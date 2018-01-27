@@ -12,13 +12,8 @@
 //
 //
 enum appl_status
-    appl_object::destroy(
-        class appl_client * const
-            p_client)
+    appl_object::destroy(void)
 {
-    static_cast<void>(
-        p_client);
-
     delete
         this;
 
@@ -30,7 +25,8 @@ enum appl_status
 //
 //
 //
-appl_object::appl_object()
+appl_object::appl_object() :
+    m_client()
 {
 }
 

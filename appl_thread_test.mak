@@ -1,15 +1,19 @@
+ifndef APPL_CXX
+    APPL_CXX = $(CXX)
+endif
+
 APPL_THREAD_TEST_FLAGS = -g -O0 -Wall -Wextra -fno-exceptions -fno-rtti
 
 APPL_THREAD_TEST_SRCS = \
-    appl_thread_test.cpp \
-    appl_thread_mgr.cpp \
-    appl_object.cpp \
-    appl_thread_std_mgr.cpp \
-    appl_thread_node.cpp \
-    appl_thread_std_node.cpp
+    $(APPL_SRC)appl_thread_test.cpp \
+    $(APPL_SRC)appl_thread_mgr.cpp \
+    $(APPL_SRC)appl_object.cpp \
+    $(APPL_SRC)appl_thread_std_mgr.cpp \
+    $(APPL_SRC)appl_thread_node.cpp \
+    $(APPL_SRC)appl_thread_std_node.cpp
 
 APPL_THREAD_TEST_LIBS = \
     -lpthread
 
-test : $(APPL_THREAD_TEST_SRCS)
-	$(CXX) -o test $(APPL_THREAD_TEST_FLAGS) $(APPL_THREAD_TEST_SRCS) $(APPL_THREAD_TEST_LIBS)
+$(APPL_DST)test_appl_thread.exe : $(APPL_THREAD_TEST_SRCS)
+	$(APPL_CXX) -o $(APPL_DST)test_appl_thread.exe $(APPL_THREAD_TEST_FLAGS) $(APPL_THREAD_TEST_SRCS) $(APPL_THREAD_TEST_LIBS)

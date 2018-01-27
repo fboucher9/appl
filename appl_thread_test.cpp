@@ -93,19 +93,15 @@ int main()
                 == e_status)
             {
                 printf(
-                    "result = %d\n",
-                    reinterpret_cast<int>(
-                        p_result));
+                    "result = %p\n",
+                        p_result);
             }
 
-            p_thread_node->destroy(
-                p_client);
+            p_thread_node->destroy();
         }
 
-        p_thread_mgr->destroy(
-            p_client);
+        p_thread_mgr->destroy();
     }
-
 
     return 0;
 }

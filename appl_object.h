@@ -23,11 +23,12 @@ class appl_object
 
         virtual
         enum appl_status
-            destroy(
-                class appl_client * const
-                    p_client);
+            destroy(void);
 
     protected:
+
+        class appl_client *
+            m_client;
 
         appl_object();
 
