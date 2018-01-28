@@ -4,8 +4,6 @@
 
 */
 
-#include <stdlib.h>
-
 #include "appl.h"
 
 #include "appl_object.h"
@@ -40,7 +38,7 @@ enum appl_status
                 p_client_descriptor);
 
         if (
-            appl_status_success == e_status)
+            appl_status_ok == e_status)
         {
             *(
                 r_client) =
@@ -48,11 +46,10 @@ enum appl_status
         }
 
         if (
-            appl_status_success != e_status)
+            appl_status_ok != e_status)
         {
-            free(
-                (void *)(
-                    p_client));
+            delete
+                p_client;
         }
     }
     else
@@ -89,6 +86,11 @@ enum appl_status
         struct appl_context_descriptor const * const
             p_client_descriptor)
 {
+    static_cast<void>(
+        p_client_descriptor);
+    return
+        appl_status_ok;
+
 } // init()
 
 //
@@ -97,6 +99,8 @@ enum appl_status
 enum appl_status
     appl_client::cleanup(void)
 {
+    return
+        appl_status_ok;
 } // cleanup()
 
 /* end-of-file: appl_client.cpp */

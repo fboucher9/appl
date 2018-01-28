@@ -28,11 +28,15 @@ APPL_TEST_OBJS = \
     $(APPL_DST)appl.o \
     $(APPL_DST)appl_object.o \
     $(APPL_DST)appl_client.o \
+    $(APPL_DST)appl_options.o \
+    $(APPL_DST)appl_options_std.o \
     $(APPL_DST)appl_test.o
 
-APPL_CFLAGS += -Wall -Wextra
+APPL_FLAGS = -g -O0 -Wall -Wextra
 
-APPL_CXXFLAGS += -Wall -Wextra
+APPL_CFLAGS += $(APPL_FLAGS)
+
+APPL_CXXFLAGS += $(APPL_FLAGS)
 
 .PHONY: all
 all : appl_test
@@ -41,7 +45,7 @@ all : appl_test
 appl_test: $(APPL_DST)appl_test.exe
 
 $(APPL_DST)appl_test.exe : $(APPL_TEST_OBJS)
-	$(APPL_CC) -o $(APPL_DST)appl_test.exe $(APPL_CFLAGS) $(APPL_TEST_OBJS)
+	$(APPL_CXX) -o $(APPL_DST)appl_test.exe $(APPL_CFLAGS) $(APPL_TEST_OBJS)
 
 $(APPL_DST)%.o : $(APPL_SRC)%.c
 	$(APPL_CC) -c -o $@ $(APPL_CFLAGS) $<

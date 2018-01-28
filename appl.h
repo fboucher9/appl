@@ -114,6 +114,17 @@ struct appl_list
 }; /* struct appl_list */
 
 /* list methods */
+void
+appl_list_init(
+    struct appl_list * const
+        p_list);
+
+void
+appl_list_join(
+    struct appl_list * const
+        p_list_left,
+    struct appl_list * const
+        p_list_right);
 
 /*
 
@@ -130,7 +141,7 @@ struct appl_object_handle
 
 enum appl_status
 appl_object_destroy(
-    struct appl_object * const
+    struct appl_object_handle * const
         p_object);
 
 /*
@@ -544,11 +555,11 @@ appl_options_create(
         r_options_handle);
 
 enum appl_status
-appl_options_read(
+appl_options_query(
     struct appl_options_handle * const
         p_options,
-    struct appl_buf * const
-        p_buf);
+    struct appl_options_descriptor * const
+        p_options_descriptor);
 
 /* extern */
 enum appl_status
