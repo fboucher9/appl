@@ -28,6 +28,8 @@ APPL_TEST_OBJS = \
     $(APPL_DST)appl.o \
     $(APPL_DST)appl_object.o \
     $(APPL_DST)appl_client.o \
+    $(APPL_DST)appl_heap.o \
+    $(APPL_DST)appl_heap_std.o \
     $(APPL_DST)appl_options.o \
     $(APPL_DST)appl_options_std.o \
     $(APPL_DST)appl_test.o
@@ -42,10 +44,10 @@ APPL_CXXFLAGS += $(APPL_FLAGS)
 all : appl_test
 
 .PHONY: appl_test
-appl_test: $(APPL_DST)appl_test.exe
+appl_test: $(APPL_DST)test_appl.exe
 
-$(APPL_DST)appl_test.exe : $(APPL_TEST_OBJS)
-	$(APPL_CXX) -o $(APPL_DST)appl_test.exe $(APPL_CFLAGS) $(APPL_TEST_OBJS)
+$(APPL_DST)test_appl.exe : $(APPL_TEST_OBJS)
+	$(APPL_CXX) -o $(APPL_DST)test_appl.exe $(APPL_CFLAGS) $(APPL_TEST_OBJS)
 
 $(APPL_DST)%.o : $(APPL_SRC)%.c
 	$(APPL_CC) -c -o $@ $(APPL_CFLAGS) $<
@@ -53,7 +55,7 @@ $(APPL_DST)%.o : $(APPL_SRC)%.c
 $(APPL_DST)%.o : $(APPL_SRC)%.cpp
 	$(APPL_CXX) -c -o $@ $(APPL_CXXFLAGS) $<
 
-$(APPL_DST)appl_test.exe $(APPL_TEST_OBJS) : $(APPL_SRC)appl_project.mak
+$(APPL_DST)test_appl.exe $(APPL_TEST_OBJS) : $(APPL_SRC)appl_project.mak
 
 .PHONY: clean
 clean: appl_clean

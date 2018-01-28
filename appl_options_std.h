@@ -60,19 +60,24 @@ class appl_options_std : public appl_options
             operator =(
                 class appl_options_std const & r);
 
-        enum appl_status
-            init(
-                class appl_client * const
-                    p_client,
-                struct appl_options_descriptor const * const
-                    p_options_descriptor);
-
-        enum appl_status
-            cleanup(void);
+        static
+        void
+            placement_new(
+                void * const
+                    p_placement)
+        {
+            new (p_placement) class appl_options_std;
+        }
 
         virtual
         enum appl_status
-            destroy(void);
+            init(
+                void const * const
+                    p_descriptor);
+
+        virtual
+        enum appl_status
+            cleanup(void);
 
         virtual
         enum appl_status

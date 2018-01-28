@@ -31,37 +31,28 @@ appl_options_std::create_instance(
     enum appl_status
         e_status;
 
-    class appl_options_std * const
-        p_options_std =
-        new
-            class appl_options_std;
+    class appl_object *
+        p_object;
+
+    e_status =
+        appl_object::create_instance(
+            p_client,
+            sizeof(
+                class appl_options_std),
+            &(
+                appl_options_std::placement_new),
+            p_options_descriptor,
+            &(
+                p_object));
 
     if (
-        p_options_std)
+        appl_status_ok
+        == e_status)
     {
-        e_status =
-            p_options_std->init(
-                p_client,
-                p_options_descriptor);
-
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            *(
-                r_options_std) =
-                p_options_std;
-        }
-        else
-        {
-            delete
-                p_options_std;
-        }
-    }
-    else
-    {
-        e_status =
-            appl_status_out_of_memory;
+        *(
+            r_options_std) =
+            reinterpret_cast<class appl_options_std *>(
+                p_object);
     }
 
     return
@@ -92,16 +83,16 @@ appl_options_std::~appl_options_std()
 //
 enum appl_status
 appl_options_std::init(
-    class appl_client * const
-        p_client,
-    struct appl_options_descriptor const * const
-        p_options_descriptor)
+    void const * const
+        p_descriptor)
 {
     enum appl_status
         e_status;
 
-    m_client =
-        p_client;
+    struct appl_options_descriptor const * const
+        p_options_descriptor =
+        static_cast<struct appl_options_descriptor const *>(
+            p_descriptor);
 
     unsigned long int const
         i_count =
@@ -177,30 +168,6 @@ appl_options_std::cleanup(void)
         e_status;
 
 } // cleanup()
-
-//
-//
-//
-enum appl_status
-appl_options_std::destroy(void)
-{
-    enum appl_status
-        e_status;
-
-    e_status =
-        cleanup();
-
-    if (
-        appl_status_ok == e_status)
-    {
-        delete
-            this;
-    }
-
-    return
-        e_status;
-
-} // destroy()
 
 //
 //

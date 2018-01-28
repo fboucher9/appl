@@ -18,7 +18,7 @@ enum appl_status
     static_cast<void>(
         p_options_descriptor);
     return
-        appl_status_fail;
+        appl_status_not_implemented;
 } // query()
 
 appl_options::appl_options() :

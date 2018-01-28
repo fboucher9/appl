@@ -18,6 +18,8 @@ struct appl_context_descriptor;
 
 class appl_client;
 
+class appl_heap;
+
 //
 //
 //
@@ -33,6 +35,9 @@ class appl_client : public appl_object
                 class appl_client * * const
                     r_client);
 
+        class appl_heap *
+            m_heap;
+
     protected:
 
         appl_client();
@@ -40,11 +45,13 @@ class appl_client : public appl_object
         virtual
         ~appl_client();
 
+        virtual
         enum appl_status
             init(
-                struct appl_context_descriptor const * const
-                    p_client_descriptor);
+                void const * const
+                    p_descriptor);
 
+        virtual
         enum appl_status
             cleanup(void);
 
@@ -56,6 +63,17 @@ class appl_client : public appl_object
         class appl_client &
             operator =(
                 class appl_client const & r);
+
+        static
+        void
+            placement_new(
+                void * const
+                    p_placement)
+        {
+            new (
+                p_placement)
+                class appl_client;
+        }
 
 }; // class appl_client
 

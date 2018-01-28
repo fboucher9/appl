@@ -28,7 +28,10 @@ enum appl_status
     appl_status_fail = 2,
 
     /* Out of memory (fatal error) */
-    appl_status_out_of_memory = 3
+    appl_status_out_of_memory = 3,
+
+    /* Function not implemented */
+    appl_status_not_implemented = 4
 
 }; /* enum appl_status */
 
