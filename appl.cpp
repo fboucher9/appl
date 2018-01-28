@@ -185,7 +185,7 @@ main(
         {
             /* Create array of buffer */
             o_options_descriptor.p_buf_min =
-                (struct appl_buf *)(
+                static_cast<struct appl_buf *>(
                     malloc(
                         argc * sizeof(
                             struct appl_buf)));
@@ -201,11 +201,11 @@ main(
                 for (argi = 0; argi < argc; argi ++)
                 {
                     o_options_descriptor.p_buf_min[argi].o_min.p_void =
-                        (void *)(
+                        static_cast<void *>(
                             argv[argi]);
 
                     o_options_descriptor.p_buf_min[argi].o_max.p_void =
-                        (void *)(
+                        static_cast<void *>(
                             argv[argi] + strlen(argv[argi]));
                 }
             }
@@ -227,6 +227,20 @@ main(
                     o_options_descriptor),
                 &(
                     p_options));
+
+        if (
+            o_options_descriptor.p_buf_min)
+        {
+            free(
+                static_cast<void *>(
+                    o_options_descriptor.p_buf_min));
+
+            o_options_descriptor.p_buf_min =
+                0;
+
+            o_options_descriptor.p_buf_max =
+                0;
+        }
 
         if (
             appl_status_ok

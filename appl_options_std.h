@@ -74,6 +74,12 @@ class appl_options_std : public appl_options
         enum appl_status
             destroy(void);
 
+        virtual
+        enum appl_status
+            query(
+                struct appl_options_descriptor * const
+                    p_options_descriptor);
+
 }; // class appl_options_std
 
 /* end-of-file: appl_options_std.h */

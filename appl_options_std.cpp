@@ -87,6 +87,9 @@ appl_options_std::~appl_options_std()
 {
 }
 
+//
+//
+//
 enum appl_status
 appl_options_std::init(
     class appl_client * const
@@ -132,6 +135,9 @@ appl_options_std::init(
         m_buf_max =
             m_buf_min
             + i_count;
+
+        e_status =
+            appl_status_ok;
     }
     else
     {
@@ -144,6 +150,9 @@ appl_options_std::init(
 
 } // init()
 
+//
+//
+//
 enum appl_status
 appl_options_std::cleanup(void)
 {
@@ -169,6 +178,9 @@ appl_options_std::cleanup(void)
 
 } // cleanup()
 
+//
+//
+//
 enum appl_status
 appl_options_std::destroy(void)
 {
@@ -189,5 +201,30 @@ appl_options_std::destroy(void)
         e_status;
 
 } // destroy()
+
+//
+//
+//
+enum appl_status
+appl_options_std::query(
+    struct appl_options_descriptor * const
+        p_options_descriptor)
+{
+    enum appl_status
+        e_status;
+
+    p_options_descriptor->p_buf_min =
+        m_buf_min;
+
+    p_options_descriptor->p_buf_max =
+        m_buf_max;
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // query()
 
 /* end-of-file: appl_options_std.cpp */
