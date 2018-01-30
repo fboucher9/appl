@@ -80,6 +80,12 @@ class appl_thread_std_node : public appl_thread_node
             operator =(
                 class appl_thread_std_node const & r);
 
+        static
+        void
+            placement_new(
+                void * const
+                    p_placement);
+
 }; // class appl_thread_std_node
 
 /* end-of-file: appl_thread_std_node.h */

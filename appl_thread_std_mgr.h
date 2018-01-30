@@ -50,6 +50,12 @@ class appl_thread_std_mgr :
             operator =(
                 class appl_thread_std_mgr const & r);
 
+        static
+        void
+            placement_new(
+                void * const
+                    p_placement);
+
         virtual
         enum appl_status
             create_node(

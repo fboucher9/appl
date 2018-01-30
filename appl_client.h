@@ -22,6 +22,13 @@ class appl_heap;
 
 class appl_options;
 
+struct appl_client_descriptor
+{
+    class appl_heap *
+        p_heap;
+
+}; /* struct appl_client_descriptor */
+
 //
 //
 //
@@ -32,10 +39,14 @@ class appl_client : public appl_object
         static
         enum appl_status
             create_instance(
-                struct appl_context_descriptor const * const
+                struct appl_client_descriptor const * const
                     p_client_descriptor,
                 class appl_client * * const
                     r_client);
+
+        virtual
+        enum appl_status
+            destroy(void);
 
         class appl_heap *
             m_heap;
@@ -73,12 +84,7 @@ class appl_client : public appl_object
         void
             placement_new(
                 void * const
-                    p_placement)
-        {
-            new (
-                p_placement)
-                class appl_client;
-        }
+                    p_placement);
 
 }; // class appl_client
 

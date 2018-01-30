@@ -99,7 +99,8 @@ appl_options_std::init(
     unsigned long int const
         i_count =
         static_cast<unsigned long int>(
-            p_options_std_descriptor->argc);
+            p_options_std_descriptor->p_arg_max
+            - p_options_std_descriptor->p_arg_min);
 
     unsigned long int
         i_placement_length =
@@ -131,11 +132,11 @@ appl_options_std::init(
             argi++)
         {
             m_buf_min[argi].o_min.pc_void =
-                p_options_std_descriptor->argv[argi];
+                p_options_std_descriptor->p_arg_min[argi];
 
             m_buf_min[argi].o_max.pc_void =
-                p_options_std_descriptor->argv[argi]
-                + strlen(p_options_std_descriptor->argv[argi]);
+                p_options_std_descriptor->p_arg_min[argi]
+                + strlen(p_options_std_descriptor->p_arg_min[argi]);
         }
 
         e_status =

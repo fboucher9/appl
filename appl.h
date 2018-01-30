@@ -459,7 +459,7 @@ enum appl_status
 appl_main(
     struct appl_context_handle * const
         p_context,
-    struct appl_options_descriptor * const
+    struct appl_options_descriptor const * const
         p_options_descriptor,
     int * const
         r_exit_code);

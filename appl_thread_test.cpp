@@ -2,9 +2,11 @@
 
 #include <stdio.h>
 
-#include "appl_status.h"
+#include "appl.h"
 
 #include "appl_object.h"
+
+#include "appl_client.h"
 
 #include "appl_thread_node.h"
 
@@ -27,11 +29,18 @@ appl_thread_test_cb(
         "hello world!\n");
 
     return
-        (void *)(1234);
+        (void *)(0x1234);
 
 } /* appl_thread_test_cb() */
 
-int main()
+enum appl_status
+appl_main(
+    struct appl_context_handle * const
+        p_context,
+    struct appl_options_descriptor const * const
+        p_options_descriptor,
+    int * const
+        p_exit_code)
 {
     enum appl_status
         e_status;
@@ -42,8 +51,12 @@ int main()
     class appl_thread_mgr *
         p_thread_mgr;
 
+    static_cast<void>(
+        p_options_descriptor);
+
     p_client =
-        0;
+        reinterpret_cast<class appl_client *>(
+            p_context);
 
     e_status =
         appl_thread_std_mgr::create_instance(
@@ -103,6 +116,8 @@ int main()
         p_thread_mgr->destroy();
     }
 
-    return 0;
+    *(p_exit_code) = 0;
+
+    return e_status;
 }
 

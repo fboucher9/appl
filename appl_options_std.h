@@ -20,11 +20,11 @@ class appl_options_std;
 
 struct appl_options_std_descriptor
 {
-    int
-        argc;
+    char const * const *
+        p_arg_min;
 
     char const * const *
-        argv;
+        p_arg_max;
 
 }; /* struct appl_options_std_descriptor */
 

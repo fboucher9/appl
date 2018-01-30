@@ -8,6 +8,8 @@
 
 #include "appl_status.h"
 
+#include "appl_types.h"
+
 #include "appl_object.h"
 
 #include "appl_thread_mgr.h"
@@ -28,35 +30,39 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_thread_std_mgr *
-        p_thread_std_mgr;
+    class appl_object *
+        p_object;
 
-    static_cast<void>(
-        p_client);
-
-    p_thread_std_mgr =
-        new
-            class appl_thread_std_mgr;
+    e_status =
+        appl_object::create_instance(
+            p_client,
+            sizeof(
+                class appl_thread_std_mgr),
+            &(
+                appl_thread_std_mgr::placement_new),
+            0,
+            &(
+                p_object));
 
     if (
-        p_thread_std_mgr)
+        appl_status_ok
+        == e_status)
     {
-        *(r_thread_mgr) =
+        class appl_thread_std_mgr *
             p_thread_std_mgr;
 
-        e_status =
-            appl_status_ok;
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
+        p_thread_std_mgr =
+            reinterpret_cast<class appl_thread_std_mgr *>(
+                p_object);
+
+        *(r_thread_mgr) =
+            p_thread_std_mgr;
     }
 
     return
         e_status;
 
-}
+} // create_instance()
 
 appl_thread_std_mgr::appl_thread_std_mgr() :
     appl_thread_mgr()
@@ -66,6 +72,16 @@ appl_thread_std_mgr::appl_thread_std_mgr() :
 appl_thread_std_mgr::~appl_thread_std_mgr()
 {
 }
+
+void
+    appl_thread_std_mgr::placement_new(
+        void * const
+            p_placement)
+{
+    new (p_placement)
+        class appl_thread_std_mgr;
+
+} // placement_new()
 
 enum appl_status
     appl_thread_std_mgr::create_node(

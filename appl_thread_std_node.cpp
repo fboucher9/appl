@@ -8,6 +8,8 @@
 
 #include "appl_status.h"
 
+#include "appl_types.h"
+
 #include "appl_object.h"
 
 #include "appl_thread_node.h"
@@ -31,19 +33,33 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_thread_std_node *
-        p_thread_std_node;
+    class appl_object *
+        p_object;
 
-    static_cast<void>(
-        p_client);
-
-    p_thread_std_node =
-        new
-            class appl_thread_std_node;
+    e_status =
+        appl_object::create_instance(
+            p_client,
+            static_cast<unsigned long int>(
+                sizeof(
+                    class appl_thread_std_node)),
+            &(
+                appl_thread_std_node::placement_new),
+            static_cast<void const *>(
+                p_thread_descriptor),
+            &(
+                p_object));
 
     if (
-        p_thread_std_node)
+        appl_status_ok
+        == e_status)
     {
+        class appl_thread_std_node *
+            p_thread_std_node;
+
+        p_thread_std_node =
+            reinterpret_cast<class appl_thread_std_node *>(
+                p_object);
+
         int
             i_external_result;
 
@@ -68,17 +84,11 @@ enum appl_status
         }
         else
         {
-            delete
-                p_thread_std_node;
+            p_thread_std_node->destroy();
 
             e_status =
                 appl_status_fail;
         }
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
     }
 
     return
@@ -187,5 +197,18 @@ enum appl_status
         e_status;
 
 } // detach()
+
+//
+//
+//
+void
+    appl_thread_std_node::placement_new(
+        void * const
+            p_placement)
+{
+    new (p_placement)
+        class appl_thread_std_node;
+
+} // placement_new()
 
 /* end-of-file: appl_thread_std_node.cpp */
