@@ -22,6 +22,7 @@ Description:
 /* Detect cpu */
 
 /* Detect types */
+#include "appl_types.h"
 
 /* Configuration */
 
@@ -39,92 +40,13 @@ Description:
 
 #include "appl_status.h"
 
+#include "appl_buf.h"
+
+#include "appl_list.h"
+
 #if defined(__cplusplus)
 extern "C" {
 #endif /* #if defined(__cplusplus) */
-
-/* Predefine appl_buf handle */
-struct appl_buf;
-
-/* ptr */
-union appl_ptr
-{
-    void *
-        p_void;
-
-    void const *
-        pc_void;
-
-    unsigned char *
-        p_uchar;
-
-    unsigned char const *
-        pc_uchar;
-
-    struct appl_buf *
-        p_buf;
-
-    struct appl_buf const *
-        pc_buf;
-
-}; /* union appl_ptr */
-
-/* buf */
-struct appl_buf
-{
-    union appl_ptr
-        o_min;
-
-    union appl_ptr
-        o_max;
-
-}; /* struct appl_buf */
-
-/* buf read iteration */
-enum appl_status
-appl_buf_read(
-    struct appl_buf * const
-        p_buf,
-    unsigned char * const
-        p_value);
-
-/* buf write iteration */
-enum appl_status
-appl_buf_write(
-    struct appl_buf * const
-        p_buf,
-    unsigned char const
-        c_value);
-
-/* buf copy */
-
-/* buf compare */
-
-/* buf case compare */
-
-/* list */
-struct appl_list
-{
-    struct appl_list *
-        p_next;
-
-    struct appl_list *
-        p_prev;
-
-}; /* struct appl_list */
-
-/* list methods */
-void
-appl_list_init(
-    struct appl_list * const
-        p_list);
-
-void
-appl_list_join(
-    struct appl_list * const
-        p_list_left,
-    struct appl_list * const
-        p_list_right);
 
 /*
 
@@ -529,45 +451,13 @@ struct appl_options_descriptor
 
 }; /* struct appl_options_descriptor */
 
-/*
-
-Structure: appl_options
-
-Description:
-
-    appl_options object handle.
-
-*/
-struct appl_options_handle
-{
-    struct appl_object_handle
-        o_object_handle;
-
-}; /* struct appl_options_handle */
-
-enum appl_status
-appl_options_create(
-    struct appl_context_handle * const
-        p_context,
-    struct appl_options_descriptor const * const
-        p_options_descriptor,
-    struct appl_options_handle * * const
-        r_options_handle);
-
-enum appl_status
-appl_options_query(
-    struct appl_options_handle * const
-        p_options,
-    struct appl_options_descriptor * const
-        p_options_descriptor);
-
 /* extern */
 enum appl_status
 appl_main(
     struct appl_context_handle * const
         p_context,
-    struct appl_options_handle * const
-        p_options,
+    struct appl_options_descriptor * const
+        p_options_descriptor,
     int * const
         r_exit_code);
 

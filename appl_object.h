@@ -10,6 +10,11 @@
 
 #define INC_APPL_OBJECT_H
 
+/* Header file dependencies */
+#if !defined(INC_APPL_TYPES_H)
+#error include appl_types.h before
+#endif /* #if !defined(INC_APPL_TYPES_H) */
+
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -82,7 +87,7 @@ class appl_object
         static
         void *
         operator new(
-            unsigned long int const
+            appl_size_t const
                 i_buf_len);
 
         static
@@ -94,7 +99,7 @@ class appl_object
         static
         void *
         operator new(
-            unsigned long int const
+            appl_size_t const
                 i_buf_len,
             void * const
                 p_placement);

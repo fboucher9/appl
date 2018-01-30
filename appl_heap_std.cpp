@@ -153,6 +153,9 @@ enum appl_status
         p_buf->o_max.pc_uchar =
             p_buf->o_min.pc_uchar
             + i_buf_len;
+
+        e_status =
+            appl_status_ok;
     }
     else
     {

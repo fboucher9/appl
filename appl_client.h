@@ -20,6 +20,8 @@ class appl_client;
 
 class appl_heap;
 
+class appl_options;
+
 //
 //
 //
@@ -37,6 +39,9 @@ class appl_client : public appl_object
 
         class appl_heap *
             m_heap;
+
+        class appl_options *
+            m_options;
 
     protected:
 

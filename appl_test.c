@@ -8,61 +8,45 @@ enum appl_status
 appl_main(
     struct appl_context_handle * const
         p_context,
-    struct appl_options_handle * const
-        p_options,
+    struct appl_options_descriptor * const
+        p_options_descriptor,
     int * const
         p_exit_code)
 {
     enum appl_status
         e_status;
 
-    struct appl_options_descriptor
-        o_options_descriptor;
+    /* Print the argument list */
+    struct appl_buf *
+        p_buf_it;
 
-    e_status =
-        appl_options_query(
-            p_options,
-            &(
-                o_options_descriptor));
+    p_buf_it =
+        p_options_descriptor->p_buf_min;
 
-    if (
-        appl_status_ok == e_status)
+    unsigned int
+        argi;
+
+    argi = 0;
+
+    while (
+        p_buf_it < p_options_descriptor->p_buf_max)
     {
-        /* Print the argument list */
-        struct appl_buf *
-            p_buf_it;
+        printf(
+            "[%3u] [%.*s]\n",
+            argi,
+            (int)(
+                p_buf_it->o_max.pc_uchar
+                - p_buf_it->o_min.pc_uchar),
+            (char const *)(
+                p_buf_it->o_min.pc_uchar));
 
-        p_buf_it =
-            o_options_descriptor.p_buf_min;
+        argi ++;
 
-        unsigned int
-            argi;
-
-        argi = 0;
-
-        while (
-            p_buf_it < o_options_descriptor.p_buf_max)
-        {
-            printf(
-                "[%3u] [%.*s]\n",
-                argi,
-                (int)(
-                    p_buf_it->o_max.pc_uchar
-                    - p_buf_it->o_min.pc_uchar),
-                (char const *)(
-                    p_buf_it->o_min.pc_uchar));
-
-            argi ++;
-
-            p_buf_it ++;
-        }
-
+        p_buf_it ++;
     }
 
     (void)(
         p_context);
-    (void)(
-        p_options);
 
     *(
         p_exit_code) =

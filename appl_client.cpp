@@ -12,6 +12,10 @@
 
 #include "appl_client.h"
 
+#include "appl_heap.h"
+
+#include "appl_heap_std.h"
+
 //
 //
 //
@@ -25,51 +29,85 @@ enum appl_status
     enum appl_status
         e_status;
 
-    void *
-        p_placement;
+    class appl_heap_std *
+        p_heap_std;
 
-    p_placement =
-        malloc(
-            sizeof(
-                class appl_client));
+    e_status =
+        appl_heap_std::create_instance(
+            &(
+                p_heap_std));
 
-    if (p_placement)
+    if (
+        appl_status_ok
+        == e_status)
     {
-        class appl_object *
-            p_object;
+        class appl_heap *
+            p_heap;
+
+        p_heap =
+            p_heap_std;
+
+        struct appl_buf
+            o_placement;
 
         e_status =
-            appl_object::init_instance(
-                static_cast<class appl_client *>(
-                    0),
-                p_placement,
+            p_heap->alloc_memory(
                 &(
-                    appl_client::placement_new),
-                static_cast<void const *>(
-                    p_client_descriptor),
-                &(
-                    p_object));
+                    o_placement),
+                static_cast<unsigned long int>(
+                    sizeof(
+                        class appl_client)));
 
         if (
             appl_status_ok == e_status)
         {
-            *(
-                r_client) =
+            class appl_object *
+                p_object;
+
+            e_status =
+                appl_object::init_instance(
+                    static_cast<class appl_client *>(
+                        0),
+                    o_placement.o_min.p_void,
+                    &(
+                        appl_client::placement_new),
+                    static_cast<void const *>(
+                        p_client_descriptor),
+                    &(
+                        p_object));
+
+            if (
+                appl_status_ok == e_status)
+            {
+                class appl_client *
+                    p_client;
+
+                p_client =
                     reinterpret_cast<class appl_client *>(
                         p_object);
+
+                p_client->m_heap =
+                    p_heap;
+
+                *(
+                    r_client) =
+                    p_client;
+            }
+
+            if (
+                appl_status_ok != e_status)
+            {
+                p_heap->free_memory(
+                    &(
+                        o_placement));
+            }
         }
 
         if (
             appl_status_ok != e_status)
         {
-            free(
-                p_placement);
+            p_heap_std->destroy();
         }
-    }
-    else
-    {
-        e_status =
-            appl_status_out_of_memory;
     }
 
     return
@@ -81,7 +119,9 @@ enum appl_status
 //
 //
 appl_client::appl_client() :
-    appl_object()
+    appl_object(),
+    m_heap(),
+    m_options()
 {
 }
 

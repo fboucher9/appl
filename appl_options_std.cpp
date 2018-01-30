@@ -4,8 +4,6 @@
 
 */
 
-#include <stdlib.h>
-
 #include <string.h>
 
 #include "appl.h"
@@ -16,6 +14,10 @@
 
 #include "appl_options_std.h"
 
+#include "appl_client.h"
+
+#include "appl_heap.h"
+
 //
 //
 //
@@ -23,8 +25,8 @@ enum appl_status
 appl_options_std::create_instance(
     class appl_client * const
         p_client,
-    struct appl_options_descriptor const * const
-        p_options_descriptor,
+    struct appl_options_std_descriptor const * const
+        p_options_std_descriptor,
     class appl_options_std * * const
         r_options_std)
 {
@@ -41,7 +43,7 @@ appl_options_std::create_instance(
                 class appl_options_std),
             &(
                 appl_options_std::placement_new),
-            p_options_descriptor,
+            p_options_std_descriptor,
             &(
                 p_object));
 
@@ -65,7 +67,7 @@ appl_options_std::create_instance(
 //
 appl_options_std::appl_options_std() :
     appl_options(),
-    m_placement_ptr(),
+    m_placement_buf(),
     m_buf_min(),
     m_buf_max()
 {
@@ -89,16 +91,15 @@ appl_options_std::init(
     enum appl_status
         e_status;
 
-    struct appl_options_descriptor const * const
-        p_options_descriptor =
-        static_cast<struct appl_options_descriptor const *>(
+    struct appl_options_std_descriptor const * const
+        p_options_std_descriptor =
+        static_cast<struct appl_options_std_descriptor const *>(
             p_descriptor);
 
     unsigned long int const
         i_count =
         static_cast<unsigned long int>(
-            p_options_descriptor->p_buf_max
-            - p_options_descriptor->p_buf_min);
+            p_options_std_descriptor->argc);
 
     unsigned long int
         i_placement_length =
@@ -107,33 +108,38 @@ appl_options_std::init(
             * sizeof(
                 struct appl_buf));
 
-    m_placement_ptr =
-        malloc(
+    e_status =
+        m_client->m_heap->alloc_memory(
+            &(
+                m_placement_buf),
             i_placement_length);
 
     if (
-        m_placement_ptr)
+        appl_status_ok == e_status)
     {
-        memcpy(
-            m_placement_ptr,
-            p_options_descriptor->p_buf_min,
-            i_placement_length);
-
         m_buf_min =
             static_cast<struct appl_buf *>(
-                m_placement_ptr);
+                m_placement_buf.o_min.p_void);
 
         m_buf_max =
             m_buf_min
             + i_count;
 
+        for (
+            unsigned long int argi=0;
+            argi<i_count;
+            argi++)
+        {
+            m_buf_min[argi].o_min.p_void =
+                p_options_std_descriptor->argv[argi];
+
+            m_buf_min[argi].o_max.p_void =
+                p_options_std_descriptor->argv[argi]
+                + strlen(p_options_std_descriptor->argv[argi]);
+        }
+
         e_status =
             appl_status_ok;
-    }
-    else
-    {
-        e_status =
-            appl_status_out_of_memory;
     }
 
     return
@@ -150,16 +156,9 @@ appl_options_std::cleanup(void)
     enum appl_status
         e_status;
 
-    if (
-        m_placement_ptr)
-    {
-        free(
-            m_placement_ptr);
-
-        m_placement_ptr =
-            static_cast<void *>(
-                0);
-    }
+    m_client->m_heap->free_memory(
+        &(
+            m_placement_buf));
 
     e_status =
         appl_status_ok;

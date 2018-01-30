@@ -30,32 +30,6 @@ class appl_heap_std : public appl_heap
                 class appl_heap_std * * const
                     r_heap_std);
 
-    protected:
-
-        appl_heap_std();
-
-        virtual
-        ~appl_heap_std();
-
-    private:
-
-        appl_heap_std(
-            class appl_heap_std const & r);
-
-        class appl_heap_std &
-            operator =(
-                class appl_heap_std const & r);
-
-        static
-        void
-            placement_new(
-                void * const
-                    p_placement)
-        {
-            new (p_placement)
-                class appl_heap_std;
-        }
-
         virtual
         enum appl_status
             destroy(void);
@@ -81,6 +55,32 @@ class appl_heap_std : public appl_heap
                     p_buf,
                 unsigned long int const
                     i_buf_len);
+
+    protected:
+
+        appl_heap_std();
+
+        virtual
+        ~appl_heap_std();
+
+    private:
+
+        appl_heap_std(
+            class appl_heap_std const & r);
+
+        class appl_heap_std &
+            operator =(
+                class appl_heap_std const & r);
+
+        static
+        void
+            placement_new(
+                void * const
+                    p_placement)
+        {
+            new (p_placement)
+                class appl_heap_std;
+        }
 
 }; // class appl_heap_std
 

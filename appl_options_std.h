@@ -18,6 +18,16 @@ struct appl_options_descriptor;
 
 class appl_options_std;
 
+struct appl_options_std_descriptor
+{
+    int
+        argc;
+
+    char * *
+        argv;
+
+}; /* struct appl_options_std_descriptor */
+
 //
 //
 //
@@ -30,8 +40,8 @@ class appl_options_std : public appl_options
         create_instance(
             class appl_client * const
                 p_client,
-            struct appl_options_descriptor const * const
-                p_options_descriptor,
+            struct appl_options_std_descriptor const * const
+                p_options_std_descriptor,
             class appl_options_std * * const
                 r_options_std);
 
@@ -44,8 +54,8 @@ class appl_options_std : public appl_options
 
     private:
 
-        void *
-            m_placement_ptr;
+        struct appl_buf
+            m_placement_buf;
 
         struct appl_buf *
             m_buf_min;

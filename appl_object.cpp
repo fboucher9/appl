@@ -4,7 +4,7 @@
 
 */
 
-#include "appl_status.h"
+#include "appl.h"
 
 #include "appl_object.h"
 
@@ -32,19 +32,28 @@ enum appl_status
     enum appl_status
         e_status;
 
-    unsigned char *
-        p_placement;
+    class appl_heap *
+        p_heap;
 
-    p_placement =
-        new unsigned char [i_placement_length];
+    p_heap =
+        p_client->m_heap;
+
+    struct appl_buf
+        o_placement;
+
+    e_status =
+        p_heap->alloc_memory(
+            &(
+                o_placement),
+            i_placement_length);
 
     if (
-        p_placement)
+        appl_status_ok == e_status)
     {
         e_status =
             appl_object::init_instance(
                 p_client,
-                p_placement,
+                o_placement.o_min.p_void,
                 p_new,
                 p_descriptor,
                 r_object);
@@ -52,14 +61,10 @@ enum appl_status
         if (
             appl_status_ok != e_status)
         {
-            delete []
-                p_placement;
+            p_heap->free_memory(
+                &(
+                    o_placement));
         }
-    }
-    else
-    {
-        e_status =
-            appl_status_out_of_memory;
     }
 
     return
@@ -67,6 +72,9 @@ enum appl_status
 
 } // create_instance()
 
+//
+//
+//
 enum appl_status
     appl_object::init_instance(
         class appl_client * const
@@ -130,8 +138,34 @@ enum appl_status
     if (
         appl_status_ok == e_status)
     {
+        class appl_client *
+            p_client;
+
+        p_client =
+            m_client;
+
         delete
             this;
+
+        /* Free memory */
+        class appl_heap *
+            p_heap;
+
+        p_heap =
+            p_client->m_heap;
+
+        struct appl_buf
+            o_placement;
+
+        o_placement.o_min.p_void =
+            this;
+
+        o_placement.o_max.p_void =
+            this + 1;
+
+        p_heap->free_memory(
+            &(
+                o_placement));
     }
 
     return
@@ -156,7 +190,7 @@ appl_object::~appl_object()
 
 void *
 appl_object::operator new(
-    unsigned long int const
+    appl_size_t const
         i_buf_len)
 {
     static_cast<void>(
@@ -177,7 +211,7 @@ appl_object::operator delete(
 
 void *
 appl_object::operator new(
-    unsigned long int const
+    appl_size_t const
         i_buf_len,
     void * const
         p_placement)
