@@ -23,7 +23,7 @@ struct appl_options_std_descriptor
     int
         argc;
 
-    char * *
+    char const * const *
         argv;
 
 }; /* struct appl_options_std_descriptor */

@@ -73,8 +73,11 @@ struct appl_context_handle;
 
 struct appl_context_descriptor
 {
-    void *
-        p_dummy;
+    char const * const *
+        p_arg_min;
+
+    char const * const *
+        p_arg_max;
 
 };
 

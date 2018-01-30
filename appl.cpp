@@ -98,6 +98,12 @@ main(
     struct appl_context_descriptor
         o_context_descriptor;
 
+    o_context_descriptor.p_arg_min =
+        argv;
+
+    o_context_descriptor.p_arg_max =
+        argv + argc;
+
     /* Create context */
     e_status =
         appl_context_create(
@@ -111,75 +117,44 @@ main(
         == e_status)
     {
         /* Create options */
-        struct appl_options_std_descriptor
-            o_options_std_descriptor;
-
-        o_options_std_descriptor.argc =
-            argc;
-
-        o_options_std_descriptor.argv =
-            argv;
-
         class appl_client * const
             p_client =
             reinterpret_cast<class appl_client *>(
                 p_context);
 
-        class appl_options_std *
-            p_options_std;
+        struct appl_options_descriptor
+            o_options_descriptor;
 
         e_status =
-            appl_options_std::create_instance(
-                p_client,
+            p_client->m_options->query(
                 &(
-                    o_options_std_descriptor),
-                &(
-                    p_options_std));
+                    o_options_descriptor));
 
         if (
-            appl_status_ok == e_status)
+            appl_status_ok
+            == e_status)
         {
-            class appl_options *
-                p_options;
-
-            p_options =
-                p_options_std;
-
-            p_client->m_options =
-                p_options;
-
-            struct appl_options_descriptor
-                o_options_descriptor;
+            /* Dispatch */
+            i_exit_code =
+                1;
 
             e_status =
-                p_options->query(
+                appl_main(
+                    p_context,
                     &(
-                        o_options_descriptor));
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                /* Dispatch */
-                i_exit_code =
-                    1;
-
-                e_status =
-                    appl_main(
-                        p_context,
-                        &(
-                            o_options_descriptor),
-                        &(
-                            i_exit_code));
-            }
-            else
-            {
-                i_exit_code =
-                    1;
-            }
-
-            p_options_std->destroy();
+                        o_options_descriptor),
+                    &(
+                        i_exit_code));
         }
+        else
+        {
+            i_exit_code =
+                1;
+        }
+
+        appl_object_destroy(
+            &(
+                p_context->o_object_handle));
     }
     else
     {
@@ -187,8 +162,9 @@ main(
             1;
     }
 
-
     return
         i_exit_code;
 
-}
+} /* main() */
+
+/* end-of-file: appl.cpp */

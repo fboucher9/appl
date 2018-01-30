@@ -130,10 +130,10 @@ appl_options_std::init(
             argi<i_count;
             argi++)
         {
-            m_buf_min[argi].o_min.p_void =
+            m_buf_min[argi].o_min.pc_void =
                 p_options_std_descriptor->argv[argi];
 
-            m_buf_min[argi].o_max.p_void =
+            m_buf_min[argi].o_max.pc_void =
                 p_options_std_descriptor->argv[argi]
                 + strlen(p_options_std_descriptor->argv[argi]);
         }

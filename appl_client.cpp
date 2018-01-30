@@ -16,6 +16,20 @@
 
 #include "appl_heap_std.h"
 
+#include "appl_options.h"
+
+#include "appl_options_std.h"
+
+struct appl_client_init_descriptor
+{
+    struct appl_context_descriptor
+        o_context_descriptor;
+
+    class appl_heap *
+        p_heap;
+
+};
+
 //
 //
 //
@@ -61,6 +75,16 @@ enum appl_status
         if (
             appl_status_ok == e_status)
         {
+            struct appl_client_init_descriptor
+                o_client_init_descriptor;
+
+            o_client_init_descriptor.o_context_descriptor =
+                *(
+                    p_client_descriptor);
+
+            o_client_init_descriptor.p_heap =
+                p_heap;
+
             class appl_object *
                 p_object;
 
@@ -72,7 +96,8 @@ enum appl_status
                     &(
                         appl_client::placement_new),
                     static_cast<void const *>(
-                        p_client_descriptor),
+                        &(
+                            o_client_init_descriptor)),
                     &(
                         p_object));
 
@@ -140,16 +165,54 @@ enum appl_status
         void const * const
             p_descriptor)
 {
-    struct appl_context_descriptor const * const
-        p_client_descriptor =
-        static_cast<struct appl_context_descriptor const *>(
+    enum appl_status
+        e_status;
+
+    struct appl_client_init_descriptor const * const
+        p_client_init_descriptor =
+        static_cast<struct appl_client_init_descriptor const *>(
             p_descriptor);
 
-    static_cast<void>(
-        p_client_descriptor);
+    m_heap =
+        p_client_init_descriptor->p_heap;
+
+    /* Create options */
+    struct appl_options_std_descriptor
+        o_options_std_descriptor;
+
+    o_options_std_descriptor.argc =
+        p_client_init_descriptor->o_context_descriptor.p_arg_max
+        - p_client_init_descriptor->o_context_descriptor.p_arg_min;
+
+    o_options_std_descriptor.argv =
+        p_client_init_descriptor->o_context_descriptor.p_arg_min;
+
+    class appl_options_std *
+        p_options_std;
+
+    e_status =
+        appl_options_std::create_instance(
+            this,
+            &(
+                o_options_std_descriptor),
+            &(
+                p_options_std));
+
+    if (
+        appl_status_ok == e_status)
+    {
+        class appl_options *
+            p_options;
+
+        p_options =
+            p_options_std;
+
+        m_options =
+            p_options;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 } // init()
 
