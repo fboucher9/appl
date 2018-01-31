@@ -14,6 +14,8 @@
 
 #include "appl_options.h"
 
+#include "appl_thread_mgr.h"
+
 //
 //
 //
@@ -160,6 +162,14 @@ enum appl_status
         e_status;
 
     // destroy objects
+
+    if (m_thread_mgr)
+    {
+        m_thread_mgr->destroy();
+
+        m_thread_mgr =
+            0;
+    }
 
     if (m_options)
     {

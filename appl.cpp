@@ -18,6 +18,8 @@ Description:
 
 #include "appl_options.h"
 
+#include "appl_heap.h"
+
 /*
 
 */

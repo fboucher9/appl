@@ -16,6 +16,8 @@ struct appl_options_descriptor;
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
 
+class appl_options;
+
 class appl_options_std;
 
 struct appl_options_std_descriptor
@@ -42,7 +44,7 @@ class appl_options_std : public appl_options
                 p_client,
             struct appl_options_std_descriptor const * const
                 p_options_std_descriptor,
-            class appl_options_std * * const
+            class appl_options * * const
                 r_options_std);
 
     protected:

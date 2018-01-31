@@ -4,6 +4,23 @@
 
 #include "appl.h"
 
+static
+void *
+appl_thread_test_cb(
+    void * const
+        p_context)
+{
+    (void)(
+        p_context);
+
+    printf(
+        "hello world!\n");
+
+    return
+        (void *)(0x1234);
+
+} /* appl_thread_test_cb() */
+
 enum appl_status
 appl_main(
     struct appl_context_handle * const
@@ -45,8 +62,54 @@ appl_main(
         p_buf_it ++;
     }
 
-    (void)(
-        p_context);
+    /* Test thread */
+    struct appl_thread_handle *
+        p_thread_handle;
+
+    struct appl_thread_descriptor
+        o_thread_descriptor;
+
+    o_thread_descriptor.p_entry =
+        &(
+            appl_thread_test_cb);
+
+    o_thread_descriptor.p_context =
+        p_context;
+
+    e_status =
+        appl_thread_create(
+            p_context,
+            &(
+                o_thread_descriptor),
+            &(
+                p_thread_handle));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        void *
+            p_thread_result;
+
+        e_status =
+            appl_thread_wait_result(
+                p_thread_handle,
+                &(
+                    p_thread_result));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            printf(
+                "thread result = %p\n",
+                p_thread_result);
+        }
+
+        appl_object_destroy(
+            &(
+                p_thread_handle->o_object_handle));
+    }
 
     *(
         p_exit_code) =

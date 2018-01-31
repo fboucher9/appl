@@ -4,6 +4,8 @@
 
 */
 
+#include <stdio.h>
+
 #include <stdlib.h>
 
 #include "appl.h"
@@ -19,8 +21,8 @@
 //
 enum appl_status
     appl_heap_std::create_instance(
-        class appl_heap_std * * const
-            r_heap_std)
+        class appl_heap * * const
+            r_heap)
 {
     enum appl_status
         e_status;
@@ -55,9 +57,10 @@ enum appl_status
             == e_status)
         {
             *(
-                r_heap_std) =
-                reinterpret_cast<class appl_heap_std *>(
-                    p_object);
+                r_heap) =
+                static_cast<class appl_heap *>(
+                    reinterpret_cast<class appl_heap_std *>(
+                        p_object));
         }
         else
         {
@@ -80,7 +83,8 @@ enum appl_status
 //
 //
 appl_heap_std::appl_heap_std() :
-    appl_heap()
+    appl_heap(),
+    m_alloc_count(0)
 {
 }
 
@@ -90,6 +94,40 @@ appl_heap_std::appl_heap_std() :
 appl_heap_std::~appl_heap_std()
 {
 }
+
+void
+    appl_heap_std::placement_new(
+        void * const
+            p_placement)
+{
+    new (p_placement)
+        class appl_heap_std;
+}
+
+enum appl_status
+    appl_heap_std::cleanup(void)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        0
+        != m_alloc_count)
+    {
+        printf("*** detected %ld memory leaks ***\n", m_alloc_count);
+    }
+    else
+    {
+        printf("*** no memory leaks ***\n");
+    }
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // cleanup()
 
 //
 //
@@ -154,6 +192,8 @@ enum appl_status
             p_buf->o_min.pc_uchar
             + i_buf_len;
 
+        m_alloc_count ++;
+
         e_status =
             appl_status_ok;
     }
@@ -185,8 +225,13 @@ enum appl_status
     p_allocation =
         p_buf->o_min.p_void;
 
+    m_alloc_count --;
+
     free(
         p_allocation);
+
+    p_buf->o_max.p_void =
+        p_buf->o_min.p_void;
 
     e_status =
         appl_status_ok;
@@ -209,31 +254,51 @@ enum appl_status
     enum appl_status
         e_status;
 
-    void *
-        p_allocation;
-
-    p_allocation =
-        realloc(
-            p_buf->o_min.p_void,
-            i_buf_len);
-
     if (
-        p_allocation)
+        0
+        == i_buf_len)
     {
-        p_buf->o_min.p_void =
-            p_allocation;
-
-        p_buf->o_max.pc_uchar =
-            p_buf->o_min.pc_uchar
-            + i_buf_len;
-
         e_status =
-            appl_status_ok;
+            free_memory(
+                p_buf);
+    }
+    else if (
+        p_buf->o_min.p_void
+        == p_buf->o_max.p_void)
+    {
+        e_status =
+            alloc_memory(
+                p_buf,
+                i_buf_len);
     }
     else
     {
-        e_status =
-            appl_status_out_of_memory;
+        void *
+            p_allocation;
+
+        p_allocation =
+            realloc(
+                p_buf->o_min.p_void,
+                i_buf_len);
+
+        if (
+            p_allocation)
+        {
+            p_buf->o_min.p_void =
+                p_allocation;
+
+            p_buf->o_max.pc_uchar =
+                p_buf->o_min.pc_uchar
+                + i_buf_len;
+
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_out_of_memory;
+        }
     }
 
     return

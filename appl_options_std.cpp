@@ -27,7 +27,7 @@ appl_options_std::create_instance(
         p_client,
     struct appl_options_std_descriptor const * const
         p_options_std_descriptor,
-    class appl_options_std * * const
+    class appl_options * * const
         r_options_std)
 {
     enum appl_status
@@ -53,8 +53,9 @@ appl_options_std::create_instance(
     {
         *(
             r_options_std) =
-            reinterpret_cast<class appl_options_std *>(
-                p_object);
+            static_cast<class appl_options *>(
+                reinterpret_cast<class appl_options_std *>(
+                    p_object));
     }
 
     return
