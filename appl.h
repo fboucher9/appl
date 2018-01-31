@@ -30,7 +30,7 @@ Description:
 
 /* #define APPL_CONFIG_WITH_FILE */
 
-/* #define APPL_CONFIG_WITH_THREAD */
+#define APPL_CONFIG_WITH_THREAD
 
 /* #define APPL_CONFIG_WITH_SOCKET */
 
@@ -44,56 +44,13 @@ Description:
 
 #include "appl_list.h"
 
+#include "appl_object_handle.h"
+
+#include "appl_context_handle.h"
+
 #if defined(__cplusplus)
 extern "C" {
 #endif /* #if defined(__cplusplus) */
-
-/*
-
-*/
-
-struct appl_object_handle;
-
-struct appl_object_handle
-{
-    void *
-        reserved;
-
-};
-
-enum appl_status
-appl_object_destroy(
-    struct appl_object_handle * const
-        p_object);
-
-/*
-
-*/
-struct appl_context_handle;
-
-struct appl_context_descriptor
-{
-    char const * const *
-        p_arg_min;
-
-    char const * const *
-        p_arg_max;
-
-};
-
-struct appl_context_handle
-{
-    struct appl_object_handle
-        o_object_handle;
-
-};
-
-enum appl_status
-appl_context_create(
-    struct appl_context_descriptor const * const
-        p_client_descriptor,
-    struct appl_context_handle * * const
-        r_context_handle);
 
 #if defined(APPL_CONFIG_WITH_HEAP)
 
@@ -209,94 +166,11 @@ appl_file_write(
 
 #if defined(APPL_CONFIG_WITH_THREAD)
 
-struct appl_thread_handle;
+#include "appl_thread_descriptor.h"
 
-typedef
-void *
-(appl_thread_callback)(
-    struct appl_context_handle * const
-        p_context,
-    struct appl_thread_handle * const
-        p_thread,
-    void * const
-        p_thread_context);
+#include "appl_thread_handle.h"
 
-struct appl_thread_descriptor
-{
-    appl_thread_callback *
-        p_callback;
-
-    void *
-        p_thread_context;
-
-    unsigned long int
-        i_stack_size;
-
-    unsigned long int
-        ul_padding[1u];
-
-    char
-        b_detach;
-
-    unsigned char
-        uc_padding[7u];
-
-};
-
-struct appl_thread_handle
-{
-    struct appl_object_handle
-        o_object_handle;
-
-};
-
-enum appl_status
-appl_thread_create(
-    struct appl_context_handle * const
-        p_context,
-    struct appl_thread_descriptor const * const
-        p_thread_descriptor,
-    struct appl_thread_handle * * const
-        r_thread_handle);
-
-struct appl_event_handle;
-
-struct appl_event_descriptor
-{
-    void *
-        p_dummy;
-
-};
-
-struct appl_event_handle
-{
-    struct appl_object_handle
-        o_object_handle;
-
-};
-
-enum appl_status
-appl_event_create(
-    struct appl_context_handle * const
-        p_context,
-    struct appl_event_descriptor const * const
-        p_event_descriptor,
-    struct appl_event_handle * * const
-        p_event);
-
-enum appl_status
-appl_event_signal(
-    struct appl_event_handle * const
-        p_event);
-
-enum appl_status
-appl_event_wait(
-    struct appl_event_handle * const
-        p_event,
-    unsigned long int const
-        i_time_freq,
-    unsigned long int const
-        i_time_count);
+#include "appl_event_handle.h"
 
 /* mutex */
 struct appl_mutex_handle;
@@ -323,6 +197,16 @@ appl_mutex_create(
         p_mutex_descriptor,
     struct appl_mutex_handle * * const
         r_mutex_handle);
+
+enum appl_status
+appl_mutex_lock(
+    struct appl_mutex_handle * const
+        p_mutex_handle);
+
+enum appl_status
+appl_mutex_unlock(
+    struct appl_mutex_handle * const
+        p_mutex_handle);
 
 #endif /* #if defined(APPL_CONFIG_WITH_THREAD) */
 

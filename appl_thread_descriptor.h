@@ -10,15 +10,19 @@
 
 #define INC_APPL_THREAD_DESCRIPTOR_H
 
+typedef
+void *
+(appl_thread_callback)(
+    void * const
+        p_thread_context);
+
 /*
 
 */
 struct appl_thread_descriptor
 {
-    void *
-        (* p_entry)(
-            void * const
-                p_context);
+    appl_thread_callback *
+        p_entry;
 
     void *
         p_context;

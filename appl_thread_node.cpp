@@ -21,13 +21,9 @@
 //
 enum appl_status
     appl_thread_node::wait_result(
-        class appl_client * const
-            p_client,
         void * * const
             r_result)
 {
-    static_cast<void>(
-        p_client);
     static_cast<void>(
         r_result);
     return
@@ -38,12 +34,8 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_thread_node::detach(
-        class appl_client * const
-            p_client)
+    appl_thread_node::detach(void)
 {
-    static_cast<void>(
-        p_client);
     return
         appl_status_fail;
 } // detach()

@@ -22,6 +22,8 @@ class appl_heap;
 
 class appl_options;
 
+class appl_thread_mgr;
+
 struct appl_client_descriptor
 {
     class appl_heap *
@@ -53,6 +55,9 @@ class appl_client : public appl_object
 
         class appl_options *
             m_options;
+
+        class appl_thread_mgr *
+            m_thread_mgr;
 
     protected:
 

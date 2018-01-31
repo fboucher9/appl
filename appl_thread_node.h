@@ -34,16 +34,12 @@ class appl_thread_node : public appl_object
         virtual
         enum appl_status
             wait_result(
-                class appl_client * const
-                    p_client,
                 void * * const
                     r_result);
 
         virtual
         enum appl_status
-            detach(
-                class appl_client * const
-                    p_client);
+            detach(void);
 
     protected:
 

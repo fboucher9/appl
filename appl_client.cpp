@@ -97,7 +97,8 @@ enum appl_status
 appl_client::appl_client() :
     appl_object(),
     m_heap(),
-    m_options()
+    m_options(),
+    m_thread_mgr()
 {
 }
 

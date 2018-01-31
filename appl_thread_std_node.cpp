@@ -114,8 +114,6 @@ appl_thread_std_node::~appl_thread_std_node()
 
 enum appl_status
     appl_thread_std_node::wait_result(
-        class appl_client * const
-            p_client,
         void * * const
             r_result)
 {
@@ -127,9 +125,6 @@ enum appl_status
 
     int
         i_external_result;
-
-    static_cast<void>(
-        p_client);
 
     i_external_result =
         pthread_join(
@@ -163,18 +158,13 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_thread_std_node::detach(
-        class appl_client * const
-            p_client)
+    appl_thread_std_node::detach(void)
 {
     enum appl_status
         e_status;
 
     int
         i_external_result;
-
-    static_cast<void>(
-        p_client);
 
     i_external_result =
         pthread_detach(
