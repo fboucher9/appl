@@ -26,7 +26,7 @@ Description:
 
 /* Configuration */
 
-/* #define APPL_CONFIG_WITH_HEAP */
+#define APPL_CONFIG_WITH_HEAP
 
 /* #define APPL_CONFIG_WITH_FILE */
 
@@ -48,42 +48,15 @@ Description:
 
 #include "appl_context_handle.h"
 
+#if defined(APPL_CONFIG_WITH_HEAP)
+
+#include "appl_heap_handle.h"
+
+#endif /* #if defined(APPL_CONFIG_WITH_HEAP) */
+
 #if defined(__cplusplus)
 extern "C" {
 #endif /* #if defined(__cplusplus) */
-
-#if defined(APPL_CONFIG_WITH_HEAP)
-
-/*
-
-*/
-
-enum appl_status
-appl_heap_alloc(
-    struct appl_context_handle * const
-        p_context,
-    struct appl_buf * const
-        p_buf,
-    unsigned long int const
-        i_length);
-
-enum appl_status
-appl_heap_free(
-    struct appl_context_handle * const
-        p_context,
-    struct appl_buf * const
-        p_buf);
-
-enum appl_status
-appl_heap_realloc(
-    struct appl_context_handle * const
-        p_context,
-    struct appl_buf * const
-        p_buf,
-    unsigned long int const
-        i_length);
-
-#endif /* #if defined(APPL_CONFIG_WITH_HEAP) */
 
 #if defined(APPL_CONFIG_WITH_FILE)
 

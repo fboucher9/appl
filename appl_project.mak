@@ -39,6 +39,7 @@ APPL_TEST_OBJS = \
     $(APPL_DST)appl_context_handle.o \
     $(APPL_DST)appl_heap.o \
     $(APPL_DST)appl_heap_std.o \
+    $(APPL_DST)appl_heap_handle.o \
     $(APPL_DST)appl_options.o \
     $(APPL_DST)appl_options_std.o \
     $(APPL_DST)appl_thread_handle.o \
@@ -49,13 +50,83 @@ APPL_TEST_OBJS = \
     $(APPL_DST)appl_test.o
 
 # Common compiler flags for C and C++
-APPL_FLAGS = -g -O0 -Wall -Wextra
+APPL_FLAGS = \
+    -g \
+    -O0 \
+    -pedantic \
+    -Wall \
+    -Wextra \
+    -Wabi \
+    -Waggregate-return \
+    -Warray-bounds \
+    -Wattributes \
+    -Wbuiltin-macro-redefined \
+    -Wcast-align \
+    -Wcast-qual \
+    -Wconversion \
+    -Wdeprecated \
+    -Wdiv-by-zero \
+    -Wendif-labels \
+    -Wfloat-equal \
+    -Wformat-contains-nul \
+    -Wformat-extra-args \
+    -Wformat-nonliteral \
+    -Wformat-security \
+    -Wformat-y2k \
+    -Wlarger-than=4096 \
+    -Wlong-long \
+    -Wmissing-declarations \
+    -Wmissing-format-attribute \
+    -Wmissing-include-dirs \
+    -Wmultichar \
+    -Woverflow \
+    -Woverlength-strings \
+    -Wpacked \
+    -Wpacked-bitfield-compat \
+    -Wpadded \
+    -Wpointer-arith \
+    -Wpragmas \
+    -Wredundant-decls \
+    -Wsequence-point \
+    -Wshadow \
+    -Wstrict-overflow=5 \
+    -Wsync-nand \
+    -Wundef \
+    -Wunused \
+    -Wunused-macros \
+    -Wunused-result \
+    -Wvariadic-macros \
+    -Wvla \
+    -Wwrite-strings
 
 # Append common flags to C compiler flags
-APPL_CFLAGS += $(APPL_FLAGS)
+APPL_CFLAGS += $(APPL_FLAGS) \
+    -Wbad-function-cast \
+    -Wc++-compat \
+    -Wdeclaration-after-statement \
+    -Wformat-zero-length \
+    -Wint-to-pointer-cast \
+    -Wmissing-prototypes \
+    -Wnested-externs \
+    -Wold-style-definition \
+    -Wpointer-to-int-cast \
+    -Wstrict-prototypes \
+    -std=c89
 
 # Append common flags to C++ compiler flags
-APPL_CXXFLAGS += $(APPL_FLAGS)
+APPL_CXXFLAGS += \
+    $(APPL_FLAGS) \
+    -Wc++0x-compat \
+    -Wctor-dtor-privacy \
+    -Weffc++ \
+    -Wenum-compare \
+    -Wnon-virtual-dtor \
+    -Woverloaded-virtual \
+    -Wstrict-null-sentinel \
+    -Wsign-promo \
+    -std=c++98 \
+    -fno-rtti \
+    -fno-exceptions
 
 # List of libraries required to link test application
 APPL_TEST_LIBS = -lpthread
@@ -70,15 +141,21 @@ appl_test: $(APPL_DST)test_appl.exe
 
 # Link of test application
 $(APPL_DST)test_appl.exe : $(APPL_TEST_OBJS)
-	$(APPL_CXX) -o $(APPL_DST)test_appl.exe $(APPL_CXXFLAGS) $(APPL_TEST_OBJS) $(APPL_TEST_LIBS)
+	@echo linking $(APPL_DST)test_appl.exe
+	@echo -o $(APPL_DST)test_appl.exe $(APPL_CXXFLAGS) $(APPL_TEST_OBJS) $(APPL_TEST_LIBS) > $(APPL_DST)test_appl.exe.cmd
+	@$(APPL_CXX) @$(APPL_DST)test_appl.exe.cmd
 
 # Compile of C source files
 $(APPL_DST)%.o : $(APPL_SRC)%.c
-	$(APPL_CC) -c -o $@ $(APPL_CFLAGS) $<
+	@echo compiling $@
+	@echo -c -o $@ $(APPL_CFLAGS) $< > $@.cmd
+	@$(APPL_CC) @$@.cmd
 
 # Compile of C++ source files
 $(APPL_DST)%.o : $(APPL_SRC)%.cpp
-	$(APPL_CXX) -c -o $@ $(APPL_CXXFLAGS) $<
+	@echo compiling $@
+	@echo -c -o $@ $(APPL_CXXFLAGS) $< > $@.cmd
+	@$(APPL_CXX) @$@.cmd
 
 # Dependency on makefile and appl_project.mak
 $(APPL_DST)test_appl.exe $(APPL_TEST_OBJS) : $(APPL_SRC)makefile $(APPL_SRC)appl_project.mak
@@ -91,5 +168,6 @@ clean: appl_clean
 .PHONY: appl_clean
 appl_clean:
 	-rm $(APPL_DST)*.o
+	-rm $(APPL_DST)*.cmd
 
 # end-of-file: appl_project.mak
