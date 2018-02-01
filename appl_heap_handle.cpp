@@ -6,13 +6,13 @@
 
 #include "appl_status.h"
 
-#include "appl_buf.h"
-
 #include "appl_heap_handle.h"
 
 #include "appl_types.h"
 
 #include "appl_object.h"
+
+#include "appl_context.h"
 
 #include "appl_heap.h"
 
@@ -28,14 +28,24 @@ appl_heap_alloc(
     unsigned long int const
         i_length)
 {
-    static_cast<void>(
-        p_context_handle);
-    static_cast<void>(
-        p_buf);
-    static_cast<void>(
-        i_length);
+    class appl_context * const
+        p_context =
+        appl_context::convert_handle(
+            p_context_handle);
+
+    class appl_heap * const
+        p_heap =
+        p_context->m_heap;
+
+    enum appl_status const
+        e_status =
+        p_heap->alloc_memory(
+            p_buf,
+            i_length);
+
     return
-        appl_status_not_implemented;
+        e_status;
+
 } /* appl_heap_alloc() */
 
 /*
@@ -48,12 +58,23 @@ appl_heap_free(
     struct appl_buf * const
         p_buf)
 {
-    static_cast<void>(
-        p_context_handle);
-    static_cast<void>(
-        p_buf);
+    class appl_context * const
+        p_context =
+        appl_context::convert_handle(
+            p_context_handle);
+
+    class appl_heap * const
+        p_heap =
+        p_context->m_heap;
+
+    enum appl_status const
+        e_status =
+        p_heap->free_memory(
+            p_buf);
+
     return
-        appl_status_not_implemented;
+        e_status;
+
 } /* appl_heap_free() */
 
 /*
@@ -68,14 +89,24 @@ appl_heap_realloc(
     unsigned long int const
         i_length)
 {
-    static_cast<void>(
-        p_context_handle);
-    static_cast<void>(
-        p_buf);
-    static_cast<void>(
-        i_length);
+    class appl_context * const
+        p_context =
+        appl_context::convert_handle(
+            p_context_handle);
+
+    class appl_heap * const
+        p_heap =
+        p_context->m_heap;
+
+    enum appl_status const
+        e_status =
+        p_heap->realloc_memory(
+            p_buf,
+            i_length);
+
     return
-        appl_status_not_implemented;
+        e_status;
+
 } /* appl_heap_realloc() */
 
 /* end-of-file: appl_heap_handle.cpp */

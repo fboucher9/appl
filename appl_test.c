@@ -5,8 +5,37 @@
 #include "appl.h"
 
 static
+void
+appl_test_memory_leak(
+    struct appl_context_handle * const
+        p_context_handle)
+{
+    struct appl_buf
+        o_buf;
+
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_heap_alloc(
+            p_context_handle,
+            &(
+                o_buf),
+            123u);
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+    }
+    else
+    {
+    }
+}
+
+static
 void *
-appl_thread_test_cb(
+appl_test_thread_entry(
     void * const
         p_context)
 {
@@ -19,7 +48,7 @@ appl_thread_test_cb(
     return
         (void *)(0x1234);
 
-} /* appl_thread_test_cb() */
+} /* appl_test_thread_entry() */
 
 enum appl_status
 appl_main(
@@ -64,6 +93,12 @@ appl_main(
         }
     }
 
+    /* Test memory leak */
+    {
+        appl_test_memory_leak(
+            p_context_handle);
+    }
+
     /* Test thread */
     {
         struct appl_thread_handle *
@@ -74,7 +109,7 @@ appl_main(
 
         o_thread_descriptor.p_entry =
             &(
-                appl_thread_test_cb);
+                appl_test_thread_entry);
 
         o_thread_descriptor.p_context =
             p_context_handle;

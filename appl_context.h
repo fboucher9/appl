@@ -10,7 +10,7 @@
 
 #define INC_APPL_CONTEXT_H
 
-struct appl_context_descriptor;
+struct appl_context_handle;
 
 #if !defined(__cplusplus)
 #error use c++ compiler
@@ -51,6 +51,12 @@ class appl_context : public appl_object
 
         class appl_thread_mgr *
             m_thread_mgr;
+
+        static
+        class appl_context *
+        convert_handle(
+            struct appl_context_handle * const
+                p_context_handle);
 
     protected:
 

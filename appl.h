@@ -289,9 +289,6 @@ appl_clock_delay(
 
 #if defined(APPL_CONFIG_WITH_MAIN)
 
-/* Predefine options handle */
-struct appl_options;
-
 /*
 
 Structure: appl_options_descriptor
