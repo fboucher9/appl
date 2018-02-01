@@ -58,6 +58,9 @@ class appl_context : public appl_object
             struct appl_context_handle * const
                 p_context_handle);
 
+        struct appl_context_handle *
+            get_handle(void);
+
     protected:
 
         appl_context();

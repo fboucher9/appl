@@ -61,7 +61,7 @@ main(
         /* Create options */
         class appl_context * const
             p_context =
-            reinterpret_cast<class appl_context *>(
+            appl_context::convert_handle(
                 p_context_handle);
 
         struct appl_options_descriptor

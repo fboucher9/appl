@@ -14,6 +14,8 @@ Description:
 
 #define INC_APPL_THREAD_NODE_H
 
+struct appl_thread_handle;
+
 #if !defined(__cplusplus)
 #error use C++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -40,6 +42,15 @@ class appl_thread_node : public appl_object
         virtual
         enum appl_status
             detach(void);
+
+        static
+        class appl_thread_node *
+            convert_handle(
+                struct appl_thread_handle * const
+                    p_thread_handle);
+
+        struct appl_thread_handle *
+            get_handle(void);
 
     protected:
 

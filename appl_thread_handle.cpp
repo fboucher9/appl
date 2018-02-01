@@ -10,6 +10,8 @@
 
 #include "appl_thread_handle.h"
 
+#include "appl_context_handle.h"
+
 #include "appl_types.h"
 
 #include "appl_object.h"
@@ -35,11 +37,9 @@ appl_thread_create(
     enum appl_status
         e_status;
 
-    class appl_context *
-        p_context;
-
-    p_context =
-        reinterpret_cast<class appl_context *>(
+    class appl_context * const
+        p_context =
+        appl_context::convert_handle(
             p_context_handle);
 
     class appl_thread_mgr *
@@ -63,8 +63,7 @@ appl_thread_create(
     {
         *(
             r_thread_handle) =
-            reinterpret_cast<struct appl_thread_handle *>(
-                p_thread_node);
+            p_thread_node->get_handle();
     }
 
     return
@@ -83,11 +82,9 @@ appl_thread_detach(
     enum appl_status
         e_status;
 
-    class appl_thread_node *
-        p_thread_node;
-
-    p_thread_node =
-        reinterpret_cast<class appl_thread_node *>(
+    class appl_thread_node * const
+        p_thread_node =
+        appl_thread_node::convert_handle(
             p_thread_handle);
 
     e_status =
@@ -111,11 +108,9 @@ appl_thread_wait_result(
     enum appl_status
         e_status;
 
-    class appl_thread_node *
-        p_thread_node;
-
-    p_thread_node =
-        reinterpret_cast<class appl_thread_node *>(
+    class appl_thread_node * const
+        p_thread_node =
+        appl_thread_node::convert_handle(
             p_thread_handle);
 
     e_status =

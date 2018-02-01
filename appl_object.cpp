@@ -266,4 +266,18 @@ enum appl_status
 
 } // cleanup()
 
+//
+//
+//
+class appl_object *
+    appl_object::convert_handle(
+        struct appl_object_handle * const
+            p_object_handle)
+{
+    return
+        reinterpret_cast<class appl_object *>(
+            p_object_handle);
+
+} // convert_handle()
+
 /* end-of-file: appl_object.cpp */

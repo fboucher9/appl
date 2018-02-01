@@ -55,4 +55,24 @@ appl_thread_node::~appl_thread_node()
 {
 }
 
+class appl_thread_node *
+    appl_thread_node::convert_handle(
+        struct appl_thread_handle * const
+            p_thread_handle)
+{
+    return
+        reinterpret_cast<class appl_thread_node *>(
+            p_thread_handle);
+
+} // convert_handle()
+
+struct appl_thread_handle *
+    appl_thread_node::get_handle(void)
+{
+    return
+        reinterpret_cast<struct appl_thread_handle *>(
+            this);
+
+} // get_handle()
+
 /* end-of-file: appl_thread_node.cpp */

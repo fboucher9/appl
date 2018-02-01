@@ -22,7 +22,7 @@ appl_object_destroy(
 {
     class appl_object * const
         p_object =
-        reinterpret_cast<class appl_object *>(
+        appl_object::convert_handle(
             p_object_handle);
 
     return

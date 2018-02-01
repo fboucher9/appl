@@ -169,8 +169,7 @@ appl_context_create(
 
                     *(
                         r_context_handle) =
-                        reinterpret_cast<struct appl_context_handle *>(
-                            p_context);
+                        p_context->get_handle();
                 }
             }
 

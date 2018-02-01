@@ -15,6 +15,8 @@
 #error include appl_types.h before
 #endif /* #if !defined(INC_APPL_TYPES_H) */
 
+struct appl_object_handle;
+
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -63,6 +65,12 @@ class appl_object
         virtual
         enum appl_status
             destroy(void);
+
+        static
+        class appl_object *
+            convert_handle(
+                struct appl_object_handle * const
+                    p_object_handle);
 
     protected:
 

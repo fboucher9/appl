@@ -166,6 +166,41 @@ enum appl_status
 
 } // destroy()
 
+static bool g_appl_heap_std_leak_detector = false;
+
+static unsigned char const g_appl_heap_std_header_magic =
+static_cast<unsigned char>(0xA1u);
+
+static unsigned char const g_appl_heap_std_footer_magic =
+static_cast<unsigned char>(0x8Du);
+
+struct appl_heap_std_header
+{
+    void *
+        a_backstrace[8u];
+
+    /* -- */
+
+    unsigned long int
+        i_backstrace_count;
+
+    unsigned long int
+        i_buf_len;
+
+    /* -- */
+
+    unsigned char
+        a_header[8u];
+
+}; /* struct appl_heap_std_header */
+
+struct appl_heap_std_footer
+{
+    unsigned char
+        a_footer[8u];
+
+}; /* struct appl_heap_std_footer */
+
 //
 //
 //
@@ -179,32 +214,119 @@ enum appl_status
     enum appl_status
         e_status;
 
-    void *
-        p_allocation;
-
-    p_allocation =
-        malloc(
-            i_buf_len);
-
-    if (
-        p_allocation)
+    if (g_appl_heap_std_leak_detector)
     {
-        p_buf->o_min.p_void =
+        void *
             p_allocation;
 
-        p_buf->o_max.pc_uchar =
-            p_buf->o_min.pc_uchar
-            + i_buf_len;
+        unsigned long int
+            i_total_buf_len;
 
-        m_alloc_count ++;
+        i_total_buf_len =
+            static_cast<unsigned long int>(
+                i_buf_len
+                + sizeof(
+                    struct appl_heap_std_header)
+                + sizeof(
+                    struct appl_heap_std_footer));
 
-        e_status =
-            appl_status_ok;
+        p_allocation =
+            malloc(
+                i_total_buf_len);
+
+        if (
+            p_allocation)
+        {
+            struct appl_heap_std_header *
+                p_header;
+
+            p_header =
+                static_cast<struct appl_heap_std_header *>(
+                    p_allocation);
+
+            p_header->i_buf_len =
+                i_buf_len;
+
+            p_header->i_backstrace_count =
+                0ul;
+
+            {
+                unsigned int i_header_iterator;
+                for (i_header_iterator = 0u;
+                    i_header_iterator < sizeof(p_header->a_header);
+                    i_header_iterator ++)
+                {
+                    p_header->a_header[i_header_iterator] =
+                        g_appl_heap_std_header_magic;
+                }
+            }
+
+            p_buf->o_min.p_void =
+                static_cast<void *>(
+                    p_header + 1);
+
+            p_buf->o_max.pc_uchar =
+                p_buf->o_min.pc_uchar
+                + i_buf_len;
+
+            struct appl_heap_std_footer *
+                p_footer;
+
+            p_footer =
+                static_cast<struct appl_heap_std_footer *>(
+                    p_buf->o_max.p_void);
+
+            {
+                unsigned int i_footer_iterator;
+                for (i_footer_iterator = 0u;
+                    i_footer_iterator < sizeof(p_footer->a_footer);
+                    i_footer_iterator ++)
+                {
+                    p_footer->a_footer[i_footer_iterator] =
+                        g_appl_heap_std_footer_magic;
+                }
+            }
+
+            m_alloc_count ++;
+
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
     }
     else
     {
-        e_status =
-            appl_status_fail;
+        void *
+            p_allocation;
+
+        p_allocation =
+            malloc(
+                i_buf_len);
+
+        if (
+            p_allocation)
+        {
+            p_buf->o_min.p_void =
+                p_allocation;
+
+            p_buf->o_max.pc_uchar =
+                p_buf->o_min.pc_uchar
+                + i_buf_len;
+
+            m_alloc_count ++;
+
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
     }
 
     return
@@ -223,22 +345,92 @@ enum appl_status
     enum appl_status
         e_status;
 
-    void *
-        p_allocation;
+    if (g_appl_heap_std_leak_detector)
+    {
+        struct appl_heap_std_header *
+            p_header;
 
-    p_allocation =
-        p_buf->o_min.p_void;
+        p_header =
+            static_cast<struct appl_heap_std_header *>(
+                p_buf->o_min.p_void)
+            - 1;
 
-    m_alloc_count --;
+        {
+            unsigned int i_header_iterator;
+            for (i_header_iterator = 0u;
+                i_header_iterator < sizeof(p_header->a_header);
+                i_header_iterator ++)
+            {
+                if (
+                    g_appl_heap_std_header_magic
+                    == p_header->a_header[i_header_iterator])
+                {
+                }
+                else
+                {
+                }
+            }
+        }
 
-    free(
-        p_allocation);
+        void *
+            p_allocation;
 
-    p_buf->o_max.p_void =
-        p_buf->o_min.p_void;
+        p_allocation =
+            static_cast<void *>(
+                p_header);
 
-    e_status =
-        appl_status_ok;
+        struct appl_heap_std_footer *
+            p_footer;
+
+        p_footer =
+            reinterpret_cast<struct appl_heap_std_footer *>(
+                p_buf->o_min.p_uchar
+                + p_header->i_buf_len);
+
+        {
+            unsigned int i_footer_iterator;
+            for (i_footer_iterator = 0u;
+                i_footer_iterator < sizeof(p_footer->a_footer);
+                i_footer_iterator ++)
+            {
+                if (
+                    g_appl_heap_std_footer_magic
+                    == p_footer->a_footer[i_footer_iterator])
+                {
+                }
+                else
+                {
+                }
+            }
+        }
+
+        free(
+            p_allocation);
+
+        m_alloc_count --;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        void *
+            p_allocation;
+
+        p_allocation =
+            p_buf->o_min.p_void;
+
+        m_alloc_count --;
+
+        free(
+            p_allocation);
+
+        p_buf->o_max.p_void =
+            p_buf->o_min.p_void;
+
+        e_status =
+            appl_status_ok;
+    }
 
     return
         e_status;

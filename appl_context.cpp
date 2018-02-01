@@ -242,6 +242,9 @@ appl_context::destroy(void)
 
 } // destroy()
 
+//
+//
+//
 class appl_context *
 appl_context::convert_handle(
     struct appl_context_handle * const
@@ -252,5 +255,17 @@ appl_context::convert_handle(
             p_context_handle);
 
 } // convert_handle()
+
+//
+//
+//
+struct appl_context_handle *
+appl_context::get_handle(void)
+{
+    return
+        reinterpret_cast<struct appl_context_handle *>(
+            this);
+
+} // get_handle()
 
 /* end-of-file: appl_context.cpp */
