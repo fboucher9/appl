@@ -19,7 +19,7 @@ extern "C" {
 enum appl_status
 appl_heap_alloc(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     struct appl_buf * const
         p_buf,
     unsigned long int const
@@ -28,14 +28,14 @@ appl_heap_alloc(
 enum appl_status
 appl_heap_free(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     struct appl_buf * const
         p_buf);
 
 enum appl_status
 appl_heap_realloc(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     struct appl_buf * const
         p_buf,
     unsigned long int const

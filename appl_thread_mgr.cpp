@@ -18,15 +18,15 @@
 
 enum appl_status
     appl_thread_mgr::create_node(
-        class appl_client * const
-            p_client,
+        class appl_context * const
+            p_context,
         struct appl_thread_descriptor const * const
             p_thread_descriptor,
         class appl_thread_node * * const
             r_thread_node)
 {
     static_cast<void>(
-        p_client);
+        p_context);
     static_cast<void>(
         p_thread_descriptor);
     static_cast<void>(

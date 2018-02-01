@@ -33,21 +33,21 @@ extern "C" {
 enum appl_status
 appl_event_create(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     struct appl_event_descriptor const * const
         p_event_descriptor,
     struct appl_event_handle * * const
-        p_event);
+        p_event_handle);
 
 enum appl_status
 appl_event_signal(
     struct appl_event_handle * const
-        p_event);
+        p_event_handle);
 
 enum appl_status
 appl_event_wait(
     struct appl_event_handle * const
-        p_event,
+        p_event_handle,
     unsigned long int const
         i_time_freq,
     unsigned long int const

@@ -107,7 +107,7 @@ struct appl_file_handle
 enum appl_status
 appl_file_create(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     struct appl_file_descriptor const * const
         p_file_descriptor,
     struct appl_file * * const
@@ -165,7 +165,7 @@ struct appl_mutex_handle
 enum appl_status
 appl_mutex_create(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     struct appl_mutex_descriptor const * const
         p_mutex_descriptor,
     struct appl_mutex_handle * * const
@@ -205,7 +205,7 @@ struct appl_socket_address_handle
 enum appl_status
 appl_socket_address_create(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     struct appl_socket_address_descriptor const * const
         p_socket_address_descriptor,
     struct appl_socket_address_handle * * const
@@ -231,7 +231,7 @@ struct appl_tcp_socket_handle
 enum appl_status
 appl_tcp_socket_create(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     struct appl_tcp_socket_descriptor const * const
         p_tcp_socket_descriptor,
     struct appl_tcp_socket_handle * * const
@@ -257,7 +257,7 @@ struct appl_udp_socket_handle
 enum appl_status
 appl_udp_socket_create(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     struct appl_udp_socket_descriptor const * const
         p_udp_socket_descriptor,
     struct appl_udp_socket * * const
@@ -270,7 +270,7 @@ appl_udp_socket_create(
 enum appl_status
 appl_clock_read(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     unsigned long int const
         i_time_freq,
     unsigned long int * const
@@ -279,7 +279,7 @@ appl_clock_read(
 enum appl_status
 appl_clock_delay(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     unsigned long int const
         i_time_freq,
     unsigned long int const
@@ -315,7 +315,7 @@ struct appl_options_descriptor
 enum appl_status
 appl_main(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     struct appl_options_descriptor const * const
         p_options_descriptor,
     int * const

@@ -8,7 +8,7 @@
 
 #include "appl_object.h"
 
-#include "appl_client.h"
+#include "appl_context.h"
 
 #include "appl_heap.h"
 
@@ -16,24 +16,31 @@
 
 #include "appl_thread_mgr.h"
 
+struct appl_context_init_descriptor
+{
+    class appl_heap *
+        p_heap;
+
+}; /* struct appl_context_init_descriptor */
+
 //
 //
 //
 enum appl_status
-    appl_client::create_instance(
-        struct appl_client_descriptor const * const
-            p_client_descriptor,
-        class appl_client * * const
-            r_client)
+    appl_context::create_instance(
+        class appl_heap * const
+            p_heap,
+        class appl_context * * const
+            r_context)
 {
     enum appl_status
         e_status;
 
-    class appl_heap *
-        p_heap;
+    struct appl_context_init_descriptor
+        o_init_descriptor;
 
-    p_heap =
-        p_client_descriptor->p_heap;
+    o_init_descriptor.p_heap =
+        p_heap;
 
     struct appl_buf
         o_placement;
@@ -44,7 +51,7 @@ enum appl_status
                 o_placement),
             static_cast<unsigned long int>(
                 sizeof(
-                    class appl_client)));
+                    class appl_context)));
 
     if (
         appl_status_ok == e_status)
@@ -54,29 +61,30 @@ enum appl_status
 
         e_status =
             appl_object::init_instance(
-                static_cast<class appl_client *>(
+                static_cast<class appl_context *>(
                     0),
                 o_placement.o_min.p_void,
                 &(
-                    appl_client::placement_new),
+                    appl_context::placement_new),
                 static_cast<void const *>(
-                    p_client_descriptor),
+                    &(
+                        o_init_descriptor)),
                 &(
                     p_object));
 
         if (
             appl_status_ok == e_status)
         {
-            class appl_client *
-                p_client;
+            class appl_context *
+                p_context;
 
-            p_client =
-                reinterpret_cast<class appl_client *>(
+            p_context =
+                reinterpret_cast<class appl_context *>(
                     p_object);
 
             *(
-                r_client) =
-                p_client;
+                r_context) =
+                p_context;
         }
 
         if (
@@ -96,7 +104,7 @@ enum appl_status
 //
 //
 //
-appl_client::appl_client() :
+appl_context::appl_context() :
     appl_object(),
     m_heap(),
     m_options(),
@@ -107,18 +115,18 @@ appl_client::appl_client() :
 //
 //
 //
-appl_client::~appl_client()
+appl_context::~appl_context()
 {
 }
 
 void
-    appl_client::placement_new(
+    appl_context::placement_new(
         void * const
             p_placement)
 {
     new (
         p_placement)
-        class appl_client;
+        class appl_context;
 
 } // placement_new()
 
@@ -126,23 +134,23 @@ void
 //
 //
 enum appl_status
-    appl_client::init(
+    appl_context::init(
         void const * const
             p_descriptor)
 {
     enum appl_status
         e_status;
 
-    struct appl_client_descriptor const * const
-        p_client_descriptor =
-        static_cast<struct appl_client_descriptor const *>(
+    struct appl_context_init_descriptor const * const
+        p_context_init_descriptor =
+        static_cast<struct appl_context_init_descriptor const *>(
             p_descriptor);
 
-    m_client =
+    m_context =
         this;
 
     m_heap =
-        p_client_descriptor->p_heap;
+        p_context_init_descriptor->p_heap;
 
     e_status =
         appl_status_ok;
@@ -156,7 +164,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_client::cleanup(void)
+    appl_context::cleanup(void)
 {
     enum appl_status
         e_status;
@@ -191,7 +199,7 @@ enum appl_status
 //
 //
 enum appl_status
-appl_client::destroy(void)
+appl_context::destroy(void)
 {
     enum appl_status
         e_status;
@@ -230,4 +238,4 @@ appl_client::destroy(void)
 
 } // destroy()
 
-/* end-of-file: appl_client.cpp */
+/* end-of-file: appl_context.cpp */

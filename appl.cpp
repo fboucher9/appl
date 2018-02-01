@@ -14,7 +14,7 @@ Description:
 
 #include "appl_object.h"
 
-#include "appl_client.h"
+#include "appl_context.h"
 
 #include "appl_options.h"
 
@@ -32,7 +32,7 @@ main(
         i_exit_code;
 
     struct appl_context_handle *
-        p_context;
+        p_context_handle;
 
     enum appl_status
         e_status;
@@ -52,23 +52,23 @@ main(
             &(
                 o_context_descriptor),
             &(
-                p_context));
+                p_context_handle));
 
     if (
         appl_status_ok
         == e_status)
     {
         /* Create options */
-        class appl_client * const
-            p_client =
-            reinterpret_cast<class appl_client *>(
-                p_context);
+        class appl_context * const
+            p_context =
+            reinterpret_cast<class appl_context *>(
+                p_context_handle);
 
         struct appl_options_descriptor
             o_options_descriptor;
 
         e_status =
-            p_client->m_options->query(
+            p_context->m_options->query(
                 &(
                     o_options_descriptor));
 
@@ -82,7 +82,7 @@ main(
 
             e_status =
                 appl_main(
-                    p_context,
+                    p_context_handle,
                     &(
                         o_options_descriptor),
                     &(
@@ -96,7 +96,7 @@ main(
 
         appl_object_destroy(
             &(
-                p_context->o_object_handle));
+                p_context_handle->o_object_handle));
     }
     else
     {

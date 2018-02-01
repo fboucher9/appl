@@ -4,11 +4,11 @@
 
 */
 
-#if defined(INC_APPL_CLIENT_H)
-#error include appl_client.h once
-#endif /* #if defined(INC_APPL_CLIENT_H) */
+#if defined(INC_APPL_CONTEXT_H)
+#error include appl_context.h once
+#endif /* #if defined(INC_APPL_CONTEXT_H) */
 
-#define INC_APPL_CLIENT_H
+#define INC_APPL_CONTEXT_H
 
 struct appl_context_descriptor;
 
@@ -16,7 +16,7 @@ struct appl_context_descriptor;
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
 
-class appl_client;
+class appl_context;
 
 class appl_heap;
 
@@ -24,27 +24,20 @@ class appl_options;
 
 class appl_thread_mgr;
 
-struct appl_client_descriptor
-{
-    class appl_heap *
-        p_heap;
-
-}; /* struct appl_client_descriptor */
-
 //
 //
 //
-class appl_client : public appl_object
+class appl_context : public appl_object
 {
     public:
 
         static
         enum appl_status
             create_instance(
-                struct appl_client_descriptor const * const
-                    p_client_descriptor,
-                class appl_client * * const
-                    r_client);
+                class appl_heap * const
+                    p_heap,
+                class appl_context * * const
+                    r_context);
 
         virtual
         enum appl_status
@@ -61,10 +54,10 @@ class appl_client : public appl_object
 
     protected:
 
-        appl_client();
+        appl_context();
 
         virtual
-        ~appl_client();
+        ~appl_context();
 
         virtual
         enum appl_status
@@ -78,12 +71,12 @@ class appl_client : public appl_object
 
     private:
 
-        appl_client(
-            class appl_client const & r);
+        appl_context(
+            class appl_context const & r);
 
-        class appl_client &
+        class appl_context &
             operator =(
-                class appl_client const & r);
+                class appl_context const & r);
 
         static
         void
@@ -91,5 +84,5 @@ class appl_client : public appl_object
                 void * const
                     p_placement);
 
-}; // class appl_client
+}; // class appl_context
 

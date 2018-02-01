@@ -22,7 +22,7 @@ Description:
 #error include appl_object.h before
 #endif /* #if !defined(INC_APPL_OBJECT_H) */
 
-class appl_client;
+class appl_context;
 
 //
 //

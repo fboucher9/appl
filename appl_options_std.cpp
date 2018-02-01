@@ -14,7 +14,7 @@
 
 #include "appl_options_std.h"
 
-#include "appl_client.h"
+#include "appl_context.h"
 
 #include "appl_heap.h"
 
@@ -23,8 +23,8 @@
 //
 enum appl_status
 appl_options_std::create_instance(
-    class appl_client * const
-        p_client,
+    class appl_context * const
+        p_context,
     struct appl_options_std_descriptor const * const
         p_options_std_descriptor,
     class appl_options * * const
@@ -38,7 +38,7 @@ appl_options_std::create_instance(
 
     e_status =
         appl_object::create_instance(
-            p_client,
+            p_context,
             sizeof(
                 class appl_options_std),
             &(
@@ -111,7 +111,7 @@ appl_options_std::init(
                 struct appl_buf));
 
     e_status =
-        m_client->m_heap->alloc_memory(
+        m_context->m_heap->alloc_memory(
             &(
                 m_placement_buf),
             i_placement_length);
@@ -158,7 +158,7 @@ appl_options_std::cleanup(void)
     enum appl_status
         e_status;
 
-    m_client->m_heap->free_memory(
+    m_context->m_heap->free_memory(
         &(
             m_placement_buf));
 

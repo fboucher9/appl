@@ -24,7 +24,7 @@ appl_thread_test_cb(
 enum appl_status
 appl_main(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     struct appl_options_descriptor const * const
         p_options_descriptor,
     int * const
@@ -77,11 +77,11 @@ appl_main(
                 appl_thread_test_cb);
 
         o_thread_descriptor.p_context =
-            p_context;
+            p_context_handle;
 
         e_status =
             appl_thread_create(
-                p_context,
+                p_context_handle,
                 &(
                     o_thread_descriptor),
                 &(

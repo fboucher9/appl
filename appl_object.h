@@ -19,7 +19,7 @@
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
 
-class appl_client;
+class appl_context;
 
 class appl_object;
 
@@ -33,8 +33,8 @@ class appl_object
         static
         enum appl_status
             create_instance(
-                class appl_client * const
-                    p_client,
+                class appl_context * const
+                    p_context,
                 unsigned long int const
                     i_placement_length,
                 void (*p_new)(
@@ -48,8 +48,8 @@ class appl_object
         static
         enum appl_status
             init_instance(
-                class appl_client * const
-                    p_client,
+                class appl_context * const
+                    p_context,
                 void * const
                     p_placement,
                 void (*p_new)(
@@ -66,8 +66,8 @@ class appl_object
 
     protected:
 
-        class appl_client *
-            m_client;
+        class appl_context *
+            m_context;
 
         appl_object();
 

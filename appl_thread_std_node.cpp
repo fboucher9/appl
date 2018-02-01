@@ -23,8 +23,8 @@
 //
 enum appl_status
     appl_thread_std_node::create_instance(
-        class appl_client * const
-            p_client,
+        class appl_context * const
+            p_context,
         struct appl_thread_descriptor const * const
             p_thread_descriptor,
         class appl_thread_node * * const
@@ -38,7 +38,7 @@ enum appl_status
 
     e_status =
         appl_object::create_instance(
-            p_client,
+            p_context,
             static_cast<unsigned long int>(
                 sizeof(
                     class appl_thread_std_node)),

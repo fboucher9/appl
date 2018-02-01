@@ -30,7 +30,7 @@ extern "C" {
 enum appl_status
 appl_thread_create(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     struct appl_thread_descriptor const * const
         p_thread_descriptor,
     struct appl_thread_handle * * const

@@ -42,7 +42,7 @@ enum appl_status
 
         e_status =
             appl_object::init_instance(
-                static_cast<class appl_client *>(
+                static_cast<class appl_context *>(
                     0),
                 p_placement,
                 &(

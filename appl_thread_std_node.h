@@ -26,7 +26,7 @@ Description:
 #error include appl_thread_node.h before
 #endif /* #if !defined(INC_APPL_THREAD_NODE_H) */
 
-class appl_client;
+class appl_context;
 
 struct appl_thread_descriptor;
 
@@ -40,8 +40,8 @@ class appl_thread_std_node : public appl_thread_node
         static
         enum appl_status
             create_instance(
-                class appl_client * const
-                    p_client,
+                class appl_context * const
+                    p_context,
                 struct appl_thread_descriptor const * const
                     p_thread_descriptor,
                 class appl_thread_node * * const

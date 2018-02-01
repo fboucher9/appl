@@ -35,7 +35,7 @@ APPL_TEST_OBJS = \
     $(APPL_DST)appl.o \
     $(APPL_DST)appl_object.o \
     $(APPL_DST)appl_object_handle.o \
-    $(APPL_DST)appl_client.o \
+    $(APPL_DST)appl_context.o \
     $(APPL_DST)appl_context_handle.o \
     $(APPL_DST)appl_heap.o \
     $(APPL_DST)appl_heap_std.o \

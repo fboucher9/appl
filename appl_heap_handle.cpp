@@ -22,14 +22,14 @@
 enum appl_status
 appl_heap_alloc(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     struct appl_buf * const
         p_buf,
     unsigned long int const
         i_length)
 {
     static_cast<void>(
-        p_context);
+        p_context_handle);
     static_cast<void>(
         p_buf);
     static_cast<void>(
@@ -44,12 +44,12 @@ appl_heap_alloc(
 enum appl_status
 appl_heap_free(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     struct appl_buf * const
         p_buf)
 {
     static_cast<void>(
-        p_context);
+        p_context_handle);
     static_cast<void>(
         p_buf);
     return
@@ -62,14 +62,14 @@ appl_heap_free(
 enum appl_status
 appl_heap_realloc(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     struct appl_buf * const
         p_buf,
     unsigned long int const
         i_length)
 {
     static_cast<void>(
-        p_context);
+        p_context_handle);
     static_cast<void>(
         p_buf);
     static_cast<void>(

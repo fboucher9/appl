@@ -16,7 +16,7 @@
 
 #include "appl_object.h"
 
-#include "appl_client.h"
+#include "appl_context.h"
 
 #include "appl_heap.h"
 
@@ -33,8 +33,8 @@
 static
 enum appl_status
 appl_context_init_options(
-    class appl_client * const
-        p_client,
+    class appl_context * const
+        p_context,
     struct appl_context_descriptor const * const
         p_context_descriptor)
 {
@@ -55,7 +55,7 @@ appl_context_init_options(
 
     e_status =
         appl_options_std::create_instance(
-            p_client,
+            p_context,
             &(
                 o_options_std_descriptor),
             &(
@@ -64,7 +64,7 @@ appl_context_init_options(
     if (
         appl_status_ok == e_status)
     {
-        p_client->m_options =
+        p_context->m_options =
             p_options;
 
     }
@@ -80,8 +80,8 @@ appl_context_init_options(
 static
 enum appl_status
 appl_context_init_thread_mgr(
-    class appl_client * const
-        p_client)
+    class appl_context * const
+        p_context)
 {
     enum appl_status
         e_status;
@@ -91,14 +91,14 @@ appl_context_init_thread_mgr(
 
     e_status =
         appl_thread_std_mgr::create_instance(
-            p_client,
+            p_context,
             &(
                 p_thread_mgr));
 
     if (
         appl_status_ok == e_status)
     {
-        p_client->m_thread_mgr =
+        p_context->m_thread_mgr =
             p_thread_mgr;
     }
 
@@ -132,59 +132,52 @@ appl_context_create(
         appl_status_ok
         == e_status)
     {
-        class appl_client *
-            p_client;
-
-        struct appl_client_descriptor
-            o_client_descriptor;
-
-        o_client_descriptor.p_heap =
-            p_heap;
+        class appl_context *
+            p_context;
 
         e_status =
-            appl_client::create_instance(
+            appl_context::create_instance(
+                p_heap,
                 &(
-                    o_client_descriptor),
-                &(
-                    p_client));
+                    p_context));
 
         if (
             appl_status_ok == e_status)
         {
-            // unreference heap, it now belongs to client
+            // unreference heap, it now belongs to context
 
             // create the options
             e_status =
                 appl_context_init_options(
-                    p_client,
+                    p_context,
                     p_context_descriptor);
 
             if (
                 appl_status_ok == e_status)
             {
-                // unreference options, it now belongs to client
+                // unreference options, it now belongs to context
 
                 // create the thread manager
                 e_status =
                     appl_context_init_thread_mgr(
-                        p_client);
+                        p_context);
 
                 if (
                     appl_status_ok == e_status)
                 {
-                    // unreference thread manager, it now belongs to client
+                    // unreference thread manager, it now belongs to context
 
                     *(
                         r_context_handle) =
                         reinterpret_cast<struct appl_context_handle *>(
-                            p_client);
+                            p_context);
                 }
             }
 
             if (
                 appl_status_ok != e_status)
             {
-                p_client->destroy();
+                p_context->destroy();
             }
         }
         else

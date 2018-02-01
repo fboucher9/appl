@@ -29,8 +29,8 @@ class appl_thread_std_mgr :
         static
         enum appl_status
             create_instance(
-                class appl_client * const
-                    p_client,
+                class appl_context * const
+                    p_context,
                 class appl_thread_mgr * * const
                     r_thread_mgr);
 
@@ -59,8 +59,8 @@ class appl_thread_std_mgr :
         virtual
         enum appl_status
             create_node(
-                class appl_client * const
-                    p_client,
+                class appl_context * const
+                    p_context,
                 struct appl_thread_descriptor const * const
                     p_thread_descriptor,
                 class appl_thread_node * * const

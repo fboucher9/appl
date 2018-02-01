@@ -40,8 +40,8 @@ class appl_options_std : public appl_options
         static
         enum appl_status
         create_instance(
-            class appl_client * const
-                p_client,
+            class appl_context * const
+                p_context,
             struct appl_options_std_descriptor const * const
                 p_options_std_descriptor,
             class appl_options * * const

@@ -8,7 +8,7 @@
 
 #include "appl_object.h"
 
-#include "appl_client.h"
+#include "appl_context.h"
 
 #include "appl_heap.h"
 
@@ -17,8 +17,8 @@
 //
 enum appl_status
     appl_object::create_instance(
-        class appl_client * const
-            p_client,
+        class appl_context * const
+            p_context,
         unsigned long int const
             i_placement_length,
         void (*p_new)(
@@ -36,7 +36,7 @@ enum appl_status
         p_heap;
 
     p_heap =
-        p_client->m_heap;
+        p_context->m_heap;
 
     struct appl_buf
         o_placement;
@@ -52,7 +52,7 @@ enum appl_status
     {
         e_status =
             appl_object::init_instance(
-                p_client,
+                p_context,
                 o_placement.o_min.p_void,
                 p_new,
                 p_descriptor,
@@ -77,8 +77,8 @@ enum appl_status
 //
 enum appl_status
     appl_object::init_instance(
-        class appl_client * const
-            p_client,
+        class appl_context * const
+            p_context,
         void * const
             p_placement,
         void (*p_new)(
@@ -102,8 +102,8 @@ enum appl_status
     (*p_new)(
         p_placement);
 
-    p_object->m_client =
-        p_client;
+    p_object->m_context =
+        p_context;
 
     e_status =
         p_object->init(
@@ -138,11 +138,11 @@ enum appl_status
     if (
         appl_status_ok == e_status)
     {
-        class appl_client *
-            p_client;
+        class appl_context *
+            p_context;
 
-        p_client =
-            m_client;
+        p_context =
+            m_context;
 
         delete
             this;
@@ -152,7 +152,7 @@ enum appl_status
             p_heap;
 
         p_heap =
-            p_client->m_heap;
+            p_context->m_heap;
 
         struct appl_buf
             o_placement;
@@ -177,7 +177,7 @@ enum appl_status
 //
 //
 appl_object::appl_object() :
-    m_client()
+    m_context()
 {
 }
 

@@ -14,7 +14,7 @@
 
 #include "appl_object.h"
 
-#include "appl_client.h"
+#include "appl_context.h"
 
 #include "appl_thread_mgr.h"
 
@@ -26,7 +26,7 @@
 enum appl_status
 appl_thread_create(
     struct appl_context_handle * const
-        p_context,
+        p_context_handle,
     struct appl_thread_descriptor const * const
         p_thread_descriptor,
     struct appl_thread_handle * * const
@@ -35,25 +35,25 @@ appl_thread_create(
     enum appl_status
         e_status;
 
-    class appl_client *
-        p_client;
+    class appl_context *
+        p_context;
 
-    p_client =
-        reinterpret_cast<class appl_client *>(
-            p_context);
+    p_context =
+        reinterpret_cast<class appl_context *>(
+            p_context_handle);
 
     class appl_thread_mgr *
         p_thread_mgr;
 
     p_thread_mgr =
-        p_client->m_thread_mgr;
+        p_context->m_thread_mgr;
 
     class appl_thread_node *
         p_thread_node;
 
     e_status =
         p_thread_mgr->create_node(
-            p_client,
+            p_context,
             p_thread_descriptor,
             &(
                 p_thread_node));
