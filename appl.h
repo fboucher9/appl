@@ -54,10 +54,6 @@ Description:
 
 #endif /* #if defined(APPL_CONFIG_WITH_HEAP) */
 
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
-
 #if defined(APPL_CONFIG_WITH_FILE)
 
 enum appl_file_type
@@ -104,6 +100,10 @@ struct appl_file_handle
 
 };
 
+#if defined(__cplusplus)
+extern "C" {
+#endif /* #if defined(__cplusplus) */
+
 enum appl_status
 appl_file_create(
     struct appl_context_handle * const
@@ -135,6 +135,10 @@ appl_file_write(
     unsigned long int * const
         p_actual_length);
 
+#if defined(__cplusplus)
+} /* extern "C" */
+#endif /* #if defined(__cplusplus) */
+
 #endif /* #if defined(APPL_CONFIG_WITH_FILE) */
 
 #if defined(APPL_CONFIG_WITH_THREAD)
@@ -145,41 +149,7 @@ appl_file_write(
 
 #include "appl_event_handle.h"
 
-/* mutex */
-struct appl_mutex_handle;
-
-struct appl_mutex_descriptor
-{
-    void *
-        p_dummy;
-
-};
-
-struct appl_mutex_handle
-{
-    struct appl_object_handle
-        o_object_handle;
-
-};
-
-enum appl_status
-appl_mutex_create(
-    struct appl_context_handle * const
-        p_context_handle,
-    struct appl_mutex_descriptor const * const
-        p_mutex_descriptor,
-    struct appl_mutex_handle * * const
-        r_mutex_handle);
-
-enum appl_status
-appl_mutex_lock(
-    struct appl_mutex_handle * const
-        p_mutex_handle);
-
-enum appl_status
-appl_mutex_unlock(
-    struct appl_mutex_handle * const
-        p_mutex_handle);
+#include "appl_mutex_handle.h"
 
 #endif /* #if defined(APPL_CONFIG_WITH_THREAD) */
 
@@ -202,6 +172,10 @@ struct appl_socket_address_handle
 
 };
 
+#if defined(__cplusplus)
+extern "C" {
+#endif /* #if defined(__cplusplus) */
+
 enum appl_status
 appl_socket_address_create(
     struct appl_context_handle * const
@@ -210,6 +184,10 @@ appl_socket_address_create(
         p_socket_address_descriptor,
     struct appl_socket_address_handle * * const
         r_socket_address_handle);
+
+#if defined(__cplusplus)
+} /* extern "C" */
+#endif /* #if defined(__cplusplus) */
 
 /* tcp socket */
 struct appl_tcp_socket_handle;
@@ -228,6 +206,10 @@ struct appl_tcp_socket_handle
 
 };
 
+#if defined(__cplusplus)
+extern "C" {
+#endif /* #if defined(__cplusplus) */
+
 enum appl_status
 appl_tcp_socket_create(
     struct appl_context_handle * const
@@ -236,6 +218,10 @@ appl_tcp_socket_create(
         p_tcp_socket_descriptor,
     struct appl_tcp_socket_handle * * const
         r_tcp_socket_handle);
+
+#if defined(__cplusplus)
+} /* extern "C" */
+#endif /* #if defined(__cplusplus) */
 
 /* udp socket */
 struct appl_udp_socket_handle;
@@ -254,6 +240,10 @@ struct appl_udp_socket_handle
 
 };
 
+#if defined(__cplusplus)
+extern "C" {
+#endif /* #if defined(__cplusplus) */
+
 enum appl_status
 appl_udp_socket_create(
     struct appl_context_handle * const
@@ -263,9 +253,17 @@ appl_udp_socket_create(
     struct appl_udp_socket * * const
         p_udp_socket);
 
+#if defined(__cplusplus)
+} /* extern "C" */
+#endif /* #if defined(__cplusplus) */
+
 #endif /* #if defined(APPL_CONFIG_WITH_SOCKET) */
 
 #if defined(APPL_CONFIG_WITH_CLOCK)
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* #if defined(__cplusplus) */
 
 enum appl_status
 appl_clock_read(
@@ -285,28 +283,19 @@ appl_clock_delay(
     unsigned long int const
         i_time_count);
 
+#if defined(__cplusplus)
+} /* extern "C" */
+#endif /* #if defined(__cplusplus) */
+
 #endif /* #if defined(APPL_CONFIG_WITH_CLOCK) */
 
 #if defined(APPL_CONFIG_WITH_MAIN)
 
-/*
+#include "appl_options_descriptor.h"
 
-Structure: appl_options_descriptor
-
-Description:
-
-    Descriptor for initialization of appl_options object.
-
-*/
-struct appl_options_descriptor
-{
-    struct appl_buf *
-        p_buf_min;
-
-    struct appl_buf *
-        p_buf_max;
-
-}; /* struct appl_options_descriptor */
+#if defined(__cplusplus)
+extern "C" {
+#endif /* #if defined(__cplusplus) */
 
 /* extern */
 enum appl_status
@@ -318,10 +307,10 @@ appl_main(
     int * const
         r_exit_code);
 
-#endif /* #if defined(APPL_CONFIG_WITH_MAIN) */
-
 #if defined(__cplusplus)
 } /* extern "C" */
 #endif /* #if defined(__cplusplus) */
+
+#endif /* #if defined(APPL_CONFIG_WITH_MAIN) */
 
 /* end-of-file: appl.h */

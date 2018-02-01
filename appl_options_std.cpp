@@ -6,7 +6,11 @@
 
 #include <string.h>
 
-#include "appl.h"
+#include "appl_status.h"
+
+#include "appl_buf.h"
+
+#include "appl_types.h"
 
 #include "appl_object.h"
 
@@ -17,6 +21,8 @@
 #include "appl_context.h"
 
 #include "appl_heap.h"
+
+#include "appl_options_descriptor.h"
 
 //
 //

@@ -33,6 +33,7 @@ endif
 # List of object files required to link test application
 APPL_TEST_OBJS = \
     $(APPL_DST)appl.o \
+    $(APPL_DST)appl_list.o \
     $(APPL_DST)appl_object.o \
     $(APPL_DST)appl_object_handle.o \
     $(APPL_DST)appl_context.o \
