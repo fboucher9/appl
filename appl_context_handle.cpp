@@ -22,6 +22,10 @@
 
 #include "appl_heap_std.h"
 
+#include "appl_debug.h"
+
+#include "appl_debug_std.h"
+
 #include "appl_options.h"
 
 #include "appl_options_std.h"
@@ -29,6 +33,36 @@
 #include "appl_thread_mgr.h"
 
 #include "appl_thread_std_mgr.h"
+
+static
+enum appl_status
+appl_context_init_debug(
+    class appl_context * const
+        p_context)
+{
+    enum appl_status
+        e_status;
+
+    class appl_debug *
+        p_debug;
+
+    e_status =
+        appl_debug_std::create_instance(
+            p_context,
+            &(
+                p_debug));
+
+    if (
+        appl_status_ok == e_status)
+    {
+        p_context->m_debug =
+            p_debug;
+    }
+
+    return
+        e_status;
+
+} /* appl_context_init_debug() */
 
 static
 enum appl_status
@@ -146,31 +180,40 @@ appl_context_create(
         {
             // unreference heap, it now belongs to context
 
-            // create the options
+            // create the debug interface
             e_status =
-                appl_context_init_options(
-                    p_context,
-                    p_context_descriptor);
+                appl_context_init_debug(
+                    p_context);
 
             if (
                 appl_status_ok == e_status)
             {
-                // unreference options, it now belongs to context
-
-                // create the thread manager
+                // create the options
                 e_status =
-                    appl_context_init_thread_mgr(
-                        p_context);
+                    appl_context_init_options(
+                        p_context,
+                        p_context_descriptor);
 
                 if (
                     appl_status_ok == e_status)
                 {
-                    // unreference thread manager, it now belongs to context
+                    // unreference options, it now belongs to context
 
-                    *(
-                        r_context_handle) =
-                        reinterpret_cast<struct appl_context_handle *>(
+                    // create the thread manager
+                    e_status =
+                        appl_context_init_thread_mgr(
                             p_context);
+
+                    if (
+                        appl_status_ok == e_status)
+                    {
+                        // unreference thread manager, it now belongs to context
+
+                        *(
+                            r_context_handle) =
+                            reinterpret_cast<struct appl_context_handle *>(
+                                p_context);
+                    }
                 }
             }
 

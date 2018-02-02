@@ -16,6 +16,8 @@
 
 #include "appl_heap.h"
 
+#include "appl_debug.h"
+
 #include "appl_options.h"
 
 #include "appl_thread_mgr.h"
@@ -60,9 +62,6 @@ enum appl_status
     if (
         appl_status_ok == e_status)
     {
-        class appl_object *
-            p_object;
-
         e_status =
             appl_object::init_instance(
                 static_cast<class appl_context *>(
@@ -73,23 +72,8 @@ enum appl_status
                 static_cast<void const *>(
                     &(
                         o_init_descriptor)),
-                &(
-                    p_object));
-
-        if (
-            appl_status_ok == e_status)
-        {
-            class appl_context *
-                p_context;
-
-            p_context =
-                reinterpret_cast<class appl_context *>(
-                    p_object);
-
-            *(
-                r_context) =
-                p_context;
-        }
+                reinterpret_cast<class appl_object * *>(
+                    r_context));
 
         if (
             appl_status_ok != e_status)
@@ -111,6 +95,7 @@ enum appl_status
 appl_context::appl_context() :
     appl_object(),
     m_heap(),
+    m_debug(),
     m_options(),
     m_thread_mgr()
 {
@@ -188,6 +173,14 @@ enum appl_status
         m_options->destroy();
 
         m_options =
+            0;
+    }
+
+    if (m_debug)
+    {
+        m_debug->destroy();
+
+        m_debug =
             0;
     }
 

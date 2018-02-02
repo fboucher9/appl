@@ -33,11 +33,15 @@ endif
 # List of object files required to link test application
 APPL_TEST_OBJS = \
     $(APPL_DST)appl.o \
+    $(APPL_DST)appl_buf.o \
     $(APPL_DST)appl_list.o \
     $(APPL_DST)appl_object.o \
     $(APPL_DST)appl_object_handle.o \
     $(APPL_DST)appl_context.o \
     $(APPL_DST)appl_context_handle.o \
+    $(APPL_DST)appl_debug.o \
+    $(APPL_DST)appl_debug_std.o \
+    $(APPL_DST)appl_debug_handle.o \
     $(APPL_DST)appl_heap.o \
     $(APPL_DST)appl_heap_std.o \
     $(APPL_DST)appl_heap_handle.o \
@@ -149,13 +153,13 @@ $(APPL_DST)test_appl.exe : $(APPL_TEST_OBJS)
 # Compile of C source files
 $(APPL_DST)%.o : $(APPL_SRC)%.c
 	@echo compiling $@
-	@echo -c -o $@ $(APPL_CFLAGS) $< > $@.cmd
+	@echo -c -o $@ $(APPL_CFLAGS) -MT $@ -MMD -MP -MF $@.d $< > $@.cmd
 	@$(APPL_CC) @$@.cmd
 
 # Compile of C++ source files
 $(APPL_DST)%.o : $(APPL_SRC)%.cpp
 	@echo compiling $@
-	@echo -c -o $@ $(APPL_CXXFLAGS) $< > $@.cmd
+	@echo -c -o $@ $(APPL_CXXFLAGS) -MT $@ -MMD -MP -MF $@.d $< > $@.cmd
 	@$(APPL_CXX) @$@.cmd
 
 # Dependency on makefile and appl_project.mak
@@ -170,5 +174,8 @@ clean: appl_clean
 appl_clean:
 	-rm $(APPL_DST)*.o
 	-rm $(APPL_DST)*.cmd
+
+# Include automatic header file dependency files
+-include $(APPL_DST)*.d
 
 # end-of-file: appl_project.mak

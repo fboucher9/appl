@@ -27,40 +27,17 @@ enum appl_status
         class appl_thread_mgr * * const
             r_thread_mgr)
 {
-    enum appl_status
-        e_status;
-
-    class appl_object *
-        p_object;
-
-    e_status =
+    return
         appl_object::create_instance(
             p_context,
-            sizeof(
-                class appl_thread_std_mgr),
+            static_cast<unsigned long int>(
+                sizeof(
+                    class appl_thread_std_mgr)),
             &(
                 appl_thread_std_mgr::placement_new),
             0,
-            &(
-                p_object));
-
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        class appl_thread_std_mgr *
-            p_thread_std_mgr;
-
-        p_thread_std_mgr =
-            reinterpret_cast<class appl_thread_std_mgr *>(
-                p_object);
-
-        *(r_thread_mgr) =
-            p_thread_std_mgr;
-    }
-
-    return
-        e_status;
+            reinterpret_cast<class appl_object * *>(
+                r_thread_mgr));
 
 } // create_instance()
 

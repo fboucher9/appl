@@ -150,6 +150,74 @@ appl_main(
         }
     }
 
+    if (0)
+    {
+        appl_debug_break(
+            p_context_handle);
+    }
+
+    if (1)
+    {
+        /* test read */
+        if (1)
+        {
+            static unsigned char g_data[] =
+            {
+                1,
+                2,
+                3,
+                4,
+                5
+            };
+
+            struct appl_buf
+                o_buf;
+
+            unsigned char
+                c_value;
+
+            o_buf.o_min.pc_uchar =
+                g_data;
+
+            o_buf.o_max.pc_uchar =
+                g_data + sizeof(g_data);
+
+            while (
+                appl_status_ok
+                == appl_buf_read(
+                    &(
+                        o_buf),
+                    &(
+                        c_value)))
+            {
+                printf(
+                    "%u\n",
+                    (unsigned int)(
+                        c_value));
+            }
+        }
+
+        /* test write */
+        if (1)
+        {
+        }
+
+        /* test copy */
+        if (1)
+        {
+        }
+
+        /* test compare */
+        if (1)
+        {
+        }
+
+        /* test case compare */
+        if (1)
+        {
+        }
+    }
+
     *(
         p_exit_code) =
         0;
