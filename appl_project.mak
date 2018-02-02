@@ -7,7 +7,7 @@ endif
 
 # Location of object files
 ifndef APPL_DST
-    APPL_DST =
+    APPL_DST = .obj/
 endif
 
 # Select a C compiler program
@@ -144,20 +144,24 @@ all : appl_test
 .PHONY: appl_test
 appl_test: $(APPL_DST)test_appl.exe
 
+$(APPL_DST) :
+	@echo create $(APPL_DST) folder
+	-@mkdir -p $(APPL_DST)
+
 # Link of test application
-$(APPL_DST)test_appl.exe : $(APPL_TEST_OBJS)
+$(APPL_DST)test_appl.exe : $(APPL_TEST_OBJS) | $(APPL_DST)
 	@echo linking $(APPL_DST)test_appl.exe
 	@echo -o $(APPL_DST)test_appl.exe $(APPL_CXXFLAGS) $(APPL_TEST_OBJS) $(APPL_TEST_LIBS) > $(APPL_DST)test_appl.exe.cmd
 	@$(APPL_CXX) @$(APPL_DST)test_appl.exe.cmd
 
 # Compile of C source files
-$(APPL_DST)%.o : $(APPL_SRC)%.c
+$(APPL_DST)%.o : $(APPL_SRC)%.c | $(APPL_DST)
 	@echo compiling $@
 	@echo -c -o $@ $(APPL_CFLAGS) -MT $@ -MMD -MP -MF $@.d $< > $@.cmd
 	@$(APPL_CC) @$@.cmd
 
 # Compile of C++ source files
-$(APPL_DST)%.o : $(APPL_SRC)%.cpp
+$(APPL_DST)%.o : $(APPL_SRC)%.cpp | $(APPL_DST)
 	@echo compiling $@
 	@echo -c -o $@ $(APPL_CXXFLAGS) -MT $@ -MMD -MP -MF $@.d $< > $@.cmd
 	@$(APPL_CXX) @$@.cmd
