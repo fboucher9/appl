@@ -38,6 +38,7 @@ APPL_TEST_OBJS = \
     $(APPL_DST)appl_object.o \
     $(APPL_DST)appl_object_handle.o \
     $(APPL_DST)appl_context.o \
+    $(APPL_DST)appl_context_std.o \
     $(APPL_DST)appl_context_handle.o \
     $(APPL_DST)appl_debug.o \
     $(APPL_DST)appl_debug_std.o \

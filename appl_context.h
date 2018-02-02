@@ -33,18 +33,6 @@ class appl_context : public appl_object
 {
     public:
 
-        static
-        enum appl_status
-            create_instance(
-                class appl_heap * const
-                    p_heap,
-                class appl_context * * const
-                    r_context);
-
-        virtual
-        enum appl_status
-            destroy(void);
-
         class appl_heap *
             m_heap;
 
@@ -73,16 +61,6 @@ class appl_context : public appl_object
         virtual
         ~appl_context();
 
-        virtual
-        enum appl_status
-            init(
-                void const * const
-                    p_descriptor);
-
-        virtual
-        enum appl_status
-            cleanup(void);
-
     private:
 
         appl_context(
@@ -92,11 +70,6 @@ class appl_context : public appl_object
             operator =(
                 class appl_context const & r);
 
-        static
-        void
-            placement_new(
-                void * const
-                    p_placement);
-
 }; // class appl_context
 
+/* end-of-file: appl_context.h */
