@@ -20,6 +20,8 @@ class appl_context;
 
 class appl_heap;
 
+class appl_debug;
+
 class appl_options;
 
 class appl_thread_mgr;
@@ -45,6 +47,9 @@ class appl_context : public appl_object
 
         class appl_heap *
             m_heap;
+
+        class appl_debug *
+            m_debug;
 
         class appl_options *
             m_options;

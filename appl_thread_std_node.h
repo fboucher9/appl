@@ -14,13 +14,11 @@ Description:
 
 #define INC_APPL_THREAD_STD_NODE_H
 
+struct appl_thread_descriptor;
+
 #if !defined(__cplusplus)
 #error use C++ compiler
 #endif /* #if !defined(__cplusplus) */
-
-#if !defined(INC_APPL_OBJECT_H)
-#error include appl_object.h before
-#endif /* #if !defined(INC_APPL_OBJECT_H) */
 
 #if !defined(INC_APPL_THREAD_NODE_H)
 #error include appl_thread_node.h before
@@ -28,7 +26,7 @@ Description:
 
 class appl_context;
 
-struct appl_thread_descriptor;
+class appl_thread_std_node;
 
 //
 //

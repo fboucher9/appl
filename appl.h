@@ -48,6 +48,8 @@ Description:
 
 #include "appl_context_handle.h"
 
+#include "appl_debug_handle.h"
+
 #if defined(APPL_CONFIG_WITH_HEAP)
 
 #include "appl_heap_handle.h"

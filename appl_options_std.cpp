@@ -36,36 +36,17 @@ appl_options_std::create_instance(
     class appl_options * * const
         r_options_std)
 {
-    enum appl_status
-        e_status;
-
-    class appl_object *
-        p_object;
-
-    e_status =
+    return
         appl_object::create_instance(
             p_context,
-            sizeof(
-                class appl_options_std),
+            static_cast<unsigned long int>(
+                sizeof(
+                    class appl_options_std)),
             &(
                 appl_options_std::placement_new),
             p_options_std_descriptor,
-            &(
-                p_object));
-
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        *(
-            r_options_std) =
-            static_cast<class appl_options *>(
-                reinterpret_cast<class appl_options_std *>(
-                    p_object));
-    }
-
-    return
-        e_status;
+            reinterpret_cast<class appl_object * *>(
+                r_options_std));
 
 } // create_instance()
 

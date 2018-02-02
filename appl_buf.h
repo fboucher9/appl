@@ -69,8 +69,34 @@ appl_buf_write(
         c_value);
 
 /* buf copy */
+enum appl_status
+appl_buf_copy(
+    struct appl_buf * const
+        p_buf_destination,
+    struct appl_buf const * const
+        p_buf_source,
+    unsigned long int * const
+        p_count);
 
 /* buf compare */
+enum appl_status
+appl_buf_compare(
+    struct appl_buf const * const
+        p_buf_left,
+    struct appl_buf const * const
+        p_buf_right,
+    signed int * const
+        p_result);
+
+/* buf compare */
+enum appl_status
+appl_buf_case_compare(
+    struct appl_buf const * const
+        p_buf_left,
+    struct appl_buf const * const
+        p_buf_right,
+    signed int * const
+        p_result);
 
 /* buf case compare */
 
