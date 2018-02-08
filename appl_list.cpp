@@ -2,6 +2,12 @@
 
 /*
 
+Module: appl_list.cpp
+
+Description:
+
+    Linked list
+
 */
 
 #include "appl_list.h"
@@ -16,7 +22,7 @@ Description:
 
 Parameters:
 
-    p_node
+    p_list
         Pointer to element to initialize
 
 Returns: None.
@@ -29,10 +35,10 @@ appl_list_init(
     struct appl_list * const
         p_list)
 {
-    p_list->p_next =
+    p_list->o_next.pc_node =
         p_list;
 
-    p_list->p_prev =
+    p_list->o_prev.pc_node =
         p_list;
 
 } /* appl_list_init() */
@@ -70,18 +76,146 @@ appl_list_join(
         p_list_right)
 {
     /* AB(C) - (D)EF > ABCDEF */
-    p_list_left->p_next->p_prev =
-        p_list_right->p_prev;
+    p_list_left->o_next.p_node->o_prev.pc_node =
+        p_list_right->o_prev.pc_node;
 
-    p_list_right->p_prev->p_next =
-        p_list_left->p_next;
+    p_list_right->o_prev.p_node->o_next.pc_node =
+        p_list_left->o_next.pc_node;
 
-    p_list_left->p_next =
+    p_list_left->o_next.pc_node =
         p_list_right;
 
-    p_list_right->p_prev =
+    p_list_right->o_prev.pc_node =
         p_list_left;
 
 } /* appl_list_join() */
+
+/*
+
+Function: appl_iterator_init
+
+Description:
+
+    Initialize iterator object by pointing to beginning and end of
+    a linked list.
+
+Parameters:
+
+    p_iterator
+        Pointer to iterator object to initialize
+
+    p_list
+        Pointer to header element of linked list
+
+Comments:
+
+    -   Once initialized, the iterator is ready to scan a linked list in
+        both directions using the appl_iterator_next and appl_iterator_prev
+        functions.
+
+    -   Application must call appl_iterator_next or appl_iterator_prev
+        before using the p_cur member.
+
+*/
+void
+appl_iterator_init(
+    struct appl_iterator * const
+        p_iterator,
+    struct appl_list const * const
+        p_list)
+{
+    p_iterator->o_cur.pc_node =
+        p_list;
+
+    p_iterator->o_end.pc_node =
+        p_list;
+
+} /* appl_iterator_init() */
+
+/*
+
+Function: appl_iterator_next
+
+Description:
+
+    Point to next element of linked list.
+
+Parameters:
+
+    p_iterator
+        Pointer to iterator object
+
+Return:
+
+    1 if p_cur points to a valid element, 0 if end of list has been reached.
+
+Comments:
+
+    -   On first call of this function after calling appl_iterator_init, the
+        iterator object will point to first element of linked list.  On
+        subsequent calls, the next elements will be used.
+
+*/
+char
+appl_iterator_next(
+    struct appl_iterator * const
+        p_iterator)
+{
+    char
+        b_result;
+
+    p_iterator->o_cur.pc_node =
+        p_iterator->o_cur.pc_node->o_next.pc_node;
+
+    b_result =
+        (p_iterator->o_cur.pc_node != p_iterator->o_end.pc_node);
+
+    return
+        b_result;
+
+} /* appl_iterator_next() */
+
+/*
+
+Function: appl_iterator_prev
+
+Description:
+
+    Point to previous element of linked list.
+
+Parameters:
+
+    p_iterator
+        Pointer to iterator object
+
+Return:
+
+    1 if p_cur points to a valid element, 0 if end of list has been reached.
+
+Comments:
+
+    -   On first call of this function after calling appl_iterator_init, the
+        iterator object will point to last element of linked list.  On
+        subsequent calls, the previous elements will be used.
+
+*/
+char
+appl_iterator_prev(
+    struct appl_iterator * const
+        p_iterator)
+{
+    char
+        b_result;
+
+    p_iterator->o_cur.pc_node =
+        p_iterator->o_cur.pc_node->o_prev.pc_node;
+
+    b_result =
+        (p_iterator->o_cur.pc_node != p_iterator->o_end.pc_node);
+
+    return
+        b_result;
+
+} /* appl_iterator_prev() */
 
 /* end-of-file: appl_list.cpp */
