@@ -26,9 +26,11 @@ Description:
 
 /* Configuration */
 
+#define APPL_CONFIG_WITH_DEBUG
+
 #define APPL_CONFIG_WITH_HEAP
 
-/* #define APPL_CONFIG_WITH_FILE */
+#define APPL_CONFIG_WITH_FILE
 
 #define APPL_CONFIG_WITH_THREAD
 
@@ -48,7 +50,11 @@ Description:
 
 #include "appl_context_handle.h"
 
+#if defined(APPL_CONFIG_WITH_DEBUG)
+
 #include "appl_debug_handle.h"
+
+#endif /* #if defined(APPL_CONFIG_WITH_DEBUG) */
 
 #if defined(APPL_CONFIG_WITH_HEAP)
 
@@ -58,88 +64,7 @@ Description:
 
 #if defined(APPL_CONFIG_WITH_FILE)
 
-enum appl_file_type
-{
-    appl_file_type_stdin = 1,
-
-    appl_file_type_stdout = 2,
-
-    appl_file_type_stderr = 3,
-
-    appl_file_type_disk = 4
-
-};
-
-enum appl_file_mode
-{
-    appl_file_mode_read = 1,
-
-    appl_file_mode_write = 2,
-
-    appl_file_mode_append = 3
-
-};
-
-struct appl_file;
-
-struct appl_file_descriptor
-{
-    struct appl_buf
-        o_name;
-
-    enum appl_file_type
-        e_type;
-
-    enum appl_file_mode
-        e_mode;
-
-}; /* struct appl_file_descriptor */
-
-struct appl_file_handle
-{
-    struct appl_object_handle
-        o_object_handle;
-
-};
-
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
-
-enum appl_status
-appl_file_create(
-    struct appl_context_handle * const
-        p_context_handle,
-    struct appl_file_descriptor const * const
-        p_file_descriptor,
-    struct appl_file * * const
-        p_file);
-
-enum appl_status
-appl_file_read(
-    struct appl_file * const
-        p_file,
-    unsigned char * const
-        p_buffer,
-    unsigned long int const
-        i_buffer_max_length,
-    unsigned long int * const
-        p_actual_length);
-
-enum appl_status
-appl_file_write(
-    struct appl_file * const
-        p_file,
-    unsigned char const * const
-        p_buffer,
-    unsigned long int const
-        i_buffer_max_length,
-    unsigned long int * const
-        p_actual_length);
-
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
+#include "appl_file_handle.h"
 
 #endif /* #if defined(APPL_CONFIG_WITH_FILE) */
 
