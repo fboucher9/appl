@@ -50,6 +50,74 @@ appl_test_thread_entry(
 
 } /* appl_test_thread_entry() */
 
+static
+void
+appl_test_file_stdout(
+    struct appl_context_handle * const
+        p_context_handle)
+{
+    struct appl_file_handle *
+        p_file_handle;
+
+    enum appl_status
+        e_status;
+
+    struct appl_file_descriptor
+        o_file_descriptor;
+
+    o_file_descriptor.o_name.o_min.p_void =
+        (void *)(
+            0);
+
+    o_file_descriptor.o_name.o_max.p_void =
+        (void *)(
+            0);
+
+    o_file_descriptor.e_type =
+        appl_file_type_stdout;
+
+    e_status =
+        appl_file_create(
+            p_context_handle,
+            &(
+                o_file_descriptor),
+            &(
+                p_file_handle));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        static unsigned char const g_msg[] =
+        {
+            's',
+            't',
+            'd',
+            'o',
+            'u',
+            't',
+            '\n'
+        };
+
+        unsigned long int
+            i_actual_len;
+
+        e_status =
+            appl_file_write(
+                p_file_handle,
+                g_msg,
+                sizeof(
+                    g_msg),
+                &(
+                    i_actual_len));
+
+        appl_object_destroy(
+            &(
+                p_file_handle->o_object_handle));
+    }
+
+}
+
 enum appl_status
 appl_main(
     struct appl_context_handle * const
@@ -216,6 +284,12 @@ appl_main(
         if (1)
         {
         }
+    }
+
+    if (1)
+    {
+        appl_test_file_stdout(
+            p_context_handle);
     }
 
     *(

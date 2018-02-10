@@ -53,8 +53,20 @@ class appl_file_std_node : public appl_file_node
 
     private:
 
+        void *
+            pv_padding[1u];
+
         int
             m_fd;
+
+        unsigned int
+            ui_padding[3u];
+
+        bool
+            m_close;
+
+        unsigned char
+            uc_padding[7u];
 
         appl_file_std_node(
             class appl_file_std_node const & r);
@@ -68,6 +80,36 @@ class appl_file_std_node : public appl_file_node
             placement_new(
                 void * const
                     p_placement);
+
+        virtual
+        enum appl_status
+            init(
+                void const * const
+                    p_descriptor);
+
+        virtual
+        enum appl_status
+            cleanup(void);
+
+        virtual
+        enum appl_status
+            v_read(
+                unsigned char * const
+                    p_buf,
+                unsigned long int const
+                    i_buf_len,
+                unsigned long int * const
+                    r_actual_len);
+
+        virtual
+        enum appl_status
+            v_write(
+                unsigned char const * const
+                    p_buf,
+                unsigned long int const
+                    i_buf_len,
+                unsigned long int * const
+                    r_actual_len);
 
 }; // class appl_file_std_node
 

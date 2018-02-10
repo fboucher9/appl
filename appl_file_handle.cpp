@@ -6,23 +6,11 @@
 
 #include "appl_status.h"
 
-#include "appl_buf.h"
-
-#include "appl_file_descriptor.h"
-
 #include "appl_object_handle.h"
 
 #include "appl_file_handle.h"
 
-#include "appl_types.h"
-
-#include "appl_object.h"
-
-#include "appl_context.h"
-
-#include "appl_file_mgr.h"
-
-#include "appl_file_node.h"
+#include "appl_file_service.h"
 
 /*
 
@@ -36,26 +24,11 @@ appl_file_create(
     struct appl_file_handle * * const
         r_file_handle)
 {
-    enum appl_status
-        e_status;
-
-    class appl_context * const
-        p_context =
-        appl_context::convert_handle(
-            p_context_handle);
-
-    class appl_file_mgr * const
-        p_file_mgr =
-        p_context->m_file_mgr;
-
-    e_status =
-        p_file_mgr->v_create_node(
-            p_file_descriptor,
-            reinterpret_cast<struct appl_file_node * *>(
-                r_file_handle));
-
     return
-        e_status;
+        appl_file_service::create_node(
+            p_context_handle,
+            p_file_descriptor,
+            r_file_handle);
 
 } /* appl_file_create() */
 
@@ -73,22 +46,12 @@ appl_file_read(
     unsigned long int * const
         p_actual_length)
 {
-    enum appl_status
-        e_status;
-
-    class appl_file_node * const
-        p_file_node =
-        appl_file_node::convert_handle(
-            p_file_handle);
-
-    e_status =
-        p_file_node->v_read(
+    return
+        appl_file_service::read_buffer(
+            p_file_handle,
             p_buffer,
             i_buffer_max_length,
             p_actual_length);
-
-    return
-        e_status;
 
 } /* appl_file_read() */
 
@@ -106,22 +69,12 @@ appl_file_write(
     unsigned long int * const
         p_actual_length)
 {
-    enum appl_status
-        e_status;
-
-    class appl_file_node * const
-        p_file_node =
-        appl_file_node::convert_handle(
-            p_file_handle);
-
-    e_status =
-        p_file_node->v_write(
+    return
+        appl_file_service::write_buffer(
+            p_file_handle,
             p_buffer,
             i_buffer_max_length,
             p_actual_length);
-
-    return
-        e_status;
 
 } /* appl_file_write() */
 

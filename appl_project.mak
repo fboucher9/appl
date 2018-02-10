@@ -44,6 +44,7 @@ APPL_TEST_OBJS = \
     $(APPL_DST)appl_debug_std.o \
     $(APPL_DST)appl_debug_handle.o \
     $(APPL_DST)appl_file_handle.o \
+    $(APPL_DST)appl_file_service.o \
     $(APPL_DST)appl_file_node.o \
     $(APPL_DST)appl_file_mgr.o \
     $(APPL_DST)appl_file_std_mgr.o \
