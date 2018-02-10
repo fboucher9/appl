@@ -14,6 +14,19 @@
 
 #include "appl_file_handle.h"
 
+#include "appl_types.h"
+
+#include "appl_object.h"
+
+#include "appl_context.h"
+
+#include "appl_file_mgr.h"
+
+#include "appl_file_node.h"
+
+/*
+
+*/
 enum appl_status
 appl_file_create(
     struct appl_context_handle * const
@@ -26,21 +39,29 @@ appl_file_create(
     enum appl_status
         e_status;
 
-    static_cast<void>(
-        p_context_handle);
-    static_cast<void>(
-        p_file_descriptor);
-    static_cast<void>(
-        r_file_handle);
+    class appl_context * const
+        p_context =
+        appl_context::convert_handle(
+            p_context_handle);
+
+    class appl_file_mgr * const
+        p_file_mgr =
+        p_context->m_file_mgr;
 
     e_status =
-        appl_status_not_implemented;
+        p_file_mgr->v_create_node(
+            p_file_descriptor,
+            reinterpret_cast<struct appl_file_node * *>(
+                r_file_handle));
 
     return
         e_status;
 
 } /* appl_file_create() */
 
+/*
+
+*/
 enum appl_status
 appl_file_read(
     struct appl_file_handle * const
@@ -55,23 +76,25 @@ appl_file_read(
     enum appl_status
         e_status;
 
-    static_cast<void>(
-        p_file_handle);
-    static_cast<void>(
-        p_buffer);
-    static_cast<void>(
-        i_buffer_max_length);
-    static_cast<void>(
-        p_actual_length);
+    class appl_file_node * const
+        p_file_node =
+        appl_file_node::convert_handle(
+            p_file_handle);
 
     e_status =
-        appl_status_not_implemented;
+        p_file_node->v_read(
+            p_buffer,
+            i_buffer_max_length,
+            p_actual_length);
 
     return
         e_status;
 
 } /* appl_file_read() */
 
+/*
+
+*/
 enum appl_status
 appl_file_write(
     struct appl_file_handle * const
@@ -86,17 +109,16 @@ appl_file_write(
     enum appl_status
         e_status;
 
-    static_cast<void>(
-        p_file_handle);
-    static_cast<void>(
-        p_buffer);
-    static_cast<void>(
-        i_buffer_max_length);
-    static_cast<void>(
-        p_actual_length);
+    class appl_file_node * const
+        p_file_node =
+        appl_file_node::convert_handle(
+            p_file_handle);
 
     e_status =
-        appl_status_not_implemented;
+        p_file_node->v_write(
+            p_buffer,
+            i_buffer_max_length,
+            p_actual_length);
 
     return
         e_status;
