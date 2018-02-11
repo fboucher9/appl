@@ -365,6 +365,15 @@ enum appl_status
 
     // destroy objects
 
+    if (
+        m_file_mgr)
+    {
+        m_file_mgr->destroy();
+
+        m_file_mgr =
+            0;
+    }
+
     cleanup_thread_mgr();
 
     cleanup_options();
