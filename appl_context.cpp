@@ -31,7 +31,9 @@ appl_context::appl_context() :
     m_debug(),
     m_options(),
     m_thread_mgr(),
-    m_file_mgr()
+    m_mutex_mgr(),
+    m_file_mgr(),
+    m_poll_mgr()
 {
 }
 

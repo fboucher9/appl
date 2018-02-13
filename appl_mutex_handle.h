@@ -4,11 +4,17 @@
 
 */
 
+/* Reverse include guard */
 #if defined(INC_APPL_MUTEX_HANDLE_H)
 #error include appl_mutex_handle.h once
 #endif /* #if defined(INC_APPL_MUTEX_HANDLE_H) */
 
 #define INC_APPL_MUTEX_HANDLE_H
+
+/* Header file dependency */
+#if ! defined INC_APPL_OBJECT_HANDLE_H
+#error include appl_object_handle.h before
+#endif /* #if ! defined INC_APPL_OBJECT_HANDLE_H */
 
 /* mutex */
 struct appl_mutex_handle;
@@ -18,14 +24,14 @@ struct appl_mutex_descriptor
     void *
         p_dummy;
 
-};
+}; /* struct appl_mutex_descriptor */
 
 struct appl_mutex_handle
 {
     struct appl_object_handle
         o_object_handle;
 
-};
+}; /* struct appl_mutex_handle */
 
 #if defined(__cplusplus)
 extern "C" {

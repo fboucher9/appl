@@ -32,7 +32,11 @@ class appl_options;
 
 class appl_thread_mgr;
 
+class appl_mutex_mgr;
+
 class appl_file_mgr;
+
+class appl_poll_mgr;
 
 //
 //
@@ -53,8 +57,14 @@ class appl_context : public appl_object
         class appl_thread_mgr *
             m_thread_mgr;
 
+        class appl_mutex_mgr *
+            m_mutex_mgr;
+
         class appl_file_mgr *
             m_file_mgr;
+
+        class appl_poll_mgr *
+            m_poll_mgr;
 
         static
         class appl_context *
