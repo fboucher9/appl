@@ -64,6 +64,8 @@ Description:
 
 #if defined(APPL_CONFIG_WITH_FILE)
 
+#include "appl_file_descriptor.h"
+
 #include "appl_file_handle.h"
 
 #endif /* #if defined(APPL_CONFIG_WITH_FILE) */

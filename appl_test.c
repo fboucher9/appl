@@ -50,6 +50,101 @@ appl_test_thread_entry(
 
 } /* appl_test_thread_entry() */
 
+static
+void
+appl_test_file_stdout(
+    struct appl_context_handle * const
+        p_context_handle)
+{
+    struct appl_file_handle *
+        p_file_handle;
+
+    enum appl_status
+        e_status;
+
+    struct appl_file_descriptor
+        o_file_descriptor;
+
+    o_file_descriptor.o_name.o_min.p_void =
+        (void *)(
+            0);
+
+    o_file_descriptor.o_name.o_max.p_void =
+        (void *)(
+            0);
+
+    o_file_descriptor.e_type =
+        appl_file_type_stdout;
+
+    e_status =
+        appl_file_create(
+            p_context_handle,
+            &(
+                o_file_descriptor),
+            &(
+                p_file_handle));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        static unsigned char const g_msg[] =
+        {
+            's',
+            't',
+            'd',
+            'o',
+            'u',
+            't',
+            '\n'
+        };
+
+        unsigned long int
+            i_actual_len;
+
+        e_status =
+            appl_file_write(
+                p_file_handle,
+                g_msg,
+                sizeof(
+                    g_msg),
+                &(
+                    i_actual_len));
+
+        appl_object_destroy(
+            &(
+                p_file_handle->o_object_handle));
+    }
+
+}
+
+static
+void
+appl_test_print_number(
+    signed long int const
+        i_value,
+    unsigned long int const
+        i_flags)
+{
+    static unsigned char s_msg[128u];
+
+    struct appl_buf
+        o_buf;
+
+    o_buf.o_min.p_uchar = s_msg;
+    o_buf.o_max.p_uchar = s_msg + sizeof s_msg;
+
+    appl_buf_print_number(
+        &(
+            o_buf),
+        i_value,
+        i_flags);
+
+    printf("msg = [%.*s]\n",
+        (int)(o_buf.o_min.p_uchar - s_msg),
+        s_msg);
+}
+
 enum appl_status
 appl_main(
     struct appl_context_handle * const
@@ -216,6 +311,69 @@ appl_main(
         if (1)
         {
         }
+
+        /* print number */
+        if (1)
+        {
+            appl_test_print_number(
+                123456789l,
+                0);
+
+            appl_test_print_number(
+                123456789l,
+                APPL_BUF_PRINT_SIGN_SPACE | 0);
+
+            appl_test_print_number(
+                123456789l,
+                APPL_BUF_PRINT_SIGN_PLUS | 0);
+
+            appl_test_print_number(
+                123456789l,
+                20);
+
+            appl_test_print_number(
+                123456789l,
+                APPL_BUF_PRINT_SIGN_SPACE | 20);
+
+            appl_test_print_number(
+                123456789l,
+                APPL_BUF_PRINT_SIGN_PLUS | 20);
+
+            appl_test_print_number(
+                123456789l,
+                APPL_BUF_PRINT_PAD_ZERO | 20);
+
+            appl_test_print_number(
+                123456789l,
+                APPL_BUF_PRINT_SIGN_SPACE | APPL_BUF_PRINT_PAD_ZERO | 20);
+
+            appl_test_print_number(
+                123456789l,
+                APPL_BUF_PRINT_SIGN_PLUS | APPL_BUF_PRINT_PAD_ZERO | 20);
+
+            appl_test_print_number(
+                123456789l,
+                APPL_BUF_PRINT_ALIGN_LEFT | 20);
+
+            appl_test_print_number(
+                -123456789l,
+                0);
+
+            appl_test_print_number(
+                -123456789l,
+                20);
+
+            appl_test_print_number(
+                -123456789l,
+                APPL_BUF_PRINT_UNSIGNED | APPL_BUF_PRINT_HEXADECIMAL | 20);
+
+        }
+    }
+
+    if (1)
+    {
+        appl_test_file_stdout(
+            p_context_handle);
     }
 
     *(

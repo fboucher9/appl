@@ -36,6 +36,10 @@
 
 #include "appl_thread_std_mgr.h"
 
+#include "appl_file_mgr.h"
+
+#include "appl_file_std_mgr.h"
+
 struct appl_context_init_descriptor
 {
     struct appl_context_descriptor const *
@@ -301,6 +305,29 @@ enum appl_status
                 appl_status_ok
                 == e_status)
             {
+                e_status =
+                    appl_file_std_mgr::create_instance(
+                        this,
+                        &(
+                            m_file_mgr));
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    if (
+                        appl_status_ok != e_status)
+                    {
+                        if (m_file_mgr)
+                        {
+                            m_file_mgr->destroy();
+
+                            m_file_mgr =
+                                0;
+                        }
+                    }
+                }
+
                 if (
                     appl_status_ok != e_status)
                 {
@@ -337,6 +364,15 @@ enum appl_status
         e_status;
 
     // destroy objects
+
+    if (
+        m_file_mgr)
+    {
+        m_file_mgr->destroy();
+
+        m_file_mgr =
+            0;
+    }
 
     cleanup_thread_mgr();
 
