@@ -37,7 +37,7 @@ class appl_object
             create_instance(
                 class appl_context * const
                     p_context,
-                unsigned long int const
+                appl_size_t const
                     i_placement_length,
                 void (*p_new)(
                     void * const

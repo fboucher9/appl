@@ -40,9 +40,8 @@ enum appl_status
     e_status =
         appl_object::create_instance(
             p_context,
-            static_cast<unsigned long int>(
-                sizeof(
-                    class appl_file_std_node)),
+            sizeof(
+                class appl_file_std_node),
             &(
                 appl_file_std_node::placement_new),
             p_file_descriptor,

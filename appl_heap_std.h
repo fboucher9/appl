@@ -68,7 +68,7 @@ class appl_heap_std : public appl_heap
             alloc_memory(
                 struct appl_buf * const
                     p_buf,
-                unsigned long int const
+                appl_size_t const
                     i_buf_len);
 
         virtual
@@ -82,7 +82,7 @@ class appl_heap_std : public appl_heap
             realloc_memory(
                 struct appl_buf * const
                     p_buf,
-                unsigned long int const
+                appl_size_t const
                     i_buf_len);
 
 }; // class appl_heap_std

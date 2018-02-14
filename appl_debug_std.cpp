@@ -29,9 +29,8 @@ enum appl_status
     return
         appl_object::create_instance(
             p_context,
-            static_cast<unsigned long int>(
-                sizeof(
-                    class appl_debug_std)),
+            sizeof(
+                class appl_debug_std),
             &(
                 appl_debug_std::placement_new),
             0,

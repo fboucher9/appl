@@ -30,9 +30,8 @@ enum appl_status
     return
         appl_object::create_instance(
             p_context,
-            static_cast<unsigned long int>(
-                sizeof(
-                    class appl_thread_std_mgr)),
+            sizeof(
+                class appl_thread_std_mgr),
             &(
                 appl_thread_std_mgr::placement_new),
             0,

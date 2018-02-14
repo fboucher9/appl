@@ -31,7 +31,7 @@ class appl_heap : public appl_object
             alloc_memory(
                 struct appl_buf * const
                     p_buf,
-                unsigned long int const
+                appl_size_t const
                     i_buf_len);
 
         virtual
@@ -45,7 +45,7 @@ class appl_heap : public appl_object
             realloc_memory(
                 struct appl_buf * const
                     p_buf,
-                unsigned long int const
+                appl_size_t const
                     i_buf_len);
 
     protected:

@@ -19,7 +19,7 @@ enum appl_status
     appl_heap::alloc_memory(
         struct appl_buf * const
             p_buf,
-        unsigned long int const
+        appl_size_t const
             i_buf_len)
 {
     static_cast<void>(
@@ -55,7 +55,7 @@ enum appl_status
     appl_heap::realloc_memory(
         struct appl_buf * const
             p_buf,
-        unsigned long int const
+        appl_size_t const
             i_buf_len)
 {
     static_cast<void>(

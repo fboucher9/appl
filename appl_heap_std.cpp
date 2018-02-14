@@ -181,10 +181,10 @@ struct appl_heap_std_header
 
     /* -- */
 
-    unsigned long int
+    appl_size_t
         i_backstrace_count;
 
-    unsigned long int
+    appl_size_t
         i_buf_len;
 
     /* -- */
@@ -208,7 +208,7 @@ enum appl_status
     appl_heap_std::alloc_memory(
         struct appl_buf * const
             p_buf,
-        unsigned long int const
+        appl_size_t const
             i_buf_len)
 {
     enum appl_status
@@ -219,11 +219,11 @@ enum appl_status
         void *
             p_allocation;
 
-        unsigned long int
+        appl_size_t
             i_total_buf_len;
 
         i_total_buf_len =
-            static_cast<unsigned long int>(
+            static_cast<appl_size_t>(
                 i_buf_len
                 + sizeof(
                     struct appl_heap_std_header)
@@ -444,7 +444,7 @@ enum appl_status
     appl_heap_std::realloc_memory(
         struct appl_buf * const
             p_buf,
-        unsigned long int const
+        appl_size_t const
             i_buf_len)
 {
     enum appl_status

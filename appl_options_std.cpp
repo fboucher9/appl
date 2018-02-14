@@ -39,9 +39,8 @@ appl_options_std::create_instance(
     return
         appl_object::create_instance(
             p_context,
-            static_cast<unsigned long int>(
-                sizeof(
-                    class appl_options_std)),
+            sizeof(
+                class appl_options_std),
             &(
                 appl_options_std::placement_new),
             p_options_std_descriptor,

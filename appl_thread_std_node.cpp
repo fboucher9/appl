@@ -39,9 +39,8 @@ enum appl_status
     e_status =
         appl_object::create_instance(
             p_context,
-            static_cast<unsigned long int>(
-                sizeof(
-                    class appl_thread_std_node)),
+            sizeof(
+                class appl_thread_std_node),
             &(
                 appl_thread_std_node::placement_new),
             static_cast<void const *>(
