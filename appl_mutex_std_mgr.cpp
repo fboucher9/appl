@@ -4,6 +4,8 @@
 
 */
 
+#include <pthread.h>
+
 #include "appl_status.h"
 
 #include "appl_types.h"

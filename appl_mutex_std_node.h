@@ -55,6 +55,15 @@ class appl_mutex_std_node : public appl_mutex_node
 
     private:
 
+        pthread_mutex_t
+            m_pthread_mutex_storage;
+
+        bool
+            m_pthread_mutex_initialized;
+
+        unsigned char
+            m_uc_padding[7u];
+
         appl_mutex_std_node(
             class appl_mutex_std_node const & r);
 
@@ -67,6 +76,16 @@ class appl_mutex_std_node : public appl_mutex_node
             placement_new(
                 void * const
                     p_placement);
+
+        virtual
+        enum appl_status
+            init(
+                void const * const
+                    p_descriptor);
+
+        virtual
+        enum appl_status
+            cleanup(void);
 
         virtual
         enum appl_status

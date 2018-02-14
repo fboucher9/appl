@@ -1,8 +1,24 @@
 /* See LICENSE for license details */
 
+/* Include unistd.h for usleep() function */
+#define _BSD_SOURCE
+#include <unistd.h>
+
 #include <stdio.h>
 
 #include "appl.h"
+
+static
+void
+appl_test_sleep_msec(
+    unsigned long int const
+        i_msec_count)
+{
+    usleep(
+        (useconds_t)(
+            i_msec_count * 1000ul));
+
+}
 
 static
 void
@@ -33,17 +49,49 @@ appl_test_memory_leak(
     }
 }
 
+struct appl_test_thread_context
+{
+    struct appl_context_handle *
+        p_context_handle;
+
+    struct appl_mutex_handle *
+        p_mutex_handle;
+
+}; /* struct appl_test_thread_context */
+
 static
 void *
 appl_test_thread_entry(
     void * const
         p_context)
 {
-    (void)(
-        p_context);
+    struct appl_test_thread_context *
+        p_test_thread_context;
+
+    p_test_thread_context =
+        (struct appl_test_thread_context *)(
+            p_context);
 
     printf(
         "hello world!\n");
+
+    appl_test_sleep_msec(
+        100ul);
+
+    appl_mutex_lock(
+        p_test_thread_context->p_mutex_handle);
+
+    printf(
+        "thread wait 2 sec...\n");
+
+    appl_test_sleep_msec(
+        2000ul);
+
+    printf(
+        "... thread wait 2 sec\n");
+
+    appl_mutex_unlock(
+        p_test_thread_context->p_mutex_handle);
 
     return
         (void *)(0x1234);
@@ -199,15 +247,38 @@ appl_main(
         struct appl_thread_handle *
             p_thread_handle;
 
+        struct appl_mutex_handle *
+            p_mutex_handle;
+
         struct appl_thread_descriptor
             o_thread_descriptor;
+
+        struct appl_mutex_descriptor
+            o_mutex_descriptor;
+
+        struct appl_test_thread_context
+            o_test_thread_context;
+
+        appl_mutex_create(
+            p_context_handle,
+            &(
+                o_mutex_descriptor),
+            &(
+                p_mutex_handle));
+
+        o_test_thread_context.p_context_handle =
+            p_context_handle;
+
+        o_test_thread_context.p_mutex_handle =
+            p_mutex_handle;
 
         o_thread_descriptor.p_entry =
             &(
                 appl_test_thread_entry);
 
         o_thread_descriptor.p_context =
-            p_context_handle;
+            &(
+                o_test_thread_context);
 
         e_status =
             appl_thread_create(
@@ -223,6 +294,24 @@ appl_main(
         {
             void *
                 p_thread_result;
+
+            appl_test_sleep_msec(
+                500ul);
+
+            appl_mutex_lock(
+                p_mutex_handle);
+
+            printf(
+                "main sleep 2 sec ...\n");
+
+            appl_test_sleep_msec(
+                2000ul);
+
+            printf(
+                "... main sleep 2 sec\n");
+
+            appl_mutex_unlock(
+                p_mutex_handle);
 
             e_status =
                 appl_thread_wait_result(
@@ -242,6 +331,10 @@ appl_main(
             appl_object_destroy(
                 &(
                     p_thread_handle->o_object_handle));
+
+            appl_object_destroy(
+                &(
+                    p_mutex_handle->o_object_handle));
         }
     }
 

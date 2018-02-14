@@ -40,6 +40,10 @@
 
 #include "appl_file_std_mgr.h"
 
+#include "appl_mutex_mgr.h"
+
+#include "appl_mutex_std_mgr.h"
+
 struct appl_context_init_descriptor
 {
     struct appl_context_descriptor const *
@@ -315,6 +319,29 @@ enum appl_status
                     appl_status_ok
                     == e_status)
                 {
+                    e_status =
+                        appl_mutex_std_mgr::create_instance(
+                            this,
+                            &(
+                                m_mutex_mgr));
+
+                    if (
+                        appl_status_ok
+                        == e_status)
+                    {
+                        if (
+                            appl_status_ok != e_status)
+                        {
+                            if (m_mutex_mgr)
+                            {
+                                m_mutex_mgr->destroy();
+
+                                m_mutex_mgr =
+                                    0;
+                            }
+                        }
+                    }
+
                     if (
                         appl_status_ok != e_status)
                     {
@@ -364,6 +391,15 @@ enum appl_status
         e_status;
 
     // destroy objects
+
+    if (
+        m_mutex_mgr)
+    {
+        m_mutex_mgr->destroy();
+
+        m_mutex_mgr =
+            0;
+    }
 
     if (
         m_file_mgr)

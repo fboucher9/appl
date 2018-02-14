@@ -4,6 +4,8 @@
 
 */
 
+#include <pthread.h>
+
 #include "appl_status.h"
 
 #include "appl_types.h"
@@ -55,7 +57,9 @@ enum appl_status
 //
 //
 appl_mutex_std_node::appl_mutex_std_node() :
-    appl_mutex_node()
+    appl_mutex_node(),
+    m_pthread_mutex_storage(),
+    m_pthread_mutex_initialized()
 {
 }
 
@@ -83,13 +87,103 @@ void
 //
 //
 enum appl_status
+    appl_mutex_std_node::init(
+        void const * const
+            p_descriptor)
+{
+    enum appl_status
+        e_status;
+
+    int
+        i_pthread_result;
+
+    static_cast<void>(
+        p_descriptor);
+
+    i_pthread_result =
+        pthread_mutex_init(
+            &(
+                m_pthread_mutex_storage),
+            NULL);
+
+    if (
+        0
+        == i_pthread_result)
+    {
+        m_pthread_mutex_initialized =
+            true;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // init()
+
+//
+//
+//
+enum appl_status
+    appl_mutex_std_node::cleanup(void)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        m_pthread_mutex_initialized)
+    {
+        pthread_mutex_destroy(
+            &(
+                m_pthread_mutex_storage));
+
+        m_pthread_mutex_initialized =
+            false;
+    }
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // cleanup()
+
+//
+//
+//
+enum appl_status
     appl_mutex_std_node::v_lock(void)
 {
     enum appl_status
         e_status;
 
-    e_status =
-        appl_status_not_implemented;
+    int
+        i_pthread_result;
+
+    i_pthread_result =
+        pthread_mutex_lock(
+            &(
+                m_pthread_mutex_storage));
+
+    if (
+        0
+        == i_pthread_result)
+    {
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;
@@ -105,8 +199,26 @@ enum appl_status
     enum appl_status
         e_status;
 
-    e_status =
-        appl_status_not_implemented;
+    int
+        i_pthread_result;
+
+    i_pthread_result =
+        pthread_mutex_unlock(
+            &(
+                m_pthread_mutex_storage));
+
+    if (
+        0
+        == i_pthread_result)
+    {
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;
