@@ -91,22 +91,14 @@ class appl_file_std_node : public appl_file_node
         virtual
         enum appl_status
             v_read(
-                unsigned char * const
-                    p_buf,
-                unsigned long int const
-                    i_buf_len,
-                unsigned long int * const
-                    r_actual_len);
+                struct appl_buf * const
+                    p_buf);
 
         virtual
         enum appl_status
             v_write(
-                unsigned char const * const
-                    p_buf,
-                unsigned long int const
-                    i_buf_len,
-                unsigned long int * const
-                    r_actual_len);
+                struct appl_buf * const
+                    p_buf);
 
 }; // class appl_file_std_node
 

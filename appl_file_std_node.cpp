@@ -6,7 +6,17 @@
 
 #include <unistd.h>
 
+#include <stdlib.h>
+
 #include <stdio.h>
+
+#include <string.h>
+
+#include <sys/types.h>
+
+#include <sys/stat.h>
+
+#include <fcntl.h>
 
 #include "appl_status.h"
 
@@ -129,8 +139,100 @@ enum appl_status
     else if (
         appl_file_type_disk == p_file_descriptor->e_type)
     {
-        e_status =
-            appl_status_not_implemented;
+        char *
+            a_pathname;
+
+        a_pathname =
+            static_cast<char *>(
+                malloc(
+                    p_file_descriptor->o_name.o_max.pc_uchar
+                    - p_file_descriptor->o_name.o_min.pc_uchar));
+
+        if (
+            a_pathname)
+        {
+            memcpy(
+                a_pathname,
+                p_file_descriptor->o_name.o_min.pc_uchar,
+                p_file_descriptor->o_name.o_max.pc_uchar
+                - p_file_descriptor->o_name.o_min.pc_uchar);
+
+            *(
+                a_pathname
+                + (p_file_descriptor->o_name.o_max.pc_uchar
+                    - p_file_descriptor->o_name.o_min.pc_uchar)) =
+                '\000';
+
+            int
+                i_flags;
+
+            if (
+                appl_file_mode_read == p_file_descriptor->e_mode)
+            {
+                i_flags =
+                    0;
+            }
+            else if (
+                appl_file_mode_write == p_file_descriptor->e_mode)
+            {
+                i_flags =
+                    O_CREAT | O_TRUNC;
+            }
+            else if (
+                appl_file_mode_modify == p_file_descriptor->e_mode)
+            {
+                i_flags =
+                    O_CREAT;
+            }
+            else if (
+                appl_file_mode_append == p_file_descriptor->e_mode)
+            {
+                i_flags =
+                    O_APPEND;
+            }
+            else
+            {
+                i_flags =
+                    0;
+            }
+
+            int
+                i_mode;
+
+            i_mode =
+                S_IRUSR
+                | S_IWUSR
+                | S_IRGRP
+                | S_IWGRP
+                | S_IROTH;
+
+            m_fd =
+                open(
+                    a_pathname,
+                    i_flags,
+                    i_mode);
+
+            if (
+                m_fd >= 0)
+            {
+                e_status =
+                    appl_status_ok;
+            }
+            else
+            {
+                e_status =
+                    appl_status_fail;
+            }
+
+            free(
+                static_cast<void *>(
+                    a_pathname));
+        }
+        else
+        {
+            e_status =
+                appl_status_out_of_memory;
+        }
     }
     else
     {
@@ -178,12 +280,8 @@ enum appl_status
 //
 enum appl_status
     appl_file_std_node::v_read(
-        unsigned char * const
-            p_buf,
-        unsigned long int const
-            i_buf_len,
-        unsigned long int * const
-            r_actual_len)
+        struct appl_buf * const
+            p_buf)
 {
     enum appl_status
         e_status;
@@ -194,15 +292,15 @@ enum appl_status
     i_read_result =
         read(
             m_fd,
-            reinterpret_cast<char *>(
-                p_buf),
-            i_buf_len);
+            static_cast<char *>(
+                p_buf->o_min.p_void),
+            p_buf->o_max.pc_uchar
+            - p_buf->o_min.pc_uchar);
 
     if (
         i_read_result > 0)
     {
-        *(
-            r_actual_len) =
+        p_buf->o_min.pc_uchar +=
             static_cast<unsigned long int>(
                 i_read_result);
 
@@ -225,12 +323,8 @@ enum appl_status
 //
 enum appl_status
     appl_file_std_node::v_write(
-        unsigned char const * const
-            p_buf,
-        unsigned long int const
-            i_buf_len,
-        unsigned long int * const
-            r_actual_len)
+        struct appl_buf * const
+            p_buf)
 {
     enum appl_status
         e_status;
@@ -242,15 +336,15 @@ enum appl_status
         static_cast<signed long int>(
             write(
                 m_fd,
-                reinterpret_cast<char const *>(
-                    p_buf),
-                i_buf_len));
+                static_cast<char const *>(
+                    p_buf->o_min.pc_void),
+                p_buf->o_max.pc_uchar
+                - p_buf->o_min.pc_uchar));
 
     if (
         0 < i_write_result)
     {
-        *(
-            r_actual_len) =
+        p_buf->o_min.pc_uchar +=
             static_cast<unsigned long int>(
                 i_write_result);
 

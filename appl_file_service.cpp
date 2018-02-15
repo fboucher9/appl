@@ -27,7 +27,7 @@
 //
 //
 enum appl_status
-    appl_file_service::create_node(
+    appl_file_service::s_create(
         struct appl_context_handle * const
             p_context_handle,
         struct appl_file_descriptor const * const
@@ -62,15 +62,11 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_file_service::read_buffer(
+    appl_file_service::s_read(
         struct appl_file_handle * const
             p_file_handle,
-        unsigned char * const
-            p_buffer,
-        unsigned long int const
-            i_buffer_max_length,
-        unsigned long int * const
-            p_actual_length)
+        struct appl_buf * const
+            p_buf)
 {
     enum appl_status
         e_status;
@@ -82,9 +78,7 @@ enum appl_status
 
     e_status =
         p_file_node->v_read(
-            p_buffer,
-            i_buffer_max_length,
-            p_actual_length);
+            p_buf);
 
     return
         e_status;
@@ -95,15 +89,11 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_file_service::write_buffer(
+    appl_file_service::s_write(
         struct appl_file_handle * const
             p_file_handle,
-        unsigned char const * const
-            p_buffer,
-        unsigned long int const
-            i_buffer_max_length,
-        unsigned long int * const
-            p_actual_length)
+        struct appl_buf * const
+            p_buf)
 {
     enum appl_status
         e_status;
@@ -115,9 +105,7 @@ enum appl_status
 
     e_status =
         p_file_node->v_write(
-            p_buffer,
-            i_buffer_max_length,
-            p_actual_length);
+            p_buf);
 
     return
         e_status;

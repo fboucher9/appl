@@ -25,7 +25,7 @@ appl_file_create(
         r_file_handle)
 {
     return
-        appl_file_service::create_node(
+        appl_file_service::s_create(
             p_context_handle,
             p_file_descriptor,
             r_file_handle);
@@ -39,19 +39,13 @@ enum appl_status
 appl_file_read(
     struct appl_file_handle * const
         p_file_handle,
-    unsigned char * const
-        p_buffer,
-    unsigned long int const
-        i_buffer_max_length,
-    unsigned long int * const
-        p_actual_length)
+    struct appl_buf * const
+        p_buf)
 {
     return
-        appl_file_service::read_buffer(
+        appl_file_service::s_read(
             p_file_handle,
-            p_buffer,
-            i_buffer_max_length,
-            p_actual_length);
+            p_buf);
 
 } /* appl_file_read() */
 
@@ -62,19 +56,13 @@ enum appl_status
 appl_file_write(
     struct appl_file_handle * const
         p_file_handle,
-    unsigned char const * const
-        p_buffer,
-    unsigned long int const
-        i_buffer_max_length,
-    unsigned long int * const
-        p_actual_length)
+    struct appl_buf * const
+        p_buf)
 {
     return
-        appl_file_service::write_buffer(
+        appl_file_service::s_write(
             p_file_handle,
-            p_buffer,
-            i_buffer_max_length,
-            p_actual_length);
+            p_buf);
 
 } /* appl_file_write() */
 

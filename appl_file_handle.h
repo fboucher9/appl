@@ -21,6 +21,8 @@
 #error include appl_object_handle.h before
 #endif /* #if !defined(INC_APPL_OBJECT_HANDLE_H) */
 
+struct appl_buf;
+
 struct appl_file_handle;
 
 struct appl_file_descriptor;
@@ -49,23 +51,15 @@ enum appl_status
 appl_file_read(
     struct appl_file_handle * const
         p_file_handle,
-    unsigned char * const
-        p_buffer,
-    unsigned long int const
-        i_buffer_max_length,
-    unsigned long int * const
-        p_actual_length);
+    struct appl_buf * const
+        p_buf);
 
 enum appl_status
 appl_file_write(
     struct appl_file_handle * const
         p_file_handle,
-    unsigned char const * const
-        p_buffer,
-    unsigned long int const
-        i_buffer_max_length,
-    unsigned long int * const
-        p_actual_length);
+    struct appl_buf * const
+        p_buf);
 
 #if defined(__cplusplus)
 } /* extern "C" */

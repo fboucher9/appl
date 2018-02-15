@@ -16,6 +16,8 @@
 #error include appl_status.h before
 #endif /* #if ! defined INC_APPL_STATUS_H */
 
+struct appl_buf;
+
 struct appl_context_handle;
 
 struct appl_file_handle;
@@ -37,7 +39,7 @@ class appl_file_service
 
         static
         enum appl_status
-            create_node(
+            s_create(
                 struct appl_context_handle * const
                     p_context_handle,
                 struct appl_file_descriptor const * const
@@ -47,27 +49,19 @@ class appl_file_service
 
         static
         enum appl_status
-            read_buffer(
+            s_read(
                 struct appl_file_handle * const
                     p_file_handle,
-                unsigned char * const
-                    p_buffer,
-                unsigned long int const
-                    i_buffer_max_length,
-                unsigned long int * const
-                    p_actual_length);
+                struct appl_buf * const
+                    p_buf);
 
         static
         enum appl_status
-            write_buffer(
+            s_write(
                 struct appl_file_handle * const
                     p_file_handle,
-                unsigned char const * const
-                    p_buffer,
-                unsigned long int const
-                    i_buffer_max_length,
-                unsigned long int * const
-                    p_actual_length);
+                struct appl_buf * const
+                    p_buf);
 
 }; // class appl_file_service
 

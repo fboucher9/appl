@@ -40,7 +40,9 @@ enum appl_file_mode
 
     appl_file_mode_write = 2,
 
-    appl_file_mode_append = 3
+    appl_file_mode_modify = 3,
+
+    appl_file_mode_append = 4
 
 }; /* enum appl_file_mode */
 

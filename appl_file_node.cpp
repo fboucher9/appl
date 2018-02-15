@@ -23,22 +23,14 @@ Description:
 //
 enum appl_status
     appl_file_node::v_read(
-        unsigned char * const
-            p_buf,
-        unsigned long int const
-            i_buf_len,
-        unsigned long int * const
-            r_actual_len)
+        struct appl_buf * const
+            p_buf)
 {
     enum appl_status
         e_status;
 
     static_cast<void>(
         p_buf);
-    static_cast<void>(
-        i_buf_len);
-    static_cast<void>(
-        r_actual_len);
 
     e_status =
         appl_status_not_implemented;
@@ -53,22 +45,14 @@ enum appl_status
 //
 enum appl_status
     appl_file_node::v_write(
-        unsigned char const * const
-            p_buf,
-        unsigned long int const
-            i_buf_len,
-        unsigned long int * const
-            r_actual_len)
+        struct appl_buf * const
+            p_buf)
 {
     enum appl_status
         e_status;
 
     static_cast<void>(
         p_buf);
-    static_cast<void>(
-        i_buf_len);
-    static_cast<void>(
-        r_actual_len);
 
     e_status =
         appl_status_not_implemented;

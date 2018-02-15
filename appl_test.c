@@ -147,17 +147,20 @@ appl_test_file_stdout(
             '\n'
         };
 
-        unsigned long int
-            i_actual_len;
+        struct appl_buf
+            o_msg;
+
+        o_msg.o_min.pc_uchar =
+            g_msg;
+
+        o_msg.o_max.pc_uchar =
+            g_msg + sizeof(g_msg);
 
         e_status =
             appl_file_write(
                 p_file_handle,
-                g_msg,
-                sizeof(
-                    g_msg),
                 &(
-                    i_actual_len));
+                    o_msg));
 
         appl_object_destroy(
             &(
