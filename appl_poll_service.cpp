@@ -16,6 +16,8 @@
 
 #include "appl_list.h"
 
+#include "appl_node.h"
+
 #include "appl_poll_mgr.h"
 
 /* Assert compiler */

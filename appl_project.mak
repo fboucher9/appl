@@ -65,8 +65,11 @@ APPL_TEST_OBJS = \
     $(APPL_DST)appl_mutex_mgr.o \
     $(APPL_DST)appl_mutex_std_mgr.o \
     $(APPL_DST)appl_mutex_std_node.o \
+    $(APPL_DST)appl_node.o \
     $(APPL_DST)appl_poll_handle.o \
     $(APPL_DST)appl_poll_service.o \
+    $(APPL_DST)appl_poll_mgr.o \
+    $(APPL_DST)appl_poll_node.o \
     $(APPL_DST)appl_test.o
 
 # Common compiler flags for C and C++

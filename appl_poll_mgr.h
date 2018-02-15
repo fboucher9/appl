@@ -12,11 +12,13 @@
 #define INC_APPL_POLL_MGR_H
 
 /* Header file dependency */
-#if ! defined INC_APPL_LIST_H
-#error include appl_list.h before
-#endif /* #if ! defined INC_APPL_LIST_H */
+#if ! defined INC_APPL_NODE_H
+#error include appl_node.h before
+#endif /* #if ! defined INC_APPL_NODE_H */
 
 struct appl_poll_descriptor;
+
+struct appl_poll_table;
 
 /* Assert compiler */
 #if !defined(__cplusplus)
@@ -69,8 +71,14 @@ class appl_poll_mgr : public appl_object
         class appl_mutex_node *
             p_mutex_node;
 
-        struct appl_list
+        class appl_node
             o_nodes;
+
+        signed long int volatile
+            m_kill;
+
+        unsigned long int
+            ul_padding[1u];
 
     private:
 
@@ -80,6 +88,28 @@ class appl_poll_mgr : public appl_object
         class appl_poll_mgr &
             operator =(
                 class appl_poll_mgr const & r);
+
+        enum appl_status
+            create_poll_table(
+                struct appl_poll_table * const
+                    p_poll_table);
+
+        void
+            destroy_poll_table(
+                struct appl_poll_table * const
+                    p_poll_table);
+
+        void
+            thread_step(void);
+
+        void
+            thread_handler(void);
+
+        static
+        void *
+            thread_entry(
+                void * const
+                    p_thread_context);
 
 }; // class appl_poll_mgr
 

@@ -19,8 +19,10 @@ struct appl_poll_descriptor;
 //
 //
 //
-class appl_poll_node : public appl_object
+class appl_poll_node : public appl_node
 {
+    friend class appl_poll_mgr;
+
     public:
 
         static
@@ -60,11 +62,20 @@ class appl_poll_node : public appl_object
         struct appl_poll_descriptor
             m_descriptor;
 
+        int
+            m_fd;
+
+        unsigned int
+            ui_padding[3u];
+
         bool
             m_busy;
 
         bool
             m_avail;
+
+        unsigned char
+            uc_padding[6u];
 
     private:
 
