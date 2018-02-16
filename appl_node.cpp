@@ -22,42 +22,11 @@
 //
 //
 //
-struct appl_list *
-    appl_node::get_list(void)
-{
-    return
-        &(
-            o_list);
-
-} // get_list()
-
-//
-//
-//
-class appl_node *
-    appl_node::get_node(
-        struct appl_list * const
-            p_list)
-{
-    return
-        reinterpret_cast<class appl_node *>(
-            reinterpret_cast<appl_ptrdiff_t>(
-                p_list)
-            - reinterpret_cast<appl_ptrdiff_t>(
-                &(
-                    static_cast<class appl_node *>(0)->o_list)));
-
-} // get_node()
-
-//
-//
-//
 class appl_node *
     appl_node::get_next(void)
 {
     return
-        appl_node::get_node(
-            o_list.o_next.p_node);
+        p_next;
 
 } // get_next()
 
@@ -68,8 +37,7 @@ class appl_node *
     appl_node::get_prev(void)
 {
     return
-        appl_node::get_node(
-            o_list.o_prev.p_node);
+        p_prev;
 
 } // get_prev()
 
@@ -83,23 +51,34 @@ void
         class appl_node * const
             p_node_right)
 {
-    appl_list_join(
-        &(
-            p_node_left->o_list),
-        &(
-            p_node_right->o_list));
-}
+    /* AB(C) - (D)EF > ABCDEF */
+    p_node_left->p_next->p_prev =
+        p_node_right->p_prev;
+
+    p_node_right->p_prev->p_next =
+        p_node_left->p_next;
+
+    p_node_left->p_next =
+        p_node_right;
+
+    p_node_right->p_prev =
+        p_node_left;
+
+} // join()
 
 //
 //
 //
 appl_node::appl_node() :
     appl_object(),
-    o_list()
+    p_next(),
+    p_prev()
 {
-    appl_list_init(
-        &(
-            o_list));
+    p_next =
+        this;
+
+    p_prev =
+        this;
 
 }
 
@@ -108,11 +87,9 @@ appl_node::appl_node() :
 //
 appl_node::~appl_node()
 {
-    appl_list_join(
-        &(
-            o_list),
-        &(
-            o_list));
+    join(
+        this,
+        this);
 }
 
 /* end-of-file: appl_node.cpp */

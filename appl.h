@@ -36,7 +36,7 @@ Description:
 
 /* #define APPL_CONFIG_WITH_SOCKET */
 
-/* #define APPL_CONFIG_WITH_CLOCK */
+#define APPL_CONFIG_WITH_CLOCK
 
 #define APPL_CONFIG_WITH_MAIN
 
@@ -190,31 +190,7 @@ appl_udp_socket_create(
 
 #if defined(APPL_CONFIG_WITH_CLOCK)
 
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
-
-enum appl_status
-appl_clock_read(
-    struct appl_context_handle * const
-        p_context_handle,
-    unsigned long int const
-        i_time_freq,
-    unsigned long int * const
-        p_time_count);
-
-enum appl_status
-appl_clock_delay(
-    struct appl_context_handle * const
-        p_context_handle,
-    unsigned long int const
-        i_time_freq,
-    unsigned long int const
-        i_time_count);
-
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
+#include "appl_clock_handle.h"
 
 #endif /* #if defined(APPL_CONFIG_WITH_CLOCK) */
 

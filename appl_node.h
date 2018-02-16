@@ -16,11 +16,6 @@
 #error include appl_object.h before
 #endif /* #if ! defined INC_APPL_OBJECT_H */
 
-/* Header file dependency */
-#if ! defined INC_APPL_LIST_H
-#error include appl_list.h before
-#endif /* #if ! defined INC_APPL_LIST_H */
-
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -40,15 +35,6 @@ class appl_node : public appl_object
         virtual
         ~appl_node();
 
-        struct appl_list *
-            get_list(void);
-
-        static
-        class appl_node *
-            get_node(
-                struct appl_list * const
-                    p_list);
-
         class appl_node *
             get_next(void);
 
@@ -63,10 +49,15 @@ class appl_node : public appl_object
                 class appl_node * const
                     p_node_right);
 
-    private:
+    protected:
 
-        struct appl_list
-            o_list;
+        class appl_node *
+            p_next;
+
+        class appl_node *
+            p_prev;
+
+    private:
 
         appl_node(
             class appl_node const & r);
@@ -76,18 +67,5 @@ class appl_node : public appl_object
                 class appl_node const & r);
 
 }; // class appl_node
-
-//
-//
-//
-class appl_node_iterator
-{
-    public:
-
-    protected:
-
-    private:
-
-}; // class appl_node_iterator
 
 /* end-of-file: appl_node.h */

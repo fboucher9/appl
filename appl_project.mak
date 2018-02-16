@@ -37,6 +37,9 @@ APPL_TEST_OBJS = \
     $(APPL_DST)appl_list.o \
     $(APPL_DST)appl_object.o \
     $(APPL_DST)appl_object_handle.o \
+    $(APPL_DST)appl_clock_handle.o \
+    $(APPL_DST)appl_clock_service.o \
+    $(APPL_DST)appl_clock.o \
     $(APPL_DST)appl_context.o \
     $(APPL_DST)appl_context_std.o \
     $(APPL_DST)appl_context_handle.o \
@@ -66,6 +69,7 @@ APPL_TEST_OBJS = \
     $(APPL_DST)appl_mutex_std_mgr.o \
     $(APPL_DST)appl_mutex_std_node.o \
     $(APPL_DST)appl_node.o \
+    $(APPL_DST)appl_node_iterator.o \
     $(APPL_DST)appl_poll_handle.o \
     $(APPL_DST)appl_poll_service.o \
     $(APPL_DST)appl_poll_mgr.o \

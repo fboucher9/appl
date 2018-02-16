@@ -30,6 +30,8 @@
 
 #include "appl_buf.h"
 
+#include "appl_node_iterator.h"
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -75,32 +77,28 @@ enum appl_status
     p_mutex_node->v_lock();
 
     // count number of elements
-    struct appl_iterator
-        o_iterator;
-
-    appl_iterator_init(
-        &(
-            o_iterator),
-        o_nodes.get_list());
-
-    p_poll_table->i_count =
-        0u;
-
-    while (
-        appl_iterator_next(
-            &(
-                o_iterator)))
     {
-        class appl_poll_node * const
-            p_poll_node =
-            static_cast<class appl_poll_node *>(
-                appl_node::get_node(
-                    o_iterator.o_cur.p_node));
+        class appl_node_iterator
+            o_iterator(
+                &(
+                    o_nodes));
 
-        if (
-            p_poll_node->m_avail)
+        p_poll_table->i_count =
+            0u;
+
+        while (
+            o_iterator.next())
         {
-            p_poll_table->i_count ++;
+            class appl_poll_node * const
+                p_poll_node =
+                static_cast<class appl_poll_node *>(
+                    o_iterator.get_node());
+
+            if (
+                p_poll_node->m_avail)
+            {
+                p_poll_table->i_count ++;
+            }
         }
     }
 
@@ -142,44 +140,44 @@ enum appl_status
                     p_poll_table->a_nodes + p_poll_table->i_count));
 
         // fill array(s)
-        appl_iterator_init(
-            &(
-                o_iterator),
-            o_nodes.get_list());
-
-        unsigned int
-            i_index;
-
-        i_index =
-            0u;
-
-        while (
-            appl_iterator_next(
-                &(
-                    o_iterator)))
         {
-            class appl_poll_node * const
-                p_poll_node =
-                reinterpret_cast<class appl_poll_node *>(
-                    o_iterator.o_cur.p_node + 1);
+            class appl_node_iterator
+                o_iterator(
+                    &(
+                        o_nodes));
 
-            if (
-                p_poll_node->m_avail)
+            unsigned int
+                i_index;
+
+            i_index =
+                0u;
+
+            while (
+                o_iterator.next())
             {
-                p_poll_node->m_busy =
-                    true;
+                class appl_poll_node * const
+                    p_poll_node =
+                    reinterpret_cast<class appl_poll_node *>(
+                        o_iterator.get_node());
 
-                p_poll_table->a_events[i_index].fd =
-                    p_poll_node->m_fd;
+                if (
+                    p_poll_node->m_avail)
+                {
+                    p_poll_node->m_busy =
+                        true;
 
-                p_poll_table->a_events[i_index].events =
-                    0;
+                    p_poll_table->a_events[i_index].fd =
+                        p_poll_node->m_fd;
 
-                p_poll_table->a_events[i_index].revents =
-                    0;
+                    p_poll_table->a_events[i_index].events =
+                        0;
 
-                p_poll_table->a_nodes[i_index] =
-                    p_poll_node;
+                    p_poll_table->a_events[i_index].revents =
+                        0;
+
+                    p_poll_table->a_nodes[i_index] =
+                        p_poll_node;
+                }
             }
         }
     }
@@ -203,24 +201,18 @@ void
 
     // release the nodes
 
-    struct appl_iterator
-        o_iterator;
-
-    appl_iterator_init(
-        &(
-            o_iterator),
-        o_nodes.get_list());
+    class appl_node_iterator
+        o_iterator(
+            &(
+                o_nodes));
 
     while (
-        appl_iterator_next(
-            &(
-                o_iterator)))
+        o_iterator.next())
     {
         class appl_poll_node * const
             p_poll_node =
             static_cast<class appl_poll_node *>(
-                appl_node::get_node(
-                    o_iterator.o_cur.p_node));
+                o_iterator.get_node());
 
         if (
             p_poll_node->m_busy)
@@ -314,11 +306,15 @@ void
         b_continue)
     {
         // verify kill flag
+        p_mutex_node->v_lock();
+
         if (m_kill)
         {
             b_continue =
                 false;
         }
+
+        p_mutex_node->v_unlock();
 
         if (
             b_continue)
