@@ -25,14 +25,17 @@ class appl_node_iterator
 {
     public:
 
+        class appl_node *
+            p_cur;
+
+        class appl_node *
+            p_end;
+
         appl_node_iterator(
             class appl_node * const
                 p_node);
 
         ~appl_node_iterator();
-
-        class appl_node *
-            get_node(void);
 
         bool
             next(void);
@@ -41,12 +44,6 @@ class appl_node_iterator
             prev(void);
 
     private:
-
-        class appl_node *
-            p_cur;
-
-        class appl_node *
-            p_end;
 
         appl_node_iterator(
             class appl_node_iterator const & r);

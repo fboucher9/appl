@@ -75,4 +75,31 @@ typedef signed int appl_ptrdiff_t;
 typedef ptrdiff_t appl_ptrdiff_t;
 #endif /* #if defined(__PTRDIFF_TYPE__) */
 
+/*
+
+Type: appl_ull_t, appl_sll_t
+
+Description:
+
+    Define signed and unsigned long long integers.
+
+Comments:
+
+    -   This is required for GCC to avoid warnings when using long long type.
+
+    -   For Visual C++ compiler, the long long type is not available for older
+        versions of the compiler.  Use __int64 in that case.
+
+*/
+#if defined __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wlong-long"
+typedef signed long long int appl_sll_t;
+typedef unsigned long long int appl_ull_t;
+#pragma GCC diagnostic pop
+#else /* #if defined __GNUC__ */
+typedef signed long long int appl_sll_t;
+typedef unsigned long long int appl_ull_t;
+#endif /* #if defined __GNUC__ */
+
 /* end-of-file: appl_types.h */

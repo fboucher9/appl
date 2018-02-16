@@ -40,6 +40,7 @@ APPL_TEST_OBJS = \
     $(APPL_DST)appl_clock_handle.o \
     $(APPL_DST)appl_clock_service.o \
     $(APPL_DST)appl_clock.o \
+    $(APPL_DST)appl_clock_std.o \
     $(APPL_DST)appl_context.o \
     $(APPL_DST)appl_context_std.o \
     $(APPL_DST)appl_context_handle.o \

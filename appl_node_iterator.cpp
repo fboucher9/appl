@@ -42,17 +42,6 @@ appl_node_iterator::~appl_node_iterator()
 //
 //
 //
-class appl_node *
-    appl_node_iterator::get_node(void)
-{
-    return
-        p_cur;
-
-} // get_node()
-
-//
-//
-//
 bool
     appl_node_iterator::next(void)
 {
@@ -60,7 +49,7 @@ bool
         b_result;
 
     p_cur =
-        p_cur->get_next();
+        p_cur->p_next;
 
     b_result =
         (p_cur != p_end);
@@ -80,7 +69,7 @@ bool
         b_result;
 
     p_cur =
-        p_cur->get_prev();
+        p_cur->p_prev;
 
     b_result =
         (p_cur != p_end);

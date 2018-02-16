@@ -36,10 +36,10 @@ class appl_node : public appl_object
         ~appl_node();
 
         class appl_node *
-            get_next(void);
+            p_next;
 
         class appl_node *
-            get_prev(void);
+            p_prev;
 
         static
         void
@@ -50,12 +50,6 @@ class appl_node : public appl_object
                     p_node_right);
 
     protected:
-
-        class appl_node *
-            p_next;
-
-        class appl_node *
-            p_prev;
 
     private:
 

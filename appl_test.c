@@ -11,12 +11,30 @@
 static
 void
 appl_test_sleep_msec(
+    struct appl_context_handle * const
+        p_context_handle,
     unsigned long int const
         i_msec_count)
 {
-    usleep(
-        (useconds_t)(
-            i_msec_count * 1000ul));
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_clock_delay(
+            p_context_handle,
+            1000ul,
+            i_msec_count);
+
+    if (
+        appl_status_not_implemented
+        == e_status)
+    {
+        printf("fallback sleep\n");
+
+        usleep(
+            (useconds_t)(
+                i_msec_count * 1000ul));
+    }
 
 }
 
@@ -76,6 +94,7 @@ appl_test_thread_entry(
         "hello world!\n");
 
     appl_test_sleep_msec(
+        p_test_thread_context->p_context_handle,
         100ul);
 
     appl_mutex_lock(
@@ -85,6 +104,7 @@ appl_test_thread_entry(
         "thread wait 2 sec...\n");
 
     appl_test_sleep_msec(
+        p_test_thread_context->p_context_handle,
         2000ul);
 
     printf(
@@ -299,6 +319,7 @@ appl_main(
                 p_thread_result;
 
             appl_test_sleep_msec(
+                p_context_handle,
                 500ul);
 
             appl_mutex_lock(
@@ -308,6 +329,7 @@ appl_main(
                 "main sleep 2 sec ...\n");
 
             appl_test_sleep_msec(
+                p_context_handle,
                 2000ul);
 
             printf(

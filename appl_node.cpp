@@ -22,28 +22,6 @@
 //
 //
 //
-class appl_node *
-    appl_node::get_next(void)
-{
-    return
-        p_next;
-
-} // get_next()
-
-//
-//
-//
-class appl_node *
-    appl_node::get_prev(void)
-{
-    return
-        p_prev;
-
-} // get_prev()
-
-//
-//
-//
 void
     appl_node::join(
         class appl_node * const

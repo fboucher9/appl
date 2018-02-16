@@ -58,6 +58,30 @@ class appl_context_std : public appl_context
 
     private:
 
+        bool
+            b_init_heap;
+
+        bool
+            b_init_debug;
+
+        bool
+            b_init_options;
+
+        bool
+            b_init_thread_mgr;
+
+        bool
+            b_init_mutex_mgr;
+
+        bool
+            b_init_file_mgr;
+
+        bool
+            b_init_poll_mgr;
+
+        bool
+            b_init_clock;
+
         appl_context_std(
             class appl_context_std const & r);
 
@@ -70,6 +94,14 @@ class appl_context_std : public appl_context
             placement_new(
                 void * const
                     p_placement);
+
+        enum appl_status
+            init_heap(
+                class appl_heap * const
+                    p_heap);
+
+        void
+            cleanup_heap(void);
 
         enum appl_status
             init_debug(void);
@@ -90,6 +122,30 @@ class appl_context_std : public appl_context
 
         void
             cleanup_thread_mgr(void);
+
+        enum appl_status
+            init_mutex_mgr(void);
+
+        void
+            cleanup_mutex_mgr(void);
+
+        enum appl_status
+            init_file_mgr(void);
+
+        void
+            cleanup_file_mgr(void);
+
+        enum appl_status
+            init_poll_mgr(void);
+
+        void
+            cleanup_poll_mgr(void);
+
+        enum appl_status
+            init_clock(void);
+
+        void
+            cleanup_clock(void);
 
 }; // class appl_context_std
 

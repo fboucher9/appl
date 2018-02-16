@@ -38,6 +38,8 @@ class appl_file_mgr;
 
 class appl_poll_mgr;
 
+class appl_clock;
+
 //
 //
 //
@@ -65,6 +67,9 @@ class appl_context : public appl_object
 
         class appl_poll_mgr *
             m_poll_mgr;
+
+        class appl_clock *
+            m_clock;
 
         static
         class appl_context *

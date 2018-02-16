@@ -92,7 +92,7 @@ enum appl_status
             class appl_poll_node * const
                 p_poll_node =
                 static_cast<class appl_poll_node *>(
-                    o_iterator.get_node());
+                    o_iterator.p_cur);
 
             if (
                 p_poll_node->m_avail)
@@ -158,7 +158,7 @@ enum appl_status
                 class appl_poll_node * const
                     p_poll_node =
                     reinterpret_cast<class appl_poll_node *>(
-                        o_iterator.get_node());
+                        o_iterator.p_cur);
 
                 if (
                     p_poll_node->m_avail)
@@ -212,7 +212,7 @@ void
         class appl_poll_node * const
             p_poll_node =
             static_cast<class appl_poll_node *>(
-                o_iterator.get_node());
+                o_iterator.p_cur);
 
         if (
             p_poll_node->m_busy)

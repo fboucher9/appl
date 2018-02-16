@@ -44,6 +44,14 @@
 
 #include "appl_mutex_std_mgr.h"
 
+#include "appl_node.h"
+
+#include "appl_poll_mgr.h"
+
+#include "appl_clock.h"
+
+#include "appl_clock_std.h"
+
 struct appl_context_init_descriptor
 {
     struct appl_context_descriptor const *
@@ -58,13 +66,70 @@ struct appl_context_init_descriptor
 //
 //
 enum appl_status
+    appl_context_std::init_heap(
+        class appl_heap * const
+            p_heap)
+{
+    enum appl_status
+        e_status;
+
+    m_heap =
+        p_heap;
+
+    b_init_heap =
+        true;
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // init_heap()
+
+//
+//
+//
+void
+    appl_context_std::cleanup_heap(void)
+{
+    if (
+        b_init_heap)
+    {
+        m_heap =
+            0;
+
+        b_init_heap =
+            false;
+    }
+
+} // cleanup_heap()
+
+//
+//
+//
+enum appl_status
 appl_context_std::init_debug(void)
 {
-    return
+    enum appl_status
+        e_status;
+
+    e_status =
         appl_debug_std::create_instance(
             m_context,
             &(
                 m_debug));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        b_init_debug =
+            true;
+    }
+
+    return
+        e_status;
 
 } // init_debug()
 
@@ -74,12 +139,15 @@ appl_context_std::init_debug(void)
 void
 appl_context_std::cleanup_debug(void)
 {
-    if (m_debug)
+    if (b_init_debug)
     {
         m_debug->destroy();
 
         m_debug =
             0;
+
+        b_init_debug =
+            false;
     }
 
 } // cleanup_debug()
@@ -92,6 +160,9 @@ appl_context_std::init_options(
     struct appl_context_descriptor const * const
         p_context_descriptor)
 {
+    enum appl_status
+        e_status;
+
     struct appl_options_std_descriptor
         o_options_std_descriptor;
 
@@ -101,13 +172,24 @@ appl_context_std::init_options(
     o_options_std_descriptor.p_arg_max =
         p_context_descriptor->p_arg_max;
 
-    return
+    e_status =
         appl_options_std::create_instance(
             m_context,
             &(
                 o_options_std_descriptor),
             &(
                 m_options));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        b_init_options =
+            true;
+    }
+
+    return
+        e_status;
 
 } // init_options()
 
@@ -117,12 +199,15 @@ appl_context_std::init_options(
 void
 appl_context_std::cleanup_options(void)
 {
-    if (m_options)
+    if (b_init_options)
     {
         m_options->destroy();
 
         m_options =
             0;
+
+        b_init_options =
+            false;
     }
 
 } // cleanup_options()
@@ -133,11 +218,25 @@ appl_context_std::cleanup_options(void)
 enum appl_status
 appl_context_std::init_thread_mgr(void)
 {
-    return
+    enum appl_status
+        e_status;
+
+    e_status =
         appl_thread_std_mgr::create_instance(
             m_context,
             &(
                 m_thread_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        b_init_thread_mgr =
+            true;
+    }
+
+    return
+        e_status;
 
 } // init_thread_mgr()
 
@@ -147,15 +246,202 @@ appl_context_std::init_thread_mgr(void)
 void
 appl_context_std::cleanup_thread_mgr(void)
 {
-    if (m_thread_mgr)
+    if (b_init_thread_mgr)
     {
         m_thread_mgr->destroy();
 
         m_thread_mgr =
             0;
+
+        b_init_thread_mgr =
+            false;
     }
 
 } // cleanup_thread_mgr()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::init_mutex_mgr(void)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_mutex_std_mgr::create_instance(
+            m_context,
+            &(
+                m_mutex_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        b_init_mutex_mgr =
+            true;
+    }
+
+    return
+        e_status;
+
+}
+
+//
+//
+//
+void
+    appl_context_std::cleanup_mutex_mgr(void)
+{
+    if (b_init_mutex_mgr)
+    {
+        m_mutex_mgr->destroy();
+
+        m_mutex_mgr =
+            0;
+
+        b_init_mutex_mgr =
+            false;
+    }
+}
+
+//
+//
+//
+enum appl_status
+    appl_context_std::init_file_mgr(void)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_file_std_mgr::create_instance(
+            m_context,
+            &(
+                m_file_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        b_init_file_mgr =
+            true;
+    }
+
+    return
+        e_status;
+}
+
+//
+//
+//
+void
+    appl_context_std::cleanup_file_mgr(void)
+{
+    if (
+        b_init_file_mgr)
+    {
+        m_file_mgr->destroy();
+
+        m_file_mgr =
+            0;
+
+        b_init_file_mgr =
+            false;
+    }
+}
+
+//
+//
+//
+enum appl_status
+    appl_context_std::init_poll_mgr(void)
+{
+    enum appl_status
+        e_status;
+
+#if 0
+    e_status =
+        appl_poll_mgr::create_instance(
+            m_context,
+            &(
+                m_poll_mgr));
+#else
+    e_status =
+        appl_status_not_implemented;
+#endif
+
+    return
+        e_status;
+
+}
+
+//
+//
+//
+void
+    appl_context_std::cleanup_poll_mgr(void)
+{
+    if (
+        b_init_poll_mgr)
+    {
+        m_poll_mgr->destroy();
+
+        m_poll_mgr =
+            0;
+
+        b_init_poll_mgr =
+            false;
+    }
+}
+
+//
+//
+//
+enum appl_status
+    appl_context_std::init_clock(void)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_clock_std::create_instance(
+            m_context,
+            &(
+                m_clock));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        b_init_clock =
+            true;
+    }
+
+    return
+        e_status;
+
+} // init_clock()
+
+//
+//
+//
+void
+    appl_context_std::cleanup_clock(void)
+{
+    if (
+        b_init_clock)
+    {
+        m_clock->destroy();
+
+        m_clock =
+            0;
+
+        b_init_clock =
+            false;
+    }
+
+} // cleanup_clock()
 
 //
 //
@@ -243,7 +529,15 @@ enum appl_status
 //
 //
 appl_context_std::appl_context_std() :
-    appl_context()
+    appl_context(),
+    b_init_heap(),
+    b_init_debug(),
+    b_init_options(),
+    b_init_thread_mgr(),
+    b_init_mutex_mgr(),
+    b_init_file_mgr(),
+    b_init_poll_mgr(),
+    b_init_clock()
 {
 }
 
@@ -284,95 +578,103 @@ enum appl_status
         static_cast<struct appl_context_init_descriptor const *>(
             p_descriptor);
 
-    m_heap =
-        p_context_init_descriptor->p_heap;
-
     e_status =
-        init_debug();
+        init_heap(
+            p_context_init_descriptor->p_heap);
 
     if (
         appl_status_ok
         == e_status)
     {
         e_status =
-            init_options(
-                p_context_init_descriptor->p_context_descriptor);
+            init_debug();
 
         if (
             appl_status_ok
             == e_status)
         {
             e_status =
-                init_thread_mgr();
+                init_options(
+                    p_context_init_descriptor->p_context_descriptor);
 
             if (
                 appl_status_ok
                 == e_status)
             {
                 e_status =
-                    appl_file_std_mgr::create_instance(
-                        this,
-                        &(
-                            m_file_mgr));
+                    init_thread_mgr();
 
                 if (
                     appl_status_ok
                     == e_status)
                 {
                     e_status =
-                        appl_mutex_std_mgr::create_instance(
-                            this,
-                            &(
-                                m_mutex_mgr));
+                        init_file_mgr();
 
                     if (
                         appl_status_ok
                         == e_status)
                     {
+                        e_status =
+                            init_mutex_mgr();
+
+                        if (
+                            appl_status_ok
+                            == e_status)
+                        {
+                            e_status =
+                                init_clock();
+
+                            if (
+                                appl_status_ok
+                                == e_status)
+                            {
+                                if (
+                                    appl_status_ok != e_status)
+                                {
+                                    cleanup_clock();
+                                }
+                            }
+
+                            if (
+                                appl_status_ok != e_status)
+                            {
+                                cleanup_mutex_mgr();
+                            }
+                        }
+
                         if (
                             appl_status_ok != e_status)
                         {
-                            if (m_mutex_mgr)
-                            {
-                                m_mutex_mgr->destroy();
-
-                                m_mutex_mgr =
-                                    0;
-                            }
+                            cleanup_file_mgr();
                         }
                     }
 
                     if (
                         appl_status_ok != e_status)
                     {
-                        if (m_file_mgr)
-                        {
-                            m_file_mgr->destroy();
-
-                            m_file_mgr =
-                                0;
-                        }
+                        cleanup_thread_mgr();
                     }
                 }
 
                 if (
                     appl_status_ok != e_status)
                 {
-                    cleanup_thread_mgr();
+                    cleanup_options();
                 }
             }
 
             if (
                 appl_status_ok != e_status)
             {
-                cleanup_options();
+                cleanup_debug();
             }
         }
 
         if (
             appl_status_ok != e_status)
         {
-            cleanup_debug();
+            cleanup_heap();
         }
     }
 
@@ -392,29 +694,19 @@ enum appl_status
 
     // destroy objects
 
-    if (
-        m_mutex_mgr)
-    {
-        m_mutex_mgr->destroy();
+    cleanup_clock();
 
-        m_mutex_mgr =
-            0;
-    }
+    cleanup_mutex_mgr();
 
-    if (
-        m_file_mgr)
-    {
-        m_file_mgr->destroy();
-
-        m_file_mgr =
-            0;
-    }
+    cleanup_file_mgr();
 
     cleanup_thread_mgr();
 
     cleanup_options();
 
     cleanup_debug();
+
+    cleanup_heap();
 
     e_status =
         appl_status_ok;
