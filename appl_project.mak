@@ -175,7 +175,7 @@ $(APPL_DST) :
 $(APPL_DST)test_appl.exe : $(APPL_TEST_OBJS) | $(APPL_DST)
 	@echo linking $(APPL_DST)test_appl.exe
 	@echo -o $(APPL_DST)test_appl.exe $(APPL_CXXFLAGS) $(APPL_TEST_OBJS) $(APPL_TEST_LIBS) > $(APPL_DST)test_appl.exe.cmd
-	@$(APPL_CXX) @$(APPL_DST)test_appl.exe.cmd
+	@$(APPL_CC) @$(APPL_DST)test_appl.exe.cmd
 
 # Compile of C source files
 $(APPL_DST)%.o : $(APPL_SRC)%.c | $(APPL_DST)
@@ -199,8 +199,10 @@ clean: appl_clean
 # Define a phony rule for clean of appl objects
 .PHONY: appl_clean
 appl_clean:
-	-rm $(APPL_DST)*.o
-	-rm $(APPL_DST)*.cmd
+	-rm -f $(APPL_DST)*.o
+	-rm -f $(APPL_DST)*.cmd
+	-rm -f $(APPL_DST)*.d
+	-rm -f $(APPL_DST)*.exe
 
 # Include automatic header file dependency files
 -include $(APPL_DST)*.d
