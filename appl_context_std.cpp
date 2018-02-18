@@ -52,6 +52,10 @@
 
 #include "appl_clock_std.h"
 
+#include "appl_event_mgr.h"
+
+#include "appl_event_std_mgr.h"
+
 struct appl_context_init_descriptor
 {
     struct appl_context_descriptor const *
@@ -447,6 +451,53 @@ void
 //
 //
 enum appl_status
+    appl_context_std::init_event_mgr(void)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_event_std_mgr::s_create(
+            m_context,
+            &(
+                m_event_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        b_init_event_mgr =
+            true;
+    }
+
+    return
+        e_status;
+
+} // init_event_mgr()
+
+//
+//
+//
+void
+    appl_context_std::cleanup_event_mgr(void)
+{
+    if (
+        b_init_event_mgr)
+    {
+        m_event_mgr->destroy();
+
+        m_event_mgr =
+            0;
+
+        b_init_event_mgr =
+            false;
+    }
+} // cleanup_event_mgr()
+
+//
+//
+//
+enum appl_status
     appl_context_std::create_instance(
         class appl_context_descriptor const * const
             p_context_descriptor,
@@ -537,7 +588,8 @@ appl_context_std::appl_context_std() :
     b_init_mutex_mgr(),
     b_init_file_mgr(),
     b_init_poll_mgr(),
-    b_init_clock()
+    b_init_clock(),
+    b_init_event_mgr()
 {
 }
 
@@ -629,6 +681,20 @@ enum appl_status
                                 appl_status_ok
                                 == e_status)
                             {
+                                e_status =
+                                    init_event_mgr();
+
+                                if (
+                                    appl_status_ok
+                                    == e_status)
+                                {
+                                    if (
+                                        appl_status_ok != e_status)
+                                    {
+                                        cleanup_event_mgr();
+                                    }
+                                }
+
                                 if (
                                     appl_status_ok != e_status)
                                 {
@@ -693,6 +759,8 @@ enum appl_status
         e_status;
 
     // destroy objects
+
+    cleanup_event_mgr();
 
     cleanup_clock();
 

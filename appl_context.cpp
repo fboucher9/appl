@@ -34,7 +34,8 @@ appl_context::appl_context() :
     m_mutex_mgr(),
     m_file_mgr(),
     m_poll_mgr(),
-    m_clock()
+    m_clock(),
+    m_event_mgr()
 {
 }
 
