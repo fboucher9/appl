@@ -120,12 +120,15 @@ appl_clock_std::v_delay(
     if (
         i_time_freq)
     {
-        i_time_usec = (
-            (
-                static_cast<appl_ull_t>(
-                    i_time_count)
-                * 1000000ul)
-            / i_time_freq);
+        i_time_usec =
+            static_cast<unsigned long int>(
+                (
+                    (
+                        static_cast<appl_ull_t>(
+                            i_time_count)
+                        * 1000000ul)
+                    / i_time_freq)
+                & 0xFFFFFFFFul);
 
         usleep(
             static_cast<useconds_t>(

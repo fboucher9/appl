@@ -4,6 +4,8 @@
 
 */
 
+#if ! defined _WIN32
+
 #include <poll.h>
 
 #include "appl_status.h"
@@ -347,5 +349,7 @@ void *
             0);
 
 } // thread_entry()
+
+#endif /* #if ! defined _WIN32 */
 
 /* end-of-file: appl_poll_mgr.cpp */

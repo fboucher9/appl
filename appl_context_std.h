@@ -30,7 +30,7 @@ class appl_context_std : public appl_context
         static
         enum appl_status
             create_instance(
-                class appl_context_descriptor const * const
+                struct appl_context_descriptor const * const
                     p_context_descriptor,
                 class appl_context * * const
                     r_context);

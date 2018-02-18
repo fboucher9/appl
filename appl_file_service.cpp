@@ -50,7 +50,7 @@ enum appl_status
     e_status =
         p_file_mgr->v_create_node(
             p_file_descriptor,
-            reinterpret_cast<struct appl_file_node * *>(
+            reinterpret_cast<class appl_file_node * *>(
                 r_file_handle));
 
     return

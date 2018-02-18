@@ -145,8 +145,9 @@ enum appl_status
         a_pathname =
             static_cast<char *>(
                 malloc(
-                    p_file_descriptor->o_name.o_max.pc_uchar
-                    - p_file_descriptor->o_name.o_min.pc_uchar));
+                    static_cast<appl_size_t>(
+                        p_file_descriptor->o_name.o_max.pc_uchar
+                        - p_file_descriptor->o_name.o_min.pc_uchar)));
 
         if (
             a_pathname)
@@ -154,8 +155,9 @@ enum appl_status
             memcpy(
                 a_pathname,
                 p_file_descriptor->o_name.o_min.pc_uchar,
-                p_file_descriptor->o_name.o_max.pc_uchar
-                - p_file_descriptor->o_name.o_min.pc_uchar);
+                static_cast<appl_size_t>(
+                    p_file_descriptor->o_name.o_max.pc_uchar
+                    - p_file_descriptor->o_name.o_min.pc_uchar));
 
             *(
                 a_pathname
@@ -294,8 +296,9 @@ enum appl_status
             m_fd,
             static_cast<char *>(
                 p_buf->o_min.p_void),
-            p_buf->o_max.pc_uchar
-            - p_buf->o_min.pc_uchar);
+            static_cast<appl_size_t>(
+                p_buf->o_max.pc_uchar
+                - p_buf->o_min.pc_uchar));
 
     if (
         i_read_result > 0)
@@ -338,8 +341,9 @@ enum appl_status
                 m_fd,
                 static_cast<char const *>(
                     p_buf->o_min.pc_void),
-                p_buf->o_max.pc_uchar
-                - p_buf->o_min.pc_uchar));
+                static_cast<appl_size_t>(
+                    p_buf->o_max.pc_uchar
+                    - p_buf->o_min.pc_uchar)));
 
     if (
         0 < i_write_result)

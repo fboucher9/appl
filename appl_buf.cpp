@@ -573,7 +573,7 @@ appl_buf_print_number(
     char
         b_negative;
 
-    char
+    unsigned char
         b_sign;
 
     unsigned char
@@ -696,9 +696,9 @@ appl_buf_print_number(
     e_status =
         appl_status_ok;
 
-    if (i_width > (i_count + b_sign))
+    if (i_width > (i_count + static_cast<unsigned int>(b_sign)))
     {
-        i_width = (i_width - i_count - b_sign);
+        i_width = (i_width - i_count - static_cast<unsigned int>(b_sign));
     }
 
     /* space padding for right align */

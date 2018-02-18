@@ -1,5 +1,11 @@
 # See LICENSE for license details
 
+# Select a toolchain
+# May be gnu, clang, mingw
+ifndef APPL_TOOLCHAIN
+    APPL_TOOLCHAIN = gnu
+endif
+
 # Location of source code files
 ifndef APPL_SRC
     APPL_SRC =
@@ -7,7 +13,19 @@ endif
 
 # Location of object files
 ifndef APPL_DST
-    APPL_DST = .obj/
+    APPL_DST = .obj$(APPL_TOOLCHAIN)/
+endif
+
+# Setup clang toolchain program
+ifeq ($(APPL_TOOLCHAIN),clang)
+    APPL_CC = clang
+    APPL_CXX = clang++
+endif
+
+# Setup mingw toolchain program
+ifeq ($(APPL_TOOLCHAIN),mingw)
+    APPL_CC = x86_64-w64-mingw32-gcc
+    APPL_CXX = x86_64-w64-mingw32-g++
 endif
 
 # Select a C compiler program
@@ -86,6 +104,7 @@ APPL_TEST_OBJS = \
 APPL_FLAGS = \
     -g \
     -O0 \
+    -D_BSD_SOURCE \
     -pedantic \
     -Wall \
     -Wextra \
@@ -161,6 +180,27 @@ APPL_CXXFLAGS += \
     -fno-rtti \
     -fno-exceptions
 
+# Setup clang compiler options
+ifeq ($(APPL_TOOLCHAIN),clang)
+
+APPL_FLAGS = \
+    -g \
+    -O0 \
+    -Weverything \
+    -D_BSD_SOURCE
+
+APPL_CFLAGS = \
+    $(APPL_FLAGS) \
+    -std=c89
+
+APPL_CXXFLAGS = \
+    $(APPL_FLAGS) \
+    -std=c++98 \
+    -fno-rtti \
+    -fno-exceptions
+
+endif
+
 # List of libraries required to link test application
 APPL_TEST_LIBS = -lpthread
 
@@ -179,7 +219,7 @@ $(APPL_DST) :
 # Link of test application
 $(APPL_DST)test_appl.exe : $(APPL_TEST_OBJS) | $(APPL_DST)
 	@echo linking $(APPL_DST)test_appl.exe
-	@echo -o $(APPL_DST)test_appl.exe $(APPL_CXXFLAGS) $(APPL_TEST_OBJS) $(APPL_TEST_LIBS) > $(APPL_DST)test_appl.exe.cmd
+	@echo -o $(APPL_DST)test_appl.exe $(APPL_CFLAGS) $(APPL_TEST_OBJS) $(APPL_TEST_LIBS) > $(APPL_DST)test_appl.exe.cmd
 	@$(APPL_CC) @$(APPL_DST)test_appl.exe.cmd
 
 # Compile of C source files

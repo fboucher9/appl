@@ -1,7 +1,6 @@
 /* See LICENSE for license details */
 
 /* Include unistd.h for usleep() function */
-#define _BSD_SOURCE
 #include <unistd.h>
 
 #include <stdio.h>
@@ -363,10 +362,14 @@ appl_main(
         }
     }
 
-    if (0)
     {
-        appl_debug_break(
-            p_context_handle);
+        static char g_test_debug_break = 0;
+
+        if (g_test_debug_break)
+        {
+            appl_debug_break(
+                p_context_handle);
+        }
     }
 
     if (1)

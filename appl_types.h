@@ -10,6 +10,11 @@
 
 #define INC_APPL_TYPES_H
 
+#if defined __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wlong-long"
+#endif /* #if defined __GNUC__ */
+
 /*
 
 Type: appl_size_t
@@ -91,15 +96,11 @@ Comments:
         versions of the compiler.  Use __int64 in that case.
 
 */
+typedef signed long long int appl_sll_t;
+typedef unsigned long long int appl_ull_t;
+
 #if defined __GNUC__
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wlong-long"
-typedef signed long long int appl_sll_t;
-typedef unsigned long long int appl_ull_t;
 #pragma GCC diagnostic pop
-#else /* #if defined __GNUC__ */
-typedef signed long long int appl_sll_t;
-typedef unsigned long long int appl_ull_t;
 #endif /* #if defined __GNUC__ */
 
 /* end-of-file: appl_types.h */
