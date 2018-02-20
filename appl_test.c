@@ -31,8 +31,8 @@ appl_test_sleep_msec(
         printf("fallback sleep\n");
 
         usleep(
-            (useconds_t)(
-                i_msec_count * 1000ul));
+            (unsigned int)(
+                i_msec_count * 1000u));
     }
 
 }
