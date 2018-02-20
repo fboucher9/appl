@@ -40,6 +40,9 @@ class appl_heap_std : public appl_heap
         signed long int
             m_alloc_count;
 
+        unsigned long int
+            ul_padding[1u];
+
     private:
 
         appl_heap_std(

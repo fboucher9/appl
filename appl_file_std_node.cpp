@@ -296,9 +296,10 @@ enum appl_status
             m_fd,
             static_cast<char *>(
                 p_buf->o_min.p_void),
-            static_cast<appl_size_t>(
-                p_buf->o_max.pc_uchar
-                - p_buf->o_min.pc_uchar));
+            static_cast<unsigned int>(
+                static_cast<appl_size_t>(
+                    p_buf->o_max.pc_uchar
+                    - p_buf->o_min.pc_uchar)));
 
     if (
         i_read_result > 0)
@@ -341,9 +342,10 @@ enum appl_status
                 m_fd,
                 static_cast<char const *>(
                     p_buf->o_min.pc_void),
-                static_cast<appl_size_t>(
-                    p_buf->o_max.pc_uchar
-                    - p_buf->o_min.pc_uchar)));
+                static_cast<unsigned int>(
+                    static_cast<appl_size_t>(
+                        p_buf->o_max.pc_uchar
+                        - p_buf->o_min.pc_uchar))));
 
     if (
         0 < i_write_result)
