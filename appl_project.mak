@@ -2,103 +2,98 @@
 
 # Select a toolchain
 # May be gnu, clang, mingw
-ifndef APPL_TOOLCHAIN
-    APPL_TOOLCHAIN = gnu
-endif
+APPL_TOOLCHAIN ?= gnu
+
+# Verbose output of executed commands
+APPL_VERBOSE ?= @
 
 # Location of source code files
-ifndef APPL_SRC
-    APPL_SRC =
-endif
+APPL_SRC ?=
 
 # Location of object files
-ifndef APPL_DST
-    APPL_DST = .obj$(APPL_TOOLCHAIN)/
-endif
+APPL_DST ?= .obj$(APPL_TOOLCHAIN)/
 
 # Setup clang toolchain program
 ifeq ($(APPL_TOOLCHAIN),clang)
-    APPL_CC = clang
-    APPL_CXX = clang++
+    APPL_CC ?= clang
+    APPL_CXX ?= clang++
 endif
 
 # Setup mingw toolchain program
 ifeq ($(APPL_TOOLCHAIN),mingw)
-    APPL_CC = x86_64-w64-mingw32-gcc
-    APPL_CXX = x86_64-w64-mingw32-g++
+    APPL_CC ?= x86_64-w64-mingw32-gcc
+    APPL_CXX ?= x86_64-w64-mingw32-g++
 endif
 
 # Select a C compiler program
-ifndef APPL_CC
-    APPL_CC = $(CC)
-endif
+APPL_CC ?= $(CC)
 
 # Select a C++ compiler program
-ifndef APPL_CXX
-    APPL_CXX = $(CXX)
-endif
+APPL_CXX ?= $(CXX)
 
 # Select base C compiler flags
-ifndef APPL_CFLAGS
-    APPL_CFLAGS = $(CFLAGS)
-endif
+APPL_CFLAGS ?= $(CFLAGS)
 
 # Select base C++ compiler flags
-ifndef APPL_CXXFLAGS
-    APPL_CXXFLAGS = $(CXXFLAGS)
-endif
+APPL_CXXFLAGS ?= $(CXXFLAGS)
+
+APPL_TEST_C_DEPS = \
+    appl_test
+
+APPL_TEST_CXX_DEPS = \
+    appl \
+    appl_buf \
+    appl_list \
+    appl_object \
+    appl_object_handle \
+    appl_clock_handle \
+    appl_clock_service \
+    appl_clock \
+    appl_clock_std \
+    appl_context \
+    appl_context_std \
+    appl_context_handle \
+    appl_debug \
+    appl_debug_std \
+    appl_debug_handle \
+    appl_event_handle \
+    appl_event_service \
+    appl_event_node \
+    appl_event_mgr \
+    appl_event_std_mgr \
+    appl_file_handle \
+    appl_file_service \
+    appl_file_node \
+    appl_file_mgr \
+    appl_file_std_mgr \
+    appl_file_std_node \
+    appl_heap \
+    appl_heap_std \
+    appl_heap_handle \
+    appl_options \
+    appl_options_std \
+    appl_thread_handle \
+    appl_thread_node \
+    appl_thread_std_node \
+    appl_thread_mgr \
+    appl_thread_std_mgr \
+    appl_mutex_handle \
+    appl_mutex_service \
+    appl_mutex_node \
+    appl_mutex_mgr \
+    appl_mutex_std_mgr \
+    appl_mutex_std_node \
+    appl_node \
+    appl_node_iterator \
+    appl_poll_handle \
+    appl_poll_service \
+    appl_poll_mgr \
+    appl_poll_node
 
 # List of object files required to link test application
 APPL_TEST_OBJS = \
-    $(APPL_DST)appl.o \
-    $(APPL_DST)appl_buf.o \
-    $(APPL_DST)appl_list.o \
-    $(APPL_DST)appl_object.o \
-    $(APPL_DST)appl_object_handle.o \
-    $(APPL_DST)appl_clock_handle.o \
-    $(APPL_DST)appl_clock_service.o \
-    $(APPL_DST)appl_clock.o \
-    $(APPL_DST)appl_clock_std.o \
-    $(APPL_DST)appl_context.o \
-    $(APPL_DST)appl_context_std.o \
-    $(APPL_DST)appl_context_handle.o \
-    $(APPL_DST)appl_debug.o \
-    $(APPL_DST)appl_debug_std.o \
-    $(APPL_DST)appl_debug_handle.o \
-    $(APPL_DST)appl_event_handle.o \
-    $(APPL_DST)appl_event_service.o \
-    $(APPL_DST)appl_event_node.o \
-    $(APPL_DST)appl_event_mgr.o \
-    $(APPL_DST)appl_event_std_mgr.o \
-    $(APPL_DST)appl_file_handle.o \
-    $(APPL_DST)appl_file_service.o \
-    $(APPL_DST)appl_file_node.o \
-    $(APPL_DST)appl_file_mgr.o \
-    $(APPL_DST)appl_file_std_mgr.o \
-    $(APPL_DST)appl_file_std_node.o \
-    $(APPL_DST)appl_heap.o \
-    $(APPL_DST)appl_heap_std.o \
-    $(APPL_DST)appl_heap_handle.o \
-    $(APPL_DST)appl_options.o \
-    $(APPL_DST)appl_options_std.o \
-    $(APPL_DST)appl_thread_handle.o \
-    $(APPL_DST)appl_thread_node.o \
-    $(APPL_DST)appl_thread_std_node.o \
-    $(APPL_DST)appl_thread_mgr.o \
-    $(APPL_DST)appl_thread_std_mgr.o \
-    $(APPL_DST)appl_mutex_handle.o \
-    $(APPL_DST)appl_mutex_service.o \
-    $(APPL_DST)appl_mutex_node.o \
-    $(APPL_DST)appl_mutex_mgr.o \
-    $(APPL_DST)appl_mutex_std_mgr.o \
-    $(APPL_DST)appl_mutex_std_node.o \
-    $(APPL_DST)appl_node.o \
-    $(APPL_DST)appl_node_iterator.o \
-    $(APPL_DST)appl_poll_handle.o \
-    $(APPL_DST)appl_poll_service.o \
-    $(APPL_DST)appl_poll_mgr.o \
-    $(APPL_DST)appl_poll_node.o \
-    $(APPL_DST)appl_test.o
+    $(foreach x,$(APPL_TEST_C_DEPS), $(APPL_DST)$(x).o ) \
+    $(foreach x,$(APPL_TEST_CXX_DEPS), $(APPL_DST)$(x).o )
 
 # Common compiler flags for C and C++
 APPL_FLAGS = \
@@ -214,25 +209,105 @@ appl_test: $(APPL_DST)test_appl.exe
 
 $(APPL_DST) :
 	@echo create $(APPL_DST) folder
-	-@mkdir -p $(APPL_DST)
+	-$(APPL_VERBOSE)mkdir -p $(APPL_DST)
+
+# $1: output
+# $2: inputs
+# $3: flags
+# $4: libs
+define APPL_TOOLCHAIN_LINKER-gnu
+	@echo linking $(1) with gcc
+	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) $(4) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_CC) @$(1).cmd
+endef
+
+define APPL_TOOLCHAIN_LINKER-clang
+	@echo linking $(1) with clang
+	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) $(4) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_CC) @$(1).cmd
+endef
+
+define APPL_TOOLCHAIN_LINKER-mingw
+	@echo linking $(1) with mingw
+	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) -static $(4) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_CC) @$(1).cmd
+endef
 
 # Link of test application
 $(APPL_DST)test_appl.exe : $(APPL_TEST_OBJS) | $(APPL_DST)
-	@echo linking $(APPL_DST)test_appl.exe
-	@echo -o $(APPL_DST)test_appl.exe $(APPL_CFLAGS) $(APPL_TEST_OBJS) $(APPL_TEST_LIBS) > $(APPL_DST)test_appl.exe.cmd
-	@$(APPL_CC) @$(APPL_DST)test_appl.exe.cmd
+	$(call APPL_TOOLCHAIN_LINKER-$(APPL_TOOLCHAIN),$(APPL_DST)test_appl.exe,$(APPL_TEST_OBJS),$(APPL_CFLAGS),$(APPL_TEST_LIBS))
 
-# Compile of C source files
-$(APPL_DST)%.o : $(APPL_SRC)%.c | $(APPL_DST)
-	@echo compiling $@
-	@echo -c -o $@ $(APPL_CFLAGS) -MT $@ -MMD -MP -MF $@.d $< > $@.cmd
-	@$(APPL_CC) @$@.cmd
+#
+# $1: output
+# $2: input
+# $3: flags
+define APPL_TOOLCHAIN_CC-gnu
+	@echo compiling $(2) with gcc
+	$(APPL_VERBOSE)$(APPL_CC) -c -o $(1) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2)
+endef
 
-# Compile of C++ source files
-$(APPL_DST)%.o : $(APPL_SRC)%.cpp | $(APPL_DST)
-	@echo compiling $@
-	@echo -c -o $@ $(APPL_CXXFLAGS) -MT $@ -MMD -MP -MF $@.d $< > $@.cmd
-	@$(APPL_CXX) @$@.cmd
+define APPL_TOOLCHAIN_CC-clang
+	@echo compiling $(2) with clang
+	$(APPL_VERBOSE)$(APPL_CC) -c -o $(1) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2)
+endef
+
+define APPL_TOOLCHAIN_CC-mingw
+	@echo compiling $(2) with mingw-gcc
+	$(APPL_VERBOSE)$(APPL_CC) -c -o $(1) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2)
+endef
+
+# $1: target name
+define APPL_TEST_BASE_RULES
+.PHONY : $$($(1)-label)
+$$($(1)-label) : $$($(1)-output)
+$$($(1)-output) : $$($(1)-input)
+	$$(call $$($(1)-compiler),$$($(1)-output),$$($(1)-input),$$($(1)-flags))
+endef
+
+#
+# $1: target name
+define APPL_TEST_C_RULES
+$(1)-label ?= $(1)_c
+$(1)-output ?= $$(APPL_DST)$(1).o
+$(1)-input ?= $$(APPL_SRC)$(1).c
+$(1)-flags ?= $$(APPL_CFLAGS)
+$(1)-compiler ?= APPL_TOOLCHAIN_CC-$$(APPL_TOOLCHAIN)
+$(call APPL_TEST_BASE_RULES,$(1))
+endef
+
+$(foreach x,$(APPL_TEST_C_DEPS),$(eval $(call APPL_TEST_C_RULES,$(x))))
+
+#
+# $1: output
+# $2: input
+# $3: flags
+define APPL_TOOLCHAIN_CXX-gnu
+	@echo compiling $(2) with g++
+	$(APPL_VERBOSE)$(APPL_CXX) -c -o $(1) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2)
+endef
+
+define APPL_TOOLCHAIN_CXX-clang
+	@echo compiling $(2) with clang++
+	$(APPL_VERBOSE)$(APPL_CXX) -c -o $(1) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2)
+endef
+
+define APPL_TOOLCHAIN_CXX-mingw
+	@echo compiling $(2) with mingw-g++
+	$(APPL_VERBOSE)$(APPL_CXX) -c -o $(1) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2)
+endef
+
+#
+# $1: target name
+define APPL_TEST_CXX_RULES
+$(1)-label ?= $(1)_cpp
+$(1)-output ?= $$(APPL_DST)$(1).o
+$(1)-input ?= $$(APPL_SRC)$(1).cpp
+$(1)-flags ?= $$(APPL_CXXFLAGS)
+$(1)-compiler ?= APPL_TOOLCHAIN_CXX-$$(APPL_TOOLCHAIN)
+$(call APPL_TEST_BASE_RULES,$(1))
+endef
+
+$(foreach x,$(APPL_TEST_CXX_DEPS),$(eval $(call APPL_TEST_CXX_RULES,$(x))))
 
 # Dependency on makefile and appl_project.mak
 $(APPL_DST)test_appl.exe $(APPL_TEST_OBJS) : $(APPL_SRC)makefile $(APPL_SRC)appl_project.mak
@@ -244,10 +319,11 @@ clean: appl_clean
 # Define a phony rule for clean of appl objects
 .PHONY: appl_clean
 appl_clean:
-	-rm -f $(APPL_DST)*.o
-	-rm -f $(APPL_DST)*.cmd
-	-rm -f $(APPL_DST)*.d
-	-rm -f $(APPL_DST)*.exe
+	@echo cleaning
+	-$(APPL_VERBOSE)rm -f $(APPL_DST)*.o
+	-$(APPL_VERBOSE)rm -f $(APPL_DST)*.cmd
+	-$(APPL_VERBOSE)rm -f $(APPL_DST)*.d
+	-$(APPL_VERBOSE)rm -f $(APPL_DST)*.exe
 
 # Include automatic header file dependency files
 -include $(APPL_DST)*.d
