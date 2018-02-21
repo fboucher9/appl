@@ -1,5 +1,10 @@
 # See LICENSE for license details
 
+# TODO: compile multiple toolchain in a single make
+# TODO: compile debug and release in a single make
+# TODO: support for src files in any subfolder
+# TODO: detect folder name of a src file
+
 # Select a toolchain
 # May be gnu, clang, mingw
 APPL_TOOLCHAIN ?= gnu
@@ -32,6 +37,7 @@ APPL_FLAGS-gnu = \
     -g \
     -O0 \
     -D_BSD_SOURCE \
+    -I$(APPL_SRC). \
     -pedantic \
     -Wall \
     -Wextra \
@@ -115,7 +121,8 @@ APPL_FLAGS-clang = \
     -g \
     -O0 \
     -Weverything \
-    -D_BSD_SOURCE
+    -D_BSD_SOURCE \
+    -I$(APPL_SRC).
 
 APPL_CFLAGS-clang = \
     $(APPL_FLAGS-clang) \
@@ -143,57 +150,57 @@ $(info cflags are $(APPL_CFLAGS-$(APPL_TOOLCHAIN)))
 $(info cxxflags are $(APPL_CXXFLAGS-$(APPL_TOOLCHAIN)))
 
 APPL_TEST_C_DEPS = \
-    appl_test
+    appl_test.c
 
 APPL_TEST_CXX_DEPS = \
-    appl \
-    appl_buf \
-    appl_list \
-    appl_object \
-    appl_object_handle \
-    appl_clock_handle \
-    appl_clock_service \
-    appl_clock \
-    appl_clock_std \
-    appl_context \
-    appl_context_std \
-    appl_context_handle \
-    appl_debug \
-    appl_debug_std \
-    appl_debug_handle \
-    appl_event_handle \
-    appl_event_service \
-    appl_event_node \
-    appl_event_mgr \
-    appl_event_std_mgr \
-    appl_file_handle \
-    appl_file_service \
-    appl_file_node \
-    appl_file_mgr \
-    appl_file_std_mgr \
-    appl_file_std_node \
-    appl_heap \
-    appl_heap_std \
-    appl_heap_handle \
-    appl_options \
-    appl_options_std \
-    appl_thread_handle \
-    appl_thread_node \
-    appl_thread_std_node \
-    appl_thread_mgr \
-    appl_thread_std_mgr \
-    appl_mutex_handle \
-    appl_mutex_service \
-    appl_mutex_node \
-    appl_mutex_mgr \
-    appl_mutex_std_mgr \
-    appl_mutex_std_node \
-    appl_node \
-    appl_node_iterator \
-    appl_poll_handle \
-    appl_poll_service \
-    appl_poll_mgr \
-    appl_poll_node
+    appl.cpp \
+    appl_buf.cpp \
+    appl_list.cpp \
+    appl_object.cpp \
+    appl_object_handle.cpp \
+    appl_clock_handle.cpp \
+    appl_clock_service.cpp \
+    appl_clock.cpp \
+    appl_clock_std.cpp \
+    appl_context.cpp \
+    appl_context_std.cpp \
+    appl_context_handle.cpp \
+    appl_debug.cpp \
+    appl_debug_std.cpp \
+    appl_debug_handle.cpp \
+    appl_event_handle.cpp \
+    appl_event_service.cpp \
+    appl_event_node.cpp \
+    appl_event_mgr.cpp \
+    appl_event_std_mgr.cpp \
+    appl_file_handle.cpp \
+    appl_file_service.cpp \
+    appl_file_node.cpp \
+    appl_file_mgr.cpp \
+    appl_file_std_mgr.cpp \
+    appl_file_std_node.cpp \
+    appl_heap.cpp \
+    appl_heap_std.cpp \
+    appl_heap_handle.cpp \
+    appl_options.cpp \
+    appl_options_std.cpp \
+    appl_thread_handle.cpp \
+    appl_thread_node.cpp \
+    appl_thread_std_node.cpp \
+    appl_thread_mgr.cpp \
+    appl_thread_std_mgr.cpp \
+    appl_mutex_handle.cpp \
+    appl_mutex_service.cpp \
+    appl_mutex_node.cpp \
+    appl_mutex_mgr.cpp \
+    appl_mutex_std_mgr.cpp \
+    appl_mutex_std_node.cpp \
+    appl_node.cpp \
+    appl_node_iterator.cpp \
+    appl_poll_handle.cpp \
+    appl_poll_service.cpp \
+    appl_poll_mgr.cpp \
+    appl_poll_node.cpp
 
 # List of object files required to link test application
 APPL_TEST_OBJS = \
@@ -262,18 +269,18 @@ endef
 
 # $1: target name
 define APPL_TEST_BASE_RULES
-.PHONY : $$($(1)-label)
-$$($(1)-label) : $$($(1)-output)
-$$($(1)-output) : $$($(1)-input) | $$(APPL_DST)
+$$($(1)-output) : $$($(1)-input)
+	-$$(APPL_VERBOSE)mkdir -p $$($(1)-dst)
 	$$(call $$($(1)-compiler),$$($(1)-output),$$($(1)-input),$$($(1)-flags))
 endef
 
 #
 # $1: target name
 define APPL_TEST_C_RULES
-$(1)-label ?= $(1)_c
 $(1)-output ?= $$(APPL_DST)$(1).o
-$(1)-input ?= $$(APPL_SRC)$(1).c
+$(1)-input ?= $$(APPL_SRC)$(1)
+$(1)-dst ?= $$(dir $$($(1)-output))
+$(1)-src ?= $$(dir $$($(1)-input))
 $(1)-flags ?= $$(APPL_CFLAGS-$$(APPL_TOOLCHAIN))
 $(1)-compiler ?= APPL_TOOLCHAIN_CC-$$(APPL_TOOLCHAIN)
 $(call APPL_TEST_BASE_RULES,$(1))
@@ -303,9 +310,10 @@ endef
 #
 # $1: target name
 define APPL_TEST_CXX_RULES
-$(1)-label ?= $(1)_cpp
 $(1)-output ?= $$(APPL_DST)$(1).o
-$(1)-input ?= $$(APPL_SRC)$(1).cpp
+$(1)-input ?= $$(APPL_SRC)$(1)
+$(1)-dst ?= $$(dir $$($(1)-output))
+$(1)-src ?= $$(dir $$($(1)-input))
 $(1)-flags ?= $$(APPL_CXXFLAGS-$$(APPL_TOOLCHAIN))
 $(1)-compiler ?= APPL_TOOLCHAIN_CXX-$$(APPL_TOOLCHAIN)
 $(call APPL_TEST_BASE_RULES,$(1))
