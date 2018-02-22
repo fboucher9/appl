@@ -131,7 +131,7 @@ appl_clock_std::v_delay(
                 & 0xFFFFFFFFul);
 
         usleep(
-            static_cast<useconds_t>(
+            static_cast<unsigned int>(
                 i_time_usec));
 
         e_status =

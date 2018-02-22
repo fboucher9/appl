@@ -101,7 +101,7 @@ class appl_object
         static
         void
         operator delete(
-            void * const
+            void *
                 p_buf);
 
         static
@@ -115,7 +115,7 @@ class appl_object
         static
         void
         operator delete (
-            void * const
+            void *
                 p_buf,
             void * const
                 p_placement);

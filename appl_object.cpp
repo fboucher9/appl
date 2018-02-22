@@ -206,7 +206,7 @@ appl_object::operator new(
 
 void
 appl_object::operator delete(
-    void * const
+    void *
         p_buf)
 {
     static_cast<void>(
@@ -228,7 +228,7 @@ appl_object::operator new(
 
 void
 appl_object::operator delete (
-    void * const
+    void *
         p_buf,
     void * const
         p_placement)
