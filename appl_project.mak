@@ -7,7 +7,7 @@
 
 # Select a toolchain
 # May be gnu, clang, mingw
-APPL_TOOLCHAIN ?= gnu clang mingw
+APPL_TOOLCHAIN ?= gnu
 
 # Verbose output of executed commands
 APPL_VERBOSE ?= @
@@ -277,6 +277,7 @@ else ifeq "$(suffix $(1))" ".cpp"
 $(3)-$(2)-$(1)-flags ?= $$($(3)-$(2)-cxx-flags)
 $(3)-$(2)-$(1)-compiler ?= $$($(3)-$(2)-cxx-compiler)
 endif
+APPL_HEADER_DEPS += $$($(3)-$(2)-$(1)-output).d
 $$($(3)-$(2)-$(1)-output) : $$($(3)-$(2)-$(1)-input) $(APPL_SRC)appl_project.mak
 	-$$(APPL_VERBOSE)mkdir -p $$($(3)-$(2)-$(1)-dst)
 	$$(call $$($(3)-$(2)-$(1)-compiler), $$($(3)-$(2)-$(1)-output),$$($(3)-$(2)-$(1)-input),$$($(3)-$(2)-$(1)-flags))
@@ -327,6 +328,6 @@ appl_clean:
 	-$(APPL_VERBOSE)rm -rf .obj/
 
 # Include automatic header file dependency files
--include .obj*/*.d
+include $(wildcard $(APPL_HEADER_DEPS))
 
 # end-of-file: appl_project.mak
