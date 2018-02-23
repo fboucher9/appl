@@ -7,7 +7,7 @@
 
 # Select a toolchain
 # May be gnu, clang, mingw
-APPL_TOOLCHAIN ?= gnu
+APPL_TOOLCHAIN ?= gnu clang mingw
 
 # Verbose output of executed commands
 APPL_VERBOSE ?= @
@@ -138,6 +138,8 @@ APPL_CXXFLAGS-mingw = $(APPL_CXXFLAGS-gnu)
 
 APPL_TARGETS += test_appl
 
+test_appl-cfgs = $(APPL_TOOLCHAIN)
+
 test_appl-deps = \
     appl_test.c \
     appl.cpp \
@@ -190,7 +192,15 @@ test_appl-deps = \
     appl_poll_node.cpp
 
 # List of libraries required to link test application
-test_appl-libs = -lpthread
+test_appl-libs = pthread rt
+
+APPL_LIBRARY-pthread-gnu-lflags = -lpthread
+APPL_LIBRARY-pthread-clang-lflags = -lpthread
+APPL_LIBRARY-pthread-mingw-lflags = -lpthread
+
+APPL_LIBRARY-rt-gnu-lflags = -lrt
+APPL_LIBRARY-rt-clang-lflags = -lrt
+APPL_LIBRARY-rt-mingw-lflags =
 
 # $1: output
 # $2: inputs
@@ -198,19 +208,19 @@ test_appl-libs = -lpthread
 # $4: libs
 define appl-script-LINKER-gnu
 	@echo linking $(1) with gcc
-	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) $(4) > $(1).cmd
+	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-gnu-lflags)) > $(1).cmd
 	$(APPL_VERBOSE)$(APPL_CC-gnu) @$(strip $(1)).cmd
 endef
 
 define appl-script-LINKER-clang
 	@echo linking $(1) with clang
-	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) $(4) > $(1).cmd
+	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-clang-lflags)) > $(1).cmd
 	$(APPL_VERBOSE)$(APPL_CC-clang) @$(strip $(1)).cmd
 endef
 
 define appl-script-LINKER-mingw
 	@echo linking $(1) with mingw
-	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) -static $(4) > $(1).cmd
+	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) -static $(foreach x,$(4),$(APPL_LIBRARY-$(x)-mingw-lflags)) > $(1).cmd
 	$(APPL_VERBOSE)$(APPL_CC-mingw) @$(strip $(1)).cmd
 endef
 
@@ -300,22 +310,30 @@ $(1)-$(2)-c-flags ?= $$(APPL_CFLAGS-$(2))
 $(1)-$(2)-cxx-flags ?= $$(APPL_CXXFLAGS-$(2))
 $(1)-$(2)-deps ?= $$($(1)-deps)
 $(1)-$(2)-libs ?= $$($(1)-libs)
-$(1)-$(2)-dst ?= .obj/$(1)-$(2)/
-$(1)-$(2)-src ?= $(AAPL_SRC)
+$(1)-$(2)-dst ?= .obj/$(1)/$(2)/
+$(1)-$(2)-src ?= $(APPL_SRC)
 $(1)-$(2)-output ?= $$($(1)-$(2)-dst)$(1).exe
 $(1)-$(2)-input ?= $$(foreach y, $$($(1)-$(2)-deps), $$($(1)-$(2)-dst)$$(y).o)
 $(1)-$(2)-c-compiler ?= appl-script-CC-$(2)
 $(1)-$(2)-cxx-compiler ?= appl-script-CXX-$(2)
 $(1)-$(2)-linker ?= appl-script-LINKER-$(2)
-.PHONY : all
-all : $$($(1)-$(2)-output)
+.PHONY : $(1)
+$(1) : $(1)-$(2)
+.PHONY : $(1)-$(2)
+$(1)-$(2) : $$($(1)-$(2)-output)
 $$($(1)-$(2)-output) : $$($(1)-$(2)-input) $(APPL_SRC)appl_project.mak
 	-$$(APPL_VERBOSE)mkdir -p $$($(1)-$(2)-dst)
 	$$(call $$($(1)-$(2)-linker),$$($(1)-$(2)-output),$$($(1)-$(2)-input),$$($(1)-$(2)-c-flags),$$($(1)-$(2)-libs))
 $$(foreach x, $$($(1)-deps), $$(eval $$(call do_source,$$(x),$(2),$(1))))
 endef
 
-$(foreach x,$(APPL_TARGETS), $(foreach y, $(APPL_TOOLCHAIN), $(eval $(call do_target,$(x),$(y)))))
+.PHONY : default
+default : test_appl-gnu
+
+.PHONY : all
+all : $(APPL_TARGETS)
+
+$(foreach x,$(APPL_TARGETS), $(foreach y, $($(x)-cfgs), $(eval $(call do_target,$(x),$(y)))))
 
 # Generic "clean" rule, delete all object files
 .PHONY: clean
