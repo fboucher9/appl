@@ -18,6 +18,8 @@
 
 struct appl_buf;
 
+struct appl_socket_handle;
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -33,6 +35,12 @@ class appl_socket_node;
 class appl_socket_node : public appl_object
 {
     public:
+
+        static
+        class appl_socket_node *
+            convert_handle(
+                struct appl_socket_handle * const
+                    p_socket_handle);
 
         virtual
         enum appl_status
