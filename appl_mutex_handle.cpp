@@ -33,7 +33,7 @@ appl_mutex_create(
         e_status;
 
     e_status =
-        appl_mutex_service::thunk_create(
+        appl_mutex_service::s_create(
             p_context_handle,
             p_mutex_descriptor,
             r_mutex_handle);
@@ -55,7 +55,7 @@ appl_mutex_lock(
         e_status;
 
     e_status =
-        appl_mutex_service::thunk_lock(
+        appl_mutex_service::s_lock(
             p_mutex_handle);
 
     return
@@ -75,7 +75,7 @@ appl_mutex_unlock(
         e_status;
 
     e_status =
-        appl_mutex_service::thunk_unlock(
+        appl_mutex_service::s_unlock(
             p_mutex_handle);
 
     return

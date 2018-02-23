@@ -33,7 +33,7 @@ class appl_mutex_service
 
         static
         enum appl_status
-            thunk_create(
+            s_create(
                 struct appl_context_handle * const
                     p_context_handle,
                 struct appl_mutex_descriptor const * const
@@ -43,13 +43,13 @@ class appl_mutex_service
 
         static
         enum appl_status
-            thunk_lock(
+            s_lock(
                 struct appl_mutex_handle * const
                     p_mutex_handle);
 
         static
         enum appl_status
-            thunk_unlock(
+            s_unlock(
                 struct appl_mutex_handle * const
                     p_mutex_handle);
 

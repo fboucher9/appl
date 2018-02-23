@@ -27,7 +27,7 @@
 //
 //
 enum appl_status
-    appl_mutex_service::thunk_create(
+    appl_mutex_service::s_create(
         struct appl_context_handle * const
             p_context_handle,
         struct appl_mutex_descriptor const * const
@@ -56,13 +56,13 @@ enum appl_status
     return
         e_status;
 
-} // thunk_create()
+} // s_create()
 
 //
 //
 //
 enum appl_status
-    appl_mutex_service::thunk_lock(
+    appl_mutex_service::s_lock(
         struct appl_mutex_handle * const
             p_mutex_handle)
 {
@@ -80,13 +80,13 @@ enum appl_status
     return
         e_status;
 
-} // thunk_lock()
+} // s_lock()
 
 //
 //
 //
 enum appl_status
-    appl_mutex_service::thunk_unlock(
+    appl_mutex_service::s_unlock(
         struct appl_mutex_handle * const
             p_mutex_handle)
 {
@@ -104,6 +104,6 @@ enum appl_status
     return
         e_status;
 
-} // thunk_unlock()
+} // s_unlock()
 
 /* end-of-file: appl_mutex_service.cpp */
