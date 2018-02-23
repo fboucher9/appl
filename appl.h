@@ -34,7 +34,7 @@ Description:
 
 #define APPL_CONFIG_WITH_THREAD
 
-/* #define APPL_CONFIG_WITH_SOCKET */
+#define APPL_CONFIG_WITH_SOCKET
 
 #define APPL_CONFIG_WITH_CLOCK
 
@@ -84,107 +84,7 @@ Description:
 
 #if defined(APPL_CONFIG_WITH_SOCKET)
 
-/* socket address */
-struct appl_socket_address_handle;
-
-struct appl_socket_address_descriptor
-{
-    void *
-        p_dummy;
-
-};
-
-struct appl_socket_address_handle
-{
-    struct appl_object_handle
-        o_object_handle;
-
-};
-
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
-
-enum appl_status
-appl_socket_address_create(
-    struct appl_context_handle * const
-        p_context_handle,
-    struct appl_socket_address_descriptor const * const
-        p_socket_address_descriptor,
-    struct appl_socket_address_handle * * const
-        r_socket_address_handle);
-
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
-
-/* tcp socket */
-struct appl_tcp_socket_handle;
-
-struct appl_tcp_socket_descriptor
-{
-    void *
-        p_dummy;
-
-};
-
-struct appl_tcp_socket_handle
-{
-    struct appl_object_handle
-        o_object_handle;
-
-};
-
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
-
-enum appl_status
-appl_tcp_socket_create(
-    struct appl_context_handle * const
-        p_context_handle,
-    struct appl_tcp_socket_descriptor const * const
-        p_tcp_socket_descriptor,
-    struct appl_tcp_socket_handle * * const
-        r_tcp_socket_handle);
-
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
-
-/* udp socket */
-struct appl_udp_socket_handle;
-
-struct appl_udp_socket_descriptor
-{
-    void *
-        p_dummy;
-
-};
-
-struct appl_udp_socket_handle
-{
-    struct appl_object_handle
-        o_object_handle;
-
-};
-
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
-
-enum appl_status
-appl_udp_socket_create(
-    struct appl_context_handle * const
-        p_context_handle,
-    struct appl_udp_socket_descriptor const * const
-        p_udp_socket_descriptor,
-    struct appl_udp_socket * * const
-        p_udp_socket);
-
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
+#include "appl_address_handle.h"
 
 #endif /* #if defined(APPL_CONFIG_WITH_SOCKET) */
 
@@ -198,23 +98,7 @@ appl_udp_socket_create(
 
 #include "appl_options_descriptor.h"
 
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
-
-/* extern */
-enum appl_status
-appl_main(
-    struct appl_context_handle * const
-        p_context_handle,
-    struct appl_options_descriptor const * const
-        p_options_descriptor,
-    int * const
-        r_exit_code);
-
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
+#include "appl_main.h"
 
 #endif /* #if defined(APPL_CONFIG_WITH_MAIN) */
 
