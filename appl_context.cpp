@@ -14,14 +14,6 @@
 
 #include "appl_context.h"
 
-#include "appl_heap.h"
-
-#include "appl_debug.h"
-
-#include "appl_options.h"
-
-#include "appl_thread_mgr.h"
-
 //
 //
 //

@@ -21,6 +21,11 @@
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
+/* Assert OS */
+#if ! defined APPL_OS_LINUX
+#error must define APPL_OS_LINUX
+#endif /* #if ! defined APPL_OS_LINUX */
+
 class appl_context;
 
 class appl_clock_std;

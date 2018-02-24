@@ -50,7 +50,15 @@
 
 #include "appl_clock.h"
 
+#if defined APPL_OS_LINUX
+
 #include "appl_clock_std.h"
+
+#elif defined APPL_OS_WINDOWS
+
+#include "appl_clock_w32.h"
+
+#endif /* #if defined APPL_OS_Xx */
 
 #include "appl_event_mgr.h"
 
@@ -408,11 +416,28 @@ enum appl_status
     enum appl_status
         e_status;
 
+#if defined APPL_OS_LINUX
+
     e_status =
         appl_clock_std::create_instance(
             m_context,
             &(
                 m_clock));
+
+#elif defined APPL_OS_WINDOWS
+
+    e_status =
+        appl_clock_w32::create_instance(
+            m_context,
+            &(
+                m_clock));
+
+#else
+
+    e_status =
+        appl_status_not_implemented;
+
+#endif
 
     if (
         appl_status_ok

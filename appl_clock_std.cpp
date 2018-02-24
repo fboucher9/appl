@@ -4,6 +4,8 @@
 
 */
 
+#if defined APPL_OS_LINUX
+
 #include <time.h>
 
 #include <unistd.h>
@@ -88,13 +90,49 @@ appl_clock_std::v_read(
     enum appl_status
         e_status;
 
-    static_cast<void>(
-        i_time_freq);
-    static_cast<void>(
-        p_time_count);
+    int
+        i_clock_result;
 
-    e_status =
-        appl_status_not_implemented;
+    struct timespec
+        o_clock_value;
+
+    i_clock_result =
+        clock_gettime(
+            CLOCK_MONOTONIC,
+            &(
+                o_clock_value));
+
+    if (
+        0 == i_clock_result)
+    {
+        unsigned long int
+            i_time_count;
+
+        i_time_count =
+            static_cast<unsigned long int>(
+                (
+                    static_cast<appl_ull_t>(
+                        o_clock_value.tv_sec)
+                    * i_time_freq)
+                + (
+                    (
+                        static_cast<appl_ull_t>(
+                            o_clock_value.tv_nsec)
+                        * i_time_freq)
+                    / 1000000000ul));
+
+        *(
+            p_time_count) =
+            i_time_count;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;
@@ -147,5 +185,7 @@ appl_clock_std::v_delay(
         e_status;
 
 } // v_delay()
+
+#endif /* #if defined APPL_OS_LINUX */
 
 /* end-of-file: appl_clock_std.cpp */

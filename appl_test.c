@@ -1,11 +1,45 @@
 /* See LICENSE for license details */
 
 /* Include unistd.h for usleep() function */
+#include <stdarg.h>
+
 #include <unistd.h>
 
 #include <stdio.h>
 
 #include "appl.h"
+
+#if defined __GNUC__ && ! defined __clang__
+#pragma GCC diagnostic ignored "-Wsuggest-attribute=format"
+#endif
+static
+void
+appl_printf(
+    char const * const
+        p_format, ...)
+{
+    va_list
+        o_args;
+
+    va_start(
+        o_args, p_format);
+
+#if defined __clang__
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#endif
+    vfprintf(stdout, p_format, o_args);
+#if defined __clang__
+#pragma GCC diagnostic warning "-Wformat-nonliteral"
+#endif
+    fflush(stdout);
+
+    va_end(
+        o_args);
+
+}
+#if defined __GNUC__ && ! defined __clang__
+#pragma GCC diagnostic warning "-Wsuggest-attribute=format"
+#endif
 
 static
 void
@@ -18,17 +52,42 @@ appl_test_sleep_msec(
     enum appl_status
         e_status;
 
+    unsigned long int
+        i_time_before;
+
+    unsigned long int
+        i_time_after;
+
+    appl_clock_read(
+        p_context_handle,
+        1000ul,
+        &(
+            i_time_before));
+
     e_status =
         appl_clock_delay(
             p_context_handle,
             1000ul,
             i_msec_count);
 
+    appl_clock_read(
+        p_context_handle,
+        1000ul,
+        &(
+            i_time_after));
+
+    appl_printf(
+        "sleep %lu msec took %ld msec\n",
+        i_msec_count,
+        (
+            i_time_after
+            - i_time_before));
+
     if (
         appl_status_not_implemented
         == e_status)
     {
-        printf("fallback sleep\n");
+        appl_printf("fallback sleep\n");
 
         usleep(
             (unsigned int)(
@@ -89,7 +148,7 @@ appl_test_thread_entry(
         (struct appl_test_thread_context *)(
             p_context);
 
-    printf(
+    appl_printf(
         "hello world!\n");
 
     appl_test_sleep_msec(
@@ -99,15 +158,15 @@ appl_test_thread_entry(
     appl_mutex_lock(
         p_test_thread_context->p_mutex_handle);
 
-    printf(
-        "thread wait 2 sec...\n");
+    appl_printf(
+        "thread wait 1 sec...\n");
 
     appl_test_sleep_msec(
         p_test_thread_context->p_context_handle,
-        2000ul);
+        1000ul);
 
-    printf(
-        "... thread wait 2 sec\n");
+    appl_printf(
+        "... thread wait 1 sec\n");
 
     appl_mutex_unlock(
         p_test_thread_context->p_mutex_handle);
@@ -210,7 +269,7 @@ appl_test_print_number(
         i_value,
         i_flags);
 
-    printf("msg = [%.*s]\n",
+    appl_printf("msg = [%.*s]\n",
         (int)(o_buf.o_min.p_uchar - s_msg),
         s_msg);
 }
@@ -243,7 +302,7 @@ appl_main(
         while (
             p_buf_it < p_options_descriptor->p_buf_max)
         {
-            printf(
+            appl_printf(
                 "[%3u] [%.*s]\n",
                 argi,
                 (int)(
@@ -319,20 +378,20 @@ appl_main(
 
             appl_test_sleep_msec(
                 p_context_handle,
-                500ul);
+                200ul);
 
             appl_mutex_lock(
                 p_mutex_handle);
 
-            printf(
-                "main sleep 2 sec ...\n");
+            appl_printf(
+                "main sleep 1 sec ...\n");
 
             appl_test_sleep_msec(
                 p_context_handle,
-                2000ul);
+                1000ul);
 
-            printf(
-                "... main sleep 2 sec\n");
+            appl_printf(
+                "... main sleep 1 sec\n");
 
             appl_mutex_unlock(
                 p_mutex_handle);
@@ -347,7 +406,7 @@ appl_main(
                 appl_status_ok
                 == e_status)
             {
-                printf(
+                appl_printf(
                     "thread result = %p\n",
                     p_thread_result);
             }
@@ -406,7 +465,7 @@ appl_main(
                     &(
                         c_value)))
             {
-                printf(
+                appl_printf(
                     "%u\n",
                     (unsigned int)(
                         c_value));

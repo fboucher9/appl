@@ -151,6 +151,7 @@ test_appl-deps = \
     appl_clock_service.cpp \
     appl_clock.cpp \
     appl_clock_std.cpp \
+    appl_clock_w32.cpp \
     appl_context.cpp \
     appl_context_std.cpp \
     appl_context_handle.cpp \
@@ -200,7 +201,7 @@ APPL_LIBRARY-pthread-mingw-lflags = -lpthread
 
 APPL_LIBRARY-rt-gnu-lflags = -lrt
 APPL_LIBRARY-rt-clang-lflags = -lrt
-APPL_LIBRARY-rt-mingw-lflags =
+APPL_LIBRARY-rt-mingw-lflags = -lwinmm
 
 # $1: output
 # $2: inputs
@@ -230,37 +231,37 @@ endef
 # $3: flags
 define appl-script-CC-gnu
 	@echo compiling $(1) with gcc
-	$(APPL_VERBOSE)echo -c -o $(1) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_LINUX -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(APPL_CC-gnu) @$(strip $(1)).cmd
 endef
 
 define appl-script-CC-clang
 	@echo compiling $(1) with clang
-	$(APPL_VERBOSE)echo -c -o $(1) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_LINUX -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(APPL_CC-clang) @$(strip $(1)).cmd
 endef
 
 define appl-script-CC-mingw
 	@echo compiling $(1) with mingw-gcc
-	$(APPL_VERBOSE)echo -c -o $(1) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_WINDOWS -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(APPL_CC-mingw) @$(strip $(1)).cmd
 endef
 
 define appl-script-CXX-gnu
 	@echo compiling $(1) with g++
-	$(APPL_VERBOSE)echo -c -o $(1) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_LINUX -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(APPL_CXX-gnu) @$(strip $(1)).cmd
 endef
 
 define appl-script-CXX-clang
 	@echo compiling $(1) with clang++
-	$(APPL_VERBOSE)echo -c -o $(1) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_LINUX -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(APPL_CXX-clang) @$(strip $(1)).cmd
 endef
 
 define appl-script-CXX-mingw
 	@echo compiling $(1) with mingw-g++
-	$(APPL_VERBOSE)echo -c -o $(1) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_WINDOWS -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(APPL_CXX-mingw) @$(strip $(1)).cmd
 endef
 
