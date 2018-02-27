@@ -44,7 +44,13 @@ class appl_debug_std : public appl_debug
 
         virtual
         enum appl_status
-            break_to_debugger(void);
+            v_break(void);
+
+        virtual
+        enum appl_status
+            v_print(
+                struct appl_buf const * const
+                    p_buf);
 
     private:
 

@@ -4,6 +4,10 @@
 
 */
 
+#if ! defined APPL_DEBUG
+#error include only from debug build
+#endif /* #if ! defined APPL_DEBUG */
+
 #if defined(INC_APPL_DEBUG_H)
 #error include appl_debug.h once
 #endif /* #if defined(INC_APPL_DEBUG_H) */
@@ -29,7 +33,13 @@ class appl_debug : public appl_object
 
         virtual
         enum appl_status
-            break_to_debugger(void);
+            v_break(void);
+
+        virtual
+        enum appl_status
+            v_print(
+                struct appl_buf const * const
+                    p_buf);
 
     protected:
 

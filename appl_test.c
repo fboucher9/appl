@@ -421,15 +421,43 @@ appl_main(
         }
     }
 
+#if defined APPL_DEBUG
     {
-        static char g_test_debug_break = 0;
+        static char g_test_debug_break = 1;
 
         if (g_test_debug_break)
         {
+            static unsigned char const g_msg[] =
+            {
+                'd',
+                'e',
+                'b',
+                'u',
+                'g',
+                '_',
+                'p',
+                'r',
+                'i',
+                'n',
+                't',
+                '\n'
+            };
+
+            struct appl_buf
+                o_msg;
+
+            o_msg.o_min.pc_uchar = g_msg;
+            o_msg.o_max.pc_uchar = g_msg + sizeof(g_msg);
+
+            appl_debug_print(
+                p_context_handle,
+                &(o_msg));
+
             appl_debug_break(
                 p_context_handle);
         }
     }
+#endif /* #if defined APPL_DEBUG */
 
     if (1)
     {

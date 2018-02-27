@@ -52,7 +52,11 @@ Description:
 
 #if defined(APPL_CONFIG_WITH_DEBUG)
 
+#if defined APPL_DEBUG
+
 #include "appl_debug_handle.h"
+
+#endif /* #if defined APPL_DEBUG */
 
 #endif /* #if defined(APPL_CONFIG_WITH_DEBUG) */
 

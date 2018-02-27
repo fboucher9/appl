@@ -7,7 +7,7 @@
 
 # Select a toolchain
 # May be gnu, clang, mingw
-APPL_TOOLCHAIN ?= gnu clang mingw
+APPL_TOOLCHAIN ?= gnudbg gnu clang mingw
 
 # Verbose output of executed commands
 APPL_VERBOSE ?= @
@@ -113,6 +113,10 @@ APPL_CXXFLAGS-gnu = \
     -fno-rtti \
     -fno-exceptions
 
+APPL_CFLAGS-gnudbg = $(APPL_CFLAGS-gnu)
+
+APPL_CXXFLAGS-gnudbg = $(APPL_CXXFLAGS-gnu)
+
 # Setup clang compiler options
 APPL_FLAGS-clang = \
     -g \
@@ -214,6 +218,12 @@ define appl-script-LINKER-gnu
 	$(APPL_VERBOSE)$(APPL_CC-gnu) @$(strip $(1)).cmd
 endef
 
+define appl-script-LINKER-gnudbg
+	@echo linking $(1) with gcc
+	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-gnu-lflags)) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_CC-gnu) @$(strip $(1)).cmd
+endef
+
 define appl-script-LINKER-clang
 	@echo linking $(1) with clang
 	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-clang-lflags)) > $(1).cmd
@@ -236,6 +246,12 @@ define appl-script-CC-gnu
 	$(APPL_VERBOSE)$(APPL_CC-gnu) @$(strip $(1)).cmd
 endef
 
+define appl-script-CC-gnudbg
+	@echo compiling $(1) with gcc
+	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_LINUX -DAPPL_DEBUG -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_CC-gnu) @$(strip $(1)).cmd
+endef
+
 define appl-script-CC-clang
 	@echo compiling $(1) with clang
 	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_LINUX -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
@@ -251,6 +267,12 @@ endef
 define appl-script-CXX-gnu
 	@echo compiling $(1) with g++
 	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_LINUX -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_CXX-gnu) @$(strip $(1)).cmd
+endef
+
+define appl-script-CXX-gnudbg
+	@echo compiling $(1) with g++
+	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_LINUX -DAPPL_DEBUG -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(APPL_CXX-gnu) @$(strip $(1)).cmd
 endef
 
@@ -319,21 +341,15 @@ $(1)-$(2)-input ?= $$(foreach y, $$($(1)-$(2)-deps), $$($(1)-$(2)-dst)$$(y).o)
 $(1)-$(2)-c-compiler ?= appl-script-CC-$(2)
 $(1)-$(2)-cxx-compiler ?= appl-script-CXX-$(2)
 $(1)-$(2)-linker ?= appl-script-LINKER-$(2)
-.PHONY : $(1)
-$(1) : $(1)-$(2)
 .PHONY : $(1)-$(2)
 $(1)-$(2) : $$($(1)-$(2)-output)
+.PHONY : all
+all : $(1)-$(2)
 $$($(1)-$(2)-output) : $$($(1)-$(2)-input) $(APPL_SRC)appl_project.mak
 	-$$(APPL_VERBOSE)mkdir -p $$($(1)-$(2)-dst)
 	$$(call $$($(1)-$(2)-linker),$$($(1)-$(2)-output),$$($(1)-$(2)-input),$$($(1)-$(2)-c-flags),$$($(1)-$(2)-libs))
 $$(foreach x, $$($(1)-deps), $$(eval $$(call do_source,$$(x),$(2),$(1))))
 endef
-
-.PHONY : default
-default : test_appl-gnu
-
-.PHONY : all
-all : $(APPL_TARGETS)
 
 $(foreach x,$(APPL_TARGETS), $(foreach y, $($(x)-cfgs), $(eval $(call do_target,$(x),$(y)))))
 

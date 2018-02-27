@@ -26,7 +26,9 @@ class appl_context;
 
 class appl_heap;
 
+#if defined APPL_DEBUG
 class appl_debug;
+#endif /* #if defined APPL_DEBUG */
 
 class appl_options;
 
@@ -52,8 +54,10 @@ class appl_context : public appl_object
         class appl_heap *
             m_heap;
 
+#if defined APPL_DEBUG
         class appl_debug *
             m_debug;
+#endif /* #if defined APPL_DEBUG */
 
         class appl_options *
             m_options;

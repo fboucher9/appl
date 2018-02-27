@@ -4,7 +4,11 @@
 
 */
 
+#if defined APPL_DEBUG
+
 #include <signal.h>
+
+#include <unistd.h>
 
 #include "appl_status.h"
 
@@ -15,6 +19,8 @@
 #include "appl_debug.h"
 
 #include "appl_debug_std.h"
+
+#include "appl_buf.h"
 
 //
 //
@@ -71,13 +77,34 @@ void
 //
 //
 enum appl_status
-    appl_debug_std::break_to_debugger(void)
+    appl_debug_std::v_break(void)
 {
     raise(SIGINT);
 
     return
         appl_status_ok;
 
-} // break_to_debugger()
+} // v_break()
+
+//
+//
+//
+enum appl_status
+    appl_debug_std::v_print(
+        struct appl_buf const * const
+            p_buf)
+{
+    write(
+        STDERR_FILENO,
+        p_buf->o_min.pc_uchar,
+        p_buf->o_max.pc_uchar
+        - p_buf->o_min.pc_uchar);
+
+    return
+        appl_status_ok;
+
+} // v_print()
+
+#endif /* #if defined APPL_DEBUG */
 
 /* end-of-file: appl_debug_std.cpp */

@@ -4,8 +4,6 @@
 
 */
 
-#include <string.h>
-
 #include "appl_status.h"
 
 #include "appl_buf.h"
@@ -122,8 +120,12 @@ appl_options_std::init(
                 p_options_std_descriptor->p_arg_min[argi];
 
             m_buf_min[argi].o_max.pc_void =
-                p_options_std_descriptor->p_arg_min[argi]
-                + strlen(p_options_std_descriptor->p_arg_min[argi]);
+                p_options_std_descriptor->p_arg_min[argi];
+
+            while (*(m_buf_min[argi].o_max.pc_uchar))
+            {
+                m_buf_min[argi].o_max.pc_uchar ++;
+            }
         }
 
         e_status =

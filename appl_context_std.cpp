@@ -24,9 +24,13 @@
 
 #include "appl_heap_std.h"
 
+#if defined APPL_DEBUG
+
 #include "appl_debug.h"
 
 #include "appl_debug_std.h"
+
+#endif /* #if defined APPL_DEBUG */
 
 #include "appl_options.h"
 
@@ -120,6 +124,7 @@ void
 //
 //
 //
+#if defined APPL_DEBUG
 enum appl_status
 appl_context_std::init_debug(void)
 {
@@ -144,10 +149,12 @@ appl_context_std::init_debug(void)
         e_status;
 
 } // init_debug()
+#endif /* #if defined APPL_DEBUG */
 
 //
 //
 //
+#if defined APPL_DEBUG
 void
 appl_context_std::cleanup_debug(void)
 {
@@ -163,6 +170,7 @@ appl_context_std::cleanup_debug(void)
     }
 
 } // cleanup_debug()
+#endif /* #if defined APPL_DEBUG */
 
 //
 //
@@ -663,8 +671,10 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
+#if defined APPL_DEBUG
         e_status =
             init_debug();
+#endif /* #if defined APPL_DEBUG */
 
         if (
             appl_status_ok
@@ -755,11 +765,13 @@ enum appl_status
                 }
             }
 
+#if defined APPL_DEBUG
             if (
                 appl_status_ok != e_status)
             {
                 cleanup_debug();
             }
+#endif /* #if defined APPL_DEBUG */
         }
 
         if (
@@ -797,7 +809,9 @@ enum appl_status
 
     cleanup_options();
 
+#if defined APPL_DEBUG
     cleanup_debug();
+#endif /* #if defined APPL_DEBUG */
 
     cleanup_heap();
 
