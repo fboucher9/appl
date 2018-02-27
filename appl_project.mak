@@ -174,6 +174,7 @@ test_appl-deps = \
     appl_heap_handle.cpp \
     appl_options.cpp \
     appl_options_std.cpp \
+    appl_socket_handle.cpp \
     appl_thread_handle.cpp \
     appl_thread_node.cpp \
     appl_thread_std_node.cpp \
