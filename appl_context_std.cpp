@@ -28,13 +28,15 @@
 
 #include "appl_heap.h"
 
+#include "appl_heap_std.h"
+
 #if defined APPL_DEBUG
 
 #include "appl_list.h"
 
-#endif /* #if defined APPL_DEBUG */
+#include "appl_heap_dbg.h"
 
-#include "appl_heap_std.h"
+#endif /* #if defined APPL_DEBUG */
 
 #if defined APPL_DEBUG
 
@@ -564,48 +566,61 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
-        struct appl_context_init_descriptor
-            o_init_descriptor;
-
-        o_init_descriptor.p_context_descriptor =
-            p_context_descriptor;
-
-        o_init_descriptor.p_heap =
-            p_heap;
-
-        struct appl_buf
-            o_placement;
-
+#if defined APPL_DEBUG
         e_status =
-            p_heap->alloc_memory(
+            appl_heap_dbg::create_instance(
+                p_heap,
                 &(
-                    o_placement),
-                static_cast<unsigned long int>(
-                    sizeof(
-                        class appl_context_std)));
+                    p_heap));
+#endif /* #if defined APPL_DEBUG */
 
         if (
-            appl_status_ok == e_status)
+            appl_status_ok
+            == e_status)
         {
+            struct appl_context_init_descriptor
+                o_init_descriptor;
+
+            o_init_descriptor.p_context_descriptor =
+                p_context_descriptor;
+
+            o_init_descriptor.p_heap =
+                p_heap;
+
+            struct appl_buf
+                o_placement;
+
             e_status =
-                appl_object::init_instance(
-                    static_cast<class appl_context *>(
-                        0),
-                    o_placement.o_min.p_void,
+                p_heap->alloc_memory(
                     &(
-                        appl_context_std::placement_new),
-                    static_cast<void const *>(
-                        &(
-                            o_init_descriptor)),
-                    reinterpret_cast<class appl_object * *>(
-                        r_context));
+                        o_placement),
+                    static_cast<unsigned long int>(
+                        sizeof(
+                            class appl_context_std)));
 
             if (
-                appl_status_ok != e_status)
+                appl_status_ok == e_status)
             {
-                p_heap->free_memory(
-                    &(
-                        o_placement));
+                e_status =
+                    appl_object::init_instance(
+                        static_cast<class appl_context *>(
+                            0),
+                        o_placement.o_min.p_void,
+                        &(
+                            appl_context_std::placement_new),
+                        static_cast<void const *>(
+                            &(
+                                o_init_descriptor)),
+                        reinterpret_cast<class appl_object * *>(
+                            r_context));
+
+                if (
+                    appl_status_ok != e_status)
+                {
+                    p_heap->free_memory(
+                        &(
+                            o_placement));
+                }
             }
         }
 
