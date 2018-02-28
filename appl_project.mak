@@ -7,7 +7,7 @@
 
 # Select a toolchain
 # May be gnu, clang, mingw
-APPL_TOOLCHAIN ?= gnudbg gnu clang mingw
+APPL_TOOLCHAIN ?= gnudbg gnu clang mingw mingwdbg gnudbg32
 
 # Verbose output of executed commands
 APPL_VERBOSE ?= @
@@ -32,7 +32,7 @@ APPL_CXX-gnu = $(CXX)
 # Common compiler flags for C and C++
 APPL_FLAGS-gnu = \
     -g \
-    -O0 \
+    -O2 \
     -D_BSD_SOURCE \
     -I$(APPL_SRC). \
     -pedantic \
@@ -117,6 +117,10 @@ APPL_CFLAGS-gnudbg = $(APPL_CFLAGS-gnu)
 
 APPL_CXXFLAGS-gnudbg = $(APPL_CXXFLAGS-gnu)
 
+APPL_CFLAGS-gnudbg32 = $(APPL_CFLAGS-gnu)
+
+APPL_CXXFLAGS-gnudbg32 = $(APPL_CXXFLAGS-gnu)
+
 # Setup clang compiler options
 APPL_FLAGS-clang = \
     -g \
@@ -139,6 +143,10 @@ APPL_CXXFLAGS-clang = \
 APPL_CFLAGS-mingw = $(APPL_CFLAGS-gnu)
 
 APPL_CXXFLAGS-mingw = $(APPL_CXXFLAGS-gnu)
+
+APPL_CFLAGS-mingwdbg = $(APPL_CFLAGS-mingw)
+
+APPL_CXXFLAGS-mingwdbg = $(APPL_CXXFLAGS-mingw)
 
 APPL_TARGETS += test_appl
 
@@ -220,7 +228,13 @@ endef
 
 define appl-script-LINKER-gnudbg
 	@echo linking $(1) with gcc
-	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-gnu-lflags)) > $(1).cmd
+	$(APPL_VERBOSE)echo -o $(1) -rdynamic $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-gnu-lflags)) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_CC-gnu) @$(strip $(1)).cmd
+endef
+
+define appl-script-LINKER-gnudbg32
+	@echo linking $(1) with gcc
+	$(APPL_VERBOSE)echo -o $(1) -m32 -rdynamic $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-gnu-lflags)) > $(1).cmd
 	$(APPL_VERBOSE)$(APPL_CC-gnu) @$(strip $(1)).cmd
 endef
 
@@ -231,6 +245,12 @@ define appl-script-LINKER-clang
 endef
 
 define appl-script-LINKER-mingw
+	@echo linking $(1) with mingw
+	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) -static $(foreach x,$(4),$(APPL_LIBRARY-$(x)-mingw-lflags)) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_CC-mingw) @$(strip $(1)).cmd
+endef
+
+define appl-script-LINKER-mingwdbg
 	@echo linking $(1) with mingw
 	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) -static $(foreach x,$(4),$(APPL_LIBRARY-$(x)-mingw-lflags)) > $(1).cmd
 	$(APPL_VERBOSE)$(APPL_CC-mingw) @$(strip $(1)).cmd
@@ -252,6 +272,12 @@ define appl-script-CC-gnudbg
 	$(APPL_VERBOSE)$(APPL_CC-gnu) @$(strip $(1)).cmd
 endef
 
+define appl-script-CC-gnudbg32
+	@echo compiling $(1) with gcc
+	$(APPL_VERBOSE)echo -c -o $(1) -m32 $(3) -DAPPL_OS_LINUX -DAPPL_DEBUG -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_CC-gnu) @$(strip $(1)).cmd
+endef
+
 define appl-script-CC-clang
 	@echo compiling $(1) with clang
 	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_LINUX -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
@@ -261,6 +287,12 @@ endef
 define appl-script-CC-mingw
 	@echo compiling $(1) with mingw-gcc
 	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_WINDOWS -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_CC-mingw) @$(strip $(1)).cmd
+endef
+
+define appl-script-CC-mingwdbg
+	@echo compiling $(1) with mingw-gcc
+	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_WINDOWS -DAPPL_DEBUG -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(APPL_CC-mingw) @$(strip $(1)).cmd
 endef
 
@@ -276,6 +308,12 @@ define appl-script-CXX-gnudbg
 	$(APPL_VERBOSE)$(APPL_CXX-gnu) @$(strip $(1)).cmd
 endef
 
+define appl-script-CXX-gnudbg32
+	@echo compiling $(1) with g++
+	$(APPL_VERBOSE)echo -c -o $(1) -m32 $(3) -DAPPL_OS_LINUX -DAPPL_DEBUG -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_CXX-gnu) @$(strip $(1)).cmd
+endef
+
 define appl-script-CXX-clang
 	@echo compiling $(1) with clang++
 	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_LINUX -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
@@ -285,6 +323,12 @@ endef
 define appl-script-CXX-mingw
 	@echo compiling $(1) with mingw-g++
 	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_WINDOWS -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_CXX-mingw) @$(strip $(1)).cmd
+endef
+
+define appl-script-CXX-mingwdbg
+	@echo compiling $(1) with mingw-g++
+	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_WINDOWS -DAPPL_DEBUG -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(APPL_CXX-mingw) @$(strip $(1)).cmd
 endef
 

@@ -11,6 +11,21 @@
 
 #define INC_APPL_HEAP_STD_H
 
+/* Header file dependency */
+#if ! defined INC_APPL_HEAP_H
+#error include appl_heap.h before
+#endif /* #if ! defined INC_APPL_HEAP_H */
+
+#if defined APPL_DEBUG
+
+/* Header file dependency */
+#if ! defined INC_APPL_LIST_H
+#error include appl_list.h before
+#endif /* #if ! defined INC_APPL_LIST_H */
+
+#endif /* #if defined APPL_DEBUG */
+
+/* Assert compiler */
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -37,11 +52,19 @@ class appl_heap_std : public appl_heap
         virtual
         ~appl_heap_std();
 
+#if defined APPL_DEBUG
+        struct appl_list
+            m_list;
+
+        pthread_mutex_t
+            m_lock;
+
         signed long int
             m_alloc_count;
 
         unsigned long int
             ul_padding[1u];
+#endif /* #if defined APPL_DEBUG */
 
     private:
 
@@ -61,6 +84,12 @@ class appl_heap_std : public appl_heap
         virtual
         enum appl_status
             destroy(void);
+
+        virtual
+        enum appl_status
+            init(
+                void const * const
+                    p_descriptor);
 
         virtual
         enum appl_status

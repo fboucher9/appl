@@ -4,6 +4,12 @@
 
 */
 
+#if defined APPL_DEBUG
+
+#include <pthread.h>
+
+#endif /* #if defined APPL_DEBUG */
+
 #include "appl_status.h"
 
 #include "appl_object_handle.h"
@@ -21,6 +27,12 @@
 #include "appl_context_std.h"
 
 #include "appl_heap.h"
+
+#if defined APPL_DEBUG
+
+#include "appl_list.h"
+
+#endif /* #if defined APPL_DEBUG */
 
 #include "appl_heap_std.h"
 

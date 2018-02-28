@@ -4,9 +4,25 @@
 
 */
 
+#if defined APPL_DEBUG
+
+#include <pthread.h>
+
+#endif /* #if defined APPL_DEBUG */
+
 #include <stdio.h>
 
 #include <stdlib.h>
+
+#include <string.h>
+
+#if defined APPL_OS_LINUX
+
+#include <unistd.h>
+
+#include <execinfo.h>
+
+#endif /* #if defined APPL_OS_LINUX */
 
 #include "appl_status.h"
 
@@ -17,6 +33,8 @@
 #include "appl_object.h"
 
 #include "appl_heap.h"
+
+#include "appl_list.h"
 
 #include "appl_heap_std.h"
 
@@ -87,8 +105,13 @@ enum appl_status
 //
 //
 appl_heap_std::appl_heap_std() :
-    appl_heap(),
+    appl_heap()
+#if defined APPL_DEBUG
+    ,
+    m_list(),
+    m_lock(),
     m_alloc_count(0)
+#endif /* #if defined APPL_DEBUG */
 {
 }
 
@@ -99,6 +122,9 @@ appl_heap_std::~appl_heap_std()
 {
 }
 
+//
+//
+//
 void
     appl_heap_std::placement_new(
         void * const
@@ -106,24 +132,148 @@ void
 {
     new (p_placement)
         class appl_heap_std;
-}
 
+} // placement_new()
+
+#if defined APPL_DEBUG
+
+static unsigned char const g_appl_heap_std_header_magic =
+static_cast<unsigned char>(0xA1u);
+
+static unsigned char const g_appl_heap_std_footer_magic =
+static_cast<unsigned char>(0x8Du);
+
+struct appl_heap_std_header
+{
+    struct appl_list
+        o_list;
+
+    /* -- */
+
+    void *
+        a_backtrace[8u];
+
+    /* -- */
+
+    appl_size_t
+        i_buf_len;
+
+    appl_size_t
+        i_backtrace_count;
+
+    /* -- */
+
+    unsigned char
+        a_header[8u];
+
+}; /* struct appl_heap_std_header */
+
+struct appl_heap_std_footer
+{
+    unsigned char
+        a_footer[8u];
+
+}; /* struct appl_heap_std_footer */
+
+#endif /* #if defined APPL_DEBUG */
+
+//
+//
+//
+enum appl_status
+    appl_heap_std::init(
+        void const * const
+            p_descriptor)
+{
+    enum appl_status
+        e_status;
+
+    static_cast<void>(
+        p_descriptor);
+
+#if defined APPL_DEBUG
+
+    appl_list_init(
+        &(
+            m_list));
+
+    pthread_mutex_init(
+        &(
+            m_lock),
+        NULL);
+
+#endif /* #if defined APPL_DEBUG */
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // init()
+
+//
+//
+//
 enum appl_status
     appl_heap_std::cleanup(void)
 {
     enum appl_status
         e_status;
 
+#if defined APPL_DEBUG
+
     if (
         0
         != m_alloc_count)
     {
         printf("*** detected %ld memory leaks ***\n", m_alloc_count);
+
+        /* Iterate list of allocations ... */
+        {
+            struct appl_iterator
+                o_iterator;
+
+            appl_iterator_init(
+                &(
+                    o_iterator),
+                &(
+                    m_list));
+
+            while (
+                appl_iterator_next(
+                    &(
+                        o_iterator)))
+            {
+                struct appl_heap_std_header *
+                    p_header;
+
+                p_header =
+                    reinterpret_cast<struct appl_heap_std_header *>(
+                        o_iterator.o_cur.p_node);
+
+                printf(" - allocation at %p of %lu bytes\n",
+                    static_cast<void *>(
+                        p_header + 1),
+                    static_cast<unsigned long int>(
+                        p_header->i_buf_len));
+
+#if defined APPL_OS_LINUX
+                backtrace_symbols_fd(
+                    p_header->a_backtrace,
+                    static_cast<int>(
+                        p_header->i_backtrace_count),
+                    STDOUT_FILENO);
+#endif /* #if defined APPL_OS_LINUX */
+            }
+        }
     }
     else
     {
         printf("*** no memory leaks ***\n");
     }
+
+#endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_status_ok;
@@ -166,41 +316,6 @@ enum appl_status
 
 } // destroy()
 
-static bool g_appl_heap_std_leak_detector = false;
-
-static unsigned char const g_appl_heap_std_header_magic =
-static_cast<unsigned char>(0xA1u);
-
-static unsigned char const g_appl_heap_std_footer_magic =
-static_cast<unsigned char>(0x8Du);
-
-struct appl_heap_std_header
-{
-    void *
-        a_backstrace[8u];
-
-    /* -- */
-
-    appl_size_t
-        i_backstrace_count;
-
-    appl_size_t
-        i_buf_len;
-
-    /* -- */
-
-    unsigned char
-        a_header[8u];
-
-}; /* struct appl_heap_std_header */
-
-struct appl_heap_std_footer
-{
-    unsigned char
-        a_footer[8u];
-
-}; /* struct appl_heap_std_footer */
-
 //
 //
 //
@@ -214,7 +329,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    if (g_appl_heap_std_leak_detector)
+#if defined APPL_DEBUG
     {
         void *
             p_allocation;
@@ -240,15 +355,40 @@ enum appl_status
             struct appl_heap_std_header *
                 p_header;
 
+            pthread_mutex_lock(
+                &(
+                    m_lock));
+
             p_header =
                 static_cast<struct appl_heap_std_header *>(
                     p_allocation);
 
+            appl_list_init(
+                &(
+                    p_header->o_list));
+
+            appl_list_join(
+                &(
+                    p_header->o_list),
+                &(
+                    m_list));
+
             p_header->i_buf_len =
                 i_buf_len;
 
-            p_header->i_backstrace_count =
-                0ul;
+#if defined APPL_OS_LINUX
+            /* Grab a backtrace */
+            memset(
+                p_header->a_backtrace,
+                0u,
+                sizeof(
+                    p_header->a_backtrace));
+
+            p_header->i_backtrace_count =
+                backtrace(
+                    p_header->a_backtrace,
+                    8);
+#endif /* #if defined APPL_OS_LINUX */
 
             {
                 unsigned int i_header_iterator;
@@ -289,6 +429,10 @@ enum appl_status
 
             m_alloc_count ++;
 
+            pthread_mutex_unlock(
+                &(
+                    m_lock));
+
             e_status =
                 appl_status_ok;
         }
@@ -298,7 +442,7 @@ enum appl_status
                 appl_status_fail;
         }
     }
-    else
+#else /* #if defined APPL_DEBUG */
     {
         void *
             p_allocation;
@@ -317,8 +461,6 @@ enum appl_status
                 p_buf->o_min.pc_uchar
                 + i_buf_len;
 
-            m_alloc_count ++;
-
             e_status =
                 appl_status_ok;
         }
@@ -328,6 +470,7 @@ enum appl_status
                 appl_status_fail;
         }
     }
+#endif /* #if defined APPL_DEBUG */
 
     return
         e_status;
@@ -345,15 +488,25 @@ enum appl_status
     enum appl_status
         e_status;
 
-    if (g_appl_heap_std_leak_detector)
+#if defined APPL_DEBUG
     {
         struct appl_heap_std_header *
             p_header;
+
+        pthread_mutex_lock(
+            &(
+                m_lock));
 
         p_header =
             static_cast<struct appl_heap_std_header *>(
                 p_buf->o_min.p_void)
             - 1;
+
+        appl_list_join(
+            &(
+                p_header->o_list),
+            &(
+                p_header->o_list));
 
         {
             unsigned int i_header_iterator;
@@ -409,18 +562,20 @@ enum appl_status
 
         m_alloc_count --;
 
+        pthread_mutex_unlock(
+            &(
+                m_lock));
+
         e_status =
             appl_status_ok;
     }
-    else
+#else /* #if defined APPL_DEBUG */
     {
         void *
             p_allocation;
 
         p_allocation =
             p_buf->o_min.p_void;
-
-        m_alloc_count --;
 
         free(
             p_allocation);
@@ -431,6 +586,7 @@ enum appl_status
         e_status =
             appl_status_ok;
     }
+#endif /* #if defined APPL_DEBUG */
 
     return
         e_status;

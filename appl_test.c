@@ -423,7 +423,7 @@ appl_main(
 
 #if defined APPL_DEBUG
     {
-        static char g_test_debug_break = 1;
+        static char g_test_debug_break = 0;
 
         if (g_test_debug_break)
         {

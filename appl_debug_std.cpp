@@ -94,14 +94,36 @@ enum appl_status
         struct appl_buf const * const
             p_buf)
 {
-    write(
-        STDERR_FILENO,
-        p_buf->o_min.pc_uchar,
-        p_buf->o_max.pc_uchar
-        - p_buf->o_min.pc_uchar);
+    enum appl_status
+        e_status;
+
+    signed long int
+        i_write_result;
+
+    i_write_result =
+        static_cast<signed long int>(
+            write(
+                STDERR_FILENO,
+                p_buf->o_min.pc_uchar,
+                static_cast<unsigned int>(
+                    p_buf->o_max.pc_uchar
+                    - p_buf->o_min.pc_uchar)));
+
+    if (
+        i_write_result > 0)
+    {
+        e_status =
+            appl_status_ok;
+
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 } // v_print()
 
