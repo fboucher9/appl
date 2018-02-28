@@ -184,6 +184,7 @@ test_appl-deps = \
     appl_heap.cpp \
     appl_heap_std.cpp \
     appl_heap_dbg.cpp \
+    appl_heap_service.cpp \
     appl_heap_handle.cpp \
     appl_options.cpp \
     appl_options_std.cpp \

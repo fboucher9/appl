@@ -4,7 +4,7 @@
 
 */
 
-#if ! defined _WIN32
+#if defined APPL_OS_LINUX
 
 #include <poll.h>
 
@@ -123,7 +123,7 @@ enum appl_status
             * p_poll_table->i_count);
 
     e_status =
-        p_heap->alloc_memory(
+        p_heap->v_alloc(
             &(
                 p_poll_table->o_allocation),
             i_allocation_length);
@@ -231,7 +231,7 @@ void
         p_heap =
         m_context->m_heap;
 
-    p_heap->free_memory(
+    p_heap->v_free(
         &(
             p_poll_table->o_allocation));
 
@@ -350,6 +350,6 @@ void *
 
 } // thread_entry()
 
-#endif /* #if ! defined _WIN32 */
+#endif /* #if defined APPL_OS_LINUX */
 
 /* end-of-file: appl_poll_mgr.cpp */

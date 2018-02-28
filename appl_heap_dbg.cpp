@@ -53,7 +53,7 @@ enum appl_status
         o_placement;
 
     e_status =
-        p_parent->alloc_memory(
+        p_parent->v_alloc(
             &(
                 o_placement),
             sizeof(
@@ -90,7 +90,7 @@ enum appl_status
         }
         else
         {
-            p_parent->free_memory(
+            p_parent->v_free(
                 &(
                     o_placement));
         }
@@ -312,7 +312,7 @@ enum appl_status
         delete
             this;
 
-        p_parent->free_memory(
+        p_parent->v_free(
             &(
                 o_placement));
     }
@@ -326,7 +326,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_heap_dbg::alloc_memory(
+    appl_heap_dbg::v_alloc(
         struct appl_buf * const
             p_buf,
         appl_size_t const
@@ -351,7 +351,7 @@ enum appl_status
                     struct appl_heap_dbg_footer));
 
         e_status =
-            m_parent->alloc_memory(
+            m_parent->v_alloc(
                 &(
                     o_allocation),
                 i_total_buf_len);
@@ -443,13 +443,13 @@ enum appl_status
     return
         e_status;
 
-} // alloc_memory()
+} // v_alloc()
 
 //
 //
 //
 enum appl_status
-    appl_heap_dbg::free_memory(
+    appl_heap_dbg::v_free(
         struct appl_buf * const
             p_buf)
 {
@@ -533,7 +533,7 @@ enum appl_status
             }
         }
 
-        m_parent->free_memory(
+        m_parent->v_free(
             &(
                 o_allocation));
 
@@ -550,13 +550,13 @@ enum appl_status
     return
         e_status;
 
-} // free_memory()
+} // v_free()
 
 //
 //
 //
 enum appl_status
-    appl_heap_dbg::realloc_memory(
+    appl_heap_dbg::v_realloc(
         struct appl_buf * const
             p_buf,
         appl_size_t const
@@ -570,7 +570,7 @@ enum appl_status
         == i_buf_len)
     {
         e_status =
-            free_memory(
+            v_free(
                 p_buf);
     }
     if (
@@ -578,7 +578,7 @@ enum appl_status
         == p_buf->o_min.pc_uchar)
     {
         e_status =
-            alloc_memory(
+            v_alloc(
                 p_buf,
                 i_buf_len);
     }
@@ -588,7 +588,7 @@ enum appl_status
             o_allocation;
 
         e_status =
-            alloc_memory(
+            v_alloc(
                 &(
                     o_allocation),
                 i_buf_len);
@@ -616,7 +616,7 @@ enum appl_status
                 p_buf->o_min.pc_void,
                 i_copy_len);
 
-            free_memory(
+            v_free(
                 p_buf);
 
             *(
@@ -628,7 +628,7 @@ enum appl_status
     return
         e_status;
 
-} // realloc_memory()
+} // v_realloc()
 
 #endif /* #if defined APPL_DEBUG */
 

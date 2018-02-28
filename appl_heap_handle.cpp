@@ -8,13 +8,7 @@
 
 #include "appl_heap_handle.h"
 
-#include "appl_types.h"
-
-#include "appl_object.h"
-
-#include "appl_context.h"
-
-#include "appl_heap.h"
+#include "appl_heap_service.h"
 
 /*
 
@@ -28,23 +22,11 @@ appl_heap_alloc(
     unsigned long int const
         i_length)
 {
-    class appl_context * const
-        p_context =
-        appl_context::convert_handle(
-            p_context_handle);
-
-    class appl_heap * const
-        p_heap =
-        p_context->m_heap;
-
-    enum appl_status const
-        e_status =
-        p_heap->alloc_memory(
+    return
+        appl_heap_service::s_alloc(
+            p_context_handle,
             p_buf,
             i_length);
-
-    return
-        e_status;
 
 } /* appl_heap_alloc() */
 
@@ -58,22 +40,10 @@ appl_heap_free(
     struct appl_buf * const
         p_buf)
 {
-    class appl_context * const
-        p_context =
-        appl_context::convert_handle(
-            p_context_handle);
-
-    class appl_heap * const
-        p_heap =
-        p_context->m_heap;
-
-    enum appl_status const
-        e_status =
-        p_heap->free_memory(
-            p_buf);
-
     return
-        e_status;
+        appl_heap_service::s_free(
+            p_context_handle,
+            p_buf);
 
 } /* appl_heap_free() */
 
@@ -89,23 +59,11 @@ appl_heap_realloc(
     unsigned long int const
         i_length)
 {
-    class appl_context * const
-        p_context =
-        appl_context::convert_handle(
-            p_context_handle);
-
-    class appl_heap * const
-        p_heap =
-        p_context->m_heap;
-
-    enum appl_status const
-        e_status =
-        p_heap->realloc_memory(
+    return
+        appl_heap_service::s_realloc(
+            p_context_handle,
             p_buf,
             i_length);
-
-    return
-        e_status;
 
 } /* appl_heap_realloc() */
 

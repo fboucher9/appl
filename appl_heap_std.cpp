@@ -152,7 +152,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_heap_std::alloc_memory(
+    appl_heap_std::v_alloc(
         struct appl_buf * const
             p_buf,
         appl_size_t const
@@ -192,13 +192,13 @@ enum appl_status
     return
         e_status;
 
-} // alloc_memory()
+} // v_alloc()
 
 //
 //
 //
 enum appl_status
-    appl_heap_std::free_memory(
+    appl_heap_std::v_free(
         struct appl_buf * const
             p_buf)
 {
@@ -225,13 +225,13 @@ enum appl_status
     return
         e_status;
 
-} // free_memory()
+} // v_free()
 
 //
 //
 //
 enum appl_status
-    appl_heap_std::realloc_memory(
+    appl_heap_std::v_realloc(
         struct appl_buf * const
             p_buf,
         appl_size_t const
@@ -245,7 +245,7 @@ enum appl_status
         == i_buf_len)
     {
         e_status =
-            free_memory(
+            v_free(
                 p_buf);
     }
     else if (
@@ -253,7 +253,7 @@ enum appl_status
         == p_buf->o_max.p_void)
     {
         e_status =
-            alloc_memory(
+            v_alloc(
                 p_buf,
                 i_buf_len);
     }
@@ -290,6 +290,6 @@ enum appl_status
     return
         e_status;
 
-} // realloc_memory()
+} // v_realloc()
 
 /* end-of-file: appl_heap_std.cpp */

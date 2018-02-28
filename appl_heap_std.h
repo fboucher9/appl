@@ -64,7 +64,7 @@ class appl_heap_std : public appl_heap
 
         virtual
         enum appl_status
-            alloc_memory(
+            v_alloc(
                 struct appl_buf * const
                     p_buf,
                 appl_size_t const
@@ -72,13 +72,13 @@ class appl_heap_std : public appl_heap
 
         virtual
         enum appl_status
-            free_memory(
+            v_free(
                 struct appl_buf * const
                     p_buf);
 
         virtual
         enum appl_status
-            realloc_memory(
+            v_realloc(
                 struct appl_buf * const
                     p_buf,
                 appl_size_t const

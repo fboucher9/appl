@@ -46,7 +46,7 @@ enum appl_status
         o_placement;
 
     e_status =
-        p_heap->alloc_memory(
+        p_heap->v_alloc(
             &(
                 o_placement),
             i_placement_length);
@@ -65,7 +65,7 @@ enum appl_status
         if (
             appl_status_ok != e_status)
         {
-            p_heap->free_memory(
+            p_heap->v_free(
                 &(
                     o_placement));
         }
@@ -167,7 +167,7 @@ enum appl_status
         o_placement.o_max.p_void =
             this + 1;
 
-        p_heap->free_memory(
+        p_heap->v_free(
             &(
                 o_placement));
     }

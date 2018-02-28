@@ -16,7 +16,7 @@
 //
 //
 enum appl_status
-    appl_heap::alloc_memory(
+    appl_heap::v_alloc(
         struct appl_buf * const
             p_buf,
         appl_size_t const
@@ -30,13 +30,13 @@ enum appl_status
     return
         appl_status_not_implemented;
 
-} // alloc_memory()
+} // v_alloc()
 
 //
 //
 //
 enum appl_status
-    appl_heap::free_memory(
+    appl_heap::v_free(
         struct appl_buf * const
             p_buf)
 {
@@ -46,13 +46,13 @@ enum appl_status
     return
         appl_status_not_implemented;
 
-} // free_memory()
+} // v_free()
 
 //
 //
 //
 enum appl_status
-    appl_heap::realloc_memory(
+    appl_heap::v_realloc(
         struct appl_buf * const
             p_buf,
         appl_size_t const
@@ -66,7 +66,7 @@ enum appl_status
     return
         appl_status_not_implemented;
 
-} // realloc_memory()
+} // v_realloc()
 
 //
 //

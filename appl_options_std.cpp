@@ -95,7 +95,7 @@ appl_options_std::init(
                 struct appl_buf));
 
     e_status =
-        m_context->m_heap->alloc_memory(
+        m_context->m_heap->v_alloc(
             &(
                 m_placement_buf),
             i_placement_length);
@@ -146,7 +146,7 @@ appl_options_std::cleanup(void)
     enum appl_status
         e_status;
 
-    m_context->m_heap->free_memory(
+    m_context->m_heap->v_free(
         &(
             m_placement_buf));
 

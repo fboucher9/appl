@@ -591,7 +591,7 @@ enum appl_status
                 o_placement;
 
             e_status =
-                p_heap->alloc_memory(
+                p_heap->v_alloc(
                     &(
                         o_placement),
                     static_cast<unsigned long int>(
@@ -617,7 +617,7 @@ enum appl_status
                 if (
                     appl_status_ok != e_status)
                 {
-                    p_heap->free_memory(
+                    p_heap->v_free(
                         &(
                             o_placement));
                 }
@@ -879,7 +879,7 @@ appl_context_std::destroy(void)
     delete
         this;
 
-    p_heap->free_memory(
+    p_heap->v_free(
         &(
             o_placement));
 
