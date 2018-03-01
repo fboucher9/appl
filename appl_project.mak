@@ -241,6 +241,7 @@ $(3)-$(2)-$(1)-compiler ?= $$($(3)-$(2)-cxx-compiler)
 endif
 APPL_HEADER_DEPS += $$($(3)-$(2)-$(1)-output).d
 $$($(3)-$(2)-$(1)-output) : $$($(3)-$(2)-$(1)-input) $(APPL_SRC)appl_project.mak
+	@echo compiling $(1) with $(2)
 	-$$(APPL_VERBOSE)mkdir -p $$($(3)-$(2)-$(1)-dst)
 	$$(call $$($(3)-$(2)-$(1)-compiler), $$($(3)-$(2)-$(1)-output),$$($(3)-$(2)-$(1)-input),$$($(3)-$(2)-$(1)-flags))
 endef
@@ -274,6 +275,7 @@ $(1)-$(2) : $$($(1)-$(2)-output)
 .PHONY : all
 all : $(1)-$(2)
 $$($(1)-$(2)-output) : $$($(1)-$(2)-input) $(APPL_SRC)appl_project.mak
+	@echo linking $(1) with $(2)
 	-$$(APPL_VERBOSE)mkdir -p $$($(1)-$(2)-dst)
 	$$(call $$($(1)-$(2)-linker),$$($(1)-$(2)-output),$$($(1)-$(2)-input),$$($(1)-$(2)-c-flags),$$($(1)-$(2)-libs))
 $$(foreach x, $$($(1)-deps), $$(eval $$(call do_source,$$(x),$(2),$(1))))
