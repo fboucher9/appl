@@ -19,10 +19,6 @@ APPL_SRC ?=
 APPL_CC-clang = clang
 APPL_CXX-clang = clang++
 
-# Setup mingw toolchain program
-APPL_CC-mingw = x86_64-w64-mingw32-gcc
-APPL_CXX-mingw = x86_64-w64-mingw32-g++
-
 # Select a C compiler program
 APPL_CC-gnu = $(CC)
 
@@ -113,14 +109,6 @@ APPL_CXXFLAGS-gnu = \
     -fno-rtti \
     -fno-exceptions
 
-APPL_CFLAGS-gnudbg = $(APPL_CFLAGS-gnu)
-
-APPL_CXXFLAGS-gnudbg = $(APPL_CXXFLAGS-gnu)
-
-APPL_CFLAGS-gnudbg32 = $(APPL_CFLAGS-gnu)
-
-APPL_CXXFLAGS-gnudbg32 = $(APPL_CXXFLAGS-gnu)
-
 # Setup clang compiler options
 APPL_FLAGS-clang = \
     -g \
@@ -138,15 +126,6 @@ APPL_CXXFLAGS-clang = \
     -std=c++98 \
     -fno-rtti \
     -fno-exceptions
-
-# Setup mingw compiler options
-APPL_CFLAGS-mingw = $(APPL_CFLAGS-gnu)
-
-APPL_CXXFLAGS-mingw = $(APPL_CXXFLAGS-gnu)
-
-APPL_CFLAGS-mingwdbg = $(APPL_CFLAGS-mingw)
-
-APPL_CXXFLAGS-mingwdbg = $(APPL_CXXFLAGS-mingw)
 
 APPL_TARGETS += test_appl
 
@@ -218,121 +197,24 @@ APPL_LIBRARY-rt-gnu-lflags = -lrt
 APPL_LIBRARY-rt-clang-lflags = -lrt
 APPL_LIBRARY-rt-mingw-lflags = -lwinmm
 
+# appl-toolchain-$(x)-linker
 # $1: output
 # $2: inputs
 # $3: flags
 # $4: libs
-define appl-script-LINKER-gnu
-	@echo linking $(1) with gcc
-	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-gnu-lflags)) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CC-gnu) @$(strip $(1)).cmd
-endef
 
-define appl-script-LINKER-gnudbg
-	@echo linking $(1) with gcc
-	$(APPL_VERBOSE)echo -o $(1) -rdynamic $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-gnu-lflags)) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CC-gnu) @$(strip $(1)).cmd
-endef
-
-define appl-script-LINKER-gnudbg32
-	@echo linking $(1) with gcc
-	$(APPL_VERBOSE)echo -o $(1) -m32 -rdynamic $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-gnu-lflags)) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CC-gnu) @$(strip $(1)).cmd
-endef
-
-define appl-script-LINKER-clang
-	@echo linking $(1) with clang
-	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-clang-lflags)) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CC-clang) @$(strip $(1)).cmd
-endef
-
-define appl-script-LINKER-mingw
-	@echo linking $(1) with mingw
-	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) -static $(foreach x,$(4),$(APPL_LIBRARY-$(x)-mingw-lflags)) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CC-mingw) @$(strip $(1)).cmd
-endef
-
-define appl-script-LINKER-mingwdbg
-	@echo linking $(1) with mingw
-	$(APPL_VERBOSE)echo -o $(1) $(3) $(2) -static $(foreach x,$(4),$(APPL_LIBRARY-$(x)-mingw-lflags)) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CC-mingw) @$(strip $(1)).cmd
-endef
-
-#
+# appl-toolchain-$(x)-c-compiler
 # $1: output
 # $2: input
 # $3: flags
-define appl-script-CC-gnu
-	@echo compiling $(1) with gcc
-	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_LINUX -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CC-gnu) @$(strip $(1)).cmd
-endef
 
-define appl-script-CC-gnudbg
-	@echo compiling $(1) with gcc
-	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_LINUX -DAPPL_DEBUG -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CC-gnu) @$(strip $(1)).cmd
-endef
+# appl-toolchain-$(x)-cxx-compiler
+# $1: output
+# $2: input
+# $3: flags
 
-define appl-script-CC-gnudbg32
-	@echo compiling $(1) with gcc
-	$(APPL_VERBOSE)echo -c -o $(1) -m32 $(3) -DAPPL_OS_LINUX -DAPPL_DEBUG -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CC-gnu) @$(strip $(1)).cmd
-endef
-
-define appl-script-CC-clang
-	@echo compiling $(1) with clang
-	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_LINUX -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CC-clang) @$(strip $(1)).cmd
-endef
-
-define appl-script-CC-mingw
-	@echo compiling $(1) with mingw-gcc
-	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_WINDOWS -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CC-mingw) @$(strip $(1)).cmd
-endef
-
-define appl-script-CC-mingwdbg
-	@echo compiling $(1) with mingw-gcc
-	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_WINDOWS -DAPPL_DEBUG -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CC-mingw) @$(strip $(1)).cmd
-endef
-
-define appl-script-CXX-gnu
-	@echo compiling $(1) with g++
-	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_LINUX -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CXX-gnu) @$(strip $(1)).cmd
-endef
-
-define appl-script-CXX-gnudbg
-	@echo compiling $(1) with g++
-	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_LINUX -DAPPL_DEBUG -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CXX-gnu) @$(strip $(1)).cmd
-endef
-
-define appl-script-CXX-gnudbg32
-	@echo compiling $(1) with g++
-	$(APPL_VERBOSE)echo -c -o $(1) -m32 $(3) -DAPPL_OS_LINUX -DAPPL_DEBUG -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CXX-gnu) @$(strip $(1)).cmd
-endef
-
-define appl-script-CXX-clang
-	@echo compiling $(1) with clang++
-	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_LINUX -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CXX-clang) @$(strip $(1)).cmd
-endef
-
-define appl-script-CXX-mingw
-	@echo compiling $(1) with mingw-g++
-	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_WINDOWS -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CXX-mingw) @$(strip $(1)).cmd
-endef
-
-define appl-script-CXX-mingwdbg
-	@echo compiling $(1) with mingw-g++
-	$(APPL_VERBOSE)echo -c -o $(1) $(3) -DAPPL_OS_WINDOWS -DAPPL_DEBUG -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
-	$(APPL_VERBOSE)$(APPL_CXX-mingw) @$(strip $(1)).cmd
-endef
+# include the toolchain files
+include $(wildcard $(foreach x,$(APPL_TOOLCHAIN), $(APPL_SRC)appl_toolchain_$(x).mak))
 
 #
 # Function: do_source
@@ -376,17 +258,17 @@ endef
 # Comments:
 #
 define do_target
-$(1)-$(2)-c-flags ?= $$(APPL_CFLAGS-$(2))
-$(1)-$(2)-cxx-flags ?= $$(APPL_CXXFLAGS-$(2))
+$(1)-$(2)-c-flags ?= $$($(2)-c-flags)
+$(1)-$(2)-cxx-flags ?= $$($(2)-cxx-flags)
 $(1)-$(2)-deps ?= $$($(1)-deps)
 $(1)-$(2)-libs ?= $$($(1)-libs)
 $(1)-$(2)-dst ?= .obj/$(1)/$(2)/
 $(1)-$(2)-src ?= $(APPL_SRC)
 $(1)-$(2)-output ?= $$($(1)-$(2)-dst)$(1).exe
 $(1)-$(2)-input ?= $$(foreach y, $$($(1)-$(2)-deps), $$($(1)-$(2)-dst)$$(y).o)
-$(1)-$(2)-c-compiler ?= appl-script-CC-$(2)
-$(1)-$(2)-cxx-compiler ?= appl-script-CXX-$(2)
-$(1)-$(2)-linker ?= appl-script-LINKER-$(2)
+$(1)-$(2)-c-compiler ?= appl-toolchain-$(2)-c-compiler
+$(1)-$(2)-cxx-compiler ?= appl-toolchain-$(2)-cxx-compiler
+$(1)-$(2)-linker ?= appl-toolchain-$(2)-linker
 .PHONY : $(1)-$(2)
 $(1)-$(2) : $$($(1)-$(2)-output)
 .PHONY : all
