@@ -201,12 +201,17 @@ enum appl_status
             int
                 i_mode;
 
+#if defined APPL_OS_LINUX
             i_mode =
                 S_IRUSR
                 | S_IWUSR
                 | S_IRGRP
                 | S_IWGRP
                 | S_IROTH;
+#else /* #if defined APPL_OS_LINUX */
+            i_mode =
+                0664;
+#endif /* #if defined APPL_OS_LINUX */
 
             m_fd =
                 open(
