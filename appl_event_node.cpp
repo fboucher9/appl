@@ -48,6 +48,8 @@ enum appl_status
 //
 enum appl_status
     appl_event_node::v_wait(
+        class appl_mutex_node * const
+            p_mutex_node,
         unsigned long int const
             i_time_freq,
         unsigned long int const
@@ -56,6 +58,8 @@ enum appl_status
     enum appl_status
         e_status;
 
+    static_cast<void>(
+        p_mutex_node);
     static_cast<void>(
         i_time_freq);
     static_cast<void>(

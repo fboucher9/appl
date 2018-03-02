@@ -18,6 +18,8 @@
 
 #include "appl_event_mgr.h"
 
+#include "appl_mutex_node.h"
+
 //
 //
 //
@@ -85,6 +87,8 @@ enum appl_status
 appl_event_service::s_wait(
     struct appl_event_handle * const
         p_event_handle,
+    struct appl_mutex_handle * const
+        p_mutex_handle,
     unsigned long int const
         i_time_freq,
     unsigned long int const
@@ -98,8 +102,14 @@ appl_event_service::s_wait(
         appl_event_node::convert_handle(
             p_event_handle);
 
+    class appl_mutex_node * const
+        p_mutex_node =
+        appl_mutex_node::convert_handle(
+            p_mutex_handle);
+
     e_status =
         p_event_node->v_wait(
+            p_mutex_node,
             i_time_freq,
             i_time_count);
 

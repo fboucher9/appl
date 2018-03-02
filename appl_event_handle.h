@@ -16,6 +16,8 @@
 #error include appl_object_handle.h before
 #endif /* #if ! defined INC_APPL_OBJECT_HANDLE_H */
 
+struct appl_mutex_handle;
+
 struct appl_event_handle;
 
 struct appl_event_descriptor
@@ -54,6 +56,8 @@ enum appl_status
 appl_event_wait(
     struct appl_event_handle * const
         p_event_handle,
+    struct appl_mutex_handle * const
+        p_mutex_handle,
     unsigned long int const
         i_time_freq,
     unsigned long int const
