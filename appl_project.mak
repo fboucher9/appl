@@ -127,69 +127,6 @@ APPL_CXXFLAGS-clang = \
     -fno-rtti \
     -fno-exceptions
 
-APPL_TARGETS += test_appl
-
-test_appl-cfgs = $(APPL_TOOLCHAIN)
-
-test_appl-deps = \
-    appl_test.c \
-    appl.cpp \
-    appl_buf.cpp \
-    appl_list.cpp \
-    appl_object.cpp \
-    appl_object_handle.cpp \
-    appl_clock_handle.cpp \
-    appl_clock_service.cpp \
-    appl_clock.cpp \
-    appl_clock_std.cpp \
-    appl_clock_w32.cpp \
-    appl_context.cpp \
-    appl_context_std.cpp \
-    appl_context_handle.cpp \
-    appl_debug.cpp \
-    appl_debug_std.cpp \
-    appl_debug_w32.cpp \
-    appl_debug_handle.cpp \
-    appl_event_handle.cpp \
-    appl_event_service.cpp \
-    appl_event_node.cpp \
-    appl_event_mgr.cpp \
-    appl_event_std_mgr.cpp \
-    appl_file_handle.cpp \
-    appl_file_service.cpp \
-    appl_file_node.cpp \
-    appl_file_mgr.cpp \
-    appl_file_std_mgr.cpp \
-    appl_file_std_node.cpp \
-    appl_heap.cpp \
-    appl_heap_std.cpp \
-    appl_heap_dbg.cpp \
-    appl_heap_service.cpp \
-    appl_heap_handle.cpp \
-    appl_options.cpp \
-    appl_options_std.cpp \
-    appl_socket_handle.cpp \
-    appl_thread_handle.cpp \
-    appl_thread_node.cpp \
-    appl_thread_std_node.cpp \
-    appl_thread_mgr.cpp \
-    appl_thread_std_mgr.cpp \
-    appl_mutex_handle.cpp \
-    appl_mutex_service.cpp \
-    appl_mutex_node.cpp \
-    appl_mutex_mgr.cpp \
-    appl_mutex_std_mgr.cpp \
-    appl_mutex_std_node.cpp \
-    appl_node.cpp \
-    appl_node_iterator.cpp \
-    appl_poll_handle.cpp \
-    appl_poll_service.cpp \
-    appl_poll_mgr.cpp \
-    appl_poll_node.cpp
-
-# List of libraries required to link test application
-test_appl-libs = pthread rt
-
 APPL_LIBRARY-pthread-gnu-lflags = -lpthread
 APPL_LIBRARY-pthread-clang-lflags = -lpthread
 APPL_LIBRARY-pthread-mingw-lflags = -lpthread
@@ -217,6 +154,10 @@ APPL_LIBRARY-rt-mingw-lflags = -lwinmm
 # include the toolchain files
 include $(wildcard $(foreach x,$(APPL_TOOLCHAIN), $(APPL_SRC)appl_toolchain_$(x).mak))
 
+# automatic include of target makefiles
+include $(wildcard $(APPL_SRC)appl_target_*.mak)
+$(if $(target-list),$(info building $(target-list)),$(error no targets in list))
+
 #
 # Function: do_source
 #
@@ -224,27 +165,27 @@ include $(wildcard $(foreach x,$(APPL_TOOLCHAIN), $(APPL_SRC)appl_toolchain_$(x)
 #       Generate compiler rule for a source
 #
 # Parameters:
-#       $1       target name
+#       $1       program name
 #       $2       toolchain
-#       $3       program name
+#       $3       target name
 #
 define do_source
-$(3)-$(2)-$(1)-dst ?= $$($(3)-$(2)-dst)
-$(3)-$(2)-$(1)-src ?= $$($(3)-$(2)-src)
-$(3)-$(2)-$(1)-output ?= $$($(3)-$(2)-$(1)-dst)$(1).o
-$(3)-$(2)-$(1)-input ?= $$($(3)-$(2)-$(1)-src)$(1)
-ifeq "$(suffix $(1))" ".c"
-$(3)-$(2)-$(1)-flags ?= $$($(3)-$(2)-c-flags)
-$(3)-$(2)-$(1)-compiler ?= $$($(3)-$(2)-c-compiler)
-else ifeq "$(suffix $(1))" ".cpp"
-$(3)-$(2)-$(1)-flags ?= $$($(3)-$(2)-cxx-flags)
-$(3)-$(2)-$(1)-compiler ?= $$($(3)-$(2)-cxx-compiler)
+$(1)-$(2)-$(3)-dst ?= $$($(1)-$(2)-dst)
+$(1)-$(2)-$(3)-src ?= $$($(1)-$(2)-src)
+$(1)-$(2)-$(3)-output ?= $$($(1)-$(2)-$(3)-dst)$(3).o
+$(1)-$(2)-$(3)-input ?= $$($(1)-$(2)-$(3)-src)$(3)
+ifeq "$(suffix $(3))" ".c"
+$(1)-$(2)-$(3)-flags ?= $$($(1)-$(2)-c-flags)
+$(1)-$(2)-$(3)-compiler ?= $$($(1)-$(2)-c-compiler)
+else ifeq "$(suffix $(3))" ".cpp"
+$(1)-$(2)-$(3)-flags ?= $$($(1)-$(2)-cxx-flags)
+$(1)-$(2)-$(3)-compiler ?= $$($(1)-$(2)-cxx-compiler)
 endif
-APPL_HEADER_DEPS += $$($(3)-$(2)-$(1)-output).d
-$$($(3)-$(2)-$(1)-output) : $$($(3)-$(2)-$(1)-input) $(APPL_SRC)appl_project.mak
-	@echo compiling $(1) with $(2)
-	-$$(APPL_VERBOSE)mkdir -p $$($(3)-$(2)-$(1)-dst)
-	$$(call $$($(3)-$(2)-$(1)-compiler), $$($(3)-$(2)-$(1)-output),$$($(3)-$(2)-$(1)-input),$$($(3)-$(2)-$(1)-flags))
+APPL_HEADER_DEPS += $$($(1)-$(2)-$(3)-output).d
+$$($(1)-$(2)-$(3)-output) : $$($(1)-$(2)-$(3)-input) $$(APPL_SRC)appl_project.mak
+	@echo compiling $(3) with $(2)
+	-$$(APPL_VERBOSE)mkdir -p $$($(1)-$(2)-$(3)-dst)
+	$$(call $$($(1)-$(2)-$(3)-compiler), $$($(1)-$(2)-$(3)-output),$$($(1)-$(2)-$(3)-input),$$($(1)-$(2)-$(3)-flags))
 endef
 
 #
@@ -260,12 +201,13 @@ endef
 # Comments:
 #
 define do_target
+$(1)-src ?= $$(APPL_SRC)
 $(1)-$(2)-c-flags ?= $$($(2)-c-flags)
 $(1)-$(2)-cxx-flags ?= $$($(2)-cxx-flags)
 $(1)-$(2)-deps ?= $$($(1)-deps)
 $(1)-$(2)-libs ?= $$($(1)-libs)
 $(1)-$(2)-dst ?= .obj/$(1)/$(2)/
-$(1)-$(2)-src ?= $(APPL_SRC)
+$(1)-$(2)-src ?= $$($(1)-src)
 $(1)-$(2)-output ?= $$($(1)-$(2)-dst)$(1).exe
 $(1)-$(2)-input ?= $$(foreach y, $$($(1)-$(2)-deps), $$($(1)-$(2)-dst)$$(y).o)
 $(1)-$(2)-c-compiler ?= appl-toolchain-$(2)-c-compiler
@@ -275,14 +217,14 @@ $(1)-$(2)-linker ?= appl-toolchain-$(2)-linker
 $(1)-$(2) : $$($(1)-$(2)-output)
 .PHONY : $(1) $(2) all
 all $(1) $(2) : $(1)-$(2)
-$$($(1)-$(2)-output) : $$($(1)-$(2)-input) $(APPL_SRC)appl_project.mak
+$$($(1)-$(2)-output) : $$($(1)-$(2)-input) $$(APPL_SRC)appl_project.mak
 	@echo linking $(1) with $(2)
 	-$$(APPL_VERBOSE)mkdir -p $$($(1)-$(2)-dst)
 	$$(call $$($(1)-$(2)-linker),$$($(1)-$(2)-output),$$($(1)-$(2)-input),$$($(1)-$(2)-c-flags),$$($(1)-$(2)-libs))
-$$(foreach x, $$($(1)-deps), $$(eval $$(call do_source,$$(x),$(2),$(1))))
+$$(foreach x, $$($(1)-deps), $$(eval $$(call do_source,$(1),$(2),$$(x))))
 endef
 
-$(foreach x,$(APPL_TARGETS), $(foreach y, $($(x)-cfgs), $(eval $(call do_target,$(x),$(y)))))
+$(foreach x,$(target-list), $(foreach y, $($(x)-cfgs), $(eval $(call do_target,$(x),$(y)))))
 
 # Generic "clean" rule, delete all object files
 .PHONY: clean
