@@ -148,6 +148,7 @@ test_appl-deps = \
     appl_context_handle.cpp \
     appl_debug.cpp \
     appl_debug_std.cpp \
+    appl_debug_w32.cpp \
     appl_debug_handle.cpp \
     appl_event_handle.cpp \
     appl_event_service.cpp \
@@ -272,8 +273,8 @@ $(1)-$(2)-cxx-compiler ?= appl-toolchain-$(2)-cxx-compiler
 $(1)-$(2)-linker ?= appl-toolchain-$(2)-linker
 .PHONY : $(1)-$(2)
 $(1)-$(2) : $$($(1)-$(2)-output)
-.PHONY : all
-all : $(1)-$(2)
+.PHONY : $(1) $(2) all
+all $(1) $(2) : $(1)-$(2)
 $$($(1)-$(2)-output) : $$($(1)-$(2)-input) $(APPL_SRC)appl_project.mak
 	@echo linking $(1) with $(2)
 	-$$(APPL_VERBOSE)mkdir -p $$($(1)-$(2)-dst)

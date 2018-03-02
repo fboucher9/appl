@@ -4,7 +4,7 @@
 
 */
 
-#if defined APPL_DEBUG
+#if ( defined APPL_DEBUG ) && ( defined APPL_OS_LINUX )
 
 #include <signal.h>
 
@@ -127,6 +127,6 @@ enum appl_status
 
 } // v_print()
 
-#endif /* #if defined APPL_DEBUG */
+#endif /* #if ( defined APPL_DEBUG ) && ( defined APPL_OS_LINUX ) */
 
 /* end-of-file: appl_debug_std.cpp */

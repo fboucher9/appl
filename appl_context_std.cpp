@@ -42,7 +42,15 @@
 
 #include "appl_debug.h"
 
+#if defined APPL_OS_LINUX
+
 #include "appl_debug_std.h"
+
+#elif defined APPL_OS_WINDOWS
+
+#include "appl_debug_w32.h"
+
+#endif /* #if defined APPL_OS_Xx */
 
 #endif /* #if defined APPL_DEBUG */
 
@@ -145,11 +153,28 @@ appl_context_std::init_debug(void)
     enum appl_status
         e_status;
 
+#if defined APPL_OS_LINUX
+
     e_status =
         appl_debug_std::create_instance(
             m_context,
             &(
                 m_debug));
+
+#elif defined APPL_OS_WINDOWS
+
+    e_status =
+        appl_debug_w32::create_instance(
+            m_context,
+            &(
+                m_debug));
+
+#else /* #if defined APPL_OS_Xx */
+
+    e_status =
+        appl_status_fail;
+
+#endif /* #if defined APPL_OS_Xx */
 
     if (
         appl_status_ok
