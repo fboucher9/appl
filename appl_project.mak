@@ -15,6 +15,9 @@ APPL_VERBOSE ?= @
 # Location of source code files
 APPL_SRC ?=
 
+# Location of output files
+APPL_DST ?= .obj/
+
 # Setup clang toolchain program
 APPL_CC-clang = clang
 APPL_CXX-clang = clang++
@@ -154,8 +157,8 @@ APPL_LIBRARY-rt-mingw-lflags = -lwinmm
 # include the toolchain files
 include $(wildcard $(foreach x,$(APPL_TOOLCHAIN), $(APPL_SRC)appl_toolchain_$(x).mak))
 
-# automatic include of target makefiles
-include $(wildcard $(APPL_SRC)appl_target_*.mak)
+# automatic include of project makefiles
+include $(wildcard $(APPL_PROJECT_LIST))
 $(if $(target-list),$(info building $(target-list)),$(error no targets in list))
 
 #
@@ -182,9 +185,9 @@ $(1)-$(2)-$(3)-flags ?= $$($(1)-$(2)-cxx-flags)
 $(1)-$(2)-$(3)-compiler ?= $$($(1)-$(2)-cxx-compiler)
 endif
 APPL_HEADER_DEPS += $$($(1)-$(2)-$(3)-output).d
-$$($(1)-$(2)-$(3)-output) : $$($(1)-$(2)-$(3)-input) $$(APPL_SRC)appl_project.mak
+$$($(1)-$(2)-$(3)-output) : $$($(1)-$(2)-$(3)-input) $$(MAKEFILE_LIST)
 	@echo compiling $(3) with $(2)
-	-$$(APPL_VERBOSE)mkdir -p $$($(1)-$(2)-$(3)-dst)
+	-$$(APPL_VERBOSE)mkdir -p $$(dir $$($(1)-$(2)-$(3)-output))
 	$$(call $$($(1)-$(2)-$(3)-compiler), $$($(1)-$(2)-$(3)-output),$$($(1)-$(2)-$(3)-input),$$($(1)-$(2)-$(3)-flags))
 endef
 
@@ -202,11 +205,12 @@ endef
 #
 define do_target
 $(1)-src ?= $$(APPL_SRC)
+$(1)-dst ?= $$(APPL_DST)$(1)/
 $(1)-$(2)-c-flags ?= $$($(2)-c-flags)
 $(1)-$(2)-cxx-flags ?= $$($(2)-cxx-flags)
 $(1)-$(2)-deps ?= $$($(1)-deps)
 $(1)-$(2)-libs ?= $$($(1)-libs)
-$(1)-$(2)-dst ?= .obj/$(1)/$(2)/
+$(1)-$(2)-dst ?= $$($(1)-dst)$(2)/
 $(1)-$(2)-src ?= $$($(1)-src)
 $(1)-$(2)-output ?= $$($(1)-$(2)-dst)$(1).exe
 $(1)-$(2)-input ?= $$(foreach y, $$($(1)-$(2)-deps), $$($(1)-$(2)-dst)$$(y).o)
@@ -217,9 +221,9 @@ $(1)-$(2)-linker ?= appl-toolchain-$(2)-linker
 $(1)-$(2) : $$($(1)-$(2)-output)
 .PHONY : $(1) $(2) all
 all $(1) $(2) : $(1)-$(2)
-$$($(1)-$(2)-output) : $$($(1)-$(2)-input) $$(APPL_SRC)appl_project.mak
+$$($(1)-$(2)-output) : $$($(1)-$(2)-input) $$(MAKEFILE_LIST)
 	@echo linking $(1) with $(2)
-	-$$(APPL_VERBOSE)mkdir -p $$($(1)-$(2)-dst)
+	-$$(APPL_VERBOSE)mkdir -p $$(dir $$($(1)-$(2)-output))
 	$$(call $$($(1)-$(2)-linker),$$($(1)-$(2)-output),$$($(1)-$(2)-input),$$($(1)-$(2)-c-flags),$$($(1)-$(2)-libs))
 $$(foreach x, $$($(1)-deps), $$(eval $$(call do_source,$(1),$(2),$$(x))))
 endef
