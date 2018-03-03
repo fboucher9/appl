@@ -4,6 +4,8 @@
 
 */
 
+#include <pthread.h>
+
 #include "appl_status.h"
 
 #include "appl_types.h"
@@ -13,6 +15,10 @@
 #include "appl_event_mgr.h"
 
 #include "appl_event_std_mgr.h"
+
+#include "appl_event_node.h"
+
+#include "appl_event_std_node.h"
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -38,7 +44,7 @@ enum appl_status
             sizeof(
                 class appl_event_std_mgr),
             &(
-                appl_event_std_mgr::placement_new),
+                appl_event_std_mgr::s_new),
             0,
             reinterpret_cast<class appl_object * *>(
                 r_event_mgr));
@@ -67,14 +73,14 @@ appl_event_std_mgr::~appl_event_std_mgr()
 //
 //
 void
-    appl_event_std_mgr::placement_new(
+    appl_event_std_mgr::s_new(
         void * const
             p_placement)
 {
     new (p_placement)
         class appl_event_std_mgr;
 
-} // placement_new()
+} // s_new()
 
 //
 //
@@ -91,15 +97,11 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
-        p_context);
-    static_cast<void>(
-        p_event_descriptor);
-    static_cast<void>(
-        r_event_node);
-
     e_status =
-        appl_status_not_implemented;
+        appl_event_std_node::s_create(
+            p_context,
+            p_event_descriptor,
+            r_event_node);
 
     return
         e_status;

@@ -28,6 +28,7 @@ test_appl-deps = \
     appl_event_node.cpp \
     appl_event_mgr.cpp \
     appl_event_std_mgr.cpp \
+    appl_event_std_node.cpp \
     appl_file_handle.cpp \
     appl_file_service.cpp \
     appl_file_node.cpp \

@@ -56,7 +56,7 @@ class appl_event_std_mgr : public appl_event_mgr
 
         static
         void
-            placement_new(
+            s_new(
                 void * const
                     p_placement);
 
