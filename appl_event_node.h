@@ -46,11 +46,7 @@ class appl_event_node : public appl_object
         enum appl_status
             v_wait(
                 class appl_mutex_node * const
-                    p_mutex_node,
-                unsigned long int const
-                    i_time_freq,
-                unsigned long int const
-                    i_time_count);
+                    p_mutex_node);
 
     protected:
 

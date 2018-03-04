@@ -104,63 +104,21 @@ enum appl_status
     static_cast<void>(
         p_descriptor);
 
-    pthread_condattr_t
-        o_condattr;
-
     i_pthread_result =
-        pthread_condattr_init(
+        pthread_cond_init(
             &(
-                o_condattr));
+                m_pthread_event_storage),
+            NULL);
 
     if (
         0
         == i_pthread_result)
     {
-#if ! defined APPL_OS_WINDOWS
-        i_pthread_result =
-            pthread_condattr_setclock(
-                &(
-                    o_condattr),
-                CLOCK_MONOTONIC);
-#endif /* #if ! defined APPL_OS_WINDOWS */
+        m_pthread_event_initialized =
+            true;
 
-        if (
-            0
-            == i_pthread_result)
-        {
-            i_pthread_result =
-                pthread_cond_init(
-                    &(
-                        m_pthread_event_storage),
-                    &(
-                        o_condattr));
-
-            if (
-                0
-                == i_pthread_result)
-            {
-                m_pthread_event_initialized =
-                    true;
-
-                e_status =
-                    appl_status_ok;
-            }
-            else
-            {
-                e_status =
-                    appl_status_fail;
-            }
-        }
-        else
-        {
-            e_status =
-                appl_status_fail;
-        }
-
-        pthread_condattr_destroy(
-            &(
-                o_condattr));
-
+        e_status =
+            appl_status_ok;
     }
     else
     {
@@ -207,8 +165,32 @@ enum appl_status
 enum appl_status
     appl_event_std_node::v_signal(void)
 {
+    enum appl_status
+        e_status;
+
+    int
+        i_pthread_result;
+
+    i_pthread_result =
+        pthread_cond_signal(
+            &(
+                m_pthread_event_storage));
+
+    if (
+        0
+        == i_pthread_result)
+    {
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
     return
-        appl_status_not_implemented;
+        e_status;
 
 } // v_signal()
 
@@ -218,18 +200,10 @@ enum appl_status
 enum appl_status
     appl_event_std_node::v_wait(
         class appl_mutex_node * const
-            p_mutex_node,
-        unsigned long int const
-            i_time_freq,
-        unsigned long int const
-            i_time_count)
+            p_mutex_node)
 {
     static_cast<void>(
         p_mutex_node);
-    static_cast<void>(
-        i_time_freq);
-    static_cast<void>(
-        i_time_count);
 
     return
         appl_status_not_implemented;

@@ -57,11 +57,7 @@ appl_event_wait(
     struct appl_event_handle * const
         p_event_handle,
     struct appl_mutex_handle * const
-        p_mutex_handle,
-    unsigned long int const
-        i_time_freq,
-    unsigned long int const
-        i_time_count);
+        p_mutex_handle);
 
 #if defined(__cplusplus)
 } /* extern "C" */
