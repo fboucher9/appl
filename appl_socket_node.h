@@ -2,6 +2,12 @@
 
 /*
 
+Module: appl_socket_node.h
+
+Description:
+
+    
+
 */
 
 /* Reverse include guard */

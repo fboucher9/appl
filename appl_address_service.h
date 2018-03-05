@@ -2,6 +2,11 @@
 
 /*
 
+Module: appl_address_service.h
+
+Description:
+    Services for handling of address handles.
+
 */
 
 /* Reverse include guard */
@@ -11,10 +16,13 @@
 
 #define INC_APPL_ADDRESS_SERVICE_H
 
+/* Predefine */
 struct appl_context_handle;
 
+/* Predefine */
 struct appl_address_descriptor;
 
+/* Predefine */
 struct appl_address_handle;
 
 /* Assert compiler */
@@ -22,15 +30,21 @@ struct appl_address_handle;
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
+// Predefine
 class appl_address_service;
 
 //
+//  Class: appl_address_service
 //
+//  Description:
+//      Collection of static methods that allow to interface with address
+//      handles.
 //
 class appl_address_service
 {
     public:
 
+        // Create an address handle
         static
         enum appl_status
         s_create(

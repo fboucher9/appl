@@ -2,6 +2,12 @@
 
 /*
 
+Module: appl_address_node.h
+
+Description:
+
+    Base interface for address objects.
+
 */
 
 /* Reverse include guard */
@@ -21,10 +27,14 @@
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
+// Predefine
 class appl_address_node;
 
 //
+//  Class: appl_address_node
 //
+//  Description:
+//      Base interface for address objects.
 //
 class appl_address_node : public appl_object
 {
