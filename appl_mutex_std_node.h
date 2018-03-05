@@ -25,6 +25,10 @@ struct appl_mutex_descriptor;
 
 class appl_context;
 
+class appl_event_node;
+
+class appl_event_std_node;
+
 class appl_mutex_node;
 
 class appl_mutex_std_node;
@@ -34,6 +38,8 @@ class appl_mutex_std_node;
 //
 class appl_mutex_std_node : public appl_mutex_node
 {
+    friend class appl_event_std_node;
+
     public:
 
         static

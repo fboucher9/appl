@@ -202,11 +202,41 @@ enum appl_status
         class appl_mutex_node * const
             p_mutex_node)
 {
-    static_cast<void>(
-        p_mutex_node);
+    enum appl_status
+        e_status;
+
+    class appl_mutex_std_node *
+        p_mutex_std_node;
+
+    p_mutex_std_node =
+        static_cast<class appl_mutex_std_node *>(
+            p_mutex_node);
+
+    int
+        i_pthread_result;
+
+    i_pthread_result =
+        pthread_cond_wait(
+            &(
+                m_pthread_event_storage),
+            &(
+                p_mutex_std_node->m_pthread_mutex_storage));
+
+    if (
+        0
+        == i_pthread_result)
+    {
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_not_implemented;
+        e_status;
 
 } // v_wait()
 

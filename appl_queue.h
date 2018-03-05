@@ -31,11 +31,6 @@ class appl_queue : public appl_object
                 class appl_queue * * const
                     r_queue);
 
-        appl_queue();
-
-        virtual
-        ~appl_queue();
-
         virtual
         enum appl_status
             v_push(
@@ -64,8 +59,16 @@ class appl_queue : public appl_object
         class appl_node
             m_list;
 
-        signed long int volatile
+        bool
             m_kill;
+
+        unsigned char
+            uc_padding[7u];
+
+        appl_queue();
+
+        virtual
+        ~appl_queue();
 
     private:
 

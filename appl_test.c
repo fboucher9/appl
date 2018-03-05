@@ -133,6 +133,18 @@ struct appl_test_thread_context
     struct appl_mutex_handle *
         p_mutex_handle;
 
+    struct appl_event_handle *
+        p_event_handle;
+
+    void *
+        pv_padding[1u];
+
+    char
+        b_event_signaled;
+
+    unsigned char
+        uc_padding[7u];
+
 }; /* struct appl_test_thread_context */
 
 static
@@ -167,6 +179,25 @@ appl_test_thread_entry(
 
     appl_printf(
         "... thread wait 1 sec\n");
+
+    appl_mutex_unlock(
+        p_test_thread_context->p_mutex_handle);
+
+    appl_test_sleep_msec(
+        p_test_thread_context->p_context_handle,
+        1000ul);
+
+    appl_mutex_lock(
+        p_test_thread_context->p_mutex_handle);
+
+    appl_printf(
+        "signal event!\n");
+
+    p_test_thread_context->b_event_signaled =
+        1;
+
+    appl_event_signal(
+        p_test_thread_context->p_event_handle);
 
     appl_mutex_unlock(
         p_test_thread_context->p_mutex_handle);
@@ -274,6 +305,188 @@ appl_test_print_number(
         s_msg);
 }
 
+static void appl_test_options(
+    struct appl_options_descriptor const * const
+        p_options_descriptor)
+{
+    struct appl_buf *
+        p_buf_it;
+
+    unsigned int
+        argi;
+
+    p_buf_it =
+        p_options_descriptor->p_buf_min;
+
+    argi = 0;
+
+    while (
+        p_buf_it < p_options_descriptor->p_buf_max)
+    {
+        appl_printf(
+            "[%3u] [%.*s]\n",
+            argi,
+            (int)(
+                p_buf_it->o_max.pc_uchar
+                - p_buf_it->o_min.pc_uchar),
+            (char const *)(
+                p_buf_it->o_min.pc_uchar));
+
+        argi ++;
+
+        p_buf_it ++;
+    }
+}
+
+static void appl_test_thread(
+    struct appl_context_handle * const
+        p_context_handle)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_thread_handle *
+        p_thread_handle;
+
+    struct appl_mutex_handle *
+        p_mutex_handle;
+
+    struct appl_event_handle *
+        p_event_handle;
+
+    struct appl_thread_descriptor
+        o_thread_descriptor;
+
+    struct appl_mutex_descriptor
+        o_mutex_descriptor;
+
+    struct appl_event_descriptor
+        o_event_descriptor;
+
+    struct appl_test_thread_context
+        o_test_thread_context;
+
+    appl_mutex_create(
+        p_context_handle,
+        &(
+            o_mutex_descriptor),
+        &(
+            p_mutex_handle));
+
+    appl_event_create(
+        p_context_handle,
+        &(
+            o_event_descriptor),
+        &(
+            p_event_handle));
+
+    o_test_thread_context.p_context_handle =
+        p_context_handle;
+
+    o_test_thread_context.p_mutex_handle =
+        p_mutex_handle;
+
+    o_test_thread_context.p_event_handle =
+        p_event_handle;
+
+    o_test_thread_context.b_event_signaled =
+        0;
+
+    o_thread_descriptor.p_entry =
+        &(
+            appl_test_thread_entry);
+
+    o_thread_descriptor.p_context =
+        &(
+            o_test_thread_context);
+
+    e_status =
+        appl_thread_create(
+            p_context_handle,
+            &(
+                o_thread_descriptor),
+            &(
+                p_thread_handle));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        void *
+            p_thread_result;
+
+        appl_test_sleep_msec(
+            p_context_handle,
+            200ul);
+
+#if 0
+        appl_mutex_lock(
+            p_mutex_handle);
+
+        appl_printf(
+            "main sleep 1 sec ...\n");
+
+        appl_test_sleep_msec(
+            p_context_handle,
+            1000ul);
+
+        appl_printf(
+            "... main sleep 1 sec\n");
+
+        appl_mutex_unlock(
+            p_mutex_handle);
+#endif
+
+        /* Wait for event */
+        appl_mutex_lock(
+            p_mutex_handle);
+
+        appl_printf(
+            "wait for event...\n");
+
+        while (!(o_test_thread_context.b_event_signaled))
+        {
+            appl_event_wait(
+                p_event_handle,
+                p_mutex_handle);
+        }
+
+        appl_printf(
+            "... wait done.\n");
+
+        appl_mutex_unlock(
+            p_mutex_handle);
+
+        e_status =
+            appl_thread_wait_result(
+                p_thread_handle,
+                &(
+                    p_thread_result));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            appl_printf(
+                "thread result = %p\n",
+                p_thread_result);
+        }
+
+        appl_object_destroy(
+            &(
+                p_thread_handle->o_object_handle));
+    }
+
+    appl_object_destroy(
+        &(
+            p_event_handle->o_object_handle));
+
+    appl_object_destroy(
+        &(
+            p_mutex_handle->o_object_handle));
+
+}
+
 enum appl_status
 appl_main(
     struct appl_context_handle * const
@@ -288,33 +501,8 @@ appl_main(
 
     /* Print the argument list */
     {
-        struct appl_buf *
-            p_buf_it;
-
-        unsigned int
-            argi;
-
-        p_buf_it =
-            p_options_descriptor->p_buf_min;
-
-        argi = 0;
-
-        while (
-            p_buf_it < p_options_descriptor->p_buf_max)
-        {
-            appl_printf(
-                "[%3u] [%.*s]\n",
-                argi,
-                (int)(
-                    p_buf_it->o_max.pc_uchar
-                    - p_buf_it->o_min.pc_uchar),
-                (char const *)(
-                    p_buf_it->o_min.pc_uchar));
-
-            argi ++;
-
-            p_buf_it ++;
-        }
+        appl_test_options(
+            p_options_descriptor);
     }
 
     /* Test memory leak */
@@ -325,100 +513,8 @@ appl_main(
 
     /* Test thread */
     {
-        struct appl_thread_handle *
-            p_thread_handle;
-
-        struct appl_mutex_handle *
-            p_mutex_handle;
-
-        struct appl_thread_descriptor
-            o_thread_descriptor;
-
-        struct appl_mutex_descriptor
-            o_mutex_descriptor;
-
-        struct appl_test_thread_context
-            o_test_thread_context;
-
-        appl_mutex_create(
-            p_context_handle,
-            &(
-                o_mutex_descriptor),
-            &(
-                p_mutex_handle));
-
-        o_test_thread_context.p_context_handle =
-            p_context_handle;
-
-        o_test_thread_context.p_mutex_handle =
-            p_mutex_handle;
-
-        o_thread_descriptor.p_entry =
-            &(
-                appl_test_thread_entry);
-
-        o_thread_descriptor.p_context =
-            &(
-                o_test_thread_context);
-
-        e_status =
-            appl_thread_create(
-                p_context_handle,
-                &(
-                    o_thread_descriptor),
-                &(
-                    p_thread_handle));
-
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            void *
-                p_thread_result;
-
-            appl_test_sleep_msec(
-                p_context_handle,
-                200ul);
-
-            appl_mutex_lock(
-                p_mutex_handle);
-
-            appl_printf(
-                "main sleep 1 sec ...\n");
-
-            appl_test_sleep_msec(
-                p_context_handle,
-                1000ul);
-
-            appl_printf(
-                "... main sleep 1 sec\n");
-
-            appl_mutex_unlock(
-                p_mutex_handle);
-
-            e_status =
-                appl_thread_wait_result(
-                    p_thread_handle,
-                    &(
-                        p_thread_result));
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                appl_printf(
-                    "thread result = %p\n",
-                    p_thread_result);
-            }
-
-            appl_object_destroy(
-                &(
-                    p_thread_handle->o_object_handle));
-
-            appl_object_destroy(
-                &(
-                    p_mutex_handle->o_object_handle));
-        }
+        appl_test_thread(
+            p_context_handle);
     }
 
 #if defined APPL_DEBUG
