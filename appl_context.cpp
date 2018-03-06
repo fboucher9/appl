@@ -29,7 +29,8 @@ appl_context::appl_context() :
     m_file_mgr(),
     m_poll_mgr(),
     m_clock(),
-    m_event_mgr()
+    m_event_mgr(),
+    m_socket_mgr()
 {
 }
 

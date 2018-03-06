@@ -59,8 +59,14 @@ test_appl-deps = \
     appl_poll_handle.cpp \
     appl_poll_service.cpp \
     appl_poll_mgr.cpp \
-    appl_poll_node.cpp
+    appl_poll_node.cpp \
+    appl_address_handle.cpp \
+    appl_address_service.cpp \
+    appl_address_node.cpp \
+    appl_address_std_node.cpp
 
 # List of libraries required to link test application
-test_appl-libs = pthread rt
+test_appl-libs = pthread rt winsock2
+
+APPL_LIBRARY-winsock2-mingw-lflags = -lws2_32
 

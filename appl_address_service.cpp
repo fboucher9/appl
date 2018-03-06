@@ -66,8 +66,7 @@ appl_address_service::s_create(
 
     // Use socket manager to dispatch this request
     e_status =
-        p_socket_mgr->v_create(
-            p_context,
+        p_socket_mgr->v_create_address(
             p_address_descriptor,
             reinterpret_cast<class appl_address_node * *>(
                 r_address_handle));

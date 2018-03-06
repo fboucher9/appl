@@ -53,6 +53,9 @@ class appl_address_std_node : public appl_address_node
 
     private:
 
+        struct sockaddr_storage
+            m_sockaddr_storage;
+
         appl_address_std_node(
             class appl_address_std_node const  & r);
 
@@ -65,6 +68,12 @@ class appl_address_std_node : public appl_address_node
             s_new(
                 void * const
                     p_placement);
+
+        virtual
+        enum appl_status
+            init(
+                void const * const
+                    p_descriptor);
 
 }; // class appl_address_std_node
 

@@ -44,6 +44,8 @@ class appl_clock;
 
 class appl_event_mgr;
 
+class appl_socket_mgr;
+
 //
 //
 //
@@ -79,6 +81,9 @@ class appl_context : public appl_object
 
         class appl_event_mgr *
             m_event_mgr;
+
+        class appl_socket_mgr *
+            m_socket_mgr;
 
         static
         class appl_context *
