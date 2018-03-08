@@ -16,6 +16,8 @@
 #error include appl_object_handle.h before
 #endif /* #if ! defined INC_APPL_OBJECT_HANDLE_H */
 
+struct appl_poll_descriptor;
+
 struct appl_poll_handle;
 
 struct appl_poll_handle

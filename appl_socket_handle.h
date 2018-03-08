@@ -22,86 +22,6 @@ struct appl_address_handle;
 
 struct appl_socket_descriptor;
 
-/* socket descriptor */
-struct appl_socket_descriptor
-{
-    struct appl_address_handle *
-        p_bind_address;
-
-    struct appl_address_handle *
-        p_connect_address;
-
-    /* -- */
-
-    struct appl_address_handle *
-        p_join_address;
-
-    struct appl_address_handle *
-        p_join_interface;
-
-    /* -- */
-
-    struct appl_socket_handle *
-        p_server_socket;
-
-    struct appl_address_handle *
-        p_accept_address;
-
-    /* -- */
-
-    unsigned long int
-        i_recv_timeout;
-
-    unsigned long int
-        i_send_timeout;
-
-    /* -- */
-
-    unsigned long int
-        i_listen_value;
-
-    unsigned long int
-        ul_padding[1u];
-
-    /* -- */
-
-    unsigned char
-        b_udp;
-
-    unsigned char
-        b_bind;
-
-    unsigned char
-        b_connect;
-
-    unsigned char
-        b_listen;
-
-    unsigned char
-        b_accept;
-
-    unsigned char
-        b_accept_address;
-
-    unsigned char
-        b_recv_timeout;
-
-    unsigned char
-        b_send_timeout;
-
-    /* -- */
-
-    unsigned char
-        b_join_address;
-
-    unsigned char
-        b_join_interface;
-
-    unsigned char
-        uc_padding[6u];
-
-}; /* struct appl_socket_descriptor */
-
 struct appl_socket_handle
 {
     struct appl_object_handle
@@ -121,6 +41,28 @@ appl_socket_create(
         p_socket_descriptor,
     struct appl_socket_handle * * const
         r_socket_handle);
+
+/* Wait for send, sendto to be ready */
+/* Wait for connect to be completed on connect socket */
+/* Wait for accept to be ready on listen socket */
+/* Wait for accept to be completed on accept socket */
+#define APPL_SOCKET_WAIT_SEND \
+    1ul
+
+/* Wait for recv or recvfrom to be ready */
+#define APPL_SOCKET_WAIT_RECV \
+    2ul
+
+enum appl_status
+appl_socket_wait(
+    struct appl_socket_handle * const
+        p_socket_handle,
+    unsigned int const
+        i_wait_flags,
+    unsigned long int const
+        i_wait_freq,
+    unsigned long int const
+        i_wait_count);
 
 enum appl_status
 appl_socket_send(

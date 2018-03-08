@@ -46,6 +46,40 @@ appl_socket_create(
 
 */
 enum appl_status
+appl_socket_wait(
+    struct appl_socket_handle * const
+        p_socket_handle,
+    unsigned int const
+        i_wait_flags,
+    unsigned long int const
+        i_wait_freq,
+    unsigned long int const
+        i_wait_count)
+{
+    enum appl_status
+        e_status;
+
+    static_cast<void>(
+        p_socket_handle);
+    static_cast<void>(
+        i_wait_flags);
+    static_cast<void>(
+        i_wait_freq);
+    static_cast<void>(
+        i_wait_count);
+
+    e_status =
+        appl_status_not_implemented;
+
+    return
+        e_status;
+
+} /* appl_socket_wait() */
+
+/*
+
+*/
+enum appl_status
 appl_socket_send(
     struct appl_socket_handle * const
         p_socket_handle,
