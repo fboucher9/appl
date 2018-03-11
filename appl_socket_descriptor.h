@@ -103,4 +103,21 @@ struct appl_socket_descriptor
 
 }; /* struct appl_socket_descriptor */
 
+/* Options for appl_socket_wait */
+enum appl_socket_wait_type
+{
+    /* wait for connect to be completed */
+    appl_socket_wait_connect = 1,
+
+    /* wait for accept to be available */
+    appl_socket_wait_accept = 2,
+
+    /* wait for send or sendto */
+    appl_socket_wait_send = 3,
+
+    /* wait for recv or recvfrom */
+    appl_socket_wait_recv = 4
+
+}; /* enum appl_socket_wait_type */
+
 /* end-of-file: appl_socket_descriptor.h */

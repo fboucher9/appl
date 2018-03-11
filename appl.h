@@ -88,7 +88,13 @@ Description:
 
 #if defined(APPL_CONFIG_WITH_SOCKET)
 
+#include "appl_address_descriptor.h"
+
 #include "appl_address_handle.h"
+
+#include "appl_socket_descriptor.h"
+
+#include "appl_socket_handle.h"
 
 #endif /* #if defined(APPL_CONFIG_WITH_SOCKET) */
 

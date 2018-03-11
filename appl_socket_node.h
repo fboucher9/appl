@@ -6,7 +6,7 @@ Module: appl_socket_node.h
 
 Description:
 
-    
+    Public interface of a socket instance, created via the socket manager.
 
 */
 
@@ -75,6 +75,20 @@ class appl_socket_node : public appl_object
                 p_buf,
             class appl_address_node * const
                 p_remote_address);
+
+        virtual
+        enum appl_status
+        v_wait(
+            enum appl_socket_wait_type const
+                e_wait_type,
+            unsigned long int const
+                i_wait_freq,
+            unsigned long int const
+                i_wait_count);
+
+        virtual
+        enum appl_status
+        v_cancel(void);
 
     protected:
 

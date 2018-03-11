@@ -8,6 +8,8 @@
 
 #include "appl_object_handle.h"
 
+#include "appl_socket_descriptor.h"
+
 #include "appl_socket_handle.h"
 
 #include "appl_socket_service.h"
@@ -27,54 +29,16 @@ appl_socket_create(
     enum appl_status
         e_status;
 
-    static_cast<void>(
-        p_context_handle);
-    static_cast<void>(
-        p_socket_descriptor);
-    static_cast<void>(
-        r_socket_handle);
-
     e_status =
-        appl_status_not_implemented;
+        appl_socket_service::s_create(
+            p_context_handle,
+            p_socket_descriptor,
+            r_socket_handle);
 
     return
         e_status;
 
 } /* appl_socket_create() */
-
-/*
-
-*/
-enum appl_status
-appl_socket_wait(
-    struct appl_socket_handle * const
-        p_socket_handle,
-    unsigned int const
-        i_wait_flags,
-    unsigned long int const
-        i_wait_freq,
-    unsigned long int const
-        i_wait_count)
-{
-    enum appl_status
-        e_status;
-
-    static_cast<void>(
-        p_socket_handle);
-    static_cast<void>(
-        i_wait_flags);
-    static_cast<void>(
-        i_wait_freq);
-    static_cast<void>(
-        i_wait_count);
-
-    e_status =
-        appl_status_not_implemented;
-
-    return
-        e_status;
-
-} /* appl_socket_wait() */
 
 /*
 
@@ -89,13 +53,10 @@ appl_socket_send(
     enum appl_status
         e_status;
 
-    static_cast<void>(
-        p_socket_handle);
-    static_cast<void>(
-        p_buf);
-
     e_status =
-        appl_status_not_implemented;
+        appl_socket_service::s_send(
+            p_socket_handle,
+            p_buf);
 
     return
         e_status;
@@ -115,13 +76,10 @@ appl_socket_recv(
     enum appl_status
         e_status;
 
-    static_cast<void>(
-        p_socket_handle);
-    static_cast<void>(
-        p_buf);
-
     e_status =
-        appl_status_not_implemented;
+        appl_socket_service::s_recv(
+            p_socket_handle,
+            p_buf);
 
     return
         e_status;
@@ -143,21 +101,20 @@ appl_socket_sendto(
     enum appl_status
         e_status;
 
-    static_cast<void>(
-        p_socket_handle);
-    static_cast<void>(
-        p_buf);
-    static_cast<void>(
-        p_remote_address);
-
     e_status =
-        appl_status_not_implemented;
+        appl_socket_service::s_sendto(
+            p_socket_handle,
+            p_buf,
+            p_remote_address);
 
     return
         e_status;
 
 } /* appl_socket_sendto() */
 
+/*
+
+*/
 enum appl_status
 appl_socket_recvfrom(
     struct appl_socket_handle * const
@@ -170,19 +127,64 @@ appl_socket_recvfrom(
     enum appl_status
         e_status;
 
-    static_cast<void>(
-        p_socket_handle);
-    static_cast<void>(
-        p_buf);
-    static_cast<void>(
-        p_remote_address);
-
     e_status =
-        appl_status_not_implemented;
+        appl_socket_service::s_recvfrom(
+            p_socket_handle,
+            p_buf,
+            p_remote_address);
 
     return
         e_status;
 
 } /* appl_socket_recvfrom() */
+
+/*
+
+*/
+enum appl_status
+appl_socket_wait(
+    struct appl_socket_handle * const
+        p_socket_handle,
+    enum appl_socket_wait_type const
+        e_wait_type,
+    unsigned long int const
+        i_wait_freq,
+    unsigned long int const
+        i_wait_count)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_socket_service::s_wait(
+            p_socket_handle,
+            e_wait_type,
+            i_wait_freq,
+            i_wait_count);
+
+    return
+        e_status;
+
+} /* appl_socket_wait() */
+
+/*
+
+*/
+enum appl_status
+appl_socket_cancel(
+    struct appl_socket_handle * const
+        p_socket_handle)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_socket_service::s_cancel(
+            p_socket_handle);
+
+    return
+        e_status;
+
+} /* appl_socket_cancel() */
 
 /* end-of-file: appl_socket_handle.cpp */

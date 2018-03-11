@@ -81,6 +81,24 @@ class appl_socket_service
             struct appl_address_handle * const
                 p_remote_address);
 
+        static
+        enum appl_status
+        s_wait(
+            struct appl_socket_handle * const
+                p_socket_handle,
+            enum appl_socket_wait_type const
+                e_wait_type,
+            unsigned long int const
+                i_wait_freq,
+            unsigned long int const
+                i_wait_count);
+
+        static
+        enum appl_status
+        s_cancel(
+            struct appl_socket_handle * const
+                p_socket_handle);
+
 }; // class appl_socket_service
 
 /* end-of-file: appl_socket_service.h */
