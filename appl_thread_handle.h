@@ -42,6 +42,11 @@ appl_thread_detach(
         p_thread_handle);
 
 enum appl_status
+appl_thread_interrupt(
+    struct appl_thread_handle * const
+        p_thread_handle);
+
+enum appl_status
 appl_thread_wait_result(
     struct appl_thread_handle * const
         p_thread_handle,

@@ -12,6 +12,7 @@
 
 #include "appl_thread_node.h"
 
+/* Assert compiler */
 #if !defined(__cplusplus)
 #error use C++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -39,6 +40,16 @@ enum appl_status
     return
         appl_status_fail;
 } // detach()
+
+//
+//
+//
+enum appl_status
+    appl_thread_node::interrupt(void)
+{
+    return
+        appl_status_fail;
+} // interrupt()
 
 //
 //

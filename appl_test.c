@@ -142,8 +142,11 @@ struct appl_test_thread_context
     char
         b_event_signaled;
 
+    char volatile
+        b_kill;
+
     unsigned char
-        uc_padding[7u];
+        uc_padding[6u];
 
 }; /* struct appl_test_thread_context */
 
@@ -183,24 +186,30 @@ appl_test_thread_entry(
     appl_mutex_unlock(
         p_test_thread_context->p_mutex_handle);
 
-    appl_test_sleep_msec(
-        p_test_thread_context->p_context_handle,
-        1000ul);
+    if (!(p_test_thread_context->b_kill))
+    {
+        appl_test_sleep_msec(
+            p_test_thread_context->p_context_handle,
+            1000ul);
 
-    appl_mutex_lock(
-        p_test_thread_context->p_mutex_handle);
+        if (!(p_test_thread_context->b_kill))
+        {
+            appl_mutex_lock(
+                p_test_thread_context->p_mutex_handle);
 
-    appl_printf(
-        "signal event!\n");
+            appl_printf(
+                "signal event!\n");
 
-    p_test_thread_context->b_event_signaled =
-        1;
+            p_test_thread_context->b_event_signaled =
+                1;
 
-    appl_event_signal(
-        p_test_thread_context->p_event_handle);
+            appl_event_signal(
+                p_test_thread_context->p_event_handle);
 
-    appl_mutex_unlock(
-        p_test_thread_context->p_mutex_handle);
+            appl_mutex_unlock(
+                p_test_thread_context->p_mutex_handle);
+        }
+    }
 
     return
         (void *)(0x1234);
@@ -437,6 +446,7 @@ static void appl_test_thread(
             p_mutex_handle);
 #endif
 
+#if 0
         /* Wait for event */
         appl_mutex_lock(
             p_mutex_handle);
@@ -456,6 +466,15 @@ static void appl_test_thread(
 
         appl_mutex_unlock(
             p_mutex_handle);
+#endif
+
+        /* Use interrupt to stop the sleep */
+        o_test_thread_context.b_kill =
+            1;
+
+        e_status =
+            appl_thread_interrupt(
+                p_thread_handle);
 
         e_status =
             appl_thread_wait_result(

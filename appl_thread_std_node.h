@@ -62,6 +62,10 @@ class appl_thread_std_node : public appl_thread_node
         enum appl_status
             detach(void);
 
+        virtual
+        enum appl_status
+            interrupt(void);
+
     private:
 
         pthread_t

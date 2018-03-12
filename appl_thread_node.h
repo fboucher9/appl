@@ -43,6 +43,10 @@ class appl_thread_node : public appl_object
         enum appl_status
             detach(void);
 
+        virtual
+        enum appl_status
+            interrupt(void);
+
         static
         class appl_thread_node *
             convert_handle(

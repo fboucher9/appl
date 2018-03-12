@@ -99,6 +99,30 @@ appl_thread_detach(
 
 */
 enum appl_status
+appl_thread_interrupt(
+    struct appl_thread_handle * const
+        p_thread_handle)
+{
+    enum appl_status
+        e_status;
+
+    class appl_thread_node * const
+        p_thread_node =
+        appl_thread_node::convert_handle(
+            p_thread_handle);
+
+    e_status =
+        p_thread_node->interrupt();
+
+    return
+        e_status;
+
+} /* appl_thread_interrupt() */
+
+/*
+
+*/
+enum appl_status
 appl_thread_wait_result(
     struct appl_thread_handle * const
         p_thread_handle,

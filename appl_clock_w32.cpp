@@ -258,9 +258,10 @@ appl_clock_w32::v_delay(
                     / i_time_freq)
                 & 0xFFFFFFFFul);
 
-        Sleep(
+        SleepEx(
             static_cast<unsigned int>(
-                i_time_msec));
+                i_time_msec),
+            TRUE);
 
         e_status =
             appl_status_ok;

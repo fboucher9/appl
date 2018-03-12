@@ -6,6 +6,12 @@
 
 #include <pthread.h>
 
+#if defined APPL_OS_LINUX
+
+#include <signal.h>
+
+#endif /* #if defined APPL_OS_LINUX */
+
 #include "appl_status.h"
 
 #include "appl_types.h"
@@ -186,6 +192,105 @@ enum appl_status
         e_status;
 
 } // detach()
+
+#if defined APPL_OS_LINUX
+
+/*
+
+*/
+static
+void
+dummy_urgent_signal_handler(
+    int
+        i_unused)
+{
+    static_cast<void>(
+        i_unused);
+} /* dummy_urgent_signal_handler() */
+
+#endif /* #if defined APPL_OS_LINUX */
+
+//
+//
+//
+enum appl_status
+    appl_thread_std_node::interrupt(void)
+{
+    enum appl_status
+        e_status;
+
+#if defined APPL_OS_LINUX
+
+    // setup SIGURG handler
+    struct sigaction
+        o_new_action;
+
+    struct sigaction
+        o_old_action;
+
+    o_new_action.sa_handler =
+        &(
+            dummy_urgent_signal_handler);
+
+    sigemptyset(
+        &(
+            o_new_action.sa_mask));
+
+    o_new_action.sa_flags = 0;
+
+    int
+        i_sigaction_result;
+
+    i_sigaction_result =
+        sigaction(
+            SIGURG,
+            &(
+                o_new_action),
+            &(
+                o_old_action));
+
+    if (
+        0
+        == i_sigaction_result)
+    {
+        int
+            i_external_result;
+
+        i_external_result =
+            pthread_kill(
+                p_external_thread_handle,
+                SIGURG);
+
+        if (
+            0
+            == i_external_result)
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+#elif defined APPL_OS_WINDOWS
+
+    e_status =
+        appl_status_not_implemented;
+
+#endif /* #if defined APPL_OS_Xx */
+
+    return
+        e_status;
+
+} // interrupt()
 
 //
 //
