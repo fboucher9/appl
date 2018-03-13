@@ -48,9 +48,11 @@ test_appl-deps = \
     appl_socket_node.cpp \
     appl_thread_handle.cpp \
     appl_thread_node.cpp \
-    appl_thread_std_node.cpp \
     appl_thread_mgr.cpp \
+    appl_thread_std_node.cpp \
     appl_thread_std_mgr.cpp \
+    appl_thread_w32_node.cpp \
+    appl_thread_w32_mgr.cpp \
     appl_mutex_handle.cpp \
     appl_mutex_service.cpp \
     appl_mutex_node.cpp \

@@ -60,7 +60,15 @@
 
 #include "appl_thread_mgr.h"
 
+#if defined APPL_OS_LINUX
+
 #include "appl_thread_std_mgr.h"
+
+#elif defined APPL_OS_WINDOWS
+
+#include "appl_thread_w32_mgr.h"
+
+#endif
 
 #include "appl_file_mgr.h"
 
@@ -280,11 +288,28 @@ appl_context_std::init_thread_mgr(void)
     enum appl_status
         e_status;
 
+#if defined APPL_OS_LINUX
+
     e_status =
         appl_thread_std_mgr::create_instance(
             m_context,
             &(
                 m_thread_mgr));
+
+#elif defined APPL_OS_WINDOWS
+
+    e_status =
+        appl_thread_w32_mgr::create_instance(
+            m_context,
+            &(
+                m_thread_mgr));
+
+#else /* #if defined APPL_OS_Xx */
+
+    e_status =
+        appl_status_fail;
+
+#endif /* #if defined APPL_OS_Xx */
 
     if (
         appl_status_ok
