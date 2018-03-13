@@ -57,7 +57,8 @@ enum appl_status
 //
 appl_thread_w32_node::appl_thread_w32_node() :
     appl_thread_node(),
-    m_w32_thread_handle()
+    m_w32_thread_handle(
+        INVALID_HANDLE_VALUE)
 {
 }
 
@@ -79,11 +80,47 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
-        r_result);
+    DWORD
+        dwWaitResult;
 
-    e_status =
-        appl_status_fail;
+    dwWaitResult =
+        WaitForSingleObject(
+            m_w32_thread_handle,
+            INFINITE);
+
+    if (
+        WAIT_OBJECT_0 == dwWaitResult)
+    {
+        DWORD
+            dwExitCode;
+
+        if (
+            GetExitCodeThread(
+                m_w32_thread_handle,
+                &(
+                    dwExitCode)))
+        {
+            *(
+                r_result) =
+                reinterpret_cast<void *>(
+                    static_cast<DWORD_PTR>(
+                        dwExitCode));
+
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;
@@ -100,12 +137,26 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_status_fail;
+        appl_status_ok;
 
     return
         e_status;
 
 } // detach()
+
+//
+//
+//
+static
+VOID
+CALLBACK
+DummyAPCEntry(
+    ULONG_PTR dwParam)
+{
+    static_cast<void>(
+        dwParam);
+
+} // DummyAPCEntry
 
 //
 //
@@ -116,8 +167,29 @@ enum appl_status
     enum appl_status
         e_status;
 
-    e_status =
-        appl_status_not_implemented;
+    DWORD
+        dwQueueResult;
+
+    dwQueueResult =
+        QueueUserAPC(
+            &(
+                DummyAPCEntry),
+            m_w32_thread_handle,
+            0);
+
+    if (
+        0 != dwQueueResult)
+    {
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        // GetLastError...
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;
@@ -192,6 +264,15 @@ enum appl_status
 {
     enum appl_status
         e_status;
+
+    if (INVALID_HANDLE_VALUE != m_w32_thread_handle)
+    {
+        CloseHandle(
+            m_w32_thread_handle);
+
+        m_w32_thread_handle =
+            INVALID_HANDLE_VALUE;
+    }
 
     e_status =
         appl_status_ok;

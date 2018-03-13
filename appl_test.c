@@ -401,6 +401,9 @@ static void appl_test_thread(
     o_test_thread_context.b_event_signaled =
         0;
 
+    o_test_thread_context.b_kill =
+        0;
+
     o_thread_descriptor.p_entry =
         &(
             appl_test_thread_entry);
@@ -468,6 +471,7 @@ static void appl_test_thread(
             p_mutex_handle);
 #endif
 
+#if 1
         /* Use interrupt to stop the sleep */
         o_test_thread_context.b_kill =
             1;
@@ -475,6 +479,7 @@ static void appl_test_thread(
         e_status =
             appl_thread_interrupt(
                 p_thread_handle);
+#endif
 
         e_status =
             appl_thread_wait_result(
