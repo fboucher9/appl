@@ -46,6 +46,7 @@ test_appl-deps = \
     appl_socket_mgr.cpp \
     appl_socket_service.cpp \
     appl_socket_node.cpp \
+    appl_socket_std_mgr.cpp \
     appl_thread_handle.cpp \
     appl_thread_node.cpp \
     appl_thread_mgr.cpp \

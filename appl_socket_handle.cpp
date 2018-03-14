@@ -167,24 +167,4 @@ appl_socket_wait(
 
 } /* appl_socket_wait() */
 
-/*
-
-*/
-enum appl_status
-appl_socket_cancel(
-    struct appl_socket_handle * const
-        p_socket_handle)
-{
-    enum appl_status
-        e_status;
-
-    e_status =
-        appl_socket_service::s_cancel(
-            p_socket_handle);
-
-    return
-        e_status;
-
-} /* appl_socket_cancel() */
-
 /* end-of-file: appl_socket_handle.cpp */

@@ -18,6 +18,20 @@ Description:
 #include "appl_address_node.h"
 
 //
+//
+//
+class appl_address_node *
+appl_address_node::convert_handle(
+    struct appl_address_handle * const
+        p_address_handle)
+{
+    return
+        reinterpret_cast<class appl_address_node *>(
+            p_address_handle);
+
+} // convert_handle()
+
+//
 //  Function: appl_address_node()
 //
 //  Description:

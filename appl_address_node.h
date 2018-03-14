@@ -40,6 +40,12 @@ class appl_address_node : public appl_object
 {
     public:
 
+        static
+        class appl_address_node *
+        convert_handle(
+            struct appl_address_handle * const
+                p_address_handle);
+
     protected:
 
         appl_address_node();

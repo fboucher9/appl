@@ -90,11 +90,6 @@ appl_socket_wait(
     unsigned long int const
         i_wait_count);
 
-enum appl_status
-appl_socket_cancel(
-    struct appl_socket_handle * const
-        p_socket_handle);
-
 #if defined(__cplusplus)
 } /* extern "C" */
 #endif /* #if defined(__cplusplus) */

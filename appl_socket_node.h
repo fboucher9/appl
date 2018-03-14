@@ -86,10 +86,6 @@ class appl_socket_node : public appl_object
             unsigned long int const
                 i_wait_count);
 
-        virtual
-        enum appl_status
-        v_cancel(void);
-
     protected:
 
         appl_socket_node();

@@ -93,12 +93,6 @@ class appl_socket_service
             unsigned long int const
                 i_wait_count);
 
-        static
-        enum appl_status
-        s_cancel(
-            struct appl_socket_handle * const
-                p_socket_handle);
-
 }; // class appl_socket_service
 
 /* end-of-file: appl_socket_service.h */

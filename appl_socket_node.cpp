@@ -122,16 +122,6 @@ appl_socket_node::v_wait(
 //
 //
 //
-enum appl_status
-appl_socket_node::v_cancel(void)
-{
-    return
-        appl_status_not_implemented;
-}
-
-//
-//
-//
 appl_socket_node::appl_socket_node() :
     appl_object()
 {
