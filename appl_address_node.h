@@ -22,6 +22,9 @@ Description:
 #error include appl_object.h before
 #endif /* #if ! defined INC_APPL_OBJECT_H */
 
+/* Predefine */
+struct appl_address_handle;
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -45,6 +48,9 @@ class appl_address_node : public appl_object
         convert_handle(
             struct appl_address_handle * const
                 p_address_handle);
+
+        struct appl_address_handle *
+        get_handle(void);
 
     protected:
 

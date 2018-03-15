@@ -37,16 +37,14 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_object::create_instance(
+        appl_object::s_create(
             p_context,
             sizeof(
                 class appl_mutex_std_node),
             &(
                 appl_mutex_std_node::placement_new),
-            static_cast<void const *>(
-                p_mutex_descriptor),
-            reinterpret_cast<class appl_object * *>(
-                r_mutex_node));
+            p_mutex_descriptor,
+            r_mutex_node);
 
     return
         e_status;

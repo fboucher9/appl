@@ -32,6 +32,18 @@ appl_address_node::convert_handle(
 } // convert_handle()
 
 //
+//
+//
+struct appl_address_handle *
+appl_address_node::get_handle(void)
+{
+    return
+        reinterpret_cast<struct appl_address_handle *>(
+            this);
+
+} // get_handle()
+
+//
 //  Function: appl_address_node()
 //
 //  Description:

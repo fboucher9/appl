@@ -39,32 +39,24 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_object *
-        p_object;
+    class appl_thread_std_node *
+        p_thread_std_node;
 
     e_status =
-        appl_object::create_instance(
+        appl_object::s_create(
             p_context,
             sizeof(
                 class appl_thread_std_node),
             &(
                 appl_thread_std_node::placement_new),
-            static_cast<void const *>(
-                p_thread_descriptor),
+            p_thread_descriptor,
             &(
-                p_object));
+                p_thread_std_node));
 
     if (
         appl_status_ok
         == e_status)
     {
-        class appl_thread_std_node *
-            p_thread_std_node;
-
-        p_thread_std_node =
-            reinterpret_cast<class appl_thread_std_node *>(
-                p_object);
-
         int
             i_external_result;
 

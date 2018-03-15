@@ -41,16 +41,14 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_object::create_instance(
+        appl_object::s_create(
             p_context,
             sizeof(
                 class appl_event_std_node),
             &(
                 appl_event_std_node::s_new),
-            static_cast<void const *>(
-                p_event_descriptor),
-            reinterpret_cast<class appl_object * *>(
-                r_event_node));
+            p_event_descriptor,
+            r_event_node);
 
     return
         e_status;

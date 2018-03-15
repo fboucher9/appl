@@ -52,17 +52,14 @@ enum appl_status
             r_address_node)
 {
     return
-        appl_object::create_instance(
+        appl_object::s_create(
             p_context,
-            static_cast<unsigned long int>(
-                sizeof(
-                    class appl_address_std_node)),
+            sizeof(
+                class appl_address_std_node),
             &(
                 appl_address_std_node::s_new),
-            static_cast<void const *>(
-                p_address_descriptor),
-            reinterpret_cast<class appl_object * *>(
-                r_address_node));
+            p_address_descriptor,
+            r_address_node);
 
 } // s_create()
 

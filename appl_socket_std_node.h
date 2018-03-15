@@ -64,6 +64,16 @@ class appl_socket_std_node : public appl_socket_node
 
         virtual
         enum appl_status
+        init(
+            void const * const
+                p_descriptor);
+
+        virtual
+        enum appl_status
+        cleanup(void);
+
+        virtual
+        enum appl_status
         v_send(
             struct appl_buf * const
                 p_buf);

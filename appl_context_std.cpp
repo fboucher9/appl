@@ -652,17 +652,15 @@ enum appl_status
                 appl_status_ok == e_status)
             {
                 e_status =
-                    appl_object::init_instance(
+                    appl_object::s_init(
                         static_cast<class appl_context *>(
                             0),
                         o_placement.o_min.p_void,
                         &(
                             appl_context_std::placement_new),
-                        static_cast<void const *>(
-                            &(
-                                o_init_descriptor)),
-                        reinterpret_cast<class appl_object * *>(
-                            r_context));
+                        &(
+                            o_init_descriptor),
+                        r_context);
 
                 if (
                     appl_status_ok != e_status)

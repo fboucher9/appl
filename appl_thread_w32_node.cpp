@@ -36,16 +36,14 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_object::create_instance(
+        appl_object::s_create(
             p_context,
             sizeof(
                 class appl_thread_w32_node),
             &(
                 appl_thread_w32_node::placement_new),
-            static_cast<void const *>(
-                p_thread_descriptor),
-            reinterpret_cast<class appl_object * *>(
-                r_thread_node));
+            p_thread_descriptor,
+            r_thread_node);
 
     return
         e_status;

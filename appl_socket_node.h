@@ -22,6 +22,11 @@ Description:
 #error include appl_object.h before
 #endif /* #if ! defined INC_APPL_OBJECT_H */
 
+/* Header file dependency */
+#if ! defined INC_APPL_SOCKET_DESCRIPTOR_H
+#error include appl_socket_descriptor.h before
+#endif /* #if ! defined INC_APPL_SOCKET_DESCRIPTOR_H */
+
 struct appl_buf;
 
 struct appl_socket_handle;

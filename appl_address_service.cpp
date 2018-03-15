@@ -21,6 +21,8 @@ Description:
 
 #include "appl_context.h"
 
+#include "appl_address_node.h"
+
 //
 //  Function: s_create
 //
@@ -64,12 +66,24 @@ appl_address_service::s_create(
         p_socket_mgr =
         p_context->m_socket_mgr;
 
+    class appl_address_node *
+        p_address_node;
+
     // Use socket manager to dispatch this request
     e_status =
         p_socket_mgr->v_create_address(
             p_address_descriptor,
-            reinterpret_cast<class appl_address_node * *>(
-                r_address_handle));
+            &(
+                p_address_node));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_address_handle) =
+            p_address_node->get_handle();
+    }
 
     return
         e_status;

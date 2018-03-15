@@ -34,15 +34,13 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_object::create_instance(
+        appl_object::s_create(
             p_context,
             sizeof(
                 class appl_clock_std),
             &(
                 appl_clock_std::placement_new),
-            0,
-            reinterpret_cast<class appl_object * *>(
-                r_clock));
+            r_clock);
 
     return
         e_status;

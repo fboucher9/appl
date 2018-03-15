@@ -35,15 +35,14 @@ appl_options_std::create_instance(
         r_options_std)
 {
     return
-        appl_object::create_instance(
+        appl_object::s_create(
             p_context,
             sizeof(
                 class appl_options_std),
             &(
                 appl_options_std::placement_new),
             p_options_std_descriptor,
-            reinterpret_cast<class appl_object * *>(
-                r_options_std));
+            r_options_std);
 
 } // create_instance()
 

@@ -47,6 +47,58 @@ class appl_object
                 class appl_object * * const
                     r_object);
 
+        template <typename T_instance>
+        static
+        enum appl_status
+            s_create(
+                class appl_context * const
+                    p_context,
+                appl_size_t const
+                    i_placement_length,
+                void (*p_new)(
+                    void * const
+                        p_placement),
+                T_instance * * const
+                    r_type_instance)
+        {
+            return
+                appl_object::create_instance(
+                    p_context,
+                    i_placement_length,
+                    p_new,
+                    static_cast<void const *>(
+                        0),
+                    reinterpret_cast<class appl_object * *>(
+                        r_type_instance));
+        }
+
+        template <typename T_descriptor, typename T_instance>
+        static
+        enum appl_status
+            s_create(
+                class appl_context * const
+                    p_context,
+                appl_size_t const
+                    i_placement_length,
+                void (*p_new)(
+                    void * const
+                        p_placement),
+                T_descriptor const * const
+                    p_type_descriptor,
+                T_instance * * const
+                    r_type_instance)
+        {
+            return
+                appl_object::create_instance(
+                    p_context,
+                    i_placement_length,
+                    p_new,
+                    static_cast<void const *>(
+                        p_type_descriptor),
+                    reinterpret_cast<class appl_object * *>(
+                        r_type_instance));
+        }
+
         static
         enum appl_status
             init_instance(
@@ -61,6 +113,58 @@ class appl_object
                     p_descriptor,
                 class appl_object * * const
                     r_object);
+
+        template <typename T_instance>
+        static
+        enum appl_status
+            s_init(
+                class appl_context * const
+                    p_context,
+                void * const
+                    p_placement,
+                void (*p_new)(
+                    void * const
+                        p_placement),
+                T_instance * * const
+                    r_object)
+        {
+            return
+                appl_object::init_instance(
+                    p_context,
+                    p_placement,
+                    p_new,
+                    static_cast<void const *>(
+                        0),
+                    reinterpret_cast<class appl_object * *>(
+                        r_object));
+        }
+
+        template <typename T_descriptor, typename T_instance>
+        static
+        enum appl_status
+            s_init(
+                class appl_context * const
+                    p_context,
+                void * const
+                    p_placement,
+                void (*p_new)(
+                    void * const
+                        p_placement),
+                T_descriptor const * const
+                    p_descriptor,
+                T_instance * * const
+                    r_object)
+        {
+            return
+                appl_object::init_instance(
+                    p_context,
+                    p_placement,
+                    p_new,
+                    static_cast<void const *>(
+                        p_descriptor),
+                    reinterpret_cast<class appl_object * *>(
+                        r_object));
+        }
 
         virtual
         enum appl_status
