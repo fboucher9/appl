@@ -6,6 +6,16 @@
 
 #include <pthread.h>
 
+#if defined APPL_OS_WINDOWS
+
+#include <pthread_time.h>
+
+#else /* */
+
+#include <time.h>
+
+#endif /* */
+
 #include "appl_status.h"
 
 #include "appl_types.h"
@@ -211,21 +221,70 @@ enum appl_status
             p_mutex_node);
 
     int
-        i_pthread_result;
+        i_clock_result;
 
-    i_pthread_result =
-        pthread_cond_wait(
+    struct timespec
+        o_now;
+
+    i_clock_result =
+        clock_gettime(
+            CLOCK_REALTIME,
             &(
-                m_pthread_event_storage),
-            &(
-                p_mutex_std_node->m_pthread_mutex_storage));
+                o_now));
 
     if (
         0
-        == i_pthread_result)
+        == i_clock_result)
     {
-        e_status =
-            appl_status_ok;
+        appl_ull_t
+            i_abstime;
+
+        i_abstime =
+            static_cast<appl_ull_t>(
+                (
+                 static_cast<appl_ull_t>(
+                     o_now.tv_sec)
+                 * 1000000000ul)
+                + static_cast<appl_ull_t>(
+                    o_now.tv_nsec)
+                + 100000000ul);
+
+        /* Default timeout ... */
+        struct timespec
+            o_abstime;
+
+        o_abstime.tv_sec =
+            static_cast<time_t>(
+                i_abstime / 1000000000ul);
+
+        o_abstime.tv_nsec =
+            static_cast<unsigned long int>(
+                i_abstime % 1000000000ul);
+
+        int
+            i_pthread_result;
+
+        i_pthread_result =
+            pthread_cond_timedwait(
+                &(
+                    m_pthread_event_storage),
+                &(
+                    p_mutex_std_node->m_pthread_mutex_storage),
+                &(
+                    o_abstime));
+
+        if (
+            0
+            == i_pthread_result)
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
     }
     else
     {
