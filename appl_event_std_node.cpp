@@ -208,7 +208,11 @@ enum appl_status
 enum appl_status
     appl_event_std_node::v_wait(
         class appl_mutex_node * const
-            p_mutex_node)
+            p_mutex_node,
+        unsigned long int const
+            i_wait_freq,
+        unsigned long int const
+            i_wait_count)
 {
     enum appl_status
         e_status;

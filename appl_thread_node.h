@@ -35,17 +35,21 @@ class appl_thread_node : public appl_object
 
         virtual
         enum appl_status
-            wait_result(
+            v_start(void);
+
+        virtual
+        enum appl_status
+            v_stop(
+                unsigned long int const
+                    i_wait_freq,
+                unsigned long int const
+                    i_wait_count,
                 void * * const
                     r_result);
 
         virtual
         enum appl_status
-            detach(void);
-
-        virtual
-        enum appl_status
-            interrupt(void);
+            v_interrupt(void);
 
         static
         class appl_thread_node *

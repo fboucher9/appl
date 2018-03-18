@@ -424,76 +424,87 @@ static void appl_test_thread(
         appl_status_ok
         == e_status)
     {
-        void *
-            p_thread_result;
-
-        appl_test_sleep_msec(
-            p_context_handle,
-            200ul);
-
-#if 0
-        appl_mutex_lock(
-            p_mutex_handle);
-
-        appl_printf(
-            "main sleep 1 sec ...\n");
-
-        appl_test_sleep_msec(
-            p_context_handle,
-            1000ul);
-
-        appl_printf(
-            "... main sleep 1 sec\n");
-
-        appl_mutex_unlock(
-            p_mutex_handle);
-#endif
-
-#if 0
-        /* Wait for event */
-        appl_mutex_lock(
-            p_mutex_handle);
-
-        appl_printf(
-            "wait for event...\n");
-
-        while (!(o_test_thread_context.b_event_signaled))
-        {
-            appl_event_wait(
-                p_event_handle,
-                p_mutex_handle);
-        }
-
-        appl_printf(
-            "... wait done.\n");
-
-        appl_mutex_unlock(
-            p_mutex_handle);
-#endif
-
-#if 1
-        /* Use interrupt to stop the sleep */
-        o_test_thread_context.b_kill =
-            1;
-
         e_status =
-            appl_thread_interrupt(
+            appl_thread_start(
                 p_thread_handle);
-#endif
-
-        e_status =
-            appl_thread_wait_result(
-                p_thread_handle,
-                &(
-                    p_thread_result));
 
         if (
             appl_status_ok
             == e_status)
         {
+            void *
+                p_thread_result;
+
+            appl_test_sleep_msec(
+                p_context_handle,
+                200ul);
+
+#if 0
+            appl_mutex_lock(
+                p_mutex_handle);
+
             appl_printf(
-                "thread result = %p\n",
-                p_thread_result);
+                "main sleep 1 sec ...\n");
+
+            appl_test_sleep_msec(
+                p_context_handle,
+                1000ul);
+
+            appl_printf(
+                "... main sleep 1 sec\n");
+
+            appl_mutex_unlock(
+                p_mutex_handle);
+#endif
+
+#if 0
+            /* Wait for event */
+            appl_mutex_lock(
+                p_mutex_handle);
+
+            appl_printf(
+                "wait for event...\n");
+
+            while (!(o_test_thread_context.b_event_signaled))
+            {
+                appl_event_wait(
+                    p_event_handle,
+                    p_mutex_handle);
+            }
+
+            appl_printf(
+                "... wait done.\n");
+
+            appl_mutex_unlock(
+                p_mutex_handle);
+#endif
+
+#if 1
+            /* Use interrupt to stop the sleep */
+            o_test_thread_context.b_kill =
+                1;
+
+            e_status =
+                appl_thread_interrupt(
+                    p_thread_handle);
+#endif
+
+            e_status =
+                appl_thread_stop(
+                    p_thread_handle,
+                    1,
+                    1,
+                    &(
+                        p_thread_result));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                appl_printf(
+                    "thread result = %p\n",
+                    p_thread_result);
+            }
         }
 
         appl_object_destroy(

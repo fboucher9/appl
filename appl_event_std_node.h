@@ -95,7 +95,11 @@ class appl_event_std_node : public appl_event_node
         enum appl_status
             v_wait(
                 class appl_mutex_node * const
-                    p_mutex_nodet);
+                    p_mutex_node,
+                unsigned long int const
+                    i_wait_freq,
+                unsigned long int const
+                    i_wait_count);
 
 }; // class appl_event_std_node
 

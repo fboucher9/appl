@@ -49,13 +49,21 @@ enum appl_status
 enum appl_status
     appl_event_node::v_wait(
         class appl_mutex_node * const
-            p_mutex_node)
+            p_mutex_node,
+        unsigned long int const
+            i_wait_freq,
+        unsigned long int const
+            i_wait_count)
 {
     enum appl_status
         e_status;
 
     static_cast<void>(
         p_mutex_node);
+    static_cast<void>(
+        i_wait_freq);
+    static_cast<void>(
+        i_wait_count);
 
     e_status =
         appl_status_not_implemented;

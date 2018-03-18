@@ -37,7 +37,7 @@ class appl_thread_mgr : public appl_object
 
         virtual
         enum appl_status
-            create_node(
+            v_create(
                 class appl_context * const
                     p_context,
                 struct appl_thread_descriptor const * const

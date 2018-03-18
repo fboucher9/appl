@@ -55,7 +55,11 @@ class appl_event_service
             struct appl_event_handle * const
                 p_event_handle,
             struct appl_mutex_handle * const
-                p_mutex_handle);
+                p_mutex_handle,
+            unsigned long int const
+                i_wait_freq,
+            unsigned long int const
+                i_wait_count);
 
 }; // class appl_event_service
 

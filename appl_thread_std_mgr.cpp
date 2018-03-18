@@ -12,6 +12,8 @@
 
 #include "appl_object.h"
 
+#include "appl_thread_descriptor.h"
+
 #include "appl_thread_mgr.h"
 
 #include "appl_thread_std_mgr.h"
@@ -58,7 +60,7 @@ void
 } // placement_new()
 
 enum appl_status
-    appl_thread_std_mgr::create_node(
+    appl_thread_std_mgr::v_create(
         class appl_context * const
             p_context,
         struct appl_thread_descriptor const * const
@@ -78,6 +80,6 @@ enum appl_status
     return
         e_status;
 
-} // create_node()
+} // v_create()
 
 /* end-of-file: appl_thread_std_mgr.cpp */

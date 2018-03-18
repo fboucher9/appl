@@ -17,7 +17,7 @@
 #endif /* #if !defined(__cplusplus) */
 
 enum appl_status
-    appl_thread_mgr::create_node(
+    appl_thread_mgr::v_create(
         class appl_context * const
             p_context,
         struct appl_thread_descriptor const * const

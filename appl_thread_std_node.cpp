@@ -18,11 +18,11 @@
 
 #include "appl_object.h"
 
+#include "appl_thread_descriptor.h"
+
 #include "appl_thread_node.h"
 
 #include "appl_thread_std_node.h"
-
-#include "appl_thread_descriptor.h"
 
 //
 //
@@ -57,35 +57,23 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
-        int
-            i_external_result;
+        pthread_mutex_init(
+            &(
+                p_thread_std_node->m_lock),
+            NULL);
 
-        i_external_result =
-            pthread_create(
-                &(
-                    p_thread_std_node->p_external_thread_handle),
-                NULL,
-                p_thread_descriptor->p_entry,
-                p_thread_descriptor->p_context);
+        pthread_cond_init(
+            &(
+                p_thread_std_node->m_event),
+            NULL);
 
-        if (
-            0
-            == i_external_result)
-        {
+        p_thread_std_node->m_descriptor =
             *(
-                r_thread_node) =
-                p_thread_std_node;
+                p_thread_descriptor);
 
-            e_status =
-                appl_status_ok;
-        }
-        else
-        {
-            p_thread_std_node->destroy();
-
-            e_status =
-                appl_status_fail;
-        }
+        *(
+            r_thread_node) =
+            p_thread_std_node;
     }
 
     return
@@ -98,7 +86,12 @@ enum appl_status
 //
 appl_thread_std_node::appl_thread_std_node() :
     appl_thread_node(),
-    p_external_thread_handle()
+    m_descriptor(),
+    m_lock(),
+    m_event(),
+    m_thread(),
+    m_thread_result(),
+    m_running(false)
 {
 }
 
@@ -109,33 +102,165 @@ appl_thread_std_node::~appl_thread_std_node()
 {
 }
 
+//
+//
+//
+void
+    appl_thread_std_node::thread_handler(void)
+{
+    void *
+        p_thread_result;
+
+    pthread_detach(
+        m_thread);
+
+    p_thread_result =
+        (*(m_descriptor.p_entry))(
+            m_descriptor.p_context);
+
+    pthread_mutex_lock(
+        &(
+            m_lock));
+
+    m_running =
+        false;
+
+    m_thread_result =
+        p_thread_result;
+
+    pthread_cond_signal(
+        &(
+            m_event));
+
+    pthread_mutex_unlock(
+        &(
+            m_lock));
+
+} // thread_handler()
+
+//
+//
+//
+void *
+    appl_thread_std_node::thread_entry(
+        void *
+            p_thread_context)
+{
+    class appl_thread_std_node * const
+        p_thread_std_node =
+        static_cast<class appl_thread_std_node *>(
+            p_thread_context);
+
+    p_thread_std_node->thread_handler();
+
+    return
+        static_cast<void *>(
+            0);
+
+} // thread_entry()
+
+//
+//
+//
 enum appl_status
-    appl_thread_std_node::wait_result(
+appl_thread_std_node::v_start(void)
+{
+    enum appl_status
+        e_status;
+
+    pthread_mutex_lock(
+        &(
+            m_lock));
+
+    if (
+        !(
+            m_running))
+    {
+        int
+            i_external_result;
+
+        i_external_result =
+            pthread_create(
+                &(
+                    m_thread),
+                NULL,
+                &(
+                    appl_thread_std_node::thread_entry),
+                static_cast<void *>(
+                    this));
+
+        if (
+            0
+            == i_external_result)
+        {
+            m_running =
+                true;
+
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    pthread_mutex_unlock(
+        &(
+            m_lock));
+
+    return
+        e_status;
+
+} // v_start()
+
+//
+//
+//
+enum appl_status
+    appl_thread_std_node::v_stop(
+        unsigned long int const
+            i_wait_freq,
+        unsigned long int const
+            i_wait_count,
         void * * const
             r_result)
 {
     enum appl_status
         e_status;
 
-    void *
-        p_result;
+    static_cast<void>(
+        i_wait_freq);
+    static_cast<void>(
+        i_wait_count);
 
-    int
-        i_external_result;
-
-    i_external_result =
-        pthread_join(
-            p_external_thread_handle,
-            &(
-                p_result));
+    pthread_mutex_lock(
+        &(
+            m_lock));
 
     if (
-        0
-        == i_external_result)
+        m_running)
+    {
+        pthread_cond_wait(
+            &(
+                m_event),
+            &(
+                m_lock));
+    }
+
+    if (
+        !(
+            m_running))
     {
         *(
             r_result) =
-            p_result;
+            m_thread_result;
 
         e_status =
             appl_status_ok;
@@ -145,45 +270,15 @@ enum appl_status
         e_status =
             appl_status_fail;
     }
+
+    pthread_mutex_unlock(
+        &(
+            m_lock));
 
     return
         e_status;
 
 } // wait_result()
-
-//
-//
-//
-enum appl_status
-    appl_thread_std_node::detach(void)
-{
-    enum appl_status
-        e_status;
-
-    int
-        i_external_result;
-
-    i_external_result =
-        pthread_detach(
-            p_external_thread_handle);
-
-    if (
-        0
-        == i_external_result)
-    {
-        e_status =
-            appl_status_ok;
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
-    }
-
-    return
-        e_status;
-
-} // detach()
 
 #if defined APPL_OS_LINUX
 
@@ -206,7 +301,7 @@ dummy_urgent_signal_handler(
 //
 //
 enum appl_status
-    appl_thread_std_node::interrupt(void)
+    appl_thread_std_node::v_interrupt(void)
 {
     enum appl_status
         e_status;
@@ -250,7 +345,7 @@ enum appl_status
 
         i_external_result =
             pthread_kill(
-                p_external_thread_handle,
+                m_thread,
                 SIGURG);
 
         if (
@@ -282,7 +377,7 @@ enum appl_status
     return
         e_status;
 
-} // interrupt()
+} // v_interrupt()
 
 //
 //

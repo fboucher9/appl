@@ -54,22 +54,44 @@ class appl_thread_std_node : public appl_thread_node
 
         virtual
         enum appl_status
-            wait_result(
+            v_start(void);
+
+        virtual
+        enum appl_status
+            v_stop(
+                unsigned long int const
+                    i_wait_freq,
+                unsigned long int const
+                    i_wait_count,
                 void * * const
                     r_result);
 
         virtual
         enum appl_status
-            detach(void);
-
-        virtual
-        enum appl_status
-            interrupt(void);
+            v_interrupt(void);
 
     private:
 
+        struct appl_thread_descriptor
+            m_descriptor;
+
+        pthread_mutex_t
+            m_lock;
+
+        pthread_cond_t
+            m_event;
+
         pthread_t
-            p_external_thread_handle;
+            m_thread;
+
+        void *
+            m_thread_result;
+
+        bool
+            m_running;
+
+        unsigned char
+            uc_padding[7u];
 
         appl_thread_std_node(
             class appl_thread_std_node const & r);
@@ -83,6 +105,15 @@ class appl_thread_std_node : public appl_thread_node
             placement_new(
                 void * const
                     p_placement);
+
+        void
+            thread_handler(void);
+
+        static
+        void *
+            thread_entry(
+                void *
+                    p_thread_context);
 
 }; // class appl_thread_std_node
 

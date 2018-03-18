@@ -21,10 +21,28 @@
 //
 //
 enum appl_status
-    appl_thread_node::wait_result(
+    appl_thread_node::v_start(void)
+{
+    return
+        appl_status_fail;
+} // v_start()
+
+//
+//
+//
+enum appl_status
+    appl_thread_node::v_stop(
+        unsigned long int const
+            i_wait_freq,
+        unsigned long int const
+            i_wait_count,
         void * * const
             r_result)
 {
+    static_cast<void>(
+        i_wait_freq);
+    static_cast<void>(
+        i_wait_count);
     static_cast<void>(
         r_result);
     return
@@ -35,21 +53,11 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_thread_node::detach(void)
+    appl_thread_node::v_interrupt(void)
 {
     return
         appl_status_fail;
-} // detach()
-
-//
-//
-//
-enum appl_status
-    appl_thread_node::interrupt(void)
-{
-    return
-        appl_status_fail;
-} // interrupt()
+} // v_interrupt()
 
 //
 //

@@ -37,21 +37,25 @@ appl_thread_create(
         r_thread_handle);
 
 enum appl_status
-appl_thread_detach(
+appl_thread_start(
     struct appl_thread_handle * const
         p_thread_handle);
+
+enum appl_status
+appl_thread_stop(
+    struct appl_thread_handle * const
+        p_thread_handle,
+    unsigned long int const
+        i_wait_freq,
+    unsigned long int const
+        i_wait_count,
+    void * * const
+        r_thread_result);
 
 enum appl_status
 appl_thread_interrupt(
     struct appl_thread_handle * const
         p_thread_handle);
-
-enum appl_status
-appl_thread_wait_result(
-    struct appl_thread_handle * const
-        p_thread_handle,
-    void * * const
-        r_thread_result);
 
 #if defined(__cplusplus)
 } /* extern "C" */

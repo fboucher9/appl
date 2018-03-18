@@ -52,7 +52,7 @@ appl_thread_create(
         p_thread_node;
 
     e_status =
-        p_thread_mgr->create_node(
+        p_thread_mgr->v_create(
             p_context,
             p_thread_descriptor,
             &(
@@ -75,7 +75,7 @@ appl_thread_create(
 
 */
 enum appl_status
-appl_thread_detach(
+appl_thread_start(
     struct appl_thread_handle * const
         p_thread_handle)
 {
@@ -88,12 +88,45 @@ appl_thread_detach(
             p_thread_handle);
 
     e_status =
-        p_thread_node->detach();
+        p_thread_node->v_start();
 
     return
         e_status;
 
-} /* appl_thread_detach() */
+} /* appl_thread_start() */
+
+/*
+
+*/
+enum appl_status
+appl_thread_stop(
+    struct appl_thread_handle * const
+        p_thread_handle,
+    unsigned long int const
+        i_wait_freq,
+    unsigned long int const
+        i_wait_count,
+    void * * const
+        r_thread_result)
+{
+    enum appl_status
+        e_status;
+
+    class appl_thread_node * const
+        p_thread_node =
+        appl_thread_node::convert_handle(
+            p_thread_handle);
+
+    e_status =
+        p_thread_node->v_stop(
+            i_wait_freq,
+            i_wait_count,
+            r_thread_result);
+
+    return
+        e_status;
+
+} /* appl_thread_stop() */
 
 /*
 
@@ -112,38 +145,11 @@ appl_thread_interrupt(
             p_thread_handle);
 
     e_status =
-        p_thread_node->interrupt();
+        p_thread_node->v_interrupt();
 
     return
         e_status;
 
 } /* appl_thread_interrupt() */
-
-/*
-
-*/
-enum appl_status
-appl_thread_wait_result(
-    struct appl_thread_handle * const
-        p_thread_handle,
-    void * * const
-        r_thread_result)
-{
-    enum appl_status
-        e_status;
-
-    class appl_thread_node * const
-        p_thread_node =
-        appl_thread_node::convert_handle(
-            p_thread_handle);
-
-    e_status =
-        p_thread_node->wait_result(
-            r_thread_result);
-
-    return
-        e_status;
-
-} /* appl_thread_wait_result() */
 
 /* end-of-file: appl_thread_handle.cpp */

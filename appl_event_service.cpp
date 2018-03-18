@@ -88,7 +88,11 @@ appl_event_service::s_wait(
     struct appl_event_handle * const
         p_event_handle,
     struct appl_mutex_handle * const
-        p_mutex_handle)
+        p_mutex_handle,
+    unsigned long int const
+        i_wait_freq,
+    unsigned long int const
+        i_wait_count)
 {
     enum appl_status
         e_status;
@@ -105,7 +109,9 @@ appl_event_service::s_wait(
 
     e_status =
         p_event_node->v_wait(
-            p_mutex_node);
+            p_mutex_node,
+            i_wait_freq,
+            i_wait_count);
 
     return
         e_status;
