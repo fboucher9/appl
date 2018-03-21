@@ -60,6 +60,14 @@ struct appl_socket_descriptor;
 #define APPL_SOCKET_FLAG_JOIN_INTERFACE \
     0x00000100ul
 
+/* Provide recv buffer size option */
+#define APPL_SOCKET_FLAG_RECV_BUFFER \
+    0x00000200ul
+
+/* Provide send buffer size option */
+#define APPL_SOCKET_FLAG_SEND_BUFFER \
+    0x00000400ul
+
 /* socket descriptor */
 struct appl_socket_descriptor
 {
@@ -92,6 +100,14 @@ struct appl_socket_descriptor
 
     unsigned long int
         i_send_timeout;
+
+    /* -- */
+
+    unsigned long int
+        i_recv_buffer;
+
+    unsigned long int
+        i_send_buffer;
 
     /* -- */
 
