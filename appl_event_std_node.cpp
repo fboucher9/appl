@@ -251,7 +251,12 @@ enum appl_status
                  * 1000000000ul)
                 + static_cast<appl_ull_t>(
                     o_now.tv_nsec)
-                + 100000000ul);
+                + (
+                    (
+                        static_cast<appl_ull_t>(
+                            i_wait_count)
+                        * 1000000000ul)
+                    / i_wait_freq));
 
         /* Default timeout ... */
         struct timespec

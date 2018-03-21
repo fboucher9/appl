@@ -118,23 +118,58 @@ void
         (*(m_descriptor.p_entry))(
             m_descriptor.p_context);
 
-    pthread_mutex_lock(
-        &(
-            m_lock));
+    int
+        i_lock_result;
 
-    m_running =
-        false;
+    i_lock_result =
+        pthread_mutex_lock(
+            &(
+                m_lock));
 
-    m_thread_result =
-        p_thread_result;
+    if (
+        0
+        == i_lock_result)
+    {
+        m_running =
+            false;
 
-    pthread_cond_signal(
-        &(
-            m_event));
+        m_thread_result =
+            p_thread_result;
 
-    pthread_mutex_unlock(
-        &(
-            m_lock));
+        int
+            i_signal_result;
+
+        i_signal_result =
+            pthread_cond_signal(
+                &(
+                    m_event));
+
+        static_cast<void>(
+            i_signal_result);
+
+        int
+            i_unlock_result;
+
+        i_unlock_result =
+            pthread_mutex_unlock(
+                &(
+                    m_lock));
+
+        static_cast<void>(
+            i_unlock_result);
+    }
+    else
+    {
+        m_running =
+            false;
+
+        m_thread_result =
+            p_thread_result;
+
+        pthread_cond_signal(
+            &(
+                m_event));
+    }
 
 } // thread_handler()
 
@@ -168,52 +203,73 @@ appl_thread_std_node::v_start(void)
     enum appl_status
         e_status;
 
-    pthread_mutex_lock(
-        &(
-            m_lock));
+    int
+        i_lock_result;
+
+    i_lock_result =
+        pthread_mutex_lock(
+            &(
+                m_lock));
 
     if (
-        !(
-            m_running))
+        0
+        == i_lock_result)
     {
-        int
-            i_external_result;
-
-        i_external_result =
-            pthread_create(
-                &(
-                    m_thread),
-                NULL,
-                &(
-                    appl_thread_std_node::thread_entry),
-                static_cast<void *>(
-                    this));
-
         if (
-            0
-            == i_external_result)
+            !(
+                m_running))
         {
-            m_running =
-                true;
+            int
+                i_create_result;
 
-            e_status =
-                appl_status_ok;
+            i_create_result =
+                pthread_create(
+                    &(
+                        m_thread),
+                    NULL,
+                    &(
+                        appl_thread_std_node::thread_entry),
+                    static_cast<void *>(
+                        this));
+
+            if (
+                0
+                == i_create_result)
+            {
+                m_running =
+                    true;
+
+                e_status =
+                    appl_status_ok;
+            }
+            else
+            {
+                e_status =
+                    appl_status_fail;
+            }
         }
         else
         {
             e_status =
                 appl_status_fail;
         }
+
+        int
+            i_unlock_result;
+
+        i_unlock_result =
+            pthread_mutex_unlock(
+                &(
+                    m_lock));
+
+        static_cast<void>(
+            i_unlock_result);
     }
     else
     {
         e_status =
             appl_status_fail;
     }
-
-    pthread_mutex_unlock(
-        &(
-            m_lock));
 
     return
         e_status;
@@ -235,45 +291,141 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
-        i_wait_freq);
-    static_cast<void>(
-        i_wait_count);
+    int
+        i_lock_result;
 
-    pthread_mutex_lock(
-        &(
-            m_lock));
-
-    if (
-        m_running)
-    {
-        pthread_cond_wait(
-            &(
-                m_event),
+    i_lock_result =
+        pthread_mutex_lock(
             &(
                 m_lock));
-    }
 
     if (
-        !(
-            m_running))
+        0
+        == i_lock_result)
     {
-        *(
-            r_result) =
-            m_thread_result;
+        if (
+            m_running)
+        {
+            struct timespec
+                o_now;
 
-        e_status =
-            appl_status_ok;
+            int
+                i_clock_result;
+
+            i_clock_result =
+                clock_gettime(
+                    CLOCK_REALTIME,
+                    &(
+                        o_now));
+
+            if (
+                0
+                == i_clock_result)
+            {
+                appl_ull_t
+                    i_abstime;
+
+                i_abstime =
+                    static_cast<appl_ull_t>(
+                        (
+                        static_cast<appl_ull_t>(
+                            o_now.tv_sec)
+                        * 1000000000ul)
+                        + static_cast<appl_ull_t>(
+                            o_now.tv_nsec)
+                        + (
+                            (
+                                static_cast<appl_ull_t>(
+                                    i_wait_count)
+                                * 1000000000ul)
+                            / i_wait_freq));
+
+                /* Default timeout ... */
+                struct timespec
+                    o_abstime;
+
+                o_abstime.tv_sec =
+                    static_cast<time_t>(
+                        i_abstime / 1000000000ul);
+
+                o_abstime.tv_nsec =
+                    static_cast<unsigned long int>(
+                        i_abstime % 1000000000ul);
+
+                int
+                    i_wait_result;
+
+                i_wait_result =
+                    pthread_cond_timedwait(
+                        &(
+                            m_event),
+                        &(
+                            m_lock),
+                        &(
+                            o_abstime));
+
+                if (
+                    0
+                    == i_wait_result)
+                {
+                }
+                else
+                {
+                }
+
+                e_status =
+                    appl_status_ok;
+            }
+            else
+            {
+                e_status =
+                    appl_status_fail;
+            }
+        }
+        else
+        {
+            e_status =
+                appl_status_ok;
+        }
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            if (
+                !(
+                    m_running))
+            {
+                *(
+                    r_result) =
+                    m_thread_result;
+
+                e_status =
+                    appl_status_ok;
+            }
+            else
+            {
+                e_status =
+                    appl_status_fail;
+            }
+        }
+
+        int
+            i_unlock_result;
+
+        i_unlock_result =
+            pthread_mutex_unlock(
+                &(
+                    m_lock));
+
+        static_cast<void>(
+            i_unlock_result);
     }
     else
     {
         e_status =
             appl_status_fail;
     }
-
-    pthread_mutex_unlock(
-        &(
-            m_lock));
 
     return
         e_status;
