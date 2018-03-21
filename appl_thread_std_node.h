@@ -115,6 +115,16 @@ class appl_thread_std_node : public appl_thread_node
                 void *
                     p_thread_context);
 
+        virtual
+        enum appl_status
+            init(
+                void const * const
+                    p_descriptor);
+
+        virtual
+        enum appl_status
+            cleanup(void);
+
 }; // class appl_thread_std_node
 
 /* end-of-file: appl_thread_std_node.h */

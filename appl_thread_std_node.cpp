@@ -39,9 +39,6 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_thread_std_node *
-        p_thread_std_node;
-
     e_status =
         appl_object::s_create(
             p_context,
@@ -50,31 +47,7 @@ enum appl_status
             &(
                 appl_thread_std_node::placement_new),
             p_thread_descriptor,
-            &(
-                p_thread_std_node));
-
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        pthread_mutex_init(
-            &(
-                p_thread_std_node->m_lock),
-            NULL);
-
-        pthread_cond_init(
-            &(
-                p_thread_std_node->m_event),
-            NULL);
-
-        p_thread_std_node->m_descriptor =
-            *(
-                p_thread_descriptor);
-
-        *(
-            r_thread_node) =
-            p_thread_std_node;
-    }
+            r_thread_node);
 
     return
         e_status;
@@ -543,5 +516,107 @@ void
         class appl_thread_std_node;
 
 } // placement_new()
+
+//
+//
+//
+enum appl_status
+    appl_thread_std_node::init(
+        void const * const
+            p_descriptor)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_thread_descriptor const *
+        p_thread_descriptor;
+
+    p_thread_descriptor =
+        static_cast<struct appl_thread_descriptor const *>(
+            p_descriptor);
+
+    m_descriptor =
+        *(
+            p_thread_descriptor);
+
+    int
+        i_mutex_result;
+
+    i_mutex_result =
+        pthread_mutex_init(
+            &(
+                m_lock),
+            NULL);
+
+    if (
+        0
+        == i_mutex_result)
+    {
+        int
+            i_cond_result;
+
+        i_cond_result =
+            pthread_cond_init(
+                &(
+                    m_event),
+                NULL);
+
+        if (
+            0
+            == i_cond_result)
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+
+        if (
+            appl_status_ok
+            != e_status)
+        {
+            pthread_mutex_destroy(
+                &(
+                    m_lock));
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // init()
+
+//
+//
+//
+enum appl_status
+    appl_thread_std_node::cleanup(void)
+{
+    enum appl_status
+        e_status;
+
+    pthread_cond_destroy(
+        &(
+            m_event));
+
+    pthread_mutex_destroy(
+        &(
+            m_lock));
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // cleanup()
 
 /* end-of-file: appl_thread_std_node.cpp */
