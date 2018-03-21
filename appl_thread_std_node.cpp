@@ -12,6 +12,12 @@
 
 #endif /* #if defined APPL_OS_LINUX */
 
+#if defined APPL_OS_WINDOWS
+
+#include <pthread_time.h>
+
+#endif /* #if defined APPL_OS_WINDOWS */
+
 #include "appl_status.h"
 
 #include "appl_types.h"
@@ -23,6 +29,16 @@
 #include "appl_thread_node.h"
 
 #include "appl_thread_std_node.h"
+
+#if defined APPL_DEBUG
+
+#include "appl_debug.h"
+
+#include "appl_context.h"
+
+#include "appl_buf.h"
+
+#endif /* #if defined APPL_DEBUG */
 
 //
 //
@@ -75,6 +91,82 @@ appl_thread_std_node::~appl_thread_std_node()
 {
 }
 
+#if defined APPL_DEBUG
+void
+appl_thread_std_node::oops(
+    unsigned char const * const
+        p_msg_min,
+    unsigned char const * const
+        p_msg_max,
+    int const
+        i_status_code)
+{
+    unsigned char
+        s_msg[128u];
+
+    struct appl_buf
+        o_msg_iterator;
+
+    o_msg_iterator.o_min.p_uchar =
+        s_msg;
+
+    o_msg_iterator.o_max.p_uchar =
+        s_msg + sizeof(s_msg);
+
+    struct appl_buf
+        o_msg_prefix;
+
+    o_msg_prefix.o_min.pc_uchar =
+        p_msg_min;
+
+    o_msg_prefix.o_max.pc_uchar =
+        p_msg_max;
+
+    unsigned long int
+        i_count;
+
+    appl_buf_copy(
+        &(
+            o_msg_iterator),
+        &(
+            o_msg_prefix),
+        &(
+            i_count));
+
+    appl_buf_write(
+        &(
+            o_msg_iterator),
+        ' ');
+
+    appl_buf_write(
+        &(
+            o_msg_iterator),
+        '(');
+
+    appl_buf_print_number(
+        &(
+            o_msg_iterator),
+        static_cast<signed long int>(
+            i_status_code),
+        0);
+
+    appl_buf_write(
+        &(
+            o_msg_iterator),
+        ')');
+
+    appl_buf_write(
+        &(
+            o_msg_iterator),
+        '\n');
+
+    m_context->m_debug->v_print(
+        s_msg,
+        o_msg_iterator.o_min.pc_uchar);
+
+} // oops()
+#endif /* #if defined APPL_DEBUG */
+
 //
 //
 //
@@ -84,64 +176,129 @@ void
     void *
         p_thread_result;
 
-    pthread_detach(
-        m_thread);
-
-    p_thread_result =
-        (*(m_descriptor.p_entry))(
-            m_descriptor.p_context);
-
     int
-        i_lock_result;
+        i_detach_result;
 
-    i_lock_result =
-        pthread_mutex_lock(
-            &(
-                m_lock));
+    i_detach_result =
+        pthread_detach(
+            m_thread);
 
     if (
         0
-        == i_lock_result)
+        == i_detach_result)
     {
-        m_running =
-            false;
-
-        m_thread_result =
-            p_thread_result;
+        p_thread_result =
+            (*(m_descriptor.p_entry))(
+                m_descriptor.p_context);
 
         int
-            i_signal_result;
+            i_lock_result;
 
-        i_signal_result =
-            pthread_cond_signal(
-                &(
-                    m_event));
-
-        static_cast<void>(
-            i_signal_result);
-
-        int
-            i_unlock_result;
-
-        i_unlock_result =
-            pthread_mutex_unlock(
+        i_lock_result =
+            pthread_mutex_lock(
                 &(
                     m_lock));
 
-        static_cast<void>(
-            i_unlock_result);
+        if (
+            0
+            == i_lock_result)
+        {
+            m_running =
+                false;
+
+            m_thread_result =
+                p_thread_result;
+
+            int
+                i_signal_result;
+
+            i_signal_result =
+                pthread_cond_signal(
+                    &(
+                        m_event));
+
+            static_cast<void>(
+                i_signal_result);
+
+            int
+                i_unlock_result;
+
+            i_unlock_result =
+                pthread_mutex_unlock(
+                    &(
+                        m_lock));
+
+            static_cast<void>(
+                i_unlock_result);
+        }
+        else
+        {
+#if defined APPL_DEBUG
+            static unsigned char const s_msg[] =
+            {
+                'p',
+                't',
+                'h',
+                'r',
+                'e',
+                'a',
+                'd',
+                '_',
+                'm',
+                'u',
+                't',
+                'e',
+                'x',
+                '_',
+                'l',
+                'o',
+                'c',
+                'k'
+            };
+
+            oops(
+                s_msg,
+                s_msg + sizeof s_msg,
+                i_detach_result);
+#endif /* #if defined APPL_DEBUG */
+
+            m_running =
+                false;
+
+            m_thread_result =
+                p_thread_result;
+
+            pthread_cond_signal(
+                &(
+                    m_event));
+        }
     }
     else
     {
-        m_running =
-            false;
+#if defined APPL_DEBUG
+        static unsigned char const s_msg[] =
+        {
+            'p',
+            't',
+            'h',
+            'r',
+            'e',
+            'a',
+            'd',
+            '_',
+            'd',
+            'e',
+            't',
+            'a',
+            'c',
+            'h'
+        };
 
-        m_thread_result =
-            p_thread_result;
-
-        pthread_cond_signal(
-            &(
-                m_event));
+        oops(
+            s_msg,
+            s_msg + sizeof s_msg,
+            i_detach_result);
+#endif /* #if defined APPL_DEBUG */
     }
 
 } // thread_handler()

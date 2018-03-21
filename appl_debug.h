@@ -38,8 +38,10 @@ class appl_debug : public appl_object
         virtual
         enum appl_status
             v_print(
-                struct appl_buf const * const
-                    p_buf);
+                unsigned char const * const
+                    p_msg_min,
+                unsigned char const * const
+                    p_msg_max);
 
     protected:
 

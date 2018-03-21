@@ -574,15 +574,10 @@ appl_main(
                 '\n'
             };
 
-            struct appl_buf
-                o_msg;
-
-            o_msg.o_min.pc_uchar = g_msg;
-            o_msg.o_max.pc_uchar = g_msg + sizeof(g_msg);
-
             appl_debug_print(
                 p_context_handle,
-                &(o_msg));
+                g_msg,
+                g_msg + sizeof(g_msg));
 
             appl_debug_break(
                 p_context_handle);

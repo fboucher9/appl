@@ -30,11 +30,15 @@ enum appl_status
 //
 enum appl_status
     appl_debug::v_print(
-        struct appl_buf const * const
-            p_buf)
+        unsigned char const * const
+            p_msg_min,
+        unsigned char const * const
+            p_msg_max)
 {
     static_cast<void>(
-        p_buf);
+        p_msg_min);
+    static_cast<void>(
+        p_msg_max);
 
     return
         appl_status_not_implemented;

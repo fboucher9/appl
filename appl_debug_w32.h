@@ -61,8 +61,10 @@ class appl_debug_w32 : public appl_debug
         virtual
         enum appl_status
             v_print(
-                struct appl_buf const * const
-                    p_buf);
+                unsigned char const * const
+                    p_msg_min,
+                unsigned char const * const
+                    p_msg_max);
 
     private:
 

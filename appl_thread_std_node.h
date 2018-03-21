@@ -125,6 +125,17 @@ class appl_thread_std_node : public appl_thread_node
         enum appl_status
             cleanup(void);
 
+#if defined APPL_DEBUG
+        void
+            oops(
+                unsigned char const * const
+                    p_msg_min,
+                unsigned char const * const
+                    p_msg_max,
+                int const
+                    i_status_code);
+#endif /* #if defined APPL_DEBUG */
+
 }; // class appl_thread_std_node
 
 /* end-of-file: appl_thread_std_node.h */

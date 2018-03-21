@@ -31,8 +31,10 @@ enum appl_status
 appl_debug_print(
     struct appl_context_handle * const
         p_context_handle,
-    struct appl_buf const * const
-        p_buf);
+    unsigned char const * const
+        p_msg_min,
+    unsigned char const * const
+        p_msg_max);
 
 #if defined(__cplusplus)
 } /* extern "C" */

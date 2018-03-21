@@ -87,8 +87,10 @@ enum appl_status
 //
 enum appl_status
     appl_debug_w32::v_print(
-        struct appl_buf const * const
-            p_buf)
+        unsigned char const * const
+            p_msg_min,
+        unsigned char const * const
+            p_msg_max)
 {
     enum appl_status
         e_status;
@@ -113,10 +115,10 @@ enum appl_status
         b_write_file_result =
             WriteFile(
                 h_stderr_file,
-                p_buf->o_min.pc_void,
+                p_msg_min,
                 static_cast<DWORD>(
-                    p_buf->o_max.pc_uchar
-                    - p_buf->o_min.pc_uchar),
+                    p_msg_max
+                    - p_msg_min),
                 &(
                     dwBytesWritten),
                 NULL);

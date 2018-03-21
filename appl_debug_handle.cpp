@@ -53,8 +53,10 @@ enum appl_status
 appl_debug_print(
     struct appl_context_handle * const
         p_context_handle,
-    struct appl_buf const * const
-        p_buf)
+    unsigned char const * const
+        p_msg_min,
+    unsigned char const * const
+        p_msg_max)
 {
     enum appl_status
         e_status;
@@ -70,7 +72,8 @@ appl_debug_print(
 
     e_status =
         p_debug->v_print(
-            p_buf);
+            p_msg_min,
+            p_msg_max);
 
     return
         e_status;

@@ -89,8 +89,10 @@ enum appl_status
 //
 enum appl_status
     appl_debug_std::v_print(
-        struct appl_buf const * const
-            p_buf)
+        unsigned char const * const
+            p_msg_min,
+        unsigned char const * const
+            p_msg_max)
 {
     enum appl_status
         e_status;
@@ -102,10 +104,10 @@ enum appl_status
         static_cast<signed long int>(
             write(
                 STDERR_FILENO,
-                p_buf->o_min.pc_uchar,
+                p_msg_min,
                 static_cast<unsigned int>(
-                    p_buf->o_max.pc_uchar
-                    - p_buf->o_min.pc_uchar)));
+                    p_msg_max
+                    - p_msg_min)));
 
     if (
         i_write_result > 0)
