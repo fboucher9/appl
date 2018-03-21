@@ -20,102 +20,116 @@ struct appl_socket_handle;
 /* Predefine */
 struct appl_socket_descriptor;
 
-/* Flags to select descriptor fields */
+/* Socket option unique identifiers */
+enum appl_socket_option_id
+{
+    /* Select UDP type with SOCK_DGRAM option */
+    /* Default is to select TCP type with SOCK_STREAM option */
+    appl_socket_option_id_is_udp = 1,
 
-/* Select UDP type with SOCK_DGRAM option */
-/* Default is to select TCP type with SOCK_STREAM option */
-#define APPL_SOCKET_FLAG_UDP_DGRAM \
-    0x00000001ul
+    /* Provide an address for call to bind() */
+    /* Default is an unbound socket, kernel will select interface and port */
+    appl_socket_option_id_bind_address = 2,
 
-/* Provide an address for call to bind() */
-/* Default is an unbound socket, kernel will select interface and port */
-#define APPL_SOCKET_FLAG_BIND_ADDRESS \
-    0x00000002ul
+    /* Provide an address for call to connect() */
+    appl_socket_option_id_connect_address = 3,
 
-/* Provide an address for call to connect() */
-#define APPL_SOCKET_FLAG_CONNECT_ADDRESS \
-    0x00000004ul
+    /* Provide number for call to listen() */
+    appl_socket_option_id_listen_count = 4,
 
-/* Provide number for call to listen() */
-#define APPL_SOCKET_FLAG_LISTEN \
-    0x00000008ul
+    /* Provide an empty address for call to accept() */
+    appl_socket_option_id_accept_address = 5,
 
-/* Provide an empty address for call to accept() */
-#define APPL_SOCKET_FLAG_ACCEPT_ADDRESS \
-    0x00000010ul
+    /* Set recv timeout socket option */
+    appl_socket_option_id_recv_timeout = 6,
 
-/* Set recv timeout socket option */
-#define APPL_SOCKET_FLAG_RECV_TIMEOUT \
-    0x00000020ul
+    /* Set send timeout socket option */
+    appl_socket_option_id_send_timeout = 7,
 
-/* Set send timeout socket option */
-#define APPL_SOCKET_FLAG_SEND_TIMEOUT \
-    0x00000040ul
+    /* Provide an address for add membership */
+    appl_socket_option_id_join_address = 8,
 
-/* Provide an address for add membership */
-#define APPL_SOCKET_FLAG_JOIN_ADDRESS \
-    0x00000080ul
+    /* Provide an interface for add membership */
+    appl_socket_option_id_join_interface = 9,
 
-/* Provide an interface for add membership */
-#define APPL_SOCKET_FLAG_JOIN_INTERFACE \
-    0x00000100ul
+    /* Provide recv buffer size option */
+    appl_socket_option_id_recv_buffer = 10,
 
-/* Provide recv buffer size option */
-#define APPL_SOCKET_FLAG_RECV_BUFFER \
-    0x00000200ul
+    /* Provide send buffer size option */
+    appl_socket_option_id_send_buffer = 11
 
-/* Provide send buffer size option */
-#define APPL_SOCKET_FLAG_SEND_BUFFER \
-    0x00000400ul
+}; /* enum appl_socket_option_id */
+
+/* Socket option storage types */
+enum appl_socket_option_type
+{
+    /* Option is a pointer to an address handle */
+    appl_socket_option_type_address_handle = 1,
+
+    /* Option is a pointer to a socket handle */
+    appl_socket_option_type_socket_handle = 2,
+
+    /* Option is an unsigned integer */
+    appl_socket_option_type_unsigned_integer = 3,
+
+    /* Option is a signed integer */
+    appl_socket_option_type_signed_integer = 4,
+
+    /* Option is a boolean */
+    appl_socket_option_type_boolean = 5
+
+}; /* appl_socket_option_type */
+
+/*
+
+Structure: appl_socket_option
+
+Description:
+    Description of a single socket option.
+
+*/
+struct appl_socket_option
+{
+    enum appl_socket_option_id
+        e_id;
+
+    enum appl_socket_option_type
+        e_type;
+
+    unsigned int
+        ui_padding[2u];
+
+    /* -- */
+
+    union appl_socket_option_data
+    {
+        struct appl_address_handle *
+            p_address_handle;
+
+        struct appl_socket_handle *
+            p_socket_handle;
+
+        unsigned long int
+            u_value;
+
+        signed long int
+            i_value;
+
+        unsigned char
+            b_value;
+
+    } u;
+
+}; /* struct appl_socket_option */
 
 /* socket descriptor */
 struct appl_socket_descriptor
 {
-    struct appl_address_handle *
-        p_bind_address;
+    struct appl_socket_option const *
+        p_option_min;
 
-    struct appl_address_handle *
-        p_connect_address;
-
-    /* -- */
-
-    struct appl_address_handle *
-        p_join_address;
-
-    struct appl_address_handle *
-        p_join_interface;
-
-    /* -- */
-
-    struct appl_socket_handle *
-        p_server_socket;
-
-    struct appl_address_handle *
-        p_accept_address;
-
-    /* -- */
-
-    unsigned long int
-        i_recv_timeout;
-
-    unsigned long int
-        i_send_timeout;
-
-    /* -- */
-
-    unsigned long int
-        i_recv_buffer;
-
-    unsigned long int
-        i_send_buffer;
-
-    /* -- */
-
-    unsigned long int
-        i_listen_value;
-
-    unsigned long int
-        i_flags;
+    struct appl_socket_option const *
+        p_option_max;
 
 }; /* struct appl_socket_descriptor */
 
