@@ -32,4 +32,38 @@ appl_address_create(
 
 } /* appl_address_create() */
 
+/*
+
+*/
+enum appl_status
+appl_address_get_name(
+    struct appl_address_handle * const
+        p_address_handle,
+    struct appl_buf * const
+        p_name_buf)
+{
+    return
+        appl_address_service::s_get_name(
+            p_address_handle,
+            p_name_buf);
+
+} /* appl_address_get_name() */
+
+/*
+
+*/
+enum appl_status
+appl_address_get_port(
+    struct appl_address_handle * const
+        p_address_handle,
+    unsigned short int * const
+        r_port)
+{
+    return
+        appl_address_service::s_get_port(
+            p_address_handle,
+            r_port);
+
+} /* appl_address_get_port() */
+
 /* end-of-file: appl_address_handle.cpp */

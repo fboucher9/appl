@@ -4,6 +4,12 @@
 
 */
 
+#if defined APPL_OS_LINUX
+
+#include <sys/socket.h>
+
+#endif /* #if defined APPL_OS_Xx */
+
 #include "appl_status.h"
 
 #include "appl_types.h"
@@ -13,6 +19,16 @@
 #include "appl_socket_mgr.h"
 
 #include "appl_socket_std_mgr.h"
+
+#include "appl_socket_descriptor.h"
+
+#include "appl_socket_node.h"
+
+#include "appl_socket_std_node.h"
+
+#include "appl_address_node.h"
+
+#include "appl_address_std_node.h"
 
 //
 //
@@ -82,13 +98,11 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
-        p_address_descriptor);
-    static_cast<void>(
-        r_address_node);
-
     e_status =
-        appl_status_not_implemented;
+        appl_address_std_node::s_create(
+            m_context,
+            p_address_descriptor,
+            r_address_node);
 
     return
         e_status;
@@ -108,13 +122,11 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
-        p_socket_descriptor);
-    static_cast<void>(
-        r_socket_node);
-
     e_status =
-        appl_status_not_implemented;
+        appl_socket_std_node::s_create(
+            m_context,
+            p_socket_descriptor,
+            r_socket_node);
 
     return
         e_status;

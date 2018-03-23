@@ -171,4 +171,108 @@ enum appl_status
 
 } // init()
 
+//
+//
+//
+enum appl_status
+    appl_address_std_node::v_get_name(
+        struct appl_buf * const
+            p_name_buf)
+{
+    enum appl_status
+        e_status;
+
+    struct sockaddr_in *
+        p_sockaddr_in =
+        reinterpret_cast<struct sockaddr_in *>(
+            &(
+                m_sockaddr_storage));
+
+    // convert sin_addr to string
+    char * const
+        p_name0 =
+        inet_ntoa(
+            p_sockaddr_in->sin_addr);
+
+    if (
+        p_name0)
+    {
+        int const
+            i_name0_len =
+            static_cast<int>(
+                strlen(
+                    p_name0));
+
+        struct appl_buf
+            o_buf_source;
+
+        o_buf_source.o_min.pc_uchar =
+            reinterpret_cast<unsigned char const *>(
+                p_name0);
+
+        o_buf_source.o_max.pc_uchar =
+            reinterpret_cast<unsigned char const *>(
+                p_name0 + i_name0_len);
+
+        unsigned long int
+            i_count;
+
+        e_status =
+            appl_buf_copy(
+                p_name_buf,
+                &(
+                    o_buf_source),
+                &(
+                    i_count));
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    // copy string to name buffer
+
+    return
+        e_status;
+
+} // v_get_name()
+
+//
+//
+//
+enum appl_status
+    appl_address_std_node::v_get_port(
+        unsigned short int * const
+            r_port)
+{
+    enum appl_status
+        e_status;
+
+    struct sockaddr_in *
+        p_sockaddr_in =
+        reinterpret_cast<struct sockaddr_in *>(
+            &(
+                m_sockaddr_storage));
+
+    unsigned short int
+        i_port;
+
+    i_port =
+        static_cast<unsigned short int>(
+            ntohs(
+                p_sockaddr_in->sin_port));
+
+    *(
+        r_port) =
+        i_port;
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // v_get_port()
+
 /* end-of-file: appl_address_std_node.cpp */

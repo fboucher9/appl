@@ -52,6 +52,18 @@ class appl_address_node : public appl_object
         struct appl_address_handle *
         get_handle(void);
 
+        virtual
+        enum appl_status
+            v_get_name(
+                struct appl_buf * const
+                    p_name_buf);
+
+        virtual
+        enum appl_status
+            v_get_port(
+                unsigned short int * const
+                    r_port);
+
     protected:
 
         appl_address_node();

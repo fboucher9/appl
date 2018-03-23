@@ -90,4 +90,58 @@ appl_address_service::s_create(
 
 } // s_create()
 
+//
+//
+//
+enum appl_status
+appl_address_service::s_get_name(
+    struct appl_address_handle * const
+        p_address_handle,
+    struct appl_buf * const
+        p_name_buf)
+{
+    enum appl_status
+        e_status;
+
+    class appl_address_node * const
+        p_address_node =
+        appl_address_node::convert_handle(
+            p_address_handle);
+
+    e_status =
+        p_address_node->v_get_name(
+            p_name_buf);
+
+    return
+        e_status;
+
+} // s_get_name()
+
+//
+//
+//
+enum appl_status
+appl_address_service::s_get_port(
+    struct appl_address_handle * const
+        p_address_handle,
+    unsigned short int * const
+        r_port)
+{
+    enum appl_status
+        e_status;
+
+    class appl_address_node * const
+        p_address_node =
+        appl_address_node::convert_handle(
+            p_address_handle);
+
+    e_status =
+        p_address_node->v_get_port(
+            r_port);
+
+    return
+        e_status;
+
+} // s_get_port()
+
 /* end-of-file: appl_address_service.cpp */

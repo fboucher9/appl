@@ -23,9 +23,10 @@ struct appl_socket_descriptor;
 /* Socket option unique identifiers */
 enum appl_socket_option_id
 {
-    /* Select UDP type with SOCK_DGRAM option */
+    /* Select 0 for TCP with SOCK_STREAM,
+              1 for UDP with SOCK_DGRAM */
     /* Default is to select TCP type with SOCK_STREAM option */
-    appl_socket_option_id_is_udp = 1,
+    appl_socket_option_id_protocol = 1,
 
     /* Provide an address for call to bind() */
     /* Default is an unbound socket, kernel will select interface and port */
@@ -56,7 +57,13 @@ enum appl_socket_option_id
     appl_socket_option_id_recv_buffer = 10,
 
     /* Provide send buffer size option */
-    appl_socket_option_id_send_buffer = 11
+    appl_socket_option_id_send_buffer = 11,
+
+    /* Set timeout for call to connect() */
+    appl_socket_option_id_connect_timeout = 12,
+
+    /* Set timeout for call to accept() */
+    appl_socket_option_id_accept_timeout = 13
 
 }; /* enum appl_socket_option_id */
 
@@ -75,8 +82,11 @@ enum appl_socket_option_type
     /* Option is a signed integer */
     appl_socket_option_type_signed_integer = 4,
 
-    /* Option is a boolean */
-    appl_socket_option_type_boolean = 5
+    /* Option is an unsigned fraction */
+    appl_socket_option_type_unsigned_fraction = 5,
+
+    /* Option is a signed fraction */
+    appl_socket_option_type_signed_fraction = 6
 
 }; /* appl_socket_option_type */
 
@@ -96,8 +106,10 @@ struct appl_socket_option
     enum appl_socket_option_type
         e_type;
 
+#if 0 /* sizeof int == 2 */
     unsigned int
         ui_padding[2u];
+#endif /* sizeof int == 2 */
 
     /* -- */
 
@@ -115,10 +127,27 @@ struct appl_socket_option
         signed long int
             i_value;
 
-        unsigned char
-            b_value;
+        struct appl_socket_option_unsigned_fraction
+        {
+            unsigned long int
+                u_num;
 
-    } u;
+            unsigned long int
+                u_den;
+
+        } o_unsigned_fraction;
+
+        struct appl_socket_option_signed_fraction
+        {
+            signed long int
+                i_num;
+
+            signed long int
+                i_den;
+
+        } o_signed_fraction;
+
+    } o_data;
 
 }; /* struct appl_socket_option */
 
@@ -136,17 +165,11 @@ struct appl_socket_descriptor
 /* Options for appl_socket_wait */
 enum appl_socket_wait_type
 {
-    /* wait for connect to be completed */
-    appl_socket_wait_connect = 1,
-
-    /* wait for accept to be available */
-    appl_socket_wait_accept = 2,
-
     /* wait for send or sendto */
-    appl_socket_wait_send = 3,
+    appl_socket_wait_send = 1,
 
     /* wait for recv or recvfrom */
-    appl_socket_wait_recv = 4
+    appl_socket_wait_recv = 2
 
 }; /* enum appl_socket_wait_type */
 

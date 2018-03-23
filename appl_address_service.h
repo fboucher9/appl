@@ -55,6 +55,24 @@ class appl_address_service
             struct appl_address_handle * * const
                 r_address_handle);
 
+        // Get name of address
+        static
+        enum appl_status
+        s_get_name(
+            struct appl_address_handle * const
+                p_address_handle,
+            struct appl_buf * const
+                p_name_buf);
+
+        // Get port number
+        static
+        enum appl_status
+        s_get_port(
+            struct appl_address_handle * const
+                p_address_handle,
+            unsigned short int * const
+                r_port);
+
 }; // class appl_address_service
 
 /* end-of-file: appl_address_service.h */

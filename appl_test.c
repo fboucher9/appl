@@ -522,6 +522,180 @@ static void appl_test_thread(
 
 }
 
+static
+void
+appl_test_socket(
+    struct appl_context_handle * const
+        p_context_handle)
+{
+    static unsigned char const g_name[] =
+    {
+        '1',
+        '9',
+        '2',
+        '.',
+        '1',
+        '6',
+        '8',
+        '.',
+        '0',
+        '.',
+        '1',
+        '0',
+        '0'
+    };
+
+    enum appl_status
+        e_status;
+
+    struct appl_address_handle *
+        p_address_handle;
+
+    {
+        struct appl_address_descriptor
+            o_address_descriptor;
+
+        o_address_descriptor.o_name.o_min.pc_uchar =
+            g_name;
+
+        o_address_descriptor.o_name.o_max.pc_uchar =
+            g_name + sizeof(g_name);
+
+        o_address_descriptor.b_name =
+            1;
+
+        o_address_descriptor.i_port =
+            13013;
+
+        o_address_descriptor.b_port =
+            1;
+
+        e_status =
+            appl_address_create(
+                p_context_handle,
+                &(
+                    o_address_descriptor),
+                &(
+                    p_address_handle));
+    }
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        struct appl_socket_handle *
+            p_socket_handle;
+
+        {
+            struct appl_buf
+                o_name_buf;
+
+            unsigned char
+                a_name[64u];
+
+            o_name_buf.o_min.p_uchar =
+                a_name;
+
+            o_name_buf.o_max.p_uchar =
+                a_name + sizeof(a_name);
+
+            e_status =
+                appl_address_get_name(
+                    p_address_handle,
+                    &(
+                        o_name_buf));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                appl_printf(
+                    "name=[%.*s]\n",
+                    (int)(
+                        o_name_buf.o_min.p_uchar
+                        - a_name),
+                    (char const *)(
+                        a_name));
+            }
+        }
+
+        {
+            unsigned short int
+                i_port;
+
+            e_status =
+                appl_address_get_port(
+                    p_address_handle,
+                    &(
+                        i_port));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                appl_printf(
+                    "port=[%u]\n",
+                    (unsigned int)(
+                        i_port));
+            }
+        }
+
+        {
+            struct appl_socket_descriptor
+                o_socket_descriptor;
+
+            struct appl_socket_option
+                a_socket_options[10u];
+
+            {
+                struct appl_socket_option *
+                    p_socket_option_iterator;
+
+                p_socket_option_iterator = a_socket_options;
+
+                p_socket_option_iterator->e_id =
+                    appl_socket_option_id_bind_address;
+
+                p_socket_option_iterator->e_type =
+                    appl_socket_option_type_address_handle;
+
+                p_socket_option_iterator->o_data.p_address_handle =
+                    p_address_handle;
+
+                p_socket_option_iterator ++;
+
+                o_socket_descriptor.p_option_min =
+                    a_socket_options;
+
+                o_socket_descriptor.p_option_max =
+                    p_socket_option_iterator;
+            }
+
+            e_status =
+                appl_socket_create(
+                    p_context_handle,
+                    &(
+                        o_socket_descriptor),
+                    &(
+                        p_socket_handle));
+        }
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            appl_object_destroy(
+                &(
+                    p_socket_handle->o_object_handle));
+        }
+
+        appl_object_destroy(
+            &(
+                p_address_handle->o_object_handle));
+    }
+
+} /* appl_test_socket() */
+
 enum appl_status
 appl_main(
     struct appl_context_handle * const
@@ -707,6 +881,12 @@ appl_main(
     if (1)
     {
         appl_test_file_stdout(
+            p_context_handle);
+    }
+
+    if (1)
+    {
+        appl_test_socket(
             p_context_handle);
     }
 

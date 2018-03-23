@@ -44,6 +44,34 @@ appl_address_node::get_handle(void)
 } // get_handle()
 
 //
+//
+//
+enum appl_status
+    appl_address_node::v_get_name(
+        struct appl_buf * const
+            p_name_buf)
+{
+    static_cast<void>(
+        p_name_buf);
+    return
+        appl_status_not_implemented;
+} // v_get_name()
+
+//
+//
+//
+enum appl_status
+    appl_address_node::v_get_port(
+        unsigned short int * const
+            r_port)
+{
+    static_cast<void>(
+        r_port);
+    return
+        appl_status_not_implemented;
+} // v_get_port()
+
+//
 //  Function: appl_address_node()
 //
 //  Description:

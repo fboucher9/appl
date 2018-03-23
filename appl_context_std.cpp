@@ -98,6 +98,10 @@
 
 #include "appl_event_std_mgr.h"
 
+#include "appl_socket_mgr.h"
+
+#include "appl_socket_std_mgr.h"
+
 struct appl_context_init_descriptor
 {
     struct appl_context_descriptor const *
@@ -553,18 +557,27 @@ enum appl_status
     enum appl_status
         e_status;
 
-    e_status =
-        appl_event_std_mgr::s_create(
-            m_context,
-            &(
-                m_event_mgr));
-
     if (
-        appl_status_ok
-        == e_status)
+        !b_init_event_mgr)
     {
-        b_init_event_mgr =
-            true;
+        e_status =
+            appl_event_std_mgr::s_create(
+                m_context,
+                &(
+                    m_event_mgr));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            b_init_event_mgr =
+                true;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
     }
 
     return
@@ -590,6 +603,63 @@ void
             false;
     }
 } // cleanup_event_mgr()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::init_socket_mgr(void)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        !b_init_socket_mgr)
+    {
+        e_status =
+            appl_socket_std_mgr::s_create(
+                m_context,
+                &(
+                    m_socket_mgr));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            b_init_socket_mgr =
+                true;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // init_socket_mgr()
+
+//
+//
+//
+void
+    appl_context_std::cleanup_socket_mgr(void)
+{
+    if (
+        b_init_socket_mgr)
+    {
+        m_socket_mgr->destroy();
+
+        m_socket_mgr =
+            0;
+
+        b_init_socket_mgr =
+            false;
+    }
+
+} // cleanup_socket_mgr()
 
 //
 //
@@ -697,7 +767,8 @@ appl_context_std::appl_context_std() :
     b_init_file_mgr(),
     b_init_poll_mgr(),
     b_init_clock(),
-    b_init_event_mgr()
+    b_init_event_mgr(),
+    b_init_socket_mgr()
 {
 }
 
@@ -798,6 +869,20 @@ enum appl_status
                                     appl_status_ok
                                     == e_status)
                                 {
+                                    e_status =
+                                        init_socket_mgr();
+
+                                    if (
+                                        appl_status_ok
+                                        == e_status)
+                                    {
+                                        if (
+                                            appl_status_ok != e_status)
+                                        {
+                                            cleanup_socket_mgr();
+                                        }
+                                    }
+
                                     if (
                                         appl_status_ok != e_status)
                                     {
@@ -871,6 +956,8 @@ enum appl_status
         e_status;
 
     // destroy objects
+
+    cleanup_socket_mgr();
 
     cleanup_event_mgr();
 

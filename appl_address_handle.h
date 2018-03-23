@@ -40,6 +40,20 @@ appl_address_create(
     struct appl_address_handle * * const
         r_address_handle);
 
+enum appl_status
+appl_address_get_name(
+    struct appl_address_handle * const
+        p_address_handle,
+    struct appl_buf * const
+        p_name_buf);
+
+enum appl_status
+appl_address_get_port(
+    struct appl_address_handle * const
+        p_address_handle,
+    unsigned short int * const
+        r_port);
+
 #if defined(__cplusplus)
 } /* extern "C" */
 #endif /* #if defined(__cplusplus) */

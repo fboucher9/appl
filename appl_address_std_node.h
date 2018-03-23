@@ -75,6 +75,18 @@ class appl_address_std_node : public appl_address_node
                 void const * const
                     p_descriptor);
 
+        virtual
+        enum appl_status
+            v_get_name(
+                struct appl_buf * const
+                    p_name_buf);
+
+        virtual
+        enum appl_status
+            v_get_port(
+                unsigned short int * const
+                    r_port);
+
 }; // class appl_address_std_node
 
 /* end-of-file: appl_address_std_node.h */
