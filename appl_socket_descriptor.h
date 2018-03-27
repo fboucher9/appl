@@ -63,7 +63,10 @@ enum appl_socket_option_id
     appl_socket_option_id_connect_timeout = 12,
 
     /* Set timeout for call to accept() */
-    appl_socket_option_id_accept_timeout = 13
+    appl_socket_option_id_accept_timeout = 13,
+
+    /* Maximum number of options */
+    appl_socket_option_id_max
 
 }; /* enum appl_socket_option_id */
 

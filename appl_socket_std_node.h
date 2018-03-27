@@ -49,6 +49,12 @@ class appl_socket_std_node : public appl_socket_node
 
     private:
 
+        int
+            m_fd;
+
+        unsigned int
+            ui_padding[3u];
+
         appl_socket_std_node(
             class appl_socket_std_node const & r);
 
