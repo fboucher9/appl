@@ -10,6 +10,12 @@
 
 #endif /* #if defined APPL_OS_Xx */
 
+#if defined APPL_OS_WINDOWS
+
+#include <winsock2.h>
+
+#endif /* #if defined APPL_OS_Xx */
+
 #include "appl_status.h"
 
 #include "appl_types.h"

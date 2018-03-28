@@ -77,7 +77,7 @@ void
 //
 //
 enum appl_status
-    appl_thread_w32_mgr::create_node(
+    appl_thread_w32_mgr::v_create(
         class appl_context * const
             p_context,
         struct appl_thread_descriptor const * const
@@ -97,7 +97,7 @@ enum appl_status
     return
         e_status;
 
-} // create_node()
+} // v_create()
 
 #endif /* #if defined APPL_OS_WINDOWS */
 

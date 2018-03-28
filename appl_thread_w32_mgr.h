@@ -66,7 +66,7 @@ class appl_thread_w32_mgr :
 
         virtual
         enum appl_status
-            create_node(
+            v_create(
                 class appl_context * const
                     p_context,
                 struct appl_thread_descriptor const * const

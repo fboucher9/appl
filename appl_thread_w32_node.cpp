@@ -71,7 +71,11 @@ appl_thread_w32_node::~appl_thread_w32_node()
 //
 //
 enum appl_status
-    appl_thread_w32_node::wait_result(
+    appl_thread_w32_node::v_stop(
+        unsigned long int const
+            i_wait_freq,
+        unsigned long int const
+            i_wait_count,
         void * * const
             r_result)
 {
@@ -80,6 +84,11 @@ enum appl_status
 
     DWORD
         dwWaitResult;
+
+    static_cast<void>(
+        i_wait_freq);
+    static_cast<void>(
+        i_wait_count);
 
     dwWaitResult =
         WaitForSingleObject(
@@ -123,13 +132,13 @@ enum appl_status
     return
         e_status;
 
-} // wait_result()
+} // v_stop()
 
 //
 //
 //
 enum appl_status
-    appl_thread_w32_node::detach(void)
+    appl_thread_w32_node::v_start(void)
 {
     enum appl_status
         e_status;
@@ -140,7 +149,7 @@ enum appl_status
     return
         e_status;
 
-} // detach()
+} // v_start()
 
 //
 //
@@ -160,7 +169,7 @@ DummyAPCEntry(
 //
 //
 enum appl_status
-    appl_thread_w32_node::interrupt(void)
+    appl_thread_w32_node::v_interrupt(void)
 {
     enum appl_status
         e_status;
@@ -192,7 +201,7 @@ enum appl_status
     return
         e_status;
 
-} // interrupt()
+} // v_interrupt()
 
 //
 //
