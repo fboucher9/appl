@@ -104,7 +104,7 @@ appl_property_set_slong(
     unsigned int const
         i_id,
     signed long int const
-        u_value);
+        i_value);
 
 enum appl_status
 appl_property_get_ptr(

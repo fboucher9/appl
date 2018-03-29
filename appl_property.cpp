@@ -24,7 +24,11 @@ class appl_property *
         struct appl_property_handle * const
             p_property_handle)
 {
-}
+    return
+        reinterpret_cast<class appl_property *>(
+            p_property_handle);
+
+} // convert_handle()
 
 //
 //
@@ -38,7 +42,15 @@ enum appl_status
         union appl_property_value const * const
             p_value)
 {
-}
+    static_cast<void>(
+        i_id);
+    static_cast<void>(
+        e_type);
+    static_cast<void>(
+        p_value);
+    return
+        appl_status_not_implemented;
+} // v_set()
 
 //
 //
@@ -52,12 +64,21 @@ enum appl_status
         union appl_property_value * const
             p_value)
 {
-}
+    static_cast<void>(
+        i_id);
+    static_cast<void>(
+        e_type);
+    static_cast<void>(
+        p_value);
+    return
+        appl_status_not_implemented;
+} // v_get()
 
 //
 //
 //
-appl_property::appl_property()
+appl_property::appl_property() :
+    appl_object()
 {
 }
 
