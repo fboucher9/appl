@@ -47,23 +47,23 @@ class appl_property : public appl_object
 
         virtual
         enum appl_status
-            v_write(
+            v_set(
                 unsigned int const
                     i_id,
                 enum appl_property_type const
                     e_type,
                 union appl_property_value const * const
-                    p_value);
+                    p_property_value);
 
         virtual
         enum appl_status
-            v_read(
+            v_get(
                 unsigned int const
                     i_id,
                 enum appl_property_type const
                     e_type,
                 union appl_property_value * const
-                    p_value);
+                    p_property_value);
 
     protected:
 
