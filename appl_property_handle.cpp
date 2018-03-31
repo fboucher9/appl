@@ -6,43 +6,29 @@
 
 #include "appl_status.h"
 
-#include "appl_types.h"
-
 #include "appl_object_handle.h"
 
 #include "appl_property_handle.h"
 
-#include "appl_object.h"
-
-#include "appl_property.h"
+#include "appl_property_service.h"
 
 /*
 
 */
 enum appl_status
 appl_property_create(
-    struct appl_context * const
+    struct appl_context_handle * const
         p_context_handle,
     unsigned int const
         i_count,
     struct appl_property_handle * * const
         r_property_handle)
 {
-    enum appl_status
-        e_status;
-
-    static_cast<void>(
-        p_context_handle);
-    static_cast<void>(
-        i_count);
-    static_cast<void>(
-        r_property_handle);
-
-    e_status =
-        appl_status_not_implemented;
-
     return
-        e_status;
+        appl_property_service::s_create(
+            p_context_handle,
+            i_count,
+            r_property_handle);
 
 } /* appl_property_create() */
 
@@ -58,29 +44,11 @@ appl_property_set_ptr(
     void * const
         p_value)
 {
-    enum appl_status
-        e_status;
-
-    class appl_property * const
-        p_property =
-        appl_property::convert_handle(
-            p_property_handle);
-
-    union appl_property_value
-        o_value;
-
-    o_value.p_value =
-        p_value;
-
-    e_status =
-        p_property->v_set(
-            i_id,
-            appl_property_type_ptr,
-            &(
-                o_value));
-
     return
-        e_status;
+        appl_property_service::s_set_ptr(
+            p_property_handle,
+            i_id,
+            p_value);
 
 } /* appl_property_set_ptr() */
 
@@ -96,29 +64,11 @@ appl_property_set_ulong(
     unsigned long int const
         u_value)
 {
-    enum appl_status
-        e_status;
-
-    class appl_property * const
-        p_property =
-        appl_property::convert_handle(
-            p_property_handle);
-
-    union appl_property_value
-        o_value;
-
-    o_value.u_value =
-        u_value;
-
-    e_status =
-        p_property->v_set(
-            i_id,
-            appl_property_type_ulong,
-            &(
-                o_value));
-
     return
-        e_status;
+        appl_property_service::s_set_ulong(
+            p_property_handle,
+            i_id,
+            u_value);
 
 } /* appl_property_set_ulong() */
 
@@ -134,29 +84,11 @@ appl_property_set_slong(
     signed long int const
         i_value)
 {
-    enum appl_status
-        e_status;
-
-    class appl_property * const
-        p_property =
-        appl_property::convert_handle(
-            p_property_handle);
-
-    union appl_property_value
-        o_value;
-
-    o_value.i_value =
-        i_value;
-
-    e_status =
-        p_property->v_set(
-            i_id,
-            appl_property_type_slong,
-            &(
-                o_value));
-
     return
-        e_status;
+        appl_property_service::s_set_slong(
+            p_property_handle,
+            i_id,
+            i_value);
 
 } /* appl_property_set_slong() */
 
@@ -172,35 +104,11 @@ appl_property_get_ptr(
     void * * const
         r_value)
 {
-    enum appl_status
-        e_status;
-
-    class appl_property * const
-        p_property =
-        appl_property::convert_handle(
-            p_property_handle);
-
-    union appl_property_value
-        o_value;
-
-    e_status =
-        p_property->v_get(
-            i_id,
-            appl_property_type_ptr,
-            &(
-                o_value));
-
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        *(
-            r_value) =
-            o_value.p_value;
-    }
-
     return
-        e_status;
+        appl_property_service::s_get_ptr(
+            p_property_handle,
+            i_id,
+            r_value);
 
 } /* appl_property_get_ptr() */
 
@@ -216,35 +124,11 @@ appl_property_get_ulong(
     unsigned long int * const
         r_value)
 {
-    enum appl_status
-        e_status;
-
-    class appl_property * const
-        p_property =
-        appl_property::convert_handle(
-            p_property_handle);
-
-    union appl_property_value
-        o_value;
-
-    e_status =
-        p_property->v_get(
-            i_id,
-            appl_property_type_ulong,
-            &(
-                o_value));
-
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        *(
-            r_value) =
-            o_value.u_value;
-    }
-
     return
-        e_status;
+        appl_property_service::s_get_ulong(
+            p_property_handle,
+            i_id,
+            r_value);
 
 } /* appl_property_get_ulong() */
 
@@ -260,35 +144,11 @@ appl_property_get_slong(
     signed long int * const
         r_value)
 {
-    enum appl_status
-        e_status;
-
-    class appl_property * const
-        p_property =
-        appl_property::convert_handle(
-            p_property_handle);
-
-    union appl_property_value
-        o_value;
-
-    e_status =
-        p_property->v_get(
-            i_id,
-            appl_property_type_slong,
-            &(
-                o_value));
-
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        *(
-            r_value) =
-            o_value.i_value;
-    }
-
     return
-        e_status;
+        appl_property_service::s_get_slong(
+            p_property_handle,
+            i_id,
+            r_value);
 
 } /* appl_property_get_slong() */
 

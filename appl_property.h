@@ -25,6 +25,19 @@ union appl_property_value;
 
 struct appl_property_handle;
 
+struct appl_property_node
+{
+    unsigned int
+        i_id;
+
+    enum appl_property_type
+        e_type;
+
+    union appl_property_value
+        o_value;
+
+}; /* struct appl_property_node */
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -40,10 +53,23 @@ class appl_property : public appl_object
     public:
 
         static
+        enum appl_status
+            s_create(
+                class appl_context * const
+                    p_context,
+                unsigned int const
+                    i_id,
+                class appl_property * * const
+                    r_property);
+
+        static
         class appl_property *
             convert_handle(
                 struct appl_property_handle * const
                     p_property_handle);
+
+        struct appl_property_handle *
+            get_handle(void);
 
         virtual
         enum appl_status
@@ -74,12 +100,37 @@ class appl_property : public appl_object
 
     private:
 
+        unsigned int
+            m_count;
+
+        unsigned int
+            ui_padding[3u];
+
+        struct appl_property_node
+            a_nodes[1u];
+
         appl_property(
             class appl_property const & r);
 
         class appl_property &
             operator =(
                 class appl_property const & r);
+
+        static
+        void
+            s_new(
+                void * const
+                    p_placement);
+
+        virtual
+        enum appl_status
+            init(
+                void const * const
+                    p_descriptor);
+
+        virtual
+        enum appl_status
+            cleanup(void);
 
 }; // class appl_property
 

@@ -16,6 +16,8 @@
 #error include appl_object_handle.h before
 #endif /* #if ! defined INC_APPL_OBJECT_HANDLE_H */
 
+struct appl_context_handle;
+
 /*
 
 Enumeration: appl_property_type
@@ -55,7 +57,7 @@ union appl_property_value
     signed long int
         i_value;
 
-};
+}; /* union appl_property_value */
 
 struct appl_property_handle;
 
@@ -72,7 +74,7 @@ extern "C" {
 
 enum appl_status
 appl_property_create(
-    struct appl_context * const
+    struct appl_context_handle * const
         p_context_handle,
     unsigned int const
         i_count,

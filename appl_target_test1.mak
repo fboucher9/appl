@@ -43,6 +43,7 @@ test_appl-deps = \
     appl_options.cpp \
     appl_options_std.cpp \
     appl_property_handle.cpp \
+    appl_property_service.cpp \
     appl_property.cpp \
     appl_socket_handle.cpp \
     appl_socket_mgr.cpp \
