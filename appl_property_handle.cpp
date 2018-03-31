@@ -6,6 +6,8 @@
 
 #include "appl_status.h"
 
+#include "appl_buf.h"
+
 #include "appl_object_handle.h"
 
 #include "appl_property_handle.h"
@@ -117,6 +119,26 @@ appl_property_set_pfn(
 
 */
 enum appl_status
+appl_property_set_buf(
+    struct appl_property_handle * const
+        p_property_handle,
+    unsigned int const
+        i_id,
+    struct appl_buf const * const
+        p_value)
+{
+    return
+        appl_property_service::s_set_buf(
+            p_property_handle,
+            i_id,
+            p_value);
+
+} /* appl_property_set_buf() */
+
+/*
+
+*/
+enum appl_status
 appl_property_get_ptr(
     struct appl_property_handle const * const
         p_property_handle,
@@ -193,5 +215,25 @@ appl_property_get_pfn(
             r_value);
 
 } /* appl_property_get_pfn() */
+
+/*
+
+*/
+enum appl_status
+appl_property_get_buf(
+    struct appl_property_handle * const
+        p_property_handle,
+    unsigned int const
+        i_id,
+    struct appl_buf * const
+        r_value)
+{
+    return
+        appl_property_service::s_get_buf(
+            p_property_handle,
+            i_id,
+            r_value);
+
+} /* appl_property_get_buf() */
 
 /* end-of-file: appl_property_handle.cpp */

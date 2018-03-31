@@ -16,6 +16,11 @@
 #error include appl_object_handle.h before
 #endif /* #if ! defined INC_APPL_OBJECT_HANDLE_H */
 
+/* Header file dependency */
+#if ! defined INC_APPL_BUF_H
+#error include appl_buf.h before
+#endif /* #if ! defined INC_APPL_BUF_H */
+
 struct appl_context_handle;
 
 /*
@@ -35,7 +40,9 @@ enum appl_property_type
 
     appl_property_type_long = 4,
 
-    appl_property_type_pfn = 5
+    appl_property_type_pfn = 5,
+
+    appl_property_type_buf = 6
 
 }; /* enum appl_property_type */
 
@@ -63,6 +70,9 @@ union appl_property_value
         (* p_func)(
             void * const
                 p_args);
+
+    struct appl_buf
+        o_buf;
 
 }; /* union appl_property_value */
 
@@ -126,6 +136,15 @@ appl_property_set_pfn(
             p_args));
 
 enum appl_status
+appl_property_set_buf(
+    struct appl_property_handle * const
+        p_property_handle,
+    unsigned int const
+        i_id,
+    struct appl_buf const * const
+        p_value);
+
+enum appl_status
 appl_property_get_ptr(
     struct appl_property_handle const * const
         p_property_handle,
@@ -161,6 +180,15 @@ appl_property_get_pfn(
     void * (* * r_value)(
         void * const
             p_args));
+
+enum appl_status
+appl_property_get_buf(
+    struct appl_property_handle * const
+        p_property_handle,
+    unsigned int const
+        i_id,
+    struct appl_buf * const
+        r_value);
 
 #if defined __cplusplus
 } /* extern "C" */

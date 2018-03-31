@@ -6,6 +6,8 @@
 
 #include "appl_status.h"
 
+#include "appl_buf.h"
+
 #include "appl_property_service.h"
 
 #include "appl_object_handle.h"
@@ -221,6 +223,45 @@ appl_property_service::s_set_pfn(
 //
 //
 enum appl_status
+appl_property_service::s_set_buf(
+    struct appl_property_handle * const
+        p_property_handle,
+    unsigned int const
+        i_id,
+    struct appl_buf const * const
+        p_value)
+{
+    enum appl_status
+        e_status;
+
+    class appl_property * const
+        p_property =
+        appl_property::convert_handle(
+            p_property_handle);
+
+    union appl_property_value
+        o_value;
+
+    o_value.o_buf =
+        *(
+            p_value);
+
+    e_status =
+        p_property->v_set(
+            i_id,
+            appl_property_type_buf,
+            &(
+                o_value));
+
+    return
+        e_status;
+
+} // s_set_buf()
+
+//
+//
+//
+enum appl_status
 appl_property_service::s_get_ptr(
     struct appl_property_handle const * const
         p_property_handle,
@@ -393,5 +434,49 @@ appl_property_service::s_get_pfn(
         e_status;
 
 } // s_get_pfn()
+
+//
+//
+//
+enum appl_status
+appl_property_service::s_get_buf(
+    struct appl_property_handle const * const
+        p_property_handle,
+    unsigned int const
+        i_id,
+    struct appl_buf * const
+        r_value)
+{
+    enum appl_status
+        e_status;
+
+    class appl_property const * const
+        p_property =
+        appl_property::convert_const_handle(
+            p_property_handle);
+
+    union appl_property_value
+        o_value;
+
+    e_status =
+        p_property->v_get(
+            i_id,
+            appl_property_type_buf,
+            &(
+                o_value));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_value) =
+            o_value.o_buf;
+    }
+
+    return
+        e_status;
+
+} // s_get_long()
 
 /* end-of-file: appl_property_handle.cpp */

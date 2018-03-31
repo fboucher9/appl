@@ -82,6 +82,16 @@ class appl_property_service
 
         static
         enum appl_status
+        s_set_buf(
+            struct appl_property_handle * const
+                p_property_handle,
+            unsigned int const
+                i_id,
+            struct appl_buf const * const
+                p_value);
+
+        static
+        enum appl_status
         s_get_ptr(
             struct appl_property_handle const * const
                 p_property_handle,
@@ -120,6 +130,16 @@ class appl_property_service
             void * (* * r_value)(
                 void * const
                     p_args));
+
+        static
+        enum appl_status
+        s_get_buf(
+            struct appl_property_handle const * const
+                p_property_handle,
+            unsigned int const
+                i_id,
+            struct appl_buf * const
+                r_value);
 
 }; // class appl_property_service
 
