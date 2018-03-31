@@ -33,7 +33,9 @@ enum appl_property_type
 
     appl_property_type_ulong = 3,
 
-    appl_property_type_long = 4
+    appl_property_type_long = 4,
+
+    appl_property_type_pfn = 5
 
 }; /* enum appl_property_type */
 
@@ -56,6 +58,11 @@ union appl_property_value
 
     signed long int
         i_value;
+
+    void *
+        (* p_func)(
+            void * const
+                p_args);
 
 }; /* union appl_property_value */
 
@@ -109,8 +116,18 @@ appl_property_set_long(
         i_value);
 
 enum appl_status
-appl_property_get_ptr(
+appl_property_set_pfn(
     struct appl_property_handle * const
+        p_property_handle,
+    unsigned int const
+        i_id,
+    void * (* p_value)(
+        void * const
+            p_args));
+
+enum appl_status
+appl_property_get_ptr(
+    struct appl_property_handle const * const
         p_property_handle,
     unsigned int const
         i_id,
@@ -119,7 +136,7 @@ appl_property_get_ptr(
 
 enum appl_status
 appl_property_get_ulong(
-    struct appl_property_handle * const
+    struct appl_property_handle const * const
         p_property_handle,
     unsigned int const
         i_id,
@@ -128,12 +145,22 @@ appl_property_get_ulong(
 
 enum appl_status
 appl_property_get_long(
-    struct appl_property_handle * const
+    struct appl_property_handle const * const
         p_property_handle,
     unsigned int const
         i_id,
     signed long int * const
         r_value);
+
+enum appl_status
+appl_property_get_pfn(
+    struct appl_property_handle const * const
+        p_property_handle,
+    unsigned int const
+        i_id,
+    void * (* * r_value)(
+        void * const
+            p_args));
 
 #if defined __cplusplus
 } /* extern "C" */

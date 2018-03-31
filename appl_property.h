@@ -68,6 +68,12 @@ class appl_property : public appl_object
                 struct appl_property_handle * const
                     p_property_handle);
 
+        static
+        class appl_property const *
+            convert_const_handle(
+                struct appl_property_handle const * const
+                    p_property_handle);
+
         struct appl_property_handle *
             get_handle(void);
 
@@ -89,7 +95,7 @@ class appl_property : public appl_object
                 enum appl_property_type const
                     e_type,
                 union appl_property_value * const
-                    p_property_value);
+                    p_property_value) const;
 
     protected:
 

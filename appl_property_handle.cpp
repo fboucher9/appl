@@ -96,8 +96,29 @@ appl_property_set_long(
 
 */
 enum appl_status
-appl_property_get_ptr(
+appl_property_set_pfn(
     struct appl_property_handle * const
+        p_property_handle,
+    unsigned int const
+        i_id,
+    void * (* p_func)(
+        void * const
+            p_args))
+{
+    return
+        appl_property_service::s_set_pfn(
+            p_property_handle,
+            i_id,
+            p_func);
+
+} /* appl_property_set_pfn() */
+
+/*
+
+*/
+enum appl_status
+appl_property_get_ptr(
+    struct appl_property_handle const * const
         p_property_handle,
     unsigned int const
         i_id,
@@ -117,7 +138,7 @@ appl_property_get_ptr(
 */
 enum appl_status
 appl_property_get_ulong(
-    struct appl_property_handle * const
+    struct appl_property_handle const * const
         p_property_handle,
     unsigned int const
         i_id,
@@ -137,7 +158,7 @@ appl_property_get_ulong(
 */
 enum appl_status
 appl_property_get_long(
-    struct appl_property_handle * const
+    struct appl_property_handle const * const
         p_property_handle,
     unsigned int const
         i_id,
@@ -151,5 +172,26 @@ appl_property_get_long(
             r_value);
 
 } /* appl_property_get_long() */
+
+/*
+
+*/
+enum appl_status
+appl_property_get_pfn(
+    struct appl_property_handle const * const
+        p_property_handle,
+    unsigned int const
+        i_id,
+    void * (* * r_value)(
+        void * const
+            p_args))
+{
+    return
+        appl_property_service::s_get_pfn(
+            p_property_handle,
+            i_id,
+            r_value);
+
+} /* appl_property_get_pfn() */
 
 /* end-of-file: appl_property_handle.cpp */

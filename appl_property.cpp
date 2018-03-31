@@ -84,6 +84,20 @@ class appl_property *
 //
 //
 //
+class appl_property const *
+    appl_property::convert_const_handle(
+        struct appl_property_handle const * const
+            p_property_handle)
+{
+    return
+        reinterpret_cast<class appl_property const *>(
+            p_property_handle);
+
+} // convert_const_handle()
+
+//
+//
+//
 struct appl_property_handle *
     appl_property::get_handle(void)
 {
@@ -142,7 +156,7 @@ enum appl_status
         enum appl_property_type const
             e_type,
         union appl_property_value * const
-            p_value)
+            p_value) const
 {
     enum appl_status
         e_status;
