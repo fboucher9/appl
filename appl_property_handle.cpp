@@ -76,7 +76,7 @@ appl_property_set_ulong(
 
 */
 enum appl_status
-appl_property_set_slong(
+appl_property_set_long(
     struct appl_property_handle * const
         p_property_handle,
     unsigned int const
@@ -85,12 +85,12 @@ appl_property_set_slong(
         i_value)
 {
     return
-        appl_property_service::s_set_slong(
+        appl_property_service::s_set_long(
             p_property_handle,
             i_id,
             i_value);
 
-} /* appl_property_set_slong() */
+} /* appl_property_set_long() */
 
 /*
 
@@ -136,7 +136,7 @@ appl_property_get_ulong(
 
 */
 enum appl_status
-appl_property_get_slong(
+appl_property_get_long(
     struct appl_property_handle * const
         p_property_handle,
     unsigned int const
@@ -145,11 +145,11 @@ appl_property_get_slong(
         r_value)
 {
     return
-        appl_property_service::s_get_slong(
+        appl_property_service::s_get_long(
             p_property_handle,
             i_id,
             r_value);
 
-} /* appl_property_get_slong() */
+} /* appl_property_get_long() */
 
 /* end-of-file: appl_property_handle.cpp */

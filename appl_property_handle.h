@@ -33,7 +33,7 @@ enum appl_property_type
 
     appl_property_type_ulong = 3,
 
-    appl_property_type_slong = 4
+    appl_property_type_long = 4
 
 }; /* enum appl_property_type */
 
@@ -100,7 +100,7 @@ appl_property_set_ulong(
         u_value);
 
 enum appl_status
-appl_property_set_slong(
+appl_property_set_long(
     struct appl_property_handle * const
         p_property_handle,
     unsigned int const
@@ -127,7 +127,7 @@ appl_property_get_ulong(
         r_value);
 
 enum appl_status
-appl_property_get_slong(
+appl_property_get_long(
     struct appl_property_handle * const
         p_property_handle,
     unsigned int const

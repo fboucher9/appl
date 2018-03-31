@@ -16,6 +16,9 @@
 
 #include "appl_property.h"
 
+/*
+
+*/
 struct appl_property_descriptor
 {
     unsigned int
@@ -102,14 +105,31 @@ enum appl_status
         union appl_property_value const * const
             p_value)
 {
-    static_cast<void>(
-        i_id);
-    static_cast<void>(
-        e_type);
-    static_cast<void>(
-        p_value);
+    enum appl_status
+        e_status;
+
+    if (
+        i_id < m_count)
+    {
+        a_nodes[i_id].e_type =
+            e_type;
+
+        a_nodes[i_id].o_value =
+            *(
+                p_value);
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
     return
-        appl_status_not_implemented;
+        e_status;
+
 } // v_set()
 
 //
@@ -124,14 +144,37 @@ enum appl_status
         union appl_property_value * const
             p_value)
 {
-    static_cast<void>(
-        i_id);
-    static_cast<void>(
-        e_type);
-    static_cast<void>(
-        p_value);
+    enum appl_status
+        e_status;
+
+    if (
+        i_id < m_count)
+    {
+        if (
+            e_type == a_nodes[i_id].e_type)
+        {
+            *(
+                p_value) =
+                a_nodes[i_id].o_value;
+
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
     return
-        appl_status_not_implemented;
+        e_status;
+
 } // v_get()
 
 //
@@ -181,6 +224,24 @@ enum appl_status
 
     m_count =
         p_property_descriptor->i_count;
+
+    {
+        unsigned int
+            i;
+
+        for (
+            i = 0u;
+            i < m_count;
+            i ++)
+        {
+            a_nodes[i].e_type =
+                appl_property_type_default;
+
+            a_nodes[i].o_value.p_value =
+                (void *)(
+                    0);
+        }
+    }
 
     e_status =
         appl_status_ok;

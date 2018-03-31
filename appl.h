@@ -40,6 +40,8 @@ Description:
 
 #define APPL_CONFIG_WITH_MAIN
 
+#define APPL_CONFIG_WITH_PROPERTY
+
 #include "appl_status.h"
 
 #include "appl_buf.h"
@@ -103,6 +105,12 @@ Description:
 #include "appl_clock_handle.h"
 
 #endif /* #if defined(APPL_CONFIG_WITH_CLOCK) */
+
+#if defined APPL_CONFIG_WITH_PROPERTY
+
+#include "appl_property_handle.h"
+
+#endif /* #if defined APPL_CONFIG_WITH_PROPERTY */
 
 #if defined(APPL_CONFIG_WITH_MAIN)
 

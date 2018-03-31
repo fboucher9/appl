@@ -61,7 +61,7 @@ class appl_property_service
 
         static
         enum appl_status
-        s_set_slong(
+        s_set_long(
             struct appl_property_handle * const
                 p_property_handle,
             unsigned int const
@@ -91,7 +91,7 @@ class appl_property_service
 
         static
         enum appl_status
-        s_get_slong(
+        s_get_long(
             struct appl_property_handle * const
                 p_property_handle,
             unsigned int const

@@ -696,6 +696,155 @@ appl_test_socket(
 
 } /* appl_test_socket() */
 
+static
+void
+appl_test_property(
+    struct appl_context_handle * const
+        p_context_handle)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_property_handle *
+        p_property_handle;
+
+    e_status =
+        appl_property_create(
+            p_context_handle,
+            3,
+            &(
+                p_property_handle));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_property_set_ptr(
+                p_property_handle,
+                0,
+                (void *)(
+                    7777));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+        }
+        else
+        {
+        }
+
+        e_status =
+            appl_property_set_ulong(
+                p_property_handle,
+                1,
+                8080ul);
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+        }
+        else
+        {
+        }
+
+        e_status =
+            appl_property_set_long(
+                p_property_handle,
+                2,
+                -1234l);
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+        }
+        else
+        {
+        }
+
+        {
+            void *
+                p_value;
+
+            e_status =
+                appl_property_get_ptr(
+                    p_property_handle,
+                    0,
+                    &(
+                        p_value));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                appl_printf(
+                    "property 0=%p\n",
+                    p_value);
+            }
+            else
+            {
+            }
+        }
+
+        {
+            unsigned long int
+                u_value;
+
+            e_status =
+                appl_property_get_ulong(
+                    p_property_handle,
+                    1,
+                    &(
+                        u_value));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                appl_printf(
+                    "property 1=%lu\n",
+                    u_value);
+            }
+            else
+            {
+            }
+
+        }
+
+        {
+            signed long int
+                i_value;
+
+            e_status =
+                appl_property_get_long(
+                    p_property_handle,
+                    2,
+                    &(
+                        i_value));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                appl_printf(
+                    "property 2=%ld\n",
+                    i_value);
+            }
+            else
+            {
+            }
+        }
+
+        appl_object_destroy(
+            &(
+                p_property_handle->o_object_handle));
+    }
+
+} /* appl_test_property() */
+
 enum appl_status
 appl_main(
     struct appl_context_handle * const
@@ -887,6 +1036,12 @@ appl_main(
     if (1)
     {
         appl_test_socket(
+            p_context_handle);
+    }
+
+    if (1)
+    {
+        appl_test_property(
             p_context_handle);
     }
 
