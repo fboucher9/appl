@@ -8,9 +8,7 @@
 
 #include "appl_buf.h"
 
-#include "appl_object_handle.h"
-
-#include "appl_property_handle.h"
+#include "appl_property_types.h"
 
 #include "appl_types.h"
 
@@ -192,6 +190,194 @@ enum appl_status
         e_status;
 
 } // v_get()
+
+//
+//
+//
+enum appl_status
+    appl_property::get_ptr(
+        unsigned int const
+            i_id,
+        void * * const
+            r_value) const
+{
+    enum appl_status
+        e_status;
+
+    union appl_property_value
+        o_value;
+
+    e_status =
+        v_get(
+            i_id,
+            appl_property_type_ptr,
+            &(
+                o_value));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_value) =
+            o_value.p_value;
+    }
+
+    return
+        e_status;
+
+} // get_ptr()
+
+//
+//
+//
+enum appl_status
+    appl_property::get_ulong(
+        unsigned int const
+            i_id,
+        unsigned long int * const
+            r_value) const
+{
+    enum appl_status
+        e_status;
+
+    union appl_property_value
+        o_value;
+
+    e_status =
+        v_get(
+            i_id,
+            appl_property_type_ulong,
+            &(
+                o_value));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_value) =
+            o_value.u_value;
+    }
+
+    return
+        e_status;
+
+} // get_ulong()
+
+//
+//
+//
+enum appl_status
+    appl_property::get_long(
+        unsigned int const
+            i_id,
+        signed long int * const
+            r_value) const
+{
+    enum appl_status
+        e_status;
+
+    union appl_property_value
+        o_value;
+
+    e_status =
+        v_get(
+            i_id,
+            appl_property_type_long,
+            &(
+                o_value));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_value) =
+            o_value.i_value;
+    }
+
+    return
+        e_status;
+
+} // get_long()
+
+//
+//
+//
+enum appl_status
+    appl_property::get_pfn(
+        unsigned int const
+            i_id,
+        void * (* * r_value)(
+            void * const
+                p_args)) const
+{
+    enum appl_status
+        e_status;
+
+    union appl_property_value
+        o_value;
+
+    e_status =
+        v_get(
+            i_id,
+            appl_property_type_pfn,
+            &(
+                o_value));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_value) =
+            o_value.p_func;
+    }
+
+    return
+        e_status;
+
+
+} // get_pfn()
+
+//
+//
+//
+enum appl_status
+    appl_property::get_buf(
+        unsigned int const
+            i_id,
+        struct appl_buf * const
+            r_value) const
+{
+    enum appl_status
+        e_status;
+
+    union appl_property_value
+        o_value;
+
+    e_status =
+        v_get(
+            i_id,
+            appl_property_type_buf,
+            &(
+                o_value));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_value) =
+            o_value.o_buf;
+    }
+
+    return
+        e_status;
+
+
+} // get_buf()
 
 //
 //

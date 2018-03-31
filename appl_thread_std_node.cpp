@@ -22,6 +22,8 @@
 
 #include "appl_types.h"
 
+#include "appl_buf.h"
+
 #include "appl_object.h"
 
 #include "appl_thread_descriptor.h"
@@ -30,13 +32,15 @@
 
 #include "appl_thread_std_node.h"
 
+#include "appl_property_types.h"
+
+#include "appl_property.h"
+
 #if defined APPL_DEBUG
 
 #include "appl_debug.h"
 
 #include "appl_context.h"
-
-#include "appl_buf.h"
 
 #endif /* #if defined APPL_DEBUG */
 
@@ -47,8 +51,8 @@ enum appl_status
     appl_thread_std_node::create_instance(
         class appl_context * const
             p_context,
-        struct appl_thread_descriptor const * const
-            p_thread_descriptor,
+        class appl_property const * const
+            p_property,
         class appl_thread_node * * const
             r_thread_node)
 {
@@ -62,7 +66,7 @@ enum appl_status
                 class appl_thread_std_node),
             &(
                 appl_thread_std_node::placement_new),
-            p_thread_descriptor,
+            p_property,
             r_thread_node);
 
     return
@@ -685,16 +689,22 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_thread_descriptor const *
-        p_thread_descriptor;
+    class appl_property const *
+        p_property;
 
-    p_thread_descriptor =
-        static_cast<struct appl_thread_descriptor const *>(
+    p_property =
+        static_cast<class appl_property const *>(
             p_descriptor);
 
-    m_descriptor =
-        *(
-            p_thread_descriptor);
+    p_property->get_pfn(
+        appl_thread_property_id_callback,
+        &(
+            m_descriptor.p_entry));
+
+    p_property->get_ptr(
+        appl_thread_property_id_context,
+        &(
+            m_descriptor.p_context));
 
     int
         i_mutex_result;

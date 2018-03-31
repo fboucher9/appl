@@ -363,8 +363,8 @@ static void appl_test_thread(
     struct appl_event_handle *
         p_event_handle;
 
-    struct appl_thread_descriptor
-        o_thread_descriptor;
+    struct appl_property_handle *
+        p_property_handle;
 
     struct appl_mutex_descriptor
         o_mutex_descriptor;
@@ -404,19 +404,28 @@ static void appl_test_thread(
     o_test_thread_context.b_kill =
         0;
 
-    o_thread_descriptor.p_entry =
+    appl_property_create(
+        p_context_handle,
+        appl_thread_property_id_max,
         &(
-            appl_test_thread_entry);
+            p_property_handle));
 
-    o_thread_descriptor.p_context =
+    appl_property_set_pfn(
+        p_property_handle,
+        appl_thread_property_id_callback,
         &(
-            o_test_thread_context);
+            appl_test_thread_entry));
+
+    appl_property_set_ptr(
+        p_property_handle,
+        appl_thread_property_id_context,
+        &(
+            o_test_thread_context));
 
     e_status =
         appl_thread_create(
             p_context_handle,
-            &(
-                o_thread_descriptor),
+            p_property_handle,
             &(
                 p_thread_handle));
 
@@ -511,6 +520,10 @@ static void appl_test_thread(
             &(
                 p_thread_handle->o_object_handle));
     }
+
+    appl_object_destroy(
+        &(
+            p_property_handle->o_object_handle));
 
     appl_object_destroy(
         &(

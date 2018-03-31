@@ -8,23 +8,25 @@ Description:
 
 */
 
+/* Reverse include guard */
 #if defined(INC_APPL_THREAD_STD_NODE_H)
 #error include appl_thread_std_node.h once
 #endif /* #if defined(INC_APPL_THREAD_STD_NODE_H) */
 
 #define INC_APPL_THREAD_STD_NODE_H
 
-struct appl_thread_descriptor;
-
 #if !defined(__cplusplus)
 #error use C++ compiler
 #endif /* #if !defined(__cplusplus) */
 
+/* Header file dependency */
 #if !defined(INC_APPL_THREAD_NODE_H)
 #error include appl_thread_node.h before
 #endif /* #if !defined(INC_APPL_THREAD_NODE_H) */
 
 class appl_context;
+
+class appl_property;
 
 class appl_thread_std_node;
 
@@ -40,8 +42,8 @@ class appl_thread_std_node : public appl_thread_node
             create_instance(
                 class appl_context * const
                     p_context,
-                struct appl_thread_descriptor const * const
-                    p_thread_descriptor,
+                class appl_property const * const
+                    p_property,
                 class appl_thread_node * * const
                     r_thread_node);
 

@@ -14,11 +14,17 @@
 
 #include "appl_object.h"
 
+#include "appl_buf.h"
+
 #include "appl_thread_node.h"
 
 #include "appl_thread_w32_node.h"
 
 #include "appl_thread_descriptor.h"
+
+#include "appl_property_types.h"
+
+#include "appl_property.h"
 
 //
 //
@@ -27,8 +33,8 @@ enum appl_status
     appl_thread_w32_node::create_instance(
         class appl_context * const
             p_context,
-        struct appl_thread_descriptor const * const
-            p_thread_descriptor,
+        class appl_property const * const
+            p_property,
         class appl_thread_node * * const
             r_thread_node)
 {
@@ -42,7 +48,7 @@ enum appl_status
                 class appl_thread_w32_node),
             &(
                 appl_thread_w32_node::placement_new),
-            p_thread_descriptor,
+            p_property,
             r_thread_node);
 
     return
@@ -227,10 +233,23 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_thread_descriptor const * const
-        p_thread_descriptor =
-        static_cast<struct appl_thread_descriptor const *>(
+    class appl_property const * const
+        p_property =
+        static_cast<class appl_property const *>(
             p_descriptor);
+
+    struct appl_thread_descriptor
+        o_thread_descriptor;
+
+    p_property->get_pfn(
+        appl_thread_property_id_callback,
+        &(
+            o_thread_descriptor.p_entry));
+
+    p_property->get_ptr(
+        appl_thread_property_id_context,
+        &(
+            o_thread_descriptor.p_context));
 
     DWORD
         dwThreadId;
@@ -240,8 +259,8 @@ enum appl_status
             NULL,
             0,
             reinterpret_cast<LPTHREAD_START_ROUTINE>(
-                p_thread_descriptor->p_entry),
-            p_thread_descriptor->p_context,
+                o_thread_descriptor.p_entry),
+            o_thread_descriptor.p_context,
             0,
             &(
                 dwThreadId));

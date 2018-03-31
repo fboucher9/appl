@@ -80,8 +80,8 @@ enum appl_status
     appl_thread_w32_mgr::v_create(
         class appl_context * const
             p_context,
-        struct appl_thread_descriptor const * const
-            p_thread_descriptor,
+        class appl_property const * const
+            p_property,
         class appl_thread_node * * const
             r_thread_node)
 {
@@ -91,7 +91,7 @@ enum appl_status
     e_status =
         appl_thread_w32_node::create_instance(
             p_context,
-            p_thread_descriptor,
+            p_property,
             r_thread_node);
 
     return

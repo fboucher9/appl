@@ -12,9 +12,9 @@
 #define INC_APPL_PROPERTY_H
 
 /* Header file dependency */
-#if ! defined INC_APPL_PROPERTY_HANDLE_H
-#error include appl_property_handle.h before
-#endif /* #if ! defined INC_APPL_PROPERTY_HANDLE_H */
+#if ! defined INC_APPL_PROPERTY_TYPES_H
+#error include appl_property_types.h before
+#endif /* #if ! defined INC_APPL_PROPERTY_TYPES_H */
 
 /* Header file dependency */
 #if ! defined INC_APPL_OBJECT_H
@@ -96,6 +96,42 @@ class appl_property : public appl_object
                     e_type,
                 union appl_property_value * const
                     p_property_value) const;
+
+        enum appl_status
+            get_ptr(
+                unsigned int const
+                    i_id,
+                void * * const
+                    r_value) const;
+
+        enum appl_status
+            get_ulong(
+                unsigned int const
+                    i_id,
+                unsigned long int * const
+                    r_value) const;
+
+        enum appl_status
+            get_long(
+                unsigned int const
+                    i_id,
+                signed long int * const
+                    r_value) const;
+
+        enum appl_status
+            get_pfn(
+                unsigned int const
+                    i_id,
+                void * (* * r_value)(
+                    void * const
+                        p_args)) const;
+
+        enum appl_status
+            get_buf(
+                unsigned int const
+                    i_id,
+                struct appl_buf * const
+                    r_value) const;
 
     protected:
 
