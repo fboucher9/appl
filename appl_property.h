@@ -130,8 +130,10 @@ class appl_property : public appl_object
             get_buf(
                 unsigned int const
                     i_id,
-                struct appl_buf * const
-                    r_value) const;
+                unsigned char const * * const
+                    r_buf_min,
+                unsigned char const * * const
+                    r_buf_max) const;
 
     protected:
 

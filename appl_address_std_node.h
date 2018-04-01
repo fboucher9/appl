@@ -16,14 +16,14 @@
 #error include appl_address_node.h before
 #endif /* #if ! defined INC_APPL_ADDRESS_NODE_H */
 
-struct appl_address_descriptor;
-
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
 class appl_context;
+
+class appl_property;
 
 class appl_address_std_node;
 
@@ -39,8 +39,8 @@ class appl_address_std_node : public appl_address_node
             s_create(
                 class appl_context * const
                     p_context,
-                struct appl_address_descriptor const * const
-                    p_address_descriptor,
+                class appl_property const * const
+                    p_property,
                 class appl_address_node * * const
                     r_address_node);
 

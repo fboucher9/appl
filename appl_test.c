@@ -565,31 +565,36 @@ appl_test_socket(
         p_address_handle;
 
     {
-        struct appl_address_descriptor
-            o_address_descriptor;
+        struct appl_property_handle *
+            p_address_descriptor;
 
-        o_address_descriptor.o_name.o_min.pc_uchar =
-            g_name;
+        appl_property_create(
+            p_context_handle,
+            appl_address_property_id_max,
+            &(
+                p_address_descriptor));
 
-        o_address_descriptor.o_name.o_max.pc_uchar =
-            g_name + sizeof(g_name);
+        appl_property_set_buf(
+            p_address_descriptor,
+            appl_address_property_id_name,
+            g_name,
+            g_name + sizeof(g_name));
 
-        o_address_descriptor.b_name =
-            1;
-
-        o_address_descriptor.i_port =
-            13013;
-
-        o_address_descriptor.b_port =
-            1;
+        appl_property_set_ulong(
+            p_address_descriptor,
+            appl_address_property_id_port,
+            13013ul);
 
         e_status =
             appl_address_create(
                 p_context_handle,
-                &(
-                    o_address_descriptor),
+                p_address_descriptor,
                 &(
                     p_address_handle));
+
+        appl_object_destroy(
+            &(
+                p_address_descriptor->o_object_handle));
     }
 
     if (

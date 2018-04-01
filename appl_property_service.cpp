@@ -226,8 +226,10 @@ appl_property_service::s_set_buf(
         p_property_handle,
     unsigned int const
         i_id,
-    struct appl_buf const * const
-        p_value)
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max)
 {
     enum appl_status
         e_status;
@@ -240,9 +242,11 @@ appl_property_service::s_set_buf(
     union appl_property_value
         o_value;
 
-    o_value.o_buf =
-        *(
-            p_value);
+    o_value.o_buf.p_buf_min =
+        p_buf_min;
+
+    o_value.o_buf.p_buf_max =
+        p_buf_max;
 
     e_status =
         p_property->v_set(
@@ -442,8 +446,10 @@ appl_property_service::s_get_buf(
         p_property_handle,
     unsigned int const
         i_id,
-    struct appl_buf * const
-        r_value)
+    unsigned char const * * const
+        r_buf_min,
+    unsigned char const * * const
+        r_buf_max)
 {
     enum appl_status
         e_status;
@@ -468,8 +474,12 @@ appl_property_service::s_get_buf(
         == e_status)
     {
         *(
-            r_value) =
-            o_value.o_buf;
+            r_buf_min) =
+            o_value.o_buf.p_buf_min;
+
+        *(
+            r_buf_max) =
+            o_value.o_buf.p_buf_max;
     }
 
     return

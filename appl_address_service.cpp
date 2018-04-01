@@ -23,6 +23,10 @@ Description:
 
 #include "appl_address_node.h"
 
+#include "appl_property_types.h"
+
+#include "appl_property.h"
+
 //
 //  Function: s_create
 //
@@ -34,8 +38,8 @@ Description:
 //      p_context_handle
 //          Opaque context handle.
 //
-//      p_address_descriptor
-//          Pointer to transparent appl_address_descriptor structure.
+//      p_property_handle
+//          Pointer to opaque appl_property_handle structure.
 //
 //      r_address_handle
 //          Output pointer to opaque address handle.
@@ -47,8 +51,8 @@ enum appl_status
 appl_address_service::s_create(
     struct appl_context_handle * const
         p_context_handle,
-    struct appl_address_descriptor const * const
-        p_address_descriptor,
+    struct appl_property_handle const * const
+        p_property_handle,
     struct appl_address_handle * * const
         r_address_handle)
 {
@@ -61,6 +65,12 @@ appl_address_service::s_create(
         appl_context::convert_handle(
             p_context_handle);
 
+    // Convert opaque property handle to C++ property object
+    class appl_property const * const
+        p_property =
+        appl_property::convert_const_handle(
+            p_property_handle);
+
     // Use the C++ context object to query socket manager
     class appl_socket_mgr * const
         p_socket_mgr =
@@ -72,7 +82,7 @@ appl_address_service::s_create(
     // Use socket manager to dispatch this request
     e_status =
         p_socket_mgr->v_create_address(
-            p_address_descriptor,
+            p_property,
             &(
                 p_address_node));
 

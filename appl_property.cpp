@@ -348,8 +348,10 @@ enum appl_status
     appl_property::get_buf(
         unsigned int const
             i_id,
-        struct appl_buf * const
-            r_value) const
+        unsigned char const * * const
+            r_buf_min,
+        unsigned char const * * const
+            r_buf_max) const
 {
     enum appl_status
         e_status;
@@ -369,8 +371,12 @@ enum appl_status
         == e_status)
     {
         *(
-            r_value) =
-            o_value.o_buf;
+            r_buf_min) =
+            o_value.o_buf.p_buf_min;
+
+        *(
+            r_buf_max) =
+            o_value.o_buf.p_buf_max;
     }
 
     return

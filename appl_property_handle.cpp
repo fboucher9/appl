@@ -124,14 +124,17 @@ appl_property_set_buf(
         p_property_handle,
     unsigned int const
         i_id,
-    struct appl_buf const * const
-        p_value)
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max)
 {
     return
         appl_property_service::s_set_buf(
             p_property_handle,
             i_id,
-            p_value);
+            p_buf_min,
+            p_buf_max);
 
 } /* appl_property_set_buf() */
 
@@ -225,14 +228,17 @@ appl_property_get_buf(
         p_property_handle,
     unsigned int const
         i_id,
-    struct appl_buf * const
-        r_value)
+    unsigned char const * * const
+        r_buf_min,
+    unsigned char const * * const
+        r_buf_max)
 {
     return
         appl_property_service::s_get_buf(
             p_property_handle,
             i_id,
-            r_value);
+            r_buf_min,
+            r_buf_max);
 
 } /* appl_property_get_buf() */
 

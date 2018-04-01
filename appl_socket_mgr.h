@@ -32,8 +32,8 @@ class appl_socket_mgr : public appl_object
         virtual
         enum appl_status
             v_create_address(
-                struct appl_address_descriptor const * const
-                    p_address_descriptor,
+                class appl_property const * const
+                    p_property,
                 class appl_address_node * * const
                     r_address_node);
 

@@ -39,6 +39,10 @@ Description:
 
 #include "appl_address_descriptor.h"
 
+#include "appl_property_types.h"
+
+#include "appl_property.h"
+
 //
 //
 //
@@ -46,8 +50,8 @@ enum appl_status
     appl_address_std_node::s_create(
         class appl_context * const
             p_context,
-        struct appl_address_descriptor const * const
-            p_address_descriptor,
+        class appl_property const * const
+            p_property,
         class appl_address_node * * const
             r_address_node)
 {
@@ -58,7 +62,7 @@ enum appl_status
                 class appl_address_std_node),
             &(
                 appl_address_std_node::s_new),
-            p_address_descriptor,
+            p_property,
             r_address_node);
 
 } // s_create()
@@ -103,10 +107,44 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_address_descriptor const * const
-        p_address_descriptor =
-        static_cast<struct appl_address_descriptor const *>(
+    class appl_property const * const
+        p_property =
+        static_cast<class appl_property const *>(
             p_descriptor);
+
+    struct appl_address_descriptor
+        o_address_descriptor;
+
+    if (
+        appl_status_ok
+        == p_property->get_buf(
+            appl_address_property_id_name,
+            &(
+                o_address_descriptor.o_name.o_min.pc_uchar),
+            &(
+                o_address_descriptor.o_name.o_max.pc_uchar)))
+    {
+        o_address_descriptor.b_name =
+            1;
+    }
+
+    unsigned long int
+        u_value;
+
+    if (
+        appl_status_ok
+        == p_property->get_ulong(
+            appl_address_property_id_port,
+            &(
+                u_value)))
+    {
+        o_address_descriptor.i_port =
+            static_cast<unsigned short int>(
+                u_value);
+
+        o_address_descriptor.b_port =
+            1;
+    }
 
     struct sockaddr_in *
         p_sockaddr_in =
@@ -125,23 +163,23 @@ enum appl_status
         AF_INET;
 
     if (
-        p_address_descriptor->b_port)
+        o_address_descriptor.b_port)
     {
         p_sockaddr_in->sin_port =
             htons(
-                p_address_descriptor->i_port);
+                o_address_descriptor.i_port);
     }
 
     if (
-        p_address_descriptor->b_name)
+        o_address_descriptor.b_name)
     {
         appl_size_t
             i_name_len;
 
         i_name_len =
             static_cast<appl_size_t>(
-                p_address_descriptor->o_name.o_max.pc_uchar
-                - p_address_descriptor->o_name.o_min.pc_uchar);
+                o_address_descriptor.o_name.o_max.pc_uchar
+                - o_address_descriptor.o_name.o_min.pc_uchar);
 
         if (
             i_name_len < 64u)
@@ -151,7 +189,7 @@ enum appl_status
 
             memcpy(
                 ac_buffer,
-                p_address_descriptor->o_name.o_min.pc_uchar,
+                o_address_descriptor.o_name.o_min.pc_uchar,
                 i_name_len);
 
             ac_buffer[i_name_len] =

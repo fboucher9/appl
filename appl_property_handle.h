@@ -88,8 +88,10 @@ appl_property_set_buf(
         p_property_handle,
     unsigned int const
         i_id,
-    struct appl_buf const * const
-        p_value);
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max);
 
 enum appl_status
 appl_property_get_ptr(
@@ -134,8 +136,10 @@ appl_property_get_buf(
         p_property_handle,
     unsigned int const
         i_id,
-    struct appl_buf * const
-        r_value);
+    unsigned char const * * const
+        r_buf_min,
+    unsigned char const * * const
+        r_buf_max);
 
 #if defined __cplusplus
 } /* extern "C" */

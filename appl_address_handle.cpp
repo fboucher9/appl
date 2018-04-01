@@ -19,15 +19,15 @@ enum appl_status
 appl_address_create(
     struct appl_context_handle * const
         p_context_handle,
-    struct appl_address_descriptor const * const
-        p_address_descriptor,
+    struct appl_property_handle const * const
+        p_property_handle,
     struct appl_address_handle * * const
         r_address_handle)
 {
     return
         appl_address_service::s_create(
             p_context_handle,
-            p_address_descriptor,
+            p_property_handle,
             r_address_handle);
 
 } /* appl_address_create() */

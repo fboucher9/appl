@@ -18,7 +18,7 @@
 
 struct appl_address_handle;
 
-struct appl_address_descriptor;
+struct appl_property_handle;
 
 struct appl_address_handle
 {
@@ -35,8 +35,8 @@ enum appl_status
 appl_address_create(
     struct appl_context_handle * const
         p_context_handle,
-    struct appl_address_descriptor const * const
-        p_address_descriptor,
+    struct appl_property_handle const * const
+        p_property_handle,
     struct appl_address_handle * * const
         r_address_handle);
 

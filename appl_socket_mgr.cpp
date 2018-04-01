@@ -22,8 +22,8 @@
 //
 enum appl_status
     appl_socket_mgr::v_create_address(
-        struct appl_address_descriptor const * const
-            p_address_descriptor,
+        class appl_property const * const
+            p_property,
         class appl_address_node * * const
             r_address_node)
 {
@@ -31,7 +31,7 @@ enum appl_status
         e_status;
 
     static_cast<void>(
-        p_address_descriptor);
+        p_property);
     static_cast<void>(
         r_address_node);
 

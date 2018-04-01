@@ -11,11 +11,6 @@
 
 #define INC_APPL_PROPERTY_TYPES_H
 
-/* Header file dependency */
-#if ! defined INC_APPL_BUF_H
-#error include appl_buf.h before
-#endif /* #if ! defined INC_APPL_BUF_H */
-
 /*
 
 Enumeration: appl_property_type
@@ -64,8 +59,15 @@ union appl_property_value
             void * const
                 p_args);
 
-    struct appl_buf
-        o_buf;
+    struct appl_property_buf
+    {
+        unsigned char const *
+            p_buf_min;
+
+        unsigned char const *
+            p_buf_max;
+
+    } o_buf;
 
 }; /* union appl_property_value */
 

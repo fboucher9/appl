@@ -179,7 +179,7 @@ appl_socket_std_node::cleanup(void)
         e_status;
 
     e_status =
-        appl_status_not_implemented;
+        appl_status_ok;
 
     return
         e_status;
