@@ -109,9 +109,9 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_property const * const
-        p_property =
-        static_cast<class appl_property const *>(
+    struct appl_property_handle const * const
+        p_property_handle =
+        static_cast<struct appl_property_handle const *>(
             p_descriptor);
 
     struct appl_address_descriptor
@@ -119,8 +119,8 @@ enum appl_status
 
     if (
         appl_status_ok
-        == p_property->get_buf(
-            appl_address_property_id_name,
+        == appl_address_property_get_name(
+            p_property_handle,
             &(
                 o_address_descriptor.o_name.o_min.pc_uchar),
             &(
@@ -130,20 +130,13 @@ enum appl_status
             1;
     }
 
-    unsigned long int
-        u_value;
-
     if (
         appl_status_ok
-        == p_property->get_ulong(
-            appl_address_property_id_port,
+        == appl_address_property_get_port(
+            p_property_handle,
             &(
-                u_value)))
+                o_address_descriptor.i_port)))
     {
-        o_address_descriptor.i_port =
-            static_cast<unsigned short int>(
-                u_value);
-
         o_address_descriptor.b_port =
             1;
     }

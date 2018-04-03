@@ -5,11 +5,13 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_ADDRESS_PROPERTY_H
-#error include appl_address_property.h once
-#endif /* #if defined INC_APPL_ADDRESS_PROPERTY_H */
+#if defined INC_APPL_THREAD_PROPERTY_H
+#error include appl_thread_property.h once
+#endif /* #if defined INC_APPL_THREAD_PROPERTY_H */
 
-#define INC_APPL_ADDRESS_PROPERTY_H
+#define INC_APPL_THREAD_PROPERTY_H
+
+struct appl_context_handle;
 
 struct appl_property_handle;
 
@@ -18,46 +20,44 @@ extern "C" {
 #endif /* #if defined __cplusplus */
 
 enum appl_status
-appl_address_property_create(
+appl_thread_property_create(
     struct appl_context_handle * const
         p_context_handle,
     struct appl_property_handle * * const
         r_property_handle);
 
 enum appl_status
-appl_address_property_set_name(
+appl_thread_property_set_callback(
     struct appl_property_handle * const
         p_property_handle,
-    unsigned char const * const
-        p_name_min,
-    unsigned char const * const
-        p_name_max);
+    void * (* p_thread_callback)(
+        void * const
+            p_thread_context));
 
 enum appl_status
-appl_address_property_set_port(
+appl_thread_property_set_context(
     struct appl_property_handle * const
         p_property_handle,
-    unsigned short int const
-        i_port);
+    void * const
+        p_thread_context);
 
 enum appl_status
-appl_address_property_get_name(
+appl_thread_property_get_callback(
     struct appl_property_handle const * const
         p_property_handle,
-    unsigned char const * * const
-        r_name_min,
-    unsigned char const * * const
-        r_name_max);
+    void * (* * r_thread_callback)(
+        void * const
+            p_thread_context));
 
 enum appl_status
-appl_address_property_get_port(
+appl_thread_property_get_context(
     struct appl_property_handle const * const
         p_property_handle,
-    unsigned short int * const
-        r_port);
+    void * * const
+        r_thread_context);
 
 #if defined __cplusplus
 } /* extern "C" */
 #endif /* #if defined __cplusplus */
 
-/* end-of-file: appl_address_property.h */
+/* end-of-file: appl_thread_property.h */

@@ -28,6 +28,8 @@
 
 #include "appl_thread_descriptor.h"
 
+#include "appl_thread_property.h"
+
 #include "appl_thread_node.h"
 
 #include "appl_thread_std_node.h"
@@ -689,20 +691,20 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_property const *
-        p_property;
+    struct appl_property_handle const *
+        p_property_handle;
 
-    p_property =
-        static_cast<class appl_property const *>(
+    p_property_handle =
+        static_cast<struct appl_property_handle const *>(
             p_descriptor);
 
-    p_property->get_pfn(
-        appl_thread_property_id_callback,
+    appl_thread_property_get_callback(
+        p_property_handle,
         &(
             m_descriptor.p_entry));
 
-    p_property->get_ptr(
-        appl_thread_property_id_context,
+    appl_thread_property_get_context(
+        p_property_handle,
         &(
             m_descriptor.p_context));
 

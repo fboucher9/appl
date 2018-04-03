@@ -404,21 +404,18 @@ static void appl_test_thread(
     o_test_thread_context.b_kill =
         0;
 
-    appl_property_create(
+    appl_thread_property_create(
         p_context_handle,
-        appl_thread_property_id_max,
         &(
             p_property_handle));
 
-    appl_property_set_pfn(
+    appl_thread_property_set_callback(
         p_property_handle,
-        appl_thread_property_id_callback,
         &(
             appl_test_thread_entry));
 
-    appl_property_set_ptr(
+    appl_thread_property_set_context(
         p_property_handle,
-        appl_thread_property_id_context,
         &(
             o_test_thread_context));
 
@@ -568,22 +565,19 @@ appl_test_socket(
         struct appl_property_handle *
             p_address_descriptor;
 
-        appl_property_create(
+        appl_address_property_create(
             p_context_handle,
-            appl_address_property_id_max,
             &(
                 p_address_descriptor));
 
-        appl_property_set_buf(
+        appl_address_property_set_name(
             p_address_descriptor,
-            appl_address_property_id_name,
             g_name,
             g_name + sizeof(g_name));
 
-        appl_property_set_ulong(
+        appl_address_property_set_port(
             p_address_descriptor,
-            appl_address_property_id_port,
-            13013ul);
+            13013u);
 
         e_status =
             appl_address_create(

@@ -86,6 +86,8 @@ Description:
 
 #include "appl_thread_descriptor.h"
 
+#include "appl_thread_property.h"
+
 #include "appl_thread_handle.h"
 
 #include "appl_event_handle.h"

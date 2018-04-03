@@ -6,11 +6,25 @@
 
 #include "appl_status.h"
 
+#include "appl_address_property.h"
+
 #include "appl_object_handle.h"
 
 #include "appl_property_handle.h"
 
-#include "appl_address_property.h"
+#define APPL_ADDRESS_PROPERTY_GUID (unsigned long int)(0xe0bfd095ul)
+
+enum appl_address_property_id
+{
+    appl_address_property_id_guid = 0,
+
+    appl_address_property_id_name = 1,
+
+    appl_address_property_id_port = 2,
+
+    appl_address_property_id_max = 3
+
+}; /* enum appl_address_property_id */
 
 /*
 
@@ -22,12 +36,35 @@ appl_address_property_create(
     struct appl_property_handle * * const
         r_property_handle)
 {
-    return
+    enum appl_status
+        e_status;
+
+    struct appl_property_handle *
+        p_property_handle;
+
+    e_status =
         appl_property_create(
             p_context_handle,
             appl_address_property_id_max,
-            reinterpret_cast<struct appl_property_handle * *>(
-                r_property_handle));
+            &(
+                p_property_handle));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        appl_property_set_ulong(
+            p_property_handle,
+            appl_address_property_id_guid,
+            APPL_ADDRESS_PROPERTY_GUID);
+
+        *(
+            r_property_handle) =
+            p_property_handle;
+    }
+
+    return
+        e_status;
 
 } /* appl_address_property_create() */
 
