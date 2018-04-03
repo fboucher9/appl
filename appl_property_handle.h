@@ -16,11 +16,6 @@
 #error include appl_object_handle.h before
 #endif /* #if ! defined INC_APPL_OBJECT_HANDLE_H */
 
-/* Header file dependency */
-#if ! defined INC_APPL_BUF_H
-#error include appl_buf.h before
-#endif /* #if ! defined INC_APPL_BUF_H */
-
 struct appl_context_handle;
 
 struct appl_property_handle;
@@ -132,7 +127,7 @@ appl_property_get_pfn(
 
 enum appl_status
 appl_property_get_buf(
-    struct appl_property_handle * const
+    struct appl_property_handle const * const
         p_property_handle,
     unsigned int const
         i_id,

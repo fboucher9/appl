@@ -73,6 +73,7 @@ test_appl-deps = \
     appl_poll_node.cpp \
     appl_address_handle.cpp \
     appl_address_service.cpp \
+    appl_address_property.cpp \
     appl_address_node.cpp \
     appl_address_std_node.cpp
 

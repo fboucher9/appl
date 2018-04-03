@@ -68,6 +68,12 @@ Description:
 
 #endif /* #if defined(APPL_CONFIG_WITH_HEAP) */
 
+#if defined APPL_CONFIG_WITH_PROPERTY
+
+#include "appl_property_handle.h"
+
+#endif /* #if defined APPL_CONFIG_WITH_PROPERTY */
+
 #if defined(APPL_CONFIG_WITH_FILE)
 
 #include "appl_file_descriptor.h"
@@ -92,6 +98,8 @@ Description:
 
 #include "appl_address_descriptor.h"
 
+#include "appl_address_property.h"
+
 #include "appl_address_handle.h"
 
 #include "appl_socket_descriptor.h"
@@ -105,12 +113,6 @@ Description:
 #include "appl_clock_handle.h"
 
 #endif /* #if defined(APPL_CONFIG_WITH_CLOCK) */
-
-#if defined APPL_CONFIG_WITH_PROPERTY
-
-#include "appl_property_handle.h"
-
-#endif /* #if defined APPL_CONFIG_WITH_PROPERTY */
 
 #if defined(APPL_CONFIG_WITH_MAIN)
 

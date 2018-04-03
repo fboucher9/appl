@@ -224,7 +224,7 @@ appl_property_get_pfn(
 */
 enum appl_status
 appl_property_get_buf(
-    struct appl_property_handle * const
+    struct appl_property_handle const * const
         p_property_handle,
     unsigned int const
         i_id,
