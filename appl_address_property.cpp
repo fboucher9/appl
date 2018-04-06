@@ -71,6 +71,44 @@ appl_address_property_create(
 /*
 
 */
+#if defined APPL_DEBUG
+static
+void
+appl_address_property_assert_guid(
+    struct appl_property_handle * const
+        p_property_handle)
+{
+    enum appl_status
+        e_status;
+
+    unsigned long int
+        u_value;
+
+    e_status =
+        appl_property_get_ulong(
+            p_property_handle,
+            appl_address_property_id_guid,
+            &(
+                u_value));
+
+    if (
+        (
+            appl_status_ok
+            == e_status)
+        && (
+            APPL_ADDRESS_PROPERTY_GUID
+            == u_value))
+    {
+    }
+    else
+    {
+    }
+}
+#endif /* #if defined APPL_DEBUG */
+
+/*
+
+*/
 enum appl_status
 appl_address_property_set_name(
     struct appl_property_handle * const
@@ -80,6 +118,11 @@ appl_address_property_set_name(
     unsigned char const * const
         p_name_max)
 {
+#if defined APPL_DEBUG
+    appl_address_property_assert_guid(
+        p_property_handle);
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_property_set_buf(
             p_property_handle,
@@ -99,6 +142,11 @@ appl_address_property_set_port(
     unsigned short int const
         i_port)
 {
+#if defined APPL_DEBUG
+    appl_address_property_assert_guid(
+        p_property_handle);
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_property_set_ulong(
             p_property_handle,
@@ -120,6 +168,11 @@ appl_address_property_get_name(
     unsigned char const * * const
         r_name_max)
 {
+#if defined APPL_DEBUG
+    appl_address_property_assert_guid(
+        p_property_handle);
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_property_get_buf(
             p_property_handle,
@@ -139,6 +192,11 @@ appl_address_property_get_port(
     unsigned short int * const
         r_port)
 {
+#if defined APPL_DEBUG
+    appl_address_property_assert_guid(
+        p_property_handle);
+#endif /* #if defined APPL_DEBUG */
+
     enum appl_status
         e_status;
 

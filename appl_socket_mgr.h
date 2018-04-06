@@ -11,8 +11,6 @@
 
 #define INC_APPL_SOCKET_MGR_H
 
-struct appl_address_descriptor;
-
 struct appl_socket_descriptor;
 
 /* Assert compiler */

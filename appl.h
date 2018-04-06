@@ -98,8 +98,6 @@ Description:
 
 #if defined(APPL_CONFIG_WITH_SOCKET)
 
-#include "appl_address_descriptor.h"
-
 #include "appl_address_property.h"
 
 #include "appl_address_handle.h"
