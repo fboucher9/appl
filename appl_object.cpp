@@ -6,8 +6,6 @@
 
 #include "appl_status.h"
 
-#include "appl_buf.h"
-
 #include "appl_types.h"
 
 #include "appl_object.h"
@@ -42,14 +40,14 @@ enum appl_status
     p_heap =
         p_context->m_heap;
 
-    struct appl_buf
-        o_placement;
+    void *
+        p_placement;
 
     e_status =
         p_heap->v_alloc(
+            i_placement_length,
             &(
-                o_placement),
-            i_placement_length);
+                p_placement));
 
     if (
         appl_status_ok == e_status)
@@ -57,7 +55,7 @@ enum appl_status
         e_status =
             appl_object::init_instance(
                 p_context,
-                o_placement.o_min.p_void,
+                p_placement,
                 p_new,
                 p_descriptor,
                 r_object);
@@ -66,8 +64,7 @@ enum appl_status
             appl_status_ok != e_status)
         {
             p_heap->v_free(
-                &(
-                    o_placement));
+                p_placement);
         }
     }
 
@@ -148,28 +145,25 @@ enum appl_status
         p_context =
             m_context;
 
-        delete
-            this;
-
-        /* Free memory */
         class appl_heap *
             p_heap;
 
         p_heap =
             p_context->m_heap;
 
-        struct appl_buf
-            o_placement;
+        void *
+            p_placement;
 
-        o_placement.o_min.p_void =
+        p_placement =
+            static_cast<void *>(
+                this);
+
+        delete
             this;
 
-        o_placement.o_max.p_void =
-            this + 1;
-
+        /* Free memory */
         p_heap->v_free(
-            &(
-                o_placement));
+            p_placement);
     }
 
     return

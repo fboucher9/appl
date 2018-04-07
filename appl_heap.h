@@ -11,8 +11,12 @@
 
 #define INC_APPL_HEAP_H
 
-struct appl_buf;
+/* Header file dependency */
+#if ! defined INC_APPL_OBJECT_H
+#error include appl_object.h before appl_heap.h
+#endif /* #if ! defined INC_APPL_OBJECT_H */
 
+/* Assert compiler */
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -29,24 +33,26 @@ class appl_heap : public appl_object
         virtual
         enum appl_status
             v_alloc(
-                struct appl_buf * const
-                    p_buf,
                 appl_size_t const
-                    i_buf_len);
+                    i_buf_len,
+                void * * const
+                    r_buf);
 
         virtual
         enum appl_status
             v_free(
-                struct appl_buf * const
+                void * const
                     p_buf);
 
         virtual
         enum appl_status
             v_realloc(
-                struct appl_buf * const
-                    p_buf,
+                void * const
+                    p_old_buf,
                 appl_size_t const
-                    i_buf_len);
+                    i_buf_len,
+                void * * const
+                    r_new_buf);
 
     protected:
 

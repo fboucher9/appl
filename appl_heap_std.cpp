@@ -149,10 +149,10 @@ enum appl_status
 //
 enum appl_status
     appl_heap_std::v_alloc(
-        struct appl_buf * const
-            p_buf,
         appl_size_t const
-            i_buf_len)
+            i_buf_len,
+        void * * const
+            r_buf)
 {
     enum appl_status
         e_status;
@@ -168,12 +168,9 @@ enum appl_status
         if (
             p_allocation)
         {
-            p_buf->o_min.p_void =
+            *(
+                r_buf) =
                 p_allocation;
-
-            p_buf->o_max.pc_uchar =
-                p_buf->o_min.pc_uchar
-                + i_buf_len;
 
             e_status =
                 appl_status_ok;
@@ -195,24 +192,15 @@ enum appl_status
 //
 enum appl_status
     appl_heap_std::v_free(
-        struct appl_buf * const
+        void * const
             p_buf)
 {
     enum appl_status
         e_status;
 
     {
-        void *
-            p_allocation;
-
-        p_allocation =
-            p_buf->o_min.p_void;
-
         free(
-            p_allocation);
-
-        p_buf->o_max.p_void =
-            p_buf->o_min.p_void;
+            p_buf);
 
         e_status =
             appl_status_ok;
@@ -228,59 +216,38 @@ enum appl_status
 //
 enum appl_status
     appl_heap_std::v_realloc(
-        struct appl_buf * const
-            p_buf,
+        void * const
+            p_old_buf,
         appl_size_t const
-            i_buf_len)
+            i_buf_len,
+        void * * const
+            r_new_buf)
 {
     enum appl_status
         e_status;
 
+    void *
+        p_new_buf;
+
+    p_new_buf =
+        realloc(
+            p_old_buf,
+            i_buf_len);
+
     if (
-        0
-        == i_buf_len)
+        p_new_buf)
     {
+        *(
+            r_new_buf) =
+            p_new_buf;
+
         e_status =
-            v_free(
-                p_buf);
-    }
-    else if (
-        p_buf->o_min.p_void
-        == p_buf->o_max.p_void)
-    {
-        e_status =
-            v_alloc(
-                p_buf,
-                i_buf_len);
+            appl_status_ok;
     }
     else
     {
-        void *
-            p_allocation;
-
-        p_allocation =
-            realloc(
-                p_buf->o_min.p_void,
-                i_buf_len);
-
-        if (
-            p_allocation)
-        {
-            p_buf->o_min.p_void =
-                p_allocation;
-
-            p_buf->o_max.pc_uchar =
-                p_buf->o_min.pc_uchar
-                + i_buf_len;
-
-            e_status =
-                appl_status_ok;
-        }
-        else
-        {
-            e_status =
-                appl_status_out_of_memory;
-        }
+        e_status =
+            appl_status_out_of_memory;
     }
 
     return

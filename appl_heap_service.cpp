@@ -23,10 +23,10 @@ enum appl_status
     appl_heap_service::s_alloc(
         struct appl_context_handle * const
             p_context_handle,
-        struct appl_buf * const
-            p_buf,
         unsigned long int const
-            i_length)
+            i_length,
+        void * * const
+            r_buf)
 {
     class appl_context * const
         p_context =
@@ -40,8 +40,8 @@ enum appl_status
     enum appl_status const
         e_status =
         p_heap->v_alloc(
-            p_buf,
-            i_length);
+            i_length,
+            r_buf);
 
     return
         e_status;
@@ -52,7 +52,7 @@ enum appl_status
     appl_heap_service::s_free(
         struct appl_context_handle * const
             p_context_handle,
-        struct appl_buf * const
+        void * const
             p_buf)
 {
     class appl_context * const
@@ -78,10 +78,12 @@ enum appl_status
     appl_heap_service::s_realloc(
         struct appl_context_handle * const
             p_context_handle,
-        struct appl_buf * const
-            p_buf,
+        void * const
+            p_old_buf,
         unsigned long int const
-            i_length)
+            i_length,
+        void * * const
+            r_new_buf)
 {
     class appl_context * const
         p_context =
@@ -95,8 +97,9 @@ enum appl_status
     enum appl_status const
         e_status =
         p_heap->v_realloc(
-            p_buf,
-            i_length);
+            p_old_buf,
+            i_length,
+            r_new_buf);
 
     return
         e_status;

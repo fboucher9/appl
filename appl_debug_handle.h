@@ -14,7 +14,7 @@
 
 #define INC_APPL_DEBUG_HANDLE_H
 
-struct appl_context_handle;
+struct appl_object_handle;
 
 struct appl_buf;
 
@@ -24,13 +24,13 @@ extern "C" {
 
 enum appl_status
 appl_debug_break(
-    struct appl_context_handle * const
-        p_context_handle);
+    struct appl_object_handle const * const
+        p_object_handle);
 
 enum appl_status
 appl_debug_print(
-    struct appl_context_handle * const
-        p_context_handle,
+    struct appl_object_handle const * const
+        p_object_handle,
     unsigned char const * const
         p_msg_min,
     unsigned char const * const

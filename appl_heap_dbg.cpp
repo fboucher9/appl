@@ -49,15 +49,15 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_buf
-        o_placement;
+    void *
+        p_placement;
 
     e_status =
         p_parent->v_alloc(
-            &(
-                o_placement),
             sizeof(
-                class appl_heap_dbg));
+                class appl_heap_dbg),
+            &(
+                p_placement));
 
     if (
         appl_status_ok
@@ -70,7 +70,7 @@ enum appl_status
             appl_object::s_init(
                 static_cast<class appl_context *>(
                     0),
-                o_placement.o_min.p_void,
+                p_placement,
                 &(
                     appl_heap_dbg::placement_new),
                 p_parent,
@@ -88,8 +88,7 @@ enum appl_status
         else
         {
             p_parent->v_free(
-                &(
-                    o_placement));
+                p_placement);
         }
     }
 
@@ -295,23 +294,18 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
-        struct appl_buf
-            o_placement;
+        void *
+            p_buf;
 
-        o_placement.o_min.p_void =
+        p_buf =
             static_cast<void *>(
                 this);
-
-        o_placement.o_max.p_void =
-            static_cast<void *>(
-                this + 1);
 
         delete
             this;
 
         p_parent->v_free(
-            &(
-                o_placement));
+            p_buf);
     }
 
     return
@@ -324,17 +318,17 @@ enum appl_status
 //
 enum appl_status
     appl_heap_dbg::v_alloc(
-        struct appl_buf * const
-            p_buf,
         appl_size_t const
-            i_buf_len)
+            i_buf_len,
+        void * * const
+            r_buf)
 {
     enum appl_status
         e_status;
 
     {
-        struct appl_buf
-            o_allocation;
+        void *
+            p_allocation;
 
         appl_size_t
             i_total_buf_len;
@@ -349,9 +343,9 @@ enum appl_status
 
         e_status =
             m_parent->v_alloc(
+                i_total_buf_len,
                 &(
-                    o_allocation),
-                i_total_buf_len);
+                    p_allocation));
 
         if (
             appl_status_ok
@@ -366,7 +360,7 @@ enum appl_status
 
             p_header =
                 static_cast<struct appl_heap_dbg_header *>(
-                    o_allocation.o_min.p_void);
+                    p_allocation);
 
             appl_list_init(
                 &(
@@ -400,20 +394,14 @@ enum appl_status
                 }
             }
 
-            p_buf->o_min.p_void =
-                static_cast<void *>(
-                    p_header + 1);
-
-            p_buf->o_max.pc_uchar =
-                p_buf->o_min.pc_uchar
-                + i_buf_len;
-
             struct appl_heap_dbg_footer *
                 p_footer;
 
             p_footer =
-                static_cast<struct appl_heap_dbg_footer *>(
-                    p_buf->o_max.p_void);
+                reinterpret_cast<struct appl_heap_dbg_footer *>(
+                    reinterpret_cast<unsigned char *>(
+                        p_header + 1)
+                    + i_buf_len);
 
             {
                 unsigned int i_footer_iterator;
@@ -432,6 +420,11 @@ enum appl_status
                 &(
                     m_lock));
 
+            *(
+                r_buf) =
+                static_cast<void *>(
+                    p_header + 1);
+
             e_status =
                 appl_status_ok;
         }
@@ -447,7 +440,7 @@ enum appl_status
 //
 enum appl_status
     appl_heap_dbg::v_free(
-        struct appl_buf * const
+        void * const
             p_buf)
 {
     enum appl_status
@@ -463,7 +456,7 @@ enum appl_status
 
         p_header =
             static_cast<struct appl_heap_dbg_header *>(
-                p_buf->o_min.p_void)
+                p_buf)
             - 1;
 
         appl_list_join(
@@ -489,28 +482,20 @@ enum appl_status
             }
         }
 
-        struct appl_buf
-            o_allocation;
+        void *
+            p_allocation;
 
-        o_allocation.o_min.p_void =
+        p_allocation =
             static_cast<void *>(
                 p_header);
-
-        o_allocation.o_max.p_uchar =
-            o_allocation.o_min.p_uchar
-            + (
-                p_header->i_buf_len
-                + sizeof(
-                    struct appl_heap_dbg_header)
-                + sizeof(
-                    struct appl_heap_dbg_footer));
 
         struct appl_heap_dbg_footer *
             p_footer;
 
         p_footer =
             reinterpret_cast<struct appl_heap_dbg_footer *>(
-                p_buf->o_min.p_uchar
+                reinterpret_cast<unsigned char *>(
+                    p_buf)
                 + p_header->i_buf_len);
 
         {
@@ -531,8 +516,7 @@ enum appl_status
         }
 
         m_parent->v_free(
-            &(
-                o_allocation));
+            p_allocation);
 
         m_alloc_count --;
 
@@ -554,53 +538,43 @@ enum appl_status
 //
 enum appl_status
     appl_heap_dbg::v_realloc(
-        struct appl_buf * const
-            p_buf,
+        void * const
+            p_old_buf,
         appl_size_t const
-            i_buf_len)
+            i_buf_len,
+        void * * const
+            r_new_buf)
 {
     enum appl_status
         e_status;
 
-    if (
-        0
-        == i_buf_len)
     {
-        e_status =
-            v_free(
-                p_buf);
-    }
-    if (
-        p_buf->o_max.pc_uchar
-        == p_buf->o_min.pc_uchar)
-    {
-        e_status =
-            v_alloc(
-                p_buf,
-                i_buf_len);
-    }
-    else
-    {
-        struct appl_buf
-            o_allocation;
+        void *
+            p_new_buf;
 
         e_status =
             v_alloc(
+                i_buf_len,
                 &(
-                    o_allocation),
-                i_buf_len);
+                    p_new_buf));
 
         if (
             appl_status_ok
             == e_status)
         {
+            struct appl_heap_dbg_header const *
+                p_header;
+
+            p_header =
+                static_cast<struct appl_heap_dbg_header const *>(
+                    p_old_buf)
+                - 1;
+
             appl_size_t
                 i_copy_len;
 
             i_copy_len =
-                static_cast<appl_size_t>(
-                    p_buf->o_max.pc_uchar
-                    - p_buf->o_min.pc_uchar);
+                p_header->i_buf_len;
 
             if (
                 i_copy_len > i_buf_len)
@@ -609,16 +583,16 @@ enum appl_status
             }
 
             memcpy(
-                o_allocation.o_min.p_void,
-                p_buf->o_min.pc_void,
+                p_new_buf,
+                p_old_buf,
                 i_copy_len);
 
             v_free(
-                p_buf);
+                p_old_buf);
 
             *(
-                p_buf) =
-                o_allocation;
+                r_new_buf) =
+                p_new_buf;
         }
     }
 

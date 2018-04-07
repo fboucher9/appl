@@ -56,7 +56,7 @@ class appl_options_std : public appl_options
 
     private:
 
-        struct appl_buf
+        void *
             m_placement_buf;
 
         struct appl_buf *

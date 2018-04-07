@@ -17,15 +17,15 @@
 //
 enum appl_status
     appl_heap::v_alloc(
-        struct appl_buf * const
-            p_buf,
         appl_size_t const
-            i_buf_len)
+            i_buf_len,
+        void * * const
+            r_buf)
 {
     static_cast<void>(
-        p_buf);
-    static_cast<void>(
         i_buf_len);
+    static_cast<void>(
+        r_buf);
 
     return
         appl_status_not_implemented;
@@ -37,7 +37,7 @@ enum appl_status
 //
 enum appl_status
     appl_heap::v_free(
-        struct appl_buf * const
+        void * const
             p_buf)
 {
     static_cast<void>(
@@ -53,15 +53,19 @@ enum appl_status
 //
 enum appl_status
     appl_heap::v_realloc(
-        struct appl_buf * const
-            p_buf,
+        void * const
+            p_old_buf,
         appl_size_t const
-            i_buf_len)
+            i_buf_len,
+        void * * const
+            r_new_buf)
 {
     static_cast<void>(
-        p_buf);
+        p_old_buf);
     static_cast<void>(
         i_buf_len);
+    static_cast<void>(
+        r_new_buf);
 
     return
         appl_status_not_implemented;

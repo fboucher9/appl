@@ -102,18 +102,19 @@ appl_test_memory_leak(
     struct appl_context_handle * const
         p_context_handle)
 {
-    struct appl_buf
-        o_buf;
+    void *
+        p_buf;
 
     enum appl_status
         e_status;
 
     e_status =
         appl_heap_alloc(
-            p_context_handle,
             &(
-                o_buf),
-            123u);
+                p_context_handle->o_object_handle),
+            123u,
+            &(
+                p_buf));
 
     if (
         appl_status_ok
@@ -907,12 +908,14 @@ appl_main(
             };
 
             appl_debug_print(
-                p_context_handle,
+                &(
+                    p_context_handle->o_object_handle),
                 g_msg,
                 g_msg + sizeof(g_msg));
 
             appl_debug_break(
-                p_context_handle);
+                &(
+                    p_context_handle->o_object_handle));
         }
     }
 #endif /* #if defined APPL_DEBUG */

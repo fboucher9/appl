@@ -106,24 +106,26 @@ class appl_heap_dbg : public appl_heap
         virtual
         enum appl_status
             v_alloc(
-                struct appl_buf * const
-                    p_buf,
                 appl_size_t const
-                    i_buf_len);
+                    i_buf_len,
+                void * * const
+                    r_buf);
 
         virtual
         enum appl_status
             v_free(
-                struct appl_buf * const
+                void * const
                     p_buf);
 
         virtual
         enum appl_status
             v_realloc(
-                struct appl_buf * const
-                    p_buf,
+                void * const
+                    p_old_buf,
                 appl_size_t const
-                    i_buf_len);
+                    i_buf_len,
+                void * * const
+                    r_new_buf);
 
 }; // class appl_heap_dbg
 

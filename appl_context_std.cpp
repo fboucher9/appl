@@ -707,16 +707,16 @@ enum appl_status
             o_init_descriptor.p_heap =
                 p_heap;
 
-            struct appl_buf
-                o_placement;
+            void *
+                p_placement;
 
             e_status =
                 p_heap->v_alloc(
-                    &(
-                        o_placement),
                     static_cast<unsigned long int>(
                         sizeof(
-                            class appl_context_std)));
+                            class appl_context_std)),
+                    &(
+                        p_placement));
 
             if (
                 appl_status_ok == e_status)
@@ -725,7 +725,7 @@ enum appl_status
                     appl_object::s_init(
                         static_cast<class appl_context *>(
                             0),
-                        o_placement.o_min.p_void,
+                        p_placement,
                         &(
                             appl_context_std::placement_new),
                         &(
@@ -736,8 +736,7 @@ enum appl_status
                     appl_status_ok != e_status)
                 {
                     p_heap->v_free(
-                        &(
-                            o_placement));
+                        p_placement);
                 }
             }
         }
@@ -1002,21 +1001,18 @@ appl_context_std::destroy(void)
 
     cleanup();
 
-    struct appl_buf
-        o_placement;
+    void *
+        p_placement;
 
-    o_placement.o_min.p_void =
-        this;
-
-    o_placement.o_max.p_void =
-        this + 1;
+    p_placement =
+        static_cast<void *>(
+            this);
 
     delete
         this;
 
     p_heap->v_free(
-        &(
-            o_placement));
+        p_placement);
 
     p_heap->destroy();
 

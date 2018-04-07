@@ -13,8 +13,6 @@
 
 struct appl_context_handle;
 
-struct appl_buf;
-
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -34,17 +32,17 @@ class appl_heap_service
             s_alloc(
                 struct appl_context_handle * const
                     p_context_handle,
-                struct appl_buf * const
-                    p_buf,
                 unsigned long int const
-                    i_length);
+                    i_length,
+                void * * const
+                    r_buf);
 
         static
         enum appl_status
             s_free(
                 struct appl_context_handle * const
                     p_context_handle,
-                struct appl_buf * const
+                void * const
                     p_buf);
 
         static
@@ -52,10 +50,12 @@ class appl_heap_service
             s_realloc(
                 struct appl_context_handle * const
                     p_context_handle,
-                struct appl_buf * const
-                    p_buf,
+                void * const
+                    p_old_buf,
                 unsigned long int const
-                    i_length);
+                    i_length,
+                void * * const
+                    r_new_buf);
 
 }; // class appl_heap_service
 

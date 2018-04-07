@@ -149,9 +149,8 @@ appl_socket_property_assert_guid(
     {
         /* break to debugger ... */
         appl_debug_break(
-            appl_object_get_context_handle(
-                &(
-                    p_property_handle->o_object_handle)));
+            &(
+                p_property_handle->o_object_handle));
     }
 } /* assert_guid() */
 #endif /* #if defined APPL_DEBUG */

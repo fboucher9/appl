@@ -95,16 +95,16 @@ appl_options_std::init(
 
     e_status =
         m_context->m_heap->v_alloc(
+            i_placement_length,
             &(
-                m_placement_buf),
-            i_placement_length);
+                m_placement_buf));
 
     if (
         appl_status_ok == e_status)
     {
         m_buf_min =
             static_cast<struct appl_buf *>(
-                m_placement_buf.o_min.p_void);
+                m_placement_buf);
 
         m_buf_max =
             m_buf_min
@@ -146,8 +146,7 @@ appl_options_std::cleanup(void)
         e_status;
 
     m_context->m_heap->v_free(
-        &(
-            m_placement_buf));
+        m_placement_buf);
 
     e_status =
         appl_status_ok;
