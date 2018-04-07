@@ -18,152 +18,18 @@ struct appl_address_handle;
 struct appl_socket_handle;
 
 /* Predefine */
-struct appl_socket_descriptor;
+struct appl_property_handle;
 
-/* Socket option unique identifiers */
-enum appl_socket_option_id
+/* Protocol values */
+enum appl_socket_protocol
 {
-    /* Select 0 for TCP with SOCK_STREAM,
-              1 for UDP with SOCK_DGRAM */
-    /* Default is to select TCP type with SOCK_STREAM option */
-    appl_socket_option_id_protocol = 1,
+    /* Default is TCP with SOCK_STREAM */
+    appl_socket_protocol_tcp_stream = 0,
 
-    /* Provide an address for call to bind() */
-    /* Default is an unbound socket, kernel will select interface and port */
-    appl_socket_option_id_bind_address = 2,
+    /* Select UDP with SOCK_DGRAM */
+    appl_socket_protocol_udp_dgram = 1
 
-    /* Provide an address for call to connect() */
-    appl_socket_option_id_connect_address = 3,
-
-    /* Provide number for call to listen() */
-    appl_socket_option_id_listen_count = 4,
-
-    /* Provide an empty address for call to accept() */
-    appl_socket_option_id_accept_address = 5,
-
-    /* Set recv timeout socket option */
-    appl_socket_option_id_recv_timeout = 6,
-
-    /* Set send timeout socket option */
-    appl_socket_option_id_send_timeout = 7,
-
-    /* Provide an address for add membership */
-    appl_socket_option_id_join_address = 8,
-
-    /* Provide an interface for add membership */
-    appl_socket_option_id_join_interface = 9,
-
-    /* Provide recv buffer size option */
-    appl_socket_option_id_recv_buffer = 10,
-
-    /* Provide send buffer size option */
-    appl_socket_option_id_send_buffer = 11,
-
-    /* Set timeout for call to connect() */
-    appl_socket_option_id_connect_timeout = 12,
-
-    /* Set timeout for call to accept() */
-    appl_socket_option_id_accept_timeout = 13,
-
-    /* Maximum number of options */
-    appl_socket_option_id_max
-
-}; /* enum appl_socket_option_id */
-
-/* Socket option storage types */
-enum appl_socket_option_type
-{
-    /* Option is a pointer to an address handle */
-    appl_socket_option_type_address_handle = 1,
-
-    /* Option is a pointer to a socket handle */
-    appl_socket_option_type_socket_handle = 2,
-
-    /* Option is an unsigned integer */
-    appl_socket_option_type_unsigned_integer = 3,
-
-    /* Option is a signed integer */
-    appl_socket_option_type_signed_integer = 4,
-
-    /* Option is an unsigned fraction */
-    appl_socket_option_type_unsigned_fraction = 5,
-
-    /* Option is a signed fraction */
-    appl_socket_option_type_signed_fraction = 6
-
-}; /* appl_socket_option_type */
-
-/*
-
-Structure: appl_socket_option
-
-Description:
-    Description of a single socket option.
-
-*/
-struct appl_socket_option
-{
-    enum appl_socket_option_id
-        e_id;
-
-    enum appl_socket_option_type
-        e_type;
-
-#if 0 /* sizeof int == 2 */
-    unsigned int
-        ui_padding[2u];
-#endif /* sizeof int == 2 */
-
-    /* -- */
-
-    union appl_socket_option_data
-    {
-        struct appl_address_handle *
-            p_address_handle;
-
-        struct appl_socket_handle *
-            p_socket_handle;
-
-        unsigned long int
-            u_value;
-
-        signed long int
-            i_value;
-
-        struct appl_socket_option_unsigned_fraction
-        {
-            unsigned long int
-                u_num;
-
-            unsigned long int
-                u_den;
-
-        } o_unsigned_fraction;
-
-        struct appl_socket_option_signed_fraction
-        {
-            signed long int
-                i_num;
-
-            signed long int
-                i_den;
-
-        } o_signed_fraction;
-
-    } o_data;
-
-}; /* struct appl_socket_option */
-
-/* socket descriptor */
-struct appl_socket_descriptor
-{
-    struct appl_socket_option const *
-        p_option_min;
-
-    struct appl_socket_option const *
-        p_option_max;
-
-}; /* struct appl_socket_descriptor */
+}; /* enum appl_socket_protocol */
 
 /* Options for appl_socket_wait */
 enum appl_socket_wait_type
@@ -175,5 +41,216 @@ enum appl_socket_wait_type
     appl_socket_wait_recv = 2
 
 }; /* enum appl_socket_wait_type */
+
+#if defined __cplusplus
+extern "C" {
+#endif /* #if defined __cplusplus */
+
+enum appl_status
+appl_socket_property_create(
+    struct appl_context_handle * const
+       p_context_handle,
+    struct appl_property_handle * * const
+        r_property_handle);
+
+enum appl_status
+appl_socket_property_set_protocol(
+    struct appl_property_handle * const
+        p_property_handle,
+    enum appl_socket_protocol const
+        e_socket_protocol);
+
+enum appl_status
+appl_socket_property_set_bind_address(
+    struct appl_property_handle * const
+        p_property_handle,
+    struct appl_address_handle * const
+        p_bind_address_handle);
+
+enum appl_status
+appl_socket_property_set_connect_address(
+    struct appl_property_handle * const
+        p_property_handle,
+    struct appl_address_handle * const
+        p_connect_address_handle);
+
+enum appl_status
+appl_socket_property_set_listen_count(
+    struct appl_property_handle * const
+        p_property_handle,
+    unsigned long int const
+        i_listen_count);
+
+enum appl_status
+appl_socket_property_set_accept_address(
+    struct appl_property_handle * const
+        p_property_handle,
+    struct appl_address_handle * const
+        p_accept_address_handle);
+
+enum appl_status
+appl_socket_property_set_accept_socket(
+    struct appl_property_handle * const
+        p_property_handle,
+    struct appl_socket_handle * const
+        p_accept_socket_handle);
+
+enum appl_status
+appl_socket_property_set_recv_timeout(
+    struct appl_property_handle * const
+        p_property_handle,
+    unsigned long int const
+        i_recv_timeout);
+
+enum appl_status
+appl_socket_property_set_send_timeout(
+    struct appl_property_handle * const
+        p_property_handle,
+    unsigned long int const
+        i_send_timeout);
+
+enum appl_status
+appl_socket_property_set_recv_buffer(
+    struct appl_property_handle * const
+        p_property_handle,
+    unsigned long int const
+        i_recv_buffer);
+
+enum appl_status
+appl_socket_property_set_send_buffer(
+    struct appl_property_handle * const
+        p_property_handle,
+    unsigned long int const
+        i_send_buffer);
+
+enum appl_status
+appl_socket_property_set_connect_timeout(
+    struct appl_property_handle * const
+        p_property_handle,
+    unsigned long int const
+        i_connect_timeout);
+
+enum appl_status
+appl_socket_property_set_accept_timeout(
+    struct appl_property_handle * const
+        p_property_handle,
+    unsigned long int const
+        i_accept_timeout);
+
+enum appl_status
+appl_socket_property_set_join_address(
+    struct appl_property_handle * const
+        p_property_handle,
+    struct appl_address_handle * const
+        p_join_address_handle);
+
+enum appl_status
+appl_socket_property_set_join_interface(
+    struct appl_property_handle * const
+        p_property_handle,
+    struct appl_address_handle * const
+        p_interface_address_handle);
+
+enum appl_status
+appl_socket_property_get_protocol(
+    struct appl_property_handle const * const
+        p_property_handle,
+    enum appl_socket_protocol * const
+        r_socket_protocol);
+
+enum appl_status
+appl_socket_property_get_bind_address(
+    struct appl_property_handle const * const
+        p_property_handle,
+    struct appl_address_handle * * const
+        r_bind_address_handle);
+
+enum appl_status
+appl_socket_property_get_connect_address(
+    struct appl_property_handle const * const
+        p_property_handle,
+    struct appl_address_handle * * const
+        r_connect_address_handle);
+
+enum appl_status
+appl_socket_property_get_listen_count(
+    struct appl_property_handle const * const
+        p_property_handle,
+    unsigned long int * const
+        r_listen_count);
+
+enum appl_status
+appl_socket_property_get_accept_address(
+    struct appl_property_handle const * const
+        p_property_handle,
+    struct appl_address_handle * * const
+        r_accept_address_handle);
+
+enum appl_status
+appl_socket_property_get_accept_socket(
+    struct appl_property_handle const * const
+        p_property_handle,
+    struct appl_socket_handle * * const
+        r_accept_socket_handle);
+
+enum appl_status
+appl_socket_property_get_recv_timeout(
+    struct appl_property_handle const * const
+        p_property_handle,
+    unsigned long int * const
+        r_recv_timeout);
+
+enum appl_status
+appl_socket_property_get_send_timeout(
+    struct appl_property_handle const * const
+        p_property_handle,
+    unsigned long int * const
+        r_send_timeout);
+
+enum appl_status
+appl_socket_property_get_recv_buffer(
+    struct appl_property_handle const * const
+        p_property_handle,
+    unsigned long int * const
+        r_recv_buffer);
+
+enum appl_status
+appl_socket_property_get_send_buffer(
+    struct appl_property_handle const * const
+        p_property_handle,
+    unsigned long int * const
+        r_send_buffer);
+
+enum appl_status
+appl_socket_property_get_connect_timeout(
+    struct appl_property_handle const * const
+        p_property_handle,
+    unsigned long int * const
+        r_connect_timeout);
+
+enum appl_status
+appl_socket_property_get_accept_timeout(
+    struct appl_property_handle const * const
+        p_property_handle,
+    unsigned long int * const
+        r_accept_timeout);
+
+enum appl_status
+appl_socket_property_get_join_address(
+    struct appl_property_handle const * const
+        p_property_handle,
+    struct appl_address_handle * * const
+        r_join_address_handle);
+
+enum appl_status
+appl_socket_property_get_join_interface(
+    struct appl_property_handle const * const
+        p_property_handle,
+    struct appl_address_handle * * const
+        r_interface_address_handle);
+
+#if defined __cplusplus
+} /* extern "C" */
+#endif /* #if defined __cplusplus */
 
 /* end-of-file: appl_socket_descriptor.h */

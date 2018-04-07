@@ -65,12 +65,6 @@ appl_address_service::s_create(
         appl_context::convert_handle(
             p_context_handle);
 
-    // Convert opaque property handle to C++ property object
-    class appl_property const * const
-        p_property =
-        appl_property::convert_const_handle(
-            p_property_handle);
-
     // Use the C++ context object to query socket manager
     class appl_socket_mgr * const
         p_socket_mgr =
@@ -82,7 +76,7 @@ appl_address_service::s_create(
     // Use socket manager to dispatch this request
     e_status =
         p_socket_mgr->v_create_address(
-            p_property,
+            p_property_handle,
             &(
                 p_address_node));
 

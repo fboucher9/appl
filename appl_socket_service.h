@@ -13,7 +13,7 @@
 
 struct appl_context_handle;
 
-struct appl_socket_descriptor;
+struct appl_property_handle;
 
 struct appl_socket_handle;
 
@@ -40,7 +40,7 @@ class appl_socket_service
         s_create(
             struct appl_context_handle * const
                 p_context_handle,
-            struct appl_socket_descriptor const * const
+            struct appl_property_handle const * const
                 p_socket_descriptor,
             struct appl_socket_handle * * const
                 r_socket_handle);

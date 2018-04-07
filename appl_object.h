@@ -15,6 +15,8 @@
 #error include appl_types.h before
 #endif /* #if !defined(INC_APPL_TYPES_H) */
 
+struct appl_context_handle;
+
 struct appl_object_handle;
 
 #if !defined(__cplusplus)
@@ -175,6 +177,18 @@ class appl_object
             convert_handle(
                 struct appl_object_handle * const
                     p_object_handle);
+
+        static
+        class appl_object const *
+            convert_const_handle(
+                struct appl_object_handle const * const
+                    p_object_handle);
+
+        struct appl_context_handle *
+            get_context_handle(void) const;
+
+        class appl_context *
+            get_context(void) const;
 
     protected:
 

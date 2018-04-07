@@ -653,43 +653,40 @@ appl_test_socket(
         }
 
         {
-            struct appl_socket_descriptor
-                o_socket_descriptor;
-
-            struct appl_socket_option
-                a_socket_options[10u];
-
-            {
-                struct appl_socket_option *
-                    p_socket_option_iterator;
-
-                p_socket_option_iterator = a_socket_options;
-
-                p_socket_option_iterator->e_id =
-                    appl_socket_option_id_bind_address;
-
-                p_socket_option_iterator->e_type =
-                    appl_socket_option_type_address_handle;
-
-                p_socket_option_iterator->o_data.p_address_handle =
-                    p_address_handle;
-
-                p_socket_option_iterator ++;
-
-                o_socket_descriptor.p_option_min =
-                    a_socket_options;
-
-                o_socket_descriptor.p_option_max =
-                    p_socket_option_iterator;
-            }
+            struct appl_property_handle *
+                p_socket_descriptor;
 
             e_status =
-                appl_socket_create(
+                appl_socket_property_create(
                     p_context_handle,
                     &(
-                        o_socket_descriptor),
+                        p_socket_descriptor));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_socket_property_set_bind_address(
+                        p_socket_descriptor,
+                        p_address_handle);
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    e_status =
+                        appl_socket_create(
+                            p_context_handle,
+                            p_socket_descriptor,
+                            &(
+                                p_socket_handle));
+                }
+
+                appl_object_destroy(
                     &(
-                        p_socket_handle));
+                        p_socket_descriptor->o_object_handle));
+            }
         }
 
         if (

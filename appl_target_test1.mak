@@ -45,6 +45,7 @@ test_appl-deps = \
     appl_property_handle.cpp \
     appl_property_service.cpp \
     appl_property.cpp \
+    appl_socket_descriptor.cpp \
     appl_socket_handle.cpp \
     appl_socket_mgr.cpp \
     appl_socket_service.cpp \

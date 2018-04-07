@@ -63,15 +63,15 @@ class appl_socket_std_mgr : public appl_socket_mgr
         virtual
         enum appl_status
             v_create_address(
-                class appl_property const * const
-                    p_property,
+                struct appl_property_handle const * const
+                    p_property_handle,
                 class appl_address_node * * const
                     r_address_node);
 
         virtual
         enum appl_status
             v_create_socket(
-                struct appl_socket_descriptor const * const
+                struct appl_property_handle const * const
                     p_socket_descriptor,
                 class appl_socket_node * * const
                     r_socket_node);

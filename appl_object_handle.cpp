@@ -30,4 +30,22 @@ appl_object_destroy(
 
 } /* appl_object_destroy() */
 
+/*
+
+*/
+struct appl_context_handle *
+appl_object_get_context_handle(
+    struct appl_object_handle const * const
+        p_object_handle)
+{
+    class appl_object const * const
+        p_object =
+        appl_object::convert_const_handle(
+            p_object_handle);
+
+    return
+        p_object->get_context_handle();
+
+} /* appl_object_get_context_handle() */
+
 /* end-of-file: appl_object_handle.cpp */

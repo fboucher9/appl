@@ -11,7 +11,7 @@
 
 #define INC_APPL_SOCKET_MGR_H
 
-struct appl_socket_descriptor;
+struct appl_property_handle;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -30,15 +30,15 @@ class appl_socket_mgr : public appl_object
         virtual
         enum appl_status
             v_create_address(
-                class appl_property const * const
-                    p_property,
+                struct appl_property_handle const * const
+                    p_property_handle,
                 class appl_address_node * * const
                     r_address_node);
 
         virtual
         enum appl_status
             v_create_socket(
-                struct appl_socket_descriptor const * const
+                struct appl_property_handle const * const
                     p_socket_descriptor,
                 class appl_socket_node * * const
                     r_socket_node);

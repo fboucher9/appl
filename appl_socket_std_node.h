@@ -35,7 +35,7 @@ class appl_socket_std_node : public appl_socket_node
             s_create(
                 class appl_context * const
                     p_context,
-                struct appl_socket_descriptor const * const
+                struct appl_property_handle const * const
                     p_socket_descriptor,
                 class appl_socket_node * * const
                     r_socket_node);

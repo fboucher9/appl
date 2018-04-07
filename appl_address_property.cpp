@@ -75,7 +75,7 @@ appl_address_property_create(
 static
 void
 appl_address_property_assert_guid(
-    struct appl_property_handle * const
+    struct appl_property_handle const * const
         p_property_handle)
 {
     enum appl_status
@@ -202,7 +202,6 @@ appl_address_property_get_port(
 
     unsigned long int
         u_value;
-
 
     e_status =
         appl_property_get_ulong(
