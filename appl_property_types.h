@@ -26,11 +26,7 @@ enum appl_property_type
 
     appl_property_type_ulong = 3,
 
-    appl_property_type_long = 4,
-
-    appl_property_type_pfn = 5,
-
-    appl_property_type_buf = 6
+    appl_property_type_long = 4
 
 }; /* enum appl_property_type */
 
@@ -53,21 +49,6 @@ union appl_property_value
 
     signed long int
         i_value;
-
-    void *
-        (* p_func)(
-            void * const
-                p_args);
-
-    struct appl_property_buf
-    {
-        unsigned char const *
-            p_buf_min;
-
-        unsigned char const *
-            p_buf_max;
-
-    } o_buf;
 
 }; /* union appl_property_value */
 

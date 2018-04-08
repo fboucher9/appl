@@ -46,7 +46,7 @@ appl_property_set_ptr(
         p_property_handle,
     unsigned int const
         i_id,
-    void * const
+    void const * const
         p_value);
 
 enum appl_status
@@ -66,27 +66,6 @@ appl_property_set_long(
         i_id,
     signed long int const
         i_value);
-
-enum appl_status
-appl_property_set_pfn(
-    struct appl_property_handle * const
-        p_property_handle,
-    unsigned int const
-        i_id,
-    void * (* p_value)(
-        void * const
-            p_args));
-
-enum appl_status
-appl_property_set_buf(
-    struct appl_property_handle * const
-        p_property_handle,
-    unsigned int const
-        i_id,
-    unsigned char const * const
-        p_buf_min,
-    unsigned char const * const
-        p_buf_max);
 
 enum appl_status
 appl_property_get_ptr(
@@ -114,27 +93,6 @@ appl_property_get_long(
         i_id,
     signed long int * const
         r_value);
-
-enum appl_status
-appl_property_get_pfn(
-    struct appl_property_handle const * const
-        p_property_handle,
-    unsigned int const
-        i_id,
-    void * (* * r_value)(
-        void * const
-            p_args));
-
-enum appl_status
-appl_property_get_buf(
-    struct appl_property_handle const * const
-        p_property_handle,
-    unsigned int const
-        i_id,
-    unsigned char const * * const
-        r_buf_min,
-    unsigned char const * * const
-        r_buf_max);
 
 #if defined __cplusplus
 } /* extern "C" */

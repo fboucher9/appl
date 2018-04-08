@@ -556,6 +556,9 @@ appl_test_socket(
         '0'
     };
 
+    static struct appl_buf
+        g_name_buf;
+
     enum appl_status
         e_status;
 
@@ -566,6 +569,12 @@ appl_test_socket(
         struct appl_property_handle *
             p_address_descriptor;
 
+        g_name_buf.o_min.pc_uchar =
+            g_name;
+
+        g_name_buf.o_max.pc_uchar =
+            g_name + sizeof(g_name);
+
         appl_address_property_create(
             p_context_handle,
             &(
@@ -573,8 +582,8 @@ appl_test_socket(
 
         appl_address_property_set_name(
             p_address_descriptor,
-            g_name,
-            g_name + sizeof(g_name));
+            &(
+                g_name_buf));
 
         appl_address_property_set_port(
             p_address_descriptor,

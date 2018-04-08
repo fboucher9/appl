@@ -113,10 +113,8 @@ enum appl_status
 appl_address_property_set_name(
     struct appl_property_handle * const
         p_property_handle,
-    unsigned char const * const
-        p_name_min,
-    unsigned char const * const
-        p_name_max)
+    struct appl_buf const * const
+        p_name_buf)
 {
 #if defined APPL_DEBUG
     appl_address_property_assert_guid(
@@ -124,11 +122,10 @@ appl_address_property_set_name(
 #endif /* #if defined APPL_DEBUG */
 
     return
-        appl_property_set_buf(
+        appl_property_set_ptr(
             p_property_handle,
             appl_address_property_id_name,
-            p_name_min,
-            p_name_max);
+            p_name_buf);
 
 } /* appl_address_property_set_name() */
 
@@ -163,10 +160,8 @@ enum appl_status
 appl_address_property_get_name(
     struct appl_property_handle const * const
         p_property_handle,
-    unsigned char const * * const
-        r_name_min,
-    unsigned char const * * const
-        r_name_max)
+    struct appl_buf const * * const
+        r_name_buf)
 {
 #if defined APPL_DEBUG
     appl_address_property_assert_guid(
@@ -174,11 +169,12 @@ appl_address_property_get_name(
 #endif /* #if defined APPL_DEBUG */
 
     return
-        appl_property_get_buf(
+        appl_property_get_ptr(
             p_property_handle,
             appl_address_property_id_name,
-            r_name_min,
-            r_name_max);
+            const_cast<void * *>(
+                reinterpret_cast<void const * *>(
+                    r_name_buf)));
 
 } /* appl_address_property_get_name() */
 

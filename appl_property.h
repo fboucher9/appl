@@ -118,23 +118,6 @@ class appl_property : public appl_object
                 signed long int * const
                     r_value) const;
 
-        enum appl_status
-            get_pfn(
-                unsigned int const
-                    i_id,
-                void * (* * r_value)(
-                    void * const
-                        p_args)) const;
-
-        enum appl_status
-            get_buf(
-                unsigned int const
-                    i_id,
-                unsigned char const * * const
-                    r_buf_min,
-                unsigned char const * * const
-                    r_buf_max) const;
-
     protected:
 
         appl_property();

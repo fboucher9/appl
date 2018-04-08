@@ -73,7 +73,7 @@ appl_property_service::s_set_ptr(
         p_property_handle,
     unsigned int const
         i_id,
-    void * const
+    void const * const
         p_value)
 {
     enum appl_status
@@ -88,7 +88,8 @@ appl_property_service::s_set_ptr(
         o_value;
 
     o_value.p_value =
-        p_value;
+        const_cast<void *>(
+            p_value);
 
     e_status =
         p_property->v_set(
@@ -177,88 +178,6 @@ appl_property_service::s_set_long(
         e_status;
 
 } // s_set_long()
-
-//
-//
-//
-enum appl_status
-appl_property_service::s_set_pfn(
-    struct appl_property_handle * const
-        p_property_handle,
-    unsigned int const
-        i_id,
-    void * (* p_value)(
-        void * const
-            p_args))
-{
-    enum appl_status
-        e_status;
-
-    class appl_property * const
-        p_property =
-        appl_property::convert_handle(
-            p_property_handle);
-
-    union appl_property_value
-        o_value;
-
-    o_value.p_func =
-        p_value;
-
-    e_status =
-        p_property->v_set(
-            i_id,
-            appl_property_type_pfn,
-            &(
-                o_value));
-
-    return
-        e_status;
-
-} // s_set_pfn()
-
-//
-//
-//
-enum appl_status
-appl_property_service::s_set_buf(
-    struct appl_property_handle * const
-        p_property_handle,
-    unsigned int const
-        i_id,
-    unsigned char const * const
-        p_buf_min,
-    unsigned char const * const
-        p_buf_max)
-{
-    enum appl_status
-        e_status;
-
-    class appl_property * const
-        p_property =
-        appl_property::convert_handle(
-            p_property_handle);
-
-    union appl_property_value
-        o_value;
-
-    o_value.o_buf.p_buf_min =
-        p_buf_min;
-
-    o_value.o_buf.p_buf_max =
-        p_buf_max;
-
-    e_status =
-        p_property->v_set(
-            i_id,
-            appl_property_type_buf,
-            &(
-                o_value));
-
-    return
-        e_status;
-
-} // s_set_buf()
 
 //
 //
@@ -385,101 +304,6 @@ appl_property_service::s_get_long(
         *(
             r_value) =
             o_value.i_value;
-    }
-
-    return
-        e_status;
-
-} // s_get_long()
-
-//
-//
-//
-enum appl_status
-appl_property_service::s_get_pfn(
-    struct appl_property_handle const * const
-        p_property_handle,
-    unsigned int const
-        i_id,
-    void * (* * r_value)(
-        void * const
-            p_args))
-{
-    enum appl_status
-        e_status;
-
-    class appl_property const * const
-        p_property =
-        appl_property::convert_const_handle(
-            p_property_handle);
-
-    union appl_property_value
-        o_value;
-
-    e_status =
-        p_property->v_get(
-            i_id,
-            appl_property_type_pfn,
-            &(
-                o_value));
-
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        *(
-            r_value) =
-            o_value.p_func;
-    }
-
-    return
-        e_status;
-
-} // s_get_pfn()
-
-//
-//
-//
-enum appl_status
-appl_property_service::s_get_buf(
-    struct appl_property_handle const * const
-        p_property_handle,
-    unsigned int const
-        i_id,
-    unsigned char const * * const
-        r_buf_min,
-    unsigned char const * * const
-        r_buf_max)
-{
-    enum appl_status
-        e_status;
-
-    class appl_property const * const
-        p_property =
-        appl_property::convert_const_handle(
-            p_property_handle);
-
-    union appl_property_value
-        o_value;
-
-    e_status =
-        p_property->v_get(
-            i_id,
-            appl_property_type_buf,
-            &(
-                o_value));
-
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        *(
-            r_buf_min) =
-            o_value.o_buf.p_buf_min;
-
-        *(
-            r_buf_max) =
-            o_value.o_buf.p_buf_max;
     }
 
     return

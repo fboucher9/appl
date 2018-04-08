@@ -44,8 +44,8 @@
 //
 struct appl_poll_table
 {
-    struct appl_buf
-        o_allocation;
+    void *
+        p_allocation;
 
     /* -- */
 
@@ -124,9 +124,9 @@ enum appl_status
 
     e_status =
         p_heap->v_alloc(
+            i_allocation_length,
             &(
-                p_poll_table->o_allocation),
-            i_allocation_length);
+                p_poll_table->p_allocation));
 
     if (
         appl_status_ok
@@ -134,7 +134,7 @@ enum appl_status
     {
         p_poll_table->a_nodes =
             static_cast<class appl_poll_node * *>(
-                p_poll_table->o_allocation.o_min.p_void);
+                p_poll_table->p_allocation);
 
         p_poll_table->a_events =
             static_cast<struct pollfd *>(
@@ -232,8 +232,7 @@ void
         m_context->m_heap;
 
     p_heap->v_free(
-        &(
-            p_poll_table->o_allocation));
+        p_poll_table->p_allocation);
 
 } // destroy_poll_table()
 

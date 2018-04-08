@@ -117,15 +117,20 @@ enum appl_status
     struct appl_address_descriptor
         o_address_descriptor;
 
+    struct appl_buf const *
+        p_name_buf;
+
     if (
         appl_status_ok
         == appl_address_property_get_name(
             p_property_handle,
             &(
-                o_address_descriptor.o_name.o_min.pc_uchar),
-            &(
-                o_address_descriptor.o_name.o_max.pc_uchar)))
+                p_name_buf)))
     {
+        o_address_descriptor.o_name =
+            *(
+                p_name_buf);
+
         o_address_descriptor.b_name =
             1;
     }

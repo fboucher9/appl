@@ -43,7 +43,7 @@ appl_property_set_ptr(
         p_property_handle,
     unsigned int const
         i_id,
-    void * const
+    void const * const
         p_value)
 {
     return
@@ -93,50 +93,6 @@ appl_property_set_long(
             i_value);
 
 } /* appl_property_set_long() */
-
-/*
-
-*/
-enum appl_status
-appl_property_set_pfn(
-    struct appl_property_handle * const
-        p_property_handle,
-    unsigned int const
-        i_id,
-    void * (* p_func)(
-        void * const
-            p_args))
-{
-    return
-        appl_property_service::s_set_pfn(
-            p_property_handle,
-            i_id,
-            p_func);
-
-} /* appl_property_set_pfn() */
-
-/*
-
-*/
-enum appl_status
-appl_property_set_buf(
-    struct appl_property_handle * const
-        p_property_handle,
-    unsigned int const
-        i_id,
-    unsigned char const * const
-        p_buf_min,
-    unsigned char const * const
-        p_buf_max)
-{
-    return
-        appl_property_service::s_set_buf(
-            p_property_handle,
-            i_id,
-            p_buf_min,
-            p_buf_max);
-
-} /* appl_property_set_buf() */
 
 /*
 
@@ -197,49 +153,5 @@ appl_property_get_long(
             r_value);
 
 } /* appl_property_get_long() */
-
-/*
-
-*/
-enum appl_status
-appl_property_get_pfn(
-    struct appl_property_handle const * const
-        p_property_handle,
-    unsigned int const
-        i_id,
-    void * (* * r_value)(
-        void * const
-            p_args))
-{
-    return
-        appl_property_service::s_get_pfn(
-            p_property_handle,
-            i_id,
-            r_value);
-
-} /* appl_property_get_pfn() */
-
-/*
-
-*/
-enum appl_status
-appl_property_get_buf(
-    struct appl_property_handle const * const
-        p_property_handle,
-    unsigned int const
-        i_id,
-    unsigned char const * * const
-        r_buf_min,
-    unsigned char const * * const
-        r_buf_max)
-{
-    return
-        appl_property_service::s_get_buf(
-            p_property_handle,
-            i_id,
-            r_buf_min,
-            r_buf_max);
-
-} /* appl_property_get_buf() */
 
 /* end-of-file: appl_property_handle.cpp */

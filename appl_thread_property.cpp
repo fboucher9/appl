@@ -138,10 +138,11 @@ appl_thread_property_set_callback(
 #endif /* #if defined APPL_DEBUG */
 
     return
-        appl_property_set_pfn(
+        appl_property_set_ptr(
             p_property_handle,
             appl_thread_property_id_callback,
-            p_thread_callback);
+            reinterpret_cast<void *>(
+                p_thread_callback));
 
 } /* appl_thread_property_set_callback() */
 
@@ -185,10 +186,11 @@ appl_thread_property_get_callback(
 #endif /* #if defined APPL_DEBUG */
 
     return
-        appl_property_get_pfn(
+        appl_property_get_ptr(
             p_property_handle,
             appl_thread_property_id_callback,
-            r_thread_callback);
+            reinterpret_cast<void * *>(
+                r_thread_callback));
 
 } /* appl_thread_property_get_callback() */
 
