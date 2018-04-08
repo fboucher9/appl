@@ -18,11 +18,17 @@
 
 struct appl_string_descriptor
 {
-    struct appl_buf const *
-        p_ref_buf;
+    unsigned char const *
+        p_buf_min;
+
+    unsigned char const *
+        p_buf_max;
 
     unsigned long int
         i_alloc_len;
+
+    unsigned long int
+        ul_padding[1u];
 
 }; /* struct appl_string_descriptor */
 
@@ -33,8 +39,10 @@ enum appl_status
     appl_string::s_create(
         class appl_context * const
             p_context,
-        struct appl_buf const * const
-            p_ref_buf,
+        unsigned char const * const
+            p_buf_min,
+        unsigned char const * const
+            p_buf_max,
         unsigned long int const
             i_alloc_len,
         class appl_string * * const
@@ -46,8 +54,11 @@ enum appl_status
     struct appl_string_descriptor
         o_string_descriptor;
 
-    o_string_descriptor.p_ref_buf =
-        p_ref_buf;
+    o_string_descriptor.p_buf_min =
+        p_buf_min;
+
+    o_string_descriptor.p_buf_max =
+        p_buf_max;
 
     o_string_descriptor.i_alloc_len =
         i_alloc_len;
@@ -73,70 +84,25 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_string::v_length(
-        unsigned long int * const
-            r_buf_len) const
+    appl_string::v_read(
+        unsigned char const * * const
+            r_buf_min,
+        unsigned char const * * const
+            r_buf_max) const
 {
     enum appl_status
         e_status;
 
     *(
-        r_buf_len) =
-        m_data_len;
+        r_buf_min) =
+        m_buf_min;
+
+    *(
+        r_buf_max) =
+        m_buf_cur;
 
     e_status =
         appl_status_ok;
-
-    return
-        e_status;
-
-} // v_length()
-
-//
-//
-//
-enum appl_status
-    appl_string::v_read(
-        struct appl_buf * const
-            p_buf) const
-{
-    enum appl_status
-        e_status;
-
-    if (
-        m_data_len)
-    {
-        unsigned long int
-            i_copy_len;
-
-        i_copy_len =
-            static_cast<unsigned long int>(
-                p_buf->o_max.pc_uchar
-                - p_buf->o_min.pc_uchar);
-
-        if (
-            i_copy_len > m_data_len)
-        {
-            i_copy_len =
-                m_data_len;
-        }
-
-        memcpy(
-            p_buf->o_min.p_uchar,
-            m_buf,
-            i_copy_len);
-
-        p_buf->o_min.p_uchar +=
-            i_copy_len;
-
-        e_status =
-            appl_status_ok;
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
-    }
 
     return
         e_status;
@@ -148,44 +114,43 @@ enum appl_status
 //
 enum appl_status
     appl_string::v_write(
-        struct appl_buf * const
-            p_buf)
+        unsigned char const * const
+            p_buf_min,
+        unsigned char const * const
+            p_buf_max)
 {
     enum appl_status
         e_status;
 
     if (
-        m_alloc_len > m_data_len)
+        m_buf_max > m_buf_cur)
     {
         unsigned long int
             i_copy_len;
 
         i_copy_len =
             static_cast<unsigned long int>(
-                p_buf->o_max.pc_uchar
-                - p_buf->o_min.pc_uchar);
+                p_buf_max
+                - p_buf_min);
 
         if (
             (
-                m_data_len
+                m_buf_cur
                 + i_copy_len)
-            > m_alloc_len)
+            > m_buf_max)
         {
             i_copy_len =
                 static_cast<unsigned long int>(
-                    m_alloc_len
-                    - m_data_len);
+                    m_buf_max
+                    - m_buf_cur);
         }
 
         memcpy(
-            m_buf + m_data_len,
-            p_buf->o_min.pc_uchar,
+            m_buf_cur,
+            p_buf_min,
             i_copy_len);
 
-        p_buf->o_min.pc_uchar +=
-            i_copy_len;
-
-        m_data_len +=
+        m_buf_cur +=
             i_copy_len;
 
         e_status =
@@ -259,9 +224,9 @@ struct appl_string_handle const *
 //
 appl_string::appl_string() :
     appl_object(),
-    m_buf(),
-    m_data_len(),
-    m_alloc_len()
+    m_buf_min(),
+    m_buf_cur(),
+    m_buf_max()
 {
 }
 
@@ -301,42 +266,24 @@ enum appl_status
     if (
         p_string_descriptor->i_alloc_len)
     {
-        m_alloc_len =
-            p_string_descriptor->i_alloc_len;
-
-        m_buf =
+        m_buf_min =
+        m_buf_cur =
             reinterpret_cast<unsigned char *>(
                 this + 1);
 
-        m_data_len =
-            static_cast<unsigned long int>(
-                p_string_descriptor->p_ref_buf->o_max.pc_uchar
-                - p_string_descriptor->p_ref_buf->o_min.pc_uchar);
-
-        if (
-            m_data_len > m_alloc_len)
-        {
-            m_data_len =
-                m_alloc_len;
-        }
-
-        memcpy(
-            m_buf,
-            p_string_descriptor->p_ref_buf->o_min.pc_void,
-            m_data_len);
+        m_buf_max =
+            m_buf_min + p_string_descriptor->i_alloc_len;
     }
     else
     {
-        m_buf =
-            p_string_descriptor->p_ref_buf->o_min.p_uchar;
+        m_buf_min =
+            const_cast<unsigned char *>(
+                p_string_descriptor->p_buf_min);
 
-        m_data_len =
-            static_cast<unsigned long int>(
-                p_string_descriptor->p_ref_buf->o_max.pc_uchar
-                - p_string_descriptor->p_ref_buf->o_min.pc_uchar);
-
-        m_alloc_len =
-            0;
+        m_buf_max =
+        m_buf_cur =
+            const_cast<unsigned char *>(
+                p_string_descriptor->p_buf_max);
     }
 
     return

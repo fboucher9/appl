@@ -36,8 +36,10 @@ class appl_string_service
         s_create(
             struct appl_object_handle * const
                 p_object_handle,
-            struct appl_buf const * const
-                p_ref_buf,
+            unsigned char const * const
+                p_buf_min,
+            unsigned char const * const
+                p_buf_max,
             unsigned long int const
                 i_alloc_len,
             struct appl_string_handle * * const
@@ -45,27 +47,23 @@ class appl_string_service
 
         static
         enum appl_status
-        s_length(
-            struct appl_string_handle const * const
-                p_string_handle,
-            unsigned long int * const
-                r_buf_len);
-
-        static
-        enum appl_status
         s_read(
             struct appl_string_handle const * const
                 p_string_handle,
-            struct appl_buf * const
-                p_buf);
+            unsigned char const * * const
+                r_buf_min,
+            unsigned char const * * const
+                r_buf_max);
 
         static
         enum appl_status
         s_write(
             struct appl_string_handle * const
                 p_string_handle,
-            struct appl_buf * const
-                p_buf);
+            unsigned char const * const
+                p_buf_min,
+            unsigned char const * const
+                p_buf_max);
 
 }; // class appl_string_service
 

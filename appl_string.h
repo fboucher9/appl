@@ -16,9 +16,6 @@
 #error include appl_object.h before
 #endif /* #if ! defined INC_APPL_OBJECT_H */
 
-/* Predefine */
-struct appl_buf;
-
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -42,8 +39,10 @@ class appl_string : public appl_object
             s_create(
                 class appl_context * const
                     p_context,
-                struct appl_buf const * const
-                    p_ref_buf,
+                unsigned char const * const
+                    p_buf_min,
+                unsigned char const * const
+                    p_buf_max,
                 unsigned long int const
                     i_alloc_len,
                 class appl_string * * const
@@ -51,21 +50,19 @@ class appl_string : public appl_object
 
         virtual
         enum appl_status
-            v_length(
-                unsigned long int * const
-                    r_buf_len) const;
-
-        virtual
-        enum appl_status
             v_read(
-                struct appl_buf * const
-                    p_buf) const;
+                unsigned char const * * const
+                    r_buf_min,
+                unsigned char const * * const
+                    r_buf_max) const;
 
         virtual
         enum appl_status
             v_write(
-                struct appl_buf * const
-                    p_buf);
+                unsigned char const * const
+                    p_buf_min,
+                unsigned char const * const
+                    p_buf_max);
 
         static
         class appl_string const *
@@ -88,16 +85,16 @@ class appl_string : public appl_object
     protected:
 
         unsigned char *
-            m_buf;
+            m_buf_min;
 
-        unsigned long int
-            m_data_len;
+        unsigned char *
+            m_buf_cur;
 
-        unsigned long int
-            m_alloc_len;
+        unsigned char *
+            m_buf_max;
 
-        unsigned long int
-            ul_padding[1u];
+        void *
+            pv_padding[1u];
 
         appl_string();
 

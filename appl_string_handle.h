@@ -10,7 +10,7 @@ Comments:
 
     -   Support for two types of strings
         -   Static constant string (i_alloc_len = 0)
-        -   Dynamic writeable string with initial content (copied from ref)
+        -   Dynamic writeable string with initial empty content
 
 */
 
@@ -25,8 +25,6 @@ Comments:
 #if ! defined INC_APPL_OBJECT_HANDLE_H
 #error include appl_object_handle.h before
 #endif /* #if ! defined INC_APPL_OBJECT_HANDLE_H */
-
-struct appl_buf;
 
 struct appl_string_handle;
 
@@ -45,33 +43,39 @@ enum appl_status
 appl_string_create(
     struct appl_object_handle * const
         p_object_handle,
-    struct appl_buf const * const
-        p_ref_buf,
     unsigned long int const
         i_alloc_len,
     struct appl_string_handle * * const
         r_string_handle);
 
 enum appl_status
-appl_string_length(
-    struct appl_string_handle const * const
-        p_string_handle,
-    unsigned long int * const
-        r_buf_len);
+appl_string_create_const(
+    struct appl_object_handle * const
+        p_object_handle,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    struct appl_string_handle * * const
+        r_string_handle);
 
 enum appl_status
 appl_string_read(
     struct appl_string_handle const * const
         p_string_handle,
-    struct appl_buf * const
-        p_buf);
+    unsigned char const * * const
+        r_buf_min,
+    unsigned char const * * const
+        r_buf_max);
 
 enum appl_status
 appl_string_write(
     struct appl_string_handle * const
         p_string_handle,
-    struct appl_buf * const
-        p_buf);
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max);
 
 #if defined __cplusplus
 } /* extern "C" */

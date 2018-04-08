@@ -19,8 +19,6 @@ enum appl_status
 appl_string_create(
     struct appl_object_handle * const
         p_object_handle,
-    struct appl_buf const * const
-        p_ref_buf,
     unsigned long int const
         i_alloc_len,
     struct appl_string_handle * * const
@@ -29,7 +27,10 @@ appl_string_create(
     return
         appl_string_service::s_create(
             p_object_handle,
-            p_ref_buf,
+            (unsigned char const *)(
+                0),
+            (unsigned char const *)(
+                0),
             i_alloc_len,
             r_string_handle);
 
@@ -39,18 +40,25 @@ appl_string_create(
 
 */
 enum appl_status
-appl_string_length(
-    struct appl_string_handle const * const
-        p_string_handle,
-    unsigned long int * const
-        r_buf_len)
+appl_string_create_const(
+    struct appl_object_handle * const
+        p_object_handle,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    struct appl_string_handle * * const
+        r_string_handle)
 {
     return
-        appl_string_service::s_length(
-            p_string_handle,
-            r_buf_len);
+        appl_string_service::s_create(
+            p_object_handle,
+            p_buf_min,
+            p_buf_max,
+            0ul,
+            r_string_handle);
 
-} /* length() */
+} /* create_const() */
 
 /*
 
@@ -59,13 +67,16 @@ enum appl_status
 appl_string_read(
     struct appl_string_handle const * const
         p_string_handle,
-    struct appl_buf * const
-        p_buf)
+    unsigned char const * * const
+        r_buf_min,
+    unsigned char const * * const
+        r_buf_max)
 {
     return
         appl_string_service::s_read(
             p_string_handle,
-            p_buf);
+            r_buf_min,
+            r_buf_max);
 
 } /* read() */
 
@@ -76,13 +87,16 @@ enum appl_status
 appl_string_write(
     struct appl_string_handle * const
         p_string_handle,
-    struct appl_buf * const
-        p_buf)
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max)
 {
     return
         appl_string_service::s_write(
             p_string_handle,
-            p_buf);
+            p_buf_min,
+            p_buf_max);
 
 } /* write() */
 

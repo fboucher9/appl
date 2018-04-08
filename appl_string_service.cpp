@@ -27,8 +27,10 @@ enum appl_status
 appl_string_service::s_create(
     struct appl_object_handle * const
         p_object_handle,
-    struct appl_buf const * const
-        p_ref_buf,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
     unsigned long int const
         i_alloc_len,
     struct appl_string_handle * * const
@@ -47,7 +49,8 @@ appl_string_service::s_create(
     return
         appl_string::s_create(
             p_context,
-            p_ref_buf,
+            p_buf_min,
+            p_buf_max,
             i_alloc_len,
             reinterpret_cast<class appl_string * *>(
                 r_string_handle));
@@ -58,32 +61,13 @@ appl_string_service::s_create(
 //
 //
 enum appl_status
-appl_string_service::s_length(
-    struct appl_string_handle const * const
-        p_string_handle,
-    unsigned long int * const
-        r_buf_len)
-{
-    class appl_string const * const
-        p_string =
-        appl_string::convert_const_handle(
-            p_string_handle);
-
-    return
-        p_string->v_length(
-            r_buf_len);
-
-} // s_length()
-
-//
-//
-//
-enum appl_status
 appl_string_service::s_read(
     struct appl_string_handle const * const
         p_string_handle,
-    struct appl_buf * const
-        p_buf)
+    unsigned char const * * const
+        r_buf_min,
+    unsigned char const * * const
+        r_buf_max)
 {
     class appl_string const * const
         p_string =
@@ -92,7 +76,8 @@ appl_string_service::s_read(
 
     return
         p_string->v_read(
-            p_buf);
+            r_buf_min,
+            r_buf_max);
 
 } // s_read()
 
@@ -103,8 +88,10 @@ enum appl_status
 appl_string_service::s_write(
     struct appl_string_handle * const
         p_string_handle,
-    struct appl_buf * const
-        p_buf)
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max)
 {
     class appl_string * const
         p_string =
@@ -113,7 +100,8 @@ appl_string_service::s_write(
 
     return
         p_string->v_write(
-            p_buf);
+            p_buf_min,
+            p_buf_max);
 
 } // s_write()
 
