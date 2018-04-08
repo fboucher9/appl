@@ -64,6 +64,12 @@ class appl_string : public appl_object
                 unsigned char const * const
                     p_buf_max);
 
+        virtual
+        enum appl_status
+            v_dup(
+                class appl_string * * const
+                    r_string) const;
+
         static
         class appl_string const *
             convert_const_handle(

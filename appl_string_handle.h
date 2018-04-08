@@ -77,6 +77,13 @@ appl_string_write(
     unsigned char const * const
         p_buf_max);
 
+enum appl_status
+appl_string_dup(
+    struct appl_string_handle const * const
+        p_string_handle,
+    struct appl_string_handle * * const
+        r_string_handle);
+
 #if defined __cplusplus
 } /* extern "C" */
 #endif /* #if defined __cplusplus */

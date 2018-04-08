@@ -18,6 +18,8 @@
 
 #include "appl_object_handle.h"
 
+#include "appl_string_handle.h"
+
 #include "appl_context.h"
 
 //
@@ -104,5 +106,33 @@ appl_string_service::s_write(
             p_buf_max);
 
 } // s_write()
+
+//
+//
+//
+enum appl_status
+appl_string_service::s_dup(
+    struct appl_string_handle const * const
+        p_string_handle,
+    struct appl_string_handle * * const
+        r_string_handle)
+{
+    enum appl_status
+        e_status;
+
+    class appl_string const * const
+        p_string =
+        appl_string::convert_const_handle(
+            p_string_handle);
+
+    e_status =
+        p_string->v_dup(
+            reinterpret_cast<class appl_string * *>(
+                r_string_handle));
+
+    return
+        e_status;
+
+} // s_dup()
 
 /* end-of-file: appl_string_service.cpp */

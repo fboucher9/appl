@@ -65,6 +65,14 @@ class appl_string_service
             unsigned char const * const
                 p_buf_max);
 
+        static
+        enum appl_status
+        s_dup(
+            struct appl_string_handle const * const
+                p_string_handle,
+            struct appl_string_handle * * const
+                r_string_handle);
+
 }; // class appl_string_service
 
 /* end-of-file: appl_string_service.h */

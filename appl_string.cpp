@@ -170,6 +170,64 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_string::v_dup(
+        class appl_string * * const
+            r_string) const
+{
+    enum appl_status
+        e_status;
+
+    class appl_string *
+        p_new_string;
+
+    e_status =
+        appl_string::s_create(
+            m_context,
+            static_cast<unsigned char const *>(
+                0),
+            static_cast<unsigned char const *>(
+                0),
+            static_cast<unsigned long int>(
+                m_buf_max
+                - m_buf_min),
+            &(
+                p_new_string));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_new_string->v_write(
+                m_buf_min,
+                m_buf_cur);
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            *(
+                r_string) =
+                p_new_string;
+        }
+
+        if (
+            appl_status_ok
+            != e_status)
+        {
+            p_new_string->destroy();
+        }
+    }
+
+    return
+        e_status;
+
+} // v_dup()
+
+//
+//
+//
 class appl_string const *
     appl_string::convert_const_handle(
         struct appl_string_handle const * const

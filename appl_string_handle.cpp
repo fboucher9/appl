@@ -100,4 +100,21 @@ appl_string_write(
 
 } /* write() */
 
+/*
+
+*/
+enum appl_status
+appl_string_dup(
+    struct appl_string_handle const * const
+        p_string_handle,
+    struct appl_string_handle * * const
+        r_string_handle)
+{
+    return
+        appl_string_service::s_dup(
+            p_string_handle,
+            r_string_handle);
+
+} /* dup() */
+
 /* end-of-file: appl_string_handle.cpp */
