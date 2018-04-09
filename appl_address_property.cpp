@@ -113,8 +113,8 @@ enum appl_status
 appl_address_property_set_name(
     struct appl_property_handle * const
         p_property_handle,
-    struct appl_buf const * const
-        p_name_buf)
+    struct appl_string_handle const * const
+        p_name_handle)
 {
 #if defined APPL_DEBUG
     appl_address_property_assert_guid(
@@ -125,7 +125,7 @@ appl_address_property_set_name(
         appl_property_set_ptr(
             p_property_handle,
             appl_address_property_id_name,
-            p_name_buf);
+            p_name_handle);
 
 } /* appl_address_property_set_name() */
 
@@ -160,7 +160,7 @@ enum appl_status
 appl_address_property_get_name(
     struct appl_property_handle const * const
         p_property_handle,
-    struct appl_buf const * * const
+    struct appl_string_handle const * * const
         r_name_buf)
 {
 #if defined APPL_DEBUG

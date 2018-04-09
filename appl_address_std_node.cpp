@@ -45,6 +45,10 @@ Description:
 
 #include "appl_property.h"
 
+#include "appl_object_handle.h"
+
+#include "appl_string_handle.h"
+
 //
 //
 //
@@ -117,19 +121,22 @@ enum appl_status
     struct appl_address_descriptor
         o_address_descriptor;
 
-    struct appl_buf const *
-        p_name_buf;
+    struct appl_string_handle const *
+        p_name_handle;
 
     if (
         appl_status_ok
         == appl_address_property_get_name(
             p_property_handle,
             &(
-                p_name_buf)))
+                p_name_handle)))
     {
-        o_address_descriptor.o_name =
-            *(
-                p_name_buf);
+        appl_string_read(
+            p_name_handle,
+            &(
+                o_address_descriptor.o_name.o_min.pc_uchar),
+            &(
+                o_address_descriptor.o_name.o_max.pc_uchar));
 
         o_address_descriptor.b_name =
             1;

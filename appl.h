@@ -42,6 +42,8 @@ Description:
 
 #define APPL_CONFIG_WITH_PROPERTY
 
+#define APPL_CONFIG_WITH_STRING
+
 #include "appl_status.h"
 
 #include "appl_buf.h"
@@ -67,6 +69,12 @@ Description:
 #include "appl_heap_handle.h"
 
 #endif /* #if defined(APPL_CONFIG_WITH_HEAP) */
+
+#if defined APPL_CONFIG_WITH_STRING
+
+#include "appl_string_handle.h"
+
+#endif /* #if defined APPL_CONFIG_WITH_STRING */
 
 #if defined APPL_CONFIG_WITH_PROPERTY
 

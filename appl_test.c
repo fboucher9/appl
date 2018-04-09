@@ -556,8 +556,8 @@ appl_test_socket(
         '0'
     };
 
-    static struct appl_buf
-        g_name_buf;
+    struct appl_string_handle *
+        p_name_handle;
 
     enum appl_status
         e_status;
@@ -569,11 +569,13 @@ appl_test_socket(
         struct appl_property_handle *
             p_address_descriptor;
 
-        g_name_buf.o_min.pc_uchar =
-            g_name;
-
-        g_name_buf.o_max.pc_uchar =
-            g_name + sizeof(g_name);
+        appl_string_create_const(
+            &(
+                p_context_handle->o_object_handle),
+            g_name,
+            g_name + sizeof(g_name),
+            &(
+                p_name_handle));
 
         appl_address_property_create(
             p_context_handle,
@@ -582,8 +584,7 @@ appl_test_socket(
 
         appl_address_property_set_name(
             p_address_descriptor,
-            &(
-                g_name_buf));
+            p_name_handle);
 
         appl_address_property_set_port(
             p_address_descriptor,
@@ -599,6 +600,10 @@ appl_test_socket(
         appl_object_destroy(
             &(
                 p_address_descriptor->o_object_handle));
+
+        appl_object_destroy(
+            &(
+                p_name_handle->o_object_handle));
     }
 
     if (

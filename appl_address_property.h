@@ -11,6 +11,8 @@
 
 #define INC_APPL_ADDRESS_PROPERTY_H
 
+struct appl_string_handle;
+
 struct appl_property_handle;
 
 #if defined __cplusplus
@@ -28,8 +30,8 @@ enum appl_status
 appl_address_property_set_name(
     struct appl_property_handle * const
         p_property_handle,
-    struct appl_buf const * const
-        p_name_buf);
+    struct appl_string_handle const * const
+        p_name_handle);
 
 enum appl_status
 appl_address_property_set_port(
@@ -42,8 +44,8 @@ enum appl_status
 appl_address_property_get_name(
     struct appl_property_handle const * const
         p_property_handle,
-    struct appl_buf const * * const
-        r_name_buf);
+    struct appl_string_handle const * * const
+        r_name_handle);
 
 enum appl_status
 appl_address_property_get_port(
