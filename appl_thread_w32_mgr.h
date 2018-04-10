@@ -11,6 +11,8 @@
 
 #define INC_APPL_THREAD_W32_MGR_H
 
+struct appl_thread_property_handle;
+
 /* Assert compiler */
 #if !defined(__cplusplus)
 #error use c++ compiler
@@ -25,6 +27,8 @@
 #if !defined(INC_APPL_THREAD_MGR_H)
 #error include appl_thread_mgr.h before
 #endif /* #if !defined(INC_APPL_THREAD_MGR_H) */
+
+class appl_thread_w32_mgr;
 
 //
 //
@@ -69,8 +73,8 @@ class appl_thread_w32_mgr :
             v_create(
                 class appl_context * const
                     p_context,
-                class appl_property const * const
-                    p_property,
+                struct appl_thread_property_handle const * const
+                    p_thread_property_handle,
                 class appl_thread_node * * const
                     r_thread_node);
 

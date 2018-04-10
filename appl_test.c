@@ -367,7 +367,7 @@ static void appl_test_thread(
     struct appl_event_handle *
         p_event_handle;
 
-    struct appl_property_handle *
+    struct appl_thread_property_handle *
         p_property_handle;
 
     struct appl_mutex_descriptor
@@ -425,7 +425,8 @@ static void appl_test_thread(
 
     e_status =
         appl_thread_create(
-            p_context_handle,
+            &(
+                p_context_handle->o_object_handle),
             p_property_handle,
             &(
                 p_thread_handle));
@@ -524,7 +525,7 @@ static void appl_test_thread(
 
     appl_object_destroy(
         &(
-            p_property_handle->o_object_handle));
+            p_property_handle->o_property_handle.o_object_handle));
 
     appl_object_destroy(
         &(
@@ -699,21 +700,22 @@ appl_test_socket(
                             p_socket_descriptor,
                             &(
                                 p_socket_handle));
+
+                    if (
+                        appl_status_ok
+                        == e_status)
+                    {
+                        appl_object_destroy(
+                            &(
+                                p_socket_handle->o_object_handle));
+                    }
+
                 }
 
                 appl_object_destroy(
                     &(
                         p_socket_descriptor->o_object_handle));
             }
-        }
-
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            appl_object_destroy(
-                &(
-                    p_socket_handle->o_object_handle));
         }
 
         appl_object_destroy(

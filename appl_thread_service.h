@@ -13,7 +13,7 @@
 
 struct appl_thread_handle;
 
-struct appl_property_handle;
+struct appl_thread_property_handle;
 
 struct appl_context_handle;
 
@@ -36,8 +36,8 @@ class appl_thread_service
         s_create(
             struct appl_context_handle * const
                 p_context_handle,
-            struct appl_property_handle const * const
-                p_property_handle,
+            struct appl_thread_property_handle const * const
+                p_thread_property_handle,
             struct appl_thread_handle * * const
                 r_thread_handle);
 

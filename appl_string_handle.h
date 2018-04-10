@@ -129,6 +129,13 @@ appl_string_create_dup_object_n(
         r_string_handle);
 
 enum appl_status
+appl_string_length(
+    struct appl_string_handle const * const
+        p_string_handle,
+    unsigned long int * const
+        r_length);
+
+enum appl_status
 appl_string_read(
     struct appl_string_handle const * const
         p_string_handle,

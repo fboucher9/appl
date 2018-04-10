@@ -267,7 +267,7 @@ enum appl_status
                 i_abstime / 1000000000ul);
 
         o_abstime.tv_nsec =
-            static_cast<unsigned long int>(
+            static_cast<signed long int>(
                 i_abstime % 1000000000ul);
 
         int

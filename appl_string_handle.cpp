@@ -350,6 +350,49 @@ appl_string_create_dup_object_n(
 
 */
 enum appl_status
+appl_string_length(
+    struct appl_string_handle const * const
+        p_string_handle,
+    unsigned long int * const
+        r_length)
+{
+    enum appl_status
+        e_status;
+
+    unsigned char const *
+        p_buf_min;
+
+    unsigned char const *
+        p_buf_max;
+
+    e_status =
+        appl_string_service::s_read(
+            p_string_handle,
+            &(
+                p_buf_min),
+            &(
+                p_buf_max));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_length) =
+            static_cast<unsigned long int>(
+                p_buf_max
+                - p_buf_min);
+    }
+
+    return
+        e_status;
+
+} /* length() */
+
+/*
+
+*/
+enum appl_status
 appl_string_read(
     struct appl_string_handle const * const
         p_string_handle,

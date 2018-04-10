@@ -22,11 +22,11 @@
 
 #include "appl_thread_descriptor.h"
 
+#include "appl_object_handle.h"
+
+#include "appl_property_handle.h"
+
 #include "appl_thread_property.h"
-
-#include "appl_property_types.h"
-
-#include "appl_property.h"
 
 //
 //
@@ -35,8 +35,8 @@ enum appl_status
     appl_thread_w32_node::create_instance(
         class appl_context * const
             p_context,
-        class appl_property const * const
-            p_property,
+        struct appl_thread_property_handle const * const
+            p_thread_property_handle,
         class appl_thread_node * * const
             r_thread_node)
 {
@@ -50,7 +50,7 @@ enum appl_status
                 class appl_thread_w32_node),
             &(
                 appl_thread_w32_node::placement_new),
-            p_property,
+            p_thread_property_handle,
             r_thread_node);
 
     return
@@ -235,21 +235,21 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_property_handle const * const
-        p_property_handle =
-        static_cast<struct appl_property_handle const *>(
+    struct appl_thread_property_handle const * const
+        p_thread_property_handle =
+        static_cast<struct appl_thread_property_handle const *>(
             p_descriptor);
 
     struct appl_thread_descriptor
         o_thread_descriptor;
 
     appl_thread_property_get_callback(
-        p_property_handle,
+        p_thread_property_handle,
         &(
             o_thread_descriptor.p_entry));
 
     appl_thread_property_get_context(
-        p_property_handle,
+        p_thread_property_handle,
         &(
             o_thread_descriptor.p_context));
 

@@ -19,7 +19,7 @@
 #endif /* #if defined APPL_DEBUG */
 
 /* Unique identifier for appl_socket_property structure */
-#define APPL_SOCKET_PROPERTY_GUID ((unsigned long int)(0x77ca3c76ul))
+#define APPL_SOCKET_PROPERTY_GUID (0x77ca3c76ul)
 
 /* Socket option unique identifiers */
 enum appl_socket_option_id

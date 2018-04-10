@@ -39,6 +39,9 @@ struct appl_thread_descriptor
     unsigned long int
         i_stack_size;
 
+    unsigned long int
+        ul_padding[1u];
+
 }; /* struct appl_thread_descriptor */
 
 /* end-of-file: appl_thread_descriptor.h */

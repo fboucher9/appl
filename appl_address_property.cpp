@@ -12,7 +12,7 @@
 
 #include "appl_property_handle.h"
 
-#define APPL_ADDRESS_PROPERTY_GUID (unsigned long int)(0xe0bfd095ul)
+#define APPL_ADDRESS_PROPERTY_GUID (0xe0bfd095ul)
 
 enum appl_address_property_id
 {

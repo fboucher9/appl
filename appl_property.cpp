@@ -363,8 +363,7 @@ enum appl_status
                 appl_property_type_default;
 
             a_nodes[i].o_value.p_value =
-                (void *)(
-                    0);
+                0;
         }
     }
 

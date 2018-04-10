@@ -15,7 +15,7 @@ Description:
 
 #define INC_APPL_THREAD_W32_NODE_H
 
-struct appl_thread_descriptor;
+struct appl_thread_property_handle;
 
 /* Assert compiler */
 #if !defined(__cplusplus)
@@ -48,8 +48,8 @@ class appl_thread_w32_node : public appl_thread_node
             create_instance(
                 class appl_context * const
                     p_context,
-                class appl_property const * const
-                    p_property,
+                struct appl_thread_property_handle const * const
+                    p_thread_property_handle,
                 class appl_thread_node * * const
                     r_thread_node);
 

@@ -24,6 +24,12 @@
 
 #include "appl_property.h"
 
+#include "appl_object_handle.h"
+
+#include "appl_property_handle.h"
+
+#include "appl_thread_property.h"
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -36,8 +42,8 @@ enum appl_status
 appl_thread_service::s_create(
     struct appl_context_handle * const
         p_context_handle,
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_thread_property_handle const * const
+        p_thread_property_handle,
     struct appl_thread_handle * * const
         r_thread_handle)
 {
@@ -48,11 +54,6 @@ appl_thread_service::s_create(
         p_context =
         appl_context::convert_handle(
             p_context_handle);
-
-    class appl_property const * const
-        p_property =
-        appl_property::convert_const_handle(
-            p_property_handle);
 
     class appl_thread_mgr *
         p_thread_mgr;
@@ -66,7 +67,7 @@ appl_thread_service::s_create(
     e_status =
         p_thread_mgr->v_create(
             p_context,
-            p_property,
+            p_thread_property_handle,
             &(
                 p_thread_node));
 

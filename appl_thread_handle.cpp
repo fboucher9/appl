@@ -17,17 +17,22 @@
 */
 enum appl_status
 appl_thread_create(
-    struct appl_context_handle * const
-        p_context_handle,
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_object_handle const * const
+        p_object_handle,
+    struct appl_thread_property_handle const * const
+        p_thread_property_handle,
     struct appl_thread_handle * * const
         r_thread_handle)
 {
+    struct appl_context_handle * const
+        p_context_handle =
+        appl_object_get_context_handle(
+            p_object_handle);
+
     return
         appl_thread_service::s_create(
             p_context_handle,
-            p_property_handle,
+            p_thread_property_handle,
             r_thread_handle);
 
 } /* appl_thread_create() */
