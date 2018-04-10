@@ -30,7 +30,8 @@ appl_context::appl_context() :
     m_poll_mgr(),
     m_clock(),
     m_event_mgr(),
-    m_socket_mgr()
+    m_socket_mgr(),
+    m_env()
 {
 }
 

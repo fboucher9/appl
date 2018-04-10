@@ -46,6 +46,8 @@ class appl_event_mgr;
 
 class appl_socket_mgr;
 
+class appl_env;
+
 //
 //
 //
@@ -84,6 +86,9 @@ class appl_context : public appl_object
 
         class appl_socket_mgr *
             m_socket_mgr;
+
+        class appl_env *
+            m_env;
 
         static
         class appl_context *

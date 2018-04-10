@@ -44,7 +44,7 @@ class appl_env : public appl_object
 
         virtual
         enum appl_status
-            s_set(
+            v_set(
                 unsigned char const * const
                     p_name_min,
                 unsigned char const * const
