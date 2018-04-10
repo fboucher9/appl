@@ -16,6 +16,8 @@
 
 #include "appl_context.h"
 
+#include "appl_object_handle.h"
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -26,8 +28,8 @@
 //
 enum appl_status
 appl_clock_service::s_read(
-    struct appl_context_handle * const
-        p_context_handle,
+    struct appl_object_handle const * const
+        p_object_handle,
     unsigned long int const
         i_time_freq,
     unsigned long int * const
@@ -35,6 +37,11 @@ appl_clock_service::s_read(
 {
     enum appl_status
         e_status;
+
+    struct appl_context_handle * const
+        p_context_handle =
+        appl_object_get_context_handle(
+            p_object_handle);
 
     class appl_context * const
         p_context =
@@ -60,8 +67,8 @@ appl_clock_service::s_read(
 //
 enum appl_status
 appl_clock_service::s_delay(
-    struct appl_context_handle * const
-        p_context_handle,
+    struct appl_object_handle const * const
+        p_object_handle,
     unsigned long int const
         i_time_freq,
     unsigned long int const
@@ -69,6 +76,11 @@ appl_clock_service::s_delay(
 {
     enum appl_status
         e_status;
+
+    struct appl_context_handle * const
+        p_context_handle =
+        appl_object_get_context_handle(
+            p_object_handle);
 
     class appl_context * const
         p_context =

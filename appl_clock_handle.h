@@ -16,7 +16,7 @@
 #error include appl_status.h before
 #endif /* #if ! defined INC_APPL_STATUS_H */
 
-struct appl_context_handle;
+struct appl_object_handle;
 
 #if defined(__cplusplus)
 extern "C" {
@@ -24,8 +24,8 @@ extern "C" {
 
 enum appl_status
 appl_clock_read(
-    struct appl_context_handle * const
-        p_context_handle,
+    struct appl_object_handle const * const
+        p_object_handle,
     unsigned long int const
         i_time_freq,
     unsigned long int * const
@@ -33,8 +33,8 @@ appl_clock_read(
 
 enum appl_status
 appl_clock_delay(
-    struct appl_context_handle * const
-        p_context_handle,
+    struct appl_object_handle const * const
+        p_object_handle,
     unsigned long int const
         i_time_freq,
     unsigned long int const
