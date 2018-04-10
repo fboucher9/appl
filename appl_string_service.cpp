@@ -27,12 +27,8 @@
 //
 enum appl_status
 appl_string_service::s_create(
-    struct appl_object_handle * const
+    struct appl_object_handle const * const
         p_object_handle,
-    unsigned char const * const
-        p_buf_min,
-    unsigned char const * const
-        p_buf_max,
     unsigned long int const
         i_alloc_len,
     struct appl_string_handle * * const
@@ -51,9 +47,41 @@ appl_string_service::s_create(
     return
         appl_string::s_create(
             p_context,
+            i_alloc_len,
+            reinterpret_cast<class appl_string * *>(
+                r_string_handle));
+
+} // s_create()
+
+//
+//
+//
+enum appl_status
+appl_string_service::s_create_ref(
+    struct appl_object_handle const * const
+        p_object_handle,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    struct appl_string_handle * * const
+        r_string_handle)
+{
+    struct appl_context_handle * const
+        p_context_handle =
+        appl_object_get_context_handle(
+            p_object_handle);
+
+    class appl_context * const
+        p_context =
+        appl_context::convert_handle(
+            p_context_handle);
+
+    return
+        appl_string::s_create_ref(
+            p_context,
             p_buf_min,
             p_buf_max,
-            i_alloc_len,
             reinterpret_cast<class appl_string * *>(
                 r_string_handle));
 
@@ -106,33 +134,5 @@ appl_string_service::s_write(
             p_buf_max);
 
 } // s_write()
-
-//
-//
-//
-enum appl_status
-appl_string_service::s_dup(
-    struct appl_string_handle const * const
-        p_string_handle,
-    struct appl_string_handle * * const
-        r_string_handle)
-{
-    enum appl_status
-        e_status;
-
-    class appl_string const * const
-        p_string =
-        appl_string::convert_const_handle(
-            p_string_handle);
-
-    e_status =
-        p_string->v_dup(
-            reinterpret_cast<class appl_string * *>(
-                r_string_handle));
-
-    return
-        e_status;
-
-} // s_dup()
 
 /* end-of-file: appl_string_service.cpp */

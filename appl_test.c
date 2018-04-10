@@ -59,19 +59,22 @@ appl_test_sleep_msec(
         i_time_after;
 
     appl_clock_read(
-        p_context_handle,
+        &(
+            p_context_handle->o_object_handle),
         1000ul,
         &(
             i_time_before));
 
     e_status =
         appl_clock_delay(
-            p_context_handle,
+            &(
+                p_context_handle->o_object_handle),
             1000ul,
             i_msec_count);
 
     appl_clock_read(
-        p_context_handle,
+        &(
+            p_context_handle->o_object_handle),
         1000ul,
         &(
             i_time_after));
@@ -569,7 +572,7 @@ appl_test_socket(
         struct appl_property_handle *
             p_address_descriptor;
 
-        appl_string_create_const(
+        appl_string_create_ref_buffer(
             &(
                 p_context_handle->o_object_handle),
             g_name,

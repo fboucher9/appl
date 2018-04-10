@@ -41,7 +41,7 @@ extern "C" {
 
 enum appl_status
 appl_string_create(
-    struct appl_object_handle * const
+    struct appl_object_handle const * const
         p_object_handle,
     unsigned long int const
         i_alloc_len,
@@ -49,13 +49,82 @@ appl_string_create(
         r_string_handle);
 
 enum appl_status
-appl_string_create_const(
-    struct appl_object_handle * const
+appl_string_create_ref_buffer(
+    struct appl_object_handle const * const
         p_object_handle,
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
         p_buf_max,
+    struct appl_string_handle * * const
+        r_string_handle);
+
+enum appl_status
+appl_string_create_ref_buffer_n(
+    struct appl_object_handle const * const
+        p_object_handle,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    unsigned long int const
+        i_count,
+    struct appl_string_handle * * const
+        r_string_handle);
+
+enum appl_status
+appl_string_create_ref_object(
+    struct appl_string_handle const * const
+        p_ref_string_handle,
+    struct appl_string_handle * * const
+        r_string_handle);
+
+enum appl_status
+appl_string_create_ref_object_n(
+    struct appl_string_handle const * const
+        p_ref_string_handle,
+    unsigned long int const
+        i_count,
+    struct appl_string_handle * * const
+        r_string_handle);
+
+enum appl_status
+appl_string_create_dup_buffer(
+    struct appl_object_handle const * const
+        p_object_handle,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    struct appl_string_handle * * const
+        r_string_handle);
+
+enum appl_status
+appl_string_create_dup_buffer_n(
+    struct appl_object_handle const * const
+        p_object_handle,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    unsigned long int const
+        i_count,
+    struct appl_string_handle * * const
+        r_string_handle);
+
+enum appl_status
+appl_string_create_dup_object(
+    struct appl_string_handle const * const
+        p_ref_string_handle,
+    struct appl_string_handle * * const
+        r_string_handle);
+
+enum appl_status
+appl_string_create_dup_object_n(
+    struct appl_string_handle const * const
+        p_ref_string_handle,
+    unsigned long int const
+        i_count,
     struct appl_string_handle * * const
         r_string_handle);
 
@@ -69,7 +138,14 @@ appl_string_read(
         r_buf_max);
 
 enum appl_status
-appl_string_write(
+appl_string_write_char(
+    struct appl_string_handle * const
+        p_string_handle,
+    unsigned char const
+        i_value);
+
+enum appl_status
+appl_string_write_buffer(
     struct appl_string_handle * const
         p_string_handle,
     unsigned char const * const
@@ -78,11 +154,103 @@ appl_string_write(
         p_buf_max);
 
 enum appl_status
-appl_string_dup(
+appl_string_write_buffer_n(
+    struct appl_string_handle * const
+        p_string_handle,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    unsigned long int const
+        i_count);
+
+enum appl_status
+appl_string_write_object(
+    struct appl_string_handle * const
+        p_string_handle,
+    struct appl_string_handle const * const
+        p_ref_string_handle);
+
+enum appl_status
+appl_string_write_object_n(
+    struct appl_string_handle * const
+        p_string_handle,
+    struct appl_string_handle const * const
+        p_ref_string_handle,
+    unsigned long int const
+        i_count);
+
+enum appl_status
+appl_string_compare_buffer(
     struct appl_string_handle const * const
         p_string_handle,
-    struct appl_string_handle * * const
-        r_string_handle);
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max);
+
+enum appl_status
+appl_string_compare_buffer_n(
+    struct appl_string_handle const * const
+        p_string_handle,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    unsigned long int const
+        i_compare_len);
+
+enum appl_status
+appl_string_compare_object(
+    struct appl_string_handle const * const
+        p_string_handle,
+    struct appl_string_handle const * const
+        p_ref_string_handle);
+
+enum appl_status
+appl_string_compare_object_n(
+    struct appl_string_handle const * const
+        p_string_handle,
+    struct appl_string_handle const * const
+        p_ref_string_handle,
+    unsigned long int const
+        i_compare_len);
+
+enum appl_status
+appl_string_case_compare_buffer(
+    struct appl_string_handle const * const
+        p_string_handle,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max);
+
+enum appl_status
+appl_string_case_compare_buffer_n(
+    struct appl_string_handle const * const
+        p_string_handle,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    unsigned long int const
+        i_compare_len);
+
+enum appl_status
+appl_string_case_compare_object(
+    struct appl_string_handle const * const
+        p_string_handle,
+    struct appl_string_handle const * const
+        p_ref_string_handle);
+
+enum appl_status
+appl_string_case_compare_object_n(
+    struct appl_string_handle const * const
+        p_string_handle,
+    struct appl_string_handle const * const
+        p_ref_string_handle,
+    unsigned long int const
+        i_compare_len);
 
 #if defined __cplusplus
 } /* extern "C" */

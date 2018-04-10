@@ -39,12 +39,20 @@ class appl_string : public appl_object
             s_create(
                 class appl_context * const
                     p_context,
+                unsigned long int const
+                    i_alloc_len,
+                class appl_string * * const
+                    r_string);
+
+        static
+        enum appl_status
+            s_create_ref(
+                class appl_context * const
+                    p_context,
                 unsigned char const * const
                     p_buf_min,
                 unsigned char const * const
                     p_buf_max,
-                unsigned long int const
-                    i_alloc_len,
                 class appl_string * * const
                     r_string);
 
@@ -63,12 +71,6 @@ class appl_string : public appl_object
                     p_buf_min,
                 unsigned char const * const
                     p_buf_max);
-
-        virtual
-        enum appl_status
-            v_dup(
-                class appl_string * * const
-                    r_string) const;
 
         static
         class appl_string const *
