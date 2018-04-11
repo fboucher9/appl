@@ -23,6 +23,12 @@ union appl_ptr
     void const *
         pc_void;
 
+    char *
+        p_char;
+
+    char const *
+        pc_char;
+
     unsigned char *
         p_uchar;
 

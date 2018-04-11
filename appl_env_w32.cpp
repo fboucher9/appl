@@ -28,6 +28,8 @@
 
 #include "appl_string_handle.h"
 
+#include "appl_buf.h"
+
 //
 //
 //
@@ -91,55 +93,54 @@ enum appl_status
     p_heap =
         m_context->m_heap;
 
-    char *
-        p_name_allocation;
+    appl_size_t const
+        i_name_len =
+        (
+            p_name_max
+            - p_name_min);
+
+    union appl_ptr
+        o_name_allocation;
 
     e_status =
         p_heap->v_alloc(
-            (
-             p_name_max
-             - p_name_min)
-            + 1,
-            reinterpret_cast<void * *>(
-                &(
-                    p_name_allocation)));
+            i_name_len + 1,
+            &(
+                o_name_allocation.p_void));
 
     if (
         appl_status_ok
         == e_status)
     {
         memcpy(
-            p_name_allocation,
+            o_name_allocation.p_void,
             p_name_min,
-            p_name_max
-            - p_name_min);
+            i_name_len);
 
-        p_name_allocation[p_name_max - p_name_min] =
-            static_cast<unsigned char>(
-                0u);
+        o_name_allocation.p_uchar[i_name_len] =
+            0;
 
         DWORD
             dwResult;
 
         dwResult =
             GetEnvironmentVariableA(
-                p_name_allocation,
+                o_name_allocation.pc_char,
                 NULL,
                 0);
 
         if (
             dwResult)
         {
-            char *
-                p_value_allocation;
+            union appl_ptr
+                o_value_allocation;
 
             e_status =
                 p_heap->v_alloc(
                     static_cast<appl_size_t>(
                         dwResult),
-                    reinterpret_cast<void * *>(
-                        &(
-                            p_value_allocation)));
+                    &(
+                        o_value_allocation.p_void));
 
             if (
                 appl_status_ok
@@ -150,8 +151,8 @@ enum appl_status
 
                 dwResult2 =
                     GetEnvironmentVariableA(
-                        p_name_allocation,
-                        p_value_allocation,
+                        o_name_allocation.pc_char,
+                        o_value_allocation.p_char,
                         dwResult);
 
                 if (
@@ -164,10 +165,8 @@ enum appl_status
                         appl_string_create_dup_buffer(
                             &(
                                 m_context->get_handle()->o_object_handle),
-                            reinterpret_cast<unsigned char const *>(
-                                p_value_allocation),
-                            reinterpret_cast<unsigned char const *>(
-                                p_value_allocation + dwResult2),
+                            o_value_allocation.pc_uchar,
+                            o_value_allocation.pc_uchar + dwResult2,
                             &(
                                 p_string_handle));
 
@@ -191,8 +190,7 @@ enum appl_status
                 }
 
                 p_heap->v_free(
-                    static_cast<void *>(
-                        p_value_allocation));
+                    o_value_allocation.p_void);
             }
         }
         else
@@ -202,8 +200,7 @@ enum appl_status
         }
 
         p_heap->v_free(
-            static_cast<void *>(
-                p_name_allocation));
+            o_name_allocation.p_void);
     }
     else
     {
@@ -230,17 +227,97 @@ enum appl_status
         unsigned char const * const
             p_value_max)
 {
-    static_cast<void>(
-        p_name_min);
-    static_cast<void>(
-        p_name_max);
-    static_cast<void>(
-        p_value_min);
-    static_cast<void>(
-        p_value_max);
+    enum appl_status
+        e_status;
+
+    class appl_heap * const
+        p_heap =
+        m_context->m_heap;
+
+    appl_size_t const
+        i_name_len =
+        (
+            p_name_max
+            - p_name_min);
+
+    union appl_ptr
+        o_name_allocation;
+
+    e_status =
+        p_heap->v_alloc(
+            i_name_len + 1,
+            &(
+                o_name_allocation.p_void));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        memcpy(
+            o_name_allocation.p_void,
+            p_name_min,
+            i_name_len);
+
+        o_name_allocation.p_uchar[i_name_len] =
+            0;
+
+        appl_size_t const
+            i_value_len =
+            (
+                p_value_max
+                - p_value_min);
+
+        union appl_ptr
+            o_value_allocation;
+
+        e_status =
+            p_heap->v_alloc(
+                i_value_len + 1,
+                &(
+                    o_value_allocation.p_void));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            memcpy(
+                o_value_allocation.p_void,
+                p_value_min,
+                i_value_len);
+
+            o_value_allocation.p_uchar[i_value_len] =
+                0;
+
+            BOOL
+                bResult;
+
+            bResult =
+                SetEnvironmentVariableA(
+                    o_name_allocation.pc_char,
+                    o_value_allocation.pc_char);
+
+            if (
+                bResult)
+            {
+                e_status =
+                    appl_status_ok;
+            }
+            else
+            {
+                e_status =
+                    appl_status_fail;
+            }
+
+            p_heap->v_free(
+                o_value_allocation.p_void);
+        }
+
+        p_heap->v_free(
+            o_name_allocation.p_void);
+    }
 
     return
-        appl_status_not_implemented;
+        e_status;
 
 } // v_set()
 
