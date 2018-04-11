@@ -103,6 +103,24 @@ appl_buf_write_tail_repeat(
     unsigned long int const
         i_count);
 
+enum appl_status
+appl_buf_write_array(
+    struct appl_buf * const
+        p_buf,
+    unsigned char const * const
+        p_ref_min,
+    unsigned char const * const
+        p_ref_max);
+
+enum appl_status
+appl_buf_write_tail_array(
+    struct appl_buf * const
+        p_buf,
+    unsigned char const * const
+        p_ref_min,
+    unsigned char const * const
+        p_ref_max);
+
 /* buf fill */
 enum appl_status
 appl_buf_fill(

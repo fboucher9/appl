@@ -194,7 +194,9 @@ appl_string_compare_buffer(
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
-        p_buf_max);
+        p_buf_max,
+    signed int * const
+        r_result);
 
 enum appl_status
 appl_string_compare_buffer_n(
@@ -205,14 +207,18 @@ appl_string_compare_buffer_n(
     unsigned char const * const
         p_buf_max,
     unsigned long int const
-        i_compare_len);
+        i_compare_len,
+    signed int * const
+        r_result);
 
 enum appl_status
 appl_string_compare_object(
     struct appl_string_handle const * const
         p_string_handle,
     struct appl_string_handle const * const
-        p_ref_string_handle);
+        p_ref_string_handle,
+    signed int * const
+        r_result);
 
 enum appl_status
 appl_string_compare_object_n(
@@ -221,7 +227,9 @@ appl_string_compare_object_n(
     struct appl_string_handle const * const
         p_ref_string_handle,
     unsigned long int const
-        i_compare_len);
+        i_compare_len,
+    signed int * const
+        r_result);
 
 enum appl_status
 appl_string_case_compare_buffer(
@@ -230,7 +238,9 @@ appl_string_case_compare_buffer(
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
-        p_buf_max);
+        p_buf_max,
+    signed int * const
+        r_result);
 
 enum appl_status
 appl_string_case_compare_buffer_n(
@@ -241,14 +251,18 @@ appl_string_case_compare_buffer_n(
     unsigned char const * const
         p_buf_max,
     unsigned long int const
-        i_compare_len);
+        i_compare_len,
+    signed int * const
+        r_result);
 
 enum appl_status
 appl_string_case_compare_object(
     struct appl_string_handle const * const
         p_string_handle,
     struct appl_string_handle const * const
-        p_ref_string_handle);
+        p_ref_string_handle,
+    signed int * const
+        r_result);
 
 enum appl_status
 appl_string_case_compare_object_n(
@@ -257,7 +271,9 @@ appl_string_case_compare_object_n(
     struct appl_string_handle const * const
         p_ref_string_handle,
     unsigned long int const
-        i_compare_len);
+        i_compare_len,
+    signed int * const
+        r_result);
 
 #if defined __cplusplus
 } /* extern "C" */

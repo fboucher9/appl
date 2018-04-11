@@ -28,6 +28,7 @@ test_appl-deps = \
     appl_env.cpp \
     appl_env_handle.cpp \
     appl_env_service.cpp \
+    appl_env_w32.cpp \
     appl_event_handle.cpp \
     appl_event_mgr.cpp \
     appl_event_node.cpp \
