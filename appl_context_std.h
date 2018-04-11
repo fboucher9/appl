@@ -92,8 +92,11 @@ class appl_context_std : public appl_context
         bool
             b_init_socket_mgr;
 
+        bool
+            b_init_env;
+
         unsigned char
-            uc_padding[6u];
+            uc_padding[5u];
 
         appl_context_std(
             class appl_context_std const & r);
@@ -171,6 +174,12 @@ class appl_context_std : public appl_context
 
         void
             cleanup_socket_mgr(void);
+
+        enum appl_status
+            init_env(void);
+
+        void
+            cleanup_env(void);
 
 }; // class appl_context_std
 

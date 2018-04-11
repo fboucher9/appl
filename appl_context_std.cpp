@@ -102,6 +102,18 @@
 
 #include "appl_socket_std_mgr.h"
 
+#include "appl_env.h"
+
+#if defined APPL_OS_LINUX
+
+#include "appl_env_std.h"
+
+#elif defined APPL_OS_WINDOWS
+
+#include "appl_env_w32.h"
+
+#endif /* #if defined APPL_OS_Xx */
+
 struct appl_context_init_descriptor
 {
     struct appl_context_descriptor const *
@@ -665,6 +677,73 @@ void
 //
 //
 enum appl_status
+    appl_context_std::init_env(void)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        !b_init_env)
+    {
+#if defined APPL_OS_LINUX
+        e_status =
+            appl_env_std::s_create(
+                m_context,
+                &(
+                    m_env));
+#elif defined APPL_OS_WINDOWS
+        e_status =
+            appl_env_w32::s_create(
+                m_context,
+                &(
+                    m_env));
+#else /* #if defined APPL_OS_Xx */
+        e_status =
+            appl_status_fail;
+#endif /* #if defined APPL_OS_Xx */
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            b_init_env =
+                true;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // init_env()
+
+//
+//
+//
+void
+    appl_context_std::cleanup_env(void)
+{
+    if (
+        b_init_env)
+    {
+        m_env->destroy();
+
+        m_env =
+            0;
+
+        b_init_env =
+            false;
+    }
+} // cleanup_env()
+
+//
+//
+//
+enum appl_status
     appl_context_std::create_instance(
         struct appl_context_descriptor const * const
             p_context_descriptor,
@@ -767,7 +846,8 @@ appl_context_std::appl_context_std() :
     b_init_poll_mgr(),
     b_init_clock(),
     b_init_event_mgr(),
-    b_init_socket_mgr()
+    b_init_socket_mgr(),
+    b_init_env()
 {
 }
 
@@ -875,6 +955,20 @@ enum appl_status
                                         appl_status_ok
                                         == e_status)
                                     {
+                                        e_status =
+                                            init_env();
+
+                                        if (
+                                            appl_status_ok
+                                            == e_status)
+                                        {
+                                            if (
+                                                appl_status_ok != e_status)
+                                            {
+                                                cleanup_env();
+                                            }
+                                        }
+
                                         if (
                                             appl_status_ok != e_status)
                                         {
@@ -955,6 +1049,8 @@ enum appl_status
         e_status;
 
     // destroy objects
+
+    cleanup_env();
 
     cleanup_socket_mgr();
 

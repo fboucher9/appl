@@ -874,6 +874,83 @@ appl_test_property(
 
 } /* appl_test_property() */
 
+static
+void
+appl_test_env(
+    struct appl_context_handle * const
+        p_context_handle)
+{
+    struct appl_string_handle *
+        p_home_value;
+
+    static unsigned char const sc_home_name[] =
+    {
+        'H',
+        'O',
+        'M',
+        'E'
+    };
+
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_env_get(
+            &(
+                p_context_handle->o_object_handle),
+            sc_home_name,
+            sc_home_name + sizeof sc_home_name,
+            &(
+                p_home_value));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        unsigned char const *
+            p_value_min;
+
+        unsigned char const *
+            p_value_max;
+
+        e_status =
+            appl_string_read(
+                p_home_value,
+                &(
+                    p_value_min),
+                &(
+                    p_value_max));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            appl_printf(
+                "appl_test_env: home=[%.*s]\n",
+                (int)(
+                    p_value_max
+                    - p_value_min),
+                (char const *)(
+                    p_value_min));
+        }
+        else
+        {
+            appl_printf(
+                "appl_test_env: failed string read\n");
+        }
+
+        appl_object_destroy(
+            &(
+                p_home_value->o_object_handle));
+    }
+    else
+    {
+        appl_printf(
+            "appl_test_env: failed env get\n");
+    }
+
+} /* appl_test_env() */
+
 enum appl_status
 appl_main(
     struct appl_context_handle * const
@@ -1073,6 +1150,12 @@ appl_main(
     if (1)
     {
         appl_test_property(
+            p_context_handle);
+    }
+
+    if (1)
+    {
+        appl_test_env(
             p_context_handle);
     }
 

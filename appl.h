@@ -44,6 +44,8 @@ Description:
 
 #define APPL_CONFIG_WITH_STRING
 
+#define APPL_CONFIG_WITH_ENV
+
 #include "appl_status.h"
 
 #include "appl_buf.h"
@@ -121,6 +123,12 @@ Description:
 #include "appl_clock_handle.h"
 
 #endif /* #if defined(APPL_CONFIG_WITH_CLOCK) */
+
+#if defined(APPL_CONFIG_WITH_ENV)
+
+#include "appl_env_handle.h"
+
+#endif /* #if defined(APPL_CONFIG_WITH_ENV) */
 
 #if defined(APPL_CONFIG_WITH_MAIN)
 

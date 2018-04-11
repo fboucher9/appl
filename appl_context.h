@@ -58,13 +58,10 @@ class appl_context : public appl_object
         class appl_heap *
             m_heap;
 
-#if defined APPL_DEBUG
-        class appl_debug *
-            m_debug;
-#endif /* #if defined APPL_DEBUG */
-
         class appl_options *
             m_options;
+
+        /* -- */
 
         class appl_thread_mgr *
             m_thread_mgr;
@@ -72,11 +69,15 @@ class appl_context : public appl_object
         class appl_mutex_mgr *
             m_mutex_mgr;
 
+        /* -- */
+
         class appl_file_mgr *
             m_file_mgr;
 
         class appl_poll_mgr *
             m_poll_mgr;
+
+        /* -- */
 
         class appl_clock *
             m_clock;
@@ -84,11 +85,23 @@ class appl_context : public appl_object
         class appl_event_mgr *
             m_event_mgr;
 
+        /* -- */
+
         class appl_socket_mgr *
             m_socket_mgr;
 
         class appl_env *
             m_env;
+
+        /* -- */
+
+#if defined APPL_DEBUG
+        class appl_debug *
+            m_debug;
+
+        void *
+            pv_debug_padding[1u];
+#endif /* #if defined APPL_DEBUG */
 
         static
         class appl_context *

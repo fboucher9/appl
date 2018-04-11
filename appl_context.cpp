@@ -20,9 +20,6 @@
 appl_context::appl_context() :
     appl_object(),
     m_heap(),
-#if defined APPL_DEBUG
-    m_debug(),
-#endif /* #if defined APPL_DEBUG */
     m_options(),
     m_thread_mgr(),
     m_mutex_mgr(),
@@ -32,6 +29,10 @@ appl_context::appl_context() :
     m_event_mgr(),
     m_socket_mgr(),
     m_env()
+#if defined APPL_DEBUG
+    ,
+    m_debug()
+#endif /* #if defined APPL_DEBUG */
 {
 }
 
