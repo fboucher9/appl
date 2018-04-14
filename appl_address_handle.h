@@ -44,8 +44,10 @@ enum appl_status
 appl_address_get_name(
     struct appl_address_handle * const
         p_address_handle,
-    struct appl_buf * const
-        p_name_buf);
+    unsigned char * * const
+        pp_name_cur,
+    unsigned char * const
+        p_name_max);
 
 enum appl_status
 appl_address_get_port(

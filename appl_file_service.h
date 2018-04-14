@@ -52,16 +52,24 @@ class appl_file_service
             s_read(
                 struct appl_file_handle * const
                     p_file_handle,
-                struct appl_buf * const
-                    p_buf);
+                unsigned char * const
+                    p_buf_cur,
+                unsigned char * const
+                    p_buf_max,
+                unsigned long int * const
+                    r_count);
 
         static
         enum appl_status
             s_write(
                 struct appl_file_handle * const
                     p_file_handle,
-                struct appl_buf * const
-                    p_buf);
+                unsigned char const * const
+                    p_buf_cur,
+                unsigned char const * const
+                    p_buf_max,
+                unsigned long int * const
+                    r_count);
 
 }; // class appl_file_service
 

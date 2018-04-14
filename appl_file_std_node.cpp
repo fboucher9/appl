@@ -18,19 +18,19 @@
 
 #include <fcntl.h>
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_file_node.h"
+#include <appl_file_node.h>
 
-#include "appl_file_std_node.h"
+#include <appl_file_std_node.h>
 
-#include "appl_buf.h"
+#include <appl_buf.h>
 
-#include "appl_file_descriptor.h"
+#include <appl_file_descriptor.h>
 
 //
 //
@@ -145,23 +145,23 @@ enum appl_status
             static_cast<char *>(
                 malloc(
                     static_cast<appl_size_t>(
-                        p_file_descriptor->o_name.o_max.pc_uchar
-                        - p_file_descriptor->o_name.o_min.pc_uchar)));
+                        p_file_descriptor->p_name_max
+                        - p_file_descriptor->p_name_min)));
 
         if (
             a_pathname)
         {
             memcpy(
                 a_pathname,
-                p_file_descriptor->o_name.o_min.pc_uchar,
+                p_file_descriptor->p_name_min,
                 static_cast<appl_size_t>(
-                    p_file_descriptor->o_name.o_max.pc_uchar
-                    - p_file_descriptor->o_name.o_min.pc_uchar));
+                    p_file_descriptor->p_name_max
+                    - p_file_descriptor->p_name_min));
 
             *(
                 a_pathname
-                + (p_file_descriptor->o_name.o_max.pc_uchar
-                    - p_file_descriptor->o_name.o_min.pc_uchar)) =
+                + (p_file_descriptor->p_name_max
+                    - p_file_descriptor->p_name_min)) =
                 '\000';
 
             int
@@ -286,8 +286,12 @@ enum appl_status
 //
 enum appl_status
     appl_file_std_node::v_read(
-        struct appl_buf * const
-            p_buf)
+        unsigned char * const
+            p_buf_min,
+        unsigned char * const
+            p_buf_max,
+        unsigned long int * const
+            r_count)
 {
     enum appl_status
         e_status;
@@ -298,17 +302,17 @@ enum appl_status
     i_read_result =
         read(
             m_fd,
-            static_cast<char *>(
-                p_buf->o_min.p_void),
+            reinterpret_cast<char *>(
+                p_buf_min),
             static_cast<unsigned int>(
                 static_cast<appl_size_t>(
-                    p_buf->o_max.pc_uchar
-                    - p_buf->o_min.pc_uchar)));
+                    p_buf_max
+                    - p_buf_min)));
 
     if (
         i_read_result > 0)
     {
-        p_buf->o_min.pc_uchar +=
+        *(r_count) =
             static_cast<unsigned long int>(
                 i_read_result);
 
@@ -331,8 +335,12 @@ enum appl_status
 //
 enum appl_status
     appl_file_std_node::v_write(
-        struct appl_buf * const
-            p_buf)
+        unsigned char const * const
+            p_buf_min,
+        unsigned char const * const
+            p_buf_max,
+        unsigned long int * const
+            r_count)
 {
     enum appl_status
         e_status;
@@ -344,17 +352,17 @@ enum appl_status
         static_cast<signed long int>(
             write(
                 m_fd,
-                static_cast<char const *>(
-                    p_buf->o_min.pc_void),
+                reinterpret_cast<char const *>(
+                    p_buf_min),
                 static_cast<unsigned int>(
                     static_cast<appl_size_t>(
-                        p_buf->o_max.pc_uchar
-                        - p_buf->o_min.pc_uchar))));
+                        p_buf_max
+                        - p_buf_min))));
 
     if (
         0 < i_write_result)
     {
-        p_buf->o_min.pc_uchar +=
+        *(r_count) =
             static_cast<unsigned long int>(
                 i_write_result);
 

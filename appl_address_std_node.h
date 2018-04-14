@@ -78,14 +78,16 @@ class appl_address_std_node : public appl_address_node
         virtual
         enum appl_status
             v_get_name(
-                struct appl_buf * const
-                    p_name_buf);
+                unsigned char * * const
+                    pp_name_cur,
+                unsigned char * const
+                    p_name_max) const;
 
         virtual
         enum appl_status
             v_get_port(
                 unsigned short int * const
-                    r_port);
+                    r_port) const;
 
 }; // class appl_address_std_node
 

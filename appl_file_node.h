@@ -17,8 +17,6 @@ Description:
 
 #define INC_APPL_FILE_NODE_H
 
-struct appl_buf;
-
 struct appl_file_handle;
 
 /* Header file dependencies */
@@ -38,14 +36,22 @@ class appl_file_node : public appl_object
         virtual
         enum appl_status
             v_read(
-                struct appl_buf * const
-                    p_buf);
+                unsigned char * const
+                    p_buf_min,
+                unsigned char * const
+                    p_buf_max,
+                unsigned long int * const
+                    r_count);
 
         virtual
         enum appl_status
             v_write(
-                struct appl_buf * const
-                    p_buf);
+                unsigned char const * const
+                    p_buf_min,
+                unsigned char const * const
+                    p_buf_max,
+                unsigned long int * const
+                    r_count);
 
         static
         class appl_file_node *

@@ -16,8 +16,6 @@
 
 struct appl_object_handle;
 
-struct appl_buf;
-
 #if defined(__cplusplus)
 extern "C" {
 #endif /* #if defined(__cplusplus) */

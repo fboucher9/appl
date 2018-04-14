@@ -110,65 +110,30 @@ appl_thread_std_node::oops(
     unsigned char
         s_msg[128u];
 
-    struct appl_buf
-        o_msg_iterator;
-
-    o_msg_iterator.o_min.p_uchar =
-        s_msg;
-
-    o_msg_iterator.o_max.p_uchar =
-        s_msg + sizeof(s_msg);
-
-    struct appl_buf
-        o_msg_prefix;
-
-    o_msg_prefix.o_min.pc_uchar =
-        p_msg_min;
-
-    o_msg_prefix.o_max.pc_uchar =
-        p_msg_max;
-
-    unsigned long int
-        i_count;
-
-    appl_buf_copy(
-        &(
-            o_msg_iterator),
-        &(
-            o_msg_prefix),
-        &(
-            i_count));
-
-    appl_buf_write(
-        &(
-            o_msg_iterator),
-        ' ');
-
-    appl_buf_write(
-        &(
-            o_msg_iterator),
-        '(');
-
-    appl_buf_print_number(
-        &(
-            o_msg_iterator),
-        static_cast<signed long int>(
-            i_status_code),
-        0);
-
-    appl_buf_write(
-        &(
-            o_msg_iterator),
-        ')');
-
-    appl_buf_write(
-        &(
-            o_msg_iterator),
-        '\n');
-
     m_context->m_debug->v_print(
         s_msg,
-        o_msg_iterator.o_min.pc_uchar);
+        appl_buf_write(
+            appl_buf_write(
+                appl_buf_print_number(
+                    appl_buf_write(
+                        appl_buf_write(
+                            appl_buf_copy(
+                                s_msg,
+                                s_msg + sizeof s_msg,
+                                p_msg_min,
+                                p_msg_max),
+                            s_msg + sizeof s_msg,
+                            ' '),
+                        s_msg + sizeof s_msg,
+                        '('),
+                    s_msg + sizeof s_msg,
+                    static_cast<signed long int>(
+                        i_status_code),
+                    0),
+                s_msg + sizeof s_msg,
+                ')'),
+            s_msg + sizeof s_msg,
+            '\n'));
 
 } // oops()
 #endif /* #if defined APPL_DEBUG */

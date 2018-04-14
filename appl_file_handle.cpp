@@ -39,13 +39,19 @@ enum appl_status
 appl_file_read(
     struct appl_file_handle * const
         p_file_handle,
-    struct appl_buf * const
-        p_buf)
+    unsigned char * const
+        p_buf_cur,
+    unsigned char * const
+        p_buf_max,
+    unsigned long int * const
+        r_count)
 {
     return
         appl_file_service::s_read(
             p_file_handle,
-            p_buf);
+            p_buf_cur,
+            p_buf_max,
+            r_count);
 
 } /* appl_file_read() */
 
@@ -56,13 +62,19 @@ enum appl_status
 appl_file_write(
     struct appl_file_handle * const
         p_file_handle,
-    struct appl_buf * const
-        p_buf)
+    unsigned char const * const
+        p_buf_cur,
+    unsigned char const * const
+        p_buf_max,
+    unsigned long int * const
+        r_count)
 {
     return
         appl_file_service::s_write(
             p_file_handle,
-            p_buf);
+            p_buf_cur,
+            p_buf_max,
+            r_count);
 
 } /* appl_file_write() */
 

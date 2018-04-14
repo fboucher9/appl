@@ -30,8 +30,10 @@ enum appl_status
 appl_address_property_set_name(
     struct appl_property_handle * const
         p_property_handle,
-    struct appl_string_handle const * const
-        p_name_handle);
+    unsigned char const * const
+        p_name_min,
+    unsigned char const * const
+        p_name_max);
 
 enum appl_status
 appl_address_property_set_port(
@@ -44,8 +46,10 @@ enum appl_status
 appl_address_property_get_name(
     struct appl_property_handle const * const
         p_property_handle,
-    struct appl_string_handle const * * const
-        r_name_handle);
+    unsigned char const * * const
+        r_name_min,
+    unsigned char const * * const
+        r_name_max);
 
 enum appl_status
 appl_address_property_get_port(

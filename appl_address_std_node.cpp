@@ -121,23 +121,15 @@ enum appl_status
     struct appl_address_descriptor
         o_address_descriptor;
 
-    struct appl_string_handle const *
-        p_name_handle;
-
     if (
         appl_status_ok
         == appl_address_property_get_name(
             p_property_handle,
             &(
-                p_name_handle)))
+                o_address_descriptor.p_name_min),
+            &(
+                o_address_descriptor.p_name_max)))
     {
-        appl_string_read(
-            p_name_handle,
-            &(
-                o_address_descriptor.o_name.o_min.pc_uchar),
-            &(
-                o_address_descriptor.o_name.o_max.pc_uchar));
-
         o_address_descriptor.b_name =
             1;
     }
@@ -185,8 +177,8 @@ enum appl_status
 
         i_name_len =
             static_cast<appl_size_t>(
-                o_address_descriptor.o_name.o_max.pc_uchar
-                - o_address_descriptor.o_name.o_min.pc_uchar);
+                o_address_descriptor.p_name_max
+                - o_address_descriptor.p_name_min);
 
         if (
             i_name_len < 64u)
@@ -196,7 +188,7 @@ enum appl_status
 
             memcpy(
                 ac_buffer,
-                o_address_descriptor.o_name.o_min.pc_uchar,
+                o_address_descriptor.p_name_min,
                 i_name_len);
 
             ac_buffer[i_name_len] =
@@ -221,15 +213,17 @@ enum appl_status
 //
 enum appl_status
     appl_address_std_node::v_get_name(
-        struct appl_buf * const
-            p_name_buf)
+        unsigned char * * const
+            pp_name_cur,
+        unsigned char * const
+            p_name_max) const
 {
     enum appl_status
         e_status;
 
-    struct sockaddr_in *
+    struct sockaddr_in const *
         p_sockaddr_in =
-        reinterpret_cast<struct sockaddr_in *>(
+        reinterpret_cast<struct sockaddr_in const *>(
             &(
                 m_sockaddr_storage));
 
@@ -248,27 +242,17 @@ enum appl_status
                 strlen(
                     p_name0));
 
-        struct appl_buf
-            o_buf_source;
-
-        o_buf_source.o_min.pc_uchar =
-            reinterpret_cast<unsigned char const *>(
-                p_name0);
-
-        o_buf_source.o_max.pc_uchar =
-            reinterpret_cast<unsigned char const *>(
-                p_name0 + i_name0_len);
-
-        unsigned long int
-            i_count;
+        *(pp_name_cur) =
+            appl_buf_copy(
+                *(pp_name_cur),
+                p_name_max,
+                reinterpret_cast<unsigned char const *>(
+                    p_name0),
+                reinterpret_cast<unsigned char const *>(
+                    p_name0 + i_name0_len));
 
         e_status =
-            appl_buf_copy(
-                p_name_buf,
-                &(
-                    o_buf_source),
-                &(
-                    i_count));
+            appl_status_ok;
     }
     else
     {
@@ -289,14 +273,14 @@ enum appl_status
 enum appl_status
     appl_address_std_node::v_get_port(
         unsigned short int * const
-            r_port)
+            r_port) const
 {
     enum appl_status
         e_status;
 
-    struct sockaddr_in *
+    struct sockaddr_in const *
         p_sockaddr_in =
-        reinterpret_cast<struct sockaddr_in *>(
+        reinterpret_cast<struct sockaddr_in const *>(
             &(
                 m_sockaddr_storage));
 

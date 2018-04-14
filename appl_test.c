@@ -235,12 +235,12 @@ appl_test_file_stdout(
     struct appl_file_descriptor
         o_file_descriptor;
 
-    o_file_descriptor.o_name.o_min.p_void =
-        (void *)(
+    o_file_descriptor.p_name_min =
+        (unsigned char const *)(
             0);
 
-    o_file_descriptor.o_name.o_max.p_void =
-        (void *)(
+    o_file_descriptor.p_name_max =
+        (unsigned char const *)(
             0);
 
     o_file_descriptor.e_type =
@@ -269,20 +269,16 @@ appl_test_file_stdout(
             '\n'
         };
 
-        struct appl_buf
-            o_msg;
-
-        o_msg.o_min.pc_uchar =
-            g_msg;
-
-        o_msg.o_max.pc_uchar =
-            g_msg + sizeof(g_msg);
+        unsigned long int
+            i_count;
 
         e_status =
             appl_file_write(
                 p_file_handle,
+                g_msg,
+                g_msg + sizeof(g_msg),
                 &(
-                    o_msg));
+                    i_count));
 
         appl_object_destroy(
             &(
@@ -301,20 +297,18 @@ appl_test_print_number(
 {
     static unsigned char s_msg[128u];
 
-    struct appl_buf
-        o_buf;
+    unsigned char *
+        p_msg_end;
 
-    o_buf.o_min.p_uchar = s_msg;
-    o_buf.o_max.p_uchar = s_msg + sizeof s_msg;
-
-    appl_buf_print_number(
-        &(
-            o_buf),
-        i_value,
-        i_flags);
+    p_msg_end =
+        appl_buf_print_number(
+            s_msg,
+            s_msg + sizeof s_msg,
+            i_value,
+            i_flags);
 
     appl_printf("msg = [%.*s]\n",
-        (int)(o_buf.o_min.p_uchar - s_msg),
+        (int)(p_msg_end - s_msg),
         s_msg);
 }
 
@@ -585,9 +579,6 @@ appl_test_socket(
         '0'
     };
 
-    struct appl_string_handle *
-        p_name_handle;
-
     enum appl_status
         e_status;
 
@@ -598,14 +589,6 @@ appl_test_socket(
         struct appl_property_handle *
             p_address_descriptor;
 
-        appl_string_create_ref_buffer(
-            &(
-                p_context_handle->o_object_handle),
-            g_name,
-            g_name + sizeof(g_name),
-            &(
-                p_name_handle));
-
         appl_address_property_create(
             p_context_handle,
             &(
@@ -613,7 +596,8 @@ appl_test_socket(
 
         appl_address_property_set_name(
             p_address_descriptor,
-            p_name_handle);
+            g_name,
+            g_name + sizeof(g_name));
 
         appl_address_property_set_port(
             p_address_descriptor,
@@ -629,10 +613,6 @@ appl_test_socket(
         appl_object_destroy(
             &(
                 p_address_descriptor->o_object_handle));
-
-        appl_object_destroy(
-            &(
-                p_name_handle->o_object_handle));
     }
 
     if (
@@ -643,23 +623,21 @@ appl_test_socket(
             p_socket_handle;
 
         {
-            struct appl_buf
-                o_name_buf;
-
             unsigned char
                 a_name[64u];
 
-            o_name_buf.o_min.p_uchar =
-                a_name;
+            unsigned char *
+                p_name_cur;
 
-            o_name_buf.o_max.p_uchar =
-                a_name + sizeof(a_name);
+            p_name_cur =
+                a_name;
 
             e_status =
                 appl_address_get_name(
                     p_address_handle,
                     &(
-                        o_name_buf));
+                        p_name_cur),
+                    a_name + sizeof a_name);
 
             if (
                 appl_status_ok
@@ -668,7 +646,7 @@ appl_test_socket(
                 appl_printf(
                     "name=[%.*s]\n",
                     (int)(
-                        o_name_buf.o_min.p_uchar
+                        p_name_cur
                         - a_name),
                     (char const *)(
                         a_name));
@@ -1042,7 +1020,7 @@ appl_main(
         /* test read */
         if (1)
         {
-            static unsigned char g_data[] =
+            static unsigned char const g_data[] =
             {
                 1,
                 2,
@@ -1051,30 +1029,33 @@ appl_main(
                 5
             };
 
-            struct appl_buf
-                o_buf;
+            static unsigned char const * g_data_end =
+                g_data + sizeof g_data;
 
             unsigned char
                 c_value;
 
-            o_buf.o_min.pc_uchar =
+            unsigned char const *
+                p_cur;
+
+            p_cur =
                 g_data;
 
-            o_buf.o_max.pc_uchar =
-                g_data + sizeof(g_data);
-
             while (
-                appl_status_ok
-                == appl_buf_read(
-                    &(
-                        o_buf),
-                    &(
-                        c_value)))
+                (signed long int)(
+                    g_data_end
+                    - p_cur) > 0)
             {
+                c_value =
+                    *(
+                        p_cur);
+
                 appl_printf(
                     "%u\n",
                     (unsigned int)(
                         c_value));
+
+                p_cur ++;
             }
         }
 

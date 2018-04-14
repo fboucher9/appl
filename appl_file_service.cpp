@@ -65,8 +65,12 @@ enum appl_status
     appl_file_service::s_read(
         struct appl_file_handle * const
             p_file_handle,
-        struct appl_buf * const
-            p_buf)
+        unsigned char * const
+            p_buf_cur,
+        unsigned char * const
+            p_buf_max,
+        unsigned long int * const
+            r_count)
 {
     enum appl_status
         e_status;
@@ -78,7 +82,9 @@ enum appl_status
 
     e_status =
         p_file_node->v_read(
-            p_buf);
+            p_buf_cur,
+            p_buf_max,
+            r_count);
 
     return
         e_status;
@@ -92,8 +98,12 @@ enum appl_status
     appl_file_service::s_write(
         struct appl_file_handle * const
             p_file_handle,
-        struct appl_buf * const
-            p_buf)
+        unsigned char const * const
+            p_buf_cur,
+        unsigned char const * const
+            p_buf_max,
+        unsigned long int * const
+            r_count)
 {
     enum appl_status
         e_status;
@@ -105,7 +115,9 @@ enum appl_status
 
     e_status =
         p_file_node->v_write(
-            p_buf);
+            p_buf_cur,
+            p_buf_max,
+            r_count);
 
     return
         e_status;

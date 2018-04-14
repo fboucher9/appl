@@ -8,6 +8,7 @@
 
 #include "appl_buf.h"
 
+#if 0
 /*
 
 */
@@ -44,7 +45,9 @@ appl_buf_read(
         e_status;
 
 } /* appl_buf_read() */
+#endif
 
+#if 0
 /*
 
 */
@@ -81,43 +84,42 @@ appl_buf_read_tail(
         e_status;
 
 } /* appl_buf_read_tail() */
+#endif
 
 /*
 
 */
-enum appl_status
+unsigned char *
 appl_buf_write(
-    struct appl_buf * const
-        p_buf,
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_max,
     unsigned char const
         c_value)
 {
-    enum appl_status
-        e_status;
+    unsigned char *
+        p_cur;
+
+    p_cur =
+        p_buf_min;
 
     if (
-        p_buf->o_min.p_uchar < p_buf->o_max.p_uchar)
+        p_cur < p_buf_max)
     {
         *(
-            p_buf->o_min.p_uchar) =
+            p_cur) =
             c_value;
 
-        p_buf->o_min.p_uchar ++;
-
-        e_status =
-            appl_status_ok;
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
+        p_cur ++;
     }
 
     return
-        e_status;
+        p_cur;
 
 } /* appl_buf_write() */
 
+#if 0
 /*
 
 */
@@ -153,7 +155,9 @@ appl_buf_write_tail(
         e_status;
 
 } /* appl_buf_write_tail() */
+#endif
 
+#if 0
 /*
 
 */
@@ -204,7 +208,9 @@ appl_buf_write_repeat(
         e_status;
 
 } /* appl_buf_write_repeat() */
+#endif
 
+#if 0
 /*
 
 */
@@ -255,7 +261,9 @@ appl_buf_write_tail_repeat(
         e_status;
 
 } /* appl_buf_write_tail_repeat() */
+#endif
 
+#if 0
 /*
 
 */
@@ -286,67 +294,58 @@ appl_buf_fill(
         e_status;
 
 } /* appl_buf_fill() */
+#endif
 
 /*
 
 */
-enum appl_status
+unsigned char *
 appl_buf_copy(
-    struct appl_buf * const
-        p_buf,
-    struct appl_buf const * const
-        p_buf_source,
-    unsigned long int * const
-        p_count)
+    unsigned char * const
+        p_dst_min,
+    unsigned char * const
+        p_dst_max,
+    unsigned char const * const
+        p_src_min,
+    unsigned char const * const
+        p_src_max)
 {
-    enum appl_status
-        e_status;
+    unsigned char *
+        p_cur;
 
-    unsigned long int
-        i_count;
+    unsigned char const *
+        p_src_it;
 
-    struct appl_buf
-        o_buf_source_it;
+    p_cur =
+        p_dst_min;
 
-    i_count =
-        0ul;
-
-    o_buf_source_it =
-        *(
-            p_buf_source);
+    p_src_it =
+        p_src_min;
 
     while (
         (
-            o_buf_source_it.o_min.pc_uchar
-            < o_buf_source_it.o_max.pc_uchar)
+            p_src_it
+            < p_src_max)
         && (
-            p_buf->o_min.p_uchar
-            < p_buf->o_max.p_uchar))
+            p_cur
+            < p_dst_max))
     {
         *(
-            p_buf->o_min.p_uchar) =
+            p_cur) =
             *(
-                o_buf_source_it.o_min.pc_uchar);
+                p_src_it);
 
-        o_buf_source_it.o_min.pc_uchar ++;
+        p_cur ++;
 
-        p_buf->o_min.p_uchar ++;
-
-        i_count ++;
+        p_src_it ++;
     }
 
-    *(
-        p_count) =
-        i_count;
-
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        p_cur;
 
 } /* appl_buf_copy() */
 
+#if 0
 /*
 
 */
@@ -453,6 +452,7 @@ appl_buf_compare(
         e_status;
 
 } /* appl_buf_compare() */
+#endif
 
 /*
 
@@ -543,17 +543,19 @@ build_digits(
 /*
 
 */
-enum appl_status
+unsigned char *
 appl_buf_print_number(
-    struct appl_buf * const
-        p_buf,
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_max,
     signed long int const
         i_value,
     unsigned long int const
         i_flags)
 {
-    enum appl_status
-        e_status;
+    unsigned char *
+        p_cur;
 
     unsigned char
         a_digits[64u];
@@ -578,6 +580,9 @@ appl_buf_print_number(
 
     unsigned char
         i_sign;
+
+    p_cur =
+        p_buf_min;
 
     if (APPL_BUF_PRINT_BINARY & i_flags)
     {
@@ -693,18 +698,12 @@ appl_buf_print_number(
             u_value,
             i_base);
 
-    e_status =
-        appl_status_ok;
-
     if (i_width > (i_count + static_cast<unsigned int>(b_sign)))
     {
         i_width = (i_width - i_count - static_cast<unsigned int>(b_sign));
     }
 
     /* space padding for right align */
-    if (
-        appl_status_ok
-        == e_status)
     {
         if (
             (
@@ -713,14 +712,12 @@ appl_buf_print_number(
                 !(APPL_BUF_PRINT_ALIGN_LEFT & i_flags)))
         {
             while (
-                (
-                    appl_status_ok == e_status)
-                && (
-                    i_width))
+                i_width)
             {
-                e_status =
+                p_cur =
                     appl_buf_write(
-                        p_buf,
+                        p_cur,
+                        p_buf_max,
                         ' ');
 
                 i_width --;
@@ -729,35 +726,28 @@ appl_buf_print_number(
     }
 
     /* sign */
-    if (
-        appl_status_ok
-        == e_status)
     {
         if (b_sign)
         {
-            e_status =
+            p_cur =
                 appl_buf_write(
-                    p_buf,
+                    p_cur,
+                    p_buf_max,
                     i_sign);
         }
     }
 
     /* zero padding */
-    if (
-        appl_status_ok
-        == e_status)
     {
         if (APPL_BUF_PRINT_PAD_ZERO & i_flags)
         {
             while (
-                (
-                    appl_status_ok == e_status)
-                && (
-                    i_width))
+                i_width)
             {
-                e_status =
+                p_cur =
                     appl_buf_write(
-                        p_buf,
+                        p_cur,
+                        p_buf_max,
                         '0');
 
                 i_width --;
@@ -767,23 +757,18 @@ appl_buf_print_number(
 
     /* digits */
     while (
-        (
-            appl_status_ok
-            == e_status)
-        && i_count)
+        i_count)
     {
         i_count --;
 
-        e_status =
+        p_cur =
             appl_buf_write(
-                p_buf,
+                p_cur,
+                p_buf_max,
                 a_digits[i_count]);
     }
 
     /* space padding for left align */
-    if (
-        appl_status_ok
-        == e_status)
     {
         if (
             (APPL_BUF_PRINT_ALIGN_LEFT & i_flags)
@@ -791,14 +776,12 @@ appl_buf_print_number(
                 !(APPL_BUF_PRINT_PAD_ZERO & i_flags)))
         {
             while (
-                (
-                    appl_status_ok == e_status)
-                && (
-                    i_width))
+                i_width)
             {
-                e_status =
+                p_cur =
                     appl_buf_write(
-                        p_buf,
+                        p_cur,
+                        p_buf_max,
                         ' ');
 
                 i_width --;
@@ -807,7 +790,7 @@ appl_buf_print_number(
     }
 
     return
-        e_status;
+        p_cur;
 
 } /* appl_buf_print_number() */
 

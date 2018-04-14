@@ -39,13 +39,16 @@ enum appl_status
 appl_address_get_name(
     struct appl_address_handle * const
         p_address_handle,
-    struct appl_buf * const
-        p_name_buf)
+    unsigned char * * const
+        pp_name_cur,
+    unsigned char * const
+        p_name_max)
 {
     return
         appl_address_service::s_get_name(
             p_address_handle,
-            p_name_buf);
+            pp_name_cur,
+            p_name_max);
 
 } /* appl_address_get_name() */
 

@@ -58,6 +58,7 @@ struct appl_buf
 extern "C" {
 #endif /* #if defined(__cplusplus) */
 
+#if 0
 /* buf read iteration */
 enum appl_status
 appl_buf_read(
@@ -65,105 +66,134 @@ appl_buf_read(
         p_buf,
     unsigned char * const
         p_value);
+#endif
 
+#if 0
 enum appl_status
 appl_buf_read_tail(
     struct appl_buf * const
         p_buf,
     unsigned char * const
         p_value);
+#endif
 
 /* buf write iteration */
-enum appl_status
+unsigned char *
 appl_buf_write(
-    struct appl_buf * const
-        p_buf,
+    unsigned char * const
+        p_buf_cur,
+    unsigned char * const
+        p_buf_max,
     unsigned char const
         c_value);
 
+#if 0
 /* buf write backward iteration */
-enum appl_status
+unsigned char *
 appl_buf_write_tail(
-    struct appl_buf * const
-        p_buf,
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_cur,
     unsigned char const
         c_value);
+#endif
 
+#if 0
 /* buf repeat write */
-enum appl_status
+unsigned char *
 appl_buf_write_repeat(
-    struct appl_buf * const
-        p_buf,
+    unsigned char * const
+        p_buf_cur,
+    unsigned char * const
+        p_buf_max,
     unsigned char const
         c_value,
     unsigned long int const
         i_count);
+#endif
 
+#if 0
 /* buf repeat write backward */
-enum appl_status
+unsigned char *
 appl_buf_write_tail_repeat(
-    struct appl_buf * const
-        p_buf,
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_cur,
     unsigned char const
         c_value,
     unsigned long int const
         i_count);
+#endif
 
-enum appl_status
+#if 0
+unsigned char *
 appl_buf_write_array(
-    struct appl_buf * const
-        p_buf,
+    unsigned char * const
+        p_buf_cur,
+    unsigned char * const
+        p_buf_max,
     unsigned char const * const
         p_ref_min,
     unsigned char const * const
         p_ref_max);
+#endif
 
-enum appl_status
+#if 0
+unsigned char *
 appl_buf_write_tail_array(
-    struct appl_buf * const
-        p_buf,
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_cur,
     unsigned char const * const
         p_ref_min,
     unsigned char const * const
         p_ref_max);
+#endif
 
+#if 0
 /* buf fill */
-enum appl_status
+unsigned char *
 appl_buf_fill(
-    struct appl_buf * const
-        p_buf,
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_max,
     unsigned char const
         c_value);
+#endif
 
 /* buf copy */
-enum appl_status
+unsigned char *
 appl_buf_copy(
-    struct appl_buf * const
-        p_buf_destination,
-    struct appl_buf const * const
-        p_buf_source,
-    unsigned long int * const
-        p_count);
+    unsigned char * const
+        p_dst_min,
+    unsigned char * const
+        p_dst_max,
+    unsigned char const * const
+        p_src_min,
+    unsigned char const * const
+        p_src_max);
 
+#if 0
 /* buf compare */
-enum appl_status
+signed int
 appl_buf_compare(
     struct appl_buf const * const
         p_buf_left,
     struct appl_buf const * const
-        p_buf_right,
-    signed int * const
-        p_result);
+        p_buf_right);
 
 /* buf compare */
-enum appl_status
+signed int
 appl_buf_case_compare(
     struct appl_buf const * const
         p_buf_left,
     struct appl_buf const * const
-        p_buf_right,
-    signed int * const
-        p_result);
+        p_buf_right);
+#endif
 
 /* buf case compare */
 
@@ -207,10 +237,12 @@ appl_buf_case_compare(
 #define APPL_BUF_PRINT_WIDTH_MASK 0x0000FFFFul
 
 /* buf print number using flags */
-enum appl_status
+unsigned char *
 appl_buf_print_number(
-    struct appl_buf * const
-        p_buf,
+    unsigned char * const
+        p_buf_cur,
+    unsigned char * const
+        p_buf_max,
     signed long int const
         i_value,
     unsigned long int const

@@ -18,11 +18,13 @@ enum appl_address_property_id
 {
     appl_address_property_id_guid = 0,
 
-    appl_address_property_id_name = 1,
+    appl_address_property_id_name_min = 1,
 
-    appl_address_property_id_port = 2,
+    appl_address_property_id_name_max = 2,
 
-    appl_address_property_id_max = 3
+    appl_address_property_id_port = 3,
+
+    appl_address_property_id_max = 4
 
 }; /* enum appl_address_property_id */
 
@@ -113,19 +115,38 @@ enum appl_status
 appl_address_property_set_name(
     struct appl_property_handle * const
         p_property_handle,
-    struct appl_string_handle const * const
-        p_name_handle)
+    unsigned char const * const
+        p_name_min,
+    unsigned char const * const
+        p_name_max)
 {
+    enum appl_status
+        e_status;
+
 #if defined APPL_DEBUG
     appl_address_property_assert_guid(
         p_property_handle);
 #endif /* #if defined APPL_DEBUG */
 
-    return
+    e_status =
         appl_property_set_ptr(
             p_property_handle,
-            appl_address_property_id_name,
-            p_name_handle);
+            appl_address_property_id_name_min,
+            p_name_min);
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_property_set_ptr(
+                p_property_handle,
+                appl_address_property_id_name_max,
+                p_name_max);
+    }
+
+    return
+        e_status;
 
 } /* appl_address_property_set_name() */
 
@@ -160,21 +181,61 @@ enum appl_status
 appl_address_property_get_name(
     struct appl_property_handle const * const
         p_property_handle,
-    struct appl_string_handle const * * const
-        r_name_buf)
+    unsigned char const * * const
+        r_name_min,
+    unsigned char const * * const
+        r_name_max)
 {
+    enum appl_status
+        e_status;
+
 #if defined APPL_DEBUG
     appl_address_property_assert_guid(
         p_property_handle);
 #endif /* #if defined APPL_DEBUG */
 
-    return
+    void *
+        p_name_min;
+
+    e_status =
         appl_property_get_ptr(
             p_property_handle,
-            appl_address_property_id_name,
-            const_cast<void * *>(
-                reinterpret_cast<void const * *>(
-                    r_name_buf)));
+            appl_address_property_id_name_min,
+            &(
+                p_name_min));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        void *
+            p_name_max;
+
+        e_status =
+            appl_property_get_ptr(
+                p_property_handle,
+                appl_address_property_id_name_max,
+                &(
+                    p_name_max));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            *(
+                r_name_min) =
+                static_cast<unsigned char const *>(
+                    p_name_min);
+
+            *(
+                r_name_max) =
+                static_cast<unsigned char const *>(
+                    p_name_max);
+        }
+    }
+
+    return
+        e_status;
 
 } /* appl_address_property_get_name() */
 

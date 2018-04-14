@@ -11,11 +11,6 @@
 
 #define INC_APPL_THREAD_DESCRIPTOR_H
 
-/* Header file dependency */
-#if ! defined INC_APPL_BUF_H
-#error include appl_buf.h before
-#endif /* #if ! defined INC_APPL_BUF_H */
-
 typedef
 void *
 (appl_thread_callback)(
@@ -33,8 +28,15 @@ struct appl_thread_descriptor
     void *
         p_context;
 
-    struct appl_buf
-        o_name;
+    /* -- */
+
+    unsigned char const *
+        p_name_min;
+
+    unsigned char const *
+        p_name_max;
+
+    /* -- */
 
     unsigned long int
         i_stack_size;

@@ -4,17 +4,19 @@
 
 */
 
-#include "appl_status.h"
+#include <sys/socket.h>
 
-#include "appl_types.h"
+#include <appl_status.h>
 
-#include "appl_object.h"
+#include <appl_types.h>
 
-#include "appl_socket_descriptor.h"
+#include <appl_object.h>
 
-#include "appl_socket_node.h"
+#include <appl_socket_descriptor.h>
 
-#include "appl_socket_std_node.h"
+#include <appl_socket_node.h>
+
+#include <appl_socket_std_node.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -98,6 +100,42 @@ appl_socket_std_node::init(
 
     static_cast<void>(
         p_socket_descriptor);
+
+    // call socket()
+    enum appl_socket_protocol
+        e_protocol = appl_socket_protocol_tcp_stream;
+
+    appl_socket_property_get_protocol(
+        p_socket_descriptor,
+        &(
+            e_protocol));
+
+    int
+        fd;
+
+    if (
+        appl_socket_protocol_tcp_stream == e_protocol)
+    {
+        fd =
+            socket(
+                AF_INET,
+                SOCK_STREAM,
+                0);
+    }
+    else
+    {
+    }
+
+    static_cast<void>(
+        fd);
+
+    // call bind()
+
+    // call connect()
+
+    // call listen()
+
+    // call accept()
 
     e_status =
         appl_status_fail;

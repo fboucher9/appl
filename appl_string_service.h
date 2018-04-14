@@ -13,8 +13,6 @@
 
 struct appl_object_handle;
 
-struct appl_buf;
-
 struct appl_string_handle;
 
 /* Assert compiler */

@@ -48,11 +48,15 @@ appl_address_node::get_handle(void)
 //
 enum appl_status
     appl_address_node::v_get_name(
-        struct appl_buf * const
-            p_name_buf)
+        unsigned char * * const
+            pp_name_cur,
+        unsigned char * const
+            p_name_max) const
 {
     static_cast<void>(
-        p_name_buf);
+        pp_name_cur);
+    static_cast<void>(
+        p_name_max);
     return
         appl_status_not_implemented;
 } // v_get_name()
@@ -63,7 +67,7 @@ enum appl_status
 enum appl_status
     appl_address_node::v_get_port(
         unsigned short int * const
-            r_port)
+            r_port) const
 {
     static_cast<void>(
         r_port);

@@ -11,11 +11,6 @@
 
 #define INC_APPL_FILE_DESCRIPTOR_H
 
-/* Header file dependencies */
-#if !defined(INC_APPL_BUF_H)
-#error include appl_buf.h before
-#endif /* #if !defined(INC_APPL_BUF_H) */
-
 /*
 
 */
@@ -51,14 +46,24 @@ enum appl_file_mode
 */
 struct appl_file_descriptor
 {
-    struct appl_buf
-        o_name;
+    unsigned char const *
+        p_name_min;
+
+    unsigned char const *
+        p_name_max;
+
+    /* -- */
 
     enum appl_file_type
         e_type;
 
     enum appl_file_mode
         e_mode;
+
+    unsigned int
+        ui_padding[2u];
+
+    /* -- */
 
 }; /* struct appl_file_descriptor */
 

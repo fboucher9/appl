@@ -11,18 +11,16 @@
 
 #define INC_APPL_ADDRESS_DESCRIPTOR_H
 
-/* Header file dependency */
-#if ! defined INC_APPL_BUF_H
-#error include appl_buf.h before
-#endif /* #if ! defined INC_APPL_BUF_H */
-
 /*
 
 */
 struct appl_address_descriptor
 {
-    struct appl_buf
-        o_name;
+    unsigned char const *
+        p_name_min;
+
+    unsigned char const *
+        p_name_max;
 
     /* -- */
 
