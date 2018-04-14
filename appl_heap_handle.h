@@ -4,6 +4,7 @@
 
 */
 
+/* Reverse include guard */
 #if defined(INC_APPL_HEAP_HANDLE_H)
 #error include appl_heap_handle.h once
 #endif /* #if defined(INC_APPL_HEAP_HANDLE_H) */

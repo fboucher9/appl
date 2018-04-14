@@ -256,7 +256,7 @@ appl_context_std::init_options(
         p_context_descriptor->p_arg_max;
 
     e_status =
-        appl_options_std::create_instance(
+        appl_options_std::s_create(
             m_context,
             &(
                 o_options_std_descriptor),

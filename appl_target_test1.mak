@@ -60,6 +60,8 @@ test_appl-deps = \
     appl_object_handle.cpp \
     appl_options.cpp \
     appl_options_std.cpp \
+    appl_options_handle.cpp \
+    appl_options_service.cpp \
     appl_poll_handle.cpp \
     appl_poll_mgr.cpp \
     appl_poll_node.cpp \

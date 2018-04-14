@@ -18,8 +18,6 @@
 
 struct appl_context_handle;
 
-struct appl_options_descriptor;
-
 #if defined(__cplusplus)
 extern "C" {
 #endif /* #if defined(__cplusplus) */
@@ -28,11 +26,7 @@ extern "C" {
 enum appl_status
 appl_main(
     struct appl_context_handle * const
-        p_context_handle,
-    struct appl_options_descriptor const * const
-        p_options_descriptor,
-    int * const
-        r_exit_code);
+        p_context_handle);
 
 #if defined(__cplusplus)
 } /* extern "C" */

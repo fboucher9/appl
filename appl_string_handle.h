@@ -145,6 +145,22 @@ appl_string_read(
         r_buf_max);
 
 enum appl_status
+appl_string_begin_write(
+    struct appl_string_handle * const
+        p_string_handle,
+    unsigned char * * const
+        r_buf_it,
+    unsigned char * * const
+        r_buf_max);
+
+enum appl_status
+appl_string_end_write(
+    struct appl_string_handle * const
+        p_string_handle,
+    unsigned char * const
+        r_buf_it);
+
+enum appl_status
 appl_string_write_char(
     struct appl_string_handle * const
         p_string_handle,

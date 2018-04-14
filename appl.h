@@ -132,7 +132,7 @@ Description:
 
 #if defined(APPL_CONFIG_WITH_MAIN)
 
-#include "appl_options_descriptor.h"
+#include "appl_options_handle.h"
 
 #include "appl_main.h"
 

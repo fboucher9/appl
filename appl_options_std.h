@@ -10,8 +10,6 @@
 
 #define INC_APPL_OPTIONS_STD_H
 
-struct appl_options_descriptor;
-
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -19,6 +17,8 @@ struct appl_options_descriptor;
 class appl_options;
 
 class appl_options_std;
+
+class appl_string;
 
 struct appl_options_std_descriptor
 {
@@ -39,7 +39,7 @@ class appl_options_std : public appl_options
 
         static
         enum appl_status
-        create_instance(
+        s_create(
             class appl_context * const
                 p_context,
             struct appl_options_std_descriptor const * const
@@ -59,10 +59,10 @@ class appl_options_std : public appl_options
         void *
             m_placement_buf;
 
-        struct appl_buf *
+        class appl_string * *
             m_buf_min;
 
-        struct appl_buf *
+        class appl_string * *
             m_buf_max;
 
         appl_options_std(
@@ -93,9 +93,19 @@ class appl_options_std : public appl_options
 
         virtual
         enum appl_status
-            query(
-                struct appl_options_descriptor * const
-                    p_options_descriptor);
+            v_count(
+                unsigned long int * const
+                    r_count) const;
+
+        virtual
+        enum appl_status
+            v_get(
+                unsigned long int const
+                    i_index,
+                unsigned char const * * const
+                    r_buf_min,
+                unsigned char const * * const
+                    r_buf_max) const;
 
 }; // class appl_options_std
 

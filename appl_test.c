@@ -319,35 +319,60 @@ appl_test_print_number(
 }
 
 static void appl_test_options(
-    struct appl_options_descriptor const * const
-        p_options_descriptor)
+    struct appl_context_handle * const
+        p_context_handle)
 {
-    struct appl_buf *
-        p_buf_it;
+    enum appl_status
+        e_status;
 
-    unsigned int
+    unsigned long int
+        argc;
+
+    unsigned long int
         argi;
 
-    p_buf_it =
-        p_options_descriptor->p_buf_min;
+    e_status =
+        appl_options_count(
+            &(
+                p_context_handle->o_object_handle),
+            &(
+                argc));
 
     argi = 0;
 
     while (
-        p_buf_it < p_options_descriptor->p_buf_max)
+        argi < argc)
     {
-        appl_printf(
-            "[%3u] [%.*s]\n",
-            argi,
-            (int)(
-                p_buf_it->o_max.pc_uchar
-                - p_buf_it->o_min.pc_uchar),
-            (char const *)(
-                p_buf_it->o_min.pc_uchar));
+        unsigned char const *
+            p_buf_min;
+
+        unsigned char const *
+            p_buf_max;
+
+        e_status =
+            appl_options_get(
+                &(
+                    p_context_handle->o_object_handle),
+                argi,
+                &(
+                    p_buf_min),
+                &(
+                    p_buf_max));
+
+        if (
+            appl_status_ok == e_status)
+        {
+            appl_printf(
+                "[%3u] [%.*s]\n",
+                argi,
+                (int)(
+                    p_buf_max
+                    - p_buf_min),
+                (char const *)(
+                    p_buf_min));
+        }
 
         argi ++;
-
-        p_buf_it ++;
     }
 }
 
@@ -954,11 +979,7 @@ appl_test_env(
 enum appl_status
 appl_main(
     struct appl_context_handle * const
-        p_context_handle,
-    struct appl_options_descriptor const * const
-        p_options_descriptor,
-    int * const
-        p_exit_code)
+        p_context_handle)
 {
     enum appl_status
         e_status;
@@ -966,7 +987,7 @@ appl_main(
     /* Print the argument list */
     {
         appl_test_options(
-            p_options_descriptor);
+            p_context_handle);
     }
 
     /* Test memory leak */
@@ -1158,10 +1179,6 @@ appl_main(
         appl_test_env(
             p_context_handle);
     }
-
-    *(
-        p_exit_code) =
-        0;
 
     e_status =
         appl_status_ok;

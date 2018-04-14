@@ -58,35 +58,17 @@ main(
         appl_status_ok
         == e_status)
     {
-        /* Create options */
-        class appl_context * const
-            p_context =
-            appl_context::convert_handle(
-                p_context_handle);
-
-        struct appl_options_descriptor
-            o_options_descriptor;
-
+        /* Dispatch */
         e_status =
-            p_context->m_options->query(
-                &(
-                    o_options_descriptor));
+            appl_main(
+                p_context_handle);
 
         if (
             appl_status_ok
             == e_status)
         {
-            /* Dispatch */
             i_exit_code =
-                1;
-
-            e_status =
-                appl_main(
-                    p_context_handle,
-                    &(
-                        o_options_descriptor),
-                    &(
-                        i_exit_code));
+                0;
         }
         else
         {

@@ -6,8 +6,6 @@
 
 #include "appl_status.h"
 
-#include "appl_buf.h"
-
 #include "appl_types.h"
 
 #include "appl_object.h"
@@ -16,17 +14,17 @@
 
 #include "appl_options_std.h"
 
+#include "appl_string.h"
+
 #include "appl_context.h"
 
 #include "appl_heap.h"
-
-#include "appl_options_descriptor.h"
 
 //
 //
 //
 enum appl_status
-appl_options_std::create_instance(
+appl_options_std::s_create(
     class appl_context * const
         p_context,
     struct appl_options_std_descriptor const * const
@@ -91,7 +89,7 @@ appl_options_std::init(
         static_cast<unsigned long int>(
             i_count
             * sizeof(
-                struct appl_buf));
+                class appl_string *));
 
     e_status =
         m_context->m_heap->v_alloc(
@@ -103,27 +101,64 @@ appl_options_std::init(
         appl_status_ok == e_status)
     {
         m_buf_min =
-            static_cast<struct appl_buf *>(
+            static_cast<class appl_string * *>(
                 m_placement_buf);
 
         m_buf_max =
             m_buf_min
             + i_count;
 
-        for (
-            unsigned long int argi=0;
-            argi<i_count;
-            argi++)
+        unsigned long int
+            argi;
+
+        argi = 0;
+
+        while (
+            (
+                appl_status_ok == e_status)
+            && (
+                argi < i_count))
         {
-            m_buf_min[argi].o_min.pc_void =
-                p_options_std_descriptor->p_arg_min[argi];
+            unsigned char const * const
+                p_buf_min =
+                reinterpret_cast<unsigned char const *>(
+                    p_options_std_descriptor->p_arg_min[argi]);
 
-            m_buf_min[argi].o_max.pc_void =
-                p_options_std_descriptor->p_arg_min[argi];
+            unsigned char const *
+                p_buf_max =
+                p_buf_min;
 
-            while (*(m_buf_min[argi].o_max.pc_uchar))
+            while (*(p_buf_max))
             {
-                m_buf_min[argi].o_max.pc_uchar ++;
+                p_buf_max ++;
+            }
+
+            e_status =
+                appl_string::s_create_ref(
+                    m_context,
+                    p_buf_min,
+                    p_buf_max,
+                    m_buf_min + argi);
+
+            if (
+                appl_status_ok == e_status)
+            {
+                argi++;
+            }
+            else
+            {
+                while (argi)
+                {
+                    argi --;
+
+                    class appl_string * const
+                        p_string =
+                        m_buf_min[argi];
+
+                    p_string->destroy();
+
+                    m_buf_min[argi] = 0;
+                }
             }
         }
 
@@ -145,6 +180,28 @@ appl_options_std::cleanup(void)
     enum appl_status
         e_status;
 
+    class appl_string * *
+        p_buf_it;
+
+    p_buf_it =
+        m_buf_min;
+
+    while (
+        p_buf_it
+        < m_buf_max)
+    {
+        class appl_string * const
+            p_string =
+            *(p_buf_it);
+
+        p_string->destroy();
+
+        *(p_buf_it) =
+            0;
+
+        p_buf_it ++;
+    }
+
     m_context->m_heap->v_free(
         m_placement_buf);
 
@@ -160,18 +217,22 @@ appl_options_std::cleanup(void)
 //
 //
 enum appl_status
-appl_options_std::query(
-    struct appl_options_descriptor * const
-        p_options_descriptor)
+appl_options_std::v_count(
+    unsigned long int * const
+        r_count) const
 {
     enum appl_status
         e_status;
 
-    p_options_descriptor->p_buf_min =
-        m_buf_min;
+    unsigned long int const
+        i_count =
+        static_cast<unsigned long int>(
+            m_buf_max
+            - m_buf_min);
 
-    p_options_descriptor->p_buf_max =
-        m_buf_max;
+    *(
+        r_count) =
+        i_count;
 
     e_status =
         appl_status_ok;
@@ -179,6 +240,44 @@ appl_options_std::query(
     return
         e_status;
 
-} // query()
+} // v_count()
+
+//
+//
+//
+enum appl_status
+appl_options_std::v_get(
+    unsigned long int const
+        i_index,
+    unsigned char const * * const
+        r_buf_min,
+    unsigned char const * * const
+        r_buf_max) const
+{
+    enum appl_status
+        e_status;
+
+    if (
+        (m_buf_min + i_index) < m_buf_max)
+    {
+        class appl_string * const
+            p_string =
+            m_buf_min[i_index];
+
+        e_status =
+            p_string->v_read(
+                r_buf_min,
+                r_buf_max);
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // v_get()
 
 /* end-of-file: appl_options_std.cpp */

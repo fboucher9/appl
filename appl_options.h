@@ -10,8 +10,6 @@
 
 #define INC_APPL_OPTIONS_H
 
-struct appl_options_descriptor;
-
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -27,9 +25,19 @@ class appl_options : public appl_object
 
         virtual
         enum appl_status
-            query(
-                struct appl_options_descriptor * const
-                    p_options_descriptor);
+            v_count(
+                unsigned long int * const
+                    r_count) const;
+
+        virtual
+        enum appl_status
+            v_get(
+                unsigned long int const
+                    i_index,
+                unsigned char const * * const
+                    r_buf_min,
+                unsigned char const * * const
+                    r_buf_max) const;
 
     protected:
 

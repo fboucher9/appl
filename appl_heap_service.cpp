@@ -16,26 +16,42 @@
 
 #include "appl_heap.h"
 
+static
+class appl_heap *
+get_heap_from_object(
+    struct appl_object_handle const * const
+        p_object_handle)
+{
+    class appl_object const * const
+        p_object =
+        appl_object::convert_const_handle(
+            p_object_handle);
+
+    class appl_context * const
+        p_context =
+        p_object->get_context();
+
+    return
+        p_context->m_heap;
+
+} // get_heap_from_object()
+
 //
 //
 //
 enum appl_status
     appl_heap_service::s_alloc(
-        struct appl_context_handle * const
-            p_context_handle,
+        struct appl_object_handle const * const
+            p_object_handle,
         unsigned long int const
             i_length,
         void * * const
             r_buf)
 {
-    class appl_context * const
-        p_context =
-        appl_context::convert_handle(
-            p_context_handle);
-
     class appl_heap * const
         p_heap =
-        p_context->m_heap;
+        get_heap_from_object(
+            p_object_handle);
 
     enum appl_status const
         e_status =
@@ -50,19 +66,15 @@ enum appl_status
 
 enum appl_status
     appl_heap_service::s_free(
-        struct appl_context_handle * const
-            p_context_handle,
+        struct appl_object_handle const * const
+            p_object_handle,
         void * const
             p_buf)
 {
-    class appl_context * const
-        p_context =
-        appl_context::convert_handle(
-            p_context_handle);
-
     class appl_heap * const
         p_heap =
-        p_context->m_heap;
+        get_heap_from_object(
+            p_object_handle);
 
     enum appl_status const
         e_status =
@@ -74,10 +86,13 @@ enum appl_status
 
 } // s_free()
 
+//
+//
+//
 enum appl_status
     appl_heap_service::s_realloc(
-        struct appl_context_handle * const
-            p_context_handle,
+        struct appl_object_handle const * const
+            p_object_handle,
         void * const
             p_old_buf,
         unsigned long int const
@@ -85,14 +100,10 @@ enum appl_status
         void * * const
             r_new_buf)
 {
-    class appl_context * const
-        p_context =
-        appl_context::convert_handle(
-            p_context_handle);
-
     class appl_heap * const
         p_heap =
-        p_context->m_heap;
+        get_heap_from_object(
+            p_object_handle);
 
     enum appl_status const
         e_status =

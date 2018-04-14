@@ -27,16 +27,9 @@ appl_heap_alloc(
     enum appl_status
         e_status;
 
-    struct appl_context_handle *
-        p_context_handle;
-
-    p_context_handle =
-        appl_object_get_context_handle(
-            p_object_handle);
-
     e_status =
         appl_heap_service::s_alloc(
-            p_context_handle,
+            p_object_handle,
             i_length,
             r_buf);
 
@@ -58,16 +51,9 @@ appl_heap_free(
     enum appl_status
         e_status;
 
-    struct appl_context_handle *
-        p_context_handle;
-
-    p_context_handle =
-        appl_object_get_context_handle(
-            p_object_handle);
-
     e_status =
         appl_heap_service::s_free(
-            p_context_handle,
+            p_object_handle,
             p_buf);
 
     return
@@ -92,16 +78,9 @@ appl_heap_realloc(
     enum appl_status
         e_status;
 
-    struct appl_context_handle *
-        p_context_handle;
-
-    p_context_handle =
-        appl_object_get_context_handle(
-            p_object_handle);
-
     e_status =
         appl_heap_service::s_realloc(
-            p_context_handle,
+            p_object_handle,
             p_old_buf,
             i_length,
             r_new_buf);

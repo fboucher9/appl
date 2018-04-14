@@ -12,22 +12,53 @@
 
 #include "appl_options.h"
 
+//
+//
+//
 enum appl_status
-    appl_options::query(
-        struct appl_options_descriptor * const
-            p_options_descriptor)
+    appl_options::v_count(
+        unsigned long int * const
+            r_count) const
 {
     static_cast<void>(
-        p_options_descriptor);
+        r_count);
     return
         appl_status_not_implemented;
-} // query()
+} // v_count()
 
+//
+//
+//
+enum appl_status
+    appl_options::v_get(
+        unsigned long int const
+            i_index,
+        unsigned char const * * const
+            r_buf_min,
+        unsigned char const * * const
+            r_buf_max) const
+{
+    static_cast<void>(
+        i_index);
+    static_cast<void>(
+        r_buf_min);
+    static_cast<void>(
+        r_buf_max);
+    return
+        appl_status_not_implemented;
+} // v_get()
+
+//
+//
+//
 appl_options::appl_options() :
     appl_object()
 {
 }
 
+//
+//
+//
 appl_options::~appl_options()
 {
 }
