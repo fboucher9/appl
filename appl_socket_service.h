@@ -19,8 +19,6 @@ struct appl_socket_handle;
 
 struct appl_address_handle;
 
-struct appl_buf;
-
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler

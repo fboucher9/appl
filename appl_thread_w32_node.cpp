@@ -14,8 +14,6 @@
 
 #include "appl_object.h"
 
-#include "appl_buf.h"
-
 #include "appl_thread_node.h"
 
 #include "appl_thread_w32_node.h"
