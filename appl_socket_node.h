@@ -56,28 +56,44 @@ class appl_socket_node : public appl_object
         virtual
         enum appl_status
         v_send(
-            struct appl_buf * const
-                p_buf);
+            unsigned char const * const
+                p_buf_min,
+            unsigned char const * const
+                p_buf_max,
+            unsigned long int * const
+                r_count);
 
         virtual
         enum appl_status
         v_recv(
-            struct appl_buf * const
-                p_buf);
+            unsigned char * const
+                p_buf_min,
+            unsigned char * const
+                p_buf_max,
+            unsigned long int * const
+                r_count);
 
         virtual
         enum appl_status
         v_sendto(
-            struct appl_buf * const
-                p_buf,
+            unsigned char const * const
+                p_buf_min,
+            unsigned char const * const
+                p_buf_max,
+            unsigned long int * const
+                r_count,
             class appl_address_node * const
                 p_remote_address);
 
         virtual
         enum appl_status
         v_recvfrom(
-            struct appl_buf * const
-                p_buf,
+            unsigned char * const
+                p_buf_min,
+            unsigned char * const
+                p_buf_max,
+            unsigned long int * const
+                r_count,
             class appl_address_node * const
                 p_remote_address);
 

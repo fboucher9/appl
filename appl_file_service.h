@@ -16,8 +16,6 @@
 #error include appl_status.h before
 #endif /* #if ! defined INC_APPL_STATUS_H */
 
-struct appl_buf;
-
 struct appl_context_handle;
 
 struct appl_file_handle;

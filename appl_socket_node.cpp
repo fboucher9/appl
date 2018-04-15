@@ -38,11 +38,19 @@ class appl_socket_node *
 //
 enum appl_status
 appl_socket_node::v_send(
-    struct appl_buf * const
-        p_buf)
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    unsigned long int * const
+        r_count)
 {
     static_cast<void>(
-        p_buf);
+        p_buf_min);
+    static_cast<void>(
+        p_buf_max);
+    static_cast<void>(
+        r_count);
     return
         appl_status_not_implemented;
 } // v_send()
@@ -52,50 +60,74 @@ appl_socket_node::v_send(
 //
 enum appl_status
 appl_socket_node::v_recv(
-    struct appl_buf * const
-        p_buf)
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_max,
+    unsigned long int * const
+        r_count)
 {
     static_cast<void>(
-        p_buf);
+        p_buf_min);
+    static_cast<void>(
+        p_buf_max);
+    static_cast<void>(
+        r_count);
     return
         appl_status_not_implemented;
-}
+} // v_recv()
 
 //
 //
 //
 enum appl_status
 appl_socket_node::v_sendto(
-    struct appl_buf * const
-        p_buf,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    unsigned long int * const
+        r_count,
     class appl_address_node * const
         p_remote_address)
 {
     static_cast<void>(
-        p_buf);
+        p_buf_min);
+    static_cast<void>(
+        p_buf_max);
+    static_cast<void>(
+        r_count);
     static_cast<void>(
         p_remote_address);
     return
         appl_status_not_implemented;
-}
+} // v_sendto()
 
 //
 //
 //
 enum appl_status
 appl_socket_node::v_recvfrom(
-    struct appl_buf * const
-        p_buf,
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_max,
+    unsigned long int * const
+        r_count,
     class appl_address_node * const
         p_remote_address)
 {
     static_cast<void>(
-        p_buf);
+        p_buf_min);
+    static_cast<void>(
+        p_buf_max);
+    static_cast<void>(
+        r_count);
     static_cast<void>(
         p_remote_address);
     return
         appl_status_not_implemented;
-}
+} // v_recvfrom()
 
 //
 //

@@ -47,8 +47,12 @@ enum appl_status
 appl_socket_send(
     struct appl_socket_handle * const
         p_socket_handle,
-    struct appl_buf * const
-        p_buf)
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    unsigned long int * const
+        r_count)
 {
     enum appl_status
         e_status;
@@ -56,7 +60,9 @@ appl_socket_send(
     e_status =
         appl_socket_service::s_send(
             p_socket_handle,
-            p_buf);
+            p_buf_min,
+            p_buf_max,
+            r_count);
 
     return
         e_status;
@@ -70,8 +76,12 @@ enum appl_status
 appl_socket_recv(
     struct appl_socket_handle * const
         p_socket_handle,
-    struct appl_buf * const
-        p_buf)
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_max,
+    unsigned long int * const
+        r_count)
 {
     enum appl_status
         e_status;
@@ -79,7 +89,9 @@ appl_socket_recv(
     e_status =
         appl_socket_service::s_recv(
             p_socket_handle,
-            p_buf);
+            p_buf_min,
+            p_buf_max,
+            r_count);
 
     return
         e_status;
@@ -93,8 +105,12 @@ enum appl_status
 appl_socket_sendto(
     struct appl_socket_handle * const
         p_socket_handle,
-    struct appl_buf * const
-        p_buf,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    unsigned long int * const
+        r_count,
     struct appl_address_handle * const
         p_remote_address)
 {
@@ -104,7 +120,9 @@ appl_socket_sendto(
     e_status =
         appl_socket_service::s_sendto(
             p_socket_handle,
-            p_buf,
+            p_buf_min,
+            p_buf_max,
+            r_count,
             p_remote_address);
 
     return
@@ -119,8 +137,12 @@ enum appl_status
 appl_socket_recvfrom(
     struct appl_socket_handle * const
         p_socket_handle,
-    struct appl_buf * const
-        p_buf,
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_max,
+    unsigned long int * const
+        r_count,
     struct appl_address_handle * const
         p_remote_address)
 {
@@ -130,7 +152,9 @@ appl_socket_recvfrom(
     e_status =
         appl_socket_service::s_recvfrom(
             p_socket_handle,
-            p_buf,
+            p_buf_min,
+            p_buf_max,
+            r_count,
             p_remote_address);
 
     return

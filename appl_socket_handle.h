@@ -51,22 +51,34 @@ enum appl_status
 appl_socket_send(
     struct appl_socket_handle * const
         p_socket_handle,
-    struct appl_buf * const
-        p_buf);
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    unsigned long int * const
+        r_count);
 
 enum appl_status
 appl_socket_recv(
     struct appl_socket_handle * const
         p_socket_handle,
-    struct appl_buf * const
-        p_buf);
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_max,
+    unsigned long int * const
+        r_count);
 
 enum appl_status
 appl_socket_sendto(
     struct appl_socket_handle * const
         p_socket_handle,
-    struct appl_buf * const
-        p_buf,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    unsigned long int * const
+        r_count,
     struct appl_address_handle * const
         p_remote_address);
 
@@ -74,8 +86,12 @@ enum appl_status
 appl_socket_recvfrom(
     struct appl_socket_handle * const
         p_socket_handle,
-    struct appl_buf * const
-        p_buf,
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_max,
+    unsigned long int * const
+        r_count,
     struct appl_address_handle * const
         p_remote_address);
 

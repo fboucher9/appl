@@ -270,8 +270,8 @@ enum appl_status
             int const
                 i_setenv_result =
                 setenv(
-                    o_name_allocation.p_char,
-                    o_value_allocation.p_char,
+                    p_name0,
+                    p_value0,
                     1);
 
             if (
