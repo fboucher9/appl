@@ -36,20 +36,14 @@ class appl_string_service
         s_create(
             struct appl_object_handle const * const
                 p_object_handle,
-            unsigned long int const
-                i_alloc_len,
-            struct appl_string_handle * * const
-                r_string_handle);
-
-        static
-        enum appl_status
-        s_create_ref(
-            struct appl_object_handle const * const
-                p_object_handle,
             unsigned char const * const
                 p_buf_min,
             unsigned char const * const
+                p_buf_cur,
+            unsigned char const * const
                 p_buf_max,
+            unsigned long int const
+                i_alloc_len,
             struct appl_string_handle * * const
                 r_string_handle);
 

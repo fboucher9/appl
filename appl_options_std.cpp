@@ -134,10 +134,12 @@ appl_options_std::init(
             }
 
             e_status =
-                appl_string::s_create_ref(
+                appl_string::s_create(
                     m_context,
                     p_buf_min,
                     p_buf_max,
+                    p_buf_min,
+                    0,
                     m_buf_min + argi);
 
             if (

@@ -27,6 +27,9 @@ appl_string_create(
     return
         appl_string_service::s_create(
             p_object_handle,
+            0,
+            0,
+            0,
             i_alloc_len,
             r_string_handle);
 
@@ -44,10 +47,12 @@ appl_string_create_ref_buffer(
         r_string_handle)
 {
     return
-        appl_string_service::s_create_ref(
+        appl_string_service::s_create(
             p_object_handle,
             p_buf_min,
             p_buf_max,
+            p_buf_min,
+            0,
             r_string_handle);
 
 } /* create_ref_buffer() */
@@ -72,10 +77,12 @@ appl_string_create_ref_buffer_n(
         : p_buf_max;
 
     return
-        appl_string_service::s_create_ref(
+        appl_string_service::s_create(
             p_object_handle,
             p_buf_min,
             p_buf_end,
+            p_buf_min,
+            0,
             r_string_handle);
 
 } /* create_ref_buffer_n() */
@@ -218,6 +225,9 @@ appl_string_create_dup_buffer_n(
     e_status =
         appl_string_service::s_create(
             p_object_handle,
+            0,
+            0,
+            0,
             i_count,
             &(
                 p_string_handle));
@@ -345,6 +355,37 @@ appl_string_create_dup_object_n(
         e_status;
 
 } /* create_dup_object_n() */
+
+/*
+
+*/
+enum appl_status
+appl_string_create_extern(
+    struct appl_object_handle const * const
+        p_object_handle,
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_max,
+    struct appl_string_handle * * const
+        r_string_handle)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_string_service::s_create(
+            p_object_handle,
+            p_buf_min,
+            p_buf_min,
+            p_buf_max,
+            0,
+            r_string_handle);
+
+    return
+        e_status;
+
+} /* create_extern() */
 
 /*
 
