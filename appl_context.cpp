@@ -14,6 +14,8 @@
 
 #include "appl_context.h"
 
+#include "appl_object_handle.h"
+
 //
 //
 //
@@ -56,6 +58,21 @@ appl_context::convert_handle(
             p_context_handle);
 
 } // convert_handle()
+
+//
+//
+//
+class appl_context *
+appl_context::from_object_handle(
+    struct appl_object_handle const * const
+        p_object_handle)
+{
+    return
+        appl_context::convert_handle(
+            appl_object_get_context_handle(
+                p_object_handle));
+
+} // from_object_handle()
 
 //
 //

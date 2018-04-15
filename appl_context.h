@@ -16,6 +16,8 @@
 #error include appl_object.h before
 #endif /* #if !defined(INC_APPL_OBJECT_H) */
 
+struct appl_object_handle;
+
 struct appl_context_handle;
 
 #if !defined(__cplusplus)
@@ -108,6 +110,12 @@ class appl_context : public appl_object
         convert_handle(
             struct appl_context_handle * const
                 p_context_handle);
+
+        static
+        class appl_context *
+        from_object_handle(
+            struct appl_object_handle const * const
+                p_object_handle);
 
         struct appl_context_handle *
             get_handle(void);

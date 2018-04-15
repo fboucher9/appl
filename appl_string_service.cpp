@@ -29,59 +29,29 @@ enum appl_status
 appl_string_service::s_create(
     struct appl_object_handle const * const
         p_object_handle,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_cur,
+    unsigned char const * const
+        p_buf_max,
     unsigned long int const
         i_alloc_len,
     struct appl_string_handle * * const
         r_string_handle)
 {
-    struct appl_context_handle * const
-        p_context_handle =
-        appl_object_get_context_handle(
-            p_object_handle);
-
     class appl_context * const
         p_context =
-        appl_context::convert_handle(
-            p_context_handle);
+        appl_context::from_object_handle(
+            p_object_handle);
 
     return
         appl_string::s_create(
             p_context,
-            i_alloc_len,
-            reinterpret_cast<class appl_string * *>(
-                r_string_handle));
-
-} // s_create()
-
-//
-//
-//
-enum appl_status
-appl_string_service::s_create_ref(
-    struct appl_object_handle const * const
-        p_object_handle,
-    unsigned char const * const
-        p_buf_min,
-    unsigned char const * const
-        p_buf_max,
-    struct appl_string_handle * * const
-        r_string_handle)
-{
-    struct appl_context_handle * const
-        p_context_handle =
-        appl_object_get_context_handle(
-            p_object_handle);
-
-    class appl_context * const
-        p_context =
-        appl_context::convert_handle(
-            p_context_handle);
-
-    return
-        appl_string::s_create_ref(
-            p_context,
             p_buf_min,
+            p_buf_cur,
             p_buf_max,
+            i_alloc_len,
             reinterpret_cast<class appl_string * *>(
                 r_string_handle));
 

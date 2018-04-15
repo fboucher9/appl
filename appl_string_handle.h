@@ -129,6 +129,17 @@ appl_string_create_dup_object_n(
         r_string_handle);
 
 enum appl_status
+appl_string_create_extern(
+    struct appl_object_handle const * const
+        p_object_handle,
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_max,
+    struct appl_string_handle * * const
+        r_string_handle);
+
+enum appl_status
 appl_string_length(
     struct appl_string_handle const * const
         p_string_handle,
