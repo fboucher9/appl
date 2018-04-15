@@ -10,27 +10,27 @@
 
 #include <stdlib.h>
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_env.h"
+#include <appl_env.h>
 
-#include "appl_env_std.h"
+#include <appl_env_std.h>
 
-#include "appl_context.h"
+#include <appl_context.h>
 
-#include "appl_heap.h"
+#include <appl_heap.h>
 
-#include "appl_object_handle.h"
+#include <appl_object_handle.h>
 
-#include "appl_context_handle.h"
+#include <appl_context_handle.h>
 
-#include "appl_string_handle.h"
+#include <appl_string_handle.h>
 
-#include "appl_buf.h"
+#include <appl_buf.h>
 
 //
 //
@@ -101,43 +101,40 @@ enum appl_status
             p_name_max
             - p_name_min);
 
-    union appl_ptr
-        o_name_allocation;
+    char *
+        p_name0;
 
     e_status =
         p_heap->v_alloc(
             i_name_len + 1,
-            &(
-                o_name_allocation.p_void));
+            reinterpret_cast<void * *>(
+                &(
+                    p_name0)));
 
     if (
         appl_status_ok
         == e_status)
     {
         memcpy(
-            o_name_allocation.p_void,
+            p_name0,
             p_name_min,
             i_name_len);
 
-        o_name_allocation.p_uchar[i_name_len] =
+        p_name0[i_name_len] =
             0;
 
-        union appl_ptr
-            o_std_result;
-
-        o_std_result.pc_char =
+        char const * const
+            p_value0 =
             getenv(
-                o_name_allocation.p_char);
+                p_name0);
 
         if (
-            o_std_result.pc_char)
+            p_value0)
         {
-            appl_size_t
-                i_value_len;
-
-            i_value_len =
+            appl_size_t const
+                i_value_len =
                 strlen(
-                    o_std_result.pc_char);
+                    p_value0);
 
             struct appl_string_handle *
                 p_string_handle;
@@ -146,8 +143,10 @@ enum appl_status
                 appl_string_create_dup_buffer(
                     &(
                         m_context->get_handle()->o_object_handle),
-                    o_std_result.pc_uchar,
-                    o_std_result.pc_uchar + i_value_len,
+                    reinterpret_cast<unsigned char const *>(
+                        p_value0),
+                    reinterpret_cast<unsigned char const *>(
+                        p_value0 + i_value_len),
                     &(
                         p_string_handle));
 
@@ -178,7 +177,7 @@ enum appl_status
         }
 
         p_heap->v_free(
-            o_name_allocation.p_void);
+            p_name0);
     }
     else
     {
@@ -218,25 +217,26 @@ enum appl_status
             p_name_max
             - p_name_min);
 
-    union appl_ptr
-        o_name_allocation;
+    char *
+        p_name0;
 
     e_status =
         p_heap->v_alloc(
             i_name_len + 1,
-            &(
-                o_name_allocation.p_void));
+            reinterpret_cast<void * *>(
+                &(
+                    p_name0)));
 
     if (
         appl_status_ok
         == e_status)
     {
         memcpy(
-            o_name_allocation.p_void,
+            p_name0,
             p_name_min,
             i_name_len);
 
-        o_name_allocation.p_uchar[i_name_len] =
+        p_name0[i_name_len] =
             0;
 
         appl_size_t const
@@ -245,31 +245,30 @@ enum appl_status
                 p_value_max
                 - p_value_min);
 
-        union appl_ptr
-            o_value_allocation;
+        char *
+            p_value0;
 
         e_status =
             p_heap->v_alloc(
                 i_value_len + 1,
-                &(
-                    o_value_allocation.p_void));
+                reinterpret_cast<void * *>(
+                    &(
+                        p_value0)));
 
         if (
             appl_status_ok
             == e_status)
         {
             memcpy(
-                o_value_allocation.p_void,
+                p_value0,
                 p_value_min,
                 i_value_len);
 
-            o_value_allocation.p_uchar[i_value_len] =
+            p_value0[i_value_len] =
                 0;
 
-            int
-                i_setenv_result;
-
-            i_setenv_result =
+            int const
+                i_setenv_result =
                 setenv(
                     o_name_allocation.p_char,
                     o_value_allocation.p_char,
@@ -288,11 +287,11 @@ enum appl_status
             }
 
             p_heap->v_free(
-                o_value_allocation.p_void);
+                p_value0);
         }
 
         p_heap->v_free(
-            o_name_allocation.p_void);
+            p_name0);
     }
 
     return
