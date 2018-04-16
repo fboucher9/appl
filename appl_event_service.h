@@ -11,11 +11,11 @@
 
 #define INC_APPL_EVENT_SERVICE_H
 
-struct appl_context_handle;
+struct appl_context;
 
-struct appl_mutex_handle;
+struct appl_mutex;
 
-struct appl_event_handle;
+struct appl_event;
 
 struct appl_event_descriptor;
 
@@ -36,26 +36,26 @@ class appl_event_service
         static
         enum appl_status
         s_create(
-            struct appl_context_handle * const
-                p_context_handle,
+            struct appl_context * const
+                p_context,
             struct appl_event_descriptor const * const
                 p_event_descriptor,
-            struct appl_event_handle * * const
-                r_event_handle);
+            struct appl_event * * const
+                r_event);
 
         static
         enum appl_status
         s_signal(
-            struct appl_event_handle * const
-                p_event_handle);
+            struct appl_event * const
+                p_event);
 
         static
         enum appl_status
         s_wait(
-            struct appl_event_handle * const
-                p_event_handle,
-            struct appl_mutex_handle * const
-                p_mutex_handle,
+            struct appl_event * const
+                p_event,
+            struct appl_mutex * const
+                p_mutex,
             unsigned long int const
                 i_wait_freq,
             unsigned long int const

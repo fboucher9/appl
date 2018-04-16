@@ -54,12 +54,12 @@ Description:
 //
 enum appl_status
     appl_address_std_node::s_create(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         struct appl_property_handle const * const
             p_property_handle,
-        class appl_address_node * * const
-            r_address_node)
+        struct appl_address * * const
+            r_address)
 {
     return
         appl_object::s_create(
@@ -69,7 +69,7 @@ enum appl_status
             &(
                 appl_address_std_node::s_new),
             p_property_handle,
-            r_address_node);
+            r_address);
 
 } // s_create()
 
@@ -77,7 +77,7 @@ enum appl_status
 //
 //
 appl_address_std_node::appl_address_std_node() :
-    appl_address_node(),
+    appl_address(),
     m_sockaddr_storage()
 {
 }
@@ -113,9 +113,9 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_property_handle const * const
-        p_property_handle =
-        static_cast<struct appl_property_handle const *>(
+    struct appl_property const * const
+        p_property =
+        static_cast<struct appl_property const *>(
             p_descriptor);
 
     struct appl_address_descriptor
@@ -124,7 +124,7 @@ enum appl_status
     if (
         appl_status_ok
         == appl_address_property_get_name(
-            p_property_handle,
+            p_property,
             &(
                 o_address_descriptor.p_name_min),
             &(
@@ -137,7 +137,7 @@ enum appl_status
     if (
         appl_status_ok
         == appl_address_property_get_port(
-            p_property_handle,
+            p_property,
             &(
                 o_address_descriptor.i_port)))
     {

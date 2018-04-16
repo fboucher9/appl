@@ -57,8 +57,8 @@ class appl_env_w32 : public appl_env
                     p_name_min,
                 unsigned char const * const
                     p_name_max,
-                struct appl_string_handle * * const
-                    r_string_handle);
+                struct appl_string * * const
+                    r_string);
 
         virtual
         enum appl_status

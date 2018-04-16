@@ -11,9 +11,9 @@
 
 #define INC_APPL_OPTIONS_HANDLE_H
 
-struct appl_object_handle;
+struct appl_object;
 
-struct appl_string_handle;
+struct appl_string;
 
 #if defined __cplusplus
 extern "C" {
@@ -21,15 +21,15 @@ extern "C" {
 
 enum appl_status
 appl_options_count(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned long int * const
         r_count);
 
 enum appl_status
 appl_options_get(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned long int const
         i_index,
     unsigned char const * * const

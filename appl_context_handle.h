@@ -22,12 +22,7 @@ struct appl_context_descriptor
 
 }; /* struct appl_context_descriptor */
 
-struct appl_context_handle
-{
-    struct appl_object_handle
-        o_object_handle;
-
-}; /* struct appl_context_handle */
+struct appl_context;
 
 #if defined(__cplusplus)
 extern "C" {
@@ -37,8 +32,18 @@ enum appl_status
 appl_context_create(
     struct appl_context_descriptor const * const
         p_client_descriptor,
-    struct appl_context_handle * * const
-        r_context_handle);
+    struct appl_context * * const
+        r_context);
+
+struct appl_object *
+appl_context_parent(
+    struct appl_context * const
+        p_context);
+
+struct appl_object const *
+appl_context_const_parent(
+    struct appl_context const * const
+        p_context);
 
 #if defined(__cplusplus)
 } /* extern "C" */

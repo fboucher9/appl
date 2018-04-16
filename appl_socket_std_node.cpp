@@ -4,7 +4,17 @@
 
 */
 
+#if defined APPL_OS_LINUX
+
 #include <sys/socket.h>
+
+#endif /* #if defined APPL_OS_LINUX */
+
+#if defined APPL_OS_WINDOWS
+
+#include <winsock2.h>
+
+#endif /* #if defined APPL_OS_WINDOWS */
 
 #include <appl_status.h>
 

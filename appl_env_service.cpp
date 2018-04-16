@@ -23,27 +23,22 @@
 //
 enum appl_status
 appl_env_service::s_get(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned char const * const
         p_name_min,
     unsigned char const * const
         p_name_max,
-    struct appl_string_handle * * const
-        r_string_handle)
+    struct appl_string * * const
+        r_string)
 {
     enum appl_status
         e_status;
 
-    struct appl_context_handle * const
-        p_context_handle =
-        appl_object_get_context_handle(
-            p_object_handle);
-
-    class appl_context * const
+    struct appl_context * const
         p_context =
-        appl_context::convert_handle(
-            p_context_handle);
+        appl_object_get_context(
+            p_object);
 
     class appl_env * const
         p_env =
@@ -53,7 +48,7 @@ appl_env_service::s_get(
         p_env->v_get(
             p_name_min,
             p_name_max,
-            r_string_handle);
+            r_string);
 
     return
         e_status;
@@ -65,8 +60,8 @@ appl_env_service::s_get(
 //
 enum appl_status
 appl_env_service::s_set(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned char const * const
         p_name_min,
     unsigned char const * const
@@ -79,15 +74,10 @@ appl_env_service::s_set(
     enum appl_status
         e_status;
 
-    struct appl_context_handle * const
-        p_context_handle =
-        appl_object_get_context_handle(
-            p_object_handle);
-
-    class appl_context * const
+    struct appl_context * const
         p_context =
-        appl_context::convert_handle(
-            p_context_handle);
+        appl_object_get_context(
+            p_object);
 
     class appl_env * const
         p_env =

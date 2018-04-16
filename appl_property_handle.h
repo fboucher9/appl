@@ -16,16 +16,9 @@
 #error include appl_object_handle.h before
 #endif /* #if ! defined INC_APPL_OBJECT_HANDLE_H */
 
-struct appl_context_handle;
+struct appl_context;
 
-struct appl_property_handle;
-
-struct appl_property_handle
-{
-    struct appl_object_handle
-        o_object_handle;
-
-}; /* struct appl_property_handle */
+struct appl_property;
 
 #if defined __cplusplus
 extern "C" {
@@ -33,17 +26,27 @@ extern "C" {
 
 enum appl_status
 appl_property_create(
-    struct appl_context_handle * const
-        p_context_handle,
+    struct appl_context * const
+        p_context,
     unsigned int const
         i_count,
-    struct appl_property_handle * * const
-        r_property_handle);
+    struct appl_property * * const
+        r_property);
+
+struct appl_object *
+appl_property_parent(
+    struct appl_property * const
+        p_property);
+
+struct appl_object const *
+appl_property_const_parent(
+    struct appl_property const * const
+        p_property);
 
 enum appl_status
 appl_property_set_ptr(
-    struct appl_property_handle * const
-        p_property_handle,
+    struct appl_property * const
+        p_property,
     unsigned int const
         i_id,
     void const * const
@@ -51,8 +54,8 @@ appl_property_set_ptr(
 
 enum appl_status
 appl_property_set_ulong(
-    struct appl_property_handle * const
-        p_property_handle,
+    struct appl_property * const
+        p_property,
     unsigned int const
         i_id,
     unsigned long int const
@@ -60,8 +63,8 @@ appl_property_set_ulong(
 
 enum appl_status
 appl_property_set_long(
-    struct appl_property_handle * const
-        p_property_handle,
+    struct appl_property * const
+        p_property,
     unsigned int const
         i_id,
     signed long int const
@@ -69,8 +72,8 @@ appl_property_set_long(
 
 enum appl_status
 appl_property_get_ptr(
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_property const * const
+        p_property,
     unsigned int const
         i_id,
     void * * const
@@ -78,8 +81,8 @@ appl_property_get_ptr(
 
 enum appl_status
 appl_property_get_ulong(
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_property const * const
+        p_property,
     unsigned int const
         i_id,
     unsigned long int * const
@@ -87,8 +90,8 @@ appl_property_get_ulong(
 
 enum appl_status
 appl_property_get_long(
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_property const * const
+        p_property,
     unsigned int const
         i_id,
     signed long int * const

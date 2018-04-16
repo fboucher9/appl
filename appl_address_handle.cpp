@@ -17,18 +17,18 @@
 */
 enum appl_status
 appl_address_create(
-    struct appl_context_handle * const
-        p_context_handle,
-    struct appl_property_handle const * const
-        p_property_handle,
-    struct appl_address_handle * * const
-        r_address_handle)
+    struct appl_context * const
+        p_context,
+    struct appl_property const * const
+        p_property,
+    struct appl_address * * const
+        r_address)
 {
     return
         appl_address_service::s_create(
-            p_context_handle,
-            p_property_handle,
-            r_address_handle);
+            p_context,
+            p_property,
+            r_address);
 
 } /* appl_address_create() */
 
@@ -37,8 +37,8 @@ appl_address_create(
 */
 enum appl_status
 appl_address_get_name(
-    struct appl_address_handle * const
-        p_address_handle,
+    struct appl_address * const
+        p_address,
     unsigned char * * const
         pp_name_cur,
     unsigned char * const
@@ -46,7 +46,7 @@ appl_address_get_name(
 {
     return
         appl_address_service::s_get_name(
-            p_address_handle,
+            p_address,
             pp_name_cur,
             p_name_max);
 
@@ -57,14 +57,14 @@ appl_address_get_name(
 */
 enum appl_status
 appl_address_get_port(
-    struct appl_address_handle * const
-        p_address_handle,
+    struct appl_address * const
+        p_address,
     unsigned short int * const
         r_port)
 {
     return
         appl_address_service::s_get_port(
-            p_address_handle,
+            p_address,
             r_port);
 
 } /* appl_address_get_port() */

@@ -13,14 +13,14 @@
 
 struct appl_event_descriptor;
 
+struct appl_context;
+
+struct appl_event;
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
-
-class appl_context;
-
-class appl_event_node;
 
 class appl_event_mgr;
 
@@ -34,12 +34,12 @@ class appl_event_mgr : public appl_object
         virtual
         enum appl_status
             v_create(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 struct appl_event_descriptor const * const
                     p_event_descriptor,
-                class appl_event_node * * const
-                    r_event_node);
+                struct appl_event * * const
+                    r_event);
 
     protected:
 

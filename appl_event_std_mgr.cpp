@@ -85,12 +85,12 @@ void
 //
 enum appl_status
     appl_event_std_mgr::v_create(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         struct appl_event_descriptor const * const
             p_event_descriptor,
-        class appl_event_node * * const
-            r_event_node)
+        struct appl_event * * const
+            r_event)
 {
     enum appl_status
         e_status;
@@ -99,7 +99,7 @@ enum appl_status
         appl_event_std_node::s_create(
             p_context,
             p_event_descriptor,
-            r_event_node);
+            r_event);
 
     return
         e_status;

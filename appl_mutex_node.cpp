@@ -16,7 +16,7 @@
 //
 //
 enum appl_status
-    appl_mutex_node::v_lock(void)
+    appl_mutex::v_lock(void)
 {
     enum appl_status
         e_status;
@@ -33,7 +33,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_mutex_node::v_unlock(void)
+    appl_mutex::v_unlock(void)
 {
     enum appl_status
         e_status;
@@ -49,28 +49,14 @@ enum appl_status
 //
 //
 //
-class appl_mutex_node *
-appl_mutex_node::convert_handle(
-    struct appl_mutex_handle * const
-        p_mutex_handle)
-{
-    return
-        reinterpret_cast<class appl_mutex_node *>(
-            p_mutex_handle);
-
-} // convert_handle()
-
-//
-//
-//
-appl_mutex_node::appl_mutex_node()
+appl_mutex::appl_mutex()
 {
 }
 
 //
 //
 //
-appl_mutex_node::~appl_mutex_node()
+appl_mutex::~appl_mutex()
 {
 }
 

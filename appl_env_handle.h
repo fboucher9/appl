@@ -10,9 +10,9 @@
 
 #define INC_APPL_ENV_HANDLE_H
 
-struct appl_object_handle;
+struct appl_object;
 
-struct appl_string_handle;
+struct appl_string;
 
 #if defined __cplusplus
 extern "C" {
@@ -20,19 +20,19 @@ extern "C" {
 
 enum appl_status
 appl_env_get(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned char const * const
         p_name_min,
     unsigned char const * const
         p_name_max,
-    struct appl_string_handle * * const
-        r_string_handle);
+    struct appl_string * * const
+        r_string);
 
 enum appl_status
 appl_env_set(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned char const * const
         p_name_min,
     unsigned char const * const

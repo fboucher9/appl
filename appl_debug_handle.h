@@ -14,7 +14,7 @@
 
 #define INC_APPL_DEBUG_HANDLE_H
 
-struct appl_object_handle;
+struct appl_object;
 
 #if defined(__cplusplus)
 extern "C" {
@@ -22,13 +22,13 @@ extern "C" {
 
 enum appl_status
 appl_debug_break(
-    struct appl_object_handle const * const
-        p_object_handle);
+    struct appl_object const * const
+        p_object);
 
 enum appl_status
 appl_debug_print(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned char const * const
         p_msg_min,
     unsigned char const * const

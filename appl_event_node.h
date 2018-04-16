@@ -16,27 +16,19 @@
 #error include appl_object.h before
 #endif /* #if ! defined INC_APPL_OBJECT_H */
 
-struct appl_event_handle;
+struct appl_event;
 
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
-class appl_event_node;
-
 //
 //
 //
-class appl_event_node : public appl_object
+struct appl_event : public appl_object
 {
     public:
-
-        static
-        class appl_event_node *
-            convert_handle(
-                struct appl_event_handle * const
-                    p_event_handle);
 
         virtual
         enum appl_status
@@ -45,7 +37,7 @@ class appl_event_node : public appl_object
         virtual
         enum appl_status
             v_wait(
-                class appl_mutex_node * const
+                struct appl_mutex * const
                     p_mutex_node,
                 unsigned long int const
                     i_wait_freq,
@@ -54,20 +46,20 @@ class appl_event_node : public appl_object
 
     protected:
 
-        appl_event_node();
+        appl_event();
 
         virtual
-        ~appl_event_node();
+        ~appl_event();
 
     private:
 
-        appl_event_node(
-            class appl_event_node const & r);
+        appl_event(
+            struct appl_event const & r);
 
-        class appl_event_node &
+        struct appl_event &
             operator =(
-                class appl_event_node const & r);
+                struct appl_event const & r);
 
-}; // class appl_event_node
+}; // struct appl_event
 
 /* end-of-file: appl_event_node.h */

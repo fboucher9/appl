@@ -20,34 +20,8 @@ Description:
 //
 //
 //
-class appl_address_node *
-appl_address_node::convert_handle(
-    struct appl_address_handle * const
-        p_address_handle)
-{
-    return
-        reinterpret_cast<class appl_address_node *>(
-            p_address_handle);
-
-} // convert_handle()
-
-//
-//
-//
-struct appl_address_handle *
-appl_address_node::get_handle(void)
-{
-    return
-        reinterpret_cast<struct appl_address_handle *>(
-            this);
-
-} // get_handle()
-
-//
-//
-//
 enum appl_status
-    appl_address_node::v_get_name(
+    appl_address::v_get_name(
         unsigned char * * const
             pp_name_cur,
         unsigned char * const
@@ -65,7 +39,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_address_node::v_get_port(
+    appl_address::v_get_port(
         unsigned short int * const
             r_port) const
 {
@@ -76,23 +50,23 @@ enum appl_status
 } // v_get_port()
 
 //
-//  Function: appl_address_node()
+//  Function: appl_address()
 //
 //  Description:
 //      Initialize to default values.
 //
-appl_address_node::appl_address_node() :
+appl_address::appl_address() :
     appl_object()
 {
 }
 
 //
-//  Function: ~appl_address_node()
+//  Function: ~appl_address()
 //
 //  Description:
 //      Deinitialize all members.
 //
-appl_address_node::~appl_address_node()
+appl_address::~appl_address()
 {
 }
 

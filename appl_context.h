@@ -24,7 +24,7 @@ struct appl_context_handle;
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
 
-class appl_context;
+struct appl_context;
 
 class appl_heap;
 
@@ -53,7 +53,7 @@ class appl_env;
 //
 //
 //
-class appl_context : public appl_object
+struct appl_context : public appl_object
 {
     public:
 
@@ -106,19 +106,10 @@ class appl_context : public appl_object
 #endif /* #if defined APPL_DEBUG */
 
         static
-        class appl_context *
-        convert_handle(
-            struct appl_context_handle * const
-                p_context_handle);
-
-        static
-        class appl_context *
+        struct appl_context *
         from_object_handle(
-            struct appl_object_handle const * const
-                p_object_handle);
-
-        struct appl_context_handle *
-            get_handle(void);
+            struct appl_object const * const
+                p_object);
 
     protected:
 
@@ -130,11 +121,11 @@ class appl_context : public appl_object
     private:
 
         appl_context(
-            class appl_context const & r);
+            struct appl_context const & r);
 
-        class appl_context &
+        struct appl_context &
             operator =(
-                class appl_context const & r);
+                struct appl_context const & r);
 
 }; // class appl_context
 

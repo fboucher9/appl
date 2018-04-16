@@ -17,13 +17,13 @@ Description:
 #define INC_APPL_ADDRESS_SERVICE_H
 
 /* Predefine */
-struct appl_context_handle;
+struct appl_context;
 
 /* Predefine */
-struct appl_property_handle;
+struct appl_property;
 
 /* Predefine */
-struct appl_address_handle;
+struct appl_address;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -48,19 +48,19 @@ class appl_address_service
         static
         enum appl_status
         s_create(
-            struct appl_context_handle * const
-                p_context_handle,
-            struct appl_property_handle const * const
+            struct appl_context * const
+                p_context,
+            struct appl_property const * const
                 p_address_descriptor,
-            struct appl_address_handle * * const
-                r_address_handle);
+            struct appl_address * * const
+                r_address);
 
         // Get name of address
         static
         enum appl_status
         s_get_name(
-            struct appl_address_handle * const
-                p_address_handle,
+            struct appl_address * const
+                p_address,
             unsigned char * * const
                 pp_name_cur,
             unsigned char * const
@@ -70,8 +70,8 @@ class appl_address_service
         static
         enum appl_status
         s_get_port(
-            struct appl_address_handle * const
-                p_address_handle,
+            struct appl_address * const
+                p_address,
             unsigned short int * const
                 r_port);
 

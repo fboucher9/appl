@@ -28,8 +28,8 @@
 //
 enum appl_status
 appl_clock_service::s_read(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned long int const
         i_time_freq,
     unsigned long int * const
@@ -38,15 +38,10 @@ appl_clock_service::s_read(
     enum appl_status
         e_status;
 
-    struct appl_context_handle * const
-        p_context_handle =
-        appl_object_get_context_handle(
-            p_object_handle);
-
-    class appl_context * const
+    struct appl_context * const
         p_context =
-        appl_context::convert_handle(
-            p_context_handle);
+        appl_object_get_context(
+            p_object);
 
     class appl_clock * const
         p_clock =
@@ -67,8 +62,8 @@ appl_clock_service::s_read(
 //
 enum appl_status
 appl_clock_service::s_delay(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned long int const
         i_time_freq,
     unsigned long int const
@@ -77,15 +72,10 @@ appl_clock_service::s_delay(
     enum appl_status
         e_status;
 
-    struct appl_context_handle * const
-        p_context_handle =
-        appl_object_get_context_handle(
-            p_object_handle);
-
-    class appl_context * const
+    struct appl_context * const
         p_context =
-        appl_context::convert_handle(
-            p_context_handle);
+        appl_object_get_context(
+            p_object);
 
     class appl_clock * const
         p_clock =

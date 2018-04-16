@@ -34,14 +34,14 @@ class appl_debug_service
         static
         enum appl_status
         s_break(
-            struct appl_context_handle * const
-                p_context_handle);
+            struct appl_context * const
+                p_context);
 
         static
         enum appl_status
         s_print(
-            struct appl_context_handle * const
-                p_context_handle,
+            struct appl_context * const
+                p_context,
             unsigned char const * const
                 p_msg_min,
             unsigned char const * const
@@ -54,16 +54,11 @@ class appl_debug_service
 //
 enum appl_status
     appl_debug_service::s_break(
-        struct appl_context_handle * const
-            p_context_handle)
+        struct appl_context * const
+            p_context)
 {
     enum appl_status
         e_status;
-
-    class appl_context * const
-        p_context =
-        appl_context::convert_handle(
-            p_context_handle);
 
     class appl_debug * const
         p_debug =
@@ -82,8 +77,8 @@ enum appl_status
 //
 enum appl_status
     appl_debug_service::s_print(
-        struct appl_context_handle * const
-            p_context_handle,
+        struct appl_context * const
+            p_context,
         unsigned char const * const
             p_msg_min,
         unsigned char const * const
@@ -91,11 +86,6 @@ enum appl_status
 {
     enum appl_status
         e_status;
-
-    class appl_context * const
-        p_context =
-        appl_context::convert_handle(
-            p_context_handle);
 
     class appl_debug * const
         p_debug =
@@ -116,20 +106,20 @@ enum appl_status
 */
 enum appl_status
 appl_debug_break(
-    struct appl_object_handle const * const
-        p_object_handle)
+    struct appl_object const * const
+        p_object)
 {
     enum appl_status
         e_status;
 
-    struct appl_context_handle * const
-        p_context_handle =
-        appl_object_get_context_handle(
-            p_object_handle);
+    struct appl_context * const
+        p_context =
+        appl_object_get_context(
+            p_object);
 
     e_status =
         appl_debug_service::s_break(
-            p_context_handle);
+            p_context);
 
     return
         e_status;
@@ -141,8 +131,8 @@ appl_debug_break(
 */
 enum appl_status
 appl_debug_print(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned char const * const
         p_msg_min,
     unsigned char const * const
@@ -151,14 +141,14 @@ appl_debug_print(
     enum appl_status
         e_status;
 
-    struct appl_context_handle * const
-        p_context_handle =
-        appl_object_get_context_handle(
-            p_object_handle);
+    struct appl_context * const
+        p_context =
+        appl_object_get_context(
+            p_object);
 
     e_status =
         appl_debug_service::s_print(
-            p_context_handle,
+            p_context,
             p_msg_min,
             p_msg_max);
 

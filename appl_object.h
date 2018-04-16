@@ -15,29 +15,25 @@
 #error include appl_types.h before
 #endif /* #if !defined(INC_APPL_TYPES_H) */
 
-struct appl_context_handle;
+struct appl_context;
 
-struct appl_object_handle;
+struct appl_object;
 
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
 
-class appl_context;
-
-class appl_object;
-
 //
 //
 //
-class appl_object
+struct appl_object
 {
     public:
 
         static
         enum appl_status
             create_instance(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 appl_size_t const
                     i_placement_length,
@@ -46,14 +42,14 @@ class appl_object
                         p_placement),
                 void const * const
                     p_descriptor,
-                class appl_object * * const
+                struct appl_object * * const
                     r_object);
 
         template <typename T_instance>
         static
         enum appl_status
             s_create(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 appl_size_t const
                     i_placement_length,
@@ -70,7 +66,7 @@ class appl_object
                     p_new,
                     static_cast<void const *>(
                         0),
-                    reinterpret_cast<class appl_object * *>(
+                    reinterpret_cast<struct appl_object * *>(
                         r_type_instance));
         }
 
@@ -78,7 +74,7 @@ class appl_object
         static
         enum appl_status
             s_create(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 appl_size_t const
                     i_placement_length,
@@ -97,14 +93,14 @@ class appl_object
                     p_new,
                     static_cast<void const *>(
                         p_type_descriptor),
-                    reinterpret_cast<class appl_object * *>(
+                    reinterpret_cast<struct appl_object * *>(
                         r_type_instance));
         }
 
         static
         enum appl_status
             init_instance(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 void * const
                     p_placement,
@@ -113,14 +109,14 @@ class appl_object
                         p_placement),
                 void const * const
                     p_descriptor,
-                class appl_object * * const
+                struct appl_object * * const
                     r_object);
 
         template <typename T_instance>
         static
         enum appl_status
             s_init(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 void * const
                     p_placement,
@@ -137,7 +133,7 @@ class appl_object
                     p_new,
                     static_cast<void const *>(
                         0),
-                    reinterpret_cast<class appl_object * *>(
+                    reinterpret_cast<struct appl_object * *>(
                         r_object));
         }
 
@@ -145,7 +141,7 @@ class appl_object
         static
         enum appl_status
             s_init(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 void * const
                     p_placement,
@@ -164,7 +160,7 @@ class appl_object
                     p_new,
                     static_cast<void const *>(
                         p_descriptor),
-                    reinterpret_cast<class appl_object * *>(
+                    reinterpret_cast<struct appl_object * *>(
                         r_object));
         }
 
@@ -172,27 +168,12 @@ class appl_object
         enum appl_status
             destroy(void);
 
-        static
-        class appl_object *
-            convert_handle(
-                struct appl_object_handle * const
-                    p_object_handle);
-
-        static
-        class appl_object const *
-            convert_const_handle(
-                struct appl_object_handle const * const
-                    p_object_handle);
-
-        struct appl_context_handle *
-            get_context_handle(void) const;
-
-        class appl_context *
+        struct appl_context *
             get_context(void) const;
 
     protected:
 
-        class appl_context *
+        struct appl_context *
             m_context;
 
         appl_object();
@@ -241,11 +222,11 @@ class appl_object
     private:
 
         appl_object(
-            class appl_object const & r);
+            struct appl_object const & r);
 
         class appl_object &
             operator =(
-                class appl_object const & r);
+                struct appl_object const & r);
 
 }; // class appl_object
 

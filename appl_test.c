@@ -44,8 +44,8 @@ appl_printf(
 static
 void
 appl_test_sleep_msec(
-    struct appl_context_handle * const
-        p_context_handle,
+    struct appl_context * const
+        p_context,
     unsigned long int const
         i_msec_count)
 {
@@ -59,22 +59,22 @@ appl_test_sleep_msec(
         i_time_after;
 
     appl_clock_read(
-        &(
-            p_context_handle->o_object_handle),
+        appl_context_parent(
+            p_context),
         1000ul,
         &(
             i_time_before));
 
     e_status =
         appl_clock_delay(
-            &(
-                p_context_handle->o_object_handle),
+            appl_context_parent(
+                p_context),
             1000ul,
             i_msec_count);
 
     appl_clock_read(
-        &(
-            p_context_handle->o_object_handle),
+        appl_context_parent(
+            p_context),
         1000ul,
         &(
             i_time_after));
@@ -102,8 +102,8 @@ appl_test_sleep_msec(
 static
 void
 appl_test_memory_leak(
-    struct appl_context_handle * const
-        p_context_handle)
+    struct appl_context * const
+        p_context)
 {
     void *
         p_buf;
@@ -113,8 +113,8 @@ appl_test_memory_leak(
 
     e_status =
         appl_heap_alloc(
-            &(
-                p_context_handle->o_object_handle),
+            appl_context_parent(
+                p_context),
             123u,
             &(
                 p_buf));
@@ -131,14 +131,14 @@ appl_test_memory_leak(
 
 struct appl_test_thread_context
 {
-    struct appl_context_handle *
-        p_context_handle;
+    struct appl_context *
+        p_context;
 
-    struct appl_mutex_handle *
-        p_mutex_handle;
+    struct appl_mutex *
+        p_mutex;
 
-    struct appl_event_handle *
-        p_event_handle;
+    struct appl_event *
+        p_event;
 
     void *
         pv_padding[1u];
@@ -171,35 +171,35 @@ appl_test_thread_entry(
         "hello world!\n");
 
     appl_test_sleep_msec(
-        p_test_thread_context->p_context_handle,
+        p_test_thread_context->p_context,
         100ul);
 
     appl_mutex_lock(
-        p_test_thread_context->p_mutex_handle);
+        p_test_thread_context->p_mutex);
 
     appl_printf(
         "thread wait 1 sec...\n");
 
     appl_test_sleep_msec(
-        p_test_thread_context->p_context_handle,
+        p_test_thread_context->p_context,
         1000ul);
 
     appl_printf(
         "... thread wait 1 sec\n");
 
     appl_mutex_unlock(
-        p_test_thread_context->p_mutex_handle);
+        p_test_thread_context->p_mutex);
 
     if (!(p_test_thread_context->b_kill))
     {
         appl_test_sleep_msec(
-            p_test_thread_context->p_context_handle,
+            p_test_thread_context->p_context,
             1000ul);
 
         if (!(p_test_thread_context->b_kill))
         {
             appl_mutex_lock(
-                p_test_thread_context->p_mutex_handle);
+                p_test_thread_context->p_mutex);
 
             appl_printf(
                 "signal event!\n");
@@ -208,10 +208,10 @@ appl_test_thread_entry(
                 1;
 
             appl_event_signal(
-                p_test_thread_context->p_event_handle);
+                p_test_thread_context->p_event);
 
             appl_mutex_unlock(
-                p_test_thread_context->p_mutex_handle);
+                p_test_thread_context->p_mutex);
         }
     }
 
@@ -223,11 +223,11 @@ appl_test_thread_entry(
 static
 void
 appl_test_file_stdout(
-    struct appl_context_handle * const
-        p_context_handle)
+    struct appl_context * const
+        p_context)
 {
-    struct appl_file_handle *
-        p_file_handle;
+    struct appl_file *
+        p_file;
 
     enum appl_status
         e_status;
@@ -248,11 +248,11 @@ appl_test_file_stdout(
 
     e_status =
         appl_file_create(
-            p_context_handle,
+            p_context,
             &(
                 o_file_descriptor),
             &(
-                p_file_handle));
+                p_file));
 
     if (
         appl_status_ok
@@ -274,15 +274,15 @@ appl_test_file_stdout(
 
         e_status =
             appl_file_write(
-                p_file_handle,
+                p_file,
                 g_msg,
                 g_msg + sizeof(g_msg),
                 &(
                     i_count));
 
         appl_object_destroy(
-            &(
-                p_file_handle->o_object_handle));
+            appl_file_parent(
+                p_file));
     }
 
 }
@@ -313,8 +313,8 @@ appl_test_print_number(
 }
 
 static void appl_test_options(
-    struct appl_context_handle * const
-        p_context_handle)
+    struct appl_context * const
+        p_context)
 {
     enum appl_status
         e_status;
@@ -327,8 +327,8 @@ static void appl_test_options(
 
     e_status =
         appl_options_count(
-            &(
-                p_context_handle->o_object_handle),
+            appl_context_parent(
+                p_context),
             &(
                 argc));
 
@@ -345,8 +345,8 @@ static void appl_test_options(
 
         e_status =
             appl_options_get(
-                &(
-                    p_context_handle->o_object_handle),
+                appl_context_parent(
+                    p_context),
                 argi,
                 &(
                     p_buf_min),
@@ -371,23 +371,23 @@ static void appl_test_options(
 }
 
 static void appl_test_thread(
-    struct appl_context_handle * const
-        p_context_handle)
+    struct appl_context * const
+        p_context)
 {
     enum appl_status
         e_status;
 
-    struct appl_thread_handle *
-        p_thread_handle;
+    struct appl_thread *
+        p_thread;
 
-    struct appl_mutex_handle *
-        p_mutex_handle;
+    struct appl_mutex *
+        p_mutex;
 
-    struct appl_event_handle *
-        p_event_handle;
+    struct appl_event *
+        p_event;
 
-    struct appl_thread_property_handle *
-        p_property_handle;
+    struct appl_thread_property *
+        p_property;
 
     struct appl_mutex_descriptor
         o_mutex_descriptor;
@@ -399,27 +399,27 @@ static void appl_test_thread(
         o_test_thread_context;
 
     appl_mutex_create(
-        p_context_handle,
+        p_context,
         &(
             o_mutex_descriptor),
         &(
-            p_mutex_handle));
+            p_mutex));
 
     appl_event_create(
-        p_context_handle,
+        p_context,
         &(
             o_event_descriptor),
         &(
-            p_event_handle));
+            p_event));
 
-    o_test_thread_context.p_context_handle =
-        p_context_handle;
+    o_test_thread_context.p_context =
+        p_context;
 
-    o_test_thread_context.p_mutex_handle =
-        p_mutex_handle;
+    o_test_thread_context.p_mutex =
+        p_mutex;
 
-    o_test_thread_context.p_event_handle =
-        p_event_handle;
+    o_test_thread_context.p_event =
+        p_event;
 
     o_test_thread_context.b_event_signaled =
         0;
@@ -428,27 +428,27 @@ static void appl_test_thread(
         0;
 
     appl_thread_property_create(
-        p_context_handle,
+        p_context,
         &(
-            p_property_handle));
+            p_property));
 
     appl_thread_property_set_callback(
-        p_property_handle,
+        p_property,
         &(
             appl_test_thread_entry));
 
     appl_thread_property_set_context(
-        p_property_handle,
+        p_property,
         &(
             o_test_thread_context));
 
     e_status =
         appl_thread_create(
+            appl_context_parent(
+                p_context),
+            p_property,
             &(
-                p_context_handle->o_object_handle),
-            p_property_handle,
-            &(
-                p_thread_handle));
+                p_thread));
 
     if (
         appl_status_ok
@@ -456,7 +456,7 @@ static void appl_test_thread(
     {
         e_status =
             appl_thread_start(
-                p_thread_handle);
+                p_thread);
 
         if (
             appl_status_ok
@@ -466,31 +466,31 @@ static void appl_test_thread(
                 p_thread_result;
 
             appl_test_sleep_msec(
-                p_context_handle,
+                p_context,
                 200ul);
 
 #if 0
             appl_mutex_lock(
-                p_mutex_handle);
+                p_mutex);
 
             appl_printf(
                 "main sleep 1 sec ...\n");
 
             appl_test_sleep_msec(
-                p_context_handle,
+                p_context,
                 1000ul);
 
             appl_printf(
                 "... main sleep 1 sec\n");
 
             appl_mutex_unlock(
-                p_mutex_handle);
+                p_mutex);
 #endif
 
 #if 0
             /* Wait for event */
             appl_mutex_lock(
-                p_mutex_handle);
+                p_mutex);
 
             appl_printf(
                 "wait for event...\n");
@@ -498,15 +498,15 @@ static void appl_test_thread(
             while (!(o_test_thread_context.b_event_signaled))
             {
                 appl_event_wait(
-                    p_event_handle,
-                    p_mutex_handle);
+                    p_event,
+                    p_mutex);
             }
 
             appl_printf(
                 "... wait done.\n");
 
             appl_mutex_unlock(
-                p_mutex_handle);
+                p_mutex);
 #endif
 
 #if 1
@@ -516,12 +516,12 @@ static void appl_test_thread(
 
             e_status =
                 appl_thread_interrupt(
-                    p_thread_handle);
+                    p_thread);
 #endif
 
             e_status =
                 appl_thread_stop(
-                    p_thread_handle,
+                    p_thread,
                     1,
                     1,
                     &(
@@ -538,29 +538,30 @@ static void appl_test_thread(
         }
 
         appl_object_destroy(
-            &(
-                p_thread_handle->o_object_handle));
+            appl_thread_parent(
+                p_thread));
     }
 
     appl_object_destroy(
-        &(
-            p_property_handle->o_property_handle.o_object_handle));
+        appl_property_parent(
+            appl_thread_property_parent(
+                p_property)));
 
     appl_object_destroy(
-        &(
-            p_event_handle->o_object_handle));
+        appl_event_parent(
+            p_event));
 
     appl_object_destroy(
-        &(
-            p_mutex_handle->o_object_handle));
+        appl_mutex_parent(
+            p_mutex));
 
 }
 
 static
 void
 appl_test_socket(
-    struct appl_context_handle * const
-        p_context_handle)
+    struct appl_context * const
+        p_context)
 {
     static unsigned char const g_name[] =
     {
@@ -582,15 +583,15 @@ appl_test_socket(
     enum appl_status
         e_status;
 
-    struct appl_address_handle *
-        p_address_handle;
+    struct appl_address *
+        p_address;
 
     {
-        struct appl_property_handle *
+        struct appl_property *
             p_address_descriptor;
 
         appl_address_property_create(
-            p_context_handle,
+            p_context,
             &(
                 p_address_descriptor));
 
@@ -605,22 +606,22 @@ appl_test_socket(
 
         e_status =
             appl_address_create(
-                p_context_handle,
+                p_context,
                 p_address_descriptor,
                 &(
-                    p_address_handle));
+                    p_address));
 
         appl_object_destroy(
-            &(
-                p_address_descriptor->o_object_handle));
+            appl_property_parent(
+                p_address_descriptor));
     }
 
     if (
         appl_status_ok
         == e_status)
     {
-        struct appl_socket_handle *
-            p_socket_handle;
+        struct appl_socket *
+            p_socket;
 
         {
             unsigned char
@@ -634,7 +635,7 @@ appl_test_socket(
 
             e_status =
                 appl_address_get_name(
-                    p_address_handle,
+                    p_address,
                     &(
                         p_name_cur),
                     a_name + sizeof a_name);
@@ -659,7 +660,7 @@ appl_test_socket(
 
             e_status =
                 appl_address_get_port(
-                    p_address_handle,
+                    p_address,
                     &(
                         i_port));
 
@@ -675,12 +676,12 @@ appl_test_socket(
         }
 
         {
-            struct appl_property_handle *
+            struct appl_property *
                 p_socket_descriptor;
 
             e_status =
                 appl_socket_property_create(
-                    p_context_handle,
+                    p_context,
                     &(
                         p_socket_descriptor));
 
@@ -691,7 +692,7 @@ appl_test_socket(
                 e_status =
                     appl_socket_property_set_bind_address(
                         p_socket_descriptor,
-                        p_address_handle);
+                        p_address);
 
                 if (
                     appl_status_ok
@@ -699,31 +700,31 @@ appl_test_socket(
                 {
                     e_status =
                         appl_socket_create(
-                            p_context_handle,
+                            p_context,
                             p_socket_descriptor,
                             &(
-                                p_socket_handle));
+                                p_socket));
 
                     if (
                         appl_status_ok
                         == e_status)
                     {
                         appl_object_destroy(
-                            &(
-                                p_socket_handle->o_object_handle));
+                            appl_socket_parent(
+                                p_socket));
                     }
 
                 }
 
                 appl_object_destroy(
-                    &(
-                        p_socket_descriptor->o_object_handle));
+                    appl_property_parent(
+                        p_socket_descriptor));
             }
         }
 
         appl_object_destroy(
-            &(
-                p_address_handle->o_object_handle));
+            appl_address_parent(
+                p_address));
     }
 
 } /* appl_test_socket() */
@@ -731,21 +732,21 @@ appl_test_socket(
 static
 void
 appl_test_property(
-    struct appl_context_handle * const
-        p_context_handle)
+    struct appl_context * const
+        p_context)
 {
     enum appl_status
         e_status;
 
-    struct appl_property_handle *
-        p_property_handle;
+    struct appl_property *
+        p_property;
 
     e_status =
         appl_property_create(
-            p_context_handle,
+            p_context,
             3,
             &(
-                p_property_handle));
+                p_property));
 
     if (
         appl_status_ok
@@ -753,7 +754,7 @@ appl_test_property(
     {
         e_status =
             appl_property_set_ptr(
-                p_property_handle,
+                p_property,
                 0,
                 (void *)(
                     7777));
@@ -769,7 +770,7 @@ appl_test_property(
 
         e_status =
             appl_property_set_ulong(
-                p_property_handle,
+                p_property,
                 1,
                 8080ul);
 
@@ -784,7 +785,7 @@ appl_test_property(
 
         e_status =
             appl_property_set_long(
-                p_property_handle,
+                p_property,
                 2,
                 -1234l);
 
@@ -803,7 +804,7 @@ appl_test_property(
 
             e_status =
                 appl_property_get_ptr(
-                    p_property_handle,
+                    p_property,
                     0,
                     &(
                         p_value));
@@ -827,7 +828,7 @@ appl_test_property(
 
             e_status =
                 appl_property_get_ulong(
-                    p_property_handle,
+                    p_property,
                     1,
                     &(
                         u_value));
@@ -852,7 +853,7 @@ appl_test_property(
 
             e_status =
                 appl_property_get_long(
-                    p_property_handle,
+                    p_property,
                     2,
                     &(
                         i_value));
@@ -871,8 +872,8 @@ appl_test_property(
         }
 
         appl_object_destroy(
-            &(
-                p_property_handle->o_object_handle));
+            appl_property_parent(
+                p_property));
     }
 
 } /* appl_test_property() */
@@ -880,10 +881,10 @@ appl_test_property(
 static
 void
 appl_test_env(
-    struct appl_context_handle * const
-        p_context_handle)
+    struct appl_context * const
+        p_context)
 {
-    struct appl_string_handle *
+    struct appl_string *
         p_home_value;
 
     static unsigned char const sc_home_name[] =
@@ -899,8 +900,8 @@ appl_test_env(
 
     e_status =
         appl_env_get(
-            &(
-                p_context_handle->o_object_handle),
+            appl_context_parent(
+                p_context),
             sc_home_name,
             sc_home_name + sizeof sc_home_name,
             &(
@@ -943,8 +944,8 @@ appl_test_env(
         }
 
         appl_object_destroy(
-            &(
-                p_home_value->o_object_handle));
+            appl_string_parent(
+                p_home_value));
     }
     else
     {
@@ -956,8 +957,8 @@ appl_test_env(
 
 enum appl_status
 appl_main(
-    struct appl_context_handle * const
-        p_context_handle)
+    struct appl_context * const
+        p_context)
 {
     enum appl_status
         e_status;
@@ -965,19 +966,19 @@ appl_main(
     /* Print the argument list */
     {
         appl_test_options(
-            p_context_handle);
+            p_context);
     }
 
     /* Test memory leak */
     {
         appl_test_memory_leak(
-            p_context_handle);
+            p_context);
     }
 
     /* Test thread */
     {
         appl_test_thread(
-            p_context_handle);
+            p_context);
     }
 
 #if defined APPL_DEBUG
@@ -1003,14 +1004,14 @@ appl_main(
             };
 
             appl_debug_print(
-                &(
-                    p_context_handle->o_object_handle),
+                appl_context_parent(
+                    p_context),
                 g_msg,
                 g_msg + sizeof(g_msg));
 
             appl_debug_break(
-                &(
-                    p_context_handle->o_object_handle));
+                appl_context_parent(
+                    p_context));
         }
     }
 #endif /* #if defined APPL_DEBUG */
@@ -1140,25 +1141,25 @@ appl_main(
     if (1)
     {
         appl_test_file_stdout(
-            p_context_handle);
+            p_context);
     }
 
     if (1)
     {
         appl_test_socket(
-            p_context_handle);
+            p_context);
     }
 
     if (1)
     {
         appl_test_property(
-            p_context_handle);
+            p_context);
     }
 
     if (1)
     {
         appl_test_env(
-            p_context_handle);
+            p_context);
     }
 
     e_status =

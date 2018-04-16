@@ -11,9 +11,9 @@
 
 #define INC_APPL_ENV_SERVICE_H
 
-struct appl_object_handle;
+struct appl_object;
 
-struct appl_string_handle;
+struct appl_string;
 
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -31,20 +31,20 @@ class appl_env_service
         static
         enum appl_status
         s_get(
-            struct appl_object_handle const * const
-                p_object_handle,
+            struct appl_object const * const
+                p_object,
             unsigned char const * const
                 p_name_min,
             unsigned char const * const
                 p_name_max,
-            struct appl_string_handle * * const
-                r_string_handle);
+            struct appl_string * * const
+                r_string);
 
         static
         enum appl_status
         s_set(
-            struct appl_object_handle const * const
-                p_object_handle,
+            struct appl_object const * const
+                p_object,
             unsigned char const * const
                 p_name_min,
             unsigned char const * const

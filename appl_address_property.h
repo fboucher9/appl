@@ -11,9 +11,7 @@
 
 #define INC_APPL_ADDRESS_PROPERTY_H
 
-struct appl_string_handle;
-
-struct appl_property_handle;
+struct appl_property;
 
 #if defined __cplusplus
 extern "C" {
@@ -21,15 +19,15 @@ extern "C" {
 
 enum appl_status
 appl_address_property_create(
-    struct appl_context_handle * const
-        p_context_handle,
-    struct appl_property_handle * * const
-        r_property_handle);
+    struct appl_context * const
+        p_context,
+    struct appl_property * * const
+        r_property);
 
 enum appl_status
 appl_address_property_set_name(
-    struct appl_property_handle * const
-        p_property_handle,
+    struct appl_property * const
+        p_property,
     unsigned char const * const
         p_name_min,
     unsigned char const * const
@@ -37,15 +35,15 @@ appl_address_property_set_name(
 
 enum appl_status
 appl_address_property_set_port(
-    struct appl_property_handle * const
-        p_property_handle,
+    struct appl_property * const
+        p_property,
     unsigned short int const
         i_port);
 
 enum appl_status
 appl_address_property_get_name(
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_property const * const
+        p_property,
     unsigned char const * * const
         r_name_min,
     unsigned char const * * const
@@ -53,8 +51,8 @@ appl_address_property_get_name(
 
 enum appl_status
 appl_address_property_get_port(
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_property const * const
+        p_property,
     unsigned short int * const
         r_port);
 

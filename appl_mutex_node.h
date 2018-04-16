@@ -16,19 +16,17 @@
 #error include appl_object.h before
 #endif /* #if ! defined INC_APPL_OBJECT_H */
 
-struct appl_mutex_handle;
+struct appl_mutex;
 
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
-class appl_mutex_node;
-
 //
 //
 //
-class appl_mutex_node : public appl_object
+struct appl_mutex : public appl_object
 {
     public:
 
@@ -40,28 +38,22 @@ class appl_mutex_node : public appl_object
         enum appl_status
             v_unlock(void);
 
-        static
-        class appl_mutex_node *
-        convert_handle(
-            struct appl_mutex_handle * const
-                p_mutex_handle);
-
     protected:
 
-        appl_mutex_node();
+        appl_mutex();
 
         virtual
-        ~appl_mutex_node();
+        ~appl_mutex();
 
     private:
 
-        appl_mutex_node(
-            class appl_mutex_node const & r);
+        appl_mutex(
+            struct appl_mutex const & r);
 
-        class appl_mutex_node &
+        struct appl_mutex &
             operator =(
-                class appl_mutex_node const & r);
+                struct appl_mutex const & r);
 
-}; // class appl_mutex_node
+}; // struct appl_mutex
 
 /* end-of-file: appl_mutex_node.h */

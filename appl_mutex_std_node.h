@@ -18,25 +18,25 @@
 
 struct appl_mutex_descriptor;
 
+struct appl_context;
+
+struct appl_event;
+
+struct appl_mutex;
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
-class appl_context;
-
-class appl_event_node;
-
 class appl_event_std_node;
-
-class appl_mutex_node;
 
 class appl_mutex_std_node;
 
 //
 //
 //
-class appl_mutex_std_node : public appl_mutex_node
+class appl_mutex_std_node : public appl_mutex
 {
     friend class appl_event_std_node;
 

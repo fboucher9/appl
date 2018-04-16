@@ -19,28 +19,48 @@
 */
 enum appl_status
 appl_property_create(
-    struct appl_context_handle * const
-        p_context_handle,
+    struct appl_context * const
+        p_context,
     unsigned int const
         i_count,
-    struct appl_property_handle * * const
-        r_property_handle)
+    struct appl_property * * const
+        r_property)
 {
     return
         appl_property_service::s_create(
-            p_context_handle,
+            p_context,
             i_count,
-            r_property_handle);
+            r_property);
 
 } /* appl_property_create() */
+
+struct appl_object *
+appl_property_parent(
+    struct appl_property * const
+        p_property)
+{
+    return
+        p_property;
+
+} /* parent() */
+
+struct appl_object const *
+appl_property_const_parent(
+    struct appl_property const * const
+        p_property)
+{
+    return
+        p_property;
+
+} /* const_parent() */
 
 /*
 
 */
 enum appl_status
 appl_property_set_ptr(
-    struct appl_property_handle * const
-        p_property_handle,
+    struct appl_property * const
+        p_property,
     unsigned int const
         i_id,
     void const * const
@@ -48,7 +68,7 @@ appl_property_set_ptr(
 {
     return
         appl_property_service::s_set_ptr(
-            p_property_handle,
+            p_property,
             i_id,
             p_value);
 
@@ -59,8 +79,8 @@ appl_property_set_ptr(
 */
 enum appl_status
 appl_property_set_ulong(
-    struct appl_property_handle * const
-        p_property_handle,
+    struct appl_property * const
+        p_property,
     unsigned int const
         i_id,
     unsigned long int const
@@ -68,7 +88,7 @@ appl_property_set_ulong(
 {
     return
         appl_property_service::s_set_ulong(
-            p_property_handle,
+            p_property,
             i_id,
             u_value);
 
@@ -79,8 +99,8 @@ appl_property_set_ulong(
 */
 enum appl_status
 appl_property_set_long(
-    struct appl_property_handle * const
-        p_property_handle,
+    struct appl_property * const
+        p_property,
     unsigned int const
         i_id,
     signed long int const
@@ -88,7 +108,7 @@ appl_property_set_long(
 {
     return
         appl_property_service::s_set_long(
-            p_property_handle,
+            p_property,
             i_id,
             i_value);
 
@@ -99,8 +119,8 @@ appl_property_set_long(
 */
 enum appl_status
 appl_property_get_ptr(
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_property const * const
+        p_property,
     unsigned int const
         i_id,
     void * * const
@@ -108,7 +128,7 @@ appl_property_get_ptr(
 {
     return
         appl_property_service::s_get_ptr(
-            p_property_handle,
+            p_property,
             i_id,
             r_value);
 
@@ -119,8 +139,8 @@ appl_property_get_ptr(
 */
 enum appl_status
 appl_property_get_ulong(
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_property const * const
+        p_property,
     unsigned int const
         i_id,
     unsigned long int * const
@@ -128,7 +148,7 @@ appl_property_get_ulong(
 {
     return
         appl_property_service::s_get_ulong(
-            p_property_handle,
+            p_property,
             i_id,
             r_value);
 
@@ -139,8 +159,8 @@ appl_property_get_ulong(
 */
 enum appl_status
 appl_property_get_long(
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_property const * const
+        p_property,
     unsigned int const
         i_id,
     signed long int * const
@@ -148,7 +168,7 @@ appl_property_get_long(
 {
     return
         appl_property_service::s_get_long(
-            p_property_handle,
+            p_property,
             i_id,
             r_value);
 

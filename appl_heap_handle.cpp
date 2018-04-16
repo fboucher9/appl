@@ -10,15 +10,13 @@
 
 #include "appl_heap_service.h"
 
-#include "appl_object_handle.h"
-
 /*
 
 */
 enum appl_status
 appl_heap_alloc(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned long int const
         i_length,
     void * * const
@@ -29,7 +27,7 @@ appl_heap_alloc(
 
     e_status =
         appl_heap_service::s_alloc(
-            p_object_handle,
+            p_object,
             i_length,
             r_buf);
 
@@ -43,8 +41,8 @@ appl_heap_alloc(
 */
 enum appl_status
 appl_heap_free(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     void * const
         p_buf)
 {
@@ -53,7 +51,7 @@ appl_heap_free(
 
     e_status =
         appl_heap_service::s_free(
-            p_object_handle,
+            p_object,
             p_buf);
 
     return
@@ -66,8 +64,8 @@ appl_heap_free(
 */
 enum appl_status
 appl_heap_realloc(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     void * const
         p_old_buf,
     unsigned long int const
@@ -80,7 +78,7 @@ appl_heap_realloc(
 
     e_status =
         appl_heap_service::s_realloc(
-            p_object_handle,
+            p_object,
             p_old_buf,
             i_length,
             r_new_buf);

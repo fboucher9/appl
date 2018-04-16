@@ -23,34 +23,22 @@ Description:
 #endif /* #if ! defined INC_APPL_OBJECT_H */
 
 /* Predefine */
-struct appl_address_handle;
+struct appl_address;
 
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
-// Predefine
-class appl_address_node;
-
 //
-//  Class: appl_address_node
+//  Class: appl_address
 //
 //  Description:
 //      Base interface for address objects.
 //
-class appl_address_node : public appl_object
+struct appl_address : public appl_object
 {
     public:
-
-        static
-        class appl_address_node *
-        convert_handle(
-            struct appl_address_handle * const
-                p_address_handle);
-
-        struct appl_address_handle *
-        get_handle(void);
 
         virtual
         enum appl_status
@@ -68,20 +56,20 @@ class appl_address_node : public appl_object
 
     protected:
 
-        appl_address_node();
+        appl_address();
 
         virtual
-        ~appl_address_node();
+        ~appl_address();
 
     private:
 
         appl_address_node(
-            class appl_address_node const & r);
+            struct appl_address const & r);
 
-        class appl_address_node &
+        struct appl_address &
             operator =(
-                class appl_address_node const & r);
+                struct appl_address const & r);
 
-}; // class appl_address_node
+}; // struct appl_address
 
 /* end-of-file: appl_address_node.h */

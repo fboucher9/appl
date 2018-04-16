@@ -21,15 +21,15 @@ enum appl_status
             p_name_min,
         unsigned char const * const
             p_name_max,
-        struct appl_string_handle * * const
-            r_string_handle)
+        struct appl_string * * const
+            r_string)
 {
     static_cast<void>(
         p_name_min);
     static_cast<void>(
         p_name_max);
     static_cast<void>(
-        r_string_handle);
+        r_string);
     return
         appl_status_not_implemented;
 } // v_get()

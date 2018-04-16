@@ -17,12 +17,12 @@
 //
 enum appl_status
     appl_event_mgr::v_create(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         struct appl_event_descriptor const * const
             p_event_descriptor,
-        class appl_event_node * * const
-            r_event_node)
+        struct appl_event * * const
+            r_event)
 {
     enum appl_status
         e_status;
@@ -32,7 +32,7 @@ enum appl_status
     static_cast<void>(
         p_event_descriptor);
     static_cast<void>(
-        r_event_node);
+        r_event);
 
     e_status =
         appl_status_not_implemented;

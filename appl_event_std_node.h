@@ -18,33 +18,33 @@
 
 struct appl_event_descriptor;
 
+struct appl_context;
+
+struct appl_event;
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
-
-class appl_context;
-
-class appl_event_node;
 
 class appl_event_std_node;
 
 //
 //
 //
-class appl_event_std_node : public appl_event_node
+class appl_event_std_node : public appl_event
 {
     public:
 
         static
         enum appl_status
             s_create(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 struct appl_event_descriptor const * const
                     p_event_descriptor,
-                class appl_event_node * * const
-                    r_event_node);
+                struct appl_event * * const
+                    r_event);
 
     protected:
 
@@ -94,8 +94,8 @@ class appl_event_std_node : public appl_event_node
         virtual
         enum appl_status
             v_wait(
-                class appl_mutex_node * const
-                    p_mutex_node,
+                struct appl_mutex * const
+                    p_mutex,
                 unsigned long int const
                     i_wait_freq,
                 unsigned long int const

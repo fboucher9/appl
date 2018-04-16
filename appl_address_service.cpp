@@ -35,13 +35,13 @@ Description:
 //      address descriptor.
 //
 //  Parameters:
-//      p_context_handle
+//      p_context
 //          Opaque context handle.
 //
-//      p_property_handle
-//          Pointer to opaque appl_property_handle structure.
+//      p_property
+//          Pointer to opaque appl_property structure.
 //
-//      r_address_handle
+//      r_address
 //          Output pointer to opaque address handle.
 //
 //  Returns:
@@ -49,34 +49,28 @@ Description:
 //
 enum appl_status
 appl_address_service::s_create(
-    struct appl_context_handle * const
-        p_context_handle,
-    struct appl_property_handle const * const
-        p_property_handle,
-    struct appl_address_handle * * const
-        r_address_handle)
+    struct appl_context * const
+        p_context,
+    struct appl_property const * const
+        p_property,
+    struct appl_address * * const
+        r_address)
 {
     enum appl_status
         e_status;
-
-    // Convert opaque context handle to C++ context object
-    class appl_context * const
-        p_context =
-        appl_context::convert_handle(
-            p_context_handle);
 
     // Use the C++ context object to query socket manager
     class appl_socket_mgr * const
         p_socket_mgr =
         p_context->m_socket_mgr;
 
-    class appl_address_node *
+    struct appl_address *
         p_address_node;
 
     // Use socket manager to dispatch this request
     e_status =
         p_socket_mgr->v_create_address(
-            p_property_handle,
+            p_property,
             &(
                 p_address_node));
 
@@ -85,8 +79,8 @@ appl_address_service::s_create(
         == e_status)
     {
         *(
-            r_address_handle) =
-            p_address_node->get_handle();
+            r_address) =
+            p_address_node;
     }
 
     return
@@ -99,8 +93,8 @@ appl_address_service::s_create(
 //
 enum appl_status
 appl_address_service::s_get_name(
-    struct appl_address_handle * const
-        p_address_handle,
+    struct appl_address * const
+        p_address,
     unsigned char * * const
         pp_name_cur,
     unsigned char * const
@@ -109,13 +103,8 @@ appl_address_service::s_get_name(
     enum appl_status
         e_status;
 
-    class appl_address_node * const
-        p_address_node =
-        appl_address_node::convert_handle(
-            p_address_handle);
-
     e_status =
-        p_address_node->v_get_name(
+        p_address->v_get_name(
             pp_name_cur,
             p_name_max);
 
@@ -129,21 +118,16 @@ appl_address_service::s_get_name(
 //
 enum appl_status
 appl_address_service::s_get_port(
-    struct appl_address_handle * const
-        p_address_handle,
+    struct appl_address * const
+        p_address,
     unsigned short int * const
         r_port)
 {
     enum appl_status
         e_status;
 
-    class appl_address_node * const
-        p_address_node =
-        appl_address_node::convert_handle(
-            p_address_handle);
-
     e_status =
-        p_address_node->v_get_port(
+        p_address->v_get_port(
             r_port);
 
     return

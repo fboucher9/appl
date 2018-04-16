@@ -31,8 +31,8 @@ main(
     int
         i_exit_code;
 
-    struct appl_context_handle *
-        p_context_handle;
+    struct appl_context *
+        p_context;
 
     enum appl_status
         e_status;
@@ -52,7 +52,7 @@ main(
             &(
                 o_context_descriptor),
             &(
-                p_context_handle));
+                p_context));
 
     if (
         appl_status_ok
@@ -61,7 +61,7 @@ main(
         /* Dispatch */
         e_status =
             appl_main(
-                p_context_handle);
+                p_context);
 
         if (
             appl_status_ok
@@ -77,8 +77,8 @@ main(
         }
 
         appl_object_destroy(
-            &(
-                p_context_handle->o_object_handle));
+            appl_context_parent(
+                p_context));
     }
     else
     {

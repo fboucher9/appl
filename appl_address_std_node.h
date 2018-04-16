@@ -21,27 +21,27 @@
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
-class appl_context;
+struct appl_context;
 
-class appl_property;
+struct appl_property;
 
 class appl_address_std_node;
 
 //
 //
 //
-class appl_address_std_node : public appl_address_node
+class appl_address_std_node : public appl_address
 {
     public:
 
         static
         enum appl_status
             s_create(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 struct appl_property_handle const * const
                     p_property_handle,
-                class appl_address_node * * const
+                struct appl_address * * const
                     r_address_node);
 
     protected:

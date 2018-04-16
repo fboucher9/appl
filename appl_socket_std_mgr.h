@@ -33,7 +33,7 @@ class appl_socket_std_mgr : public appl_socket_mgr
         static
         enum appl_status
             s_create(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 class appl_socket_mgr * * const
                     r_socket_mgr);
@@ -63,17 +63,17 @@ class appl_socket_std_mgr : public appl_socket_mgr
         virtual
         enum appl_status
             v_create_address(
-                struct appl_property_handle const * const
-                    p_property_handle,
-                class appl_address_node * * const
+                struct appl_property const * const
+                    p_property,
+                struct appl_address * * const
                     r_address_node);
 
         virtual
         enum appl_status
             v_create_socket(
-                struct appl_property_handle const * const
+                struct appl_property const * const
                     p_socket_descriptor,
-                class appl_socket_node * * const
+                struct appl_socket * * const
                     r_socket_node);
 
 }; // class appl_socket_std_mgr

@@ -19,24 +19,24 @@
 */
 enum appl_status
 appl_env_get(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned char const * const
         p_name_min,
     unsigned char const * const
         p_name_max,
-    struct appl_string_handle * * const
-        r_string_handle)
+    struct appl_string * * const
+        r_string)
 {
     enum appl_status
         e_status;
 
     e_status =
         appl_env_service::s_get(
-            p_object_handle,
+            p_object,
             p_name_min,
             p_name_max,
-            r_string_handle);
+            r_string);
 
     return
         e_status;
@@ -48,8 +48,8 @@ appl_env_get(
 */
 enum appl_status
 appl_env_set(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned char const * const
         p_name_min,
     unsigned char const * const
@@ -64,7 +64,7 @@ appl_env_set(
 
     e_status =
         appl_env_service::s_set(
-            p_object_handle,
+            p_object,
             p_name_min,
             p_name_max,
             p_value_min,

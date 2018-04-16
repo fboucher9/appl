@@ -33,7 +33,7 @@ class appl_event_std_mgr : public appl_event_mgr
         static
         enum appl_status
             s_create(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 class appl_event_mgr * * const
                     r_event_mgr);
@@ -63,12 +63,12 @@ class appl_event_std_mgr : public appl_event_mgr
         virtual
         enum appl_status
             v_create(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 struct appl_event_descriptor const * const
                     p_event_descriptor,
-                class appl_event_node * * const
-                    r_event_node);
+                struct appl_event * * const
+                    r_event);
 
 }; // class appl_event_std_mgr
 

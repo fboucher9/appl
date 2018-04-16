@@ -12,13 +12,13 @@
 #define INC_APPL_SOCKET_DESCRIPTOR_H
 
 /* Predefine */
-struct appl_address_handle;
+struct appl_address;
 
 /* Predefine */
-struct appl_socket_handle;
+struct appl_socket;
 
 /* Predefine */
-struct appl_property_handle;
+struct appl_property;
 
 /* Protocol values */
 enum appl_socket_protocol
@@ -48,206 +48,206 @@ extern "C" {
 
 enum appl_status
 appl_socket_property_create(
-    struct appl_context_handle * const
-       p_context_handle,
-    struct appl_property_handle * * const
-        r_property_handle);
+    struct appl_context * const
+       p_context,
+    struct appl_property * * const
+        r_property);
 
 enum appl_status
 appl_socket_property_set_protocol(
-    struct appl_property_handle * const
-        p_property_handle,
+    struct appl_property * const
+        p_property,
     enum appl_socket_protocol const
         e_socket_protocol);
 
 enum appl_status
 appl_socket_property_set_bind_address(
-    struct appl_property_handle * const
-        p_property_handle,
-    struct appl_address_handle * const
-        p_bind_address_handle);
+    struct appl_property * const
+        p_property,
+    struct appl_address * const
+        p_bind_address);
 
 enum appl_status
 appl_socket_property_set_connect_address(
-    struct appl_property_handle * const
-        p_property_handle,
-    struct appl_address_handle * const
-        p_connect_address_handle);
+    struct appl_property * const
+        p_property,
+    struct appl_address * const
+        p_connect_address);
 
 enum appl_status
 appl_socket_property_set_listen_count(
-    struct appl_property_handle * const
-        p_property_handle,
+    struct appl_property * const
+        p_property,
     unsigned long int const
         i_listen_count);
 
 enum appl_status
 appl_socket_property_set_accept_address(
-    struct appl_property_handle * const
-        p_property_handle,
-    struct appl_address_handle * const
-        p_accept_address_handle);
+    struct appl_property * const
+        p_property,
+    struct appl_address * const
+        p_accept_address);
 
 enum appl_status
 appl_socket_property_set_accept_socket(
-    struct appl_property_handle * const
-        p_property_handle,
-    struct appl_socket_handle * const
-        p_accept_socket_handle);
+    struct appl_property * const
+        p_property,
+    struct appl_socket * const
+        p_accept_socket);
 
 enum appl_status
 appl_socket_property_set_recv_timeout(
-    struct appl_property_handle * const
-        p_property_handle,
+    struct appl_property * const
+        p_property,
     unsigned long int const
         i_recv_timeout);
 
 enum appl_status
 appl_socket_property_set_send_timeout(
-    struct appl_property_handle * const
-        p_property_handle,
+    struct appl_property * const
+        p_property,
     unsigned long int const
         i_send_timeout);
 
 enum appl_status
 appl_socket_property_set_recv_buffer(
-    struct appl_property_handle * const
-        p_property_handle,
+    struct appl_property * const
+        p_property,
     unsigned long int const
         i_recv_buffer);
 
 enum appl_status
 appl_socket_property_set_send_buffer(
-    struct appl_property_handle * const
-        p_property_handle,
+    struct appl_property * const
+        p_property,
     unsigned long int const
         i_send_buffer);
 
 enum appl_status
 appl_socket_property_set_connect_timeout(
-    struct appl_property_handle * const
-        p_property_handle,
+    struct appl_property * const
+        p_property,
     unsigned long int const
         i_connect_timeout);
 
 enum appl_status
 appl_socket_property_set_accept_timeout(
-    struct appl_property_handle * const
-        p_property_handle,
+    struct appl_property * const
+        p_property,
     unsigned long int const
         i_accept_timeout);
 
 enum appl_status
 appl_socket_property_set_join_address(
-    struct appl_property_handle * const
-        p_property_handle,
-    struct appl_address_handle * const
-        p_join_address_handle);
+    struct appl_property * const
+        p_property,
+    struct appl_address * const
+        p_join_address);
 
 enum appl_status
 appl_socket_property_set_join_interface(
-    struct appl_property_handle * const
-        p_property_handle,
-    struct appl_address_handle * const
-        p_interface_address_handle);
+    struct appl_property * const
+        p_property,
+    struct appl_address * const
+        p_interface_address);
 
 enum appl_status
 appl_socket_property_get_protocol(
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_property const * const
+        p_property,
     enum appl_socket_protocol * const
         r_socket_protocol);
 
 enum appl_status
 appl_socket_property_get_bind_address(
-    struct appl_property_handle const * const
-        p_property_handle,
-    struct appl_address_handle * * const
-        r_bind_address_handle);
+    struct appl_property const * const
+        p_property,
+    struct appl_address * * const
+        r_bind_address);
 
 enum appl_status
 appl_socket_property_get_connect_address(
-    struct appl_property_handle const * const
-        p_property_handle,
-    struct appl_address_handle * * const
-        r_connect_address_handle);
+    struct appl_property const * const
+        p_property,
+    struct appl_address * * const
+        r_connect_address);
 
 enum appl_status
 appl_socket_property_get_listen_count(
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_property const * const
+        p_property,
     unsigned long int * const
         r_listen_count);
 
 enum appl_status
 appl_socket_property_get_accept_address(
-    struct appl_property_handle const * const
-        p_property_handle,
-    struct appl_address_handle * * const
-        r_accept_address_handle);
+    struct appl_property const * const
+        p_property,
+    struct appl_address * * const
+        r_accept_address);
 
 enum appl_status
 appl_socket_property_get_accept_socket(
-    struct appl_property_handle const * const
-        p_property_handle,
-    struct appl_socket_handle * * const
-        r_accept_socket_handle);
+    struct appl_property const * const
+        p_property,
+    struct appl_socket * * const
+        r_accept_socket);
 
 enum appl_status
 appl_socket_property_get_recv_timeout(
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_property const * const
+        p_property,
     unsigned long int * const
         r_recv_timeout);
 
 enum appl_status
 appl_socket_property_get_send_timeout(
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_property const * const
+        p_property,
     unsigned long int * const
         r_send_timeout);
 
 enum appl_status
 appl_socket_property_get_recv_buffer(
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_property const * const
+        p_property,
     unsigned long int * const
         r_recv_buffer);
 
 enum appl_status
 appl_socket_property_get_send_buffer(
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_property const * const
+        p_property,
     unsigned long int * const
         r_send_buffer);
 
 enum appl_status
 appl_socket_property_get_connect_timeout(
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_property const * const
+        p_property,
     unsigned long int * const
         r_connect_timeout);
 
 enum appl_status
 appl_socket_property_get_accept_timeout(
-    struct appl_property_handle const * const
-        p_property_handle,
+    struct appl_property const * const
+        p_property,
     unsigned long int * const
         r_accept_timeout);
 
 enum appl_status
 appl_socket_property_get_join_address(
-    struct appl_property_handle const * const
-        p_property_handle,
-    struct appl_address_handle * * const
-        r_join_address_handle);
+    struct appl_property const * const
+        p_property,
+    struct appl_address * * const
+        r_join_address);
 
 enum appl_status
 appl_socket_property_get_join_interface(
-    struct appl_property_handle const * const
-        p_property_handle,
-    struct appl_address_handle * * const
-        r_interface_address_handle);
+    struct appl_property const * const
+        p_property,
+    struct appl_address * * const
+        r_interface_address);
 
 #if defined __cplusplus
 } /* extern "C" */

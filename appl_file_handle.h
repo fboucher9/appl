@@ -16,21 +16,11 @@
 #error include appl_status.h before
 #endif /* #if !defined(INC_APPL_STATUS_H) */
 
-/* Header file dependencies */
-#if !defined(INC_APPL_OBJECT_HANDLE_H)
-#error include appl_object_handle.h before
-#endif /* #if !defined(INC_APPL_OBJECT_HANDLE_H) */
+struct appl_object;
 
-struct appl_file_handle;
+struct appl_file;
 
 struct appl_file_descriptor;
-
-struct appl_file_handle
-{
-    struct appl_object_handle
-        o_object_handle;
-
-}; /* struct appl_file_handle */
 
 #if defined(__cplusplus)
 extern "C" {
@@ -38,17 +28,27 @@ extern "C" {
 
 enum appl_status
 appl_file_create(
-    struct appl_context_handle * const
-        p_context_handle,
+    struct appl_context * const
+        p_context,
     struct appl_file_descriptor const * const
         p_file_descriptor,
-    struct appl_file_handle * * const
-        r_file_handle);
+    struct appl_file * * const
+        r_file);
+
+struct appl_object *
+appl_file_parent(
+    struct appl_file * const
+        p_file);
+
+struct appl_object const *
+appl_file_const_parent(
+    struct appl_file const * const
+        p_file);
 
 enum appl_status
 appl_file_read(
-    struct appl_file_handle * const
-        p_file_handle,
+    struct appl_file * const
+        p_file,
     unsigned char * const
         p_buf_cur,
     unsigned char * const
@@ -58,8 +58,8 @@ appl_file_read(
 
 enum appl_status
 appl_file_write(
-    struct appl_file_handle * const
-        p_file_handle,
+    struct appl_file * const
+        p_file,
     unsigned char const * const
         p_buf_cur,
     unsigned char const * const

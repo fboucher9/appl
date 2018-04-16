@@ -17,17 +17,12 @@
 #include "appl_heap.h"
 
 static
-class appl_heap *
+struct appl_heap *
 get_heap_from_object(
-    struct appl_object_handle const * const
-        p_object_handle)
+    struct appl_object const * const
+        p_object)
 {
-    class appl_object const * const
-        p_object =
-        appl_object::convert_const_handle(
-            p_object_handle);
-
-    class appl_context * const
+    struct appl_context * const
         p_context =
         p_object->get_context();
 
@@ -41,17 +36,17 @@ get_heap_from_object(
 //
 enum appl_status
     appl_heap_service::s_alloc(
-        struct appl_object_handle const * const
-            p_object_handle,
+        struct appl_object const * const
+            p_object,
         unsigned long int const
             i_length,
         void * * const
             r_buf)
 {
-    class appl_heap * const
+    struct appl_heap * const
         p_heap =
         get_heap_from_object(
-            p_object_handle);
+            p_object);
 
     enum appl_status const
         e_status =
@@ -66,15 +61,15 @@ enum appl_status
 
 enum appl_status
     appl_heap_service::s_free(
-        struct appl_object_handle const * const
-            p_object_handle,
+        struct appl_object const * const
+            p_object,
         void * const
             p_buf)
 {
-    class appl_heap * const
+    struct appl_heap * const
         p_heap =
         get_heap_from_object(
-            p_object_handle);
+            p_object);
 
     enum appl_status const
         e_status =
@@ -91,8 +86,8 @@ enum appl_status
 //
 enum appl_status
     appl_heap_service::s_realloc(
-        struct appl_object_handle const * const
-            p_object_handle,
+        struct appl_object const * const
+            p_object,
         void * const
             p_old_buf,
         unsigned long int const
@@ -100,10 +95,10 @@ enum appl_status
         void * * const
             r_new_buf)
 {
-    class appl_heap * const
+    struct appl_heap * const
         p_heap =
         get_heap_from_object(
-            p_object_handle);
+            p_object);
 
     enum appl_status const
         e_status =

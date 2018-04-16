@@ -16,7 +16,7 @@
 #error include appl_status.h before
 #endif /* #if ! defined INC_APPL_STATUS_H */
 
-struct appl_context_handle;
+struct appl_context;
 
 #if defined(__cplusplus)
 extern "C" {
@@ -25,8 +25,8 @@ extern "C" {
 /* extern */
 enum appl_status
 appl_main(
-    struct appl_context_handle * const
-        p_context_handle);
+    struct appl_context * const
+        p_context);
 
 #if defined(__cplusplus)
 } /* extern "C" */

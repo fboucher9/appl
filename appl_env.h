@@ -16,7 +16,7 @@
 #error include appl_object.h before appl_env.h
 #endif /* #if ! defined INC_APPL_OBJECT_H */
 
-struct appl_string_handle;
+struct appl_string;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -39,8 +39,8 @@ class appl_env : public appl_object
                     p_name_min,
                 unsigned char const * const
                     p_name_max,
-                struct appl_string_handle * * const
-                    r_string_handle);
+                struct appl_string * * const
+                    r_string);
 
         virtual
         enum appl_status

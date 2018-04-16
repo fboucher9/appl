@@ -15,22 +15,8 @@
 //
 //
 //
-class appl_event_node *
-    appl_event_node::convert_handle(
-        struct appl_event_handle * const
-            p_event_handle)
-{
-    return
-        reinterpret_cast<class appl_event_node *>(
-            p_event_handle);
-
-} // convert_handle()
-
-//
-//
-//
 enum appl_status
-    appl_event_node::v_signal(void)
+    appl_event::v_signal(void)
 {
     enum appl_status
         e_status;
@@ -47,9 +33,9 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_event_node::v_wait(
-        class appl_mutex_node * const
-            p_mutex_node,
+    appl_event::v_wait(
+        struct appl_mutex * const
+            p_mutex,
         unsigned long int const
             i_wait_freq,
         unsigned long int const
@@ -59,7 +45,7 @@ enum appl_status
         e_status;
 
     static_cast<void>(
-        p_mutex_node);
+        p_mutex);
     static_cast<void>(
         i_wait_freq);
     static_cast<void>(
@@ -76,7 +62,7 @@ enum appl_status
 //
 //
 //
-appl_event_node::appl_event_node() :
+appl_event::appl_event() :
     appl_object()
 {
 }
@@ -84,7 +70,7 @@ appl_event_node::appl_event_node() :
 //
 //
 //
-appl_event_node::~appl_event_node()
+appl_event::~appl_event()
 {
 }
 

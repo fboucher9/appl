@@ -10,16 +10,9 @@
 
 #define INC_APPL_OBJECT_HANDLE_H
 
-struct appl_context_handle;
+struct appl_context;
 
-struct appl_object_handle;
-
-struct appl_object_handle
-{
-    void *
-        reserved;
-
-}; /* struct appl_object_handle */
+struct appl_object;
 
 #if defined(__cplusplus)
 extern "C" {
@@ -27,13 +20,13 @@ extern "C" {
 
 enum appl_status
 appl_object_destroy(
-    struct appl_object_handle * const
-        p_object_handle);
+    struct appl_object * const
+        p_object);
 
-struct appl_context_handle *
-appl_object_get_context_handle(
-    struct appl_object_handle const * const
-        p_object_handle);
+struct appl_context *
+appl_object_get_context(
+    struct appl_object const * const
+        p_object);
 
 #if defined(__cplusplus)
 } /* extern "C" */
