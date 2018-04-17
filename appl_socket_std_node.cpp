@@ -40,10 +40,10 @@ enum appl_status
     appl_socket_std_node::s_create(
         class appl_context * const
             p_context,
-        struct appl_property_handle const * const
+        struct appl_property const * const
             p_socket_descriptor,
-        class appl_socket_node * * const
-            r_socket_node)
+        struct appl_socket * * const
+            r_socket)
 {
     enum appl_status
         e_status;
@@ -56,7 +56,7 @@ enum appl_status
             &(
                 appl_socket_std_node::s_new),
             p_socket_descriptor,
-            r_socket_node);
+            r_socket);
 
     return
         e_status;
@@ -67,7 +67,7 @@ enum appl_status
 //
 //
 appl_socket_std_node::appl_socket_std_node() :
-    appl_socket_node(),
+    appl_socket(),
     m_fd(-1)
 {
 }
@@ -103,9 +103,9 @@ appl_socket_std_node::init(
     enum appl_status
         e_status;
 
-    struct appl_property_handle const * const
+    struct appl_property const * const
         p_socket_descriptor =
-        static_cast<struct appl_property_handle const *>(
+        static_cast<struct appl_property const *>(
             p_descriptor);
 
     static_cast<void>(
@@ -243,7 +243,7 @@ appl_socket_std_node::v_sendto(
         p_buf_max,
     unsigned long int * const
         r_count,
-    class appl_address_node * const
+    struct appl_address * const
         p_remote_address)
 {
     enum appl_status
@@ -277,7 +277,7 @@ appl_socket_std_node::v_recvfrom(
         p_buf_max,
     unsigned long int * const
         r_count,
-    class appl_address_node * const
+    struct appl_address * const
         p_remote_address)
 {
     enum appl_status

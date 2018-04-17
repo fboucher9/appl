@@ -56,8 +56,8 @@ enum appl_status
     appl_address_std_node::s_create(
         struct appl_context * const
             p_context,
-        struct appl_property_handle const * const
-            p_property_handle,
+        struct appl_property const * const
+            p_property,
         struct appl_address * * const
             r_address)
 {
@@ -68,7 +68,7 @@ enum appl_status
                 class appl_address_std_node),
             &(
                 appl_address_std_node::s_new),
-            p_property_handle,
+            p_property,
             r_address);
 
 } // s_create()

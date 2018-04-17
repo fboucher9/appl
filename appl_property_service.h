@@ -11,9 +11,9 @@
 
 #define INC_APPL_PROPERTY_SERVICE_H
 
-struct appl_context_handle;
+struct appl_context;
 
-struct appl_property_handle;
+struct appl_property;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -32,18 +32,18 @@ class appl_property_service
         static
         enum appl_status
         s_create(
-            struct appl_context_handle * const
-                p_context_handle,
+            struct appl_context * const
+                p_context,
             unsigned int const
                 i_count,
-            struct appl_property_handle * * const
-                r_property_handle);
+            struct appl_property * * const
+                r_property);
 
         static
         enum appl_status
         s_set_ptr(
-            struct appl_property_handle * const
-                p_property_handle,
+            struct appl_property * const
+                p_property,
             unsigned int const
                 i_id,
             void const * const
@@ -52,8 +52,8 @@ class appl_property_service
         static
         enum appl_status
         s_set_ulong(
-            struct appl_property_handle * const
-                p_property_handle,
+            struct appl_property * const
+                p_property,
             unsigned int const
                 i_id,
             unsigned long int const
@@ -62,8 +62,8 @@ class appl_property_service
         static
         enum appl_status
         s_set_long(
-            struct appl_property_handle * const
-                p_property_handle,
+            struct appl_property * const
+                p_property,
             unsigned int const
                 i_id,
             signed long int const
@@ -72,8 +72,8 @@ class appl_property_service
         static
         enum appl_status
         s_get_ptr(
-            struct appl_property_handle const * const
-                p_property_handle,
+            struct appl_property const * const
+                p_property,
             unsigned int const
                 i_id,
             void * * const
@@ -82,8 +82,8 @@ class appl_property_service
         static
         enum appl_status
         s_get_ulong(
-            struct appl_property_handle const * const
-                p_property_handle,
+            struct appl_property const * const
+                p_property,
             unsigned int const
                 i_id,
             unsigned long int * const
@@ -92,8 +92,8 @@ class appl_property_service
         static
         enum appl_status
         s_get_long(
-            struct appl_property_handle const * const
-                p_property_handle,
+            struct appl_property const * const
+                p_property,
             unsigned int const
                 i_id,
             signed long int * const

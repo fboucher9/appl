@@ -45,12 +45,12 @@ class appl_mutex_std_node : public appl_mutex
         static
         enum appl_status
             create_instance(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 struct appl_mutex_descriptor const * const
                     p_mutex_descriptor,
-                class appl_mutex_node * * const
-                    r_mutex_node);
+                struct appl_mutex * * const
+                    r_mutex);
 
     protected:
 

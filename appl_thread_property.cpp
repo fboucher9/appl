@@ -62,37 +62,37 @@ union appl_thread_property_callback
 */
 enum appl_status
 appl_thread_property_create(
-    struct appl_context_handle * const
-        p_context_handle,
-    struct appl_thread_property_handle * * const
-        r_thread_property_handle)
+    struct appl_context * const
+        p_context,
+    struct appl_thread_property * * const
+        r_thread_property)
 {
     enum appl_status
         e_status;
 
-    struct appl_property_handle *
-        p_property_handle;
+    struct appl_property *
+        p_property;
 
     e_status =
         appl_property_create(
-            p_context_handle,
+            p_context,
             appl_thread_property_id_max,
             &(
-                p_property_handle));
+                p_property));
 
     if (
         appl_status_ok
         == e_status)
     {
         appl_property_set_ulong(
-            p_property_handle,
+            p_property,
             appl_thread_property_id_guid,
             APPL_THREAD_DESCRIPTOR_GUID);
 
         *(
-            r_thread_property_handle) =
-            reinterpret_cast<struct appl_thread_property_handle *>(
-                p_property_handle);
+            r_thread_property) =
+            reinterpret_cast<struct appl_thread_property *>(
+                p_property);
     }
 
     return
@@ -107,8 +107,8 @@ appl_thread_property_create(
 static
 void
 appl_thread_property_assert_guid(
-    struct appl_thread_property_handle const * const
-        p_thread_property_handle)
+    struct appl_thread_property const * const
+        p_thread_property)
 {
     unsigned long int
         u_value;
@@ -117,8 +117,8 @@ appl_thread_property_assert_guid(
         (
             appl_status_ok
             == appl_property_get_ulong(
-                &(
-                    p_thread_property_handle->o_property_handle),
+                reinterpret_cast<struct appl_property const *>(
+                    p_thread_property),
                 appl_thread_property_id_guid,
                 &(
                     u_value)))
@@ -140,15 +140,15 @@ appl_thread_property_assert_guid(
 */
 enum appl_status
 appl_thread_property_set_callback(
-    struct appl_thread_property_handle * const
-        p_thread_property_handle,
+    struct appl_thread_property * const
+        p_thread_property,
     void * (* p_thread_callback)(
         void * const
             p_thread_context))
 {
 #if defined APPL_DEBUG
     appl_thread_property_assert_guid(
-        p_thread_property_handle);
+        p_thread_property);
 #endif /* #if defined APPL_DEBUG */
 
     union appl_thread_property_callback
@@ -159,8 +159,8 @@ appl_thread_property_set_callback(
 
     return
         appl_property_set_ptr(
-            &(
-                p_thread_property_handle->o_property_handle),
+            reinterpret_cast<struct appl_property *>(
+                p_thread_property),
             appl_thread_property_id_callback,
             o_callback.p_value);
 
@@ -171,20 +171,20 @@ appl_thread_property_set_callback(
 */
 enum appl_status
 appl_thread_property_set_context(
-    struct appl_thread_property_handle * const
-        p_thread_property_handle,
+    struct appl_thread_property * const
+        p_thread_property,
     void * const
         p_thread_context)
 {
 #if defined APPL_DEBUG
     appl_thread_property_assert_guid(
-        p_thread_property_handle);
+        p_thread_property);
 #endif /* #if defined APPL_DEBUG */
 
     return
         appl_property_set_ptr(
-            &(
-                p_thread_property_handle->o_property_handle),
+            reinterpret_cast<struct appl_property *>(
+                p_thread_property),
             appl_thread_property_id_context,
             p_thread_context);
 
@@ -195,8 +195,8 @@ appl_thread_property_set_context(
 */
 enum appl_status
 appl_thread_property_get_callback(
-    struct appl_thread_property_handle const * const
-        p_thread_property_handle,
+    struct appl_thread_property const * const
+        p_thread_property,
     void * (* * r_thread_callback)(
         void * const
             p_thread_context))
@@ -206,7 +206,7 @@ appl_thread_property_get_callback(
 
 #if defined APPL_DEBUG
     appl_thread_property_assert_guid(
-        p_thread_property_handle);
+        p_thread_property);
 #endif /* #if defined APPL_DEBUG */
 
     union appl_thread_property_callback
@@ -214,8 +214,8 @@ appl_thread_property_get_callback(
 
     e_status =
         appl_property_get_ptr(
-            &(
-                p_thread_property_handle->o_property_handle),
+            reinterpret_cast<struct appl_property const *>(
+                p_thread_property),
             appl_thread_property_id_callback,
             &(
                 o_callback.p_value));
@@ -239,20 +239,20 @@ appl_thread_property_get_callback(
 */
 enum appl_status
 appl_thread_property_get_context(
-    struct appl_thread_property_handle const * const
-        p_thread_property_handle,
+    struct appl_thread_property const * const
+        p_thread_property,
     void * * const
         r_thread_context)
 {
 #if defined APPL_DEBUG
     appl_thread_property_assert_guid(
-        p_thread_property_handle);
+        p_thread_property);
 #endif /* #if defined APPL_DEBUG */
 
     return
         appl_property_get_ptr(
-            &(
-                p_thread_property_handle->o_property_handle),
+            reinterpret_cast<struct appl_property const *>(
+                p_thread_property),
             appl_thread_property_id_context,
             r_thread_context);
 

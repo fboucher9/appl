@@ -13,8 +13,6 @@
 
 struct appl_object;
 
-struct appl_string;
-
 #if defined __cplusplus
 extern "C" {
 #endif /* #if defined __cplusplus */

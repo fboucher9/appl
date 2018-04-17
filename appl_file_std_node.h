@@ -30,7 +30,7 @@ class appl_file_std_node;
 //
 //
 //
-class appl_file_std_node : public appl_file_node
+class appl_file_std_node : public appl_file
 {
     public:
 
@@ -41,7 +41,7 @@ class appl_file_std_node : public appl_file_node
                     p_context,
                 struct appl_file_descriptor const * const
                     p_file_descriptor,
-                class appl_file_node * * const
+                struct appl_file * * const
                     r_file_node);
 
     protected:

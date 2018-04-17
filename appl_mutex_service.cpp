@@ -28,30 +28,20 @@
 //
 enum appl_status
     appl_mutex_service::s_create(
-        struct appl_context_handle * const
-            p_context_handle,
+        struct appl_context * const
+            p_context,
         struct appl_mutex_descriptor const * const
             p_mutex_descriptor,
-        struct appl_mutex_handle * * const
-            r_mutex_handle)
+        struct appl_mutex * * const
+            r_mutex)
 {
     enum appl_status
         e_status;
 
-    class appl_context * const
-        p_context =
-        appl_context::convert_handle(
-            p_context_handle);
-
-    class appl_mutex_mgr * const
-        p_mutex_mgr =
-        p_context->m_mutex_mgr;
-
     e_status =
-        p_mutex_mgr->v_create(
+        p_context->m_mutex_mgr->v_create(
             p_mutex_descriptor,
-            reinterpret_cast<class appl_mutex_node * *>(
-                r_mutex_handle));
+            r_mutex);
 
     return
         e_status;
@@ -63,19 +53,14 @@ enum appl_status
 //
 enum appl_status
     appl_mutex_service::s_lock(
-        struct appl_mutex_handle * const
-            p_mutex_handle)
+        struct appl_mutex * const
+            p_mutex)
 {
     enum appl_status
         e_status;
 
-    class appl_mutex_node * const
-        p_mutex_node =
-        appl_mutex_node::convert_handle(
-            p_mutex_handle);
-
     e_status =
-        p_mutex_node->v_lock();
+        p_mutex->v_lock();
 
     return
         e_status;
@@ -87,19 +72,14 @@ enum appl_status
 //
 enum appl_status
     appl_mutex_service::s_unlock(
-        struct appl_mutex_handle * const
-            p_mutex_handle)
+        struct appl_mutex * const
+            p_mutex)
 {
     enum appl_status
         e_status;
 
-    class appl_mutex_node * const
-        p_mutex_node =
-        appl_mutex_node::convert_handle(
-            p_mutex_handle);
-
     e_status =
-        p_mutex_node->v_unlock();
+        p_mutex->v_unlock();
 
     return
         e_status;

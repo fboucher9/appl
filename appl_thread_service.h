@@ -11,11 +11,11 @@
 
 #define INC_APPL_THREAD_SERVICE_H
 
-struct appl_thread_handle;
+struct appl_thread;
 
-struct appl_thread_property_handle;
+struct appl_thread_property;
 
-struct appl_context_handle;
+struct appl_context;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -34,24 +34,24 @@ class appl_thread_service
         static
         enum appl_status
         s_create(
-            struct appl_context_handle * const
-                p_context_handle,
-            struct appl_thread_property_handle const * const
-                p_thread_property_handle,
-            struct appl_thread_handle * * const
-                r_thread_handle);
+            struct appl_context * const
+                p_context,
+            struct appl_thread_property const * const
+                p_thread_property,
+            struct appl_thread * * const
+                r_thread);
 
         static
         enum appl_status
         s_start(
-            struct appl_thread_handle * const
-                p_thread_handle);
+            struct appl_thread * const
+                p_thread);
 
         static
         enum appl_status
         s_stop(
-            struct appl_thread_handle * const
-                p_thread_handle,
+            struct appl_thread * const
+                p_thread,
             unsigned long int const
                 i_wait_freq,
             unsigned long int const
@@ -62,8 +62,8 @@ class appl_thread_service
         static
         enum appl_status
         s_interrupt(
-            struct appl_thread_handle * const
-                p_thread_handle);
+            struct appl_thread * const
+                p_thread);
 
 }; // class appl_thread_service
 

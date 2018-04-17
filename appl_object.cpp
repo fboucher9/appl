@@ -263,51 +263,12 @@ enum appl_status
 //
 //
 //
-class appl_object *
-    appl_object::convert_handle(
-        struct appl_object_handle * const
-            p_object_handle)
-{
-    return
-        reinterpret_cast<class appl_object *>(
-            p_object_handle);
-
-} // convert_handle()
-
-//
-//
-//
-class appl_object const *
-    appl_object::convert_const_handle(
-        struct appl_object_handle const * const
-            p_object_handle)
-{
-    return
-        reinterpret_cast<class appl_object const *>(
-            p_object_handle);
-
-} // convert_const_handle()
-
-//
-//
-//
-struct appl_context_handle *
-    appl_object::get_context_handle(void) const
-{
-    return
-        m_context->get_handle();
-
-} // get_context_handle()
-
-//
-//
-//
 class appl_context *
     appl_object::get_context(void) const
 {
     return
         m_context;
 
-} // get_context_handle()
+} // get_context()
 
 /* end-of-file: appl_object.cpp */

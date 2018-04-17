@@ -22,15 +22,10 @@
 static
 class appl_options *
 get_options_from_object(
-    struct appl_object_handle const * const
-        p_object_handle)
+    struct appl_object const * const
+        p_object)
 {
-    class appl_object const * const
-        p_object =
-        appl_object::convert_const_handle(
-            p_object_handle);
-
-    class appl_context * const
+    struct appl_context * const
         p_context =
         p_object->get_context();
 
@@ -44,8 +39,8 @@ get_options_from_object(
 //
 enum appl_status
 appl_options_service::s_count(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned long int * const
         r_count)
 {
@@ -55,7 +50,7 @@ appl_options_service::s_count(
     class appl_options * const
         p_options =
         get_options_from_object(
-            p_object_handle);
+            p_object);
 
     e_status =
         p_options->v_count(
@@ -71,8 +66,8 @@ appl_options_service::s_count(
 //
 enum appl_status
 appl_options_service::s_get(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned long int const
         i_index,
     unsigned char const * * const
@@ -86,7 +81,7 @@ appl_options_service::s_get(
     class appl_options * const
         p_options =
         get_options_from_object(
-            p_object_handle);
+            p_object);
 
     e_status =
         p_options->v_get(

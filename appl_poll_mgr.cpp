@@ -49,7 +49,7 @@ struct appl_poll_table
 
     /* -- */
 
-    class appl_poll_node * *
+    struct appl_poll * *
         a_nodes;
 
     struct pollfd *
@@ -76,7 +76,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    p_mutex_node->v_lock();
+    p_mutex->v_lock();
 
     // count number of elements
     {
@@ -91,9 +91,9 @@ enum appl_status
         while (
             o_iterator.next())
         {
-            class appl_poll_node * const
+            struct appl_poll * const
                 p_poll_node =
-                static_cast<class appl_poll_node *>(
+                static_cast<struct appl_poll *>(
                     o_iterator.p_cur);
 
             if (
@@ -119,7 +119,7 @@ enum appl_status
             * p_poll_table->i_count)
         + (
             sizeof(
-                class appl_poll_node *)
+                struct appl_poll *)
             * p_poll_table->i_count);
 
     e_status =
@@ -133,7 +133,7 @@ enum appl_status
         == e_status)
     {
         p_poll_table->a_nodes =
-            static_cast<class appl_poll_node * *>(
+            static_cast<struct appl_poll * *>(
                 p_poll_table->p_allocation);
 
         p_poll_table->a_events =
@@ -157,9 +157,9 @@ enum appl_status
             while (
                 o_iterator.next())
             {
-                class appl_poll_node * const
+                struct appl_poll * const
                     p_poll_node =
-                    reinterpret_cast<class appl_poll_node *>(
+                    reinterpret_cast<struct appl_poll *>(
                         o_iterator.p_cur);
 
                 if (
@@ -184,7 +184,7 @@ enum appl_status
         }
     }
 
-    p_mutex_node->v_unlock();
+    p_mutex->v_unlock();
 
     return
         e_status;
@@ -199,7 +199,7 @@ void
         struct appl_poll_table * const
             p_poll_table)
 {
-    p_mutex_node->v_lock();
+    p_mutex->v_lock();
 
     // release the nodes
 
@@ -211,9 +211,9 @@ void
     while (
         o_iterator.next())
     {
-        class appl_poll_node * const
+        struct appl_poll * const
             p_poll_node =
-            static_cast<class appl_poll_node *>(
+            static_cast<struct appl_poll *>(
                 o_iterator.p_cur);
 
         if (
@@ -224,7 +224,7 @@ void
         }
     }
 
-    p_mutex_node->v_unlock();
+    p_mutex->v_unlock();
 
     // free the tables
     class appl_heap * const
@@ -307,7 +307,7 @@ void
         b_continue)
     {
         // verify kill flag
-        p_mutex_node->v_lock();
+        p_mutex->v_lock();
 
         if (m_kill)
         {
@@ -315,7 +315,7 @@ void
                 false;
         }
 
-        p_mutex_node->v_unlock();
+        p_mutex->v_unlock();
 
         if (
             b_continue)

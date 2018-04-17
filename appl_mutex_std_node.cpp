@@ -26,12 +26,12 @@
 //
 enum appl_status
     appl_mutex_std_node::create_instance(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         struct appl_mutex_descriptor const * const
             p_mutex_descriptor,
-        class appl_mutex_node * * const
-            r_mutex_node)
+        struct appl_mutex * * const
+            r_mutex)
 {
     enum appl_status
         e_status;
@@ -44,7 +44,7 @@ enum appl_status
             &(
                 appl_mutex_std_node::placement_new),
             p_mutex_descriptor,
-            r_mutex_node);
+            r_mutex);
 
     return
         e_status;
@@ -55,7 +55,7 @@ enum appl_status
 //
 //
 appl_mutex_std_node::appl_mutex_std_node() :
-    appl_mutex_node(),
+    appl_mutex(),
     m_pthread_mutex_storage(),
     m_pthread_mutex_initialized()
 {

@@ -14,15 +14,15 @@
 /* Header file dependencies */
 #if !defined(INC_APPL_OBJECT_H)
 #error include appl_object.h before
-#endif /* #if !defined(INC_APPL_OBJECT_HANDLE_H) */
+#endif /* #if !defined(INC_APPL_OBJECT_H) */
 
 struct appl_file_descriptor;
+
+struct appl_file;
 
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
-
-class appl_file_node;
 
 class appl_file_mgr;
 
@@ -38,7 +38,7 @@ class appl_file_mgr : public appl_object
             v_create_node(
                 struct appl_file_descriptor const * const
                     p_file_descriptor,
-                class appl_file_node * * const
+                struct appl_file * * const
                     r_file_node);
 
     protected:

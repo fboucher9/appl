@@ -84,8 +84,8 @@ enum appl_status
     appl_file_std_mgr::v_create_node(
         struct appl_file_descriptor const * const
             p_file_descriptor,
-        class appl_file_node * * const
-            r_file_node)
+        struct appl_file * * const
+            r_file)
 {
     enum appl_status
         e_status;
@@ -94,7 +94,7 @@ enum appl_status
         appl_file_std_node::create_instance(
             m_context,
             p_file_descriptor,
-            r_file_node);
+            r_file);
 
     return
         e_status;

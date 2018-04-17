@@ -22,22 +22,8 @@
 //
 //
 //
-class appl_socket_node *
-    appl_socket_node::convert_handle(
-        struct appl_socket_handle * const
-            p_socket_handle)
-{
-    return
-        reinterpret_cast<class appl_socket_node *>(
-            p_socket_handle);
-
-} // convert_handle()
-
-//
-//
-//
 enum appl_status
-appl_socket_node::v_send(
+appl_socket::v_send(
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
@@ -59,7 +45,7 @@ appl_socket_node::v_send(
 //
 //
 enum appl_status
-appl_socket_node::v_recv(
+appl_socket::v_recv(
     unsigned char * const
         p_buf_min,
     unsigned char * const
@@ -81,14 +67,14 @@ appl_socket_node::v_recv(
 //
 //
 enum appl_status
-appl_socket_node::v_sendto(
+appl_socket::v_sendto(
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
         p_buf_max,
     unsigned long int * const
         r_count,
-    class appl_address_node * const
+    struct appl_address * const
         p_remote_address)
 {
     static_cast<void>(
@@ -107,14 +93,14 @@ appl_socket_node::v_sendto(
 //
 //
 enum appl_status
-appl_socket_node::v_recvfrom(
+appl_socket::v_recvfrom(
     unsigned char * const
         p_buf_min,
     unsigned char * const
         p_buf_max,
     unsigned long int * const
         r_count,
-    class appl_address_node * const
+    struct appl_address * const
         p_remote_address)
 {
     static_cast<void>(
@@ -133,7 +119,7 @@ appl_socket_node::v_recvfrom(
 //
 //
 enum appl_status
-appl_socket_node::v_wait(
+appl_socket::v_wait(
     enum appl_socket_wait_type const
         e_wait_type,
     unsigned long int const
@@ -154,7 +140,7 @@ appl_socket_node::v_wait(
 //
 //
 //
-appl_socket_node::appl_socket_node() :
+appl_socket::appl_socket() :
     appl_object()
 {
 }
@@ -162,7 +148,7 @@ appl_socket_node::appl_socket_node() :
 //
 //
 //
-appl_socket_node::~appl_socket_node()
+appl_socket::~appl_socket()
 {
 }
 

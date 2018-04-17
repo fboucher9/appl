@@ -19,7 +19,7 @@ struct appl_poll_descriptor;
 //
 //
 //
-class appl_poll_node : public appl_node
+struct appl_poll : public appl_node
 {
     friend class appl_poll_mgr;
 
@@ -34,8 +34,8 @@ class appl_poll_node : public appl_node
                     p_poll_mgr,
                 struct appl_poll_descriptor const * const
                     p_poll_descriptor,
-                class appl_poll_node * * const
-                    r_poll_node);
+                struct appl_poll * * const
+                    r_poll);
 
         virtual
         enum appl_status
@@ -51,10 +51,10 @@ class appl_poll_node : public appl_node
 
     protected:
 
-        appl_poll_node();
+        appl_poll();
 
         virtual
-        ~appl_poll_node();
+        ~appl_poll();
 
         class appl_poll_mgr *
             m_poll_mgr;
@@ -79,13 +79,13 @@ class appl_poll_node : public appl_node
 
     private:
 
-        appl_poll_node(
-            class appl_poll_node const & r);
+        appl_poll(
+            class appl_poll const & r);
 
-        class appl_poll_node &
+        class appl_poll &
             operator =(
-                class appl_poll_node const & r);
+                class appl_poll const & r);
 
-}; // class appl_poll_node
+}; // struct appl_poll
 
 /* end-of-file: appl_poll_node.h */

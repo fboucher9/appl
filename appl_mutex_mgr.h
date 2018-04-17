@@ -18,12 +18,12 @@
 
 struct appl_mutex_descriptor;
 
+struct appl_mutex;
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
-
-class appl_mutex_node;
 
 class appl_mutex_mgr;
 
@@ -39,8 +39,8 @@ class appl_mutex_mgr : public appl_object
             v_create(
                 struct appl_mutex_descriptor const * const
                     p_mutex_descriptor,
-                class appl_mutex_node * * const
-                    r_mutex_node);
+                struct appl_mutex * * const
+                    r_mutex);
 
     protected:
 

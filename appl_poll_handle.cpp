@@ -17,21 +17,21 @@
 */
 enum appl_status
 appl_poll_create(
-    struct appl_context_handle * const
-        p_context_handle,
+    struct appl_context * const
+        p_context,
     struct appl_poll_descriptor const * const
         p_poll_descriptor,
-    struct appl_poll_handle * * const
-        r_poll_handle)
+    struct appl_poll * * const
+        r_poll)
 {
     enum appl_status
         e_status;
 
     e_status =
         appl_poll_service::create_handle(
-            p_context_handle,
+            p_context,
             p_poll_descriptor,
-            r_poll_handle);
+            r_poll);
 
     return
         e_status;

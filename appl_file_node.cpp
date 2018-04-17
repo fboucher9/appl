@@ -22,7 +22,7 @@ Description:
 //
 //
 enum appl_status
-    appl_file_node::v_read(
+    appl_file::v_read(
         unsigned char * const
             p_buf_min,
         unsigned char * const
@@ -52,7 +52,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_file_node::v_write(
+    appl_file::v_write(
         unsigned char const * const
             p_buf_min,
         unsigned char const * const
@@ -81,21 +81,7 @@ enum appl_status
 //
 //
 //
-class appl_file_node *
-    appl_file_node::convert_handle(
-        struct appl_file_handle * const
-            p_file_handle)
-{
-    return
-        reinterpret_cast<class appl_file_node *>(
-            p_file_handle);
-
-} // convert_handle()
-
-//
-//
-//
-appl_file_node::appl_file_node() :
+appl_file::appl_file() :
     appl_object()
 {
 }
@@ -103,7 +89,7 @@ appl_file_node::appl_file_node() :
 //
 //
 //
-appl_file_node::~appl_file_node()
+appl_file::~appl_file()
 {
 }
 

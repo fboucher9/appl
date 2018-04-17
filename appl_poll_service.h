@@ -11,11 +11,11 @@
 
 #define INC_APPL_POLL_SERVICE_H
 
-struct appl_context_handle;
+struct appl_context;
 
 struct appl_poll_descriptor;
 
-struct appl_poll_handle;
+struct appl_poll;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -34,12 +34,12 @@ class appl_poll_service
         static
         enum appl_status
         create_handle(
-            struct appl_context_handle * const
-                p_context_handle,
+            struct appl_context* const
+                p_context,
             struct appl_poll_descriptor const * const
                 p_poll_descriptor,
-            struct appl_poll_handle * * const
-                r_poll_handle);
+            struct appl_poll* * const
+                r_poll);
 
 }; // class appl_poll_service
 

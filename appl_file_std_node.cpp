@@ -41,8 +41,8 @@ enum appl_status
             p_context,
         struct appl_file_descriptor const * const
             p_file_descriptor,
-        class appl_file_node * * const
-            r_file_node)
+        struct appl_file * * const
+            r_file)
 {
     enum appl_status
         e_status;
@@ -55,7 +55,7 @@ enum appl_status
             &(
                 appl_file_std_node::placement_new),
             p_file_descriptor,
-            r_file_node);
+            r_file);
 
     return
         e_status;
@@ -66,7 +66,7 @@ enum appl_status
 //
 //
 appl_file_std_node::appl_file_std_node() :
-    appl_file_node(),
+    appl_file(),
     m_fd(),
     m_close(false)
 {

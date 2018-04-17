@@ -40,11 +40,11 @@
 //
 enum appl_status
     appl_event_std_node::s_create(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         struct appl_event_descriptor const * const
             p_event_descriptor,
-        class appl_event_node * * const
+        struct appl_event * * const
             r_event_node)
 {
     enum appl_status
@@ -69,7 +69,7 @@ enum appl_status
 //
 //
 appl_event_std_node::appl_event_std_node() :
-    appl_event_node(),
+    appl_event(),
     m_pthread_event_storage(),
     m_pthread_event_initialized()
 {
@@ -207,7 +207,7 @@ enum appl_status
 //
 enum appl_status
     appl_event_std_node::v_wait(
-        class appl_mutex_node * const
+        struct appl_mutex * const
             p_mutex_node,
         unsigned long int const
             i_wait_freq,

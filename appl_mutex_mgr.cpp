@@ -19,8 +19,8 @@ enum appl_status
     appl_mutex_mgr::v_create(
         struct appl_mutex_descriptor const * const
             p_mutex_descriptor,
-        class appl_mutex_node * * const
-            r_mutex_node)
+        struct appl_mutex * * const
+            r_mutex)
 {
     enum appl_status
         e_status;
@@ -28,7 +28,7 @@ enum appl_status
     static_cast<void>(
         p_mutex_descriptor);
     static_cast<void>(
-        r_mutex_node);
+        r_mutex);
 
     e_status =
         appl_status_not_implemented;

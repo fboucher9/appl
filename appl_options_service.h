@@ -11,9 +11,7 @@
 
 #define INC_APPL_OPTIONS_SERVICE_H
 
-struct appl_object_handle;
-
-struct appl_string_handle;
+struct appl_object;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -32,16 +30,16 @@ class appl_options_service
         static
         enum appl_status
         s_count(
-            struct appl_object_handle const * const
-                p_object_handle,
+            struct appl_object const * const
+                p_object,
             unsigned long int * const
                 r_count);
 
         static
         enum appl_status
         s_get(
-            struct appl_object_handle const * const
-                p_object_handle,
+            struct appl_object const * const
+                p_object,
             unsigned long int const
                 i_index,
             unsigned char const * * const

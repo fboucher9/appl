@@ -38,20 +38,15 @@
 //
 enum appl_status
 appl_thread_service::s_create(
-    struct appl_context_handle * const
-        p_context_handle,
-    struct appl_thread_property_handle const * const
-        p_thread_property_handle,
-    struct appl_thread_handle * * const
-        r_thread_handle)
+    struct appl_context * const
+        p_context,
+    struct appl_thread_property const * const
+        p_thread_property,
+    struct appl_thread * * const
+        r_thread)
 {
     enum appl_status
         e_status;
-
-    class appl_context * const
-        p_context =
-        appl_context::convert_handle(
-            p_context_handle);
 
     class appl_thread_mgr *
         p_thread_mgr;
@@ -59,13 +54,13 @@ appl_thread_service::s_create(
     p_thread_mgr =
         p_context->m_thread_mgr;
 
-    class appl_thread_node *
+    struct appl_thread *
         p_thread_node;
 
     e_status =
         p_thread_mgr->v_create(
             p_context,
-            p_thread_property_handle,
+            p_thread_property,
             &(
                 p_thread_node));
 
@@ -73,8 +68,8 @@ appl_thread_service::s_create(
         appl_status_ok == e_status)
     {
         *(
-            r_thread_handle) =
-            p_thread_node->get_handle();
+            r_thread) =
+            p_thread_node;
     }
 
     return
@@ -87,19 +82,14 @@ appl_thread_service::s_create(
 //
 enum appl_status
 appl_thread_service::s_start(
-    struct appl_thread_handle * const
-        p_thread_handle)
+    struct appl_thread * const
+        p_thread)
 {
     enum appl_status
         e_status;
 
-    class appl_thread_node * const
-        p_thread_node =
-        appl_thread_node::convert_handle(
-            p_thread_handle);
-
     e_status =
-        p_thread_node->v_start();
+        p_thread->v_start();
 
     return
         e_status;
@@ -111,8 +101,8 @@ appl_thread_service::s_start(
 //
 enum appl_status
 appl_thread_service::s_stop(
-    struct appl_thread_handle * const
-        p_thread_handle,
+    struct appl_thread * const
+        p_thread,
     unsigned long int const
         i_wait_freq,
     unsigned long int const
@@ -123,13 +113,8 @@ appl_thread_service::s_stop(
     enum appl_status
         e_status;
 
-    class appl_thread_node * const
-        p_thread_node =
-        appl_thread_node::convert_handle(
-            p_thread_handle);
-
     e_status =
-        p_thread_node->v_stop(
+        p_thread->v_stop(
             i_wait_freq,
             i_wait_count,
             r_thread_result);
@@ -144,19 +129,14 @@ appl_thread_service::s_stop(
 //
 enum appl_status
 appl_thread_service::s_interrupt(
-    struct appl_thread_handle * const
-        p_thread_handle)
+    struct appl_thread * const
+        p_thread)
 {
     enum appl_status
         e_status;
 
-    class appl_thread_node * const
-        p_thread_node =
-        appl_thread_node::convert_handle(
-            p_thread_handle);
-
     e_status =
-        p_thread_node->v_interrupt();
+        p_thread->v_interrupt();
 
     return
         e_status;

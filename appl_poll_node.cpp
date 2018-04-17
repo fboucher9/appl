@@ -27,15 +27,15 @@
 //
 //
 enum appl_status
-    appl_poll_node::create_instance(
+    appl_poll::create_instance(
         class appl_context * const
             p_context,
         class appl_poll_mgr * const
             p_poll_mgr,
         struct appl_poll_descriptor const * const
             p_poll_descriptor,
-        class appl_poll_node * * const
-            r_poll_node)
+        struct appl_poll * * const
+            r_poll)
 {
     enum appl_status
         e_status;
@@ -47,7 +47,7 @@ enum appl_status
     static_cast<void>(
         p_poll_descriptor);
     static_cast<void>(
-        r_poll_node);
+        r_poll);
 
     e_status =
         appl_status_not_implemented;
@@ -61,7 +61,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_poll_node::dispatch_event(
+    appl_poll::dispatch_event(
         unsigned int const
             i_poll_flags)
 {
@@ -83,7 +83,7 @@ enum appl_status
 //
 //
 bool
-    appl_poll_node::is_busy(void) const
+    appl_poll::is_busy(void) const
 {
     return
         m_busy;
@@ -94,7 +94,7 @@ bool
 //
 //
 bool
-    appl_poll_node::is_avail(void) const
+    appl_poll::is_avail(void) const
 {
     return
         m_avail;
@@ -104,7 +104,7 @@ bool
 //
 //
 //
-appl_poll_node::appl_poll_node() :
+appl_poll::appl_poll() :
     appl_node(),
     m_poll_mgr(),
     m_descriptor(),
@@ -117,7 +117,7 @@ appl_poll_node::appl_poll_node() :
 //
 //
 //
-appl_poll_node::~appl_poll_node()
+appl_poll::~appl_poll()
 {
 }
 

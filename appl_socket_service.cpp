@@ -34,13 +34,13 @@
 //      Create an instance of a socket node.
 //
 //  Parameters:
-//      p_context_handle
+//      p_context
 //          (input) Library context handle
 //
 //      p_socket_descriptor
 //          (input) Pointer to socket descriptor structure
 //
-//      r_socket_handle
+//      r_socket
 //          (output) Pointer to returned socket handle
 //
 // Returns:
@@ -48,33 +48,21 @@
 //
 enum appl_status
 appl_socket_service::s_create(
-    struct appl_context_handle * const
-        p_context_handle,
-    struct appl_property_handle const * const
+    struct appl_context * const
+        p_context,
+    struct appl_property const * const
         p_socket_descriptor,
-    struct appl_socket_handle * * const
-        r_socket_handle)
+    struct appl_socket * * const
+        r_socket)
 {
     enum appl_status
         e_status;
 
-    // Convert opaque context handle to context object
-    class appl_context * const
-        p_context =
-        appl_context::convert_handle(
-            p_context_handle);
-
-    // Get socket manager from context
-    class appl_socket_mgr * const
-        p_socket_mgr =
-        p_context->m_socket_mgr;
-
     // Dispatch to socket manager
     e_status =
-        p_socket_mgr->v_create_socket(
+        p_context->m_socket_mgr->v_create_socket(
             p_socket_descriptor,
-            reinterpret_cast<class appl_socket_node * *>(
-                r_socket_handle));
+            r_socket);
 
     return
         e_status;
@@ -88,7 +76,7 @@ appl_socket_service::s_create(
 //      Send a packet to connected address.
 //
 //  Parameters:
-//      p_socket_handle
+//      p_socket
 //          (input) Socket handle
 //
 //      p_buf
@@ -97,8 +85,8 @@ appl_socket_service::s_create(
 //
 enum appl_status
 appl_socket_service::s_send(
-    struct appl_socket_handle * const
-        p_socket_handle,
+    struct appl_socket * const
+        p_socket,
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
@@ -109,15 +97,9 @@ appl_socket_service::s_send(
     enum appl_status
         e_status;
 
-    // Convert socket handle to pointer to socket node
-    class appl_socket_node * const
-        p_socket_node =
-        appl_socket_node::convert_handle(
-            p_socket_handle);
-
     // Dispatch to socket node
     e_status =
-        p_socket_node->v_send(
+        p_socket->v_send(
             p_buf_min,
             p_buf_max,
             r_count);
@@ -132,8 +114,8 @@ appl_socket_service::s_send(
 //
 enum appl_status
 appl_socket_service::s_recv(
-    struct appl_socket_handle * const
-        p_socket_handle,
+    struct appl_socket * const
+        p_socket,
     unsigned char * const
         p_buf_min,
     unsigned char * const
@@ -144,15 +126,9 @@ appl_socket_service::s_recv(
     enum appl_status
         e_status;
 
-    // Convert socket handle to pointer to socket node
-    class appl_socket_node * const
-        p_socket_node =
-        appl_socket_node::convert_handle(
-            p_socket_handle);
-
     // Dispatch to socket node
     e_status =
-        p_socket_node->v_recv(
+        p_socket->v_recv(
             p_buf_min,
             p_buf_max,
             r_count);
@@ -167,39 +143,27 @@ appl_socket_service::s_recv(
 //
 enum appl_status
 appl_socket_service::s_sendto(
-    struct appl_socket_handle * const
-        p_socket_handle,
+    struct appl_socket * const
+        p_socket,
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
         p_buf_max,
     unsigned long int * const
         r_count,
-    struct appl_address_handle * const
+    struct appl_address * const
         p_remote_address)
 {
     enum appl_status
         e_status;
 
-    // Convert socket handle to pointer to socket node
-    class appl_socket_node * const
-        p_socket_node =
-        appl_socket_node::convert_handle(
-            p_socket_handle);
-
-    // Convert address handle to pointer to address node
-    class appl_address_node * const
-        p_address_node =
-        appl_address_node::convert_handle(
-            p_remote_address);
-
     // Dispatch to socket node
     e_status =
-        p_socket_node->v_sendto(
+        p_socket->v_sendto(
             p_buf_min,
             p_buf_max,
             r_count,
-            p_address_node);
+            p_remote_address);
 
     return
         e_status;
@@ -211,39 +175,27 @@ appl_socket_service::s_sendto(
 //
 enum appl_status
 appl_socket_service::s_recvfrom(
-    struct appl_socket_handle * const
-        p_socket_handle,
+    struct appl_socket * const
+        p_socket,
     unsigned char * const
         p_buf_min,
     unsigned char * const
         p_buf_max,
     unsigned long int * const
         r_count,
-    struct appl_address_handle * const
+    struct appl_address * const
         p_remote_address)
 {
     enum appl_status
         e_status;
 
-    // Convert socket handle to pointer to socket node
-    class appl_socket_node * const
-        p_socket_node =
-        appl_socket_node::convert_handle(
-            p_socket_handle);
-
-    // Convert address handle to pointer to address node
-    class appl_address_node * const
-        p_address_node =
-        appl_address_node::convert_handle(
-            p_remote_address);
-
     // Dispatch to socket node
     e_status =
-        p_socket_node->v_recvfrom(
+        p_socket->v_recvfrom(
             p_buf_min,
             p_buf_max,
             r_count,
-            p_address_node);
+            p_remote_address);
 
     return
         e_status;
@@ -255,8 +207,8 @@ appl_socket_service::s_recvfrom(
 //
 enum appl_status
 appl_socket_service::s_wait(
-    struct appl_socket_handle * const
-        p_socket_handle,
+    struct appl_socket * const
+        p_socket,
     enum appl_socket_wait_type const
         e_wait_type,
     unsigned long int const
@@ -267,15 +219,9 @@ appl_socket_service::s_wait(
     enum appl_status
         e_status;
 
-    // Convert socket handle to pointer to socket node
-    class appl_socket_node * const
-        p_socket_node =
-        appl_socket_node::convert_handle(
-            p_socket_handle);
-
     // Dispatch to socket node
     e_status =
-        p_socket_node->v_wait(
+        p_socket->v_wait(
             e_wait_type,
             i_wait_freq,
             i_wait_count);

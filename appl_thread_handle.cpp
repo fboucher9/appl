@@ -17,23 +17,23 @@
 */
 enum appl_status
 appl_thread_create(
-    struct appl_object_handle const * const
-        p_object_handle,
-    struct appl_thread_property_handle const * const
-        p_thread_property_handle,
-    struct appl_thread_handle * * const
-        r_thread_handle)
+    struct appl_object const * const
+        p_object,
+    struct appl_thread_property const * const
+        p_thread_property,
+    struct appl_thread * * const
+        r_thread)
 {
-    struct appl_context_handle * const
-        p_context_handle =
-        appl_object_get_context_handle(
-            p_object_handle);
+    struct appl_context * const
+        p_context =
+        appl_object_get_context(
+            p_object);
 
     return
         appl_thread_service::s_create(
-            p_context_handle,
-            p_thread_property_handle,
-            r_thread_handle);
+            p_context,
+            p_thread_property,
+            r_thread);
 
 } /* appl_thread_create() */
 
@@ -42,12 +42,12 @@ appl_thread_create(
 */
 enum appl_status
 appl_thread_start(
-    struct appl_thread_handle * const
-        p_thread_handle)
+    struct appl_thread * const
+        p_thread)
 {
     return
         appl_thread_service::s_start(
-            p_thread_handle);
+            p_thread);
 
 } /* appl_thread_start() */
 
@@ -56,8 +56,8 @@ appl_thread_start(
 */
 enum appl_status
 appl_thread_stop(
-    struct appl_thread_handle * const
-        p_thread_handle,
+    struct appl_thread * const
+        p_thread,
     unsigned long int const
         i_wait_freq,
     unsigned long int const
@@ -67,7 +67,7 @@ appl_thread_stop(
 {
     return
         appl_thread_service::s_stop(
-            p_thread_handle,
+            p_thread,
             i_wait_freq,
             i_wait_count,
             r_thread_result);
@@ -79,12 +79,12 @@ appl_thread_stop(
 */
 enum appl_status
 appl_thread_interrupt(
-    struct appl_thread_handle * const
-        p_thread_handle)
+    struct appl_thread * const
+        p_thread)
 {
     return
         appl_thread_service::s_interrupt(
-            p_thread_handle);
+            p_thread);
 
 } /* appl_thread_interrupt() */
 

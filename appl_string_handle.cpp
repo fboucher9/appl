@@ -12,63 +12,69 @@
 
 #include "appl_string_service.h"
 
+#include "appl_types.h"
+
+#include "appl_object.h"
+
+#include "appl_string.h"
+
 /*
 
 */
 enum appl_status
 appl_string_create(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned long int const
         i_alloc_len,
-    struct appl_string_handle * * const
-        r_string_handle)
+    struct appl_string * * const
+        r_string)
 {
     return
         appl_string_service::s_create(
-            p_object_handle,
+            p_object,
             0,
             0,
             0,
             i_alloc_len,
-            r_string_handle);
+            r_string);
 
 } /* create() */
 
 enum appl_status
 appl_string_create_ref_buffer(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
         p_buf_max,
-    struct appl_string_handle * * const
-        r_string_handle)
+    struct appl_string * * const
+        r_string)
 {
     return
         appl_string_service::s_create(
-            p_object_handle,
+            p_object,
             p_buf_min,
             p_buf_max,
             p_buf_min,
             0,
-            r_string_handle);
+            r_string);
 
 } /* create_ref_buffer() */
 
 enum appl_status
 appl_string_create_ref_buffer_n(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
         p_buf_max,
     unsigned long int const
         i_count,
-    struct appl_string_handle * * const
-        r_string_handle)
+    struct appl_string * * const
+        r_string)
 {
     unsigned char const * const
         p_buf_end =
@@ -78,12 +84,12 @@ appl_string_create_ref_buffer_n(
 
     return
         appl_string_service::s_create(
-            p_object_handle,
+            p_object,
             p_buf_min,
             p_buf_end,
             p_buf_min,
             0,
-            r_string_handle);
+            r_string);
 
 } /* create_ref_buffer_n() */
 
@@ -92,10 +98,10 @@ appl_string_create_ref_buffer_n(
 */
 enum appl_status
 appl_string_create_ref_object(
-    struct appl_string_handle const * const
-        p_ref_string_handle,
-    struct appl_string_handle * * const
-        r_string_handle)
+    struct appl_string const * const
+        p_ref_string,
+    struct appl_string * * const
+        r_string)
 {
     enum appl_status
         e_status;
@@ -108,7 +114,7 @@ appl_string_create_ref_object(
 
     e_status =
         appl_string_service::s_read(
-            p_ref_string_handle,
+            p_ref_string,
             &(
                 p_buf_min),
             &(
@@ -120,11 +126,10 @@ appl_string_create_ref_object(
     {
         e_status =
             appl_string_create_ref_buffer(
-                &(
-                    p_ref_string_handle->o_object_handle),
+                p_ref_string,
                 p_buf_min,
                 p_buf_max,
-                r_string_handle);
+                r_string);
     }
 
     return
@@ -137,12 +142,12 @@ appl_string_create_ref_object(
 */
 enum appl_status
 appl_string_create_ref_object_n(
-    struct appl_string_handle const * const
-        p_ref_string_handle,
+    struct appl_string const * const
+        p_ref_string,
     unsigned long int const
         i_count,
-    struct appl_string_handle * * const
-        r_string_handle)
+    struct appl_string * * const
+        r_string)
 {
     enum appl_status
         e_status;
@@ -155,7 +160,7 @@ appl_string_create_ref_object_n(
 
     e_status =
         appl_string_service::s_read(
-            p_ref_string_handle,
+            p_ref_string,
             &(
                 p_buf_min),
             &(
@@ -167,12 +172,11 @@ appl_string_create_ref_object_n(
     {
         e_status =
             appl_string_create_ref_buffer_n(
-                &(
-                    p_ref_string_handle->o_object_handle),
+                p_ref_string,
                 p_buf_min,
                 p_buf_max,
                 i_count,
-                r_string_handle);
+                r_string);
     }
 
     return
@@ -182,55 +186,55 @@ appl_string_create_ref_object_n(
 
 enum appl_status
 appl_string_create_dup_buffer(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
         p_buf_max,
-    struct appl_string_handle * * const
-        r_string_handle)
+    struct appl_string * * const
+        r_string)
 {
     return
         appl_string_create_dup_buffer_n(
-            p_object_handle,
+            p_object,
             p_buf_min,
             p_buf_max,
             static_cast<unsigned long int>(
                 p_buf_max
                 - p_buf_min),
-            r_string_handle);
+            r_string);
 
 } /* create_dup_buffer() */
 
 enum appl_status
 appl_string_create_dup_buffer_n(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
         p_buf_max,
     unsigned long int const
         i_count,
-    struct appl_string_handle * * const
-        r_string_handle)
+    struct appl_string * * const
+        r_string)
 {
     enum appl_status
         e_status;
 
-    struct appl_string_handle *
-        p_string_handle;
+    struct appl_string *
+        p_string;
 
     e_status =
         appl_string_service::s_create(
-            p_object_handle,
+            p_object,
             0,
             0,
             0,
             i_count,
             &(
-                p_string_handle));
+                p_string));
 
     if (
         appl_status_ok
@@ -244,7 +248,7 @@ appl_string_create_dup_buffer_n(
 
         e_status =
             appl_string_service::s_write(
-                p_string_handle,
+                p_string,
                 p_buf_min,
                 p_buf_end);
 
@@ -253,14 +257,13 @@ appl_string_create_dup_buffer_n(
             == e_status)
         {
             *(
-                r_string_handle) =
-                p_string_handle;
+                r_string) =
+                p_string;
         }
         else
         {
             appl_object_destroy(
-                &(
-                    p_string_handle->o_object_handle));
+                p_string);
         }
     }
 
@@ -271,10 +274,10 @@ appl_string_create_dup_buffer_n(
 
 enum appl_status
 appl_string_create_dup_object(
-    struct appl_string_handle const * const
-        p_ref_string_handle,
-    struct appl_string_handle * * const
-        r_string_handle)
+    struct appl_string const * const
+        p_ref_string,
+    struct appl_string * * const
+        r_string)
 {
     enum appl_status
         e_status;
@@ -287,7 +290,7 @@ appl_string_create_dup_object(
 
     e_status =
         appl_string_service::s_read(
-            p_ref_string_handle,
+            p_ref_string,
             &(
                 p_buf_min),
             &(
@@ -299,11 +302,10 @@ appl_string_create_dup_object(
     {
         e_status =
             appl_string_create_dup_buffer(
-                &(
-                    p_ref_string_handle->o_object_handle),
+                p_ref_string,
                 p_buf_min,
                 p_buf_max,
-                r_string_handle);
+                r_string);
     }
 
     return
@@ -313,12 +315,12 @@ appl_string_create_dup_object(
 
 enum appl_status
 appl_string_create_dup_object_n(
-    struct appl_string_handle const * const
-        p_ref_string_handle,
+    struct appl_string const * const
+        p_ref_string,
     unsigned long int const
         i_count,
-    struct appl_string_handle * * const
-        r_string_handle)
+    struct appl_string * * const
+        r_string)
 {
     enum appl_status
         e_status;
@@ -331,7 +333,7 @@ appl_string_create_dup_object_n(
 
     e_status =
         appl_string_service::s_read(
-            p_ref_string_handle,
+            p_ref_string,
             &(
                 p_buf_min),
             &(
@@ -343,12 +345,11 @@ appl_string_create_dup_object_n(
     {
         e_status =
             appl_string_create_dup_buffer_n(
-                &(
-                    p_ref_string_handle->o_object_handle),
+                p_ref_string,
                 p_buf_min,
                 p_buf_max,
                 i_count,
-                r_string_handle);
+                r_string);
     }
 
     return
@@ -361,26 +362,26 @@ appl_string_create_dup_object_n(
 */
 enum appl_status
 appl_string_create_extern(
-    struct appl_object_handle const * const
-        p_object_handle,
+    struct appl_object const * const
+        p_object,
     unsigned char * const
         p_buf_min,
     unsigned char * const
         p_buf_max,
-    struct appl_string_handle * * const
-        r_string_handle)
+    struct appl_string * * const
+        r_string)
 {
     enum appl_status
         e_status;
 
     e_status =
         appl_string_service::s_create(
-            p_object_handle,
+            p_object,
             p_buf_min,
             p_buf_min,
             p_buf_max,
             0,
-            r_string_handle);
+            r_string);
 
     return
         e_status;
@@ -392,8 +393,8 @@ appl_string_create_extern(
 */
 enum appl_status
 appl_string_length(
-    struct appl_string_handle const * const
-        p_string_handle,
+    struct appl_string const * const
+        p_string,
     unsigned long int * const
         r_length)
 {
@@ -408,7 +409,7 @@ appl_string_length(
 
     e_status =
         appl_string_service::s_read(
-            p_string_handle,
+            p_string,
             &(
                 p_buf_min),
             &(
@@ -435,8 +436,8 @@ appl_string_length(
 */
 enum appl_status
 appl_string_read(
-    struct appl_string_handle const * const
-        p_string_handle,
+    struct appl_string const * const
+        p_string,
     unsigned char const * * const
         r_buf_min,
     unsigned char const * * const
@@ -444,7 +445,7 @@ appl_string_read(
 {
     return
         appl_string_service::s_read(
-            p_string_handle,
+            p_string,
             r_buf_min,
             r_buf_max);
 
@@ -455,14 +456,14 @@ appl_string_read(
 */
 enum appl_status
 appl_string_write_char(
-    struct appl_string_handle * const
-        p_string_handle,
+    struct appl_string * const
+        p_string,
     unsigned char const
         i_value)
 {
     return
         appl_string_service::s_write(
-            p_string_handle,
+            p_string,
             &(
                 i_value),
             &(
@@ -475,8 +476,8 @@ appl_string_write_char(
 */
 enum appl_status
 appl_string_write_buffer(
-    struct appl_string_handle * const
-        p_string_handle,
+    struct appl_string * const
+        p_string,
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
@@ -484,7 +485,7 @@ appl_string_write_buffer(
 {
     return
         appl_string_service::s_write(
-            p_string_handle,
+            p_string,
             p_buf_min,
             p_buf_max);
 
@@ -495,8 +496,8 @@ appl_string_write_buffer(
 */
 enum appl_status
 appl_string_write_buffer_n(
-    struct appl_string_handle * const
-        p_string_handle,
+    struct appl_string * const
+        p_string,
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
@@ -512,7 +513,7 @@ appl_string_write_buffer_n(
 
     return
         appl_string_service::s_write(
-            p_string_handle,
+            p_string,
             p_buf_min,
             p_buf_end);
 
@@ -523,10 +524,10 @@ appl_string_write_buffer_n(
 */
 enum appl_status
 appl_string_write_object(
-    struct appl_string_handle * const
-        p_string_handle,
-    struct appl_string_handle const * const
-        p_ref_string_handle)
+    struct appl_string * const
+        p_string,
+    struct appl_string const * const
+        p_ref_string)
 {
     enum appl_status
         e_status;
@@ -539,7 +540,7 @@ appl_string_write_object(
 
     e_status =
         appl_string_service::s_read(
-            p_ref_string_handle,
+            p_ref_string,
             &(
                 p_buf_min),
             &(
@@ -551,7 +552,7 @@ appl_string_write_object(
     {
         e_status =
             appl_string_write_buffer(
-                p_string_handle,
+                p_string,
                 p_buf_min,
                 p_buf_max);
     }
@@ -566,10 +567,10 @@ appl_string_write_object(
 */
 enum appl_status
 appl_string_write_object_n(
-    struct appl_string_handle * const
-        p_string_handle,
-    struct appl_string_handle const * const
-        p_ref_string_handle,
+    struct appl_string * const
+        p_string,
+    struct appl_string const * const
+        p_ref_string,
     unsigned long int const
         i_count)
 {
@@ -584,7 +585,7 @@ appl_string_write_object_n(
 
     e_status =
         appl_string_service::s_read(
-            p_ref_string_handle,
+            p_ref_string,
             &(
                 p_buf_min),
             &(
@@ -596,7 +597,7 @@ appl_string_write_object_n(
     {
         e_status =
             appl_string_write_buffer_n(
-                p_string_handle,
+                p_string,
                 p_buf_min,
                 p_buf_max,
                 i_count);

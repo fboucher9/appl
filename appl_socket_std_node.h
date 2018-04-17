@@ -16,6 +16,12 @@
 #error include appl_socket_node.h before
 #endif /* #if ! defined INC_APPL_SOCKET_NODE_H */
 
+struct appl_context;
+
+struct appl_property;
+
+struct appl_socket;
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -26,19 +32,19 @@ class appl_socket_std_node;
 //
 //
 //
-class appl_socket_std_node : public appl_socket_node
+class appl_socket_std_node : public appl_socket
 {
     public:
 
         static
         enum appl_status
             s_create(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
-                struct appl_property_handle const * const
+                struct appl_property const * const
                     p_socket_descriptor,
-                class appl_socket_node * * const
-                    r_socket_node);
+                struct appl_socket * * const
+                    r_socket);
 
     protected:
 
@@ -107,7 +113,7 @@ class appl_socket_std_node : public appl_socket_node
                 p_buf_max,
             unsigned long int * const
                 r_count,
-            class appl_address_node * const
+            struct appl_address * const
                 p_remote_address);
 
         virtual
@@ -119,7 +125,7 @@ class appl_socket_std_node : public appl_socket_node
                 p_buf_max,
             unsigned long int * const
                 r_count,
-            class appl_address_node * const
+            struct appl_address * const
                 p_remote_address);
 
 }; // class appl_socket_std_node

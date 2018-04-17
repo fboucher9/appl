@@ -83,8 +83,8 @@ enum appl_status
             p_name_min,
         unsigned char const * const
             p_name_max,
-        struct appl_string_handle * * const
-            r_string_handle)
+        struct appl_string * * const
+            r_string)
 {
     enum appl_status
         e_status;
@@ -136,27 +136,26 @@ enum appl_status
                 strlen(
                     p_value0);
 
-            struct appl_string_handle *
-                p_string_handle;
+            struct appl_string *
+                p_string;
 
             e_status =
                 appl_string_create_dup_buffer(
-                    &(
-                        m_context->get_handle()->o_object_handle),
+                    m_context,
                     reinterpret_cast<unsigned char const *>(
                         p_value0),
                     reinterpret_cast<unsigned char const *>(
                         p_value0 + i_value_len),
                     &(
-                        p_string_handle));
+                        p_string));
 
             if (
                 appl_status_ok
                 == e_status)
             {
                 *(
-                    r_string_handle) =
-                    p_string_handle;
+                    r_string) =
+                    p_string;
 
 #if 0
                 if (
@@ -164,8 +163,7 @@ enum appl_status
                     != e_status)
                 {
                     appl_object_destroy(
-                        &(
-                            p_string_handle->o_object_handle));
+                        p_string);
                 }
 #endif
             }

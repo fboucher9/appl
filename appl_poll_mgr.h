@@ -55,8 +55,8 @@ class appl_poll_mgr : public appl_object
             v_create(
                 struct appl_poll_descriptor const * const
                     p_poll_descriptor,
-                class appl_poll_node * * const
-                    r_poll_node);
+                struct appl_poll * * const
+                    r_poll);
 
     protected:
 
@@ -65,11 +65,11 @@ class appl_poll_mgr : public appl_object
         virtual
         ~appl_poll_mgr();
 
-        class appl_thread_node *
-            p_thread_node;
+        struct appl_thread *
+            p_thread;
 
-        class appl_mutex_node *
-            p_mutex_node;
+        struct appl_mutex *
+            p_mutex;
 
         class appl_node
             o_nodes;

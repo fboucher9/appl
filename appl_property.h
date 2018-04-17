@@ -23,7 +23,7 @@
 
 union appl_property_value;
 
-struct appl_property_handle;
+struct appl_property;
 
 struct appl_property_node
 {
@@ -43,12 +43,12 @@ struct appl_property_node
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
-class appl_property;
+struct appl_property;
 
 //
 //
 //
-class appl_property : public appl_object
+struct appl_property : public appl_object
 {
     public:
 
@@ -61,21 +61,6 @@ class appl_property : public appl_object
                     i_id,
                 class appl_property * * const
                     r_property);
-
-        static
-        class appl_property *
-            convert_handle(
-                struct appl_property_handle * const
-                    p_property_handle);
-
-        static
-        class appl_property const *
-            convert_const_handle(
-                struct appl_property_handle const * const
-                    p_property_handle);
-
-        struct appl_property_handle *
-            get_handle(void);
 
         virtual
         enum appl_status
@@ -137,11 +122,11 @@ class appl_property : public appl_object
             a_nodes[1u];
 
         appl_property(
-            class appl_property const & r);
+            struct appl_property const & r);
 
-        class appl_property &
+        struct appl_property &
             operator =(
-                class appl_property const & r);
+                struct appl_property const & r);
 
         static
         void
@@ -159,6 +144,6 @@ class appl_property : public appl_object
         enum appl_status
             cleanup(void);
 
-}; // class appl_property
+}; // struct appl_property
 
 /* end-of-file: appl_property.h */

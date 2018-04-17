@@ -11,9 +11,9 @@
 
 #define INC_APPL_STRING_SERVICE_H
 
-struct appl_object_handle;
+struct appl_object;
 
-struct appl_string_handle;
+struct appl_string;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -32,8 +32,8 @@ class appl_string_service
         static
         enum appl_status
         s_create(
-            struct appl_object_handle const * const
-                p_object_handle,
+            struct appl_object const * const
+                p_object,
             unsigned char const * const
                 p_buf_min,
             unsigned char const * const
@@ -42,14 +42,14 @@ class appl_string_service
                 p_buf_max,
             unsigned long int const
                 i_alloc_len,
-            struct appl_string_handle * * const
-                r_string_handle);
+            struct appl_string * * const
+                r_string);
 
         static
         enum appl_status
         s_read(
-            struct appl_string_handle const * const
-                p_string_handle,
+            struct appl_string const * const
+                p_string,
             unsigned char const * * const
                 r_buf_min,
             unsigned char const * * const
@@ -58,8 +58,8 @@ class appl_string_service
         static
         enum appl_status
         s_write(
-            struct appl_string_handle * const
-                p_string_handle,
+            struct appl_string * const
+                p_string,
             unsigned char const * const
                 p_buf_min,
             unsigned char const * const

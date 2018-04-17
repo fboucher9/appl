@@ -11,13 +11,13 @@
 
 #define INC_APPL_SOCKET_SERVICE_H
 
-struct appl_context_handle;
+struct appl_context;
 
-struct appl_property_handle;
+struct appl_property;
 
-struct appl_socket_handle;
+struct appl_socket;
 
-struct appl_address_handle;
+struct appl_address;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -36,18 +36,18 @@ class appl_socket_service
         static
         enum appl_status
         s_create(
-            struct appl_context_handle * const
-                p_context_handle,
-            struct appl_property_handle const * const
+            struct appl_context * const
+                p_context,
+            struct appl_property const * const
                 p_socket_descriptor,
-            struct appl_socket_handle * * const
-                r_socket_handle);
+            struct appl_socket * * const
+                r_socket);
 
         static
         enum appl_status
         s_send(
-            struct appl_socket_handle * const
-                p_socket_handle,
+            struct appl_socket * const
+                p_socket,
             unsigned char const * const
                 p_buf_min,
             unsigned char const * const
@@ -58,8 +58,8 @@ class appl_socket_service
         static
         enum appl_status
         s_recv(
-            struct appl_socket_handle * const
-                p_socket_handle,
+            struct appl_socket * const
+                p_socket,
             unsigned char * const
                 p_buf_min,
             unsigned char * const
@@ -70,36 +70,36 @@ class appl_socket_service
         static
         enum appl_status
         s_sendto(
-            struct appl_socket_handle * const
-                p_socket_handle,
+            struct appl_socket * const
+                p_socket,
             unsigned char const * const
                 p_buf_min,
             unsigned char const * const
                 p_buf_max,
             unsigned long int * const
                 r_count,
-            struct appl_address_handle * const
+            struct appl_address * const
                 p_remote_address);
 
         static
         enum appl_status
         s_recvfrom(
-            struct appl_socket_handle * const
-                p_socket_handle,
+            struct appl_socket * const
+                p_socket,
             unsigned char * const
                 p_buf_min,
             unsigned char * const
                 p_buf_max,
             unsigned long int * const
                 r_count,
-            struct appl_address_handle * const
+            struct appl_address * const
                 p_remote_address);
 
         static
         enum appl_status
         s_wait(
-            struct appl_socket_handle * const
-                p_socket_handle,
+            struct appl_socket * const
+                p_socket,
             enum appl_socket_wait_type const
                 e_wait_type,
             unsigned long int const

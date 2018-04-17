@@ -17,18 +17,18 @@
 */
 enum appl_status
 appl_file_create(
-    struct appl_context_handle * const
-        p_context_handle,
+    struct appl_context * const
+        p_context,
     struct appl_file_descriptor const * const
         p_file_descriptor,
-    struct appl_file_handle * * const
-        r_file_handle)
+    struct appl_file * * const
+        r_file)
 {
     return
         appl_file_service::s_create(
-            p_context_handle,
+            p_context,
             p_file_descriptor,
-            r_file_handle);
+            r_file);
 
 } /* appl_file_create() */
 
@@ -37,8 +37,8 @@ appl_file_create(
 */
 enum appl_status
 appl_file_read(
-    struct appl_file_handle * const
-        p_file_handle,
+    struct appl_file * const
+        p_file,
     unsigned char * const
         p_buf_cur,
     unsigned char * const
@@ -48,7 +48,7 @@ appl_file_read(
 {
     return
         appl_file_service::s_read(
-            p_file_handle,
+            p_file,
             p_buf_cur,
             p_buf_max,
             r_count);
@@ -60,8 +60,8 @@ appl_file_read(
 */
 enum appl_status
 appl_file_write(
-    struct appl_file_handle * const
-        p_file_handle,
+    struct appl_file * const
+        p_file,
     unsigned char const * const
         p_buf_cur,
     unsigned char const * const
@@ -71,7 +71,7 @@ appl_file_write(
 {
     return
         appl_file_service::s_write(
-            p_file_handle,
+            p_file,
             p_buf_cur,
             p_buf_max,
             r_count);

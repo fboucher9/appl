@@ -23,7 +23,7 @@ enum appl_status
     appl_file_mgr::v_create_node(
         struct appl_file_descriptor const * const
             p_file_descriptor,
-        class appl_file_node * * const
+        struct appl_file * * const
             r_file_node)
 {
     enum appl_status

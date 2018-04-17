@@ -63,7 +63,7 @@ struct appl_address : public appl_object
 
     private:
 
-        appl_address_node(
+        appl_address(
             struct appl_address const & r);
 
         struct appl_address &

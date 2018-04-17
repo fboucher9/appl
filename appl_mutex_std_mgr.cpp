@@ -87,8 +87,8 @@ enum appl_status
     appl_mutex_std_mgr::v_create(
         struct appl_mutex_descriptor const * const
             p_mutex_descriptor,
-        class appl_mutex_node * * const
-            r_mutex_node)
+        struct appl_mutex * * const
+            r_mutex)
 {
     enum appl_status
         e_status;
@@ -97,7 +97,7 @@ enum appl_status
         appl_mutex_std_node::create_instance(
             m_context,
             p_mutex_descriptor,
-            r_mutex_node);
+            r_mutex);
 
     return
         e_status;

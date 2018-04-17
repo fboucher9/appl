@@ -178,58 +178,6 @@ enum appl_status
 //
 //
 //
-class appl_string const *
-    appl_string::convert_const_handle(
-        struct appl_string_handle const * const
-            p_string_handle)
-{
-    return
-        reinterpret_cast<class appl_string const *>(
-            p_string_handle);
-
-} // convert_const_handle()
-
-//
-//
-//
-class appl_string *
-    appl_string::convert_handle(
-        struct appl_string_handle * const
-            p_string_handle)
-{
-    return
-        reinterpret_cast<class appl_string *>(
-            p_string_handle);
-
-} // convert_handle()
-
-//
-//
-//
-struct appl_string_handle *
-    appl_string::get_handle(void)
-{
-    return
-        reinterpret_cast<struct appl_string_handle *>(
-            this);
-
-} // get_handle()
-
-//
-//
-//
-struct appl_string_handle const *
-    appl_string::get_const_handle(void) const
-{
-    return
-        reinterpret_cast<struct appl_string_handle const *>(
-            this);
-
-} // get_const_handle()
-
-//
-//
-//
 appl_string::appl_string() :
     appl_object(),
     m_buf_min(),
@@ -254,7 +202,7 @@ void
             p_placement)
 {
     new (p_placement)
-        class appl_string;
+        struct appl_string;
 
 } // s_new()
 

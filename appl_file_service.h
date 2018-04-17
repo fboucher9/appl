@@ -16,9 +16,9 @@
 #error include appl_status.h before
 #endif /* #if ! defined INC_APPL_STATUS_H */
 
-struct appl_context_handle;
+struct appl_context;
 
-struct appl_file_handle;
+struct appl_file;
 
 struct appl_file_descriptor;
 
@@ -38,18 +38,18 @@ class appl_file_service
         static
         enum appl_status
             s_create(
-                struct appl_context_handle * const
-                    p_context_handle,
+                struct appl_context * const
+                    p_context,
                 struct appl_file_descriptor const * const
                     p_file_descriptor,
-                struct appl_file_handle * * const
-                    r_file_handle);
+                struct appl_file * * const
+                    r_file);
 
         static
         enum appl_status
             s_read(
-                struct appl_file_handle * const
-                    p_file_handle,
+                struct appl_file * const
+                    p_file,
                 unsigned char * const
                     p_buf_cur,
                 unsigned char * const
@@ -60,8 +60,8 @@ class appl_file_service
         static
         enum appl_status
             s_write(
-                struct appl_file_handle * const
-                    p_file_handle,
+                struct appl_file * const
+                    p_file,
                 unsigned char const * const
                     p_buf_cur,
                 unsigned char const * const

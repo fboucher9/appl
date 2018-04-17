@@ -41,7 +41,7 @@
 //
 enum appl_status
     appl_socket_std_mgr::s_create(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         class appl_socket_mgr * * const
             r_socket_mgr)
@@ -96,10 +96,10 @@ void
 //
 enum appl_status
     appl_socket_std_mgr::v_create_address(
-        struct appl_property_handle const * const
-            p_property_handle,
-        class appl_address_node * * const
-            r_address_node)
+        struct appl_property const * const
+            p_property,
+        struct appl_address * * const
+            r_address)
 {
     enum appl_status
         e_status;
@@ -107,8 +107,8 @@ enum appl_status
     e_status =
         appl_address_std_node::s_create(
             m_context,
-            p_property_handle,
-            r_address_node);
+            p_property,
+            r_address);
 
     return
         e_status;
@@ -120,10 +120,10 @@ enum appl_status
 //
 enum appl_status
     appl_socket_std_mgr::v_create_socket(
-        struct appl_property_handle const * const
+        struct appl_property const * const
             p_socket_descriptor,
-        class appl_socket_node * * const
-            r_socket_node)
+        struct appl_socket * * const
+            r_socket)
 {
     enum appl_status
         e_status;
@@ -132,7 +132,7 @@ enum appl_status
         appl_socket_std_node::s_create(
             m_context,
             p_socket_descriptor,
-            r_socket_node);
+            r_socket);
 
     return
         e_status;

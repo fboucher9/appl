@@ -35,7 +35,7 @@ enum appl_status
             p_context,
         unsigned int const
             i_count,
-        class appl_property * * const
+        struct appl_property * * const
             r_property)
 {
     enum appl_status
@@ -51,7 +51,7 @@ enum appl_status
         appl_object::s_create(
             p_context,
             sizeof(
-                class appl_property)
+                struct appl_property)
             + (
                 sizeof(
                     struct appl_property_node)
@@ -66,46 +66,6 @@ enum appl_status
         e_status;
 
 } // s_create()
-
-//
-//
-//
-class appl_property *
-    appl_property::convert_handle(
-        struct appl_property_handle * const
-            p_property_handle)
-{
-    return
-        reinterpret_cast<class appl_property *>(
-            p_property_handle);
-
-} // convert_handle()
-
-//
-//
-//
-class appl_property const *
-    appl_property::convert_const_handle(
-        struct appl_property_handle const * const
-            p_property_handle)
-{
-    return
-        reinterpret_cast<class appl_property const *>(
-            p_property_handle);
-
-} // convert_const_handle()
-
-//
-//
-//
-struct appl_property_handle *
-    appl_property::get_handle(void)
-{
-    return
-        reinterpret_cast<struct appl_property_handle *>(
-            this);
-
-} // get_handle()
 
 //
 //

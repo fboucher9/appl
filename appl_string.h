@@ -16,28 +16,28 @@
 #error include appl_object.h before
 #endif /* #if ! defined INC_APPL_OBJECT_H */
 
+/* Predefine */
+struct appl_context;
+
+/* Predefine */
+struct appl_string;
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
-// Predefine
-class appl_context;
-
-// Predefine
-class appl_string;
-
 //
 //
 //
-class appl_string : public appl_object
+struct appl_string : public appl_object
 {
     public:
 
         static
         enum appl_status
             s_create(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 unsigned char const * const
                     p_buf_min,
@@ -47,7 +47,7 @@ class appl_string : public appl_object
                     p_buf_max,
                 unsigned long int const
                     i_alloc_len,
-                class appl_string * * const
+                struct appl_string * * const
                     r_string);
 
         virtual
@@ -65,24 +65,6 @@ class appl_string : public appl_object
                     p_buf_min,
                 unsigned char const * const
                     p_buf_max);
-
-        static
-        class appl_string const *
-            convert_const_handle(
-                struct appl_string_handle const * const
-                    p_string_handle);
-
-        static
-        class appl_string *
-            convert_handle(
-                struct appl_string_handle * const
-                    p_string_handle);
-
-        struct appl_string_handle *
-            get_handle(void);
-
-        struct appl_string_handle const *
-            get_const_handle(void) const;
 
     protected:
 
@@ -106,11 +88,11 @@ class appl_string : public appl_object
     private:
 
         appl_string(
-            class appl_string const & r);
+            struct appl_string const & r);
 
-        class appl_string &
+        struct appl_string &
             operator =(
-                class appl_string const & r);
+                struct appl_string const & r);
 
         static
         void
@@ -128,6 +110,6 @@ class appl_string : public appl_object
         enum appl_status
             cleanup(void);
 
-}; // class appl_string
+}; // struct appl_string
 
 /* end-of-file: appl_string.h */

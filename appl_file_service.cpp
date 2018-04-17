@@ -28,20 +28,15 @@
 //
 enum appl_status
     appl_file_service::s_create(
-        struct appl_context_handle * const
-            p_context_handle,
+        struct appl_context * const
+            p_context,
         struct appl_file_descriptor const * const
             p_file_descriptor,
-        struct appl_file_handle * * const
-            r_file_handle)
+        struct appl_file * * const
+            r_file)
 {
     enum appl_status
         e_status;
-
-    class appl_context * const
-        p_context =
-        appl_context::convert_handle(
-            p_context_handle);
 
     class appl_file_mgr * const
         p_file_mgr =
@@ -50,8 +45,7 @@ enum appl_status
     e_status =
         p_file_mgr->v_create_node(
             p_file_descriptor,
-            reinterpret_cast<class appl_file_node * *>(
-                r_file_handle));
+            r_file);
 
     return
         e_status;
@@ -63,8 +57,8 @@ enum appl_status
 //
 enum appl_status
     appl_file_service::s_read(
-        struct appl_file_handle * const
-            p_file_handle,
+        struct appl_file * const
+            p_file,
         unsigned char * const
             p_buf_cur,
         unsigned char * const
@@ -75,13 +69,8 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_file_node * const
-        p_file_node =
-        appl_file_node::convert_handle(
-            p_file_handle);
-
     e_status =
-        p_file_node->v_read(
+        p_file->v_read(
             p_buf_cur,
             p_buf_max,
             r_count);
@@ -96,8 +85,8 @@ enum appl_status
 //
 enum appl_status
     appl_file_service::s_write(
-        struct appl_file_handle * const
-            p_file_handle,
+        struct appl_file * const
+            p_file,
         unsigned char const * const
             p_buf_cur,
         unsigned char const * const
@@ -108,13 +97,8 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_file_node * const
-        p_file_node =
-        appl_file_node::convert_handle(
-            p_file_handle);
-
     e_status =
-        p_file_node->v_write(
+        p_file->v_write(
             p_buf_cur,
             p_buf_max,
             r_count);

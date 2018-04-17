@@ -27,29 +27,21 @@ Description:
 #error include appl_socket_descriptor.h before
 #endif /* #if ! defined INC_APPL_SOCKET_DESCRIPTOR_H */
 
-struct appl_socket_handle;
+struct appl_address;
+
+struct appl_socket;
 
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
-class appl_address_node;
-
-class appl_socket_node;
-
 //
 //
 //
-class appl_socket_node : public appl_object
+struct appl_socket : public appl_object
 {
     public:
-
-        static
-        class appl_socket_node *
-            convert_handle(
-                struct appl_socket_handle * const
-                    p_socket_handle);
 
         virtual
         enum appl_status
@@ -80,7 +72,7 @@ class appl_socket_node : public appl_object
                 p_buf_max,
             unsigned long int * const
                 r_count,
-            class appl_address_node * const
+            struct appl_address * const
                 p_remote_address);
 
         virtual
@@ -92,7 +84,7 @@ class appl_socket_node : public appl_object
                 p_buf_max,
             unsigned long int * const
                 r_count,
-            class appl_address_node * const
+            struct appl_address * const
                 p_remote_address);
 
         virtual
@@ -107,20 +99,20 @@ class appl_socket_node : public appl_object
 
     protected:
 
-        appl_socket_node();
+        appl_socket();
 
         virtual
-        ~appl_socket_node();
+        ~appl_socket();
 
     private:
 
-        appl_socket_node(
-            class appl_socket_node const & r);
+        appl_socket(
+            struct appl_socket const & r);
 
-        class appl_socket_node &
+        struct appl_socket &
             operator =(
-                class appl_socket_node const & r);
+                struct appl_socket const & r);
 
-}; // class appl_socket_node
+}; // struct appl_socket
 
 /* end-of-file: appl_socket_node.h */
