@@ -22,11 +22,11 @@ Description:
 #error include appl_object.h before
 #endif /* #if !defined(INC_APPL_OBJECT_H) */
 
-class appl_context;
+struct appl_context;
 
-class appl_thread_node;
+struct appl_thread;
 
-class appl_property;
+struct appl_thread_property;
 
 //
 //
@@ -38,12 +38,12 @@ class appl_thread_mgr : public appl_object
         virtual
         enum appl_status
             v_create(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
-                struct appl_thread_property_handle const * const
-                    p_thread_property_handle,
-                class appl_thread_node * * const
-                    r_thread_node);
+                struct appl_thread_property const * const
+                    p_thread_property,
+                struct appl_thread * * const
+                    r_thread);
 
     protected:
 

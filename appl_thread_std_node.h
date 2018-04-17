@@ -15,6 +15,10 @@ Description:
 
 #define INC_APPL_THREAD_STD_NODE_H
 
+struct appl_context;
+
+struct appl_thread_property;
+
 #if !defined(__cplusplus)
 #error use C++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -24,28 +28,24 @@ Description:
 #error include appl_thread_node.h before
 #endif /* #if !defined(INC_APPL_THREAD_NODE_H) */
 
-class appl_context;
-
-class appl_property;
-
 class appl_thread_std_node;
 
 //
 //
 //
-class appl_thread_std_node : public appl_thread_node
+class appl_thread_std_node : public appl_thread
 {
     public:
 
         static
         enum appl_status
             create_instance(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
-                struct appl_thread_property_handle const * const
-                    p_thread_property_handle,
-                class appl_thread_node * * const
-                    r_thread_node);
+                struct appl_thread_property const * const
+                    p_thread_property,
+                struct appl_thread * * const
+                    r_thread);
 
     protected:
 

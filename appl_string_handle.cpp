@@ -388,6 +388,26 @@ appl_string_create_extern(
 
 } /* create_extern() */
 
+struct appl_object *
+appl_string_parent(
+    struct appl_string * const
+        p_string)
+{
+    return
+        p_string;
+
+}
+
+struct appl_object const *
+appl_string_const_parent(
+    struct appl_string const * const
+        p_string)
+{
+    return
+        p_string;
+
+}
+
 /*
 
 */

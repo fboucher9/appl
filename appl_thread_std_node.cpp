@@ -51,12 +51,12 @@
 //
 enum appl_status
     appl_thread_std_node::create_instance(
-        class appl_context * const
+        struct appl_context * const
             p_context,
-        struct appl_thread_property_handle const * const
-            p_thread_property_handle,
-        class appl_thread_node * * const
-            r_thread_node)
+        struct appl_thread_property const * const
+            p_thread_property,
+        struct appl_thread * * const
+            r_thread)
 {
     enum appl_status
         e_status;
@@ -68,8 +68,8 @@ enum appl_status
                 class appl_thread_std_node),
             &(
                 appl_thread_std_node::placement_new),
-            p_thread_property_handle,
-            r_thread_node);
+            p_thread_property,
+            r_thread);
 
     return
         e_status;
@@ -80,7 +80,7 @@ enum appl_status
 //
 //
 appl_thread_std_node::appl_thread_std_node() :
-    appl_thread_node(),
+    appl_thread(),
     m_descriptor(),
     m_lock(),
     m_event(),
@@ -656,20 +656,20 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_thread_property_handle const *
-        p_thread_property_handle;
+    struct appl_thread_property const *
+        p_thread_property;
 
-    p_thread_property_handle =
-        static_cast<struct appl_thread_property_handle const *>(
+    p_thread_property =
+        static_cast<struct appl_thread_property const *>(
             p_descriptor);
 
     appl_thread_property_get_callback(
-        p_thread_property_handle,
+        p_thread_property,
         &(
             m_descriptor.p_entry));
 
     appl_thread_property_get_context(
-        p_thread_property_handle,
+        p_thread_property,
         &(
             m_descriptor.p_context));
 

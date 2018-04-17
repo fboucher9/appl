@@ -18,19 +18,19 @@
 
 enum appl_status
     appl_thread_mgr::v_create(
-        class appl_context * const
+        struct appl_context * const
             p_context,
-        struct appl_thread_property_handle const * const
-            p_thread_property_handle,
-        class appl_thread_node * * const
-            r_thread_node)
+        struct appl_thread_property const * const
+            p_thread_property,
+        struct appl_thread * * const
+            r_thread)
 {
     static_cast<void>(
         p_context);
     static_cast<void>(
-        p_thread_property_handle);
+        p_thread_property);
     static_cast<void>(
-        r_thread_node);
+        r_thread);
     return
         appl_status_fail;
 }

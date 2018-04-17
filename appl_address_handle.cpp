@@ -12,6 +12,12 @@
 
 #include "appl_address_service.h"
 
+#include "appl_types.h"
+
+#include "appl_object.h"
+
+#include "appl_address_node.h"
+
 /*
 
 */
@@ -31,6 +37,26 @@ appl_address_create(
             r_address);
 
 } /* appl_address_create() */
+
+struct appl_object *
+appl_address_parent(
+    struct appl_address * const
+        p_address)
+{
+    return
+        p_address;
+
+}
+
+struct appl_object const *
+appl_address_const_parent(
+    struct appl_address const * const
+        p_address)
+{
+    return
+        p_address;
+
+}
 
 /*
 

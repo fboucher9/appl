@@ -14,6 +14,12 @@
 
 #include "appl_socket_service.h"
 
+#include "appl_types.h"
+
+#include "appl_object.h"
+
+#include "appl_socket_node.h"
+
 /*
 
 */
@@ -39,6 +45,26 @@ appl_socket_create(
         e_status;
 
 } /* appl_socket_create() */
+
+struct appl_object *
+appl_socket_parent(
+    struct appl_socket * const
+        p_socket)
+{
+    return
+        p_socket;
+
+}
+
+struct appl_object const *
+appl_socket_const_parent(
+    struct appl_socket const * const
+        p_socket)
+{
+    return
+        p_socket;
+
+}
 
 /*
 

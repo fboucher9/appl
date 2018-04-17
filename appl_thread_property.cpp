@@ -12,6 +12,14 @@
 
 #include "appl_thread_property.h"
 
+#include "appl_types.h"
+
+#include "appl_object.h"
+
+#include "appl_property_types.h"
+
+#include "appl_property.h"
+
 /* unique identifier for thread descriptor structure */
 /* echo -n "appl_thread_descriptor" | md5sum | cut -b1-8 */
 #define APPL_THREAD_DESCRIPTOR_GUID (0x7c92e304ul)
@@ -57,6 +65,10 @@ union appl_thread_property_callback
 
 };
 
+struct appl_thread_property : public appl_property
+{
+};
+
 /*
 
 */
@@ -91,7 +103,7 @@ appl_thread_property_create(
 
         *(
             r_thread_property) =
-            reinterpret_cast<struct appl_thread_property *>(
+            static_cast<struct appl_thread_property *>(
                 p_property);
     }
 
@@ -99,6 +111,26 @@ appl_thread_property_create(
         e_status;
 
 } /* appl_thread_property_create() */
+
+struct appl_property *
+appl_thread_property_parent(
+    struct appl_thread_property * const
+        p_thread_property)
+{
+    return
+        p_thread_property;
+
+} /* parent() */
+
+struct appl_property const *
+appl_thread_property_const_parent(
+    struct appl_thread_property const * const
+        p_thread_property)
+{
+    return
+        p_thread_property;
+
+} /* const_parent() */
 
 /*
 

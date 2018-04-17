@@ -12,6 +12,12 @@
 
 #include "appl_thread_service.h"
 
+#include "appl_types.h"
+
+#include "appl_object.h"
+
+#include "appl_thread_node.h"
+
 /*
 
 */
@@ -36,6 +42,26 @@ appl_thread_create(
             r_thread);
 
 } /* appl_thread_create() */
+
+struct appl_object *
+appl_thread_parent(
+    struct appl_thread * const
+        p_thread)
+{
+    return
+        p_thread;
+
+}
+
+struct appl_object const *
+appl_thread_const_parent(
+    struct appl_thread const * const
+        p_thread)
+{
+    return
+        p_thread;
+
+}
 
 /*
 

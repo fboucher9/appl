@@ -12,6 +12,12 @@
 
 #include "appl_file_service.h"
 
+#include "appl_types.h"
+
+#include "appl_object.h"
+
+#include "appl_file_node.h"
+
 /*
 
 */
@@ -31,6 +37,26 @@ appl_file_create(
             r_file);
 
 } /* appl_file_create() */
+
+struct appl_object *
+appl_file_parent(
+    struct appl_file * const
+        p_file)
+{
+    return
+        p_file;
+
+}
+
+struct appl_object const *
+appl_file_const_parent(
+    struct appl_file const * const
+        p_file)
+{
+    return
+        p_file;
+
+}
 
 /*
 

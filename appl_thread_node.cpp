@@ -21,7 +21,7 @@
 //
 //
 enum appl_status
-    appl_thread_node::v_start(void)
+    appl_thread::v_start(void)
 {
     return
         appl_status_fail;
@@ -31,7 +31,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_thread_node::v_stop(
+    appl_thread::v_stop(
         unsigned long int const
             i_wait_freq,
         unsigned long int const
@@ -53,7 +53,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_thread_node::v_interrupt(void)
+    appl_thread::v_interrupt(void)
 {
     return
         appl_status_fail;
@@ -62,7 +62,7 @@ enum appl_status
 //
 //
 //
-appl_thread_node::appl_thread_node() :
+appl_thread::appl_thread() :
     appl_object()
 {
 }
@@ -70,28 +70,8 @@ appl_thread_node::appl_thread_node() :
 //
 //
 //
-appl_thread_node::~appl_thread_node()
+appl_thread::~appl_thread()
 {
 }
-
-class appl_thread_node *
-    appl_thread_node::convert_handle(
-        struct appl_thread_handle * const
-            p_thread_handle)
-{
-    return
-        reinterpret_cast<class appl_thread_node *>(
-            p_thread_handle);
-
-} // convert_handle()
-
-struct appl_thread_handle *
-    appl_thread_node::get_handle(void)
-{
-    return
-        reinterpret_cast<struct appl_thread_handle *>(
-            this);
-
-} // get_handle()
 
 /* end-of-file: appl_thread_node.cpp */

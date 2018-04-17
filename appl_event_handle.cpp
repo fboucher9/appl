@@ -10,6 +10,11 @@
 
 #include "appl_event_service.h"
 
+#include "appl_types.h"
+
+#include "appl_object.h"
+
+#include "appl_event_node.h"
 /*
 
 */
@@ -35,6 +40,26 @@ appl_event_create(
         e_status;
 
 } /* appl_event_create() */
+
+struct appl_object *
+appl_event_parent(
+    struct appl_event * const
+        p_event)
+{
+    return
+        p_event;
+
+}
+
+struct appl_object const *
+appl_event_const_parent(
+    struct appl_event const * const
+        p_event)
+{
+    return
+        p_event;
+
+}
 
 /*
 
