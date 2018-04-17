@@ -4,19 +4,11 @@
 
 */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_object_handle.h"
+#include <appl_thread_handle.h>
 
-#include "appl_thread_handle.h"
-
-#include "appl_thread_service.h"
-
-#include "appl_types.h"
-
-#include "appl_object.h"
-
-#include "appl_thread_node.h"
+#include <appl_thread_service.h>
 
 /*
 
@@ -30,14 +22,9 @@ appl_thread_create(
     struct appl_thread * * const
         r_thread)
 {
-    struct appl_context * const
-        p_context =
-        appl_object_get_context(
-            p_object);
-
     return
         appl_thread_service::s_create(
-            p_context,
+            p_object,
             p_thread_property,
             r_thread);
 
@@ -49,9 +36,10 @@ appl_thread_parent(
         p_thread)
 {
     return
-        p_thread;
+        appl_thread_service::s_convert(
+            p_thread);
 
-}
+} /* parent() */
 
 struct appl_object const *
 appl_thread_const_parent(
@@ -59,9 +47,10 @@ appl_thread_const_parent(
         p_thread)
 {
     return
-        p_thread;
+        appl_thread_service::s_convert(
+            p_thread);
 
-}
+} /* const_parent() */
 
 /*
 

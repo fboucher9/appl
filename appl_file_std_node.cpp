@@ -37,7 +37,7 @@
 //
 enum appl_status
     appl_file_std_node::create_instance(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         struct appl_file_descriptor const * const
             p_file_descriptor,

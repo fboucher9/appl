@@ -23,7 +23,7 @@ struct appl_file_descriptor;
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
-class appl_context;
+struct appl_context;
 
 class appl_file_std_node;
 
@@ -37,7 +37,7 @@ class appl_file_std_node : public appl_file
         static
         enum appl_status
             create_instance(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 struct appl_file_descriptor const * const
                     p_file_descriptor,

@@ -28,7 +28,7 @@
 //
 enum appl_status
     appl_poll::create_instance(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         class appl_poll_mgr * const
             p_poll_mgr,

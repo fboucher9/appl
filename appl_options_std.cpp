@@ -25,7 +25,7 @@
 //
 enum appl_status
 appl_options_std::s_create(
-    class appl_context * const
+    struct appl_context * const
         p_context,
     struct appl_options_std_descriptor const * const
         p_options_std_descriptor,
@@ -89,7 +89,7 @@ appl_options_std::init(
         static_cast<unsigned long int>(
             i_count
             * sizeof(
-                class appl_string *));
+                struct appl_string *));
 
     e_status =
         m_context->m_heap->v_alloc(
@@ -101,7 +101,7 @@ appl_options_std::init(
         appl_status_ok == e_status)
     {
         m_buf_min =
-            static_cast<class appl_string * *>(
+            static_cast<struct appl_string * *>(
                 m_placement_buf);
 
         m_buf_max =
@@ -153,7 +153,7 @@ appl_options_std::init(
                 {
                     argi --;
 
-                    class appl_string * const
+                    struct appl_string * const
                         p_string =
                         m_buf_min[argi];
 
@@ -182,7 +182,7 @@ appl_options_std::cleanup(void)
     enum appl_status
         e_status;
 
-    class appl_string * *
+    struct appl_string * *
         p_buf_it;
 
     p_buf_it =
@@ -192,7 +192,7 @@ appl_options_std::cleanup(void)
         p_buf_it
         < m_buf_max)
     {
-        class appl_string * const
+        struct appl_string * const
             p_string =
             *(p_buf_it);
 
@@ -262,7 +262,7 @@ appl_options_std::v_get(
     if (
         (m_buf_min + i_index) < m_buf_max)
     {
-        class appl_string * const
+        struct appl_string * const
             p_string =
             m_buf_min[i_index];
 

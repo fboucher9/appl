@@ -50,7 +50,7 @@ enum appl_status
 
         e_status =
             appl_object::s_init(
-                static_cast<class appl_context *>(
+                static_cast<struct appl_context *>(
                     0),
                 p_placement,
                 &(

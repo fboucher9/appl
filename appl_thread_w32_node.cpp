@@ -31,7 +31,7 @@
 //
 enum appl_status
     appl_thread_w32_node::create_instance(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         struct appl_thread_property_handle const * const
             p_thread_property_handle,

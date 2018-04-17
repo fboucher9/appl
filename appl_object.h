@@ -224,10 +224,10 @@ struct appl_object
         appl_object(
             struct appl_object const & r);
 
-        class appl_object &
+        struct appl_object &
             operator =(
                 struct appl_object const & r);
 
-}; // class appl_object
+}; // struct appl_object
 
 /* end-of-file: appl_object.h */

@@ -21,7 +21,7 @@
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
-class appl_context;
+struct appl_context;
 
 class appl_mutex_std_mgr;
 
@@ -35,7 +35,7 @@ class appl_mutex_std_mgr : public appl_mutex_mgr
         static
         enum appl_status
             create_instance(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 class appl_mutex_mgr * * const
                     r_mutex_mgr);

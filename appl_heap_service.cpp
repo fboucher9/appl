@@ -17,7 +17,7 @@
 #include "appl_heap.h"
 
 static
-struct appl_heap *
+class appl_heap *
 get_heap_from_object(
     struct appl_object const * const
         p_object)
@@ -43,7 +43,7 @@ enum appl_status
         void * * const
             r_buf)
 {
-    struct appl_heap * const
+    class appl_heap * const
         p_heap =
         get_heap_from_object(
             p_object);
@@ -66,7 +66,7 @@ enum appl_status
         void * const
             p_buf)
 {
-    struct appl_heap * const
+    class appl_heap * const
         p_heap =
         get_heap_from_object(
             p_object);
@@ -95,7 +95,7 @@ enum appl_status
         void * * const
             r_new_buf)
 {
-    struct appl_heap * const
+    class appl_heap * const
         p_heap =
         get_heap_from_object(
             p_object);

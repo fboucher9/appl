@@ -31,7 +31,7 @@ struct appl_property_descriptor
 //
 enum appl_status
     appl_property::s_create(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         unsigned int const
             i_count,
@@ -287,7 +287,7 @@ void
             p_placement)
 {
     new (p_placement)
-        class appl_property;
+        struct appl_property;
 
 } // s_new()
 

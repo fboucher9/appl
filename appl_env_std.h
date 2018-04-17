@@ -38,7 +38,7 @@ class appl_env_std : public appl_env
         static
         enum appl_status
         s_create(
-            class appl_context * const
+            struct appl_context * const
                 p_context,
             class appl_env * * const
                 r_env);

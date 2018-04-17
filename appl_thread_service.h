@@ -34,12 +34,24 @@ class appl_thread_service
         static
         enum appl_status
         s_create(
-            struct appl_context * const
-                p_context,
+            struct appl_object const * const
+                p_object,
             struct appl_thread_property const * const
                 p_thread_property,
             struct appl_thread * * const
                 r_thread);
+
+        static
+        struct appl_object *
+        s_convert(
+            struct appl_thread * const
+                p_thread);
+
+        static
+        struct appl_object const *
+        s_convert(
+            struct appl_thread const * const
+                p_thread);
 
         static
         enum appl_status

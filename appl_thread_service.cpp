@@ -4,29 +4,23 @@
 
 */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_thread_service.h"
+#include <appl_thread_service.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_context.h"
+#include <appl_context.h>
 
-#include "appl_thread_mgr.h"
+#include <appl_thread_mgr.h>
 
-#include "appl_thread_node.h"
+#include <appl_thread_node.h>
 
-#include "appl_property_types.h"
+#include <appl_property_types.h>
 
-#include "appl_property.h"
-
-#include "appl_object_handle.h"
-
-#include "appl_property_handle.h"
-
-#include "appl_thread_property.h"
+#include <appl_property.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -38,8 +32,8 @@
 //
 enum appl_status
 appl_thread_service::s_create(
-    struct appl_context * const
-        p_context,
+    struct appl_object const * const
+        p_object,
     struct appl_thread_property const * const
         p_thread_property,
     struct appl_thread * * const
@@ -48,10 +42,12 @@ appl_thread_service::s_create(
     enum appl_status
         e_status;
 
-    class appl_thread_mgr *
-        p_thread_mgr;
+    struct appl_context * const
+        p_context =
+        p_object->get_context();
 
-    p_thread_mgr =
+    class appl_thread_mgr * const
+        p_thread_mgr =
         p_context->m_thread_mgr;
 
     struct appl_thread *
@@ -76,6 +72,32 @@ appl_thread_service::s_create(
         e_status;
 
 } // s_create()
+
+//
+//
+//
+struct appl_object *
+appl_thread_service::s_convert(
+    struct appl_thread * const
+        p_thread)
+{
+    return
+        p_thread;
+
+}
+
+//
+//
+//
+struct appl_object const *
+appl_thread_service::s_convert(
+    struct appl_thread const * const
+        p_thread)
+{
+    return
+        p_thread;
+
+}
 
 //
 //

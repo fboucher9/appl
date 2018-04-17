@@ -26,7 +26,7 @@
 #error must define APPL_OS_WINDOWS
 #endif /* #if ! defined APPL_OS_WINDOWS */
 
-class appl_context;
+struct appl_context;
 
 class appl_clock_w32;
 
@@ -40,7 +40,7 @@ class appl_clock_w32 : public appl_clock
         static
         enum appl_status
             create_instance(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 class appl_clock * * const
                     r_clock);

@@ -42,7 +42,7 @@ class appl_debug_w32 : public appl_debug
         static
         enum appl_status
             create_instance(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 class appl_debug * * const
                     r_debug);

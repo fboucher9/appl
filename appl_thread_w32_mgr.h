@@ -41,7 +41,7 @@ class appl_thread_w32_mgr :
         static
         enum appl_status
             create_instance(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 class appl_thread_mgr * * const
                     r_thread_mgr);
@@ -71,7 +71,7 @@ class appl_thread_w32_mgr :
         virtual
         enum appl_status
             v_create(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 struct appl_thread_property_handle const * const
                     p_thread_property_handle,

@@ -37,7 +37,7 @@
 //
 enum appl_status
 appl_env_std::s_create(
-    class appl_context * const
+    struct appl_context * const
         p_context,
     class appl_env * * const
         r_env)
@@ -97,7 +97,7 @@ enum appl_status
 
     appl_size_t const
         i_name_len =
-        (
+        static_cast<appl_size_t>(
             p_name_max
             - p_name_min);
 
@@ -211,7 +211,7 @@ enum appl_status
 
     appl_size_t const
         i_name_len =
-        (
+        static_cast<appl_size_t>(
             p_name_max
             - p_name_min);
 
@@ -239,7 +239,7 @@ enum appl_status
 
         appl_size_t const
             i_value_len =
-            (
+            static_cast<appl_size_t>(
                 p_value_max
                 - p_value_min);
 

@@ -35,7 +35,7 @@
 //
 enum appl_status
 appl_env_w32::s_create(
-    class appl_context * const
+    struct appl_context * const
         p_context,
     class appl_env * * const
         r_env)

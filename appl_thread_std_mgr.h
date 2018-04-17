@@ -29,7 +29,7 @@ class appl_thread_std_mgr :
         static
         enum appl_status
             create_instance(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 class appl_thread_mgr * * const
                     r_thread_mgr);

@@ -30,7 +30,7 @@
 //
 enum appl_status
     appl_mutex_std_mgr::create_instance(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         class appl_mutex_mgr * * const
             r_mutex_mgr)

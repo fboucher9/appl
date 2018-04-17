@@ -16,9 +16,9 @@
 #error include appl_object.h before
 #endif /* #if !defined(INC_APPL_OBJECT_H) */
 
-struct appl_object_handle;
+struct appl_object;
 
-struct appl_context_handle;
+struct appl_context;
 
 #if !defined(__cplusplus)
 #error use c++ compiler
@@ -127,6 +127,6 @@ struct appl_context : public appl_object
             operator =(
                 struct appl_context const & r);
 
-}; // class appl_context
+}; // struct appl_context
 
 /* end-of-file: appl_context.h */

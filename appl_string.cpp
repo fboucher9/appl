@@ -40,7 +40,7 @@ struct appl_string_descriptor
 //
 enum appl_status
     appl_string::s_create(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         unsigned char const * const
             p_buf_min,
@@ -50,7 +50,7 @@ enum appl_status
             p_buf_max,
         unsigned long int const
             i_alloc_len,
-        class appl_string * * const
+        struct appl_string * * const
             r_string)
 {
     enum appl_status
@@ -75,7 +75,7 @@ enum appl_status
         appl_object::s_create(
             p_context,
             sizeof(
-                class appl_string)
+                struct appl_string)
             + i_alloc_len,
             &(
                 appl_string::s_new),

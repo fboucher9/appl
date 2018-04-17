@@ -747,7 +747,7 @@ enum appl_status
     appl_context_std::create_instance(
         struct appl_context_descriptor const * const
             p_context_descriptor,
-        class appl_context * * const
+        struct appl_context * * const
             r_context)
 {
     enum appl_status
@@ -802,7 +802,7 @@ enum appl_status
             {
                 e_status =
                     appl_object::s_init(
-                        static_cast<class appl_context *>(
+                        static_cast<struct appl_context *>(
                             0),
                         p_placement,
                         &(

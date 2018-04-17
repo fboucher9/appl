@@ -12,7 +12,7 @@ class appl_poll_node;
 
 class appl_poll_mgr;
 
-class appl_context;
+struct appl_context;
 
 struct appl_poll_descriptor;
 
@@ -28,7 +28,7 @@ struct appl_poll : public appl_node
         static
         enum appl_status
             create_instance(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 class appl_poll_mgr * const
                     p_poll_mgr,
@@ -80,11 +80,11 @@ struct appl_poll : public appl_node
     private:
 
         appl_poll(
-            class appl_poll const & r);
+            struct appl_poll const & r);
 
-        class appl_poll &
+        struct appl_poll &
             operator =(
-                class appl_poll const & r);
+                struct appl_poll const & r);
 
 }; // struct appl_poll
 

@@ -48,7 +48,7 @@ appl_context::~appl_context()
 //
 //
 //
-class appl_context *
+struct appl_context *
 appl_context::from_object_handle(
     struct appl_object const * const
         p_object)

@@ -55,11 +55,11 @@ struct appl_property : public appl_object
         static
         enum appl_status
             s_create(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 unsigned int const
                     i_id,
-                class appl_property * * const
+                struct appl_property * * const
                     r_property);
 
         virtual

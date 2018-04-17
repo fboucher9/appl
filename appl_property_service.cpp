@@ -35,7 +35,7 @@ appl_property_service::s_create(
     enum appl_status
         e_status;
 
-    class appl_property *
+    struct appl_property *
         p_property;
 
     e_status =

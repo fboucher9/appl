@@ -30,7 +30,7 @@
 //
 enum appl_status
     appl_event_std_mgr::s_create(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         class appl_event_mgr * * const
             r_event_mgr)

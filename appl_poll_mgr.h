@@ -25,13 +25,13 @@ struct appl_poll_table;
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
 
-class appl_context;
+struct appl_context;
 
-class appl_thread_node;
+struct appl_thread;
 
-class appl_mutex_node;
+struct appl_mutex;
 
-class appl_poll_node;
+struct appl_poll;
 
 class appl_poll_mgr;
 
@@ -45,7 +45,7 @@ class appl_poll_mgr : public appl_object
         static
         enum appl_status
             create_instance(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 class appl_poll_mgr * * const
                     r_poll_mgr);

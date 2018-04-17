@@ -38,7 +38,7 @@
 //
 enum appl_status
     appl_socket_std_node::s_create(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         struct appl_property const * const
             p_socket_descriptor,

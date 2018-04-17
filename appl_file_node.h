@@ -61,12 +61,12 @@ struct appl_file : public appl_object
     private:
 
         appl_file(
-            class appl_file const & r);
+            struct appl_file const & r);
 
-        class appl_file &
+        struct appl_file &
             operator =(
-                class appl_file const & r);
+                struct appl_file const & r);
 
-}; // class appl_file
+}; // struct appl_file
 
 /* end-of-file: appl_file_node.h */

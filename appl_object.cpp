@@ -19,7 +19,7 @@
 //
 enum appl_status
     appl_object::create_instance(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         appl_size_t const
             i_placement_length,
@@ -28,7 +28,7 @@ enum appl_status
                 p_placement),
         void const * const
             p_descriptor,
-        class appl_object * * const
+        struct appl_object * * const
             r_object)
 {
     enum appl_status
@@ -78,7 +78,7 @@ enum appl_status
 //
 enum appl_status
     appl_object::init_instance(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         void * const
             p_placement,
@@ -87,17 +87,17 @@ enum appl_status
                 p_placement),
         void const * const
             p_descriptor,
-        class appl_object * * const
+        struct appl_object * * const
             r_object)
 {
     enum appl_status
         e_status;
 
-    class appl_object *
+    struct appl_object *
         p_object;
 
     p_object =
-        static_cast<class appl_object *>(
+        static_cast<struct appl_object *>(
             p_placement);
 
     (*p_new)(
@@ -139,7 +139,7 @@ enum appl_status
     if (
         appl_status_ok == e_status)
     {
-        class appl_context *
+        struct appl_context *
             p_context;
 
         p_context =
@@ -263,7 +263,7 @@ enum appl_status
 //
 //
 //
-class appl_context *
+struct appl_context *
     appl_object::get_context(void) const
 {
     return

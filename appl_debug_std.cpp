@@ -27,7 +27,7 @@
 //
 enum appl_status
     appl_debug_std::create_instance(
-        class appl_context * const
+        struct appl_context * const
             p_context,
         class appl_debug * * const
             r_debug)

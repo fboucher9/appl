@@ -27,7 +27,7 @@ class appl_file_std_mgr : public appl_file_mgr
         static
         enum appl_status
             create_instance(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 class appl_file_mgr * * const
                     r_file_mgr);

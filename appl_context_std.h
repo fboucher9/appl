@@ -16,7 +16,7 @@ struct appl_context_descriptor;
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
 
-class appl_context;
+struct appl_context;
 
 class appl_context_std;
 
@@ -32,7 +32,7 @@ class appl_context_std : public appl_context
             create_instance(
                 struct appl_context_descriptor const * const
                     p_context_descriptor,
-                class appl_context * * const
+                struct appl_context * * const
                     r_context);
 
     protected:

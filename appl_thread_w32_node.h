@@ -32,7 +32,7 @@ struct appl_thread_property_handle;
 #error include from windows build
 #endif /* #if ! defined APPL_OS_WINDOWS */
 
-class appl_context;
+struct appl_context;
 
 class appl_thread_w32_node;
 
@@ -46,7 +46,7 @@ class appl_thread_w32_node : public appl_thread_node
         static
         enum appl_status
             create_instance(
-                class appl_context * const
+                struct appl_context * const
                     p_context,
                 struct appl_thread_property_handle const * const
                     p_thread_property_handle,

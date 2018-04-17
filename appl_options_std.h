@@ -18,7 +18,7 @@ class appl_options;
 
 class appl_options_std;
 
-class appl_string;
+struct appl_string;
 
 struct appl_options_std_descriptor
 {
@@ -40,7 +40,7 @@ class appl_options_std : public appl_options
         static
         enum appl_status
         s_create(
-            class appl_context * const
+            struct appl_context * const
                 p_context,
             struct appl_options_std_descriptor const * const
                 p_options_std_descriptor,
@@ -59,10 +59,10 @@ class appl_options_std : public appl_options
         void *
             m_placement_buf;
 
-        class appl_string * *
+        struct appl_string * *
             m_buf_min;
 
-        class appl_string * *
+        struct appl_string * *
             m_buf_max;
 
         appl_options_std(
