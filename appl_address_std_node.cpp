@@ -78,7 +78,7 @@ enum appl_status
 //
 appl_address_std_node::appl_address_std_node() :
     appl_address(),
-    m_sockaddr_storage()
+    m_sockaddr()
 {
 }
 
@@ -147,16 +147,15 @@ enum appl_status
 
     struct sockaddr_in *
         p_sockaddr_in =
-        reinterpret_cast<struct sockaddr_in *>(
-            &(
-                m_sockaddr_storage));
+        &(
+            m_sockaddr.o_sockaddr_in);
 
     memset(
         &(
-            m_sockaddr_storage),
+            m_sockaddr),
         0u,
         sizeof(
-            m_sockaddr_storage));
+            m_sockaddr));
 
     p_sockaddr_in->sin_family =
         AF_INET;
@@ -223,9 +222,8 @@ enum appl_status
 
     struct sockaddr_in const *
         p_sockaddr_in =
-        reinterpret_cast<struct sockaddr_in const *>(
-            &(
-                m_sockaddr_storage));
+        &(
+            m_sockaddr.o_sockaddr_in);
 
     // convert sin_addr to string
     char * const
@@ -280,9 +278,8 @@ enum appl_status
 
     struct sockaddr_in const *
         p_sockaddr_in =
-        reinterpret_cast<struct sockaddr_in const *>(
-            &(
-                m_sockaddr_storage));
+        &(
+            m_sockaddr.o_sockaddr_in);
 
     unsigned short int
         i_port;

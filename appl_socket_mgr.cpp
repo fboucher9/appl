@@ -33,8 +33,7 @@ enum appl_status
         e_status;
 
     appl_unused(
-        p_property);
-    appl_unused(
+        p_property,
         r_address);
 
     e_status =
@@ -59,8 +58,7 @@ enum appl_status
         e_status;
 
     appl_unused(
-        p_socket_descriptor);
-    appl_unused(
+        p_socket_descriptor,
         r_socket);
 
     e_status =

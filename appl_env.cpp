@@ -27,10 +27,8 @@ enum appl_status
             r_string)
 {
     appl_unused(
-        p_name_min);
-    appl_unused(
-        p_name_max);
-    appl_unused(
+        p_name_min,
+        p_name_max,
         r_string);
     return
         appl_status_not_implemented;
@@ -51,12 +49,9 @@ enum appl_status
             p_value_max)
 {
     appl_unused(
-        p_name_min);
-    appl_unused(
-        p_name_max);
-    appl_unused(
-        p_value_min);
-    appl_unused(
+        p_name_min,
+        p_name_max,
+        p_value_min,
         p_value_max);
     return
         appl_status_not_implemented;

@@ -77,7 +77,7 @@ appl_address_property_create(
 
         *(
             r_property) =
-            reinterpret_cast<struct appl_address_property *>(
+            static_cast<struct appl_address_property *>(
                 p_property);
     }
 

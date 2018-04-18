@@ -28,8 +28,7 @@ enum appl_status
         e_status;
 
     appl_unused(
-        i_time_freq);
-    appl_unused(
+        i_time_freq,
         p_time_count);
 
     e_status =
@@ -54,8 +53,7 @@ enum appl_status
         e_status;
 
     appl_unused(
-        i_time_freq);
-    appl_unused(
+        i_time_freq,
         i_time_count);
 
     e_status =

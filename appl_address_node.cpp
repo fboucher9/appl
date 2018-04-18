@@ -30,8 +30,7 @@ enum appl_status
             p_name_max) const
 {
     appl_unused(
-        pp_name_cur);
-    appl_unused(
+        pp_name_cur,
         p_name_max);
     return
         appl_status_not_implemented;

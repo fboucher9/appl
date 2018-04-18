@@ -53,8 +53,15 @@ class appl_address_std_node : public appl_address
 
     private:
 
-        struct sockaddr_storage
-            m_sockaddr_storage;
+        union appl_address_std_node_storage
+        {
+            struct sockaddr_storage
+                o_sockaddr_storage;
+
+            struct sockaddr_in
+                o_sockaddr_in;
+
+        } m_sockaddr;
 
         appl_address_std_node(
             class appl_address_std_node const  & r);

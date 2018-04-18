@@ -38,8 +38,7 @@ enum appl_status
             p_msg_max)
 {
     appl_unused(
-        p_msg_min);
-    appl_unused(
+        p_msg_min,
         p_msg_max);
 
     return

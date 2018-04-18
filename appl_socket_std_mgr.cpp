@@ -8,6 +8,8 @@
 
 #include <sys/socket.h>
 
+#include <netinet/in.h>
+
 #endif /* #if defined APPL_OS_Xx */
 
 #if defined APPL_OS_WINDOWS
