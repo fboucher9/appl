@@ -587,7 +587,7 @@ appl_test_socket(
         p_address;
 
     {
-        struct appl_property *
+        struct appl_address_property *
             p_address_descriptor;
 
         appl_address_property_create(
@@ -611,9 +611,8 @@ appl_test_socket(
                 &(
                     p_address));
 
-        appl_object_destroy(
-            appl_property_parent(
-                p_address_descriptor));
+        appl_address_property_destroy(
+            p_address_descriptor);
     }
 
     if (

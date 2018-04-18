@@ -12,6 +12,14 @@
 
 #include "appl_property_handle.h"
 
+#include "appl_types.h"
+
+#include "appl_object.h"
+
+#include "appl_property_types.h"
+
+#include "appl_property.h"
+
 #define APPL_ADDRESS_PROPERTY_GUID (0xe0bfd095ul)
 
 enum appl_address_property_id
@@ -28,6 +36,13 @@ enum appl_address_property_id
 
 }; /* enum appl_address_property_id */
 
+//
+//
+//
+struct appl_address_property : public appl_property
+{
+}; // struct appl_address_property
+
 /*
 
 */
@@ -35,7 +50,7 @@ enum appl_status
 appl_address_property_create(
     struct appl_context * const
         p_context,
-    struct appl_property * * const
+    struct appl_address_property * * const
         r_property)
 {
     enum appl_status
@@ -62,13 +77,46 @@ appl_address_property_create(
 
         *(
             r_property) =
-            p_property;
+            reinterpret_cast<struct appl_address_property *>(
+                p_property);
     }
 
     return
         e_status;
 
 } /* appl_address_property_create() */
+
+enum appl_status
+appl_address_property_destroy(
+    struct appl_address_property * const
+        p_property)
+{
+    return
+        appl_object_destroy(
+            appl_property_parent(
+                p_property));
+
+}
+
+struct appl_property *
+appl_address_property_parent(
+    struct appl_address_property * const
+        p_property)
+{
+    return
+        p_property;
+
+}
+
+struct appl_property const *
+appl_address_property_const_parent(
+    struct appl_address_property const * const
+        p_property)
+{
+    return
+        p_property;
+
+}
 
 /*
 
@@ -77,7 +125,7 @@ appl_address_property_create(
 static
 void
 appl_address_property_assert_guid(
-    struct appl_property const * const
+    struct appl_address_property const * const
         p_property)
 {
     enum appl_status
@@ -113,7 +161,7 @@ appl_address_property_assert_guid(
 */
 enum appl_status
 appl_address_property_set_name(
-    struct appl_property * const
+    struct appl_address_property * const
         p_property,
     unsigned char const * const
         p_name_min,
@@ -155,7 +203,7 @@ appl_address_property_set_name(
 */
 enum appl_status
 appl_address_property_set_port(
-    struct appl_property * const
+    struct appl_address_property * const
         p_property,
     unsigned short int const
         i_port)
@@ -179,7 +227,7 @@ appl_address_property_set_port(
 */
 enum appl_status
 appl_address_property_get_name(
-    struct appl_property const * const
+    struct appl_address_property const * const
         p_property,
     unsigned char const * * const
         r_name_min,
@@ -244,7 +292,7 @@ appl_address_property_get_name(
 */
 enum appl_status
 appl_address_property_get_port(
-    struct appl_property const * const
+    struct appl_address_property const * const
         p_property,
     unsigned short int * const
         r_port)

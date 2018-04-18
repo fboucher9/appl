@@ -18,6 +18,8 @@ Description:
 
 #include "appl_file_node.h"
 
+#include "appl_unused.h"
+
 //
 //
 //
@@ -33,11 +35,11 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
+    appl_unused(
         p_buf_min);
-    static_cast<void>(
+    appl_unused(
         p_buf_max);
-    static_cast<void>(
+    appl_unused(
         r_count);
 
     e_status =
@@ -63,11 +65,11 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
+    appl_unused(
         p_buf_min);
-    static_cast<void>(
+    appl_unused(
         p_buf_max);
-    static_cast<void>(
+    appl_unused(
         r_count);
 
     e_status =

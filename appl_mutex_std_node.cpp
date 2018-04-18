@@ -16,6 +16,8 @@
 
 #include "appl_mutex_std_node.h"
 
+#include "appl_unused.h"
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -95,7 +97,7 @@ enum appl_status
     int
         i_pthread_result;
 
-    static_cast<void>(
+    appl_unused(
         p_descriptor);
 
     i_pthread_result =

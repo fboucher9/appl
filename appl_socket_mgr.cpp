@@ -12,6 +12,8 @@
 
 #include "appl_socket_mgr.h"
 
+#include "appl_unused.h"
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -22,7 +24,7 @@
 //
 enum appl_status
     appl_socket_mgr::v_create_address(
-        struct appl_property const * const
+        struct appl_address_property const * const
             p_property,
         struct appl_address * * const
             r_address)
@@ -30,9 +32,9 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
+    appl_unused(
         p_property);
-    static_cast<void>(
+    appl_unused(
         r_address);
 
     e_status =
@@ -56,9 +58,9 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
+    appl_unused(
         p_socket_descriptor);
-    static_cast<void>(
+    appl_unused(
         r_socket);
 
     e_status =

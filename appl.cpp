@@ -41,10 +41,12 @@ main(
         o_context_descriptor;
 
     o_context_descriptor.p_arg_min =
-        argv;
+        reinterpret_cast<unsigned char * *>(
+            argv);
 
     o_context_descriptor.p_arg_max =
-        argv + argc;
+        reinterpret_cast<unsigned char * *>(
+            argv + argc);
 
     /* Create context */
     e_status =

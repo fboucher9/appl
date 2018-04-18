@@ -91,9 +91,9 @@ enum appl_status
     DWORD
         dwWaitResult;
 
-    static_cast<void>(
+    appl_unused(
         i_wait_freq);
-    static_cast<void>(
+    appl_unused(
         i_wait_count);
 
     dwWaitResult =
@@ -166,7 +166,7 @@ CALLBACK
 DummyAPCEntry(
     ULONG_PTR dwParam)
 {
-    static_cast<void>(
+    appl_unused(
         dwParam);
 
 } // DummyAPCEntry

@@ -15,7 +15,7 @@ struct appl_object;
 
 struct appl_address;
 
-struct appl_property;
+struct appl_address_property;
 
 #if defined(__cplusplus)
 extern "C" {
@@ -25,8 +25,8 @@ enum appl_status
 appl_address_create(
     struct appl_context * const
         p_context,
-    struct appl_property const * const
-        p_property,
+    struct appl_address_property const * const
+        p_address_property,
     struct appl_address * * const
         r_address);
 

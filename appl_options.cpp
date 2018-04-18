@@ -12,6 +12,8 @@
 
 #include "appl_options.h"
 
+#include "appl_unused.h"
+
 //
 //
 //
@@ -20,7 +22,7 @@ enum appl_status
         unsigned long int * const
             r_count) const
 {
-    static_cast<void>(
+    appl_unused(
         r_count);
     return
         appl_status_not_implemented;
@@ -38,11 +40,11 @@ enum appl_status
         unsigned char const * * const
             r_buf_max) const
 {
-    static_cast<void>(
+    appl_unused(
         i_index);
-    static_cast<void>(
+    appl_unused(
         r_buf_min);
-    static_cast<void>(
+    appl_unused(
         r_buf_max);
     return
         appl_status_not_implemented;

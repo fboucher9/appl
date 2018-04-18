@@ -12,6 +12,8 @@
 
 #include "appl_event_node.h"
 
+#include "appl_unused.h"
+
 //
 //
 //
@@ -44,11 +46,11 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
+    appl_unused(
         p_mutex);
-    static_cast<void>(
+    appl_unused(
         i_wait_freq);
-    static_cast<void>(
+    appl_unused(
         i_wait_count);
 
     e_status =

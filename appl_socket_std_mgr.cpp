@@ -96,7 +96,7 @@ void
 //
 enum appl_status
     appl_socket_std_mgr::v_create_address(
-        struct appl_property const * const
+        struct appl_address_property const * const
             p_property,
         struct appl_address * * const
             r_address)

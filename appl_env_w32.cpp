@@ -103,11 +103,10 @@ enum appl_status
         p_name0;
 
     e_status =
-        p_heap->v_alloc(
+        p_heap->alloc_object_array(
             i_name_len + 1,
-            reinterpret_cast<void * *>(
-                &(
-                    p_name0)));
+            &(
+                p_name0));
 
     if (
         appl_status_ok
@@ -137,12 +136,11 @@ enum appl_status
                 p_value0;
 
             e_status =
-                p_heap->v_alloc(
+                p_heap->alloc_object_array(
                     static_cast<appl_size_t>(
                         dwResult),
-                    reinterpret_cast<void * *>(
-                        &(
-                            p_value0)));
+                    &(
+                        p_value0));
 
             if (
                 appl_status_ok
@@ -247,11 +245,10 @@ enum appl_status
         p_name0;
 
     e_status =
-        p_heap->v_alloc(
+        p_heap->alloc_object_array(
             i_name_len + 1,
-            reinterpret_cast<void * *>(
-                &(
-                    p_name0)));
+            &(
+                p_name0));
 
     if (
         appl_status_ok
@@ -275,11 +272,10 @@ enum appl_status
             p_value0;
 
         e_status =
-            p_heap->v_alloc(
+            p_heap->alloc_object_array(
                 i_value_len + 1,
-                reinterpret_cast<void * *>(
-                    &(
-                        p_value0)));
+                &(
+                    p_value0));
 
         if (
             appl_status_ok

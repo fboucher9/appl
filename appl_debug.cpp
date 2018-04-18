@@ -14,6 +14,8 @@
 
 #include "appl_debug.h"
 
+#include "appl_unused.h"
+
 //
 //
 //
@@ -35,9 +37,9 @@ enum appl_status
         unsigned char const * const
             p_msg_max)
 {
-    static_cast<void>(
+    appl_unused(
         p_msg_min);
-    static_cast<void>(
+    appl_unused(
         p_msg_max);
 
     return

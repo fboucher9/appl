@@ -20,7 +20,7 @@ Description:
 struct appl_context;
 
 /* Predefine */
-struct appl_property;
+struct appl_address_property;
 
 /* Predefine */
 struct appl_address;
@@ -50,7 +50,7 @@ class appl_address_service
         s_create(
             struct appl_context * const
                 p_context,
-            struct appl_property const * const
+            struct appl_address_property const * const
                 p_address_descriptor,
             struct appl_address * * const
                 r_address);

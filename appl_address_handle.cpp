@@ -25,15 +25,15 @@ enum appl_status
 appl_address_create(
     struct appl_context * const
         p_context,
-    struct appl_property const * const
-        p_property,
+    struct appl_address_property const * const
+        p_address_property,
     struct appl_address * * const
         r_address)
 {
     return
         appl_address_service::s_create(
             p_context,
-            p_property,
+            p_address_property,
             r_address);
 
 } /* appl_address_create() */

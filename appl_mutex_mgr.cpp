@@ -12,6 +12,8 @@
 
 #include "appl_mutex_mgr.h"
 
+#include "appl_unused.h"
+
 //
 //
 //
@@ -25,9 +27,9 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
+    appl_unused(
         p_mutex_descriptor);
-    static_cast<void>(
+    appl_unused(
         r_mutex);
 
     e_status =

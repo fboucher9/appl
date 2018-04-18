@@ -14,6 +14,8 @@
 
 #include "appl_heap.h"
 
+#include "appl_unused.h"
+
 //
 //
 //
@@ -191,7 +193,7 @@ appl_object::operator new(
     appl_size_t const
         i_buf_len)
 {
-    static_cast<void>(
+    appl_unused(
         i_buf_len);
     return
         reinterpret_cast<void *>(
@@ -203,7 +205,7 @@ appl_object::operator delete(
     void *
         p_buf)
 {
-    static_cast<void>(
+    appl_unused(
         p_buf);
 } // operator delete
 
@@ -214,7 +216,7 @@ appl_object::operator new(
     void * const
         p_placement)
 {
-    static_cast<void>(
+    appl_unused(
         i_buf_len);
     return
         p_placement;
@@ -227,9 +229,9 @@ appl_object::operator delete (
     void * const
         p_placement)
 {
-    static_cast<void>(
+    appl_unused(
         p_buf);
-    static_cast<void>(
+    appl_unused(
         p_placement);
 } // operator delete
 
@@ -241,7 +243,7 @@ enum appl_status
         void const * const
             p_descriptor)
 {
-    static_cast<void>(
+    appl_unused(
         p_descriptor);
 
     return

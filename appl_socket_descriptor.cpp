@@ -26,6 +26,8 @@
 
 #endif /* #if defined APPL_DEBUG */
 
+#include "appl_unused.h"
+
 /* Unique identifier for appl_socket_property structure */
 #define APPL_SOCKET_PROPERTY_GUID (0x77ca3c76ul)
 
@@ -588,9 +590,9 @@ appl_socket_property_get_bind_address(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    static_cast<void>(
+    appl_unused(
         p_property);
-    static_cast<void>(
+    appl_unused(
         r_bind_address);
 
     e_status =
@@ -616,9 +618,9 @@ appl_socket_property_get_connect_address(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    static_cast<void>(
+    appl_unused(
         p_property);
-    static_cast<void>(
+    appl_unused(
         r_connect_address);
 
     e_status =
@@ -644,9 +646,9 @@ appl_socket_property_get_listen_count(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    static_cast<void>(
+    appl_unused(
         p_property);
-    static_cast<void>(
+    appl_unused(
         r_listen_count);
 
     e_status =
@@ -672,9 +674,9 @@ appl_socket_property_get_accept_address(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    static_cast<void>(
+    appl_unused(
         p_property);
-    static_cast<void>(
+    appl_unused(
         r_accept_address);
 
     e_status =
@@ -700,9 +702,9 @@ appl_socket_property_get_accept_socket(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    static_cast<void>(
+    appl_unused(
         p_property);
-    static_cast<void>(
+    appl_unused(
         r_accept_socket);
 
     e_status =
@@ -728,9 +730,9 @@ appl_socket_property_get_recv_timeout(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    static_cast<void>(
+    appl_unused(
         p_property);
-    static_cast<void>(
+    appl_unused(
         r_recv_timeout);
 
     e_status =
@@ -756,9 +758,9 @@ appl_socket_property_get_send_timeout(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    static_cast<void>(
+    appl_unused(
         p_property);
-    static_cast<void>(
+    appl_unused(
         r_send_timeout);
 
     e_status =
@@ -784,9 +786,9 @@ appl_socket_property_get_recv_buffer(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    static_cast<void>(
+    appl_unused(
         p_property);
-    static_cast<void>(
+    appl_unused(
         r_recv_buffer);
 
     e_status =
@@ -812,9 +814,9 @@ appl_socket_property_get_send_buffer(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    static_cast<void>(
+    appl_unused(
         p_property);
-    static_cast<void>(
+    appl_unused(
         r_send_buffer);
 
     e_status =
@@ -840,9 +842,9 @@ appl_socket_property_get_connect_timeout(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    static_cast<void>(
+    appl_unused(
         p_property);
-    static_cast<void>(
+    appl_unused(
         r_connect_timeout);
 
     e_status =
@@ -868,9 +870,9 @@ appl_socket_property_get_accept_timeout(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    static_cast<void>(
+    appl_unused(
         p_property);
-    static_cast<void>(
+    appl_unused(
         r_accept_timeout);
 
     e_status =
@@ -896,9 +898,9 @@ appl_socket_property_get_join_address(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    static_cast<void>(
+    appl_unused(
         p_property);
-    static_cast<void>(
+    appl_unused(
         r_join_address);
 
     e_status =
@@ -924,9 +926,9 @@ appl_socket_property_get_join_interface(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    static_cast<void>(
+    appl_unused(
         p_property);
-    static_cast<void>(
+    appl_unused(
         r_interface_address);
 
     e_status =

@@ -22,10 +22,10 @@ struct appl_string;
 
 struct appl_options_std_descriptor
 {
-    char const * const *
+    unsigned char const * const *
         p_arg_min;
 
-    char const * const *
+    unsigned char const * const *
         p_arg_max;
 
 }; /* struct appl_options_std_descriptor */
@@ -55,9 +55,6 @@ class appl_options_std : public appl_options
         ~appl_options_std();
 
     private:
-
-        void *
-            m_placement_buf;
 
         struct appl_string * *
             m_buf_min;

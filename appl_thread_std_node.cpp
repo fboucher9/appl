@@ -46,6 +46,8 @@
 
 #endif /* #if defined APPL_DEBUG */
 
+#include "appl_unused.h"
+
 //
 //
 //
@@ -188,7 +190,7 @@ void
                     &(
                         m_event));
 
-            static_cast<void>(
+            appl_unused(
                 i_signal_result);
 
             int
@@ -199,7 +201,7 @@ void
                     &(
                         m_lock));
 
-            static_cast<void>(
+            appl_unused(
                 i_unlock_result);
         }
         else
@@ -363,7 +365,7 @@ appl_thread_std_node::v_start(void)
                 &(
                     m_lock));
 
-        static_cast<void>(
+        appl_unused(
             i_unlock_result);
     }
     else
@@ -519,7 +521,7 @@ enum appl_status
                 &(
                     m_lock));
 
-        static_cast<void>(
+        appl_unused(
             i_unlock_result);
     }
     else
@@ -544,7 +546,7 @@ dummy_urgent_signal_handler(
     int
         i_unused)
 {
-    static_cast<void>(
+    appl_unused(
         i_unused);
 } /* dummy_urgent_signal_handler() */
 

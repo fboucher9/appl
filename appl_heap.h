@@ -38,6 +38,39 @@ class appl_heap : public appl_object
                 void * * const
                     r_buf);
 
+        template <typename T_instance>
+        enum appl_status
+            alloc_object(
+                T_instance * * const
+                    r_object)
+        {
+            return
+                v_alloc(
+                    sizeof(
+                        T_instance),
+                    reinterpret_cast<void * *>(
+                        r_object));
+
+        } // alloc_object()
+
+        template <typename T_instance>
+        enum appl_status
+            alloc_object_array(
+                unsigned long int
+                    i_count,
+                T_instance * * const
+                    r_object_array)
+        {
+            return
+                v_alloc(
+                    sizeof(
+                        T_instance)
+                    * i_count,
+                    reinterpret_cast<void * *>(
+                        r_object_array));
+
+        } // alloc_object_array()
+
         virtual
         enum appl_status
             v_free(

@@ -12,6 +12,8 @@
 
 #include "appl_heap.h"
 
+#include "appl_unused.h"
+
 //
 //
 //
@@ -22,9 +24,9 @@ enum appl_status
         void * * const
             r_buf)
 {
-    static_cast<void>(
+    appl_unused(
         i_buf_len);
-    static_cast<void>(
+    appl_unused(
         r_buf);
 
     return
@@ -40,7 +42,7 @@ enum appl_status
         void * const
             p_buf)
 {
-    static_cast<void>(
+    appl_unused(
         p_buf);
 
     return
@@ -60,11 +62,11 @@ enum appl_status
         void * * const
             r_new_buf)
 {
-    static_cast<void>(
+    appl_unused(
         p_old_buf);
-    static_cast<void>(
+    appl_unused(
         i_buf_len);
-    static_cast<void>(
+    appl_unused(
         r_new_buf);
 
     return

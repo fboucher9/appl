@@ -12,6 +12,8 @@
 
 #include "appl_thread_mgr.h"
 
+#include "appl_unused.h"
+
 #if !defined(__cplusplus)
 #error use C++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -25,11 +27,11 @@ enum appl_status
         struct appl_thread * * const
             r_thread)
 {
-    static_cast<void>(
+    appl_unused(
         p_context);
-    static_cast<void>(
+    appl_unused(
         p_thread_property);
-    static_cast<void>(
+    appl_unused(
         r_thread);
     return
         appl_status_fail;

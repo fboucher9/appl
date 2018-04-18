@@ -49,7 +49,6 @@ appl_options_std::s_create(
 //
 appl_options_std::appl_options_std() :
     appl_options(),
-    m_placement_buf(),
     m_buf_min(),
     m_buf_max()
 {
@@ -84,26 +83,15 @@ appl_options_std::init(
             p_options_std_descriptor->p_arg_max
             - p_options_std_descriptor->p_arg_min);
 
-    unsigned long int
-        i_placement_length =
-        static_cast<unsigned long int>(
-            i_count
-            * sizeof(
-                struct appl_string *));
-
     e_status =
-        m_context->m_heap->v_alloc(
-            i_placement_length,
+        m_context->m_heap->alloc_object_array(
+            i_count,
             &(
-                m_placement_buf));
+                m_buf_min));
 
     if (
         appl_status_ok == e_status)
     {
-        m_buf_min =
-            static_cast<struct appl_string * *>(
-                m_placement_buf);
-
         m_buf_max =
             m_buf_min
             + i_count;
@@ -121,8 +109,7 @@ appl_options_std::init(
         {
             unsigned char const * const
                 p_buf_min =
-                reinterpret_cast<unsigned char const *>(
-                    p_options_std_descriptor->p_arg_min[argi]);
+                p_options_std_descriptor->p_arg_min[argi];
 
             unsigned char const *
                 p_buf_max =
@@ -205,7 +192,7 @@ appl_options_std::cleanup(void)
     }
 
     m_context->m_heap->v_free(
-        m_placement_buf);
+        m_buf_min);
 
     e_status =
         appl_status_ok;

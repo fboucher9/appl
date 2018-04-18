@@ -56,7 +56,7 @@ enum appl_status
     appl_address_std_node::s_create(
         struct appl_context * const
             p_context,
-        struct appl_property const * const
+        struct appl_address_property const * const
             p_property,
         struct appl_address * * const
             r_address)
@@ -113,9 +113,9 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_property const * const
+    struct appl_address_property const * const
         p_property =
-        static_cast<struct appl_property const *>(
+        static_cast<struct appl_address_property const *>(
             p_descriptor);
 
     struct appl_address_descriptor

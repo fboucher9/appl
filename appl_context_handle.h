@@ -14,10 +14,10 @@ struct appl_context_handle;
 
 struct appl_context_descriptor
 {
-    char const * const *
+    unsigned char const * const *
         p_arg_min;
 
-    char const * const *
+    unsigned char const * const *
         p_arg_max;
 
 }; /* struct appl_context_descriptor */

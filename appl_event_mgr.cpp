@@ -12,6 +12,8 @@
 
 #include "appl_event_mgr.h"
 
+#include "appl_unused.h"
+
 //
 //
 //
@@ -27,11 +29,11 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
+    appl_unused(
         p_context);
-    static_cast<void>(
+    appl_unused(
         p_event_descriptor);
-    static_cast<void>(
+    appl_unused(
         r_event);
 
     e_status =

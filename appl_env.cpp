@@ -12,6 +12,8 @@
 
 #include "appl_env.h"
 
+#include "appl_unused.h"
+
 //
 //
 //
@@ -24,11 +26,11 @@ enum appl_status
         struct appl_string * * const
             r_string)
 {
-    static_cast<void>(
+    appl_unused(
         p_name_min);
-    static_cast<void>(
+    appl_unused(
         p_name_max);
-    static_cast<void>(
+    appl_unused(
         r_string);
     return
         appl_status_not_implemented;
@@ -48,13 +50,13 @@ enum appl_status
         unsigned char const * const
             p_value_max)
 {
-    static_cast<void>(
+    appl_unused(
         p_name_min);
-    static_cast<void>(
+    appl_unused(
         p_name_max);
-    static_cast<void>(
+    appl_unused(
         p_value_min);
-    static_cast<void>(
+    appl_unused(
         p_value_max);
     return
         appl_status_not_implemented;

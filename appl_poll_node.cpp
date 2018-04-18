@@ -18,6 +18,8 @@
 
 #include "appl_poll_node.h"
 
+#include "appl_unused.h"
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -40,13 +42,13 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
+    appl_unused(
         p_context);
-    static_cast<void>(
+    appl_unused(
         p_poll_mgr);
-    static_cast<void>(
+    appl_unused(
         p_poll_descriptor);
-    static_cast<void>(
+    appl_unused(
         r_poll);
 
     e_status =
@@ -68,7 +70,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
+    appl_unused(
         i_poll_flags);
 
     e_status =

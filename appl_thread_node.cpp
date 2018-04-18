@@ -12,6 +12,8 @@
 
 #include "appl_thread_node.h"
 
+#include "appl_unused.h"
+
 /* Assert compiler */
 #if !defined(__cplusplus)
 #error use C++ compiler
@@ -39,11 +41,11 @@ enum appl_status
         void * * const
             r_result)
 {
-    static_cast<void>(
+    appl_unused(
         i_wait_freq);
-    static_cast<void>(
+    appl_unused(
         i_wait_count);
-    static_cast<void>(
+    appl_unused(
         r_result);
     return
         appl_status_fail;

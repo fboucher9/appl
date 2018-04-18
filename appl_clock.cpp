@@ -12,6 +12,8 @@
 
 #include "appl_clock.h"
 
+#include "appl_unused.h"
+
 //
 //
 //
@@ -25,9 +27,9 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
+    appl_unused(
         i_time_freq);
-    static_cast<void>(
+    appl_unused(
         p_time_count);
 
     e_status =
@@ -51,9 +53,9 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
+    appl_unused(
         i_time_freq);
-    static_cast<void>(
+    appl_unused(
         i_time_count);
 
     e_status =

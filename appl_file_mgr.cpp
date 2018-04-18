@@ -12,6 +12,8 @@
 
 #include "appl_file_mgr.h"
 
+#include "appl_unused.h"
+
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -29,9 +31,9 @@ enum appl_status
     enum appl_status
         e_status;
 
-    static_cast<void>(
+    appl_unused(
         p_file_descriptor);
-    static_cast<void>(
+    appl_unused(
         r_file_node);
 
     e_status =

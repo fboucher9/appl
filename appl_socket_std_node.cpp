@@ -28,6 +28,8 @@
 
 #include <appl_socket_std_node.h>
 
+#include <appl_unused.h>
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -108,7 +110,7 @@ appl_socket_std_node::init(
         static_cast<struct appl_property const *>(
             p_descriptor);
 
-    static_cast<void>(
+    appl_unused(
         p_socket_descriptor);
 
     // call socket()
@@ -136,7 +138,7 @@ appl_socket_std_node::init(
     {
     }
 
-    static_cast<void>(
+    appl_unused(
         fd);
 
     // call bind()
@@ -187,11 +189,11 @@ appl_socket_std_node::v_send(
     enum appl_status
         e_status;
 
-    static_cast<void>(
+    appl_unused(
         p_buf_min);
-    static_cast<void>(
+    appl_unused(
         p_buf_max);
-    static_cast<void>(
+    appl_unused(
         r_count);
 
     e_status =
@@ -217,11 +219,11 @@ appl_socket_std_node::v_recv(
     enum appl_status
         e_status;
 
-    static_cast<void>(
+    appl_unused(
         p_buf_min);
-    static_cast<void>(
+    appl_unused(
         p_buf_max);
-    static_cast<void>(
+    appl_unused(
         r_count);
 
     e_status =
@@ -249,13 +251,13 @@ appl_socket_std_node::v_sendto(
     enum appl_status
         e_status;
 
-    static_cast<void>(
+    appl_unused(
         p_buf_min);
-    static_cast<void>(
+    appl_unused(
         p_buf_max);
-    static_cast<void>(
+    appl_unused(
         r_count);
-    static_cast<void>(
+    appl_unused(
         p_remote_address);
 
     e_status =
@@ -283,13 +285,13 @@ appl_socket_std_node::v_recvfrom(
     enum appl_status
         e_status;
 
-    static_cast<void>(
+    appl_unused(
         p_buf_min);
-    static_cast<void>(
+    appl_unused(
         p_buf_max);
-    static_cast<void>(
+    appl_unused(
         r_count);
-    static_cast<void>(
+    appl_unused(
         p_remote_address);
 
     e_status =

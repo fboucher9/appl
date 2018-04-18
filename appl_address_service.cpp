@@ -51,8 +51,8 @@ enum appl_status
 appl_address_service::s_create(
     struct appl_context * const
         p_context,
-    struct appl_property const * const
-        p_property,
+    struct appl_address_property const * const
+        p_address_property,
     struct appl_address * * const
         r_address)
 {
@@ -70,7 +70,7 @@ appl_address_service::s_create(
     // Use socket manager to dispatch this request
     e_status =
         p_socket_mgr->v_create_address(
-            p_property,
+            p_address_property,
             &(
                 p_address_node));
 

@@ -39,7 +39,7 @@ class appl_address_std_node : public appl_address
             s_create(
                 struct appl_context * const
                     p_context,
-                struct appl_property const * const
+                struct appl_address_property const * const
                     p_property,
                 struct appl_address * * const
                     r_address);

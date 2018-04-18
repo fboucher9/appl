@@ -90,7 +90,7 @@ enum appl_status
     UINT
         uPeriod;
 
-    static_cast<void>(
+    appl_unused(
         p_descriptor);
 
     uPeriod =

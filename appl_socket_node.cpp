@@ -14,6 +14,8 @@
 
 #include "appl_socket_node.h"
 
+#include "appl_unused.h"
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -31,11 +33,11 @@ appl_socket::v_send(
     unsigned long int * const
         r_count)
 {
-    static_cast<void>(
+    appl_unused(
         p_buf_min);
-    static_cast<void>(
+    appl_unused(
         p_buf_max);
-    static_cast<void>(
+    appl_unused(
         r_count);
     return
         appl_status_not_implemented;
@@ -53,11 +55,11 @@ appl_socket::v_recv(
     unsigned long int * const
         r_count)
 {
-    static_cast<void>(
+    appl_unused(
         p_buf_min);
-    static_cast<void>(
+    appl_unused(
         p_buf_max);
-    static_cast<void>(
+    appl_unused(
         r_count);
     return
         appl_status_not_implemented;
@@ -77,13 +79,13 @@ appl_socket::v_sendto(
     struct appl_address * const
         p_remote_address)
 {
-    static_cast<void>(
+    appl_unused(
         p_buf_min);
-    static_cast<void>(
+    appl_unused(
         p_buf_max);
-    static_cast<void>(
+    appl_unused(
         r_count);
-    static_cast<void>(
+    appl_unused(
         p_remote_address);
     return
         appl_status_not_implemented;
@@ -103,13 +105,13 @@ appl_socket::v_recvfrom(
     struct appl_address * const
         p_remote_address)
 {
-    static_cast<void>(
+    appl_unused(
         p_buf_min);
-    static_cast<void>(
+    appl_unused(
         p_buf_max);
-    static_cast<void>(
+    appl_unused(
         r_count);
-    static_cast<void>(
+    appl_unused(
         p_remote_address);
     return
         appl_status_not_implemented;
@@ -127,11 +129,11 @@ appl_socket::v_wait(
     unsigned long int const
         i_wait_count)
 {
-    static_cast<void>(
+    appl_unused(
         e_wait_type);
-    static_cast<void>(
+    appl_unused(
         i_wait_freq);
-    static_cast<void>(
+    appl_unused(
         i_wait_count);
     return
         appl_status_not_implemented;

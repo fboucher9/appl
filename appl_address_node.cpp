@@ -17,6 +17,8 @@ Description:
 
 #include "appl_address_node.h"
 
+#include "appl_unused.h"
+
 //
 //
 //
@@ -27,9 +29,9 @@ enum appl_status
         unsigned char * const
             p_name_max) const
 {
-    static_cast<void>(
+    appl_unused(
         pp_name_cur);
-    static_cast<void>(
+    appl_unused(
         p_name_max);
     return
         appl_status_not_implemented;
@@ -43,7 +45,7 @@ enum appl_status
         unsigned short int * const
             r_port) const
 {
-    static_cast<void>(
+    appl_unused(
         r_port);
     return
         appl_status_not_implemented;
