@@ -59,15 +59,34 @@ struct appl_object
                 T_instance * * const
                     r_type_instance)
         {
-            return
+            enum appl_status
+                e_status;
+
+            struct appl_object *
+                p_object;
+
+            e_status =
                 appl_object::create_instance(
                     p_context,
                     i_placement_length,
                     p_new,
                     static_cast<void const *>(
                         0),
-                    reinterpret_cast<struct appl_object * *>(
-                        r_type_instance));
+                    &(
+                        p_object));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                *(
+                    r_type_instance) =
+                    static_cast<T_instance *>(
+                        p_object);
+            }
+
+            return
+                e_status;
         }
 
         template <typename T_descriptor, typename T_instance>
@@ -86,15 +105,35 @@ struct appl_object
                 T_instance * * const
                     r_type_instance)
         {
-            return
+            enum appl_status
+                e_status;
+
+            struct appl_object *
+                p_object;
+
+            e_status =
                 appl_object::create_instance(
                     p_context,
                     i_placement_length,
                     p_new,
                     static_cast<void const *>(
                         p_type_descriptor),
-                    reinterpret_cast<struct appl_object * *>(
-                        r_type_instance));
+                    &(
+                        p_object));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                *(
+                    r_type_instance) =
+                    static_cast<T_instance *>(
+                        p_object);
+            }
+
+            return
+                e_status;
+
         }
 
         static
@@ -126,15 +165,35 @@ struct appl_object
                 T_instance * * const
                     r_object)
         {
-            return
+            enum appl_status
+                e_status;
+
+            struct appl_object *
+                p_object;
+
+            e_status =
                 appl_object::init_instance(
                     p_context,
                     p_placement,
                     p_new,
                     static_cast<void const *>(
                         0),
-                    reinterpret_cast<struct appl_object * *>(
-                        r_object));
+                    &(
+                        p_object));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                *(
+                    r_object) =
+                    static_cast<T_instance *>(
+                        p_object);
+            }
+
+            return
+                e_status;
+
         }
 
         template <typename T_descriptor, typename T_instance>
@@ -153,15 +212,35 @@ struct appl_object
                 T_instance * * const
                     r_object)
         {
-            return
+            enum appl_status
+                e_status;
+
+            struct appl_object *
+                p_object;
+
+            e_status =
                 appl_object::init_instance(
                     p_context,
                     p_placement,
                     p_new,
                     static_cast<void const *>(
                         p_descriptor),
-                    reinterpret_cast<struct appl_object * *>(
-                        r_object));
+                    &(
+                        p_object));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                *(
+                    r_object) =
+                    static_cast<T_instance *>(
+                        p_object);
+            }
+
+            return
+                e_status;
+
         }
 
         virtual

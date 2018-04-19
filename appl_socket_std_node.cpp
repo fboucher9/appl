@@ -136,6 +136,8 @@ appl_socket_std_node::init(
     }
     else
     {
+        fd =
+            -1;
     }
 
     appl_unused(

@@ -193,11 +193,13 @@ appl_object::operator new(
     appl_size_t const
         i_buf_len)
 {
+    static unsigned int g_uiDummy = 12345;
     appl_unused(
         i_buf_len);
     return
-        reinterpret_cast<void *>(
-            12345);
+        static_cast<void *>(
+            &(
+                g_uiDummy));
 } // operator new
 
 void

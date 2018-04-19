@@ -49,6 +49,8 @@ Description:
 
 #include <appl_string_handle.h>
 
+#include <appl_convert.h>
+
 //
 //
 //
@@ -244,9 +246,9 @@ enum appl_status
             appl_buf_copy(
                 *(pp_name_cur),
                 p_name_max,
-                reinterpret_cast<unsigned char const *>(
+                appl_convert(
                     p_name0),
-                reinterpret_cast<unsigned char const *>(
+                appl_convert(
                     p_name0 + i_name0_len));
 
         e_status =

@@ -39,7 +39,7 @@ class appl_thread_w32_node;
 //
 //
 //
-class appl_thread_w32_node : public appl_thread_node
+class appl_thread_w32_node : public appl_thread
 {
     public:
 
@@ -48,10 +48,10 @@ class appl_thread_w32_node : public appl_thread_node
             create_instance(
                 struct appl_context * const
                     p_context,
-                struct appl_thread_property_handle const * const
+                struct appl_thread_property const * const
                     p_thread_property_handle,
-                class appl_thread_node * * const
-                    r_thread_node);
+                struct appl_thread * * const
+                    r_thread);
 
     protected:
 

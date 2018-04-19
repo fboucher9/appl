@@ -30,6 +30,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_convert.h>
+
 //
 //
 //
@@ -104,7 +106,8 @@ enum appl_status
 
     e_status =
         p_heap->alloc_object_array(
-            i_name_len + 1,
+            static_cast<unsigned long int>(
+                i_name_len + 1),
             &(
                 p_name0));
 
@@ -164,9 +167,9 @@ enum appl_status
                     e_status =
                         appl_string_create_dup_buffer(
                             m_context,
-                            reinterpret_cast<unsigned char const *>(
+                            appl_convert(
                                 p_value0),
-                            reinterpret_cast<unsigned char const *>(
+                            appl_convert(
                                 p_value0 + dwResult2),
                             &(
                                 p_string));
@@ -246,7 +249,8 @@ enum appl_status
 
     e_status =
         p_heap->alloc_object_array(
-            i_name_len + 1,
+            static_cast<unsigned long int>(
+                i_name_len + 1),
             &(
                 p_name0));
 

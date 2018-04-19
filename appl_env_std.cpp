@@ -32,6 +32,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_convert.h>
+
 //
 //
 //
@@ -141,9 +143,9 @@ enum appl_status
             e_status =
                 appl_string_create_dup_buffer(
                     m_context,
-                    reinterpret_cast<unsigned char const *>(
+                    appl_convert(
                         p_value0),
-                    reinterpret_cast<unsigned char const *>(
+                    appl_convert(
                         p_value0 + i_value_len),
                     &(
                         p_string));

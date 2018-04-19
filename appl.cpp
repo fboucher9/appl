@@ -20,6 +20,8 @@ Description:
 
 #include <appl_heap.h>
 
+#include <appl_convert.h>
+
 /*
 
 */
@@ -41,11 +43,11 @@ main(
         o_context_descriptor;
 
     o_context_descriptor.p_arg_min =
-        reinterpret_cast<unsigned char * *>(
+        appl_convert(
             argv);
 
     o_context_descriptor.p_arg_max =
-        reinterpret_cast<unsigned char * *>(
+        appl_convert(
             argv + argc);
 
     /* Create context */
