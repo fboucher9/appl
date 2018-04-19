@@ -6,15 +6,15 @@
 
 #include <string.h>
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_buf.h"
+#include <appl_buf.h>
 
-#include "appl_string.h"
+#include <appl_string.h>
 
 struct appl_string_descriptor
 {

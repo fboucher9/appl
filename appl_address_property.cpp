@@ -4,21 +4,21 @@
 
 */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_address_property.h"
+#include <appl_address_property.h>
 
-#include "appl_object_handle.h"
+#include <appl_object_handle.h>
 
-#include "appl_property_handle.h"
+#include <appl_property_handle.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_property_types.h"
+#include <appl_property_types.h>
 
-#include "appl_property.h"
+#include <appl_property.h>
 
 #define APPL_ADDRESS_PROPERTY_GUID (0xe0bfd095ul)
 

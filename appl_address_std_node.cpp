@@ -25,29 +25,29 @@ Description:
 
 #endif
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_address_node.h"
+#include <appl_address_node.h>
 
-#include "appl_address_std_node.h"
+#include <appl_address_std_node.h>
 
-#include "appl_buf.h"
+#include <appl_buf.h>
 
-#include "appl_address_descriptor.h"
+#include <appl_address_descriptor.h>
 
-#include "appl_address_property.h"
+#include <appl_address_property.h>
 
-#include "appl_property_types.h"
+#include <appl_property_types.h>
 
-#include "appl_property.h"
+#include <appl_property.h>
 
-#include "appl_object_handle.h"
+#include <appl_object_handle.h>
 
-#include "appl_string_handle.h"
+#include <appl_string_handle.h>
 
 //
 //

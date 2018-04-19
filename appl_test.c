@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 
-#include "appl.h"
+#include <appl.h>
 
 #if defined __GNUC__ && ! defined __clang__
 #pragma GCC diagnostic ignored "-Wsuggest-attribute=format"

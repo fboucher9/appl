@@ -10,19 +10,19 @@
 
 #include <string.h>
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_buf.h"
+#include <appl_buf.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_heap.h"
+#include <appl_heap.h>
 
-#include "appl_list.h"
+#include <appl_list.h>
 
-#include "appl_heap_std.h"
+#include <appl_heap_std.h>
 
 //
 //

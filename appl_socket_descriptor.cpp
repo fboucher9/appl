@@ -4,29 +4,29 @@
 
 */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_socket_descriptor.h"
+#include <appl_socket_descriptor.h>
 
-#include "appl_object_handle.h"
+#include <appl_object_handle.h>
 
-#include "appl_property_handle.h"
+#include <appl_property_handle.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_property_types.h"
+#include <appl_property_types.h>
 
-#include "appl_property.h"
+#include <appl_property.h>
 
 #if defined APPL_DEBUG
 
-#include "appl_debug_handle.h"
+#include <appl_debug_handle.h>
 
 #endif /* #if defined APPL_DEBUG */
 
-#include "appl_unused.h"
+#include <appl_unused.h>
 
 /* Unique identifier for appl_socket_property structure */
 #define APPL_SOCKET_PROPERTY_GUID (0x77ca3c76ul)
@@ -591,8 +591,7 @@ appl_socket_property_get_bind_address(
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property);
-    appl_unused(
+        p_property,
         r_bind_address);
 
     e_status =
@@ -619,8 +618,7 @@ appl_socket_property_get_connect_address(
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property);
-    appl_unused(
+        p_property,
         r_connect_address);
 
     e_status =
@@ -647,8 +645,7 @@ appl_socket_property_get_listen_count(
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property);
-    appl_unused(
+        p_property,
         r_listen_count);
 
     e_status =
@@ -675,8 +672,7 @@ appl_socket_property_get_accept_address(
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property);
-    appl_unused(
+        p_property,
         r_accept_address);
 
     e_status =
@@ -703,8 +699,7 @@ appl_socket_property_get_accept_socket(
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property);
-    appl_unused(
+        p_property,
         r_accept_socket);
 
     e_status =
@@ -731,8 +726,7 @@ appl_socket_property_get_recv_timeout(
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property);
-    appl_unused(
+        p_property,
         r_recv_timeout);
 
     e_status =
@@ -759,8 +753,7 @@ appl_socket_property_get_send_timeout(
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property);
-    appl_unused(
+        p_property,
         r_send_timeout);
 
     e_status =
@@ -787,8 +780,7 @@ appl_socket_property_get_recv_buffer(
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property);
-    appl_unused(
+        p_property,
         r_recv_buffer);
 
     e_status =
@@ -815,8 +807,7 @@ appl_socket_property_get_send_buffer(
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property);
-    appl_unused(
+        p_property,
         r_send_buffer);
 
     e_status =
@@ -843,8 +834,7 @@ appl_socket_property_get_connect_timeout(
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property);
-    appl_unused(
+        p_property,
         r_connect_timeout);
 
     e_status =
@@ -871,8 +861,7 @@ appl_socket_property_get_accept_timeout(
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property);
-    appl_unused(
+        p_property,
         r_accept_timeout);
 
     e_status =
@@ -899,8 +888,7 @@ appl_socket_property_get_join_address(
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property);
-    appl_unused(
+        p_property,
         r_join_address);
 
     e_status =
@@ -927,8 +915,7 @@ appl_socket_property_get_join_interface(
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property);
-    appl_unused(
+        p_property,
         r_interface_address);
 
     e_status =

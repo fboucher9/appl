@@ -10,107 +10,107 @@
 
 #endif /* #if defined APPL_DEBUG */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_object_handle.h"
+#include <appl_object_handle.h>
 
-#include "appl_context_handle.h"
+#include <appl_context_handle.h>
 
-#include "appl_buf.h"
+#include <appl_buf.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_context.h"
+#include <appl_context.h>
 
-#include "appl_context_std.h"
+#include <appl_context_std.h>
 
-#include "appl_heap.h"
+#include <appl_heap.h>
 
-#include "appl_heap_std.h"
+#include <appl_heap_std.h>
 
 #if defined APPL_DEBUG
 
-#include "appl_list.h"
+#include <appl_list.h>
 
-#include "appl_heap_dbg.h"
+#include <appl_heap_dbg.h>
 
 #endif /* #if defined APPL_DEBUG */
 
 #if defined APPL_DEBUG
 
-#include "appl_debug.h"
+#include <appl_debug.h>
 
 #if defined APPL_OS_LINUX
 
-#include "appl_debug_std.h"
+#include <appl_debug_std.h>
 
 #elif defined APPL_OS_WINDOWS
 
-#include "appl_debug_w32.h"
+#include <appl_debug_w32.h>
 
 #endif /* #if defined APPL_OS_Xx */
 
 #endif /* #if defined APPL_DEBUG */
 
-#include "appl_options.h"
+#include <appl_options.h>
 
-#include "appl_options_std.h"
+#include <appl_options_std.h>
 
-#include "appl_thread_mgr.h"
+#include <appl_thread_mgr.h>
 
 #if defined APPL_OS_LINUX
 
-#include "appl_thread_std_mgr.h"
+#include <appl_thread_std_mgr.h>
 
 #elif defined APPL_OS_WINDOWS
 
-#include "appl_thread_w32_mgr.h"
+#include <appl_thread_w32_mgr.h>
 
 #endif
 
-#include "appl_file_mgr.h"
+#include <appl_file_mgr.h>
 
-#include "appl_file_std_mgr.h"
+#include <appl_file_std_mgr.h>
 
-#include "appl_mutex_mgr.h"
+#include <appl_mutex_mgr.h>
 
-#include "appl_mutex_std_mgr.h"
+#include <appl_mutex_std_mgr.h>
 
-#include "appl_node.h"
+#include <appl_node.h>
 
-#include "appl_poll_mgr.h"
+#include <appl_poll_mgr.h>
 
-#include "appl_clock.h"
+#include <appl_clock.h>
 
 #if defined APPL_OS_LINUX
 
-#include "appl_clock_std.h"
+#include <appl_clock_std.h>
 
 #elif defined APPL_OS_WINDOWS
 
-#include "appl_clock_w32.h"
+#include <appl_clock_w32.h>
 
 #endif /* #if defined APPL_OS_Xx */
 
-#include "appl_event_mgr.h"
+#include <appl_event_mgr.h>
 
-#include "appl_event_std_mgr.h"
+#include <appl_event_std_mgr.h>
 
-#include "appl_socket_mgr.h"
+#include <appl_socket_mgr.h>
 
-#include "appl_socket_std_mgr.h"
+#include <appl_socket_std_mgr.h>
 
-#include "appl_env.h"
+#include <appl_env.h>
 
 #if defined APPL_OS_LINUX
 
-#include "appl_env_std.h"
+#include <appl_env_std.h>
 
 #elif defined APPL_OS_WINDOWS
 
-#include "appl_env_w32.h"
+#include <appl_env_w32.h>
 
 #endif /* #if defined APPL_OS_Xx */
 

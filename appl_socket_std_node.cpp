@@ -190,10 +190,8 @@ appl_socket_std_node::v_send(
         e_status;
 
     appl_unused(
-        p_buf_min);
-    appl_unused(
-        p_buf_max);
-    appl_unused(
+        p_buf_min,
+        p_buf_max,
         r_count);
 
     e_status =
@@ -220,10 +218,8 @@ appl_socket_std_node::v_recv(
         e_status;
 
     appl_unused(
-        p_buf_min);
-    appl_unused(
-        p_buf_max);
-    appl_unused(
+        p_buf_min,
+        p_buf_max,
         r_count);
 
     e_status =
@@ -252,12 +248,9 @@ appl_socket_std_node::v_sendto(
         e_status;
 
     appl_unused(
-        p_buf_min);
-    appl_unused(
-        p_buf_max);
-    appl_unused(
-        r_count);
-    appl_unused(
+        p_buf_min,
+        p_buf_max,
+        r_count,
         p_remote_address);
 
     e_status =
@@ -286,12 +279,9 @@ appl_socket_std_node::v_recvfrom(
         e_status;
 
     appl_unused(
-        p_buf_min);
-    appl_unused(
-        p_buf_max);
-    appl_unused(
-        r_count);
-    appl_unused(
+        p_buf_min,
+        p_buf_max,
+        r_count,
         p_remote_address);
 
     e_status =

@@ -4,15 +4,15 @@
 
 */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_thread_node.h"
+#include <appl_thread_node.h>
 
-#include "appl_unused.h"
+#include <appl_unused.h>
 
 /* Assert compiler */
 #if !defined(__cplusplus)
@@ -42,10 +42,8 @@ enum appl_status
             r_result)
 {
     appl_unused(
-        i_wait_freq);
-    appl_unused(
-        i_wait_count);
-    appl_unused(
+        i_wait_freq,
+        i_wait_count,
         r_result);
     return
         appl_status_fail;

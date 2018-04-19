@@ -4,15 +4,15 @@
 
 */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_heap.h"
+#include <appl_heap.h>
 
-#include "appl_unused.h"
+#include <appl_unused.h>
 
 //
 //
@@ -25,8 +25,7 @@ enum appl_status
             r_buf)
 {
     appl_unused(
-        i_buf_len);
-    appl_unused(
+        i_buf_len,
         r_buf);
 
     return
@@ -63,10 +62,8 @@ enum appl_status
             r_new_buf)
 {
     appl_unused(
-        p_old_buf);
-    appl_unused(
-        i_buf_len);
-    appl_unused(
+        p_old_buf,
+        i_buf_len,
         r_new_buf);
 
     return

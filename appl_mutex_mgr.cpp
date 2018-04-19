@@ -4,15 +4,15 @@
 
 */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_mutex_mgr.h"
+#include <appl_mutex_mgr.h>
 
-#include "appl_unused.h"
+#include <appl_unused.h>
 
 //
 //
@@ -28,8 +28,7 @@ enum appl_status
         e_status;
 
     appl_unused(
-        p_mutex_descriptor);
-    appl_unused(
+        p_mutex_descriptor,
         r_mutex);
 
     e_status =

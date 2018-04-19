@@ -6,19 +6,19 @@
 
 #if defined APPL_DEBUG
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_debug_handle.h"
+#include <appl_debug_handle.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_context.h"
+#include <appl_context.h>
 
-#include "appl_debug.h"
+#include <appl_debug.h>
 
-#include "appl_object_handle.h"
+#include <appl_object_handle.h>
 
 #if ! defined __cplusplus
 #error use c++ compiler

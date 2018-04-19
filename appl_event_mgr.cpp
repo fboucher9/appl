@@ -4,15 +4,15 @@
 
 */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_event_mgr.h"
+#include <appl_event_mgr.h>
 
-#include "appl_unused.h"
+#include <appl_unused.h>
 
 //
 //
@@ -30,10 +30,8 @@ enum appl_status
         e_status;
 
     appl_unused(
-        p_context);
-    appl_unused(
-        p_event_descriptor);
-    appl_unused(
+        p_context,
+        p_event_descriptor,
         r_event);
 
     e_status =

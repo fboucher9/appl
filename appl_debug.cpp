@@ -6,15 +6,15 @@
 
 #if defined APPL_DEBUG
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_debug.h"
+#include <appl_debug.h>
 
-#include "appl_unused.h"
+#include <appl_unused.h>
 
 //
 //

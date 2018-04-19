@@ -6,21 +6,21 @@
 
 #include <pthread.h>
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_thread_descriptor.h"
+#include <appl_thread_descriptor.h>
 
-#include "appl_thread_mgr.h"
+#include <appl_thread_mgr.h>
 
-#include "appl_thread_std_mgr.h"
+#include <appl_thread_std_mgr.h>
 
-#include "appl_thread_node.h"
+#include <appl_thread_node.h>
 
-#include "appl_thread_std_node.h"
+#include <appl_thread_std_node.h>
 
 enum appl_status
     appl_thread_std_mgr::create_instance(

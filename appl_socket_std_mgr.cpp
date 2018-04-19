@@ -18,25 +18,25 @@
 
 #endif /* #if defined APPL_OS_Xx */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_socket_mgr.h"
+#include <appl_socket_mgr.h>
 
-#include "appl_socket_std_mgr.h"
+#include <appl_socket_std_mgr.h>
 
-#include "appl_socket_descriptor.h"
+#include <appl_socket_descriptor.h>
 
-#include "appl_socket_node.h"
+#include <appl_socket_node.h>
 
-#include "appl_socket_std_node.h"
+#include <appl_socket_std_node.h>
 
-#include "appl_address_node.h"
+#include <appl_address_node.h>
 
-#include "appl_address_std_node.h"
+#include <appl_address_std_node.h>
 
 //
 //

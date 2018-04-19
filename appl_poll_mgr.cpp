@@ -8,31 +8,31 @@
 
 #include <poll.h>
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_list.h"
+#include <appl_list.h>
 
-#include "appl_node.h"
+#include <appl_node.h>
 
-#include "appl_poll_mgr.h"
+#include <appl_poll_mgr.h>
 
-#include "appl_mutex_node.h"
+#include <appl_mutex_node.h>
 
-#include "appl_poll_descriptor.h"
+#include <appl_poll_descriptor.h>
 
-#include "appl_poll_node.h"
+#include <appl_poll_node.h>
 
-#include "appl_context.h"
+#include <appl_context.h>
 
-#include "appl_heap.h"
+#include <appl_heap.h>
 
-#include "appl_buf.h"
+#include <appl_buf.h>
 
-#include "appl_node_iterator.h"
+#include <appl_node_iterator.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -159,7 +159,7 @@ enum appl_status
             {
                 struct appl_poll * const
                     p_poll_node =
-                    reinterpret_cast<struct appl_poll *>(
+                    static_cast<struct appl_poll *>(
                         o_iterator.p_cur);
 
                 if (

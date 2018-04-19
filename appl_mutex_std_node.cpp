@@ -6,17 +6,17 @@
 
 #include <pthread.h>
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_mutex_node.h"
+#include <appl_mutex_node.h>
 
-#include "appl_mutex_std_node.h"
+#include <appl_mutex_std_node.h>
 
-#include "appl_unused.h"
+#include <appl_unused.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus

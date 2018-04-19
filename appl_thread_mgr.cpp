@@ -4,15 +4,15 @@
 
 */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_thread_mgr.h"
+#include <appl_thread_mgr.h>
 
-#include "appl_unused.h"
+#include <appl_unused.h>
 
 #if !defined(__cplusplus)
 #error use C++ compiler
@@ -28,10 +28,8 @@ enum appl_status
             r_thread)
 {
     appl_unused(
-        p_context);
-    appl_unused(
-        p_thread_property);
-    appl_unused(
+        p_context,
+        p_thread_property,
         r_thread);
     return
         appl_status_fail;

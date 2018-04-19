@@ -302,8 +302,7 @@ enum appl_status
     i_read_result =
         read(
             m_fd,
-            reinterpret_cast<char *>(
-                p_buf_min),
+            p_buf_min,
             static_cast<unsigned int>(
                 static_cast<appl_size_t>(
                     p_buf_max
@@ -352,8 +351,7 @@ enum appl_status
         static_cast<signed long int>(
             write(
                 m_fd,
-                reinterpret_cast<char const *>(
-                    p_buf_min),
+                p_buf_min,
                 static_cast<unsigned int>(
                     static_cast<appl_size_t>(
                         p_buf_max

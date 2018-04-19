@@ -8,19 +8,19 @@
 
 #include <windows.h>
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_thread_mgr.h"
+#include <appl_thread_mgr.h>
 
-#include "appl_thread_w32_mgr.h"
+#include <appl_thread_w32_mgr.h>
 
-#include "appl_thread_node.h"
+#include <appl_thread_node.h>
 
-#include "appl_thread_w32_node.h"
+#include <appl_thread_w32_node.h>
 
 //
 //

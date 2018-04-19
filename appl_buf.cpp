@@ -4,9 +4,9 @@
 
 */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_buf.h"
+#include <appl_buf.h>
 
 #if 0
 /*

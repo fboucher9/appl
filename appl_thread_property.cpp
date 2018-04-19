@@ -4,21 +4,21 @@
 
 */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_object_handle.h"
+#include <appl_object_handle.h>
 
-#include "appl_property_handle.h"
+#include <appl_property_handle.h>
 
-#include "appl_thread_property.h"
+#include <appl_thread_property.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_property_types.h"
+#include <appl_property_types.h>
 
-#include "appl_property.h"
+#include <appl_property.h>
 
 /* unique identifier for thread descriptor structure */
 /* echo -n "appl_thread_descriptor" | md5sum | cut -b1-8 */
@@ -65,6 +65,9 @@ union appl_thread_property_callback
 
 };
 
+//
+//
+//
 struct appl_thread_property : public appl_property
 {
 };
@@ -149,8 +152,7 @@ appl_thread_property_assert_guid(
         (
             appl_status_ok
             == appl_property_get_ulong(
-                reinterpret_cast<struct appl_property const *>(
-                    p_thread_property),
+                p_thread_property,
                 appl_thread_property_id_guid,
                 &(
                     u_value)))
@@ -191,8 +193,7 @@ appl_thread_property_set_callback(
 
     return
         appl_property_set_ptr(
-            reinterpret_cast<struct appl_property *>(
-                p_thread_property),
+            p_thread_property,
             appl_thread_property_id_callback,
             o_callback.p_value);
 
@@ -215,8 +216,7 @@ appl_thread_property_set_context(
 
     return
         appl_property_set_ptr(
-            reinterpret_cast<struct appl_property *>(
-                p_thread_property),
+            p_thread_property,
             appl_thread_property_id_context,
             p_thread_context);
 
@@ -246,8 +246,7 @@ appl_thread_property_get_callback(
 
     e_status =
         appl_property_get_ptr(
-            reinterpret_cast<struct appl_property const *>(
-                p_thread_property),
+            p_thread_property,
             appl_thread_property_id_callback,
             &(
                 o_callback.p_value));
@@ -283,8 +282,7 @@ appl_thread_property_get_context(
 
     return
         appl_property_get_ptr(
-            reinterpret_cast<struct appl_property const *>(
-                p_thread_property),
+            p_thread_property,
             appl_thread_property_id_context,
             r_thread_context);
 

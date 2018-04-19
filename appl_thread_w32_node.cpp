@@ -8,23 +8,23 @@
 
 #include <windows.h>
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_thread_node.h"
+#include <appl_thread_node.h>
 
-#include "appl_thread_w32_node.h"
+#include <appl_thread_w32_node.h>
 
-#include "appl_thread_descriptor.h"
+#include <appl_thread_descriptor.h>
 
-#include "appl_object_handle.h"
+#include <appl_object_handle.h>
 
-#include "appl_property_handle.h"
+#include <appl_property_handle.h>
 
-#include "appl_thread_property.h"
+#include <appl_thread_property.h>
 
 //
 //
@@ -92,8 +92,7 @@ enum appl_status
         dwWaitResult;
 
     appl_unused(
-        i_wait_freq);
-    appl_unused(
+        i_wait_freq,
         i_wait_count);
 
     dwWaitResult =

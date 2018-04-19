@@ -10,15 +10,15 @@ Description:
 
 */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_file_node.h"
+#include <appl_file_node.h>
 
-#include "appl_unused.h"
+#include <appl_unused.h>
 
 //
 //
@@ -36,10 +36,8 @@ enum appl_status
         e_status;
 
     appl_unused(
-        p_buf_min);
-    appl_unused(
-        p_buf_max);
-    appl_unused(
+        p_buf_min,
+        p_buf_max,
         r_count);
 
     e_status =
@@ -66,10 +64,8 @@ enum appl_status
         e_status;
 
     appl_unused(
-        p_buf_min);
-    appl_unused(
-        p_buf_max);
-    appl_unused(
+        p_buf_min,
+        p_buf_max,
         r_count);
 
     e_status =

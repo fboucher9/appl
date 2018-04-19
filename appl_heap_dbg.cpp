@@ -22,19 +22,19 @@
 
 #endif /* #if defined APPL_OS_LINUX */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_buf.h"
+#include <appl_buf.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_heap.h"
+#include <appl_heap.h>
 
-#include "appl_list.h"
+#include <appl_list.h>
 
-#include "appl_heap_dbg.h"
+#include <appl_heap_dbg.h>
 
 //
 //
@@ -135,13 +135,8 @@ static_cast<unsigned char>(0xA1u);
 static unsigned char const g_appl_heap_dbg_footer_magic =
 static_cast<unsigned char>(0x8Du);
 
-struct appl_heap_dbg_header
+struct appl_heap_dbg_header : public appl_list
 {
-    struct appl_list
-        o_list;
-
-    /* -- */
-
     void *
         a_backtrace[8u];
 
@@ -239,7 +234,7 @@ enum appl_status
                     p_header;
 
                 p_header =
-                    reinterpret_cast<struct appl_heap_dbg_header *>(
+                    static_cast<struct appl_heap_dbg_header *>(
                         o_iterator.o_cur.p_node);
 
                 printf(" - allocation at %p of %lu bytes\n",
@@ -363,12 +358,10 @@ enum appl_status
                     p_allocation);
 
             appl_list_init(
-                &(
-                    p_header->o_list));
+                p_header);
 
             appl_list_join(
-                &(
-                    p_header->o_list),
+                p_header,
                 &(
                     m_list));
 
@@ -460,10 +453,8 @@ enum appl_status
             - 1;
 
         appl_list_join(
-            &(
-                p_header->o_list),
-            &(
-                p_header->o_list));
+            p_header,
+            p_header);
 
         {
             unsigned int i_header_iterator;

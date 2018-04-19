@@ -4,21 +4,21 @@
 
 */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_list.h"
+#include <appl_list.h>
 
-#include "appl_node.h"
+#include <appl_node.h>
 
-#include "appl_poll_descriptor.h"
+#include <appl_poll_descriptor.h>
 
-#include "appl_poll_node.h"
+#include <appl_poll_node.h>
 
-#include "appl_unused.h"
+#include <appl_unused.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -43,12 +43,9 @@ enum appl_status
         e_status;
 
     appl_unused(
-        p_context);
-    appl_unused(
-        p_poll_mgr);
-    appl_unused(
-        p_poll_descriptor);
-    appl_unused(
+        p_context,
+        p_poll_mgr,
+        p_poll_descriptor,
         r_poll);
 
     e_status =

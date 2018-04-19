@@ -4,17 +4,17 @@
 
 */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_context.h"
+#include <appl_context.h>
 
-#include "appl_heap.h"
+#include <appl_heap.h>
 
-#include "appl_unused.h"
+#include <appl_unused.h>
 
 //
 //
@@ -230,8 +230,7 @@ appl_object::operator delete (
         p_placement)
 {
     appl_unused(
-        p_buf);
-    appl_unused(
+        p_buf,
         p_placement);
 } // operator delete
 

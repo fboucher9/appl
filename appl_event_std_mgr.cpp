@@ -6,19 +6,19 @@
 
 #include <pthread.h>
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_event_mgr.h"
+#include <appl_event_mgr.h>
 
-#include "appl_event_std_mgr.h"
+#include <appl_event_std_mgr.h>
 
-#include "appl_event_node.h"
+#include <appl_event_node.h>
 
-#include "appl_event_std_node.h"
+#include <appl_event_std_node.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus

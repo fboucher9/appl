@@ -18,35 +18,35 @@
 
 #endif /* #if defined APPL_OS_WINDOWS */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_buf.h"
+#include <appl_buf.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_thread_descriptor.h"
+#include <appl_thread_descriptor.h>
 
-#include "appl_object_handle.h"
+#include <appl_object_handle.h>
 
-#include "appl_property_handle.h"
+#include <appl_property_handle.h>
 
-#include "appl_thread_property.h"
+#include <appl_thread_property.h>
 
-#include "appl_thread_node.h"
+#include <appl_thread_node.h>
 
-#include "appl_thread_std_node.h"
+#include <appl_thread_std_node.h>
 
 #if defined APPL_DEBUG
 
-#include "appl_debug.h"
+#include <appl_debug.h>
 
-#include "appl_context.h"
+#include <appl_context.h>
 
 #endif /* #if defined APPL_DEBUG */
 
-#include "appl_unused.h"
+#include <appl_unused.h>
 
 //
 //

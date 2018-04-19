@@ -8,15 +8,15 @@
 
 #include <windows.h>
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_clock.h"
+#include <appl_clock.h>
 
-#include "appl_clock_w32.h"
+#include <appl_clock_w32.h>
 
 //
 //

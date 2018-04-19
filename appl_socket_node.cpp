@@ -4,17 +4,17 @@
 
 */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_socket_descriptor.h"
+#include <appl_socket_descriptor.h>
 
-#include "appl_socket_node.h"
+#include <appl_socket_node.h>
 
-#include "appl_unused.h"
+#include <appl_unused.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -34,10 +34,8 @@ appl_socket::v_send(
         r_count)
 {
     appl_unused(
-        p_buf_min);
-    appl_unused(
-        p_buf_max);
-    appl_unused(
+        p_buf_min,
+        p_buf_max,
         r_count);
     return
         appl_status_not_implemented;
@@ -56,10 +54,8 @@ appl_socket::v_recv(
         r_count)
 {
     appl_unused(
-        p_buf_min);
-    appl_unused(
-        p_buf_max);
-    appl_unused(
+        p_buf_min,
+        p_buf_max,
         r_count);
     return
         appl_status_not_implemented;
@@ -80,12 +76,9 @@ appl_socket::v_sendto(
         p_remote_address)
 {
     appl_unused(
-        p_buf_min);
-    appl_unused(
-        p_buf_max);
-    appl_unused(
-        r_count);
-    appl_unused(
+        p_buf_min,
+        p_buf_max,
+        r_count,
         p_remote_address);
     return
         appl_status_not_implemented;
@@ -106,12 +99,9 @@ appl_socket::v_recvfrom(
         p_remote_address)
 {
     appl_unused(
-        p_buf_min);
-    appl_unused(
-        p_buf_max);
-    appl_unused(
-        r_count);
-    appl_unused(
+        p_buf_min,
+        p_buf_max,
+        r_count,
         p_remote_address);
     return
         appl_status_not_implemented;
@@ -130,10 +120,8 @@ appl_socket::v_wait(
         i_wait_count)
 {
     appl_unused(
-        e_wait_type);
-    appl_unused(
-        i_wait_freq);
-    appl_unused(
+        e_wait_type,
+        i_wait_freq,
         i_wait_count);
     return
         appl_status_not_implemented;

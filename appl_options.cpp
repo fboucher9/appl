@@ -4,15 +4,15 @@
 
 */
 
-#include "appl_status.h"
+#include <appl_status.h>
 
-#include "appl_types.h"
+#include <appl_types.h>
 
-#include "appl_object.h"
+#include <appl_object.h>
 
-#include "appl_options.h"
+#include <appl_options.h>
 
-#include "appl_unused.h"
+#include <appl_unused.h>
 
 //
 //
@@ -41,10 +41,8 @@ enum appl_status
             r_buf_max) const
 {
     appl_unused(
-        i_index);
-    appl_unused(
-        r_buf_min);
-    appl_unused(
+        i_index,
+        r_buf_min,
         r_buf_max);
     return
         appl_status_not_implemented;
