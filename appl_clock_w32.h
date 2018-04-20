@@ -67,7 +67,6 @@ class appl_clock_w32 : public appl_clock
                 void * const
                     p_placement);
 
-        virtual
         enum appl_status
             init(void);
 

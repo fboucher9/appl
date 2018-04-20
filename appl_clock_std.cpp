@@ -39,7 +39,7 @@ enum appl_status
             sizeof(
                 class appl_clock_std),
             (& appl_clock_std::placement_new),
-            (& appl_clock_std::init),
+            (& appl_clock_std::init_dummy),
             r_clock);
 
     return
@@ -74,17 +74,6 @@ void
         class appl_clock_std;
 
 } // placement_new()
-
-//
-//
-//
-enum appl_status
-    appl_clock_std::init(void)
-{
-    return
-        appl_status_ok;
-
-} // init()
 
 //
 //

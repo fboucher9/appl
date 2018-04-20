@@ -55,7 +55,7 @@ appl_env_std::s_create(
             (&
                 appl_env_std::s_new),
             (&
-                appl_env_std::init),
+                appl_env_std::init_dummy),
             r_env);
 
     return
@@ -310,17 +310,6 @@ appl_env_std::s_new(
         class appl_env_std;
 
 } // s_new()
-
-//
-//
-//
-enum appl_status
-    appl_env_std::init(void)
-{
-    return
-        appl_status_ok;
-
-} // init()
 
 #endif /* #if defined APPL_OS_LINUX */
 

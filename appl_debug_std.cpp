@@ -40,7 +40,7 @@ enum appl_status
             (&
                 appl_debug_std::placement_new),
             (&
-                appl_debug_std::init),
+                appl_debug_std::init_dummy),
             r_debug);
 
 } // create_instance()
@@ -72,14 +72,6 @@ void
         class appl_debug_std;
 
 } // placement_new()
-
-enum appl_status
-appl_debug_std::init(void)
-{
-    return
-        appl_status_ok;
-
-} // init()
 
 //
 //

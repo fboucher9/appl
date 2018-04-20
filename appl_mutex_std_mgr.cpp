@@ -46,7 +46,7 @@ enum appl_status
             (&
                 appl_mutex_std_mgr::placement_new),
             (&
-                appl_mutex_std_mgr::init),
+                appl_mutex_std_mgr::init_dummy),
             r_mutex_mgr);
 
     return
@@ -81,17 +81,6 @@ void
         class appl_mutex_std_mgr;
 
 } // placement_new()
-
-//
-//
-//
-enum appl_status
-    appl_mutex_std_mgr::init(void)
-{
-    return
-        appl_status_ok;
-
-} // init()
 
 //
 //

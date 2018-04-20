@@ -37,7 +37,7 @@ enum appl_status
             (&
                 appl_thread_std_mgr::placement_new),
             (&
-                appl_thread_std_mgr::init),
+                appl_thread_std_mgr::init_dummy),
             r_thread_mgr);
 
 } // create_instance()
@@ -60,17 +60,6 @@ void
         class appl_thread_std_mgr;
 
 } // placement_new()
-
-//
-//
-//
-enum appl_status
-    appl_thread_std_mgr::init(void)
-{
-    return
-        appl_status_ok;
-
-} // init()
 
 enum appl_status
     appl_thread_std_mgr::v_create(

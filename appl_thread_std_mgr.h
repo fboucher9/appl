@@ -56,9 +56,6 @@ class appl_thread_std_mgr :
                 void * const
                     p_placement);
 
-        enum appl_status
-            init(void);
-
         virtual
         enum appl_status
             v_create(

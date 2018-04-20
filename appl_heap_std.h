@@ -58,9 +58,6 @@ class appl_heap_std : public appl_heap
                 void * const
                     p_placement);
 
-        enum appl_status
-            init(void);
-
         virtual
         enum appl_status
             destroy(void);

@@ -59,7 +59,7 @@ enum appl_status
             (&
                 appl_socket_std_mgr::s_new),
             (&
-                appl_socket_std_mgr::init),
+                appl_socket_std_mgr::init_dummy),
             r_socket_mgr);
 
     return
@@ -94,17 +94,6 @@ void
         class appl_socket_std_mgr;
 
 } // s_new()
-
-//
-//
-//
-enum appl_status
-    appl_socket_std_mgr::init(void)
-{
-    return
-        appl_status_ok;
-
-} // init()
 
 //
 //
