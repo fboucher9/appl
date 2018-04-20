@@ -26,6 +26,10 @@ struct appl_property_descriptor
 
 }; /* struct appl_property_descriptor */
 
+#if ! defined __cplusplus
+#error use c++ compiler
+#endif /* #if ! defined __cplusplus */
+
 //
 //
 //
