@@ -87,6 +87,9 @@ class appl_env_w32 : public appl_env
             void * const
                 p_placement);
 
+        enum appl_status
+            init(void);
+
 }; // class appl_env_w32
 
 /* end-of-file: appl_env_w32.h */

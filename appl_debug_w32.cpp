@@ -35,8 +35,10 @@ enum appl_status
             p_context,
             sizeof(
                 class appl_debug_w32),
-            &(
+            (&
                 appl_debug_w32::placement_new),
+            (&
+                appl_debug_w32::init_dummy),
             r_debug);
 
 } // create_instance()

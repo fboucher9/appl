@@ -50,8 +50,10 @@ appl_env_w32::s_create(
             p_context,
             sizeof(
                 class appl_env_w32),
-            &(
+            (&
                 appl_env_w32::s_new),
+            (&
+                appl_env_w32::init),
             r_env);
 
     return
@@ -277,7 +279,8 @@ enum appl_status
 
         e_status =
             p_heap->alloc_object_array(
-                i_value_len + 1,
+                static_cast<unsigned long int>(
+                    i_value_len + 1),
                 &(
                     p_value0));
 
@@ -338,6 +341,17 @@ appl_env_w32::s_new(
         class appl_env_w32;
 
 } // s_new()
+
+//
+//
+//
+enum appl_status
+    appl_env_w32::init(void)
+{
+    return
+        appl_status_ok;
+
+} // init()
 
 #endif /* #if defined APPL_OS_WINDOWS */
 

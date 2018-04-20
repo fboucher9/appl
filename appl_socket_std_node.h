@@ -74,11 +74,10 @@ class appl_socket_std_node : public appl_socket
                 void * const
                     p_placement);
 
-        virtual
         enum appl_status
         init(
-            void const * const
-                p_descriptor);
+            struct appl_property const * const
+                p_socket_descriptor);
 
         virtual
         enum appl_status

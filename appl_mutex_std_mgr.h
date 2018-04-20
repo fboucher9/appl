@@ -62,6 +62,9 @@ class appl_mutex_std_mgr : public appl_mutex_mgr
                 void * const
                     p_placement);
 
+        enum appl_status
+            init(void);
+
         virtual
         enum appl_status
             v_create(

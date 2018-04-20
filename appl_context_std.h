@@ -18,6 +18,8 @@ struct appl_context_descriptor;
 
 struct appl_context;
 
+struct appl_context_init_descriptor;
+
 class appl_context_std;
 
 //
@@ -42,11 +44,10 @@ class appl_context_std : public appl_context
         virtual
         ~appl_context_std();
 
-        virtual
         enum appl_status
             init(
-                void const * const
-                    p_descriptor);
+                struct appl_context_init_descriptor const * const
+                    p_context_descriptor);
 
         virtual
         enum appl_status

@@ -78,11 +78,10 @@ class appl_options_std : public appl_options
             new (p_placement) class appl_options_std;
         }
 
-        virtual
         enum appl_status
             init(
-                void const * const
-                    p_descriptor);
+                struct appl_options_std_descriptor const * const
+                    p_options_std_descriptor);
 
         virtual
         enum appl_status

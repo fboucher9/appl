@@ -68,8 +68,8 @@ enum appl_status
             p_context,
             sizeof(
                 class appl_address_std_node),
-            &(
-                appl_address_std_node::s_new),
+            &appl_address_std_node::s_new,
+            &appl_address_std_node::init,
             p_property,
             r_address);
 
@@ -109,16 +109,11 @@ void
 //
 enum appl_status
     appl_address_std_node::init(
-        void const * const
-            p_descriptor)
+        struct appl_address_property const * const
+            p_property)
 {
     enum appl_status
         e_status;
-
-    struct appl_address_property const * const
-        p_property =
-        static_cast<struct appl_address_property const *>(
-            p_descriptor);
 
     struct appl_address_descriptor
         o_address_descriptor;

@@ -77,11 +77,8 @@ class appl_event_std_node : public appl_event
                 void * const
                     p_placement);
 
-        virtual
         enum appl_status
-            init(
-                void const * const
-                    p_descriptor);
+            init(void);
 
         virtual
         enum appl_status

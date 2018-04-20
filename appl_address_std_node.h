@@ -76,11 +76,10 @@ class appl_address_std_node : public appl_address
                 void * const
                     p_placement);
 
-        virtual
         enum appl_status
             init(
-                void const * const
-                    p_descriptor);
+                struct appl_address_property const * const
+                    p_property);
 
         virtual
         enum appl_status

@@ -134,11 +134,10 @@ struct appl_property : public appl_object
                 void * const
                     p_placement);
 
-        virtual
         enum appl_status
             init(
-                void const * const
-                    p_descriptor);
+                struct appl_property_descriptor const * const
+                    p_property_descriptor);
 
         virtual
         enum appl_status

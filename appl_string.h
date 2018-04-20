@@ -100,11 +100,10 @@ struct appl_string : public appl_object
                 void * const
                     p_placement);
 
-        virtual
         enum appl_status
             init(
-                void const * const
-                    p_descriptor);
+                struct appl_string_descriptor const * const
+                    p_string_descriptor);
 
         virtual
         enum appl_status

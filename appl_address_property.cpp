@@ -20,6 +20,8 @@
 
 #include <appl_property.h>
 
+#include <appl_buf.h>
+
 #define APPL_ADDRESS_PROPERTY_GUID (0xe0bfd095ul)
 
 enum appl_address_property_id
@@ -242,29 +244,29 @@ appl_address_property_get_name(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    void *
-        p_name_min;
+    union appl_ptr
+        o_name_min;
 
     e_status =
         appl_property_get_ptr(
             p_property,
             appl_address_property_id_name_min,
             &(
-                p_name_min));
+                o_name_min.p_void));
 
     if (
         appl_status_ok
         == e_status)
     {
-        void *
-            p_name_max;
+        union appl_ptr
+            o_name_max;
 
         e_status =
             appl_property_get_ptr(
                 p_property,
                 appl_address_property_id_name_max,
                 &(
-                    p_name_max));
+                    o_name_max.p_void));
 
         if (
             appl_status_ok
@@ -272,13 +274,11 @@ appl_address_property_get_name(
         {
             *(
                 r_name_min) =
-                static_cast<unsigned char const *>(
-                    p_name_min);
+                o_name_min.pc_uchar;
 
             *(
                 r_name_max) =
-                static_cast<unsigned char const *>(
-                    p_name_max);
+                o_name_max.pc_uchar;
         }
     }
 

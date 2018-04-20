@@ -52,14 +52,18 @@ enum appl_status
     enum appl_status
         e_status;
 
+    appl_unused(
+        p_event_descriptor);
+
     e_status =
         appl_object::s_create(
             p_context,
             sizeof(
                 class appl_event_std_node),
-            &(
+            (&
                 appl_event_std_node::s_new),
-            p_event_descriptor,
+            (&
+                appl_event_std_node::init),
             r_event_node);
 
     return
@@ -101,18 +105,13 @@ void
 //
 //
 enum appl_status
-    appl_event_std_node::init(
-        void const * const
-            p_descriptor)
+    appl_event_std_node::init(void)
 {
     enum appl_status
         e_status;
 
     int
         i_pthread_result;
-
-    appl_unused(
-        p_descriptor);
 
     i_pthread_result =
         pthread_cond_init(

@@ -60,6 +60,9 @@ class appl_socket_std_mgr : public appl_socket_mgr
                 void * const
                     p_placement);
 
+        enum appl_status
+            init(void);
+
         virtual
         enum appl_status
             v_create_address(

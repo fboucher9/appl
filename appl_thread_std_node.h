@@ -117,11 +117,10 @@ class appl_thread_std_node : public appl_thread
                 void *
                     p_thread_context);
 
-        virtual
         enum appl_status
             init(
-                void const * const
-                    p_descriptor);
+                struct appl_thread_property const * const
+                    p_thread_property);
 
         virtual
         enum appl_status

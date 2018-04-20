@@ -16,6 +16,7 @@
 
 #include <appl_unused.h>
 
+#if 0
 //
 //
 //
@@ -74,7 +75,9 @@ enum appl_status
         e_status;
 
 } // create_instance()
+#endif
 
+#if 0
 //
 //
 //
@@ -125,6 +128,7 @@ enum appl_status
         e_status;
 
 } // init_instance()
+#endif
 
 //
 //
@@ -240,22 +244,6 @@ appl_object::operator delete (
 //
 //
 enum appl_status
-    appl_object::init(
-        void const * const
-            p_descriptor)
-{
-    appl_unused(
-        p_descriptor);
-
-    return
-        appl_status_ok;
-
-} // init()
-
-//
-//
-//
-enum appl_status
     appl_object::cleanup(void)
 {
     return
@@ -273,5 +261,39 @@ struct appl_context *
         m_context;
 
 } // get_context()
+
+//
+//
+//
+enum appl_status
+    appl_object::alloc_placement(
+        struct appl_context * const
+            p_context,
+        appl_size_t const
+            i_placement_length,
+        void * * const
+            r_placement)
+{
+    return
+        p_context->m_heap->v_alloc(
+            i_placement_length,
+            r_placement);
+
+} // alloc_placement()
+
+//
+//
+//
+void
+    appl_object::free_placement(
+        struct appl_context * const
+            p_context,
+        void * const
+            p_placement)
+{
+    p_context->m_heap->v_free(
+        p_placement);
+
+} // free_placement()
 
 /* end-of-file: appl_object.cpp */

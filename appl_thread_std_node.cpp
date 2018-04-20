@@ -68,8 +68,10 @@ enum appl_status
             p_context,
             sizeof(
                 class appl_thread_std_node),
-            &(
+            (&
                 appl_thread_std_node::placement_new),
+            (&
+                appl_thread_std_node::init),
             p_thread_property,
             r_thread);
 
@@ -652,18 +654,11 @@ void
 //
 enum appl_status
     appl_thread_std_node::init(
-        void const * const
-            p_descriptor)
+        struct appl_thread_property const * const
+            p_thread_property)
 {
     enum appl_status
         e_status;
-
-    struct appl_thread_property const *
-        p_thread_property;
-
-    p_thread_property =
-        static_cast<struct appl_thread_property const *>(
-            p_descriptor);
 
     appl_thread_property_get_callback(
         p_thread_property,

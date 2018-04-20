@@ -52,8 +52,8 @@ enum appl_status
             p_context,
             sizeof(
                 class appl_file_std_node),
-            &(
-                appl_file_std_node::placement_new),
+            ( &appl_file_std_node::placement_new ),
+            ( &appl_file_std_node::init ),
             p_file_descriptor,
             r_file);
 
@@ -97,16 +97,11 @@ void
 //
 enum appl_status
     appl_file_std_node::init(
-        void const * const
-            p_descriptor)
+        struct appl_file_descriptor const * const
+            p_file_descriptor)
 {
     enum appl_status
         e_status;
-
-    struct appl_file_descriptor const * const
-        p_file_descriptor =
-        static_cast<struct appl_file_descriptor const *>(
-            p_descriptor);
 
     if (
         appl_file_type_stdin == p_file_descriptor->e_type)

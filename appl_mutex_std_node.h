@@ -83,11 +83,8 @@ class appl_mutex_std_node : public appl_mutex
                 void * const
                     p_placement);
 
-        virtual
         enum appl_status
-            init(
-                void const * const
-                    p_descriptor);
+            init(void);
 
         virtual
         enum appl_status

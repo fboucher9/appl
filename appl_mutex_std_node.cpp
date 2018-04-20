@@ -38,14 +38,18 @@ enum appl_status
     enum appl_status
         e_status;
 
+    appl_unused(
+        p_mutex_descriptor);
+
     e_status =
         appl_object::s_create(
             p_context,
             sizeof(
                 class appl_mutex_std_node),
-            &(
+            (&
                 appl_mutex_std_node::placement_new),
-            p_mutex_descriptor,
+            (&
+                appl_mutex_std_node::init),
             r_mutex);
 
     return
@@ -87,18 +91,13 @@ void
 //
 //
 enum appl_status
-    appl_mutex_std_node::init(
-        void const * const
-            p_descriptor)
+    appl_mutex_std_node::init(void)
 {
     enum appl_status
         e_status;
 
     int
         i_pthread_result;
-
-    appl_unused(
-        p_descriptor);
 
     i_pthread_result =
         pthread_mutex_init(

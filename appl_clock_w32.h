@@ -69,9 +69,7 @@ class appl_clock_w32 : public appl_clock
 
         virtual
         enum appl_status
-            init(
-                void const * const
-                    p_descriptor);
+            init(void);
 
         virtual
         enum appl_status

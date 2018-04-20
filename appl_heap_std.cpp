@@ -53,8 +53,10 @@ enum appl_status
                 static_cast<struct appl_context *>(
                     0),
                 p_placement,
-                &(
+                (&
                     appl_heap_std::placement_new),
+                (&
+                    appl_heap_std::init),
                 &(
                     p_heap));
 
@@ -110,6 +112,17 @@ void
         class appl_heap_std;
 
 } // placement_new()
+
+//
+//
+//
+enum appl_status
+    appl_heap_std::init(void)
+{
+    return
+        appl_status_ok;
+
+} // init()
 
 //
 //

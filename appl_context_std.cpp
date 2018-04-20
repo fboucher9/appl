@@ -805,8 +805,10 @@ enum appl_status
                         static_cast<struct appl_context *>(
                             0),
                         p_placement,
-                        &(
+                        (&
                             appl_context_std::placement_new),
+                        (&
+                            appl_context_std::init),
                         &(
                             o_init_descriptor),
                         r_context);
@@ -874,19 +876,14 @@ void
 //
 enum appl_status
     appl_context_std::init(
-        void const * const
-            p_descriptor)
+        struct appl_context_init_descriptor const * const
+            p_context_init_descriptor)
 {
     enum appl_status
         e_status;
 
     m_context =
         this;
-
-    struct appl_context_init_descriptor const * const
-        p_context_init_descriptor =
-        static_cast<struct appl_context_init_descriptor const *>(
-            p_descriptor);
 
     e_status =
         init_heap(

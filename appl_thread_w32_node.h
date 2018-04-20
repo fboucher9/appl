@@ -96,11 +96,10 @@ class appl_thread_w32_node : public appl_thread
                 void * const
                     p_placement);
 
-        virtual
         enum appl_status
             init(
-                void const * const
-                    p_descriptor);
+                struct appl_thread_property const * const
+                    p_thread_property);
 
         virtual
         enum appl_status

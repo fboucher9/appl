@@ -78,11 +78,10 @@ class appl_file_std_node : public appl_file
                 void * const
                     p_placement);
 
-        virtual
         enum appl_status
             init(
-                void const * const
-                    p_descriptor);
+                struct appl_file_descriptor const * const
+                    p_file_descriptor);
 
         virtual
         enum appl_status

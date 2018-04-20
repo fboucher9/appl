@@ -38,8 +38,10 @@ enum appl_status
             p_context,
             sizeof(
                 class appl_clock_w32),
-            &(
+            (&
                 appl_clock_w32::placement_new),
+            (&
+                appl_clock_w32::init),
             r_clock);
 
     return
@@ -79,9 +81,7 @@ void
 //
 //
 enum appl_status
-    appl_clock_w32::init(
-        void const * const
-            p_descriptor)
+    appl_clock_w32::init(void)
 {
     enum appl_status
         e_status;
@@ -91,9 +91,6 @@ enum appl_status
 
     UINT
         uPeriod;
-
-    appl_unused(
-        p_descriptor);
 
     uPeriod =
         1u;

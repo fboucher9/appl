@@ -56,8 +56,10 @@ enum appl_status
                 sizeof(
                     struct appl_property_node)
                 * i_count),
-            &(
+            (&
                 appl_property::s_new),
+            (&
+                appl_property::init),
             &(
                 o_property_descriptor),
             r_property);
@@ -296,16 +298,11 @@ void
 //
 enum appl_status
     appl_property::init(
-        void const * const
-            p_descriptor)
+        struct appl_property_descriptor const * const
+            p_property_descriptor)
 {
     enum appl_status
         e_status;
-
-    struct appl_property_descriptor const * const
-        p_property_descriptor =
-        static_cast<struct appl_property_descriptor const *>(
-            p_descriptor);
 
     m_count =
         p_property_descriptor->i_count;

@@ -37,8 +37,10 @@ appl_options_std::s_create(
             p_context,
             sizeof(
                 class appl_options_std),
-            &(
+            (&
                 appl_options_std::placement_new),
+            (&
+                appl_options_std::init),
             p_options_std_descriptor,
             r_options_std);
 
@@ -66,16 +68,11 @@ appl_options_std::~appl_options_std()
 //
 enum appl_status
 appl_options_std::init(
-    void const * const
-        p_descriptor)
+    struct appl_options_std_descriptor const * const
+        p_options_std_descriptor)
 {
     enum appl_status
         e_status;
-
-    struct appl_options_std_descriptor const * const
-        p_options_std_descriptor =
-        static_cast<struct appl_options_std_descriptor const *>(
-            p_descriptor);
 
     unsigned long int const
         i_count =

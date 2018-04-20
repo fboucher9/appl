@@ -37,8 +37,10 @@ enum appl_status
             p_context,
             sizeof(
                 class appl_debug_std),
-            &(
+            (&
                 appl_debug_std::placement_new),
+            (&
+                appl_debug_std::init),
             r_debug);
 
 } // create_instance()
@@ -70,6 +72,14 @@ void
         class appl_debug_std;
 
 } // placement_new()
+
+enum appl_status
+appl_debug_std::init(void)
+{
+    return
+        appl_status_ok;
+
+} // init()
 
 //
 //

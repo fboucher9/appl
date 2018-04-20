@@ -67,6 +67,9 @@ class appl_clock_std : public appl_clock
                 void * const
                     p_placement);
 
+        enum appl_status
+            init(void);
+
         virtual
         enum appl_status
         v_read(

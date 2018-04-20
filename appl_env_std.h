@@ -87,6 +87,9 @@ class appl_env_std : public appl_env
             void * const
                 p_placement);
 
+        enum appl_status
+            init(void);
+
 }; // class appl_env_std
 
 /* end-of-file: appl_env_std.h */

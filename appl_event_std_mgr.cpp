@@ -43,8 +43,10 @@ enum appl_status
             p_context,
             sizeof(
                 class appl_event_std_mgr),
-            &(
+            (&
                 appl_event_std_mgr::s_new),
+            (&
+                appl_event_std_mgr::init),
             r_event_mgr);
 
     return
@@ -79,6 +81,17 @@ void
         class appl_event_std_mgr;
 
 } // s_new()
+
+//
+//
+//
+enum appl_status
+    appl_event_std_mgr::init(void)
+{
+    return
+        appl_status_ok;
+
+} // init()
 
 //
 //

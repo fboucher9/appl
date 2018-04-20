@@ -77,8 +77,10 @@ enum appl_status
             sizeof(
                 struct appl_string)
             + i_alloc_len,
-            &(
+            (&
                 appl_string::s_new),
+            (&
+                appl_string::init),
             &(
                 o_string_descriptor),
             r_string);
@@ -211,14 +213,9 @@ void
 //
 enum appl_status
     appl_string::init(
-        void const * const
-            p_descriptor)
+        struct appl_string_descriptor const * const
+            p_string_descriptor)
 {
-    struct appl_string_descriptor const * const
-        p_string_descriptor =
-        static_cast<struct appl_string_descriptor const *>(
-            p_descriptor);
-
     if (
         p_string_descriptor->i_alloc_len)
     {

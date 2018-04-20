@@ -55,8 +55,10 @@ enum appl_status
             p_context,
             sizeof(
                 class appl_socket_std_node),
-            &(
+            (&
                 appl_socket_std_node::s_new),
+            (&
+                appl_socket_std_node::init),
             p_socket_descriptor,
             r_socket);
 
@@ -99,16 +101,11 @@ void
 //
 enum appl_status
 appl_socket_std_node::init(
-    void const * const
-        p_descriptor)
+    struct appl_property const * const
+        p_socket_descriptor)
 {
     enum appl_status
         e_status;
-
-    struct appl_property const * const
-        p_socket_descriptor =
-        static_cast<struct appl_property const *>(
-            p_descriptor);
 
     appl_unused(
         p_socket_descriptor);
@@ -129,10 +126,11 @@ appl_socket_std_node::init(
         appl_socket_protocol_tcp_stream == e_protocol)
     {
         fd =
-            socket(
-                AF_INET,
-                SOCK_STREAM,
-                0);
+            static_cast<int>(
+                socket(
+                    AF_INET,
+                    SOCK_STREAM,
+                    0));
     }
     else
     {

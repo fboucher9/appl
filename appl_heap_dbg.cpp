@@ -71,9 +71,12 @@ enum appl_status
                 static_cast<struct appl_context *>(
                     0),
                 p_placement,
-                &(
+                (&
                     appl_heap_dbg::placement_new),
-                p_parent,
+                (&
+                    appl_heap_dbg::init),
+                static_cast<void const *>(
+                    p_parent),
                 &(
                     p_heap));
 

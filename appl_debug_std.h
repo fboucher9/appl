@@ -62,6 +62,9 @@ class appl_debug_std : public appl_debug
                 void * const
                     p_placement);
 
+        enum appl_status
+            init(void);
+
         appl_debug_std(
             class appl_debug_std const & r);
 

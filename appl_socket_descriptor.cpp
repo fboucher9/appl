@@ -206,12 +206,24 @@ appl_socket_property_set_bind_address(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
+    union appl_address_ptr
+    {
+        void *
+            p_value;
+
+        struct appl_address *
+            p_address;
+
+    } o_bind_address;
+
+    o_bind_address.p_address =
+        p_bind_address;
+
     e_status =
         appl_property_set_ptr(
             p_property,
             appl_socket_option_id_bind_address,
-            static_cast<void *>(
-                p_bind_address));
+            o_bind_address.p_value);
 
     return
         e_status;
@@ -233,12 +245,24 @@ appl_socket_property_set_connect_address(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
+    union appl_address_ptr
+    {
+        void *
+            p_value;
+
+        struct appl_address *
+            p_address;
+
+    } o_connect_address;
+
+    o_connect_address.p_address =
+        p_connect_address;
+
     e_status =
         appl_property_set_ptr(
             p_property,
             appl_socket_option_id_connect_address,
-            static_cast<void *>(
-                p_connect_address));
+            o_connect_address.p_value);
 
     return
         e_status;
@@ -286,12 +310,24 @@ appl_socket_property_set_accept_address(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
+    union appl_address_ptr
+    {
+        void *
+            p_value;
+
+        struct appl_address *
+            p_address;
+
+    } o_accept_address;
+
+    o_accept_address.p_address =
+        p_accept_address;
+
     e_status =
         appl_property_set_ptr(
             p_property,
             appl_socket_option_id_accept_address,
-            static_cast<void *>(
-                p_accept_address));
+            o_accept_address.p_value);
 
     return
         e_status;
@@ -313,12 +349,24 @@ appl_socket_property_set_accept_socket(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
+    union appl_socket_ptr
+    {
+        void *
+            p_value;
+
+        struct appl_socket *
+            p_socket;
+
+    } o_accept_socket;
+
+    o_accept_socket.p_socket =
+        p_accept_socket;
+
     e_status =
         appl_property_set_ptr(
             p_property,
             appl_socket_option_id_accept_socket,
-            static_cast<void *>(
-                p_accept_socket));
+            o_accept_socket.p_value);
 
     return
         e_status;
@@ -496,12 +544,24 @@ appl_socket_property_set_join_address(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
+    union appl_socket_ptr
+    {
+        void *
+            p_value;
+
+        struct appl_address *
+            p_address;
+
+    } o_join_address;
+
+    o_join_address.p_address =
+        p_join_address;
+
     e_status =
         appl_property_set_ptr(
             p_property,
             appl_socket_option_id_join_address,
-            static_cast<void *>(
-                p_join_address));
+            o_join_address.p_value);
 
     return
         e_status;
@@ -523,12 +583,24 @@ appl_socket_property_set_join_interface(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
+    union appl_address_ptr
+    {
+        void *
+            p_value;
+
+        struct appl_address *
+            p_address;
+
+    } o_interface_address;
+
+    o_interface_address.p_address =
+        p_interface_address;
+
     e_status =
         appl_property_set_ptr(
             p_property,
             appl_socket_option_id_join_interface,
-            static_cast<void *>(
-                p_interface_address));
+            o_interface_address.p_value);
 
     return
         e_status;
