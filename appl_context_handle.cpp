@@ -12,8 +12,6 @@
 
 #include <appl_types.h>
 
-#include <appl_buf.h>
-
 #include <appl_object.h>
 
 #include <appl_context.h>

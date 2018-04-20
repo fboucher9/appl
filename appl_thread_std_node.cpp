@@ -133,6 +133,7 @@ appl_thread_std_node::oops(
                     s_msg + sizeof s_msg,
                     static_cast<signed long int>(
                         i_status_code),
+                    0,
                     0),
                 s_msg + sizeof s_msg,
                 ')'),

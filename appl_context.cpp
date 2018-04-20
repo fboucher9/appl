@@ -6,8 +6,6 @@
 
 #include <appl_status.h>
 
-#include <appl_buf.h>
-
 #include <appl_types.h>
 
 #include <appl_object.h>

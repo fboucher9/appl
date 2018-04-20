@@ -292,8 +292,10 @@ void
 appl_test_print_number(
     signed long int const
         i_value,
-    unsigned long int const
-        i_flags)
+    int const
+        i_flags,
+    unsigned int const
+        i_width)
 {
     static unsigned char s_msg[128u];
 
@@ -305,7 +307,8 @@ appl_test_print_number(
             s_msg,
             s_msg + sizeof s_msg,
             i_value,
-            i_flags);
+            i_flags,
+            i_width);
 
     appl_printf("msg = [%.*s]\n",
         (int)(p_msg_end - s_msg),
@@ -1084,55 +1087,68 @@ appl_main(
         {
             appl_test_print_number(
                 123456789l,
+                0,
                 0);
 
             appl_test_print_number(
                 123456789l,
-                APPL_BUF_PRINT_SIGN_SPACE | 0);
+                appl_buf_print_flag_space,
+                0);
 
             appl_test_print_number(
                 123456789l,
-                APPL_BUF_PRINT_SIGN_PLUS | 0);
+                appl_buf_print_flag_plus,
+                0);
 
             appl_test_print_number(
                 123456789l,
+                0,
                 20);
 
             appl_test_print_number(
                 123456789l,
-                APPL_BUF_PRINT_SIGN_SPACE | 20);
+                appl_buf_print_flag_space,
+                20);
 
             appl_test_print_number(
                 123456789l,
-                APPL_BUF_PRINT_SIGN_PLUS | 20);
+                appl_buf_print_flag_plus,
+                20);
 
             appl_test_print_number(
                 123456789l,
-                APPL_BUF_PRINT_PAD_ZERO | 20);
+                appl_buf_print_flag_zero,
+                20);
 
             appl_test_print_number(
                 123456789l,
-                APPL_BUF_PRINT_SIGN_SPACE | APPL_BUF_PRINT_PAD_ZERO | 20);
+                appl_buf_print_flag_space | appl_buf_print_flag_zero,
+                20);
 
             appl_test_print_number(
                 123456789l,
-                APPL_BUF_PRINT_SIGN_PLUS | APPL_BUF_PRINT_PAD_ZERO | 20);
+                appl_buf_print_flag_plus | appl_buf_print_flag_zero,
+                20);
 
             appl_test_print_number(
                 123456789l,
-                APPL_BUF_PRINT_ALIGN_LEFT | 20);
+                appl_buf_print_flag_left,
+                20);
 
             appl_test_print_number(
                 -123456789l,
+                0,
                 0);
 
             appl_test_print_number(
                 -123456789l,
+                0,
                 20);
 
             appl_test_print_number(
                 -123456789l,
-                APPL_BUF_PRINT_UNSIGNED | APPL_BUF_PRINT_HEXADECIMAL | 20);
+                appl_buf_print_flag_unsigned | appl_buf_print_flag_hex,
+                20);
 
         }
     }

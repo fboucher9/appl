@@ -197,44 +197,33 @@ appl_buf_case_compare(
 
 /* buf case compare */
 
-/* fill width using spaces */
-#define APPL_BUF_PRINT_PAD_SPACE 0x00000000ul
+enum appl_buf_print_flag
+{
+    /* fill width using zeros, else use space */
+    appl_buf_print_flag_zero = 1,
 
-/* fill width using zeros, else use space */
-#define APPL_BUF_PRINT_PAD_ZERO 0x00010000ul
+    /* display plus sign for positive */
+    appl_buf_print_flag_plus = 2,
 
-/* display plus sign for positive */
-#define APPL_BUF_PRINT_SIGN_PLUS 0x00020000ul
+    /* treat number as unsigned, always positive */
+    appl_buf_print_flag_unsigned = 4,
 
-/* treat number as signed */
-#define APPL_BUF_PRINT_SIGNED 0x00000000ul
+    /* align to left, fill with spaces */
+    appl_buf_print_flag_left = 8,
 
-/* treat number as unsigned, always positive */
-#define APPL_BUF_PRINT_UNSIGNED 0x00040000ul
+    /* display space for positive */
+    appl_buf_print_flag_space = 16,
 
-/* align to right (default) */
-#define APPL_BUF_PRINT_ALIGN_RIGHT 0x00000000ul
+    /* base binary */
+    appl_buf_print_flag_binary = 32,
 
-/* align to left, fill with spaces */
-#define APPL_BUF_PRINT_ALIGN_LEFT 0x00080000ul
+    /* base octal */
+    appl_buf_print_flag_octal = 64,
 
-/* display space for positive */
-#define APPL_BUF_PRINT_SIGN_SPACE 0x00100000ul
+    /* base hexadecimal */
+    appl_buf_print_flag_hex = 128
 
-/* base decimal (default) */
-#define APPL_BUF_PRINT_DECIMAL 0x00000000ul
-
-/* base binary */
-#define APPL_BUF_PRINT_BINARY 0x00200000ul
-
-/* base octal */
-#define APPL_BUF_PRINT_OCTAL 0x00400000ul
-
-/* base hexadecimal */
-#define APPL_BUF_PRINT_HEXADECIMAL 0x00800000ul
-
-/* width of number field in low-order bits of flags */
-#define APPL_BUF_PRINT_WIDTH_MASK 0x0000FFFFul
+}; /* enum appl_buf_print_flag */
 
 /* buf print number using flags */
 unsigned char *
@@ -245,8 +234,10 @@ appl_buf_print_number(
         p_buf_max,
     signed long int const
         i_value,
-    unsigned long int const
-        i_flags);
+    int const
+        i_flags,
+    unsigned int const
+        i_width);
 
 #if defined(__cplusplus)
 } /* extern "C" */

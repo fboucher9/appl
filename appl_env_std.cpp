@@ -30,8 +30,6 @@
 
 #include <appl_string_handle.h>
 
-#include <appl_buf.h>
-
 #include <appl_convert.h>
 
 //

@@ -551,8 +551,10 @@ appl_buf_print_number(
         p_buf_max,
     signed long int const
         i_value,
-    unsigned long int const
-        i_flags)
+    int const
+        i_flags,
+    unsigned int const
+        i_width_const)
 {
     unsigned char *
         p_cur;
@@ -564,13 +566,13 @@ appl_buf_print_number(
         i_count;
 
     unsigned int
+        i_width;
+
+    unsigned int
         i_base;
 
     unsigned long int
         u_value;
-
-    unsigned int
-        i_width;
 
     char
         b_negative;
@@ -584,15 +586,15 @@ appl_buf_print_number(
     p_cur =
         p_buf_min;
 
-    if (APPL_BUF_PRINT_BINARY & i_flags)
+    if (appl_buf_print_flag_binary & i_flags)
     {
         i_base = 2u;
     }
-    else if (APPL_BUF_PRINT_OCTAL & i_flags)
+    else if (appl_buf_print_flag_octal & i_flags)
     {
         i_base = 8u;
     }
-    else if (APPL_BUF_PRINT_HEXADECIMAL & i_flags)
+    else if (appl_buf_print_flag_hex & i_flags)
     {
         i_base = 16u;
     }
@@ -601,7 +603,7 @@ appl_buf_print_number(
         i_base = 10u;
     }
 
-    if (APPL_BUF_PRINT_UNSIGNED & i_flags)
+    if (appl_buf_print_flag_unsigned & i_flags)
     {
         u_value =
             static_cast<unsigned long int>(
@@ -633,11 +635,7 @@ appl_buf_print_number(
         }
     }
 
-    i_width =
-        static_cast<unsigned int>(
-            APPL_BUF_PRINT_WIDTH_MASK & i_flags);
-
-    if (APPL_BUF_PRINT_SIGN_SPACE & i_flags)
+    if (appl_buf_print_flag_space & i_flags)
     {
         if (
             b_negative)
@@ -654,7 +652,7 @@ appl_buf_print_number(
         b_sign =
             1;
     }
-    else if (APPL_BUF_PRINT_SIGN_PLUS & i_flags)
+    else if (appl_buf_print_flag_plus & i_flags)
     {
         if (
             b_negative)
@@ -698,6 +696,9 @@ appl_buf_print_number(
             u_value,
             i_base);
 
+    i_width =
+        i_width_const;
+
     if (i_width > (i_count + static_cast<unsigned int>(b_sign)))
     {
         i_width = (i_width - i_count - static_cast<unsigned int>(b_sign));
@@ -707,9 +708,9 @@ appl_buf_print_number(
     {
         if (
             (
-                !(APPL_BUF_PRINT_PAD_ZERO & i_flags))
+                !(appl_buf_print_flag_zero & i_flags))
             && (
-                !(APPL_BUF_PRINT_ALIGN_LEFT & i_flags)))
+                !(appl_buf_print_flag_left & i_flags)))
         {
             while (
                 i_width)
@@ -739,7 +740,7 @@ appl_buf_print_number(
 
     /* zero padding */
     {
-        if (APPL_BUF_PRINT_PAD_ZERO & i_flags)
+        if (appl_buf_print_flag_zero & i_flags)
         {
             while (
                 i_width)
@@ -771,9 +772,9 @@ appl_buf_print_number(
     /* space padding for left align */
     {
         if (
-            (APPL_BUF_PRINT_ALIGN_LEFT & i_flags)
+            (appl_buf_print_flag_left & i_flags)
             && (
-                !(APPL_BUF_PRINT_PAD_ZERO & i_flags)))
+                !(appl_buf_print_flag_zero & i_flags)))
         {
             while (
                 i_width)
