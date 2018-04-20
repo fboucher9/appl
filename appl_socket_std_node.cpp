@@ -161,7 +161,7 @@ appl_socket_std_node::init(
 //
 //
 enum appl_status
-appl_socket_std_node::cleanup(void)
+appl_socket_std_node::v_cleanup(void)
 {
     enum appl_status
         e_status;
@@ -172,7 +172,7 @@ appl_socket_std_node::cleanup(void)
     return
         e_status;
 
-} // cleanup()
+} // v_cleanup()
 
 //
 //

@@ -1040,10 +1040,14 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_context_std::cleanup(void)
+    appl_context_std::v_cleanup(void)
 {
     enum appl_status
         e_status;
+
+    class appl_heap * const
+        p_heap =
+        m_heap;
 
     // destroy objects
 
@@ -1069,35 +1073,9 @@ enum appl_status
 
     cleanup_heap();
 
-    e_status =
-        appl_status_ok;
-
-    return
-        e_status;
-
-} // cleanup()
-
-//
-//
-//
-enum appl_status
-appl_context_std::destroy(void)
-{
-    enum appl_status
-        e_status;
-
-    class appl_heap *
-        p_heap;
-
-    p_heap =
-        m_heap;
-
-    cleanup();
-
-    void *
-        p_placement;
-
-    p_placement =
+    // manual delete
+    void * const
+        p_placement =
         static_cast<void *>(
             this);
 
@@ -1110,11 +1088,11 @@ appl_context_std::destroy(void)
     p_heap->destroy();
 
     e_status =
-        appl_status_ok;
+        appl_status_fail;
 
     return
         e_status;
 
-} // destroy()
+} // v_cleanup()
 
 /* end-of-file: appl_context_std.cpp */

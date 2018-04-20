@@ -72,7 +72,7 @@ class appl_clock_w32 : public appl_clock
 
         virtual
         enum appl_status
-            cleanup(void);
+            v_cleanup(void);
 
         virtual
         enum appl_status

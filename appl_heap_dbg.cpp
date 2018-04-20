@@ -39,6 +39,16 @@
 //
 //
 //
+struct appl_heap_dbg_descriptor
+{
+    class appl_heap *
+        p_parent;
+
+}; // struct appl_heap_dbg_descriptor
+
+//
+//
+//
 enum appl_status
     appl_heap_dbg::create_instance(
         class appl_heap * const
@@ -66,6 +76,12 @@ enum appl_status
         class appl_heap *
             p_heap;
 
+        struct appl_heap_dbg_descriptor
+            o_descriptor;
+
+        o_descriptor.p_parent =
+            p_parent;
+
         e_status =
             appl_object::s_init(
                 static_cast<struct appl_context *>(
@@ -75,8 +91,8 @@ enum appl_status
                     appl_heap_dbg::placement_new),
                 (&
                     appl_heap_dbg::init),
-                static_cast<void const *>(
-                    p_parent),
+                &(
+                    o_descriptor),
                 &(
                     p_heap));
 
@@ -170,7 +186,7 @@ struct appl_heap_dbg_footer
 //
 enum appl_status
     appl_heap_dbg::init(
-        void const * const
+        struct appl_heap_dbg_descriptor const * const
             p_descriptor)
 {
     enum appl_status
@@ -178,9 +194,7 @@ enum appl_status
 
     class appl_heap * const
         p_parent =
-        static_cast<class appl_heap *>(
-            const_cast<void *>(
-                p_descriptor));
+        p_descriptor->p_parent;
 
     m_parent =
         p_parent;
@@ -206,7 +220,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_heap_dbg::cleanup(void)
+    appl_heap_dbg::v_cleanup(void)
 {
     enum appl_status
         e_status;
@@ -261,55 +275,31 @@ enum appl_status
         printf("*** no memory leaks ***\n");
     }
 
-    m_parent =
-        0;
-
-    e_status =
-        appl_status_ok;
-
-    return
-        e_status;
-
-} // cleanup()
-
-//
-//
-//
-enum appl_status
-    appl_heap_dbg::destroy(void)
-{
-    enum appl_status
-        e_status;
-
     class appl_heap * const
         p_parent =
         m_parent;
 
+    m_parent =
+        0;
+
     e_status =
-        cleanup();
+        appl_status_fail;
 
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        void *
-            p_buf;
+    void * const
+        p_placement =
+        static_cast<void *>(
+            this);
 
-        p_buf =
-            static_cast<void *>(
-                this);
+    delete
+        this;
 
-        delete
-            this;
-
-        p_parent->v_free(
-            p_buf);
-    }
+    p_parent->v_free(
+        p_placement);
 
     return
         e_status;
 
-} // destroy()
+} // v_cleanup()
 
 //
 //

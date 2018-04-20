@@ -51,11 +51,7 @@ class appl_context_std : public appl_context
 
         virtual
         enum appl_status
-            cleanup(void);
-
-        virtual
-        enum appl_status
-            destroy(void);
+            v_cleanup(void);
 
     private:
 

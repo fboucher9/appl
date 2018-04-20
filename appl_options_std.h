@@ -85,7 +85,7 @@ class appl_options_std : public appl_options
 
         virtual
         enum appl_status
-            cleanup(void);
+            v_cleanup(void);
 
         virtual
         enum appl_status

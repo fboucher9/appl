@@ -121,7 +121,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_clock_w32::cleanup(void)
+    appl_clock_w32::v_cleanup(void)
 {
     enum appl_status
         e_status;
@@ -155,7 +155,7 @@ enum appl_status
     return
         e_status;
 
-} // cleanup()
+} // v_cleanup()
 
 //
 //

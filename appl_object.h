@@ -314,7 +314,6 @@ struct appl_object
 
         } // s_init()
 
-        virtual
         enum appl_status
             destroy(void);
 
@@ -332,15 +331,11 @@ struct appl_object
         ~appl_object();
 
         enum appl_status
-            init_dummy(void)
-        {
-            return
-                appl_status_ok;
-        }
+            init_dummy(void);
 
         virtual
         enum appl_status
-            cleanup(void);
+            v_cleanup(void);
 
         static
         void *

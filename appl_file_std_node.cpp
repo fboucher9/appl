@@ -250,7 +250,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_file_std_node::cleanup(void)
+    appl_file_std_node::v_cleanup(void)
 {
     enum appl_status
         e_status;
@@ -274,7 +274,7 @@ enum appl_status
     return
         e_status;
 
-} // cleanup()
+} // v_cleanup()
 
 //
 //

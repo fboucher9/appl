@@ -81,7 +81,7 @@ class appl_socket_std_node : public appl_socket
 
         virtual
         enum appl_status
-        cleanup(void);
+        v_cleanup(void);
 
         virtual
         enum appl_status

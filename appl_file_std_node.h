@@ -85,7 +85,7 @@ class appl_file_std_node : public appl_file
 
         virtual
         enum appl_status
-            cleanup(void);
+            v_cleanup(void);
 
         virtual
         enum appl_status

@@ -103,7 +103,7 @@ class appl_thread_w32_node : public appl_thread
 
         virtual
         enum appl_status
-            cleanup(void);
+            v_cleanup(void);
 
 }; // class appl_thread_w32_node
 

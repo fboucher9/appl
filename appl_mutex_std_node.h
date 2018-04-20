@@ -88,7 +88,7 @@ class appl_mutex_std_node : public appl_mutex
 
         virtual
         enum appl_status
-            cleanup(void);
+            v_cleanup(void);
 
         virtual
         enum appl_status

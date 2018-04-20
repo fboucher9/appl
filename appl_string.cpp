@@ -251,11 +251,11 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_string::cleanup(void)
+    appl_string::v_cleanup(void)
 {
     return
         appl_status_ok;
 
-} // cleanup()
+} // v_cleanup()
 
 /* end-of-file: appl_string.cpp */

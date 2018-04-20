@@ -117,34 +117,23 @@ void
 //
 //
 enum appl_status
-    appl_heap_std::destroy(void)
+appl_heap_std::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
+    void * const
+        p_placement =
+        static_cast<void *>(
+            this);
 
-    e_status =
-        cleanup();
+    delete
+        this;
 
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        void * const
-            p_placement =
-            static_cast<void *>(
-                this);
-
-        delete
-            this;
-
-        free(
-            p_placement);
-    }
+    free(
+        p_placement);
 
     return
-        e_status;
+        appl_status_fail;
 
-} // destroy()
+} // v_cleanup()
 
 //
 //

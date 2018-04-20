@@ -161,7 +161,7 @@ appl_options_std::init(
 //
 //
 enum appl_status
-appl_options_std::cleanup(void)
+appl_options_std::v_cleanup(void)
 {
     enum appl_status
         e_status;
@@ -197,7 +197,7 @@ appl_options_std::cleanup(void)
     return
         e_status;
 
-} // cleanup()
+} // v_cleanup()
 
 //
 //

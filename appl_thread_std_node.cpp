@@ -729,7 +729,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_thread_std_node::cleanup(void)
+    appl_thread_std_node::v_cleanup(void)
 {
     enum appl_status
         e_status;
@@ -748,6 +748,6 @@ enum appl_status
     return
         e_status;
 
-} // cleanup()
+} // v_cleanup()
 
 /* end-of-file: appl_thread_std_node.cpp */

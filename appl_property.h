@@ -141,7 +141,7 @@ struct appl_property : public appl_object
 
         virtual
         enum appl_status
-            cleanup(void);
+            v_cleanup(void);
 
 }; // struct appl_property
 

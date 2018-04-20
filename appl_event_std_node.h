@@ -82,7 +82,7 @@ class appl_event_std_node : public appl_event
 
         virtual
         enum appl_status
-            cleanup(void);
+            v_cleanup(void);
 
         virtual
         enum appl_status

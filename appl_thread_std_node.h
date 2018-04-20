@@ -124,7 +124,7 @@ class appl_thread_std_node : public appl_thread
 
         virtual
         enum appl_status
-            cleanup(void);
+            v_cleanup(void);
 
 #if defined APPL_DEBUG
         void

@@ -30,6 +30,8 @@
 
 #endif /* #if defined APPL_DEBUG */
 
+struct appl_heap_dbg_descriptor;
+
 /* Assert compiler */
 #if !defined(__cplusplus)
 #error use c++ compiler
@@ -89,19 +91,14 @@ class appl_heap_dbg : public appl_heap
                 void * const
                     p_placement);
 
-        virtual
-        enum appl_status
-            destroy(void);
-
-        virtual
         enum appl_status
             init(
-                void const * const
+                struct appl_heap_dbg_descriptor const * const
                     p_descriptor);
 
         virtual
         enum appl_status
-            cleanup(void);
+            v_cleanup(void);
 
         virtual
         enum appl_status
