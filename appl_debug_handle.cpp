@@ -22,6 +22,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_buf0.h>
+
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
@@ -173,7 +175,7 @@ appl_debug_print0(
         appl_debug_print(
             p_object,
             p_msg_0,
-            p_msg_0 + appl_buf_len0(p_msg_0));
+            p_msg_0 + appl_buf0_len(p_msg_0));
 
 } /* appl_debug_print0() */
 

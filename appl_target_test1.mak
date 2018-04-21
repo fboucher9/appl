@@ -13,6 +13,7 @@ test_appl-deps = \
     appl_address_service.cpp \
     appl_address_std_node.cpp \
     appl_buf.cpp \
+    appl_buf0.cpp \
     appl_clock.cpp \
     appl_clock_handle.cpp \
     appl_clock_service.cpp \

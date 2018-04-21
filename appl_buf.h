@@ -85,12 +85,6 @@ appl_buf_len(
     unsigned char const * const
         p_buf_max);
 
-/* buf length */
-unsigned long int
-appl_buf_len0(
-    unsigned char const * const
-        p_buf_0);
-
 /* buf write iteration */
 unsigned char *
 appl_buf_write(

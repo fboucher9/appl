@@ -32,6 +32,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_buf0.h>
+
 #include <appl_convert.h>
 
 //
@@ -254,22 +256,14 @@ class appl_library_w32_node : public appl_library
             enum appl_status
                 e_status;
 
-            class appl_heap * const
-                p_heap =
-                m_context->m_heap;
-
-            unsigned long int const
-                i_name_len =
-                appl_buf_len(
-                    p_library_descriptor->p_name_min,
-                    p_library_descriptor->p_name_max);
-
             unsigned char *
                 p_name0;
 
             e_status =
-                p_heap->alloc_object_array(
-                    i_name_len,
+                appl_buf0_create(
+                    m_context,
+                    p_library_descriptor->p_name_min,
+                    p_library_descriptor->p_name_max,
                     &(
                         p_name0));
 
@@ -277,15 +271,6 @@ class appl_library_w32_node : public appl_library
                 appl_status_ok
                 == e_status)
             {
-                appl_buf_copy(
-                    p_name0,
-                    p_name0 + i_name_len,
-                    p_library_descriptor->p_name_min,
-                    p_library_descriptor->p_name_max);
-
-                p_name0[i_name_len] =
-                    0;
-
                 m_library_handle =
                     LoadLibraryA(
                         appl_convert(
@@ -301,7 +286,8 @@ class appl_library_w32_node : public appl_library
                         appl_status_fail;
                 }
 
-                p_heap->v_free(
+                appl_buf0_destroy(
+                    m_context,
                     p_name0);
             }
 

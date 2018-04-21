@@ -50,6 +50,8 @@ Description:
 
 #include <appl_buf.h>
 
+#include <appl_buf0.h>
+
 #include <appl_list.h>
 
 #include <appl_object_handle.h>

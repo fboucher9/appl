@@ -25,30 +25,6 @@ appl_buf_len(
 
 } /* appl_buf_len() */
 
-/*
-
-*/
-unsigned long int
-appl_buf_len0(
-    unsigned char const * const
-        p_buf_0)
-{
-    unsigned char const *
-        p_buf_it =
-        p_buf_0;
-
-    while (*(p_buf_it))
-    {
-        p_buf_it ++;
-    }
-
-    return
-        static_cast<unsigned long int>(
-            p_buf_it
-            - p_buf_0);
-
-} /* appl_buf_len0() */
-
 #if 0
 /*
 

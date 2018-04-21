@@ -38,7 +38,7 @@ appl_print0(
             p_buf0),
         (unsigned char const *)(
             p_buf0)
-        + appl_buf_len0(
+        + appl_buf0_len(
             (unsigned char const *)(
                 p_buf0)));
 
