@@ -9,37 +9,63 @@
 
 #include <appl.h>
 
-#if defined __GNUC__ && ! defined __clang__
-#pragma GCC diagnostic ignored "-Wsuggest-attribute=format"
-#endif
 static
 void
-appl_printf(
-    char const * const
-        p_format, ...)
+appl_print(
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max)
 {
-    va_list
-        o_args;
-
-    va_start(
-        o_args, p_format);
-
-#if defined __clang__
-#pragma GCC diagnostic ignored "-Wformat-nonliteral"
-#endif
-    vfprintf(stdout, p_format, o_args);
-#if defined __clang__
-#pragma GCC diagnostic warning "-Wformat-nonliteral"
-#endif
-    fflush(stdout);
-
-    va_end(
-        o_args);
+    printf(
+        "%.*s",
+        (int)(
+            p_buf_max
+            - p_buf_min),
+        (char const *)(
+            p_buf_min));
 
 }
-#if defined __GNUC__ && ! defined __clang__
-#pragma GCC diagnostic warning "-Wsuggest-attribute=format"
-#endif
+
+static
+void
+appl_print0(
+    char const * const
+        p_buf0)
+{
+    appl_print(
+        (unsigned char const *)(
+            p_buf0),
+        (unsigned char const *)(
+            p_buf0)
+        + appl_buf_len0(
+            (unsigned char const *)(
+                p_buf0)));
+
+}
+
+static
+void
+appl_print_number(
+    signed long int const
+        i_value,
+    int const
+        i_flags,
+    unsigned int const
+        i_width)
+{
+    unsigned char
+        a_msg[80u];
+
+    appl_print(
+        a_msg,
+        appl_buf_print_number(
+            a_msg,
+            a_msg + sizeof a_msg,
+            i_value,
+            i_flags,
+            i_width));
+}
 
 static
 void
@@ -79,18 +105,29 @@ appl_test_sleep_msec(
         &(
             i_time_after));
 
-    appl_printf(
-        "sleep %lu msec took %ld msec\n",
-        i_msec_count,
-        (
+    appl_print0(
+        "sleep ");
+    appl_print_number(
+        (signed long int)(
+            i_msec_count),
+        0,
+        0);
+    appl_print0(
+        " msec took ");
+    appl_print_number(
+        (signed long int)(
             i_time_after
-            - i_time_before));
+            - i_time_before),
+        0,
+        0);
+    appl_print0(
+        " msec\n");
 
     if (
         appl_status_not_implemented
         == e_status)
     {
-        appl_printf("fallback sleep\n");
+        appl_print0("fallback sleep\n");
 
         usleep(
             (unsigned int)(
@@ -167,7 +204,7 @@ appl_test_thread_entry(
         (struct appl_test_thread_context *)(
             p_context);
 
-    appl_printf(
+    appl_print0(
         "hello world!\n");
 
     appl_test_sleep_msec(
@@ -177,14 +214,14 @@ appl_test_thread_entry(
     appl_mutex_lock(
         p_test_thread_context->p_mutex);
 
-    appl_printf(
+    appl_print0(
         "thread wait 1 sec...\n");
 
     appl_test_sleep_msec(
         p_test_thread_context->p_context,
         1000ul);
 
-    appl_printf(
+    appl_print0(
         "... thread wait 1 sec\n");
 
     appl_mutex_unlock(
@@ -201,7 +238,7 @@ appl_test_thread_entry(
             appl_mutex_lock(
                 p_test_thread_context->p_mutex);
 
-            appl_printf(
+            appl_print0(
                 "signal event!\n");
 
             p_test_thread_context->b_event_signaled =
@@ -297,22 +334,9 @@ appl_test_print_number(
     unsigned int const
         i_width)
 {
-    static unsigned char s_msg[128u];
-
-    unsigned char *
-        p_msg_end;
-
-    p_msg_end =
-        appl_buf_print_number(
-            s_msg,
-            s_msg + sizeof s_msg,
-            i_value,
-            i_flags,
-            i_width);
-
-    appl_printf("msg = [%.*s]\n",
-        (int)(p_msg_end - s_msg),
-        s_msg);
+    appl_print0("msg = [");
+    appl_print_number(i_value, i_flags, i_width);
+    appl_print0("]\n");
 }
 
 static void appl_test_options(
@@ -359,14 +383,11 @@ static void appl_test_options(
         if (
             appl_status_ok == e_status)
         {
-            appl_printf(
-                "[%3u] [%.*s]\n",
-                argi,
-                (int)(
-                    p_buf_max
-                    - p_buf_min),
-                (char const *)(
-                    p_buf_min));
+            appl_print0("[");
+            appl_print_number((signed long int)(argi), 0, 0);
+            appl_print0("] [");
+            appl_print(p_buf_min, p_buf_max);
+            appl_print0("]\n");
         }
 
         argi ++;
@@ -476,14 +497,14 @@ static void appl_test_thread(
             appl_mutex_lock(
                 p_mutex);
 
-            appl_printf(
+            appl_print0(
                 "main sleep 1 sec ...\n");
 
             appl_test_sleep_msec(
                 p_context,
                 1000ul);
 
-            appl_printf(
+            appl_print0(
                 "... main sleep 1 sec\n");
 
             appl_mutex_unlock(
@@ -495,7 +516,7 @@ static void appl_test_thread(
             appl_mutex_lock(
                 p_mutex);
 
-            appl_printf(
+            appl_print0(
                 "wait for event...\n");
 
             while (!(o_test_thread_context.b_event_signaled))
@@ -505,7 +526,7 @@ static void appl_test_thread(
                     p_mutex);
             }
 
-            appl_printf(
+            appl_print0(
                 "... wait done.\n");
 
             appl_mutex_unlock(
@@ -534,9 +555,16 @@ static void appl_test_thread(
                 appl_status_ok
                 == e_status)
             {
-                appl_printf(
-                    "thread result = %p\n",
-                    p_thread_result);
+                appl_print0(
+                    "thread result = ");
+                appl_print_number(
+                    (signed long int)(appl_ptrdiff_t)(
+                        p_thread_result),
+                    appl_buf_print_flag_hex
+                    | appl_buf_print_flag_unsigned,
+                    0);
+                appl_print0(
+                    "\n");
             }
         }
 
@@ -646,13 +674,9 @@ appl_test_socket(
                 appl_status_ok
                 == e_status)
             {
-                appl_printf(
-                    "name=[%.*s]\n",
-                    (int)(
-                        p_name_cur
-                        - a_name),
-                    (char const *)(
-                        a_name));
+                appl_print0("name=[");
+                appl_print(a_name, p_name_cur);
+                appl_print0("]\n");
             }
         }
 
@@ -670,10 +694,13 @@ appl_test_socket(
                 appl_status_ok
                 == e_status)
             {
-                appl_printf(
-                    "port=[%u]\n",
-                    (unsigned int)(
-                        i_port));
+                appl_print0("port=[");
+                appl_print_number(
+                    (signed long int)(
+                        i_port),
+                    0,
+                    0);
+                appl_print0("]\n");
             }
         }
 
@@ -815,7 +842,7 @@ appl_test_property(
                 appl_status_ok
                 == e_status)
             {
-                appl_printf(
+                printf(
                     "property 0=%p\n",
                     p_value);
             }
@@ -839,7 +866,7 @@ appl_test_property(
                 appl_status_ok
                 == e_status)
             {
-                appl_printf(
+                printf(
                     "property 1=%lu\n",
                     u_value);
             }
@@ -864,7 +891,7 @@ appl_test_property(
                 appl_status_ok
                 == e_status)
             {
-                appl_printf(
+                printf(
                     "property 2=%ld\n",
                     i_value);
             }
@@ -931,17 +958,19 @@ appl_test_env(
             appl_status_ok
             == e_status)
         {
-            appl_printf(
-                "appl_test_env: home=[%.*s]\n",
-                (int)(
-                    p_value_max
-                    - p_value_min),
-                (char const *)(
-                    p_value_min));
+            appl_print0(
+                "appl_test_env: home=[");
+
+            appl_print(
+                p_value_min,
+                p_value_max);
+
+            appl_print0(
+                "]\n");
         }
         else
         {
-            appl_printf(
+            appl_print0(
                 "appl_test_env: failed string read\n");
         }
 
@@ -951,11 +980,22 @@ appl_test_env(
     }
     else
     {
-        appl_printf(
+        appl_print0(
             "appl_test_env: failed env get\n");
     }
 
 } /* appl_test_env() */
+
+static
+void
+appl_test_library(
+    struct appl_context * const
+        p_context)
+{
+    (void)(
+        p_context);
+
+} /* appl_test_library() */
 
 enum appl_status
 appl_main(
@@ -1072,10 +1112,12 @@ appl_main(
                     *(
                         p_cur);
 
-                appl_printf(
-                    "%u\n",
-                    (unsigned int)(
-                        c_value));
+                appl_print_number(
+                    (signed long int)(
+                        c_value),
+                    0,
+                    0);
+                appl_print0("\n");
 
                 p_cur ++;
             }
@@ -1193,6 +1235,12 @@ appl_main(
     if (1)
     {
         appl_test_env(
+            p_context);
+    }
+
+    if (1)
+    {
+        appl_test_library(
             p_context);
     }
 

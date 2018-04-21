@@ -4,6 +4,18 @@
 
 */
 
+#if defined APPL_OS_LINUX
+
+#include <dlfcn.h>
+
+#endif /* #if defined APPL_OS_LINUX */
+
+#if defined APPL_OS_WINDOWS
+
+#include <windows.h>
+
+#endif /* #if defined APPL_OS_WINDOWS */
+
 #include <appl_status.h>
 
 #include <appl_library_handle.h>
@@ -15,6 +27,12 @@
 #include <appl_context.h>
 
 #include <appl_unused.h>
+
+#include <appl_heap.h>
+
+#include <appl_buf.h>
+
+#include <appl_convert.h>
 
 //
 //
@@ -212,7 +230,8 @@ class appl_library_w32_node : public appl_library
         //
         //
         appl_library_w32_node() :
-            appl_library()
+            appl_library(),
+            m_library_handle()
         {
         }
 
@@ -232,15 +251,69 @@ class appl_library_w32_node : public appl_library
                 struct appl_library_descriptor const * const
                     p_library_descriptor)
         {
-            appl_unused(
-                p_library_descriptor);
+            enum appl_status
+                e_status;
+
+            class appl_heap * const
+                p_heap =
+                m_context->m_heap;
+
+            unsigned long int const
+                i_name_len =
+                appl_buf_len(
+                    p_library_descriptor->p_name_min,
+                    p_library_descriptor->p_name_max);
+
+            unsigned char *
+                p_name0;
+
+            e_status =
+                p_heap->alloc_object_array(
+                    i_name_len,
+                    &(
+                        p_name0));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                appl_buf_copy(
+                    p_name0,
+                    p_name0 + i_name_len,
+                    p_library_descriptor->p_name_min,
+                    p_library_descriptor->p_name_max);
+
+                p_name0[i_name_len] =
+                    0;
+
+                m_library_handle =
+                    LoadLibraryA(
+                        appl_convert(
+                            p_name0));
+
+                if (
+                    m_library_handle)
+                {
+                }
+                else
+                {
+                    e_status =
+                        appl_status_fail;
+                }
+
+                p_heap->v_free(
+                    p_name0);
+            }
 
             return
-                appl_status_ok;
+                e_status;
 
         } // init()
 
     private:
+
+        HMODULE
+            m_library_handle;
 
         appl_library_w32_node(
             class appl_library_w32_node const & r);
@@ -504,12 +577,11 @@ class appl_library_w32_mgr : public appl_library_mgr
                 struct appl_library * * const
                     r_library)
         {
-            appl_unused(
-                p_library_descriptor,
-                r_library);
-
             return
-                appl_status_not_implemented;
+                appl_library_w32_node::s_create(
+                    m_context,
+                    p_library_descriptor,
+                    r_library);
 
         } // v_create_node()
 
@@ -600,19 +672,10 @@ class appl_library_service
                 struct appl_library * * const
                     r_library)
         {
-#if 0
             return
                 p_context->m_library_mgr->v_create_node(
                     p_library_descriptor,
                     r_library);
-#else
-            appl_unused(
-                p_context,
-                p_library_descriptor,
-                r_library);
-            return
-                appl_status_not_implemented;
-#endif
 
         } // s_create()
 
