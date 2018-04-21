@@ -987,6 +987,25 @@ appl_main(
     {
         static char g_test_debug_break = 0;
 
+        appl_debug_print0(
+            appl_context_parent(
+                p_context),
+            (unsigned char const *)(
+                "debug_print0 number=["));
+
+        appl_debug_print_number(
+            appl_context_parent(
+                p_context),
+            666,
+            0,
+            0);
+
+        appl_debug_print0(
+            appl_context_parent(
+                p_context),
+            (unsigned char const *)(
+                "]\n"));
+
         if (g_test_debug_break)
         {
             static unsigned char const g_msg[] =

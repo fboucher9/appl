@@ -522,13 +522,13 @@ enum appl_status
     appl_library_mgr_create(
         struct appl_context * const
             p_context,
-        struct appl_library_mgr * * const
+        class appl_library_mgr * * const
             r_library_mgr);
 
 extern
 enum appl_status
     appl_library_mgr_destroy(
-        struct appl_library_mgr * const
+        class appl_library_mgr * const
             p_library_mgr);
 
 //
@@ -538,7 +538,7 @@ enum appl_status
     appl_library_mgr_create(
         struct appl_context * const
             p_context,
-        struct appl_library_mgr * * const
+        class appl_library_mgr * * const
             r_library_mgr)
 {
     enum appl_status
@@ -575,7 +575,7 @@ enum appl_status
 //
 enum appl_status
     appl_library_mgr_destroy(
-        struct appl_library_mgr * const
+        class appl_library_mgr * const
             p_library_mgr)
 {
     return

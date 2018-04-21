@@ -114,6 +114,20 @@
 
 #endif /* #if defined APPL_OS_Xx */
 
+extern
+enum appl_status
+    appl_library_mgr_create(
+        struct appl_context * const
+            p_context,
+        class appl_library_mgr * * const
+            r_library_mgr);
+
+extern
+enum appl_status
+    appl_library_mgr_destroy(
+        class appl_library_mgr * const
+            p_library_mgr);
+
 struct appl_context_init_descriptor
 {
     struct appl_context_descriptor const *
@@ -744,6 +758,63 @@ void
 //
 //
 enum appl_status
+    appl_context_std::init_library_mgr(void)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        !b_init_library_mgr)
+    {
+        e_status =
+            appl_library_mgr_create(
+                m_context,
+                &(
+                    m_library_mgr));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            b_init_library_mgr =
+                true;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // init_library_mgr()
+
+//
+//
+//
+void
+    appl_context_std::cleanup_library_mgr(void)
+{
+    if (
+        b_init_library_mgr)
+    {
+        appl_library_mgr_destroy(
+            m_library_mgr);
+
+        m_library_mgr =
+            0;
+
+        b_init_library_mgr =
+            false;
+    }
+} // cleanup_library_mgr()
+
+//
+//
+//
+enum appl_status
     appl_context_std::create_instance(
         struct appl_context_descriptor const * const
             p_context_descriptor,
@@ -849,7 +920,8 @@ appl_context_std::appl_context_std() :
     b_init_clock(),
     b_init_event_mgr(),
     b_init_socket_mgr(),
-    b_init_env()
+    b_init_env(),
+    b_init_library_mgr()
 {
 }
 
@@ -959,6 +1031,20 @@ enum appl_status
                                             appl_status_ok
                                             == e_status)
                                         {
+                                            e_status =
+                                                init_library_mgr();
+
+                                            if (
+                                                appl_status_ok
+                                                == e_status)
+                                            {
+                                                if (
+                                                    appl_status_ok != e_status)
+                                                {
+                                                    cleanup_library_mgr();
+                                                }
+                                            }
+
                                             if (
                                                 appl_status_ok != e_status)
                                             {
@@ -1050,6 +1136,8 @@ enum appl_status
         m_heap;
 
     // destroy objects
+
+    cleanup_library_mgr();
 
     cleanup_env();
 

@@ -34,6 +34,24 @@ appl_debug_print(
     unsigned char const * const
         p_msg_max);
 
+enum appl_status
+appl_debug_print0(
+    struct appl_object const * const
+        p_object,
+    unsigned char const * const
+        p_msg_0);
+
+enum appl_status
+appl_debug_print_number(
+    struct appl_object const * const
+        p_object,
+    signed long int const
+        i_value,
+    int const
+        e_flags,
+    unsigned int const
+        i_width);
+
 #if defined(__cplusplus)
 } /* extern "C" */
 #endif /* #if defined(__cplusplus) */

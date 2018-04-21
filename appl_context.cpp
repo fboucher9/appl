@@ -28,7 +28,8 @@ appl_context::appl_context() :
     m_clock(),
     m_event_mgr(),
     m_socket_mgr(),
-    m_env()
+    m_env(),
+    m_library_mgr()
 #if defined APPL_DEBUG
     ,
     m_debug()

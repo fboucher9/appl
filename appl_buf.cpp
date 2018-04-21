@@ -8,6 +8,47 @@
 
 #include <appl_buf.h>
 
+/*
+
+*/
+unsigned long int
+appl_buf_len(
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max)
+{
+    return
+        static_cast<unsigned long int>(
+            p_buf_max
+            - p_buf_min);
+
+} /* appl_buf_len() */
+
+/*
+
+*/
+unsigned long int
+appl_buf_len0(
+    unsigned char const * const
+        p_buf_0)
+{
+    unsigned char const *
+        p_buf_it =
+        p_buf_0;
+
+    while (*(p_buf_it))
+    {
+        p_buf_it ++;
+    }
+
+    return
+        static_cast<unsigned long int>(
+            p_buf_it
+            - p_buf_0);
+
+} /* appl_buf_len0() */
+
 #if 0
 /*
 

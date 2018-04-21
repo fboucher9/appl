@@ -17,29 +17,29 @@ struct appl_buf;
 /* ptr */
 union appl_ptr
 {
-    void *
-        p_void;
-
     void const *
         pc_void;
 
-    char *
-        p_char;
+    void *
+        p_void;
 
     char const *
         pc_char;
 
-    unsigned char *
-        p_uchar;
+    char *
+        p_char;
 
     unsigned char const *
         pc_uchar;
 
-    struct appl_buf *
-        p_buf;
+    unsigned char *
+        p_uchar;
 
     struct appl_buf const *
         pc_buf;
+
+    struct appl_buf *
+        p_buf;
 
 }; /* union appl_ptr */
 
@@ -76,6 +76,20 @@ appl_buf_read_tail(
     unsigned char * const
         p_value);
 #endif
+
+/* buf length */
+unsigned long int
+appl_buf_len(
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max);
+
+/* buf length */
+unsigned long int
+appl_buf_len0(
+    unsigned char const * const
+        p_buf_0);
 
 /* buf write iteration */
 unsigned char *

@@ -20,6 +20,8 @@
 
 #include <appl_object_handle.h>
 
+#include <appl_buf.h>
+
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
@@ -156,6 +158,54 @@ appl_debug_print(
         e_status;
 
 } /* appl_debug_print() */
+
+/*
+
+*/
+enum appl_status
+appl_debug_print0(
+    struct appl_object const * const
+        p_object,
+    unsigned char const * const
+        p_msg_0)
+{
+    return
+        appl_debug_print(
+            p_object,
+            p_msg_0,
+            p_msg_0 + appl_buf_len0(p_msg_0));
+
+} /* appl_debug_print0() */
+
+/*
+
+*/
+enum appl_status
+appl_debug_print_number(
+    struct appl_object const * const
+        p_object,
+    signed long int const
+        i_value,
+    int const
+        e_flags,
+    unsigned int const
+        i_width)
+{
+    unsigned char
+        a_buf[80u];
+
+    return
+        appl_debug_print(
+            p_object,
+            a_buf,
+            appl_buf_print_number(
+                a_buf,
+                a_buf + sizeof a_buf,
+                i_value,
+                e_flags,
+                i_width));
+
+} /* appl_debug_print_number() */
 
 #endif /* #if defined APPL_DEBUG */
 
