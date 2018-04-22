@@ -60,10 +60,10 @@ struct appl_address_property : public appl_object
                 r_address_property)
         {
             return
-                appl_object::s_create(
+                appl_object::s_create
+                < appl_address_property, appl_address_property >
+                (
                     p_context,
-                    sizeof(
-                        struct appl_address_property),
                     (&
                         appl_address_property::s_new),
                     (&

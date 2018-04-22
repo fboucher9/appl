@@ -30,20 +30,14 @@ enum appl_status
         class appl_clock * * const
             r_clock)
 {
-    enum appl_status
-        e_status;
-
-    e_status =
-        appl_object::s_create(
-            p_context,
-            sizeof(
-                class appl_clock_std),
-            (& appl_clock_std::placement_new),
-            (& appl_clock_std::init_dummy),
-            r_clock);
-
     return
-        e_status;
+        appl_object::s_create
+        < appl_clock_std, appl_clock >
+        (
+            p_context,
+            (&
+                appl_clock_std::placement_new),
+            r_clock);
 
 } // create_instance()
 

@@ -29,14 +29,12 @@ enum appl_status
             r_debug)
 {
     return
-        appl_object::s_create(
+        appl_object::s_create
+        < appl_debug_w32, appl_debug >
+        (
             p_context,
-            sizeof(
-                class appl_debug_w32),
             (&
                 appl_debug_w32::placement_new),
-            (&
-                appl_debug_w32::init_dummy),
             r_debug);
 
 } // create_instance()

@@ -33,14 +33,12 @@ enum appl_status
             r_thread_mgr)
 {
     return
-        appl_object::s_create(
+        appl_object::s_create
+        < appl_thread_w32_mgr, appl_thread_mgr >
+        (
             p_context,
-            sizeof(
-                class appl_thread_w32_mgr),
             (&
                 appl_thread_w32_mgr::placement_new),
-            (&
-                appl_thread_w32_mgr::init_dummy),
             r_thread_mgr);
 
 } // create_instance()

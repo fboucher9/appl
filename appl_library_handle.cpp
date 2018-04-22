@@ -116,10 +116,10 @@ class appl_library_std_node : public appl_library
                     r_library)
         {
             return
-                appl_object::s_create(
+                appl_object::s_create
+                < appl_library_std_node, appl_library_descriptor, appl_library >
+                (
                     p_context,
-                    sizeof(
-                        class appl_library_std_node),
                     (&
                         appl_library_std_node::s_new),
                     (&
@@ -213,10 +213,10 @@ class appl_library_w32_node : public appl_library
                     r_library)
         {
             return
-                appl_object::s_create(
+                appl_object::s_create
+                < appl_library_w32_node, appl_library_descriptor, appl_library >
+                (
                     p_context,
-                    sizeof(
-                        class appl_library_w32_node),
                     (&
                         appl_library_w32_node::s_new),
                     (&
@@ -401,14 +401,12 @@ class appl_library_std_mgr : public appl_library_mgr
                     r_library_mgr)
         {
             return
-                appl_object::s_create(
+                appl_object::s_create
+                < appl_library_std_mgr, appl_library_mgr >
+                (
                     p_context,
-                    sizeof(
-                        class appl_library_std_mgr),
                     (&
                         appl_library_std_mgr::s_new),
-                    (&
-                        appl_library_std_mgr::init_dummy),
                     r_library_mgr);
 
         } // s_create()
@@ -499,14 +497,12 @@ class appl_library_w32_mgr : public appl_library_mgr
                     r_library_mgr)
         {
             return
-                appl_object::s_create(
+                appl_object::s_create
+                < appl_library_w32_mgr, appl_library_mgr >
+                (
                     p_context,
-                    sizeof(
-                        class appl_library_w32_mgr),
                     (&
                         appl_library_w32_mgr::s_new),
-                    (&
-                        appl_library_w32_mgr::init_dummy),
                     r_library_mgr);
 
         } // s_create()

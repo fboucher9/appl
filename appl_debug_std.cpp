@@ -31,14 +31,12 @@ enum appl_status
             r_debug)
 {
     return
-        appl_object::s_create(
+        appl_object::s_create
+        < appl_debug_std, appl_debug >
+        (
             p_context,
-            sizeof(
-                class appl_debug_std),
             (&
                 appl_debug_std::placement_new),
-            (&
-                appl_debug_std::init_dummy),
             r_debug);
 
 } // create_instance()

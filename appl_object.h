@@ -30,6 +30,80 @@ struct appl_object
 {
     public:
 
+        template <typename T_instance, typename T_base>
+        static
+        enum appl_status
+            s_create(
+                struct appl_context * const
+                    p_context,
+                void (* const p_new)(
+                    void * const
+                        p_placement),
+                T_base * * const
+                    r_object)
+        {
+            return
+                appl_object::s_create<T_instance, T_base>(
+                    p_context,
+                    sizeof(T_instance),
+                    p_new,
+                    (&
+                        T_instance::init_dummy),
+                    r_object);
+
+        } // s_create()
+
+        template <typename T_instance, typename T_base>
+        static
+        enum appl_status
+            s_create(
+                struct appl_context * const
+                    p_context,
+                void (* const p_new)(
+                    void * const
+                        p_placement),
+                enum appl_status (T_instance::* const p_init)(void),
+                T_base * * const
+                    r_object)
+        {
+            return
+                appl_object::s_create<T_instance, T_base>(
+                    p_context,
+                    sizeof(T_instance),
+                    p_new,
+                    p_init,
+                    r_object);
+
+        } // s_create()
+
+        template <typename T_instance, typename T_descriptor, typename T_base>
+        static
+        enum appl_status
+            s_create(
+                struct appl_context * const
+                    p_context,
+                void (* const p_new)(
+                    void * const
+                        p_placement),
+                enum appl_status (T_instance::* const p_init)(
+                    T_descriptor const * const
+                        p_descriptor),
+                T_descriptor const * const
+                    p_descriptor,
+                T_base * * const
+                    r_object)
+        {
+            return
+                appl_object::s_create<T_instance, T_descriptor, T_base>(
+                    p_context,
+                    sizeof(T_instance),
+                    p_new,
+                    p_init,
+                    p_descriptor,
+                    r_object);
+
+        } // s_create()
+
         template <typename T_instance, typename T_descriptor, typename T_base>
         static
         enum appl_status
@@ -66,41 +140,19 @@ struct appl_object
                 appl_status_ok
                 == e_status)
             {
-                (*p_new)(
-                    p_placement);
-
-                struct appl_object * const
-                    p_object =
-                    static_cast<struct appl_object *>(
-                        p_placement);
-
-                p_object->m_context =
-                    p_context;
-
-                T_instance * const
-                    p_instance =
-                    static_cast<T_instance *>(
-                        p_object);
-
                 e_status =
-                    ((p_instance)->*(p_init))(
-                        p_descriptor);
+                    appl_object::s_init<T_instance, T_descriptor, T_base>(
+                        p_context,
+                        p_placement,
+                        p_new,
+                        p_init,
+                        p_descriptor,
+                        r_object);
 
                 if (
                     appl_status_ok
-                    == e_status)
+                    != e_status)
                 {
-                    *(
-                        r_object) =
-                        static_cast<T_base *>(
-                            p_instance);
-                }
-                else
-                {
-                    delete
-                        static_cast<struct appl_object *>(
-                            p_instance);
-
                     appl_object::free_placement(
                         p_context,
                         p_placement);
@@ -144,40 +196,18 @@ struct appl_object
                 appl_status_ok
                 == e_status)
             {
-                (*p_new)(
-                    p_placement);
-
-                struct appl_object * const
-                    p_object =
-                    static_cast<struct appl_object *>(
-                        p_placement);
-
-                p_object->m_context =
-                    p_context;
-
-                T_instance * const
-                    p_instance =
-                    static_cast<T_instance *>(
-                        p_object);
-
                 e_status =
-                    ((p_instance)->*(p_init))();
+                    appl_object::s_init<T_instance, T_base>(
+                        p_context,
+                        p_placement,
+                        p_new,
+                        p_init,
+                        r_object);
 
                 if (
                     appl_status_ok
-                    == e_status)
+                    != e_status)
                 {
-                    *(
-                        r_object) =
-                        static_cast<T_base *>(
-                            p_instance);
-                }
-                else
-                {
-                    delete
-                        static_cast<struct appl_object *>(
-                            p_instance);
-
                     appl_object::free_placement(
                         p_context,
                         p_placement);

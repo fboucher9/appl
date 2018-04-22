@@ -34,10 +34,10 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_object::s_create(
+        appl_object::s_create
+        < appl_clock_w32, appl_clock >
+        (
             p_context,
-            sizeof(
-                class appl_clock_w32),
             (&
                 appl_clock_w32::placement_new),
             (&

@@ -52,14 +52,12 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_object::s_create(
+        appl_object::s_create
+        < appl_socket_std_mgr, appl_socket_mgr >
+        (
             p_context,
-            sizeof(
-                class appl_socket_std_mgr),
             (&
                 appl_socket_std_mgr::s_new),
-            (&
-                appl_socket_std_mgr::init_dummy),
             r_socket_mgr);
 
     return

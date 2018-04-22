@@ -33,10 +33,10 @@ appl_options_std::s_create(
         r_options_std)
 {
     return
-        appl_object::s_create(
+        appl_object::s_create
+        < appl_options_std, appl_options_std_descriptor, appl_options >
+        (
             p_context,
-            sizeof(
-                class appl_options_std),
             (&
                 appl_options_std::placement_new),
             (&

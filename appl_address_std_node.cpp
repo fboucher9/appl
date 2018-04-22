@@ -64,12 +64,14 @@ enum appl_status
             r_address)
 {
     return
-        appl_object::s_create(
+        appl_object::s_create
+        < appl_address_std_node, appl_address_property, appl_address >
+        (
             p_context,
-            sizeof(
-                class appl_address_std_node),
-            &appl_address_std_node::s_new,
-            &appl_address_std_node::init,
+            (&
+                appl_address_std_node::s_new),
+            (&
+                appl_address_std_node::init),
             p_property,
             r_address);
 

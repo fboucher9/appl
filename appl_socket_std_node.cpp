@@ -51,10 +51,10 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_object::s_create(
+        appl_object::s_create
+        < appl_socket_std_node, appl_property, appl_socket >
+        (
             p_context,
-            sizeof(
-                class appl_socket_std_node),
             (&
                 appl_socket_std_node::s_new),
             (&

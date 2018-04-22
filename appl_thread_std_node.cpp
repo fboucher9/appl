@@ -64,10 +64,10 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_object::s_create(
+        appl_object::s_create
+        < appl_thread_std_node, appl_thread_property, appl_thread >
+        (
             p_context,
-            sizeof(
-                class appl_thread_std_node),
             (&
                 appl_thread_std_node::placement_new),
             (&

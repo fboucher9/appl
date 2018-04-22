@@ -39,14 +39,12 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_object::s_create(
+        appl_object::s_create
+        < appl_mutex_std_mgr, appl_mutex_mgr >
+        (
             p_context,
-            sizeof(
-                class appl_mutex_std_mgr),
             (&
                 appl_mutex_std_mgr::placement_new),
-            (&
-                appl_mutex_std_mgr::init_dummy),
             r_mutex_mgr);
 
     return

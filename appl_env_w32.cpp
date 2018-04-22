@@ -46,14 +46,12 @@ appl_env_w32::s_create(
         e_status;
 
     e_status =
-        appl_object::s_create(
+        appl_object::s_create
+        < appl_env_w32, appl_env >
+        (
             p_context,
-            sizeof(
-                class appl_env_w32),
             (&
                 appl_env_w32::s_new),
-            (&
-                appl_env_w32::init_dummy),
             r_env);
 
     return

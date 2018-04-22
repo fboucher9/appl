@@ -56,10 +56,10 @@ enum appl_status
         p_event_descriptor);
 
     e_status =
-        appl_object::s_create(
+        appl_object::s_create
+        < appl_event_std_node, appl_event >
+        (
             p_context,
-            sizeof(
-                class appl_event_std_node),
             (&
                 appl_event_std_node::s_new),
             (&

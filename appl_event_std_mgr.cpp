@@ -39,14 +39,12 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_object::s_create(
+        appl_object::s_create
+        < appl_event_std_mgr, appl_event_mgr >
+        (
             p_context,
-            sizeof(
-                class appl_event_std_mgr),
             (&
                 appl_event_std_mgr::s_new),
-            (&
-                appl_event_std_mgr::init_dummy),
             r_event_mgr);
 
     return

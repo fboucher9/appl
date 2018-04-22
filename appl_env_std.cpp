@@ -46,14 +46,12 @@ appl_env_std::s_create(
         e_status;
 
     e_status =
-        appl_object::s_create(
+        appl_object::s_create
+        < appl_env_std, appl_env >
+        (
             p_context,
-            sizeof(
-                class appl_env_std),
             (&
                 appl_env_std::s_new),
-            (&
-                appl_env_std::init_dummy),
             r_env);
 
     return

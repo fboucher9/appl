@@ -42,10 +42,10 @@ enum appl_status
         p_mutex_descriptor);
 
     e_status =
-        appl_object::s_create(
+        appl_object::s_create
+        < appl_mutex_std_node, appl_mutex >
+        (
             p_context,
-            sizeof(
-                class appl_mutex_std_node),
             (&
                 appl_mutex_std_node::placement_new),
             (&

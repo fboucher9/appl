@@ -36,14 +36,12 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_object::s_create(
+        appl_object::s_create
+        < appl_file_std_mgr, appl_file_mgr >
+        (
             p_context,
-            sizeof(
-                class appl_file_std_mgr),
             (&
                 appl_file_std_mgr::placement_new),
-            (&
-                appl_file_std_mgr::init_dummy),
             r_file_mgr);
 
     return
