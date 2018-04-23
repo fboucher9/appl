@@ -43,17 +43,28 @@ enum appl_status
     enum appl_status
         e_status;
 
+    class appl_thread_w32_node *
+        p_thread_w32_node;
+
     e_status =
-        appl_object::s_create
-        < appl_thread_w32_node, appl_thread_property, appl_thread >
-        (
+        appl_object::s_create (
             p_context,
             (&
                 appl_thread_w32_node::placement_new),
             (&
                 appl_thread_w32_node::init),
             p_thread_property,
-            r_thread);
+            &(
+                p_thread_w32_node));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_thread) =
+            p_thread_w32_node;
+    }
 
     return
         e_status;

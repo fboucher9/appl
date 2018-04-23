@@ -45,14 +45,25 @@ appl_env_w32::s_create(
     enum appl_status
         e_status;
 
+    class appl_env_w32 *
+        p_env_w32;
+
     e_status =
-        appl_object::s_create
-        < appl_env_w32, appl_env >
-        (
+        appl_object::s_create(
             p_context,
             (&
                 appl_env_w32::s_new),
-            r_env);
+            &(
+                p_env_w32));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_env) =
+            p_env_w32;
+    }
 
     return
         e_status;

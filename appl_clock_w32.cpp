@@ -33,16 +33,27 @@ enum appl_status
     enum appl_status
         e_status;
 
+    class appl_clock_w32 *
+        p_clock_w32;
+
     e_status =
-        appl_object::s_create
-        < appl_clock_w32, appl_clock >
-        (
+        appl_object::s_create(
             p_context,
             (&
                 appl_clock_w32::placement_new),
             (&
                 appl_clock_w32::init),
-            r_clock);
+            &(
+                p_clock_w32));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_clock) =
+            p_clock_w32;
+    }
 
     return
         e_status;

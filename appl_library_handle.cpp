@@ -229,17 +229,34 @@ class appl_library_w32_node : public appl_library
                 struct appl_library * * const
                     r_library)
         {
-            return
-                appl_object::s_create
-                < appl_library_w32_node, appl_library_descriptor, appl_library >
-                (
+            enum appl_status
+                e_status;
+
+            class appl_library_w32_node *
+                p_library_w32_node;
+
+            e_status =
+                appl_object::s_create(
                     p_context,
                     (&
                         appl_library_w32_node::s_new),
                     (&
                         appl_library_w32_node::init),
                     p_library_descriptor,
-                    r_library);
+                    &(
+                        p_library_w32_node));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                *(
+                    r_library) =
+                    p_library_w32_node;
+            }
+
+            return
+                e_status;
 
         } // s_create()
 
@@ -530,14 +547,31 @@ class appl_library_w32_mgr : public appl_library_mgr
                 struct appl_library_mgr * * const
                     r_library_mgr)
         {
-            return
-                appl_object::s_create
-                < appl_library_w32_mgr, appl_library_mgr >
-                (
+            enum appl_status
+                e_status;
+
+            class appl_library_w32_mgr *
+                p_library_w32_mgr;
+
+            e_status =
+                appl_object::s_create(
                     p_context,
                     (&
                         appl_library_w32_mgr::s_new),
-                    r_library_mgr);
+                    &(
+                        p_library_w32_mgr));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                *(
+                    r_library_mgr) =
+                    p_library_w32_mgr;
+            }
+
+            return
+                e_status;
 
         } // s_create()
 
