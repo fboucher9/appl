@@ -63,17 +63,34 @@ enum appl_status
         struct appl_address * * const
             r_address)
 {
-    return
-        appl_object::s_create
-        < appl_address_std_node, appl_address_property, appl_address >
-        (
+    enum appl_status
+        e_status;
+
+    class appl_address_std_node *
+        p_address_std_node;
+
+    e_status =
+        appl_object::s_create(
             p_context,
             (&
                 appl_address_std_node::s_new),
             (&
                 appl_address_std_node::init),
             p_property,
-            r_address);
+            &(
+                p_address_std_node));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_address) =
+            p_address_std_node;
+    }
+
+    return
+        e_status;
 
 } // s_create()
 

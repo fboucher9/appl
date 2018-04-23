@@ -55,16 +55,27 @@ enum appl_status
     appl_unused(
         p_event_descriptor);
 
+    class appl_event_std_node *
+        p_event_std_node;
+
     e_status =
-        appl_object::s_create
-        < appl_event_std_node, appl_event >
-        (
+        appl_object::s_create (
             p_context,
             (&
                 appl_event_std_node::s_new),
             (&
                 appl_event_std_node::init),
-            r_event_node);
+            &(
+                p_event_std_node));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_event_node) =
+            p_event_std_node;
+    }
 
     return
         e_status;

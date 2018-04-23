@@ -871,6 +871,9 @@ enum appl_status
             if (
                 appl_status_ok == e_status)
             {
+                class appl_context_std *
+                    p_context_std;
+
                 e_status =
                     appl_object::s_init(
                         static_cast<struct appl_context *>(
@@ -882,7 +885,16 @@ enum appl_status
                             appl_context_std::init),
                         &(
                             o_init_descriptor),
-                        r_context);
+                        &(
+                            p_context_std));
+
+                if (
+                    appl_status_ok == e_status)
+                {
+                    *(
+                        r_context) =
+                        p_context_std;
+                }
 
                 if (
                     appl_status_ok != e_status)

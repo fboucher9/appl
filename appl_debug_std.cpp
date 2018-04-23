@@ -30,14 +30,31 @@ enum appl_status
         class appl_debug * * const
             r_debug)
 {
-    return
-        appl_object::s_create
-        < appl_debug_std, appl_debug >
-        (
+    enum appl_status
+        e_status;
+
+    class appl_debug_std *
+        p_debug_std;
+
+    e_status =
+        appl_object::s_create(
             p_context,
             (&
                 appl_debug_std::placement_new),
-            r_debug);
+            &(
+                p_debug_std));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_debug) =
+            p_debug_std;
+    }
+
+    return
+        e_status;
 
 } // create_instance()
 

@@ -11,6 +11,8 @@
 
 #define INC_APPL_BUF0_H
 
+struct appl_object;
+
 #if defined __cplusplus
 extern "C" {
 #endif /* #if defined __cplusplus */

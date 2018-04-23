@@ -45,14 +45,25 @@ appl_env_std::s_create(
     enum appl_status
         e_status;
 
+    class appl_env_std *
+        p_env_std;
+
     e_status =
-        appl_object::s_create
-        < appl_env_std, appl_env >
-        (
+        appl_object::s_create(
             p_context,
             (&
                 appl_env_std::s_new),
-            r_env);
+            &(
+                p_env_std));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_env) =
+            p_env_std;
+    }
 
     return
         e_status;

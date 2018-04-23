@@ -41,16 +41,27 @@ enum appl_status
     appl_unused(
         p_mutex_descriptor);
 
+    class appl_mutex_std_node *
+        p_mutex_std_node;
+
     e_status =
-        appl_object::s_create
-        < appl_mutex_std_node, appl_mutex >
-        (
+        appl_object::s_create(
             p_context,
             (&
                 appl_mutex_std_node::placement_new),
             (&
                 appl_mutex_std_node::init),
-            r_mutex);
+            &(
+                p_mutex_std_node));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_mutex) =
+            p_mutex_std_node;
+    }
 
     return
         e_status;

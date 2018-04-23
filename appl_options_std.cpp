@@ -30,19 +30,36 @@ appl_options_std::s_create(
     struct appl_options_std_descriptor const * const
         p_options_std_descriptor,
     class appl_options * * const
-        r_options_std)
+        r_options)
 {
-    return
-        appl_object::s_create
-        < appl_options_std, appl_options_std_descriptor, appl_options >
-        (
+    enum appl_status
+        e_status;
+
+    class appl_options_std *
+        p_options_std;
+
+    e_status =
+        appl_object::s_create(
             p_context,
             (&
                 appl_options_std::placement_new),
             (&
                 appl_options_std::init),
             p_options_std_descriptor,
-            r_options_std);
+            &(
+                p_options_std));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_options) =
+            p_options_std;
+    }
+
+    return
+        e_status;
 
 } // create_instance()
 

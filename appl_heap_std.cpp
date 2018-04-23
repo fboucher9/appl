@@ -45,11 +45,11 @@ enum appl_status
     if (
         p_placement)
     {
-        class appl_heap *
-            p_heap;
+        class appl_heap_std *
+            p_heap_std;
 
         e_status =
-            appl_object::s_init(
+            appl_object::s_init<appl_heap_std>(
                 static_cast<struct appl_context *>(
                     0),
                 p_placement,
@@ -58,7 +58,7 @@ enum appl_status
                 (&
                     appl_heap_std::init_dummy),
                 &(
-                    p_heap));
+                    p_heap_std));
 
         if (
             appl_status_ok
@@ -66,7 +66,7 @@ enum appl_status
         {
             *(
                 r_heap) =
-                p_heap;
+                p_heap_std;
         }
         else
         {

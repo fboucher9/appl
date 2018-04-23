@@ -50,17 +50,28 @@ enum appl_status
     enum appl_status
         e_status;
 
+    class appl_socket_std_node *
+        p_socket_std_node;
+
     e_status =
-        appl_object::s_create
-        < appl_socket_std_node, appl_property, appl_socket >
-        (
+        appl_object::s_create (
             p_context,
             (&
                 appl_socket_std_node::s_new),
             (&
                 appl_socket_std_node::init),
             p_socket_descriptor,
-            r_socket);
+            &(
+                p_socket_std_node));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_socket) =
+            p_socket_std_node;
+    }
 
     return
         e_status;

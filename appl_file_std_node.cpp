@@ -44,17 +44,34 @@ enum appl_status
         struct appl_file * * const
             r_file)
 {
-    return
-        appl_object::s_create
-        < appl_file_std_node, appl_file_descriptor, appl_file >
-        (
+    enum appl_status
+        e_status;
+
+    class appl_file_std_node *
+        p_file_std_node;
+
+    e_status =
+        appl_object::s_create(
             p_context,
             (&
                 appl_file_std_node::placement_new ),
             (&
                 appl_file_std_node::init ),
             p_file_descriptor,
-            r_file);
+            &(
+                p_file_std_node));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_file) =
+            p_file_std_node;
+    }
+
+    return
+        e_status;
 
 } // create_instance()
 

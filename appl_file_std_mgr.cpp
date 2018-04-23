@@ -35,14 +35,25 @@ enum appl_status
     enum appl_status
         e_status;
 
+    class appl_file_std_mgr *
+        p_file_std_mgr;
+
     e_status =
-        appl_object::s_create
-        < appl_file_std_mgr, appl_file_mgr >
-        (
+        appl_object::s_create(
             p_context,
             (&
                 appl_file_std_mgr::placement_new),
-            r_file_mgr);
+            &(
+                p_file_std_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_file_mgr) =
+            p_file_std_mgr;
+    }
 
     return
         e_status;

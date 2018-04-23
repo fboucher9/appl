@@ -73,8 +73,8 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
-        class appl_heap *
-            p_heap;
+        class appl_heap_dbg *
+            p_heap_dbg;
 
         struct appl_heap_dbg_descriptor
             o_descriptor;
@@ -94,7 +94,7 @@ enum appl_status
                 &(
                     o_descriptor),
                 &(
-                    p_heap));
+                    p_heap_dbg));
 
         if (
             appl_status_ok
@@ -102,7 +102,7 @@ enum appl_status
         {
             *(
                 r_heap) =
-                p_heap;
+                p_heap_dbg;
         }
         else
         {

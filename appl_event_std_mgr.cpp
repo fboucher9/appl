@@ -38,14 +38,25 @@ enum appl_status
     enum appl_status
         e_status;
 
+    class appl_event_std_mgr *
+        p_event_std_mgr;
+
     e_status =
-        appl_object::s_create
-        < appl_event_std_mgr, appl_event_mgr >
-        (
+        appl_object::s_create(
             p_context,
             (&
                 appl_event_std_mgr::s_new),
-            r_event_mgr);
+            &(
+                p_event_std_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_event_mgr) =
+            p_event_std_mgr;
+    }
 
     return
         e_status;

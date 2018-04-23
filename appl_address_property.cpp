@@ -61,7 +61,7 @@ struct appl_address_property : public appl_object
         {
             return
                 appl_object::s_create
-                < appl_address_property, appl_address_property >
+                < appl_address_property >
                 (
                     p_context,
                     (&

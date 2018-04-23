@@ -51,14 +51,25 @@ enum appl_status
     enum appl_status
         e_status;
 
+    class appl_socket_std_mgr *
+        p_socket_std_mgr;
+
     e_status =
-        appl_object::s_create
-        < appl_socket_std_mgr, appl_socket_mgr >
-        (
+        appl_object::s_create(
             p_context,
             (&
                 appl_socket_std_mgr::s_new),
-            r_socket_mgr);
+            &(
+                p_socket_std_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_socket_mgr) =
+            p_socket_std_mgr;
+    }
 
     return
         e_status;
