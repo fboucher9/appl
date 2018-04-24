@@ -21,7 +21,7 @@ appl-toolchain-gnu-debug-dll-cxxflags = \
     -DAPPL_OS_LINUX
 
 define appl-toolchain-gnu-debug-dll-linker
-	$(APPL_VERBOSE)echo -o $(1) -shared -rdynamic $(appl-toolchain-gnu-debug-dll-cflags) $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-gnu-lflags)) > $(1).cmd
+	$(APPL_VERBOSE)echo -o $(1) -shared -rdynamic -Wl,--version-script=$(strip $(5)) $(appl-toolchain-gnu-debug-dll-cflags) $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-gnu-lflags)) > $(1).cmd
 	$(APPL_VERBOSE)$(appl-gnu-cc) @$(strip $(1)).cmd
 endef
 

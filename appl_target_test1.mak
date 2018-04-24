@@ -4,6 +4,8 @@ target-list += test_appl
 
 test_appl-cfgs = $(APPL_TOOLCHAIN)
 
+test_appl-exports = appl.exports
+
 test_appl-deps = \
     appl_test.c \
     appl.cpp \

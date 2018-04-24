@@ -184,6 +184,7 @@ APPL_LIBRARY-rt-mingw-lflags = -lwinmm
 # $2: inputs
 # $3: flags
 # $4: libs
+# $5: exports
 
 # appl-toolchain-$(x)-c-compiler
 # $1: output
@@ -247,6 +248,7 @@ endef
 define do_target
 $(1)-src ?= $$(APPL_SRC)
 $(1)-dst ?= $$(APPL_DST)$(1)/
+$(1)-exports-path ?= $$($(1)-src)$$($(1)-exports)
 $(1)-$(2)-c-flags ?=
 $(1)-$(2)-cxx-flags ?=
 $(1)-$(2)-deps ?= $$($(1)-deps)
@@ -265,7 +267,7 @@ all $(1) $(2) : $(1)-$(2)
 $$($(1)-$(2)-output) : $$($(1)-$(2)-input) $$(MAKEFILE_LIST)
 	@echo linking $(1) with $(2)
 	-$$(APPL_VERBOSE)mkdir -p $$(dir $$($(1)-$(2)-output))
-	$$(call $$($(1)-$(2)-linker),$$($(1)-$(2)-output),$$($(1)-$(2)-input),$$($(1)-$(2)-c-flags),$$($(1)-$(2)-libs))
+	$$(call $$($(1)-$(2)-linker),$$($(1)-$(2)-output),$$($(1)-$(2)-input),$$($(1)-$(2)-c-flags),$$($(1)-$(2)-libs),$$($(1)-exports-path))
 $$(foreach x, $$($(1)-deps), $$(eval $$(call do_source,$(1),$(2),$$(x))))
 endef
 
