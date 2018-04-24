@@ -5,8 +5,17 @@ APPL_TOOLCHAIN_MINGW_CC ?= x86_64-w64-mingw32-gcc
 APPL_TOOLCHAIN_MINGW_CXX ?= x86_64-w64-mingw32-g++
 
 # Setup mingw compiler options
-APPL_TOOLCHAIN_MINGW_CFLAGS ?= $(APPL_CFLAGS-gnu)
-APPL_TOOLCHAIN_MINGW_CXXFLAGS ?= $(APPL_CXXFLAGS-gnu)
+APPL_TOOLCHAIN_MINGW_CFLAGS = \
+    $(appl-gnu-common-flags) \
+    $(appl-gnu-common-cflags) \
+    $(appl-gnu-release-flags) \
+    $(appl-gnu-release-cflags)
+
+APPL_TOOLCHAIN_MINGW_CXXFLAGS = \
+    $(appl-gnu-common-flags) \
+    $(appl-gnu-common-cxxflags) \
+    $(appl-gnu-release-flags) \
+    $(appl-gnu-release-cxxflags)
 
 define appl-toolchain-mingw-linker
 	$(APPL_VERBOSE)echo -o $(1) $(APPL_TOOLCHAIN_MINGW_CFLAGS) $(3) $(2) -static $(foreach x,$(4),$(APPL_LIBRARY-$(x)-mingw-lflags)) > $(1).cmd

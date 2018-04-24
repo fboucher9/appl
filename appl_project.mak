@@ -18,18 +18,20 @@ APPL_SRC ?=
 # Location of output files
 APPL_DST ?= .obj/
 
-# Setup clang toolchain program
-APPL_CC-clang = clang
-APPL_CXX-clang = clang++
+# Setup clang C compiler program
+appl-clang-cc = clang
+
+# Setup clang C++ compiler program
+appl-clang-cxx = clang++
 
 # Select a C compiler program
-APPL_CC-gnu = $(CC)
+appl-gnu-cc = $(CC)
 
 # Select a C++ compiler program
-APPL_CXX-gnu = $(CXX)
+appl-gnu-cxx = $(CXX)
 
 # Common compiler flags for C and C++
-APPL_FLAGS-gnu = \
+appl-gnu-common-flags = \
     -g \
     -O2 \
     -D_BSD_SOURCE \
@@ -80,10 +82,18 @@ APPL_FLAGS-gnu = \
     -Wvla \
     -Wwrite-strings
 
+appl-gnu-common-flags-program =
+
+appl-gnu-common-flags-dynamic = -shared -fPIC
+
+appl-gnu-common-flags-static =
+
+appl-gnu-debug-flags = -DAPPL_DEBUG
+
+appl-gnu-release-flags = -DAPPL_NDEBUG
+
 # Append common flags to C compiler flags
-APPL_CFLAGS-gnu = \
-    $(CFLAGS) \
-    $(APPL_FLAGS-gnu) \
+appl-gnu-common-cflags = \
     -Wbad-function-cast \
     -Wc++-compat \
     -Wdeclaration-after-statement \
@@ -97,9 +107,7 @@ APPL_CFLAGS-gnu = \
     -std=c89
 
 # Append common flags to C++ compiler flags
-APPL_CXXFLAGS-gnu = \
-    $(CXXFLAGS) \
-    $(APPL_FLAGS-gnu) \
+appl-gnu-common-cxxflags = \
     -Wc++0x-compat \
     -Wctor-dtor-privacy \
     -Weffc++ \
@@ -112,20 +120,27 @@ APPL_CXXFLAGS-gnu = \
     -fno-rtti \
     -fno-exceptions
 
+# Configuration specific gnu flags
+appl-gnu-debug-cflags =
+
+appl-gnu-debug-cxxflags =
+
+appl-gnu-release-cflags =
+
+appl-gnu-release-cxxflags =
+
 # Setup clang compiler options
-APPL_FLAGS-clang = \
+appl-clang-common-flags = \
     -g \
     -O0 \
     -Weverything \
     -D_BSD_SOURCE \
     -I$(APPL_SRC).
 
-APPL_CFLAGS-clang = \
-    $(APPL_FLAGS-clang) \
+appl-clang-common-cflags = \
     -std=c89
 
-APPL_CXXFLAGS-clang = \
-    $(APPL_FLAGS-clang) \
+appl-clang-common-cxxflags = \
     -std=c++98 \
     -fno-rtti \
     -fno-exceptions
