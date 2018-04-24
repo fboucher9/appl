@@ -1,6 +1,6 @@
 # See LICENSE for license details
 
-appl-toolchain-gnudbg32-cflags = \
+appl-toolchain-gnu-debug-exe-cflags = \
     $(CFLAGS) \
     $(appl-gnu-common-flags) \
     $(appl-gnu-common-cflags) \
@@ -10,7 +10,7 @@ appl-toolchain-gnudbg32-cflags = \
     $(appl-gnu-exe-cflags) \
     -DAPPL_OS_LINUX
 
-appl-toolchain-gnudbg32-cxxflags = \
+appl-toolchain-gnu-debug-exe-cxxflags = \
     $(CXXFLAGS) \
     $(appl-gnu-common-flags) \
     $(appl-gnu-common-cxxflags) \
@@ -20,18 +20,18 @@ appl-toolchain-gnudbg32-cxxflags = \
     $(appl-gnu-exe-cxxflags) \
     -DAPPL_OS_LINUX
 
-define appl-toolchain-gnudbg32-linker
-	$(APPL_VERBOSE)echo -o $(1) -m32 -rdynamic $(appl-toolchain-gnudbg32-cflags) $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-gnu-lflags)) > $(1).cmd
+define appl-toolchain-gnu-debug-exe-linker
+	$(APPL_VERBOSE)echo -o $(1) -rdynamic $(appl-toolchain-gnu-debug-exe-cflags) $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-gnu-lflags)) > $(1).cmd
 	$(APPL_VERBOSE)$(appl-gnu-cc) @$(strip $(1)).cmd
 endef
 
-define appl-toolchain-gnudbg32-c-compiler
-	$(APPL_VERBOSE)echo -c -o $(1) -m32 $(appl-toolchain-gnudbg32-cflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+define appl-toolchain-gnu-debug-exe-c-compiler
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-debug-exe-cflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(appl-gnu-cc) @$(strip $(1)).cmd
 endef
 
-define appl-toolchain-gnudbg32-cxx-compiler
-	$(APPL_VERBOSE)echo -c -o $(1) -m32 $(appl-toolchain-gnudbg32-cxxflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+define appl-toolchain-gnu-debug-exe-cxx-compiler
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-debug-exe-cxxflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(appl-gnu-cxx) @$(strip $(1)).cmd
 endef
 

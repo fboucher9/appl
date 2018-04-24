@@ -9,13 +9,17 @@ APPL_TOOLCHAIN_MINGW_CFLAGS = \
     $(appl-gnu-common-flags) \
     $(appl-gnu-common-cflags) \
     $(appl-gnu-release-flags) \
-    $(appl-gnu-release-cflags)
+    $(appl-gnu-release-cflags) \
+    $(appl-gnu-exe-flags) \
+    $(appl-gnu-exe-cflags) \
 
 APPL_TOOLCHAIN_MINGW_CXXFLAGS = \
     $(appl-gnu-common-flags) \
     $(appl-gnu-common-cxxflags) \
     $(appl-gnu-release-flags) \
-    $(appl-gnu-release-cxxflags)
+    $(appl-gnu-release-cxxflags) \
+    $(appl-gnu-exe-flags) \
+    $(appl-gnu-exe-cxxflags)
 
 define appl-toolchain-mingw-linker
 	$(APPL_VERBOSE)echo -o $(1) $(APPL_TOOLCHAIN_MINGW_CFLAGS) $(3) $(2) -static $(foreach x,$(4),$(APPL_LIBRARY-$(x)-mingw-lflags)) > $(1).cmd

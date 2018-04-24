@@ -1,5 +1,7 @@
 /* See LICENSE for license details */
 
+#if defined APPL_BUILD_EXE
+
 /* Include unistd.h for usleep() function */
 #include <stdarg.h>
 
@@ -1251,3 +1253,11 @@ appl_main(
         e_status;
 
 }
+
+#else /* #if defined APPL_BUILD_EXE */
+
+typedef void appl_dummy;
+
+#endif /* #if defined APPL_BUILD_EXE */
+
+/* end-of-file: appl_test.c */

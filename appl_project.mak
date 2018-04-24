@@ -7,7 +7,17 @@
 
 # Select a toolchain
 # May be gnu, clang, mingw
-APPL_TOOLCHAIN ?= gnudbg gnu clang mingw mingwdbg gnudbg32
+APPL_TOOLCHAIN ?= \
+    gnu-debug-exe \
+    gnu-release-exe \
+    gnu-debug-dll \
+    gnu-release-dll \
+    gnu-debug-lib \
+    gnu-release-lib \
+    clang \
+    mingw \
+    mingwdbg \
+    gnudbg32
 
 # Verbose output of executed commands
 APPL_VERBOSE ?= @
@@ -29,6 +39,9 @@ appl-gnu-cc = $(CC)
 
 # Select a C++ compiler program
 appl-gnu-cxx = $(CXX)
+
+# Select archive program
+appl-gnu-ar = $(AR)
 
 # Common compiler flags for C and C++
 appl-gnu-common-flags = \
@@ -82,15 +95,15 @@ appl-gnu-common-flags = \
     -Wvla \
     -Wwrite-strings
 
-appl-gnu-common-flags-program =
-
-appl-gnu-common-flags-dynamic = -shared -fPIC
-
-appl-gnu-common-flags-static =
-
 appl-gnu-debug-flags = -DAPPL_DEBUG
 
 appl-gnu-release-flags = -DAPPL_NDEBUG
+
+appl-gnu-exe-flags = -DAPPL_BUILD_EXE
+
+appl-gnu-dll-flags = -DAPPL_BUILD_DLL -shared -fPIC
+
+appl-gnu-lib-flags = -DAPPL_BUILD_LIB
 
 # Append common flags to C compiler flags
 appl-gnu-common-cflags = \
@@ -129,12 +142,25 @@ appl-gnu-release-cflags =
 
 appl-gnu-release-cxxflags =
 
+appl-gnu-exe-cflags =
+
+appl-gnu-exe-cxxflags =
+
+appl-gnu-dll-cflags =
+
+appl-gnu-dll-cxxflags =
+
+appl-gnu-lib-cflags =
+
+appl-gnu-lib-cxxflags =
+
 # Setup clang compiler options
 appl-clang-common-flags = \
     -g \
     -O0 \
     -Weverything \
     -D_BSD_SOURCE \
+    -DAPPL_BUILD_EXE \
     -I$(APPL_SRC).
 
 appl-clang-common-cflags = \
@@ -221,8 +247,8 @@ endef
 define do_target
 $(1)-src ?= $$(APPL_SRC)
 $(1)-dst ?= $$(APPL_DST)$(1)/
-$(1)-$(2)-c-flags ?= $$($(2)-c-flags)
-$(1)-$(2)-cxx-flags ?= $$($(2)-cxx-flags)
+$(1)-$(2)-c-flags ?=
+$(1)-$(2)-cxx-flags ?=
 $(1)-$(2)-deps ?= $$($(1)-deps)
 $(1)-$(2)-libs ?= $$($(1)-libs)
 $(1)-$(2)-dst ?= $$($(1)-dst)$(2)/
