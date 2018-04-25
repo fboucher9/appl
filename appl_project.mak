@@ -43,6 +43,56 @@ appl-gnu-cxx = $(CXX)
 # Select archive program
 appl-gnu-ar = $(AR)
 
+# Setup prefix of output file
+appl-prefix =
+
+appl-gnu-prefix = $(appl-prefix)
+
+appl-gnu-exe-prefix = $(appl-gnu-prefix)
+
+appl-gnu-dll-prefix = lib$(appl-gnu-prefix)
+
+appl-gnu-lib-prefix = lib$(appl-gnu-prefix)
+
+appl-gnu-debug-exe-prefix = $(appl-gnu-exe-prefix)
+
+appl-gnu-debug-dll-prefix = $(appl-gnu-dll-prefix)
+
+appl-gnu-debug-lib-prefix = $(appl-gnu-lib-prefix)
+
+appl-gnu-release-exe-prefix = $(appl-gnu-exe-prefix)
+
+appl-gnu-release-dll-prefix = $(appl-gnu-dll-prefix)
+
+appl-gnu-release-lib-prefix = $(appl-gnu-lib-prefix)
+
+# Setup suffix of output file
+appl-suffix =
+
+appl-gnu-suffix = $(appl-suffix)
+
+appl-gnu-exe-suffix = $(appl-suffix)
+
+appl-gnu-dll-suffix = $(appl-suffix).so
+
+appl-gnu-lib-suffix = $(appl-suffix).a
+
+appl-gnu-debug-exe-suffix = $(appl-gnu-exe-suffix)
+
+appl-gnu-debug-dll-suffix = $(appl-gnu-dll-suffix)
+
+appl-gnu-debug-lib-suffix = $(appl-gnu-lib-suffix)
+
+appl-gnu-release-exe-suffix = $(appl-gnu-exe-suffix)
+
+appl-gnu-release-dll-suffix = $(appl-gnu-dll-suffix)
+
+appl-gnu-release-lib-suffix = $(appl-gnu-lib-suffix)
+
+appl-mingw-suffix = $(appl-suffix).exe
+
+appl-mingwdbg-suffix = $(appl-suffix).exe
+
 # Common compiler flags for C and C++
 appl-gnu-common-flags = \
     -g \
@@ -255,7 +305,7 @@ $(1)-$(2)-deps ?= $$($(1)-deps)
 $(1)-$(2)-libs ?= $$($(1)-libs)
 $(1)-$(2)-dst ?= $$($(1)-dst)$(2)/
 $(1)-$(2)-src ?= $$($(1)-src)
-$(1)-$(2)-output ?= $$($(1)-$(2)-dst)$(1).exe
+$(1)-$(2)-output ?= $$($(1)-$(2)-dst)$$(appl-$(2)-prefix)$(1)$$(appl-$(2)-suffix)
 $(1)-$(2)-input ?= $$(foreach y, $$($(1)-$(2)-deps), $$($(1)-$(2)-dst)$$(y).o)
 $(1)-$(2)-c-compiler ?= appl-toolchain-$(2)-c-compiler
 $(1)-$(2)-cxx-compiler ?= appl-toolchain-$(2)-cxx-compiler
