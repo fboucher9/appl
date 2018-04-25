@@ -10,6 +10,8 @@ Description:
 
 */
 
+#if ! defined APPL_BUILD_DLL
+
 #include <appl.h>
 
 #include <appl_object.h>
@@ -94,5 +96,11 @@ main(
         i_exit_code;
 
 } /* main() */
+
+#else /* #if ! defined APPL_BUILD_DLL */
+
+typedef void appl_dummy;
+
+#endif /* #if ! defined APPL_BUILD_DLL */
 
 /* end-of-file: appl.cpp */
