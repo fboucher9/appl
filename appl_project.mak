@@ -147,7 +147,7 @@ appl-gnu-common-flags = \
 
 appl-gnu-debug-flags = -DAPPL_DEBUG
 
-appl-gnu-release-flags = -DAPPL_NDEBUG
+appl-gnu-release-flags = -DAPPL_RELEASE
 
 appl-gnu-exe-flags = -DAPPL_BUILD_EXE
 

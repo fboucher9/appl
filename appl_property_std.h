@@ -21,25 +21,22 @@
 #error include appl_property.h before
 #endif /* #if ! defined INC_APPL_PROPERTY_H */
 
-struct appl_property_node
+struct appl_property_node;
+
+/*
+
+*/
+struct appl_property_std_descriptor
 {
     unsigned int
-        i_id;
+        i_count;
 
-    enum appl_property_type
-        e_type;
-
-    union appl_property_value
-        o_value;
-
-}; /* struct appl_property_node */
+}; /* struct appl_property_descriptor */
 
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
-
-struct appl_property_std_descriptor;
 
 struct appl_property_std;
 

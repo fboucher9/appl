@@ -22,15 +22,18 @@
 
 #include <appl_heap.h>
 
-/*
-
-*/
-struct appl_property_std_descriptor
+struct appl_property_node
 {
     unsigned int
-        i_count;
+        i_id;
 
-}; /* struct appl_property_descriptor */
+    enum appl_property_type
+        e_type;
+
+    union appl_property_value
+        o_value;
+
+}; /* struct appl_property_node */
 
 #if ! defined __cplusplus
 #error use c++ compiler

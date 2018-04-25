@@ -21,14 +21,10 @@
 #error include appl_heap.h before
 #endif /* #if ! defined INC_APPL_HEAP_H */
 
-#if defined APPL_DEBUG
-
 /* Header file dependency */
 #if ! defined INC_APPL_LIST_H
 #error include appl_list.h before
 #endif /* #if ! defined INC_APPL_LIST_H */
-
-#endif /* #if defined APPL_DEBUG */
 
 struct appl_heap_dbg_descriptor;
 

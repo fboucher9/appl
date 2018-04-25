@@ -22,6 +22,8 @@
 
 #include <appl_property.h>
 
+#include <appl_property_std.h>
+
 #define APPL_ADDRESS_PROPERTY_GUID (0xe0bfd095ul)
 
 enum appl_address_property_id
@@ -41,91 +43,31 @@ enum appl_address_property_id
 //
 //
 //
-struct appl_address_property : public appl_object
+struct appl_address_property : public appl_property_std
 {
     public:
 
-        struct appl_property *
-            m_property;
-
-        //
-        //
-        //
         static
         enum appl_status
         s_create(
             struct appl_context * const
                 p_context,
             struct appl_address_property * * const
-                r_address_property)
-        {
-            return
-                appl_object::s_create
-                < appl_address_property >
-                (
-                    p_context,
-                    (&
-                        appl_address_property::s_new),
-                    (&
-                        appl_address_property::init),
-                    r_address_property);
-
-        } // s_create()
+                r_address_property);
 
     protected:
 
-        appl_address_property() :
-            appl_object(),
-            m_property()
-        {
-        }
+        appl_address_property();
 
         virtual
-        ~appl_address_property()
-        {
-        }
+        ~appl_address_property();
 
-        //
-        //
-        //
         enum appl_status
-            init(void)
-        {
-            enum appl_status
-                e_status;
-
-            e_status =
-                appl_property_create(
-                    m_context,
-                    appl_address_property_id_max,
-                    &(
-                        m_property));
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                appl_property_set_ulong(
-                    m_property,
-                    appl_address_property_id_guid,
-                    APPL_ADDRESS_PROPERTY_GUID);
-            }
-
-            return
-                e_status;
-
-        } // init()
+            init(void);
 
         virtual
         enum appl_status
-            v_cleanup(void)
-        {
-            m_property->destroy();
-
-            return
-                appl_status_ok;
-
-        }
+            v_cleanup(void);
 
     private:
 
@@ -136,21 +78,110 @@ struct appl_address_property : public appl_object
             operator =(
                 struct appl_address_property const & r);
 
-        //
-        //
-        //
         static
         void
             s_new(
                 void * const
-                    p_placement)
-        {
-            new (p_placement)
-                struct appl_address_property;
-
-        } // s_new()
+                    p_placement);
 
 }; // struct appl_address_property
+
+//
+//
+//
+enum appl_status
+appl_address_property::s_create(
+    struct appl_context * const
+        p_context,
+    struct appl_address_property * * const
+        r_address_property)
+{
+    return
+        appl_object::s_create(
+            p_context,
+            (&
+                appl_address_property::s_new),
+            (&
+                appl_address_property::init),
+            r_address_property);
+
+} // s_create()
+
+//
+//
+//
+appl_address_property::appl_address_property() :
+    appl_property_std()
+{
+}
+
+//
+//
+//
+appl_address_property::~appl_address_property()
+{
+}
+
+//
+//
+//
+enum appl_status
+    appl_address_property::init(void)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_property_std_descriptor
+        o_property_std_descriptor;
+
+    o_property_std_descriptor.i_count =
+        appl_address_property_id_max;
+
+    e_status =
+        appl_property_std::init(
+            &(
+                o_property_std_descriptor));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        appl_property_set_ulong(
+            this,
+            appl_address_property_id_guid,
+            APPL_ADDRESS_PROPERTY_GUID);
+    }
+
+    return
+        e_status;
+
+} // init()
+
+//
+//
+//
+enum appl_status
+    appl_address_property::v_cleanup(void)
+{
+    appl_property_std::v_cleanup();
+
+    return
+        appl_status_ok;
+
+}
+
+//
+//
+//
+void
+    appl_address_property::s_new(
+        void * const
+            p_placement)
+{
+    new (p_placement)
+        struct appl_address_property;
+
+} // s_new()
 
 /*
 
@@ -167,8 +198,11 @@ appl_address_property_create(
             p_context,
             r_property);
 
-} /* appl_address_property_create() */
+} /* create() */
 
+/*
+
+*/
 enum appl_status
 appl_address_property_destroy(
     struct appl_address_property * const
@@ -178,27 +212,33 @@ appl_address_property_destroy(
         appl_object_destroy(
             p_address_property);
 
-}
+} /* destroy() */
 
+/*
+
+*/
 struct appl_property *
 appl_address_property_parent(
     struct appl_address_property * const
         p_address_property)
 {
     return
-        p_address_property->m_property;
+        p_address_property;
 
-}
+} /* parent() */
 
+/*
+
+*/
 struct appl_property const *
 appl_address_property_const_parent(
     struct appl_address_property const * const
         p_address_property)
 {
     return
-        p_address_property->m_property;
+        p_address_property;
 
-}
+} /* const_parent() */
 
 /*
 
@@ -218,7 +258,7 @@ appl_address_property_assert_guid(
 
     e_status =
         appl_property_get_ulong(
-            p_address_property->m_property,
+            p_address_property,
             appl_address_property_id_guid,
             &(
                 u_value));
@@ -260,7 +300,7 @@ appl_address_property_set_name(
 
     e_status =
         appl_property_set_ptr(
-            p_address_property->m_property,
+            p_address_property,
             appl_address_property_id_name_min,
             p_name_min);
 
@@ -270,7 +310,7 @@ appl_address_property_set_name(
     {
         e_status =
             appl_property_set_ptr(
-                p_address_property->m_property,
+                p_address_property,
                 appl_address_property_id_name_max,
                 p_name_max);
     }
@@ -297,7 +337,7 @@ appl_address_property_set_port(
 
     return
         appl_property_set_ulong(
-            p_address_property->m_property,
+            p_address_property,
             appl_address_property_id_port,
             static_cast<unsigned long int>(
                 i_port));
@@ -329,7 +369,7 @@ appl_address_property_get_name(
 
     e_status =
         appl_property_get_ptr(
-            p_address_property->m_property,
+            p_address_property,
             appl_address_property_id_name_min,
             &(
                 o_name_min.p_void));
@@ -343,7 +383,7 @@ appl_address_property_get_name(
 
         e_status =
             appl_property_get_ptr(
-                p_address_property->m_property,
+                p_address_property,
                 appl_address_property_id_name_max,
                 &(
                     o_name_max.p_void));
@@ -390,7 +430,7 @@ appl_address_property_get_port(
 
     e_status =
         appl_property_get_ulong(
-            p_address_property->m_property,
+            p_address_property,
             appl_address_property_id_port,
             &(
                 u_value));
