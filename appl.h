@@ -25,6 +25,13 @@ Description:
 #include <appl_types.h>
 
 /* Configuration */
+#if ( ! defined APPL_DEBUG ) && ( ! defined APPL_RELEASE )
+#error "define APPL_DEBUG or APPL_RELEASE from makefile"
+#endif
+
+#if ( ! defined APPL_OS_LINUX ) && ( ! defined APPL_OS_WINDOWS )
+#error "define APPL_OS_LINUX or APPL_OS_WINDOWS from makefile"
+#endif
 
 #define APPL_CONFIG_WITH_DEBUG
 
