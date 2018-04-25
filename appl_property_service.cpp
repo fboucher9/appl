@@ -18,6 +18,8 @@
 
 #include <appl_property.h>
 
+#include <appl_property_std.h>
+
 #include <appl_context.h>
 
 //
@@ -39,7 +41,7 @@ appl_property_service::s_create(
         p_property;
 
     e_status =
-        appl_property::s_create(
+        appl_property_std::s_create(
             p_context,
             i_count,
             &(

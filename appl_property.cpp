@@ -16,62 +16,11 @@
 
 #include <appl_property.h>
 
-/*
-
-*/
-struct appl_property_descriptor
-{
-    unsigned int
-        i_count;
-
-}; /* struct appl_property_descriptor */
+#include <appl_unused.h>
 
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
-
-//
-//
-//
-enum appl_status
-    appl_property::s_create(
-        struct appl_context * const
-            p_context,
-        unsigned int const
-            i_count,
-        struct appl_property * * const
-            r_property)
-{
-    enum appl_status
-        e_status;
-
-    struct appl_property_descriptor
-        o_property_descriptor;
-
-    o_property_descriptor.i_count =
-        i_count;
-
-    e_status =
-        appl_object::s_create(
-            p_context,
-            sizeof(
-                struct appl_property)
-            + (
-                sizeof(
-                    struct appl_property_node)
-                * i_count),
-            (&
-                appl_property::s_new),
-            (&
-                appl_property::init),
-            &(
-                o_property_descriptor),
-            r_property);
-
-    return
-        e_status;
-
-} // s_create()
 
 //
 //
@@ -85,30 +34,13 @@ enum appl_status
         union appl_property_value const * const
             p_value)
 {
-    enum appl_status
-        e_status;
-
-    if (
-        i_id < m_count)
-    {
-        a_nodes[i_id].e_type =
-            e_type;
-
-        a_nodes[i_id].o_value =
-            *(
-                p_value);
-
-        e_status =
-            appl_status_ok;
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
-    }
+    appl_unused(
+        i_id,
+        e_type,
+        p_value);
 
     return
-        e_status;
+        appl_status_not_implemented;
 
 } // v_set()
 
@@ -124,36 +56,13 @@ enum appl_status
         union appl_property_value * const
             p_value) const
 {
-    enum appl_status
-        e_status;
-
-    if (
-        i_id < m_count)
-    {
-        if (
-            e_type == a_nodes[i_id].e_type)
-        {
-            *(
-                p_value) =
-                a_nodes[i_id].o_value;
-
-            e_status =
-                appl_status_ok;
-        }
-        else
-        {
-            e_status =
-                appl_status_fail;
-        }
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
-    }
+    appl_unused(
+        i_id,
+        e_type,
+        p_value);
 
     return
-        e_status;
+        appl_status_not_implemented;
 
 } // v_get()
 
@@ -272,8 +181,7 @@ enum appl_status
 //
 //
 appl_property::appl_property() :
-    appl_object(),
-    m_count()
+    appl_object()
 {
 }
 
@@ -283,74 +191,5 @@ appl_property::appl_property() :
 appl_property::~appl_property()
 {
 }
-
-//
-//
-//
-void
-    appl_property::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        struct appl_property;
-
-} // s_new()
-
-//
-//
-//
-enum appl_status
-    appl_property::init(
-        struct appl_property_descriptor const * const
-            p_property_descriptor)
-{
-    enum appl_status
-        e_status;
-
-    m_count =
-        p_property_descriptor->i_count;
-
-    {
-        unsigned int
-            i;
-
-        for (
-            i = 0u;
-            i < m_count;
-            i ++)
-        {
-            a_nodes[i].e_type =
-                appl_property_type_default;
-
-            a_nodes[i].o_value.p_value =
-                0;
-        }
-    }
-
-    e_status =
-        appl_status_ok;
-
-    return
-        e_status;
-
-} // init()
-
-//
-//
-//
-enum appl_status
-    appl_property::v_cleanup(void)
-{
-    enum appl_status
-        e_status;
-
-    e_status =
-        appl_status_ok;
-
-    return
-        e_status;
-
-} // v_cleanup()
 
 /* end-of-file: appl_property.cpp */

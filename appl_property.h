@@ -25,25 +25,10 @@ union appl_property_value;
 
 struct appl_property;
 
-struct appl_property_node
-{
-    unsigned int
-        i_id;
-
-    enum appl_property_type
-        e_type;
-
-    union appl_property_value
-        o_value;
-
-}; /* struct appl_property_node */
-
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
-
-struct appl_property;
 
 //
 //
@@ -51,16 +36,6 @@ struct appl_property;
 struct appl_property : public appl_object
 {
     public:
-
-        static
-        enum appl_status
-            s_create(
-                struct appl_context * const
-                    p_context,
-                unsigned int const
-                    i_id,
-                struct appl_property * * const
-                    r_property);
 
         virtual
         enum appl_status
@@ -112,36 +87,12 @@ struct appl_property : public appl_object
 
     private:
 
-        unsigned int
-            m_count;
-
-        unsigned int
-            ui_padding[3u];
-
-        struct appl_property_node
-            a_nodes[1u];
-
         appl_property(
             struct appl_property const & r);
 
         struct appl_property &
             operator =(
                 struct appl_property const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
-
-        enum appl_status
-            init(
-                struct appl_property_descriptor const * const
-                    p_property_descriptor);
-
-        virtual
-        enum appl_status
-            v_cleanup(void);
 
 }; // struct appl_property
 
