@@ -24,6 +24,14 @@
 
 #include <appl_property_std.h>
 
+#if defined APPL_DEBUG
+
+#include <appl_debug_handle.h>
+
+#include <appl_convert.h>
+
+#endif /* #if defined APPL_DEBUG */
+
 #define APPL_ADDRESS_PROPERTY_GUID (0xe0bfd095ul)
 
 enum appl_address_property_id
@@ -274,6 +282,10 @@ appl_address_property_assert_guid(
     }
     else
     {
+        appl_debug_print0(
+            p_address_property,
+            appl_convert(
+                "invalid guid for appl_address_property object\n"));
     }
 }
 #endif /* #if defined APPL_DEBUG */
