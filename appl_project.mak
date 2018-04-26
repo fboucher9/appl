@@ -229,6 +229,12 @@ APPL_LIBRARY-rt-gnu-lflags = -lrt
 APPL_LIBRARY-rt-clang-lflags = -lrt
 APPL_LIBRARY-rt-mingw-lflags = -lwinmm
 
+# Macro to expand list of includes
+appl-expand-incs = $(foreach x,$(1), -I$(x))
+
+# Macro to expand list of defines
+appl-expand-defs = $(foreach x,$(1), -D$(x))
+
 # appl-toolchain-$(x)-linker
 # $1: output
 # $2: inputs
@@ -240,11 +246,15 @@ APPL_LIBRARY-rt-mingw-lflags = -lwinmm
 # $1: output
 # $2: input
 # $3: flags
+# $4: incs
+# $5: defs
 
 # appl-toolchain-$(x)-cxx-compiler
 # $1: output
 # $2: input
 # $3: flags
+# $4: incs
+# $5: defs
 
 # include the toolchain files
 include $(wildcard $(foreach x,$(APPL_TOOLCHAIN), $(APPL_SRC)appl_toolchain_$(x).mak))
@@ -269,6 +279,8 @@ $(1)-$(2)-$(3)-dst ?= $$($(1)-$(2)-dst)
 $(1)-$(2)-$(3)-src ?= $$($(1)-$(2)-src)
 $(1)-$(2)-$(3)-output ?= $$($(1)-$(2)-$(3)-dst)$(3).o
 $(1)-$(2)-$(3)-input ?= $$($(1)-$(2)-$(3)-src)$(3)
+$(1)-$(2)-$(3)-incs ?= $$($(1)-$(2)-incs)
+$(1)-$(2)-$(3)-defs ?= $$($(1)-$(2)-defs)
 ifeq "$(suffix $(3))" ".c"
 $(1)-$(2)-$(3)-flags ?= $$($(1)-$(2)-c-flags)
 $(1)-$(2)-$(3)-compiler ?= $$($(1)-$(2)-c-compiler)
@@ -280,11 +292,11 @@ APPL_HEADER_DEPS += $$($(1)-$(2)-$(3)-output).d
 $$($(1)-$(2)-$(3)-output) : $$($(1)-$(2)-$(3)-input) $$(MAKEFILE_LIST)
 	@echo compiling $(3) with $(2)
 	-$$(APPL_VERBOSE)mkdir -p $$(dir $$($(1)-$(2)-$(3)-output))
-	$$(call $$($(1)-$(2)-$(3)-compiler), $$($(1)-$(2)-$(3)-output),$$($(1)-$(2)-$(3)-input),$$($(1)-$(2)-$(3)-flags))
+	$$(call $$($(1)-$(2)-$(3)-compiler), $$($(1)-$(2)-$(3)-output),$$($(1)-$(2)-$(3)-input),$$($(1)-$(2)-$(3)-flags),$$($(1)-$(2)-$(3)-incs),$$($(1)-$(2)-$(3)-defs))
 endef
 
 #
-# Function: do_target
+# Function: do_target_2
 #
 # Description:
 #       Generate linker and compiler rules for a target
@@ -295,16 +307,15 @@ endef
 #
 # Comments:
 #
-define do_target
-$(1)-src ?= $$(APPL_SRC)
-$(1)-dst ?= $$(APPL_DST)$(1)/
-$(1)-exports-path ?= $$($(1)-src)$$($(1)-exports)
+define do_target_2
 $(1)-$(2)-c-flags ?=
 $(1)-$(2)-cxx-flags ?=
 $(1)-$(2)-deps ?= $$($(1)-deps)
 $(1)-$(2)-libs ?= $$($(1)-libs)
 $(1)-$(2)-dst ?= $$($(1)-dst)$(2)/
 $(1)-$(2)-src ?= $$($(1)-src)
+$(1)-$(2)-incs ?= $$($(1)-incs)
+$(1)-$(2)-defs ?= $$($(1)-defs)
 $(1)-$(2)-output ?= $$($(1)-$(2)-dst)$$(appl-$(2)-prefix)$(1)$$(appl-$(2)-suffix)
 $(1)-$(2)-input ?= $$(foreach y, $$($(1)-$(2)-deps), $$($(1)-$(2)-dst)$$(y).o)
 $(1)-$(2)-c-compiler ?= appl-toolchain-$(2)-c-compiler
@@ -321,7 +332,19 @@ $$($(1)-$(2)-output) : $$($(1)-$(2)-input) $$(MAKEFILE_LIST)
 $$(foreach x, $$($(1)-deps), $$(eval $$(call do_source,$(1),$(2),$$(x))))
 endef
 
-$(foreach x,$(target-list), $(foreach y, $($(x)-cfgs), $(eval $(call do_target,$(x),$(y)))))
+#
+# Parameters:
+#       $1      target name
+#
+define do_target_1
+$(1)-src ?= $$(APPL_SRC)
+$(1)-dst ?= $$(APPL_DST)$(1)/
+$(1)-exports-path ?= $$($(1)-src)$$($(1)-exports)
+$(1)-cfgs ?= $$(APPL_TOOLCHAIN)
+$$(foreach x, $$($(1)-cfgs), $$(eval $$(call do_target_2,$(1),$$(x))))
+endef
+
+$(foreach x,$(target-list), $(eval $(call do_target_1,$(x),$(y))))
 
 # Generic "clean" rule, delete all object files
 .PHONY: clean

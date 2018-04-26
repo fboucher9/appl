@@ -29,12 +29,12 @@ define appl-toolchain-mingwdbg-linker
 endef
 
 define appl-toolchain-mingwdbg-c-compiler
-	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-mingw-debug-exe-cflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-mingw-debug-exe-cflags) $(call appl-expand-incs,$(4)) $(call appl-expand-defs,$(5)) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(APPL_TOOLCHAIN_MINGW_CC) @$(strip $(1)).cmd
 endef
 
 define appl-toolchain-mingwdbg-cxx-compiler
-	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-mingw-debug-exe-cxxflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-mingw-debug-exe-cxxflags) $(call appl-expand-incs,$(4)) $(call appl-expand-defs,$(5)) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(APPL_TOOLCHAIN_MINGW_CXX) @$(strip $(1)).cmd
 endef
 
