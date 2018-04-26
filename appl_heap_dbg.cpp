@@ -385,9 +385,7 @@ enum appl_status
 
             p_footer =
                 reinterpret_cast<struct appl_heap_dbg_footer *>(
-                    reinterpret_cast<unsigned char *>(
-                        p_header + 1)
-                    + i_buf_len);
+                    p_header->a_header + 8 + i_buf_len);
 
             {
                 unsigned int i_footer_iterator;
@@ -478,7 +476,7 @@ enum appl_status
 
         p_footer =
             reinterpret_cast<struct appl_heap_dbg_footer *>(
-                reinterpret_cast<unsigned char *>(
+                static_cast<unsigned char *>(
                     p_buf)
                 + p_header->i_buf_len);
 

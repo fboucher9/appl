@@ -139,9 +139,9 @@ enum appl_status
             i_copy_len;
 
         i_copy_len =
-            static_cast<unsigned long int>(
-                p_buf_max
-                - p_buf_min);
+            appl_buf_len(
+                p_buf_min,
+                p_buf_max);
 
         if (
             (
@@ -150,9 +150,9 @@ enum appl_status
             > m_buf_max)
         {
             i_copy_len =
-                static_cast<unsigned long int>(
-                    m_buf_max
-                    - m_buf_cur);
+                appl_buf_len(
+                    m_buf_cur,
+                    m_buf_max);
         }
 
         memcpy(

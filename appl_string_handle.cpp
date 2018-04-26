@@ -18,6 +18,8 @@
 
 #include <appl_string.h>
 
+#include <appl_buf.h>
+
 /*
 
 */
@@ -200,9 +202,9 @@ appl_string_create_dup_buffer(
             p_object,
             p_buf_min,
             p_buf_max,
-            static_cast<unsigned long int>(
-                p_buf_max
-                - p_buf_min),
+            appl_buf_len(
+                p_buf_min,
+                p_buf_max),
             r_string);
 
 } /* create_dup_buffer() */
@@ -441,9 +443,9 @@ appl_string_length(
     {
         *(
             r_length) =
-            static_cast<unsigned long int>(
-                p_buf_max
-                - p_buf_min);
+            appl_buf_len(
+                p_buf_min,
+                p_buf_max);
     }
 
     return

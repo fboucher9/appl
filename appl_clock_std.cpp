@@ -89,6 +89,29 @@ void
 //
 //
 //
+static
+unsigned long int
+appl_math_muldiv(
+    unsigned long int const
+        i_value,
+    unsigned long int const
+        i_mul,
+    unsigned long int const
+        i_div)
+{
+    return
+        static_cast<unsigned long int>(
+            (
+                static_cast<appl_ull_t>(
+                    i_value)
+                * i_mul)
+            / i_div);
+
+} // appl_math_muldiv()
+
+//
+//
+//
 enum appl_status
 appl_clock_std::v_read(
     unsigned long int const
@@ -118,17 +141,15 @@ appl_clock_std::v_read(
             i_time_count;
 
         i_time_count =
-            static_cast<unsigned long int>(
-                (
-                    static_cast<appl_ull_t>(
-                        o_clock_value.tv_sec)
-                    * i_time_freq)
-                + (
-                    (
-                        static_cast<appl_ull_t>(
-                            o_clock_value.tv_nsec)
-                        * i_time_freq)
-                    / 1000000000ul));
+            (
+                appl_math_muldiv(
+                    o_clock_value.tv_sec,
+                    i_time_freq,
+                    1ul)
+                + appl_math_muldiv(
+                    o_clock_value.tv_nsec,
+                    i_time_freq,
+                    1000000000ul));
 
         *(
             p_time_count) =
@@ -168,14 +189,10 @@ appl_clock_std::v_delay(
         i_time_freq)
     {
         i_time_usec =
-            static_cast<unsigned long int>(
-                (
-                    (
-                        static_cast<appl_ull_t>(
-                            i_time_count)
-                        * 1000000ul)
-                    / i_time_freq)
-                & 0xFFFFFFFFul);
+            appl_math_muldiv(
+                i_time_count,
+                1000000ul,
+                i_time_freq);
 
         usleep(
             static_cast<unsigned int>(

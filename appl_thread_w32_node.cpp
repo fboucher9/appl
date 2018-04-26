@@ -127,11 +127,22 @@ enum appl_status
                 &(
                     dwExitCode)))
         {
+            union appl_thread_w32_result
+            {
+                appl_size_t
+                    i_value;
+
+                void *
+                    p_value;
+
+            } o_thread_result;
+
+            o_thread_result.i_value =
+                dwExitCode;
+
             *(
                 r_result) =
-                reinterpret_cast<void *>(
-                    static_cast<DWORD_PTR>(
-                        dwExitCode));
+                o_thread_result.p_value;
 
             e_status =
                 appl_status_ok;
@@ -263,12 +274,24 @@ enum appl_status
     DWORD
         dwThreadId;
 
+    union appl_thread_w32_start_routine_ptr
+    {
+        appl_thread_callback *
+            p_entry;
+
+        LPTHREAD_START_ROUTINE
+            p_w32_start_routine;
+
+    } o_start_routine;
+
+    o_start_routine.p_entry =
+        o_thread_descriptor.p_entry;
+
     m_w32_thread_handle =
         CreateThread(
             NULL,
             0,
-            reinterpret_cast<LPTHREAD_START_ROUTINE>(
-                o_thread_descriptor.p_entry),
+            o_start_routine.p_w32_start_routine,
             o_thread_descriptor.p_context,
             0,
             &(

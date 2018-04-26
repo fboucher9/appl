@@ -68,6 +68,8 @@ struct appl_string : public appl_object
 
     protected:
 
+    private:
+
         unsigned char *
             m_buf_min;
 
@@ -84,8 +86,6 @@ struct appl_string : public appl_object
 
         virtual
         ~appl_string();
-
-    private:
 
         appl_string(
             struct appl_string const & r);
