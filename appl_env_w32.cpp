@@ -30,6 +30,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_buf0.h>
+
 #include <appl_convert.h>
 
 //
@@ -100,25 +102,14 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_heap *
-        p_heap;
-
-    p_heap =
-        m_context->m_heap;
-
-    appl_size_t const
-        i_name_len =
-        (
-            p_name_max
-            - p_name_min);
-
-    char *
+    unsigned char *
         p_name0;
 
     e_status =
-        p_heap->alloc_object_array(
-            static_cast<unsigned long int>(
-                i_name_len + 1),
+        appl_buf0_create(
+            m_context,
+            p_name_min,
+            p_name_max,
             &(
                 p_name0));
 
@@ -126,33 +117,32 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
-        memcpy(
-            p_name0,
-            p_name_min,
-            i_name_len);
-
-        p_name0[i_name_len] =
-            0;
-
         DWORD
             dwResult;
 
         dwResult =
             GetEnvironmentVariableA(
-                p_name0,
+                appl_convert(
+                    p_name0),
                 NULL,
                 0);
 
         if (
             dwResult)
         {
-            char *
+            class appl_heap *
+                p_heap;
+
+            p_heap =
+                m_context->m_heap;
+
+            unsigned char *
                 p_value0;
 
             e_status =
                 p_heap->alloc_object_array(
                     static_cast<appl_size_t>(
-                        dwResult),
+                        dwResult + 1),
                     &(
                         p_value0));
 
@@ -165,8 +155,10 @@ enum appl_status
 
                 dwResult2 =
                     GetEnvironmentVariableA(
-                        p_name0,
-                        p_value0,
+                        appl_convert(
+                            p_name0),
+                        appl_convert(
+                            p_value0),
                         dwResult);
 
                 if (
@@ -178,10 +170,8 @@ enum appl_status
                     e_status =
                         appl_string_create_dup_buffer(
                             m_context,
-                            appl_convert(
-                                p_value0),
-                            appl_convert(
-                                p_value0 + dwResult2),
+                            p_value0,
+                            p_value0 + dwResult2,
                             &(
                                 p_string));
 
@@ -214,7 +204,8 @@ enum appl_status
                 appl_status_fail;
         }
 
-        p_heap->v_free(
+        appl_buf0_destroy(
+            m_context,
             p_name0);
     }
     else
@@ -245,23 +236,14 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_heap * const
-        p_heap =
-        m_context->m_heap;
-
-    appl_size_t const
-        i_name_len =
-        (
-            p_name_max
-            - p_name_min);
-
-    char *
+    unsigned char *
         p_name0;
 
     e_status =
-        p_heap->alloc_object_array(
-            static_cast<unsigned long int>(
-                i_name_len + 1),
+        appl_buf0_create(
+            m_context,
+            p_name_min,
+            p_name_max,
             &(
                 p_name0));
 
@@ -269,27 +251,14 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
-        memcpy(
-            p_name0,
-            p_name_min,
-            i_name_len);
-
-        p_name0[i_name_len] =
-            0;
-
-        appl_size_t const
-            i_value_len =
-            (
-                p_value_max
-                - p_value_min);
-
-        char *
+        unsigned char *
             p_value0;
 
         e_status =
-            p_heap->alloc_object_array(
-                static_cast<unsigned long int>(
-                    i_value_len + 1),
+            appl_buf0_create(
+                m_context,
+                p_value_min,
+                p_value_max,
                 &(
                     p_value0));
 
@@ -297,21 +266,15 @@ enum appl_status
             appl_status_ok
             == e_status)
         {
-            memcpy(
-                p_value0,
-                p_value_min,
-                i_value_len);
-
-            p_value0[i_value_len] =
-                0;
-
             BOOL
                 bResult;
 
             bResult =
                 SetEnvironmentVariableA(
-                    p_name0,
-                    p_value0);
+                    appl_convert(
+                        p_name0),
+                    appl_convert(
+                        p_value0));
 
             if (
                 bResult)
@@ -325,11 +288,13 @@ enum appl_status
                     appl_status_fail;
             }
 
-            p_heap->v_free(
+            appl_buf0_destroy(
+                m_context,
                 p_value0);
         }
 
-        p_heap->v_free(
+        appl_buf0_destroy(
+            m_context,
             p_name0);
     }
 

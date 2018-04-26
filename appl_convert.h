@@ -53,6 +53,23 @@ appl_convert(
 //
 static
 inline
+char *
+appl_convert(
+    unsigned char * const
+        p_buffer)
+{
+    return
+        static_cast<char *>(
+            static_cast<void *>(
+                p_buffer));
+
+} // appl_convert()
+
+//
+//
+//
+static
+inline
 unsigned char * *
 appl_convert(
     char * * const
