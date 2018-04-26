@@ -227,11 +227,36 @@ enum appl_status
 //
 //
 enum appl_status
+    appl_address_std_node::v_get_name_len(
+        unsigned long int * const
+            r_name_len) const
+{
+    enum appl_status
+        e_status;
+
+    *(
+        r_name_len) =
+        49u;
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // v_get_name_len()
+
+//
+//
+//
+enum appl_status
     appl_address_std_node::v_get_name(
-        unsigned char * * const
-            pp_name_cur,
         unsigned char * const
-            p_name_max) const
+            p_name_min,
+        unsigned char * const
+            p_name_max,
+        unsigned char * * const
+            r_name_cur) const
 {
     enum appl_status
         e_status;
@@ -256,9 +281,9 @@ enum appl_status
                 strlen(
                     p_name0));
 
-        *(pp_name_cur) =
+        *(r_name_cur) =
             appl_buf_copy(
-                *(pp_name_cur),
+                p_name_min,
                 p_name_max,
                 appl_convert(
                     p_name0),

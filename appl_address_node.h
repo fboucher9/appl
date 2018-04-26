@@ -42,11 +42,19 @@ struct appl_address : public appl_object
 
         virtual
         enum appl_status
+            v_get_name_len(
+                unsigned long int * const
+                    r_name_len) const;
+
+        virtual
+        enum appl_status
             v_get_name(
-                unsigned char * * const
-                    pp_name_cur,
                 unsigned char * const
-                    p_name_max) const;
+                    p_name_min,
+                unsigned char * const
+                    p_name_max,
+                unsigned char * * const
+                    r_name_cur) const;
 
         virtual
         enum appl_status

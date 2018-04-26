@@ -23,15 +23,32 @@ Description:
 //
 //
 enum appl_status
-    appl_address::v_get_name(
-        unsigned char * * const
-            pp_name_cur,
-        unsigned char * const
-            p_name_max) const
+    appl_address::v_get_name_len(
+        unsigned long int * const
+            r_name_len) const
 {
     appl_unused(
-        pp_name_cur,
-        p_name_max);
+        r_name_len);
+    return
+        appl_status_not_implemented;
+} // v_get_name_len()
+
+//
+//
+//
+enum appl_status
+    appl_address::v_get_name(
+        unsigned char * const
+            p_name_min,
+        unsigned char * const
+            p_name_max,
+        unsigned char * * const
+            r_name_cur) const
+{
+    appl_unused(
+        p_name_min,
+        p_name_max,
+        r_name_cur);
     return
         appl_status_not_implemented;
 } // v_get_name()

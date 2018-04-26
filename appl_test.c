@@ -662,15 +662,13 @@ appl_test_socket(
             unsigned char *
                 p_name_cur;
 
-            p_name_cur =
-                a_name;
-
             e_status =
                 appl_address_get_name(
                     p_address,
+                    a_name,
+                    a_name + sizeof a_name,
                     &(
-                        p_name_cur),
-                    a_name + sizeof a_name);
+                        p_name_cur));
 
             if (
                 appl_status_ok

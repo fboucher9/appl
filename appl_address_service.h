@@ -55,22 +55,33 @@ class appl_address_service
             struct appl_address * * const
                 r_address);
 
+        // Get length of address
+        static
+        enum appl_status
+        s_get_name_len(
+            struct appl_address const * const
+                p_address,
+            unsigned long int * const
+                r_name_len);
+
         // Get name of address
         static
         enum appl_status
         s_get_name(
-            struct appl_address * const
+            struct appl_address const * const
                 p_address,
-            unsigned char * * const
-                pp_name_cur,
             unsigned char * const
-                p_name_max);
+                p_name_min,
+            unsigned char * const
+                p_name_max,
+            unsigned char * * const
+                r_name_cur);
 
         // Get port number
         static
         enum appl_status
         s_get_port(
-            struct appl_address * const
+            struct appl_address const * const
                 p_address,
             unsigned short int * const
                 r_port);

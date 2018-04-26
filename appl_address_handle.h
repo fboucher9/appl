@@ -41,17 +41,26 @@ appl_address_const_parent(
         p_address);
 
 enum appl_status
-appl_address_get_name(
-    struct appl_address * const
+appl_address_get_name_len(
+    struct appl_address const * const
         p_address,
-    unsigned char * * const
-        pp_name_cur,
+    unsigned long int * const
+        r_name_len);
+
+enum appl_status
+appl_address_get_name(
+    struct appl_address const * const
+        p_address,
     unsigned char * const
-        p_name_max);
+        p_name_min,
+    unsigned char * const
+        p_name_max,
+    unsigned char * * const
+        r_name_cur);
 
 enum appl_status
 appl_address_get_port(
-    struct appl_address * const
+    struct appl_address const * const
         p_address,
     unsigned short int * const
         r_port);
