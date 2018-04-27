@@ -5,6 +5,117 @@ APPL_TOOLCHAIN_MINGW_CC ?= x86_64-w64-mingw32-gcc
 APPL_TOOLCHAIN_MINGW_CXX ?= x86_64-w64-mingw32-g++
 APPL_TOOLCHAIN_MINGW_AR ?= x86_64-w64-mingw32-ar
 
+# Common compiler flags for C and C++
+appl-toolchain-mingw-common-flags = \
+    -g \
+    -D_BSD_SOURCE \
+    -DAPPL_OS_WINDOWS \
+    -I$(APPL_SRC). \
+    -pedantic \
+    -Wall \
+    -Wextra \
+    -Wabi \
+    -Waggregate-return \
+    -Warray-bounds \
+    -Wattributes \
+    -Wbuiltin-macro-redefined \
+    -Wcast-align \
+    -Wcast-qual \
+    -Wconversion \
+    -Wdeprecated \
+    -Wdiv-by-zero \
+    -Wendif-labels \
+    -Wfloat-equal \
+    -Wformat-contains-nul \
+    -Wformat-extra-args \
+    -Wformat-nonliteral \
+    -Wformat-security \
+    -Wformat-y2k \
+    -Wlarger-than=4096 \
+    -Wlong-long \
+    -Wmissing-declarations \
+    -Wmissing-format-attribute \
+    -Wmissing-include-dirs \
+    -Wmultichar \
+    -Woverflow \
+    -Woverlength-strings \
+    -Wpacked \
+    -Wpacked-bitfield-compat \
+    -Wpadded \
+    -Wpointer-arith \
+    -Wpragmas \
+    -Wredundant-decls \
+    -Wsequence-point \
+    -Wshadow \
+    -Wstrict-overflow=5 \
+    -Wsync-nand \
+    -Wundef \
+    -Wunused \
+    -Wunused-macros \
+    -Wunused-result \
+    -Wvariadic-macros \
+    -Wvla \
+    -Wwrite-strings
+
+appl-toolchain-mingw-debug-flags = -O0 -DAPPL_DEBUG
+
+appl-toolchain-mingw-release-flags = -O2 -DAPPL_RELEASE
+
+appl-toolchain-mingw-exe-flags = -DAPPL_BUILD_EXE
+
+appl-toolchain-mingw-dll-flags = -DAPPL_BUILD_DLL -shared $(APPL_TOOLCHAIN_PIC)
+
+appl-toolchain-mingw-lib-flags = -DAPPL_BUILD_LIB
+
+# Append common flags to C compiler flags
+appl-toolchain-mingw-common-cflags = \
+    -Wbad-function-cast \
+    -Wc++-compat \
+    -Wdeclaration-after-statement \
+    -Wformat-zero-length \
+    -Wint-to-pointer-cast \
+    -Wmissing-prototypes \
+    -Wnested-externs \
+    -Wold-style-definition \
+    -Wpointer-to-int-cast \
+    -Wstrict-prototypes \
+    -std=c89
+
+# Append common flags to C++ compiler flags
+appl-toolchain-mingw-common-cxxflags = \
+    -Wc++0x-compat \
+    -Wctor-dtor-privacy \
+    -Weffc++ \
+    -Wenum-compare \
+    -Wnon-virtual-dtor \
+    -Woverloaded-virtual \
+    -Wstrict-null-sentinel \
+    -Wsign-promo \
+    -std=c++98 \
+    -fno-rtti \
+    -fno-exceptions
+
+# Configuration specific gnu flags
+appl-toolchain-mingw-debug-cflags =
+
+appl-toolchain-mingw-debug-cxxflags =
+
+appl-toolchain-mingw-release-cflags =
+
+appl-toolchain-mingw-release-cxxflags =
+
+appl-toolchain-mingw-exe-cflags =
+
+appl-toolchain-mingw-exe-cxxflags =
+
+appl-toolchain-mingw-dll-cflags =
+
+appl-toolchain-mingw-dll-cxxflags =
+
+appl-toolchain-mingw-lib-cflags =
+
+appl-toolchain-mingw-lib-cxxflags =
+
 # Setup mingw prefix for target files
 appl-toolchain-mingw-exe-prefix =
 appl-toolchain-mingw-dll-prefix =
@@ -26,26 +137,6 @@ appl-toolchain-mingw-debug-dll-suffix = $(appl-toolchain-mingw-dll-suffix)
 appl-toolchain-mingw-release-dll-suffix = $(appl-toolchain-mingw-dll-suffix)
 appl-toolchain-mingw-debug-lib-suffix = $(appl-toolchain-mingw-lib-suffix)
 appl-toolchain-mingw-release-lib-suffix = $(appl-toolchain-mingw-lib-suffix)
-
-# Setup mingw toolchain flags using common gnu flags
-appl-toolchain-mingw-common-flags = $(appl-gnu-common-flags) -DAPPL_OS_WINDOWS
-appl-toolchain-mingw-common-cflags = $(appl-gnu-common-cflags)
-appl-toolchain-mingw-common-cxxflags = $(appl-gnu-common-cxxflags)
-appl-toolchain-mingw-release-flags = $(appl-gnu-release-flags)
-appl-toolchain-mingw-release-cflags = $(appl-gnu-release-cflags)
-appl-toolchain-mingw-release-cxxflags = $(appl-gnu-release-cxxflags)
-appl-toolchain-mingw-debug-flags = $(appl-gnu-debug-flags)
-appl-toolchain-mingw-debug-cflags = $(appl-gnu-debug-cflags)
-appl-toolchain-mingw-debug-cxxflags = $(appl-gnu-debug-cxxflags)
-appl-toolchain-mingw-exe-flags = $(appl-gnu-exe-flags)
-appl-toolchain-mingw-exe-cflags = $(appl-gnu-exe-cflags)
-appl-toolchain-mingw-exe-cxxflags = $(appl-gnu-exe-cxxflags)
-appl-toolchain-mingw-dll-flags = $(appl-gnu-dll-flags)
-appl-toolchain-mingw-dll-cflags = $(appl-gnu-dll-cflags)
-appl-toolchain-mingw-dll-cxxflags = $(appl-gnu-dll-cxxflags)
-appl-toolchain-mingw-lib-flags = $(appl-gnu-lib-flags)
-appl-toolchain-mingw-lib-cflags = $(appl-gnu-lib-cflags)
-appl-toolchain-mingw-lib-cxxflags = $(appl-gnu-lib-cxxflags)
 
 # Combine flags for release exe
 appl-toolchain-mingw-release-exe-cflags = \

@@ -25,174 +25,11 @@ APPL_SRC ?=
 # Location of output files
 APPL_DST ?= .obj/
 
-# Setup clang C compiler program
-appl-clang-cc = clang
-
-# Setup clang C++ compiler program
-appl-clang-cxx = clang++
-
-# Select a C compiler program
-appl-gnu-cc = $(CC)
-
-# Select a C++ compiler program
-appl-gnu-cxx = $(CXX)
-
-# Select archive program
-appl-gnu-ar = $(AR)
-
 # Setup prefix of output file
 appl-prefix =
-appl-toolchain-gnu-prefix = $(appl-prefix)
-appl-toolchain-gnu-exe-prefix = $(appl-toolchain-gnu-prefix)
-appl-toolchain-gnu-dll-prefix = lib$(appl-toolchain-gnu-prefix)
-appl-toolchain-gnu-lib-prefix = lib$(appl-toolchain-gnu-prefix)
-appl-toolchain-gnu-debug-exe-prefix = $(appl-toolchain-gnu-exe-prefix)
-appl-toolchain-gnu-debug-dll-prefix = $(appl-toolchain-gnu-dll-prefix)
-appl-toolchain-gnu-debug-lib-prefix = $(appl-toolchain-gnu-lib-prefix)
-appl-toolchain-gnu-release-exe-prefix = $(appl-toolchain-gnu-exe-prefix)
-appl-toolchain-gnu-release-dll-prefix = $(appl-toolchain-gnu-dll-prefix)
-appl-toolchain-gnu-release-lib-prefix = $(appl-toolchain-gnu-lib-prefix)
 
 # Setup suffix of output file
 appl-suffix =
-appl-toolchain-gnu-suffix = $(appl-suffix)
-appl-toolchain-gnu-exe-suffix = $(appl-suffix)
-appl-toolchain-gnu-dll-suffix = $(appl-suffix).so
-appl-toolchain-gnu-lib-suffix = $(appl-suffix).a
-appl-toolchain-gnu-debug-exe-suffix = $(appl-toolchain-gnu-exe-suffix)
-appl-toolchain-gnu-debug-dll-suffix = $(appl-toolchain-gnu-dll-suffix)
-appl-toolchain-gnu-debug-lib-suffix = $(appl-toolchain-gnu-lib-suffix)
-appl-toolchain-gnu-release-exe-suffix = $(appl-toolchain-gnu-exe-suffix)
-appl-toolchain-gnu-release-dll-suffix = $(appl-toolchain-gnu-dll-suffix)
-appl-toolchain-gnu-release-lib-suffix = $(appl-toolchain-gnu-lib-suffix)
-
-# Common compiler flags for C and C++
-appl-gnu-common-flags = \
-    -g \
-    -O2 \
-    -D_BSD_SOURCE \
-    -I$(APPL_SRC). \
-    -pedantic \
-    -Wall \
-    -Wextra \
-    -Wabi \
-    -Waggregate-return \
-    -Warray-bounds \
-    -Wattributes \
-    -Wbuiltin-macro-redefined \
-    -Wcast-align \
-    -Wcast-qual \
-    -Wconversion \
-    -Wdeprecated \
-    -Wdiv-by-zero \
-    -Wendif-labels \
-    -Wfloat-equal \
-    -Wformat-contains-nul \
-    -Wformat-extra-args \
-    -Wformat-nonliteral \
-    -Wformat-security \
-    -Wformat-y2k \
-    -Wlarger-than=4096 \
-    -Wlong-long \
-    -Wmissing-declarations \
-    -Wmissing-format-attribute \
-    -Wmissing-include-dirs \
-    -Wmultichar \
-    -Woverflow \
-    -Woverlength-strings \
-    -Wpacked \
-    -Wpacked-bitfield-compat \
-    -Wpadded \
-    -Wpointer-arith \
-    -Wpragmas \
-    -Wredundant-decls \
-    -Wsequence-point \
-    -Wshadow \
-    -Wstrict-overflow=5 \
-    -Wsync-nand \
-    -Wundef \
-    -Wunused \
-    -Wunused-macros \
-    -Wunused-result \
-    -Wvariadic-macros \
-    -Wvla \
-    -Wwrite-strings
-
-appl-gnu-debug-flags = -DAPPL_DEBUG
-
-appl-gnu-release-flags = -DAPPL_RELEASE
-
-appl-gnu-exe-flags = -DAPPL_BUILD_EXE
-
-appl-gnu-dll-flags = -DAPPL_BUILD_DLL -shared $(APPL_TOOLCHAIN_PIC)
-
-appl-gnu-lib-flags = -DAPPL_BUILD_LIB
-
-# Append common flags to C compiler flags
-appl-gnu-common-cflags = \
-    -Wbad-function-cast \
-    -Wc++-compat \
-    -Wdeclaration-after-statement \
-    -Wformat-zero-length \
-    -Wint-to-pointer-cast \
-    -Wmissing-prototypes \
-    -Wnested-externs \
-    -Wold-style-definition \
-    -Wpointer-to-int-cast \
-    -Wstrict-prototypes \
-    -std=c89
-
-# Append common flags to C++ compiler flags
-appl-gnu-common-cxxflags = \
-    -Wc++0x-compat \
-    -Wctor-dtor-privacy \
-    -Weffc++ \
-    -Wenum-compare \
-    -Wnon-virtual-dtor \
-    -Woverloaded-virtual \
-    -Wstrict-null-sentinel \
-    -Wsign-promo \
-    -std=c++98 \
-    -fno-rtti \
-    -fno-exceptions
-
-# Configuration specific gnu flags
-appl-gnu-debug-cflags =
-
-appl-gnu-debug-cxxflags =
-
-appl-gnu-release-cflags =
-
-appl-gnu-release-cxxflags =
-
-appl-gnu-exe-cflags =
-
-appl-gnu-exe-cxxflags =
-
-appl-gnu-dll-cflags =
-
-appl-gnu-dll-cxxflags =
-
-appl-gnu-lib-cflags =
-
-appl-gnu-lib-cxxflags =
-
-# Setup clang compiler options
-appl-clang-common-flags = \
-    -g \
-    -O0 \
-    -Weverything \
-    -D_BSD_SOURCE \
-    -DAPPL_BUILD_EXE \
-    -I$(APPL_SRC).
-
-appl-clang-common-cflags = \
-    -std=c89
-
-appl-clang-common-cxxflags = \
-    -std=c++98 \
-    -fno-rtti \
-    -fno-exceptions
 
 APPL_LIBRARY-pthread-gnu-lflags = -lpthread
 APPL_LIBRARY-pthread-clang-lflags = -lpthread
@@ -276,7 +113,10 @@ endef
 #
 # Parameters:
 #       $1      target name
-#       $2      toolchain
+#       $2      toolchain-build-type
+#       $3      toolchain
+#       $4      build
+#       $5      type
 #
 # Comments:
 #
@@ -297,8 +137,8 @@ $(1)-$(2)-cxx-compiler ?= appl-toolchain-$(2)-cxx-compiler
 $(1)-$(2)-linker ?= appl-toolchain-$(2)-linker
 .PHONY : $(1)-$(2)
 $(1)-$(2) : $$($(1)-$(2)-output)
-.PHONY : $(1) $(2) all
-all $(1) $(2) : $(1)-$(2)
+.PHONY : all $(1) $(2) $(3) $(4) $(3)-$(4) $(4)-$(5) $(5)
+all $(1) $(2) $(3) $(4) $(3)-$(4) $(4)-$(5) $(5) : $(1)-$(2)
 $$($(1)-$(2)-output) : $$($(1)-$(2)-input) $$(MAKEFILE_LIST)
 	@echo linking $(1) with $(2)
 	-$$(APPL_VERBOSE)mkdir -p $$(dir $$($(1)-$(2)-output))
@@ -323,8 +163,8 @@ $(1)-type ?= exe
 $(1)-name ?= $(1)
 $(1)-exports-path ?= $$($(1)-src)$$($(1)-exports)
 $(1)-cfgs ?= $$(APPL_TOOLCHAIN)
-$$(foreach x, $$($(1)-cfgs), $$(eval $$(call do_target_2,$(1),$$(x)-debug-$$($(1)-type))))
-$$(foreach x, $$($(1)-cfgs), $$(eval $$(call do_target_2,$(1),$$(x)-release-$$($(1)-type))))
+$$(foreach x, $$($(1)-cfgs), $$(eval $$(call do_target_2,$(1),$$(x)-debug-$$($(1)-type),$$(x),debug,$$($(1)-type))))
+$$(foreach x, $$($(1)-cfgs), $$(eval $$(call do_target_2,$(1),$$(x)-release-$$($(1)-type),$$(x),release,$$($(1)-type))))
 endef
 
 $(foreach x,$(target-list), $(eval $(call do_target_1,$(x),$(y))))
