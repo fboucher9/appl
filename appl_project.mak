@@ -16,7 +16,6 @@ APPL_TOOLCHAIN ?= \
     gnu-release-lib \
     clang \
     mingw \
-    mingwdbg \
     gnudbg32
 
 # Verbose output of executed commands
@@ -45,53 +44,29 @@ appl-gnu-ar = $(AR)
 
 # Setup prefix of output file
 appl-prefix =
-
-appl-gnu-prefix = $(appl-prefix)
-
-appl-gnu-exe-prefix = $(appl-gnu-prefix)
-
-appl-gnu-dll-prefix = lib$(appl-gnu-prefix)
-
-appl-gnu-lib-prefix = lib$(appl-gnu-prefix)
-
-appl-gnu-debug-exe-prefix = $(appl-gnu-exe-prefix)
-
-appl-gnu-debug-dll-prefix = $(appl-gnu-dll-prefix)
-
-appl-gnu-debug-lib-prefix = $(appl-gnu-lib-prefix)
-
-appl-gnu-release-exe-prefix = $(appl-gnu-exe-prefix)
-
-appl-gnu-release-dll-prefix = $(appl-gnu-dll-prefix)
-
-appl-gnu-release-lib-prefix = $(appl-gnu-lib-prefix)
+appl-toolchain-gnu-prefix = $(appl-prefix)
+appl-toolchain-gnu-exe-prefix = $(appl-toolchain-gnu-prefix)
+appl-toolchain-gnu-dll-prefix = lib$(appl-toolchain-gnu-prefix)
+appl-toolchain-gnu-lib-prefix = lib$(appl-toolchain-gnu-prefix)
+appl-toolchain-gnu-debug-exe-prefix = $(appl-toolchain-gnu-exe-prefix)
+appl-toolchain-gnu-debug-dll-prefix = $(appl-toolchain-gnu-dll-prefix)
+appl-toolchain-gnu-debug-lib-prefix = $(appl-toolchain-gnu-lib-prefix)
+appl-toolchain-gnu-release-exe-prefix = $(appl-toolchain-gnu-exe-prefix)
+appl-toolchain-gnu-release-dll-prefix = $(appl-toolchain-gnu-dll-prefix)
+appl-toolchain-gnu-release-lib-prefix = $(appl-toolchain-gnu-lib-prefix)
 
 # Setup suffix of output file
 appl-suffix =
-
-appl-gnu-suffix = $(appl-suffix)
-
-appl-gnu-exe-suffix = $(appl-suffix)
-
-appl-gnu-dll-suffix = $(appl-suffix).so
-
-appl-gnu-lib-suffix = $(appl-suffix).a
-
-appl-gnu-debug-exe-suffix = $(appl-gnu-exe-suffix)
-
-appl-gnu-debug-dll-suffix = $(appl-gnu-dll-suffix)
-
-appl-gnu-debug-lib-suffix = $(appl-gnu-lib-suffix)
-
-appl-gnu-release-exe-suffix = $(appl-gnu-exe-suffix)
-
-appl-gnu-release-dll-suffix = $(appl-gnu-dll-suffix)
-
-appl-gnu-release-lib-suffix = $(appl-gnu-lib-suffix)
-
-appl-mingw-suffix = $(appl-suffix).exe
-
-appl-mingwdbg-suffix = $(appl-suffix).exe
+appl-toolchain-gnu-suffix = $(appl-suffix)
+appl-toolchain-gnu-exe-suffix = $(appl-suffix)
+appl-toolchain-gnu-dll-suffix = $(appl-suffix).so
+appl-toolchain-gnu-lib-suffix = $(appl-suffix).a
+appl-toolchain-gnu-debug-exe-suffix = $(appl-toolchain-gnu-exe-suffix)
+appl-toolchain-gnu-debug-dll-suffix = $(appl-toolchain-gnu-dll-suffix)
+appl-toolchain-gnu-debug-lib-suffix = $(appl-toolchain-gnu-lib-suffix)
+appl-toolchain-gnu-release-exe-suffix = $(appl-toolchain-gnu-exe-suffix)
+appl-toolchain-gnu-release-dll-suffix = $(appl-toolchain-gnu-dll-suffix)
+appl-toolchain-gnu-release-lib-suffix = $(appl-toolchain-gnu-lib-suffix)
 
 # Common compiler flags for C and C++
 appl-gnu-common-flags = \
@@ -308,6 +283,7 @@ endef
 # Comments:
 #
 define do_target_2
+$(1)-$(2)-name ?= $$($(1)-name)
 $(1)-$(2)-c-flags ?=
 $(1)-$(2)-cxx-flags ?=
 $(1)-$(2)-deps ?= $$($(1)-deps)
@@ -316,7 +292,7 @@ $(1)-$(2)-dst ?= $$($(1)-dst)$(2)/
 $(1)-$(2)-src ?= $$($(1)-src)
 $(1)-$(2)-incs ?= $$($(1)-incs)
 $(1)-$(2)-defs ?= $$($(1)-defs)
-$(1)-$(2)-output ?= $$($(1)-$(2)-dst)$$(appl-$(2)-prefix)$(1)$$(appl-$(2)-suffix)
+$(1)-$(2)-output ?= $$($(1)-$(2)-dst)$$(appl-toolchain-$(2)-prefix)$$($(1)-name)$$(appl-toolchain-$(2)-suffix)
 $(1)-$(2)-input ?= $$(foreach y, $$($(1)-$(2)-deps), $$($(1)-$(2)-dst)$$(y).o)
 $(1)-$(2)-c-compiler ?= appl-toolchain-$(2)-c-compiler
 $(1)-$(2)-cxx-compiler ?= appl-toolchain-$(2)-cxx-compiler
@@ -333,15 +309,24 @@ $$(foreach x, $$($(1)-deps), $$(eval $$(call do_source,$(1),$(2),$$(x))))
 endef
 
 #
+# Function: do_target_1
+#
+# Description:
+#       Setup default variables of a target and generate all configurations
+#       supported by the target.
+#
 # Parameters:
 #       $1      target name
 #
 define do_target_1
 $(1)-src ?= $$(APPL_SRC)
 $(1)-dst ?= $$(APPL_DST)$(1)/
+$(1)-type ?= exe
+$(1)-name ?= $(1)
 $(1)-exports-path ?= $$($(1)-src)$$($(1)-exports)
 $(1)-cfgs ?= $$(APPL_TOOLCHAIN)
-$$(foreach x, $$($(1)-cfgs), $$(eval $$(call do_target_2,$(1),$$(x))))
+$$(foreach x, $$($(1)-cfgs), $$(eval $$(call do_target_2,$(1),$$(x)-debug-$$($(1)-type))))
+$$(foreach x, $$($(1)-cfgs), $$(eval $$(call do_target_2,$(1),$$(x)-release-$$($(1)-type))))
 endef
 
 $(foreach x,$(target-list), $(eval $(call do_target_1,$(x),$(y))))

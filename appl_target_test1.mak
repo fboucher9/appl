@@ -2,6 +2,10 @@
 
 target-list += test_appl
 
+# test_appl-name = test
+
+# test_appl-type = exe
+
 test_appl-exports = appl.exports
 
 test_appl-deps = \
