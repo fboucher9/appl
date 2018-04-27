@@ -8,12 +8,7 @@
 # Select a toolchain
 # May be gnu, clang, mingw
 APPL_TOOLCHAIN ?= \
-    gnu-debug-exe \
-    gnu-release-exe \
-    gnu-debug-dll \
-    gnu-release-dll \
-    gnu-debug-lib \
-    gnu-release-lib \
+    gnu \
     clang \
     mingw \
     gnudbg32
