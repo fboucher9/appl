@@ -18,6 +18,9 @@ APPL_TOOLCHAIN ?= \
     mingw \
     gnudbg32
 
+# Setup -fPIC option for gnu compiler
+APPL_TOOLCHAIN_PIC ?= -fPIC
+
 # Verbose output of executed commands
 APPL_VERBOSE ?= @
 
@@ -126,7 +129,7 @@ appl-gnu-release-flags = -DAPPL_RELEASE
 
 appl-gnu-exe-flags = -DAPPL_BUILD_EXE
 
-appl-gnu-dll-flags = -DAPPL_BUILD_DLL -shared -fPIC
+appl-gnu-dll-flags = -DAPPL_BUILD_DLL -shared $(APPL_TOOLCHAIN_PIC)
 
 appl-gnu-lib-flags = -DAPPL_BUILD_LIB
 

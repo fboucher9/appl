@@ -128,6 +128,21 @@ appl-toolchain-mingw-release-dll-cxxflags = \
     $(appl-toolchain-mingw-dll-flags) \
     $(appl-toolchain-mingw-dll-cxxflags)
 
+define appl-toolchain-mingw-release-dll-linker
+	$(APPL_VERBOSE)echo -o $(1) $(appl-toolchain-mingw-release-dll-cflags) $(3) $(2) -static $(foreach x,$(4),$(APPL_LIBRARY-$(x)-mingw-lflags)) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_TOOLCHAIN_MINGW_CC) @$(strip $(1)).cmd
+endef
+
+define appl-toolchain-mingw-release-dll-c-compiler
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-mingw-release-dll-cflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_TOOLCHAIN_MINGW_CC) @$(strip $(1)).cmd
+endef
+
+define appl-toolchain-mingw-release-dll-cxx-compiler
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-mingw-release-dll-cxxflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_TOOLCHAIN_MINGW_CXX) @$(strip $(1)).cmd
+endef
+
 # Combine flags for debug dll
 appl-toolchain-mingw-debug-dll-cflags = \
     $(appl-toolchain-mingw-common-flags) \
@@ -144,6 +159,21 @@ appl-toolchain-mingw-debug-dll-cxxflags = \
     $(appl-toolchain-mingw-debug-cxxflags) \
     $(appl-toolchain-mingw-dll-flags) \
     $(appl-toolchain-mingw-dll-cxxflags)
+
+define appl-toolchain-mingw-debug-dll-linker
+	$(APPL_VERBOSE)echo -o $(1) $(appl-toolchain-mingw-debug-dll-cflags) $(3) $(2) -static $(foreach x,$(4),$(APPL_LIBRARY-$(x)-mingw-lflags)) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_TOOLCHAIN_MINGW_CC) @$(strip $(1)).cmd
+endef
+
+define appl-toolchain-mingw-debug-dll-c-compiler
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-mingw-debug-dll-cflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_TOOLCHAIN_MINGW_CC) @$(strip $(1)).cmd
+endef
+
+define appl-toolchain-mingw-debug-dll-cxx-compiler
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-mingw-debug-dll-cxxflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)$(APPL_TOOLCHAIN_MINGW_CXX) @$(strip $(1)).cmd
+endef
 
 # Combine flags for release lib
 appl-toolchain-mingw-release-lib-cflags = \
