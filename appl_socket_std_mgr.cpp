@@ -10,14 +10,6 @@
 
 #include <netinet/in.h>
 
-#endif /* #if defined APPL_OS_Xx */
-
-#if defined APPL_OS_WINDOWS
-
-#include <winsock2.h>
-
-#endif /* #if defined APPL_OS_Xx */
-
 #include <appl_status.h>
 
 #include <appl_types.h>
@@ -151,5 +143,7 @@ enum appl_status
         e_status;
 
 } // v_create_socket()
+
+#endif /* #if defined APPL_OS_LINUX */
 
 /* end-of-file: appl_socket_std_mgr.cpp */

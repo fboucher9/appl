@@ -6,15 +6,11 @@
 
 #if defined APPL_OS_LINUX
 
+#include <unistd.h>
+
 #include <sys/socket.h>
 
-#endif /* #if defined APPL_OS_LINUX */
-
-#if defined APPL_OS_WINDOWS
-
-#include <winsock2.h>
-
-#endif /* #if defined APPL_OS_WINDOWS */
+#include <netinet/in.h>
 
 #include <appl_status.h>
 
@@ -27,6 +23,10 @@
 #include <appl_socket_node.h>
 
 #include <appl_socket_std_node.h>
+
+#include <appl_address_node.h>
+
+#include <appl_address_std_node.h>
 
 #include <appl_unused.h>
 
@@ -123,12 +123,21 @@ appl_socket_std_node::init(
 
     // call socket()
     enum appl_socket_protocol
-        e_protocol = appl_socket_protocol_tcp_stream;
+        e_protocol;
 
-    appl_socket_property_get_protocol(
-        p_socket_descriptor,
-        &(
-            e_protocol));
+    if (
+        appl_status_ok
+        == appl_socket_property_get_protocol(
+            p_socket_descriptor,
+            &(
+                e_protocol)))
+    {
+    }
+    else
+    {
+        e_protocol =
+            appl_socket_protocol_tcp_stream;
+    }
 
     int
         fd;
@@ -142,26 +151,135 @@ appl_socket_std_node::init(
                     AF_INET,
                     SOCK_STREAM,
                     0));
+
+        if (
+            -1 != fd)
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
     }
     else
     {
+        e_status =
+            appl_status_fail;
+
         fd =
             -1;
     }
 
-    appl_unused(
-        fd);
-
     // call bind()
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        struct appl_address *
+            p_bind_address;
+
+        if (
+            appl_status_ok
+            == appl_socket_property_get_bind_address(
+                p_socket_descriptor,
+                &(
+                    p_bind_address)))
+        {
+            class appl_address_std_node * const
+                p_address_std_node =
+                static_cast<class appl_address_std_node *>(
+                    p_bind_address);
+
+            int const
+                i_bind_result =
+                bind(
+                    fd,
+                    reinterpret_cast<struct sockaddr const *>(
+                        &(
+                            p_address_std_node->m_sockaddr.o_sockaddr_in)),
+                    sizeof(
+                        p_address_std_node->m_sockaddr.o_sockaddr_in));
+
+            if (
+                0
+                == i_bind_result)
+            {
+                e_status =
+                    appl_status_ok;
+            }
+            else
+            {
+                e_status =
+                    appl_status_fail;
+            }
+        }
+    }
 
     // call connect()
+    if (
+        appl_status_ok
+        == e_status)
+    {
+    }
 
     // call listen()
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        unsigned long int
+            i_listen_count;
 
-    // call accept()
+        if (
+            appl_status_ok
+            == appl_socket_property_get_listen_count(
+                p_socket_descriptor,
+                &(
+                    i_listen_count)))
+        {
+            int const
+                i_listen_result =
+                listen(
+                    fd,
+                    static_cast<int>(
+                        i_listen_count));
 
-    e_status =
-        appl_status_fail;
+            if (
+                0
+                == i_listen_result)
+            {
+            }
+            else
+            {
+                e_status =
+                    appl_status_fail;
+            }
+        }
+    }
+
+    // store fd
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        m_fd =
+            fd;
+    }
+
+    if (
+        appl_status_ok
+        != e_status)
+    {
+        if (
+            -1 != fd)
+        {
+            close(
+                fd);
+        }
+    }
 
     return
         e_status;
@@ -302,5 +420,7 @@ appl_socket_std_node::v_recvfrom(
         e_status;
 
 } // v_recvfrom()
+
+#endif /* #if defined APPL_OS_LINUX */
 
 /* end-of-file: appl_socket_std_node.cpp */

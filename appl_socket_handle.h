@@ -48,6 +48,15 @@ appl_socket_const_parent(
         p_socket);
 
 enum appl_status
+appl_socket_accept(
+    struct appl_socket * const
+        p_socket,
+    struct appl_socket * * const
+        r_socket,
+    struct appl_address * * const
+        r_address);
+
+enum appl_status
 appl_socket_send(
     struct appl_socket * const
         p_socket,

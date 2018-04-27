@@ -1,17 +1,8 @@
 # See LICENSE for license details
 
-# TODO: compile multiple toolchain in a single make
-# TODO: compile debug and release in a single make
-# TODO: support for src files in any subfolder
-# TODO: detect folder name of a src file
-
 # Select a toolchain
 # May be gnu, clang, mingw
-APPL_TOOLCHAIN ?= \
-    gnu \
-    clang \
-    mingw \
-    gnudbg32
+APPL_TOOLCHAIN ?= gnu clang mingw
 
 # Setup -fPIC option for gnu compiler
 APPL_TOOLCHAIN_PIC ?= -fPIC

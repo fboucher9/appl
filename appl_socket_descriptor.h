@@ -82,20 +82,6 @@ appl_socket_property_set_listen_count(
         i_listen_count);
 
 enum appl_status
-appl_socket_property_set_accept_address(
-    struct appl_property * const
-        p_property,
-    struct appl_address * const
-        p_accept_address);
-
-enum appl_status
-appl_socket_property_set_accept_socket(
-    struct appl_property * const
-        p_property,
-    struct appl_socket * const
-        p_accept_socket);
-
-enum appl_status
 appl_socket_property_set_recv_timeout(
     struct appl_property * const
         p_property,
@@ -178,20 +164,6 @@ appl_socket_property_get_listen_count(
         p_property,
     unsigned long int * const
         r_listen_count);
-
-enum appl_status
-appl_socket_property_get_accept_address(
-    struct appl_property const * const
-        p_property,
-    struct appl_address * * const
-        r_accept_address);
-
-enum appl_status
-appl_socket_property_get_accept_socket(
-    struct appl_property const * const
-        p_property,
-    struct appl_socket * * const
-        r_accept_socket);
 
 enum appl_status
 appl_socket_property_get_recv_timeout(

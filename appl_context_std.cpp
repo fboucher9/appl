@@ -100,7 +100,13 @@
 
 #include <appl_socket_mgr.h>
 
+#if defined APPL_OS_LINUX
+
 #include <appl_socket_std_mgr.h>
+
+#elif defined APPL_OS_WINDOWS
+
+#endif /* #if defined APPL_OS_Xx */
 
 #include <appl_env.h>
 
@@ -642,11 +648,25 @@ enum appl_status
     if (
         !b_init_socket_mgr)
     {
+#if defined APPL_OS_LINUX
+
         e_status =
             appl_socket_std_mgr::s_create(
                 m_context,
                 &(
                     m_socket_mgr));
+
+#elif defined APPL_OS_WINDOWS
+
+        e_status =
+            appl_status_fail;
+
+#else /* #if defined APPL_OS_Xx */
+
+        e_status =
+            appl_status_fail;
+
+#endif /* #if defined APPL_OS_Xx */
 
         if (
             appl_status_ok

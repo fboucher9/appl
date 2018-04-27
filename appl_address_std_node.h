@@ -27,11 +27,15 @@ struct appl_property;
 
 class appl_address_std_node;
 
+class appl_socket_std_node;
+
 //
 //
 //
 class appl_address_std_node : public appl_address
 {
+    friend class appl_socket_std_node;
+
     public:
 
         static

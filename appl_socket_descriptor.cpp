@@ -52,8 +52,8 @@ enum appl_socket_option_id
     /* Provide number for call to listen() */
     appl_socket_option_id_listen_count = 4,
 
-    /* Provide an empty address for call to accept() */
-    appl_socket_option_id_accept_address = 5,
+    /* Set timeout for call to accept() */
+    appl_socket_option_id_accept_timeout = 5,
 
     /* Set recv timeout socket option */
     appl_socket_option_id_recv_timeout = 6,
@@ -75,12 +75,6 @@ enum appl_socket_option_id
 
     /* Set timeout for call to connect() */
     appl_socket_option_id_connect_timeout = 12,
-
-    /* Set timeout for call to accept() */
-    appl_socket_option_id_accept_timeout = 13,
-
-    /* Socket handle for call to accept() */
-    appl_socket_option_id_accept_socket = 14,
 
     /* Maximum number of options */
     appl_socket_option_id_max
@@ -294,84 +288,6 @@ appl_socket_property_set_listen_count(
         e_status;
 
 } /* set_listen_count() */
-
-enum appl_status
-appl_socket_property_set_accept_address(
-    struct appl_property * const
-        p_property,
-    struct appl_address * const
-        p_accept_address)
-{
-    enum appl_status
-        e_status;
-
-#if defined APPL_DEBUG
-    appl_socket_property_assert_guid(
-        p_property);
-#endif /* #if defined APPL_DEBUG */
-
-    union appl_address_ptr
-    {
-        void *
-            p_value;
-
-        struct appl_address *
-            p_address;
-
-    } o_accept_address;
-
-    o_accept_address.p_address =
-        p_accept_address;
-
-    e_status =
-        appl_property_set_ptr(
-            p_property,
-            appl_socket_option_id_accept_address,
-            o_accept_address.p_value);
-
-    return
-        e_status;
-
-} /* set_accept_address() */
-
-enum appl_status
-appl_socket_property_set_accept_socket(
-    struct appl_property * const
-        p_property,
-    struct appl_socket * const
-        p_accept_socket)
-{
-    enum appl_status
-        e_status;
-
-#if defined APPL_DEBUG
-    appl_socket_property_assert_guid(
-        p_property);
-#endif /* #if defined APPL_DEBUG */
-
-    union appl_socket_ptr
-    {
-        void *
-            p_value;
-
-        struct appl_socket *
-            p_socket;
-
-    } o_accept_socket;
-
-    o_accept_socket.p_socket =
-        p_accept_socket;
-
-    e_status =
-        appl_property_set_ptr(
-            p_property,
-            appl_socket_option_id_accept_socket,
-            o_accept_socket.p_value);
-
-    return
-        e_status;
-
-} /* set_accept_socket() */
 
 enum appl_status
 appl_socket_property_set_recv_timeout(
@@ -727,60 +643,6 @@ appl_socket_property_get_listen_count(
         e_status;
 
 } /* get_listen_count() */
-
-enum appl_status
-appl_socket_property_get_accept_address(
-    struct appl_property const * const
-        p_property,
-    struct appl_address * * const
-        r_accept_address)
-{
-    enum appl_status
-        e_status;
-
-#if defined APPL_DEBUG
-    appl_socket_property_assert_guid(
-        p_property);
-#endif /* #if defined APPL_DEBUG */
-
-    appl_unused(
-        p_property,
-        r_accept_address);
-
-    e_status =
-        appl_status_not_implemented;
-
-    return
-        e_status;
-
-} /* get_accept_address() */
-
-enum appl_status
-appl_socket_property_get_accept_socket(
-    struct appl_property const * const
-        p_property,
-    struct appl_socket * * const
-        r_accept_socket)
-{
-    enum appl_status
-        e_status;
-
-#if defined APPL_DEBUG
-    appl_socket_property_assert_guid(
-        p_property);
-#endif /* #if defined APPL_DEBUG */
-
-    appl_unused(
-        p_property,
-        r_accept_socket);
-
-    e_status =
-        appl_status_not_implemented;
-
-    return
-        e_status;
-
-} /* get_accept_socket() */
 
 enum appl_status
 appl_socket_property_get_recv_timeout(
