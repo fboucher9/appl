@@ -53,6 +53,7 @@ test_appl-deps = \
     appl_heap_service.cpp \
     appl_heap_std.cpp \
     appl_library_handle.cpp \
+    appl_library_service.cpp \
     appl_list.cpp \
     appl_mutex_handle.cpp \
     appl_mutex_mgr.cpp \
