@@ -18,8 +18,6 @@ class appl_options;
 
 class appl_options_std;
 
-struct appl_string;
-
 struct appl_options_std_descriptor
 {
     unsigned char const * const *
@@ -56,11 +54,8 @@ class appl_options_std : public appl_options
 
     private:
 
-        struct appl_string * *
-            m_buf_min;
-
-        struct appl_string * *
-            m_buf_max;
+        struct appl_options_std_descriptor
+            m_descriptor;
 
         appl_options_std(
             class appl_options_std const & r);
@@ -73,10 +68,7 @@ class appl_options_std : public appl_options
         void
             placement_new(
                 void * const
-                    p_placement)
-        {
-            new (p_placement) class appl_options_std;
-        }
+                    p_placement);
 
         enum appl_status
             init(

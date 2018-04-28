@@ -106,6 +106,8 @@
 
 #elif defined APPL_OS_WINDOWS
 
+#include <appl_socket_w32_mgr.h>
+
 #endif /* #if defined APPL_OS_Xx */
 
 #include <appl_env.h>
@@ -659,7 +661,10 @@ enum appl_status
 #elif defined APPL_OS_WINDOWS
 
         e_status =
-            appl_status_fail;
+            appl_socket_w32_mgr::s_create(
+                m_context,
+                &(
+                    m_socket_mgr));
 
 #else /* #if defined APPL_OS_Xx */
 

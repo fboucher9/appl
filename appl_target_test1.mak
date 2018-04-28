@@ -84,6 +84,7 @@ test_appl-deps = \
     appl_socket_service.cpp \
     appl_socket_std_mgr.cpp \
     appl_socket_std_node.cpp \
+    appl_socket_w32_mgr.cpp \
     appl_string.cpp \
     appl_string_handle.cpp \
     appl_string_service.cpp \

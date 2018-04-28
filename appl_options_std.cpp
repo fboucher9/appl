@@ -20,6 +20,8 @@
 
 #include <appl_heap.h>
 
+#include <appl_buf0.h>
+
 //
 //
 //
@@ -68,8 +70,7 @@ appl_options_std::s_create(
 //
 appl_options_std::appl_options_std() :
     appl_options(),
-    m_buf_min(),
-    m_buf_max()
+    m_descriptor()
 {
 }
 
@@ -83,6 +84,19 @@ appl_options_std::~appl_options_std()
 //
 //
 //
+void
+    appl_options_std::placement_new(
+        void * const
+            p_placement)
+{
+    new (p_placement)
+        class appl_options_std;
+
+} // placement_new()
+
+//
+//
+//
 enum appl_status
 appl_options_std::init(
     struct appl_options_std_descriptor const * const
@@ -91,83 +105,12 @@ appl_options_std::init(
     enum appl_status
         e_status;
 
-    unsigned long int const
-        i_count =
-        static_cast<unsigned long int>(
-            p_options_std_descriptor->p_arg_max
-            - p_options_std_descriptor->p_arg_min);
+    m_descriptor =
+        *(
+            p_options_std_descriptor);
 
     e_status =
-        m_context->m_heap->alloc_object_array(
-            i_count,
-            &(
-                m_buf_min));
-
-    if (
-        appl_status_ok == e_status)
-    {
-        m_buf_max =
-            m_buf_min
-            + i_count;
-
-        unsigned long int
-            argi;
-
-        argi = 0;
-
-        while (
-            (
-                appl_status_ok == e_status)
-            && (
-                argi < i_count))
-        {
-            unsigned char const * const
-                p_buf_min =
-                p_options_std_descriptor->p_arg_min[argi];
-
-            unsigned char const *
-                p_buf_max =
-                p_buf_min;
-
-            while (*(p_buf_max))
-            {
-                p_buf_max ++;
-            }
-
-            e_status =
-                appl_string::s_create(
-                    m_context,
-                    p_buf_min,
-                    p_buf_max,
-                    p_buf_min,
-                    0,
-                    m_buf_min + argi);
-
-            if (
-                appl_status_ok == e_status)
-            {
-                argi++;
-            }
-            else
-            {
-                while (argi)
-                {
-                    argi --;
-
-                    struct appl_string * const
-                        p_string =
-                        m_buf_min[argi];
-
-                    p_string->destroy();
-
-                    m_buf_min[argi] = 0;
-                }
-            }
-        }
-
-        e_status =
-            appl_status_ok;
-    }
+        appl_status_ok;
 
     return
         e_status;
@@ -182,31 +125,6 @@ appl_options_std::v_cleanup(void)
 {
     enum appl_status
         e_status;
-
-    struct appl_string * *
-        p_buf_it;
-
-    p_buf_it =
-        m_buf_min;
-
-    while (
-        p_buf_it
-        < m_buf_max)
-    {
-        struct appl_string * const
-            p_string =
-            *(p_buf_it);
-
-        p_string->destroy();
-
-        *(p_buf_it) =
-            0;
-
-        p_buf_it ++;
-    }
-
-    m_context->m_heap->v_free(
-        m_buf_min);
 
     e_status =
         appl_status_ok;
@@ -230,8 +148,8 @@ appl_options_std::v_count(
     unsigned long int const
         i_count =
         static_cast<unsigned long int>(
-            m_buf_max
-            - m_buf_min);
+            m_descriptor.p_arg_max
+            - m_descriptor.p_arg_min);
 
     *(
         r_count) =
@@ -261,16 +179,26 @@ appl_options_std::v_get(
         e_status;
 
     if (
-        (m_buf_min + i_index) < m_buf_max)
+        (m_descriptor.p_arg_min + i_index) < m_descriptor.p_arg_max)
     {
-        struct appl_string * const
-            p_string =
-            m_buf_min[i_index];
+        unsigned char const *
+            p_arg0;
+
+        p_arg0 =
+            m_descriptor.p_arg_min[i_index];
+
+        *(
+            r_buf_min) =
+            p_arg0;
+
+        *(
+            r_buf_max) =
+            p_arg0
+            + appl_buf0_len(
+                p_arg0);
 
         e_status =
-            p_string->v_read(
-                r_buf_min,
-                r_buf_max);
+            appl_status_ok;
     }
     else
     {
