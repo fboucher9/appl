@@ -118,10 +118,82 @@ appl_socket_std_node::init(
     enum appl_status
         e_status;
 
-    appl_unused(
-        p_socket_descriptor);
+    e_status =
+        appl_status_ok;
 
     // call socket()
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            init_socket(
+                p_socket_descriptor);
+    }
+
+    // call bind()
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            init_bind(
+                p_socket_descriptor);
+    }
+
+    // call connect()
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            init_connect(
+                p_socket_descriptor);
+    }
+
+    // call listen()
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            init_listen(
+                p_socket_descriptor);
+    }
+
+    // sockopt
+
+    if (
+        appl_status_ok
+        != e_status)
+    {
+        if (
+            -1 != m_fd)
+        {
+            close(
+                m_fd);
+
+            m_fd =
+                -1;
+        }
+    }
+
+    return
+        e_status;
+
+} // init()
+
+//
+//
+//
+enum appl_status
+appl_socket_std_node::init_socket(
+    struct appl_property const * const
+        p_socket_descriptor)
+{
+    enum appl_status
+        e_status;
+
     enum appl_socket_protocol
         e_protocol;
 
@@ -139,13 +211,12 @@ appl_socket_std_node::init(
             appl_socket_protocol_tcp_stream;
     }
 
-    int
-        fd;
-
     if (
-        appl_socket_protocol_tcp_stream == e_protocol)
+        appl_socket_protocol_tcp_stream
+        == e_protocol)
     {
-        fd =
+        int const
+            i_socket_result =
             static_cast<int>(
                 socket(
                     AF_INET,
@@ -153,7 +224,182 @@ appl_socket_std_node::init(
                     0));
 
         if (
-            -1 != fd)
+            -1 != i_socket_result)
+        {
+            m_fd =
+                i_socket_result;
+
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // init_socket()
+
+//
+//
+//
+enum appl_status
+appl_socket_std_node::init_bind(
+    struct appl_property const * const
+        p_socket_descriptor)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_address *
+        p_bind_address;
+
+    if (
+        appl_status_ok
+        == appl_socket_property_get_bind_address(
+            p_socket_descriptor,
+            &(
+                p_bind_address)))
+    {
+        class appl_address_std_node * const
+            p_address_std_node =
+            static_cast<class appl_address_std_node *>(
+                p_bind_address);
+
+        int const
+            i_bind_result =
+            bind(
+                m_fd,
+                reinterpret_cast<struct sockaddr const *>(
+                    &(
+                        p_address_std_node->m_sockaddr.o_sockaddr_in)),
+                sizeof(
+                    p_address_std_node->m_sockaddr.o_sockaddr_in));
+
+        if (
+            0
+            == i_bind_result)
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_ok;
+    }
+
+    return
+        e_status;
+
+} // init_bind()
+
+//
+//
+//
+enum appl_status
+appl_socket_std_node::init_connect(
+    struct appl_property const * const
+        p_socket_descriptor)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_address *
+        p_connect_address;
+
+    if (
+        appl_status_ok
+        == appl_socket_property_get_connect_address(
+            p_socket_descriptor,
+            &(
+                p_connect_address)))
+    {
+        class appl_address_std_node * const
+            p_address_std_node =
+            static_cast<class appl_address_std_node *>(
+                p_connect_address);
+
+        int const
+            i_connect_result =
+            connect(
+                m_fd,
+                reinterpret_cast<struct sockaddr const *>(
+                    &(
+                        p_address_std_node->m_sockaddr.o_sockaddr_in)),
+                sizeof(
+                    p_address_std_node->m_sockaddr.o_sockaddr_in));
+
+        if (
+            0
+            == i_connect_result)
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_ok;
+    }
+
+    return
+        e_status;
+
+} // init_connect()
+
+//
+//
+//
+enum appl_status
+appl_socket_std_node::init_listen(
+    struct appl_property const * const
+        p_socket_descriptor)
+{
+    enum appl_status
+        e_status;
+
+    unsigned long int
+        i_listen_count;
+
+    if (
+        appl_status_ok
+        == appl_socket_property_get_listen_count(
+            p_socket_descriptor,
+            &(
+                i_listen_count)))
+    {
+        int const
+            i_listen_result =
+            listen(
+                m_fd,
+                static_cast<int>(
+                    i_listen_count));
+
+        if (
+            0
+            == i_listen_result)
         {
             e_status =
                 appl_status_ok;
@@ -168,123 +414,12 @@ appl_socket_std_node::init(
     {
         e_status =
             appl_status_fail;
-
-        fd =
-            -1;
-    }
-
-    // call bind()
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        struct appl_address *
-            p_bind_address;
-
-        if (
-            appl_status_ok
-            == appl_socket_property_get_bind_address(
-                p_socket_descriptor,
-                &(
-                    p_bind_address)))
-        {
-            class appl_address_std_node * const
-                p_address_std_node =
-                static_cast<class appl_address_std_node *>(
-                    p_bind_address);
-
-            int const
-                i_bind_result =
-                bind(
-                    fd,
-                    reinterpret_cast<struct sockaddr const *>(
-                        &(
-                            p_address_std_node->m_sockaddr.o_sockaddr_in)),
-                    sizeof(
-                        p_address_std_node->m_sockaddr.o_sockaddr_in));
-
-            if (
-                0
-                == i_bind_result)
-            {
-                e_status =
-                    appl_status_ok;
-            }
-            else
-            {
-                e_status =
-                    appl_status_fail;
-            }
-        }
-    }
-
-    // call connect()
-    if (
-        appl_status_ok
-        == e_status)
-    {
-    }
-
-    // call listen()
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        unsigned long int
-            i_listen_count;
-
-        if (
-            appl_status_ok
-            == appl_socket_property_get_listen_count(
-                p_socket_descriptor,
-                &(
-                    i_listen_count)))
-        {
-            int const
-                i_listen_result =
-                listen(
-                    fd,
-                    static_cast<int>(
-                        i_listen_count));
-
-            if (
-                0
-                == i_listen_result)
-            {
-            }
-            else
-            {
-                e_status =
-                    appl_status_fail;
-            }
-        }
-    }
-
-    // store fd
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        m_fd =
-            fd;
-    }
-
-    if (
-        appl_status_ok
-        != e_status)
-    {
-        if (
-            -1 != fd)
-        {
-            close(
-                fd);
-        }
     }
 
     return
         e_status;
 
-} // init()
+} // init_listen()
 
 //
 //
@@ -295,6 +430,16 @@ appl_socket_std_node::v_cleanup(void)
     enum appl_status
         e_status;
 
+    if (
+        -1 != m_fd)
+    {
+        close(
+            m_fd);
+
+        m_fd =
+            -1;
+    }
+
     e_status =
         appl_status_ok;
 
@@ -302,6 +447,23 @@ appl_socket_std_node::v_cleanup(void)
         e_status;
 
 } // v_cleanup()
+
+//
+//
+//
+enum appl_status
+appl_socket_std_node::v_accept(
+    struct appl_socket * * const
+        r_socket,
+    struct appl_address * * const
+        r_address)
+{
+    appl_unused(
+        r_socket,
+        r_address);
+    return
+        appl_status_not_implemented;
+} // v_accept()
 
 //
 //

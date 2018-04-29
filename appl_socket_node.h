@@ -45,6 +45,14 @@ struct appl_socket : public appl_object
 
         virtual
         enum appl_status
+        v_accept(
+            struct appl_socket * * const
+                r_socket,
+            struct appl_address * * const
+                r_address);
+
+        virtual
+        enum appl_status
         v_send(
             unsigned char const * const
                 p_buf_min,

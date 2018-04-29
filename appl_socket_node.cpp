@@ -25,6 +25,23 @@
 //
 //
 enum appl_status
+appl_socket::v_accept(
+    struct appl_socket * * const
+        r_socket,
+    struct appl_address * * const
+        r_address)
+{
+    appl_unused(
+        r_socket,
+        r_address);
+    return
+        appl_status_not_implemented;
+} // v_accept()
+
+//
+//
+//
+enum appl_status
 appl_socket::v_send(
     unsigned char const * const
         p_buf_min,

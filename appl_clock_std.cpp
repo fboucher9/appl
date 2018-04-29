@@ -143,11 +143,13 @@ appl_clock_std::v_read(
         i_time_count =
             (
                 appl_math_muldiv(
-                    o_clock_value.tv_sec,
+                    static_cast<unsigned long int>(
+                        o_clock_value.tv_sec),
                     i_time_freq,
                     1ul)
                 + appl_math_muldiv(
-                    o_clock_value.tv_nsec,
+                    static_cast<unsigned long int>(
+                        o_clock_value.tv_nsec),
                     i_time_freq,
                     1000000000ul));
 

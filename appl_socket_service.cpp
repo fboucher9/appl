@@ -70,6 +70,44 @@ appl_socket_service::s_create(
 } // s_create()
 
 //
+//  Function: s_accept()
+//
+//  Description:
+//      Accept a connection from remote machine.
+//
+//  Parameters:
+//      p_socket
+//          (input) Socket handle of listen socket.
+//
+//      r_socket
+//          (output) Socket handle of connected remote machine.
+//
+//      r_address
+//          (output) Address of remote machine.
+//
+enum appl_status
+appl_socket_service::s_accept(
+    struct appl_socket * const
+        p_socket,
+    struct appl_socket * * const
+        r_socket,
+    struct appl_address * * const
+        r_address)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_socket->v_accept(
+            r_socket,
+            r_address);
+
+    return
+        e_status;
+
+} // s_accept()
+
+//
 //  Function: s_send()
 //
 //  Description:

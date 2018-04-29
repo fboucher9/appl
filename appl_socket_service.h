@@ -45,6 +45,16 @@ class appl_socket_service
 
         static
         enum appl_status
+        s_accept(
+            struct appl_socket * const
+                p_socket,
+            struct appl_socket * * const
+                r_socket,
+            struct appl_address * * const
+                r_address);
+
+        static
+        enum appl_status
         s_send(
             struct appl_socket * const
                 p_socket,

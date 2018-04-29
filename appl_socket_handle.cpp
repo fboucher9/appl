@@ -46,6 +46,9 @@ appl_socket_create(
 
 } /* appl_socket_create() */
 
+/*
+
+*/
 struct appl_object *
 appl_socket_parent(
     struct appl_socket * const
@@ -54,8 +57,11 @@ appl_socket_parent(
     return
         p_socket;
 
-}
+} /* parent() */
 
+/*
+
+*/
 struct appl_object const *
 appl_socket_const_parent(
     struct appl_socket const * const
@@ -64,7 +70,27 @@ appl_socket_const_parent(
     return
         p_socket;
 
-}
+} /* const_parent() */
+
+/*
+
+*/
+enum appl_status
+appl_socket_accept(
+    struct appl_socket * const
+        p_socket,
+    struct appl_socket * * const
+        r_socket,
+    struct appl_address * * const
+        r_address)
+{
+    return
+        appl_socket_service::s_accept(
+            p_socket,
+            r_socket,
+            r_address);
+
+} /* accept() */
 
 /*
 

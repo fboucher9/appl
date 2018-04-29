@@ -79,9 +79,37 @@ class appl_socket_std_node : public appl_socket
             struct appl_property const * const
                 p_socket_descriptor);
 
+        enum appl_status
+        init_socket(
+            struct appl_property const * const
+                p_socket_descriptor);
+
+        enum appl_status
+        init_bind(
+            struct appl_property const * const
+                p_socket_descriptor);
+
+        enum appl_status
+        init_connect(
+            struct appl_property const * const
+                p_socket_descriptor);
+
+        enum appl_status
+        init_listen(
+            struct appl_property const * const
+                p_socket_descriptor);
+
         virtual
         enum appl_status
         v_cleanup(void);
+
+        virtual
+        enum appl_status
+        v_accept(
+            struct appl_socket * * const
+                r_socket,
+            struct appl_address * * const
+                r_address);
 
         virtual
         enum appl_status

@@ -45,9 +45,6 @@ struct appl_library : public appl_object
 {
     public:
 
-        //
-        //
-        //
         virtual
         enum appl_status
             v_query(
@@ -56,33 +53,14 @@ struct appl_library : public appl_object
                 unsigned char const * const
                     p_symbol_name_max,
                 void * * const
-                    r_symbol) const
-        {
-            appl_unused(
-                p_symbol_name_min,
-                p_symbol_name_max,
-                r_symbol);
-            return
-                appl_status_not_implemented;
-        }
+                    r_symbol) const;
 
     protected:
 
-        //
-        //
-        //
-        appl_library() :
-            appl_object()
-        {
-        }
+        appl_library();
 
-        //
-        //
-        //
         virtual
-        ~appl_library()
-        {
-        }
+        ~appl_library();
 
     private:
 
@@ -95,6 +73,41 @@ struct appl_library : public appl_object
 
 }; // struct appl_library
 
+//
+//
+//
+enum appl_status
+    appl_library::v_query(
+        unsigned char const * const
+            p_symbol_name_min,
+        unsigned char const * const
+            p_symbol_name_max,
+        void * * const
+            r_symbol) const
+{
+    appl_unused(
+        p_symbol_name_min,
+        p_symbol_name_max,
+        r_symbol);
+    return
+        appl_status_not_implemented;
+}
+
+//
+//
+//
+appl_library::appl_library() :
+    appl_object()
+{
+}
+
+//
+//
+//
+appl_library::~appl_library()
+{
+}
+
 #if defined APPL_OS_LINUX
 
 //
@@ -104,9 +117,6 @@ class appl_library_std_node : public appl_library
 {
     public:
 
-        //
-        //
-        //
         static
         enum appl_status
             s_create(
@@ -115,72 +125,19 @@ class appl_library_std_node : public appl_library
                 struct appl_library_descriptor const * const
                     p_library_descriptor,
                 struct appl_library * * const
-                    r_library)
-        {
-            enum appl_status
-                e_status;
-
-            class appl_library_std_node *
-                p_library_std_node;
-
-            e_status =
-                appl_object::s_create(
-                    p_context,
-                    (&
-                        appl_library_std_node::s_new),
-                    (&
-                        appl_library_std_node::init),
-                    p_library_descriptor,
-                    &(
-                        p_library_std_node));
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                *(
-                    r_library) =
-                    p_library_std_node;
-            }
-
-            return
-                e_status;
-
-        } // s_create()
+                    r_library);
 
     protected:
 
-        //
-        //
-        //
-        appl_library_std_node() :
-            appl_library()
-        {
-        }
+        appl_library_std_node();
 
-        //
-        //
-        //
         virtual
-        ~appl_library_std_node()
-        {
-        }
+        ~appl_library_std_node();
 
-        //
-        //
-        //
         enum appl_status
             init(
                 struct appl_library_descriptor const * const
-                    p_library_descriptor)
-        {
-            appl_unused(
-                p_library_descriptor);
-
-            return
-                appl_status_ok;
-
-        } // init()
+                    p_library_descriptor);
 
     private:
 
@@ -191,21 +148,100 @@ class appl_library_std_node : public appl_library
             operator =(
                 class appl_library_std_node const & r);
 
-        //
-        //
-        //
         static
         void
         s_new(
             void * const
-                p_placement)
-        {
-            new (p_placement)
-                class appl_library_std_node;
-
-        } // s_new()
+                p_placement);
 
 }; // class appl_library_std_node
+
+//
+//
+//
+enum appl_status
+    appl_library_std_node::s_create(
+        struct appl_context * const
+            p_context,
+        struct appl_library_descriptor const * const
+            p_library_descriptor,
+        struct appl_library * * const
+            r_library)
+{
+    enum appl_status
+        e_status;
+
+    class appl_library_std_node *
+        p_library_std_node;
+
+    e_status =
+        appl_object::s_create(
+            p_context,
+            (&
+                appl_library_std_node::s_new),
+            (&
+                appl_library_std_node::init),
+            p_library_descriptor,
+            &(
+                p_library_std_node));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_library) =
+            p_library_std_node;
+    }
+
+    return
+        e_status;
+
+} // s_create()
+
+//
+//
+//
+appl_library_std_node::appl_library_std_node() :
+    appl_library()
+{
+}
+
+//
+//
+//
+appl_library_std_node::~appl_library_std_node()
+{
+}
+
+//
+//
+//
+enum appl_status
+    appl_library_std_node::init(
+        struct appl_library_descriptor const * const
+            p_library_descriptor)
+{
+    appl_unused(
+        p_library_descriptor);
+
+    return
+        appl_status_ok;
+
+} // init()
+
+//
+//
+//
+void
+appl_library_std_node::s_new(
+    void * const
+        p_placement)
+{
+    new (p_placement)
+        class appl_library_std_node;
+
+} // s_new()
 
 #endif /* #if defined APPL_OS_LINUX */
 
@@ -369,41 +405,20 @@ class appl_library_mgr : public appl_object
 {
     public:
 
-        //
-        //
-        //
         virtual
         enum appl_status
             v_create_node(
                 struct appl_library_descriptor const * const
                     p_library_descriptor,
                 struct appl_library * * const
-                    r_library)
-        {
-            appl_unused(
-                p_library_descriptor,
-                r_library);
-            return
-                appl_status_not_implemented;
-        } // v_create_node()
+                    r_library);
 
     protected:
 
-        //
-        //
-        //
-        appl_library_mgr() :
-            appl_object()
-        {
-        }
+        appl_library_mgr();
 
-        //
-        //
-        //
         virtual
-        ~appl_library_mgr()
-        {
-        }
+        ~appl_library_mgr();
 
     private:
 
@@ -416,6 +431,38 @@ class appl_library_mgr : public appl_object
 
 }; // class appl_library_mgr
 
+//
+//
+//
+enum appl_status
+    appl_library_mgr::v_create_node(
+        struct appl_library_descriptor const * const
+            p_library_descriptor,
+        struct appl_library * * const
+            r_library)
+{
+    appl_unused(
+        p_library_descriptor,
+        r_library);
+    return
+        appl_status_not_implemented;
+} // v_create_node()
+
+//
+//
+//
+appl_library_mgr::appl_library_mgr() :
+    appl_object()
+{
+}
+
+//
+//
+//
+appl_library_mgr::~appl_library_mgr()
+{
+}
+
 #if defined APPL_OS_LINUX
 
 //
@@ -425,62 +472,20 @@ class appl_library_std_mgr : public appl_library_mgr
 {
     public:
 
-        //
-        //
-        //
         static
         enum appl_status
             s_create(
                 struct appl_context * const
                     p_context,
                 class appl_library_mgr * * const
-                    r_library_mgr)
-        {
-            enum appl_status
-                e_status;
-
-            class appl_library_std_mgr *
-                p_library_std_mgr;
-
-            e_status =
-                appl_object::s_create(
-                    p_context,
-                    (&
-                        appl_library_std_mgr::s_new),
-                    &(
-                        p_library_std_mgr));
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                *(
-                    r_library_mgr) =
-                    p_library_std_mgr;
-            }
-
-            return
-                e_status;
-
-        } // s_create()
+                    r_library_mgr);
 
     protected:
 
-        //
-        //
-        //
-        appl_library_std_mgr() :
-            appl_library_mgr()
-        {
-        }
+        appl_library_std_mgr();
 
-        //
-        //
-        //
         virtual
-        ~appl_library_std_mgr()
-        {
-        }
+        ~appl_library_std_mgr();
 
     private:
 
@@ -491,41 +496,106 @@ class appl_library_std_mgr : public appl_library_mgr
             operator =(
                 class appl_library_std_mgr const & r);
 
-        //
-        //
-        //
         static
             void
             s_new(
                 void * const
-                    p_placement)
-        {
-            new (p_placement)
-                class appl_library_std_mgr;
+                    p_placement);
 
-        } // s_new()
-
-        //
-        //
-        //
         virtual
         enum appl_status
             v_create_node(
                 struct appl_library_descriptor const * const
                     p_library_descriptor,
                 struct appl_library * * const
-                    r_library)
-        {
-            appl_unused(
-                p_library_descriptor,
-                r_library);
-
-            return
-                appl_status_not_implemented;
-
-        } // v_create_node()
+                    r_library);
 
 }; // class appl_library_std_mgr
+
+//
+//
+//
+enum appl_status
+    appl_library_std_mgr::s_create(
+        struct appl_context * const
+            p_context,
+        class appl_library_mgr * * const
+            r_library_mgr)
+{
+    enum appl_status
+        e_status;
+
+    class appl_library_std_mgr *
+        p_library_std_mgr;
+
+    e_status =
+        appl_object::s_create(
+            p_context,
+            (&
+                appl_library_std_mgr::s_new),
+            &(
+                p_library_std_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_library_mgr) =
+            p_library_std_mgr;
+    }
+
+    return
+        e_status;
+
+} // s_create()
+
+//
+//
+//
+appl_library_std_mgr::appl_library_std_mgr() :
+    appl_library_mgr()
+{
+}
+
+//
+//
+//
+appl_library_std_mgr::~appl_library_std_mgr()
+{
+}
+
+//
+//
+//
+void
+    appl_library_std_mgr::s_new(
+        void * const
+            p_placement)
+{
+    new (p_placement)
+        class appl_library_std_mgr;
+
+} // s_new()
+
+//
+//
+//
+enum appl_status
+    appl_library_std_mgr::v_create_node(
+        struct appl_library_descriptor const * const
+            p_library_descriptor,
+        struct appl_library * * const
+            r_library)
+{
+    appl_unused(
+        p_library_descriptor,
+        r_library);
+
+    return
+        appl_status_not_implemented;
+
+} // v_create_node()
 
 #endif /* #if defined APPL_OS_LINUX */
 
