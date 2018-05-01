@@ -29,12 +29,15 @@ class appl_address_std_node;
 
 class appl_socket_std_node;
 
+class appl_socket_w32_node;
+
 //
 //
 //
 class appl_address_std_node : public appl_address
 {
     friend class appl_socket_std_node;
+    friend class appl_socket_w32_node;
 
     public:
 

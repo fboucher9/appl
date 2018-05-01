@@ -22,7 +22,7 @@
 
 #include <appl_socket_node.h>
 
-// #include <appl_socket_w32_node.h>
+#include <appl_socket_w32_node.h>
 
 #include <appl_address_node.h>
 
@@ -133,20 +133,11 @@ enum appl_status
     enum appl_status
         e_status;
 
-    appl_unused(
-        p_socket_descriptor,
-        r_socket);
-
-    e_status =
-        appl_status_not_implemented;
-
-#if 0
     e_status =
         appl_socket_w32_node::s_create(
             m_context,
             p_socket_descriptor,
             r_socket);
-#endif
 
     return
         e_status;
