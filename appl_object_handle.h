@@ -4,11 +4,17 @@
 
 */
 
-#if defined(INC_APPL_OBJECT_HANDLE_H)
+/* Reverse include guard */
+#if defined INC_APPL_OBJECT_HANDLE_H
 #error include appl_object_handle.h once
-#endif /* #if defined(INC_APPL_OBJECT_HANDLE_H) */
+#endif /* #if defined INC_APPL_OBJECT_HANDLE_H */
 
 #define INC_APPL_OBJECT_HANDLE_H
+
+/* Header file dependency */
+#if ! defined INC_APPL_STATUS_H
+#error include appl_status.h before appl_object_handle.h
+#endif /* #if ! defined INC_APPL_STATUS_H */
 
 struct appl_context;
 
