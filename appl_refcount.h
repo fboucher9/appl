@@ -58,9 +58,9 @@ Example:
 #define INC_APPL_REFCOUNT_H
 
 /* Header file dependency */
-#if defined INC_APPL_OBJECT_H
+#if ! defined INC_APPL_OBJECT_H
 #error include appl_object.h before appl_refcount.h
-#endif /* #if defined INC_APPL_OBJECT_H */
+#endif /* #if ! defined INC_APPL_OBJECT_H */
 
 /* Predefine */
 struct appl_refcount;

@@ -28,6 +28,10 @@
 
 #include <appl_address_std_node.h>
 
+#include <appl_address_handle.h>
+
+#include <appl_address_property.h>
+
 #include <appl_unused.h>
 
 /* Assert compiler */
@@ -187,6 +191,29 @@ appl_socket_std_node::init(
 //
 //
 enum appl_status
+appl_socket_std_node::init_fd(
+    int const * const
+        p_socket_descriptor)
+{
+    enum appl_status
+        e_status;
+
+    m_fd =
+        *(
+            p_socket_descriptor);
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // init_fd()
+
+//
+//
+//
+enum appl_status
 appl_socket_std_node::init_socket(
     struct appl_property const * const
         p_socket_descriptor)
@@ -279,9 +306,8 @@ appl_socket_std_node::init_bind(
             i_bind_result =
             bind(
                 m_fd,
-                reinterpret_cast<struct sockaddr const *>(
-                    &(
-                        p_address_std_node->m_sockaddr.o_sockaddr_in)),
+                &(
+                    p_address_std_node->m_sockaddr.o_sockaddr_base),
                 sizeof(
                     p_address_std_node->m_sockaddr.o_sockaddr_in));
 
@@ -339,9 +365,8 @@ appl_socket_std_node::init_connect(
             i_connect_result =
             connect(
                 m_fd,
-                reinterpret_cast<struct sockaddr const *>(
-                    &(
-                        p_address_std_node->m_sockaddr.o_sockaddr_in)),
+                &(
+                    p_address_std_node->m_sockaddr.o_sockaddr_base),
                 sizeof(
                     p_address_std_node->m_sockaddr.o_sockaddr_in));
 
@@ -458,11 +483,114 @@ appl_socket_std_node::v_accept(
     struct appl_address * * const
         r_address)
 {
-    appl_unused(
-        r_socket,
-        r_address);
+    enum appl_status
+        e_status;
+
+    // create empty address property
+    struct appl_address_property *
+        p_address_property;
+
+    e_status =
+        appl_address_property_create(
+            m_context,
+            &(
+                p_address_property));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        // create empty address
+        struct appl_address *
+            p_address;
+
+        e_status =
+            appl_address_create(
+                m_context,
+                p_address_property,
+                &(
+                    p_address));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            class appl_address_std_node * const
+                p_address_std_node =
+                static_cast<class appl_address_std_node *>(
+                    p_address);
+
+            socklen_t
+                i_address_length;
+
+            i_address_length =
+                static_cast<socklen_t>(
+                    sizeof(
+                        p_address_std_node->m_sockaddr.o_sockaddr_storage));
+
+            // setup non-blocking mode?
+
+            int const
+                i_accept_result =
+                accept(
+                    m_fd,
+                    &(
+                        p_address_std_node->m_sockaddr.o_sockaddr_base),
+                    &(
+                        i_address_length));
+
+            if (
+                -1 != i_accept_result)
+            {
+                // create a socket node to hold this new file descriptor
+                class appl_socket_std_node *
+                    p_socket_std_node;
+
+                e_status =
+                    appl_object::s_create(
+                        m_context,
+                        (&
+                            appl_socket_std_node::s_new),
+                        (&
+                            appl_socket_std_node::init_fd),
+                        &(
+                            i_accept_result),
+                        &(
+                            p_socket_std_node));
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    *(
+                        r_socket) =
+                        p_socket_std_node;
+
+                    *(
+                        r_address) =
+                        p_address;
+                }
+            }
+            else
+            {
+                e_status =
+                    appl_status_fail;
+            }
+
+            if (
+                appl_status_ok
+                != e_status)
+            {
+            }
+        }
+
+        appl_address_property_destroy(
+            p_address_property);
+    }
+
     return
         appl_status_not_implemented;
+
 } // v_accept()
 
 //

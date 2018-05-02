@@ -65,6 +65,9 @@ class appl_address_std_node : public appl_address
             struct sockaddr_storage
                 o_sockaddr_storage;
 
+            struct sockaddr
+                o_sockaddr_base;
+
             struct sockaddr_in
                 o_sockaddr_in;
 

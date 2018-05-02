@@ -80,6 +80,11 @@ class appl_socket_std_node : public appl_socket
                 p_socket_descriptor);
 
         enum appl_status
+        init_fd(
+            int const * const
+                p_socket_descriptor);
+
+        enum appl_status
         init_socket(
             struct appl_property const * const
                 p_socket_descriptor);
