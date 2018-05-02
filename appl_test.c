@@ -19,13 +19,13 @@ appl_print(
     unsigned char const * const
         p_buf_max)
 {
-    printf(
-        "%.*s",
-        (int)(
+    fwrite(
+        p_buf_min,
+        1,
+        (unsigned long int)(
             p_buf_max
             - p_buf_min),
-        (char const *)(
-            p_buf_min));
+        stdout);
 
 }
 
@@ -822,7 +822,7 @@ appl_test_property(
                 p_property,
                 0,
                 (void *)(
-                    7777));
+                    0x77777777));
 
         if (
             appl_status_ok
@@ -878,9 +878,9 @@ appl_test_property(
                 appl_status_ok
                 == e_status)
             {
-                printf(
-                    "property 0=%p\n",
-                    p_value);
+                appl_print0("property 0=[");
+                appl_print_number((signed long int)(appl_ptrdiff_t)(p_value), appl_buf_print_flag_hex, 0);
+                appl_print0("]\n");
             }
             else
             {
@@ -902,9 +902,9 @@ appl_test_property(
                 appl_status_ok
                 == e_status)
             {
-                printf(
-                    "property 1=%lu\n",
-                    u_value);
+                appl_print0("property 1=[");
+                appl_print_number((signed long int)(u_value), appl_buf_print_flag_unsigned, 0);
+                appl_print0("]\n");
             }
             else
             {
@@ -927,9 +927,9 @@ appl_test_property(
                 appl_status_ok
                 == e_status)
             {
-                printf(
-                    "property 2=%ld\n",
-                    i_value);
+                appl_print0("property 2=[");
+                appl_print_number(i_value, 0, 0);
+                appl_print0("]\n");
             }
             else
             {

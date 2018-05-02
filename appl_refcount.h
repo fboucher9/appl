@@ -17,6 +17,9 @@ Example:
     must correctly handle destroy when last reference is
     destroyed.
 
+    The implementation must have a locking mechanism to protect
+    the reference counter from multiple threads.
+
     class appl_resource : public appl_refcount
     {
         private:
