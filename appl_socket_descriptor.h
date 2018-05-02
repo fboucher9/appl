@@ -64,14 +64,14 @@ enum appl_status
 appl_socket_property_set_bind_address(
     struct appl_property * const
         p_property,
-    struct appl_address * const
+    struct appl_address const * const
         p_bind_address);
 
 enum appl_status
 appl_socket_property_set_connect_address(
     struct appl_property * const
         p_property,
-    struct appl_address * const
+    struct appl_address const * const
         p_connect_address);
 
 enum appl_status
@@ -127,14 +127,14 @@ enum appl_status
 appl_socket_property_set_join_address(
     struct appl_property * const
         p_property,
-    struct appl_address * const
+    struct appl_address const * const
         p_join_address);
 
 enum appl_status
 appl_socket_property_set_join_interface(
     struct appl_property * const
         p_property,
-    struct appl_address * const
+    struct appl_address const * const
         p_interface_address);
 
 enum appl_status
@@ -148,14 +148,14 @@ enum appl_status
 appl_socket_property_get_bind_address(
     struct appl_property const * const
         p_property,
-    struct appl_address * * const
+    struct appl_address const * * const
         r_bind_address);
 
 enum appl_status
 appl_socket_property_get_connect_address(
     struct appl_property const * const
         p_property,
-    struct appl_address * * const
+    struct appl_address const * * const
         r_connect_address);
 
 enum appl_status
@@ -211,14 +211,14 @@ enum appl_status
 appl_socket_property_get_join_address(
     struct appl_property const * const
         p_property,
-    struct appl_address * * const
+    struct appl_address const * * const
         r_join_address);
 
 enum appl_status
 appl_socket_property_get_join_interface(
     struct appl_property const * const
         p_property,
-    struct appl_address * * const
+    struct appl_address const * * const
         r_interface_address);
 
 #if defined __cplusplus

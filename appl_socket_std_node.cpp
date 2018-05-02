@@ -287,7 +287,7 @@ appl_socket_std_node::init_bind(
     enum appl_status
         e_status;
 
-    struct appl_address *
+    struct appl_address const *
         p_bind_address;
 
     if (
@@ -297,9 +297,9 @@ appl_socket_std_node::init_bind(
             &(
                 p_bind_address)))
     {
-        class appl_address_std_node * const
+        class appl_address_std_node const * const
             p_address_std_node =
-            static_cast<class appl_address_std_node *>(
+            static_cast<class appl_address_std_node const *>(
                 p_bind_address);
 
         int const
@@ -346,7 +346,7 @@ appl_socket_std_node::init_connect(
     enum appl_status
         e_status;
 
-    struct appl_address *
+    struct appl_address const *
         p_connect_address;
 
     if (
@@ -356,9 +356,9 @@ appl_socket_std_node::init_connect(
             &(
                 p_connect_address)))
     {
-        class appl_address_std_node * const
+        class appl_address_std_node const * const
             p_address_std_node =
-            static_cast<class appl_address_std_node *>(
+            static_cast<class appl_address_std_node const *>(
                 p_connect_address);
 
         int const
@@ -438,7 +438,7 @@ appl_socket_std_node::init_listen(
     else
     {
         e_status =
-            appl_status_fail;
+            appl_status_ok;
     }
 
     return

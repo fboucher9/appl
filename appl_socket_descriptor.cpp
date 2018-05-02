@@ -81,6 +81,16 @@ enum appl_socket_option_id
 
 }; /* enum appl_socket_option_id */
 
+union appl_address_ptr
+{
+    void *
+        p_value;
+
+    struct appl_address const *
+        p_address;
+
+};
+
 enum appl_status
 appl_socket_property_create(
     struct appl_context * const
@@ -189,7 +199,7 @@ enum appl_status
 appl_socket_property_set_bind_address(
     struct appl_property * const
         p_property,
-    struct appl_address * const
+    struct appl_address const * const
         p_bind_address)
 {
     enum appl_status
@@ -201,14 +211,7 @@ appl_socket_property_set_bind_address(
 #endif /* #if defined APPL_DEBUG */
 
     union appl_address_ptr
-    {
-        void *
-            p_value;
-
-        struct appl_address *
-            p_address;
-
-    } o_bind_address;
+        o_bind_address;
 
     o_bind_address.p_address =
         p_bind_address;
@@ -228,7 +231,7 @@ enum appl_status
 appl_socket_property_set_connect_address(
     struct appl_property * const
         p_property,
-    struct appl_address * const
+    struct appl_address const * const
         p_connect_address)
 {
     enum appl_status
@@ -240,14 +243,7 @@ appl_socket_property_set_connect_address(
 #endif /* #if defined APPL_DEBUG */
 
     union appl_address_ptr
-    {
-        void *
-            p_value;
-
-        struct appl_address *
-            p_address;
-
-    } o_connect_address;
+        o_connect_address;
 
     o_connect_address.p_address =
         p_connect_address;
@@ -449,7 +445,7 @@ enum appl_status
 appl_socket_property_set_join_address(
     struct appl_property * const
         p_property,
-    struct appl_address * const
+    struct appl_address const * const
         p_join_address)
 {
     enum appl_status
@@ -465,7 +461,7 @@ appl_socket_property_set_join_address(
         void *
             p_value;
 
-        struct appl_address *
+        struct appl_address const *
             p_address;
 
     } o_join_address;
@@ -488,7 +484,7 @@ enum appl_status
 appl_socket_property_set_join_interface(
     struct appl_property * const
         p_property,
-    struct appl_address * const
+    struct appl_address const * const
         p_interface_address)
 {
     enum appl_status
@@ -500,14 +496,7 @@ appl_socket_property_set_join_interface(
 #endif /* #if defined APPL_DEBUG */
 
     union appl_address_ptr
-    {
-        void *
-            p_value;
-
-        struct appl_address *
-            p_address;
-
-    } o_interface_address;
+        o_interface_address;
 
     o_interface_address.p_address =
         p_interface_address;
@@ -567,7 +556,7 @@ enum appl_status
 appl_socket_property_get_bind_address(
     struct appl_property const * const
         p_property,
-    struct appl_address * * const
+    struct appl_address const * * const
         r_bind_address)
 {
     enum appl_status
@@ -578,12 +567,24 @@ appl_socket_property_get_bind_address(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    appl_unused(
-        p_property,
-        r_bind_address);
+    union appl_address_ptr
+        o_bind_address;
 
     e_status =
-        appl_status_not_implemented;
+        appl_property_get_ptr(
+            p_property,
+            appl_socket_option_id_bind_address,
+            &(
+                o_bind_address.p_value));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_bind_address) =
+            o_bind_address.p_address;
+    }
 
     return
         e_status;
@@ -594,7 +595,7 @@ enum appl_status
 appl_socket_property_get_connect_address(
     struct appl_property const * const
         p_property,
-    struct appl_address * * const
+    struct appl_address const * * const
         r_connect_address)
 {
     enum appl_status
@@ -605,12 +606,24 @@ appl_socket_property_get_connect_address(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    appl_unused(
-        p_property,
-        r_connect_address);
+    union appl_address_ptr
+        o_address_ptr;
 
     e_status =
-        appl_status_not_implemented;
+        appl_property_get_ptr(
+            p_property,
+            appl_socket_option_id_connect_address,
+            &(
+                o_address_ptr.p_value));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_connect_address) =
+            o_address_ptr.p_address;
+    }
 
     return
         e_status;
@@ -632,12 +645,11 @@ appl_socket_property_get_listen_count(
         p_property);
 #endif /* #if defined APPL_DEBUG */
 
-    appl_unused(
-        p_property,
-        r_listen_count);
-
     e_status =
-        appl_status_not_implemented;
+        appl_property_get_ulong(
+            p_property,
+            appl_socket_option_id_listen_count,
+            r_listen_count);
 
     return
         e_status;
@@ -810,7 +822,7 @@ enum appl_status
 appl_socket_property_get_join_address(
     struct appl_property const * const
         p_property,
-    struct appl_address * * const
+    struct appl_address const * * const
         r_join_address)
 {
     enum appl_status
@@ -837,7 +849,7 @@ enum appl_status
 appl_socket_property_get_join_interface(
     struct appl_property const * const
         p_property,
-    struct appl_address * * const
+    struct appl_address const * * const
         r_interface_address)
 {
     enum appl_status

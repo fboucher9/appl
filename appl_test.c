@@ -610,7 +610,7 @@ appl_test_socket(
         '.',
         '1',
         '0',
-        '0'
+        '4'
     };
 
     enum appl_status
@@ -727,20 +727,56 @@ appl_test_socket(
                     appl_status_ok
                     == e_status)
                 {
+                    /* setup connect address ... */
+
                     e_status =
-                        appl_socket_create(
-                            p_context,
+                        appl_socket_property_set_listen_count(
                             p_socket_descriptor,
-                            &(
-                                p_socket));
+                            10);
 
                     if (
                         appl_status_ok
                         == e_status)
                     {
-                        appl_object_destroy(
-                            appl_socket_parent(
-                                p_socket));
+                        e_status =
+                            appl_socket_create(
+                                p_context,
+                                p_socket_descriptor,
+                                &(
+                                    p_socket));
+
+                        if (
+                            appl_status_ok
+                            == e_status)
+                        {
+                            static char g_test_accept = 0;
+                            if (g_test_accept)
+                            {
+                                struct appl_socket *
+                                    p_remote_socket;
+
+                                struct appl_address *
+                                    p_remote_address;
+
+                                e_status =
+                                    appl_socket_accept(
+                                        p_socket,
+                                        &(
+                                            p_remote_socket),
+                                        &(
+                                            p_remote_address));
+
+                                if (
+                                    appl_status_ok
+                                    == e_status)
+                                {
+                                }
+                            }
+
+                            appl_object_destroy(
+                                appl_socket_parent(
+                                    p_socket));
+                        }
                     }
 
                 }
