@@ -4,6 +4,9 @@
 APPL_TOOLCHAIN_MINGW_CC ?= x86_64-w64-mingw32-gcc
 APPL_TOOLCHAIN_MINGW_CXX ?= x86_64-w64-mingw32-g++
 APPL_TOOLCHAIN_MINGW_AR ?= x86_64-w64-mingw32-ar
+# APPL_TOOLCHAIN_MINGW_CC ?= i686-w64-mingw32-gcc
+# APPL_TOOLCHAIN_MINGW_CXX ?= i686-w64-mingw32-g++
+# APPL_TOOLCHAIN_MINGW_AR ?= i686-w64-mingw32-ar
 
 # Common compiler flags for C and C++
 appl-toolchain-mingw-common-flags = \

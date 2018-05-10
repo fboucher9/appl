@@ -174,7 +174,7 @@ appl_socket_w32_node::init(
         appl_status_ok
         == e_status)
     {
-        struct appl_address *
+        struct appl_address const *
             p_bind_address;
 
         if (
@@ -184,9 +184,9 @@ appl_socket_w32_node::init(
                 &(
                     p_bind_address)))
         {
-            class appl_address_std_node * const
+            class appl_address_std_node const * const
                 p_address_std_node =
-                static_cast<class appl_address_std_node *>(
+                static_cast<class appl_address_std_node const *>(
                     p_bind_address);
 
             int const

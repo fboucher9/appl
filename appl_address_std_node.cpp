@@ -51,6 +51,8 @@ Description:
 
 #include <appl_convert.h>
 
+#include <appl_buf0.h>
+
 //
 //
 //
@@ -187,13 +189,13 @@ enum appl_status
     if (
         o_address_descriptor.b_name)
     {
-        appl_size_t
+        unsigned long int
             i_name_len;
 
         i_name_len =
-            static_cast<appl_size_t>(
-                o_address_descriptor.p_name_max
-                - o_address_descriptor.p_name_min);
+            appl_buf_len(
+                o_address_descriptor.p_name_min,
+                o_address_descriptor.p_name_max);
 
         if (
             i_name_len < 64u)
@@ -275,10 +277,10 @@ enum appl_status
     if (
         p_name0)
     {
-        int const
+        unsigned long int const
             i_name0_len =
-            static_cast<int>(
-                strlen(
+            appl_buf0_len(
+                appl_convert(
                     p_name0));
 
         *(r_name_cur) =

@@ -58,8 +58,8 @@ class appl_socket_w32_node : public appl_socket
         SOCKET
             m_fd;
 
-        unsigned int
-            ui_padding[3u];
+        void *
+            pv_padding[1u];
 
         appl_socket_w32_node(
             class appl_socket_w32_node const & r);
