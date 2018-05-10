@@ -74,7 +74,10 @@ struct appl_string : public appl_object
             m_buf_min;
 
         unsigned char *
-            m_buf_cur;
+            m_buf_read;
+
+        unsigned char *
+            m_buf_write;
 
         unsigned char *
             m_buf_max;

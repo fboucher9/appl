@@ -105,11 +105,11 @@ enum appl_status
 
     *(
         r_buf_min) =
-        m_buf_min;
+        m_buf_read;
 
     *(
         r_buf_max) =
-        m_buf_cur;
+        m_buf_write;
 
     e_status =
         appl_status_ok;
@@ -133,7 +133,7 @@ enum appl_status
         e_status;
 
     if (
-        m_buf_max > m_buf_cur)
+        m_buf_max > m_buf_write)
     {
         unsigned long int
             i_copy_len;
@@ -145,22 +145,22 @@ enum appl_status
 
         if (
             (
-                m_buf_cur
+                m_buf_write
                 + i_copy_len)
             > m_buf_max)
         {
             i_copy_len =
                 appl_buf_len(
-                    m_buf_cur,
+                    m_buf_write,
                     m_buf_max);
         }
 
         memcpy(
-            m_buf_cur,
+            m_buf_write,
             p_buf_min,
             i_copy_len);
 
-        m_buf_cur +=
+        m_buf_write +=
             i_copy_len;
 
         e_status =
@@ -183,7 +183,8 @@ enum appl_status
 appl_string::appl_string() :
     appl_object(),
     m_buf_min(),
-    m_buf_cur(),
+    m_buf_read(),
+    m_buf_write(),
     m_buf_max()
 {
 }
@@ -220,7 +221,8 @@ enum appl_status
         p_string_descriptor->i_alloc_len)
     {
         m_buf_min =
-        m_buf_cur =
+        m_buf_read =
+        m_buf_write =
             reinterpret_cast<unsigned char *>(
                 this + 1);
 
@@ -230,10 +232,11 @@ enum appl_status
     else
     {
         m_buf_min =
+        m_buf_read =
             const_cast<unsigned char *>(
                 p_string_descriptor->p_buf_min);
 
-        m_buf_cur =
+        m_buf_write =
             const_cast<unsigned char *>(
                 p_string_descriptor->p_buf_cur);
 

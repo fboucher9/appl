@@ -193,9 +193,8 @@ appl_socket_w32_node::init(
                 i_bind_result =
                 bind(
                     fd,
-                    reinterpret_cast<struct sockaddr const *>(
-                        &(
-                            p_address_std_node->m_sockaddr.o_sockaddr_in)),
+                    &(
+                        p_address_std_node->m_sockaddr.o_sockaddr_base),
                     sizeof(
                         p_address_std_node->m_sockaddr.o_sockaddr_in));
 
