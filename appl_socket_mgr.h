@@ -13,7 +13,7 @@
 
 struct appl_address_property;
 
-struct appl_property;
+struct appl_socket_property;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -40,7 +40,7 @@ class appl_socket_mgr : public appl_object
         virtual
         enum appl_status
             v_create_socket(
-                struct appl_property const * const
+                struct appl_socket_property const * const
                     p_socket_descriptor,
                 struct appl_socket * * const
                     r_socket_node);

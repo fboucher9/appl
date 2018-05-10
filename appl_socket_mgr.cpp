@@ -49,7 +49,7 @@ enum appl_status
 //
 enum appl_status
     appl_socket_mgr::v_create_socket(
-        struct appl_property const * const
+        struct appl_socket_property const * const
             p_socket_descriptor,
         struct appl_socket * * const
             r_socket)

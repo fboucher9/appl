@@ -22,7 +22,7 @@ struct appl_socket;
 
 struct appl_address;
 
-struct appl_property;
+struct appl_socket_property;
 
 #if defined(__cplusplus)
 extern "C" {
@@ -32,7 +32,7 @@ enum appl_status
 appl_socket_create(
     struct appl_context * const
         p_context,
-    struct appl_property const * const
+    struct appl_socket_property const * const
         p_socket_descriptor,
     struct appl_socket * * const
         r_socket);

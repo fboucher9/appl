@@ -13,7 +13,7 @@
 
 struct appl_context;
 
-struct appl_property;
+struct appl_socket_property;
 
 struct appl_socket;
 
@@ -38,7 +38,7 @@ class appl_socket_service
         s_create(
             struct appl_context * const
                 p_context,
-            struct appl_property const * const
+            struct appl_socket_property const * const
                 p_socket_descriptor,
             struct appl_socket * * const
                 r_socket);

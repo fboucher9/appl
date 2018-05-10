@@ -29,7 +29,7 @@
 #include <appl_unused.h>
 
 /* Unique identifier for appl_socket_property structure */
-#define APPL_SOCKET_PROPERTY_GUID (0x77ca3c76ul)
+static unsigned long int const APPL_SOCKET_PROPERTY_GUID = 0x77ca3c76ul;
 
 /* Socket option unique identifiers */
 enum appl_socket_option_id
@@ -91,12 +91,16 @@ union appl_address_ptr
 
 };
 
+struct appl_socket_property : public appl_property
+{
+};
+
 enum appl_status
 appl_socket_property_create(
     struct appl_context * const
         p_context,
-    struct appl_property * * const
-        r_property)
+    struct appl_socket_property * * const
+        r_socket_property)
 {
     enum appl_status
         e_status;
@@ -121,8 +125,9 @@ appl_socket_property_create(
             APPL_SOCKET_PROPERTY_GUID);
 
         *(
-            r_property) =
-            p_property;
+            r_socket_property) =
+            static_cast<struct appl_socket_property *>(
+                p_property);
     }
 
     return
@@ -130,12 +135,52 @@ appl_socket_property_create(
 
 } /* create() */
 
+/*
+
+*/
+enum appl_status
+appl_socket_property_destroy(
+    struct appl_socket_property * const
+        p_socket_property)
+{
+    return
+        appl_object_destroy(
+            p_socket_property);
+
+} /* destroy() */
+
+/*
+
+*/
+struct appl_property *
+appl_socket_property_parent(
+    struct appl_socket_property * const
+        p_socket_property)
+{
+    return
+        p_socket_property;
+
+} /* parent() */
+
+/*
+
+*/
+struct appl_property const *
+appl_socket_property_const_parent(
+    struct appl_socket_property const * const
+        p_socket_property)
+{
+    return
+        p_socket_property;
+
+} /* const_parent() */
+
 #if defined APPL_DEBUG
 static
 void
 appl_socket_property_assert_guid(
-    struct appl_property const * const
-        p_property)
+    struct appl_socket_property const * const
+        p_socket_property)
 {
     enum appl_status
         e_status;
@@ -145,7 +190,7 @@ appl_socket_property_assert_guid(
 
     e_status =
         appl_property_get_ulong(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_guid,
             &(
                 u_value));
@@ -163,15 +208,15 @@ appl_socket_property_assert_guid(
     {
         /* break to debugger ... */
         appl_debug_break(
-            p_property);
+            p_socket_property);
     }
 } /* assert_guid() */
 #endif /* #if defined APPL_DEBUG */
 
 enum appl_status
 appl_socket_property_set_protocol(
-    struct appl_property * const
-        p_property,
+    struct appl_socket_property * const
+        p_socket_property,
     enum appl_socket_protocol const
         e_socket_protocol)
 {
@@ -180,12 +225,12 @@ appl_socket_property_set_protocol(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_property_set_ulong(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_protocol,
             static_cast<unsigned long int>(
                 e_socket_protocol));
@@ -197,8 +242,8 @@ appl_socket_property_set_protocol(
 
 enum appl_status
 appl_socket_property_set_bind_address(
-    struct appl_property * const
-        p_property,
+    struct appl_socket_property * const
+        p_socket_property,
     struct appl_address const * const
         p_bind_address)
 {
@@ -207,7 +252,7 @@ appl_socket_property_set_bind_address(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     union appl_address_ptr
@@ -218,7 +263,7 @@ appl_socket_property_set_bind_address(
 
     e_status =
         appl_property_set_ptr(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_bind_address,
             o_bind_address.p_value);
 
@@ -229,8 +274,8 @@ appl_socket_property_set_bind_address(
 
 enum appl_status
 appl_socket_property_set_connect_address(
-    struct appl_property * const
-        p_property,
+    struct appl_socket_property * const
+        p_socket_property,
     struct appl_address const * const
         p_connect_address)
 {
@@ -239,7 +284,7 @@ appl_socket_property_set_connect_address(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     union appl_address_ptr
@@ -250,7 +295,7 @@ appl_socket_property_set_connect_address(
 
     e_status =
         appl_property_set_ptr(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_connect_address,
             o_connect_address.p_value);
 
@@ -261,8 +306,8 @@ appl_socket_property_set_connect_address(
 
 enum appl_status
 appl_socket_property_set_listen_count(
-    struct appl_property * const
-        p_property,
+    struct appl_socket_property * const
+        p_socket_property,
     unsigned long int const
         i_listen_count)
 {
@@ -271,12 +316,12 @@ appl_socket_property_set_listen_count(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_property_set_ulong(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_listen_count,
             i_listen_count);
 
@@ -287,8 +332,8 @@ appl_socket_property_set_listen_count(
 
 enum appl_status
 appl_socket_property_set_recv_timeout(
-    struct appl_property * const
-        p_property,
+    struct appl_socket_property * const
+        p_socket_property,
     unsigned long int const
         i_recv_timeout)
 {
@@ -297,12 +342,12 @@ appl_socket_property_set_recv_timeout(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_property_set_ulong(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_recv_timeout,
             i_recv_timeout);
 
@@ -313,8 +358,8 @@ appl_socket_property_set_recv_timeout(
 
 enum appl_status
 appl_socket_property_set_send_timeout(
-    struct appl_property * const
-        p_property,
+    struct appl_socket_property * const
+        p_socket_property,
     unsigned long int const
         i_send_timeout)
 {
@@ -323,12 +368,12 @@ appl_socket_property_set_send_timeout(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_property_set_ulong(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_send_timeout,
             i_send_timeout);
 
@@ -339,8 +384,8 @@ appl_socket_property_set_send_timeout(
 
 enum appl_status
 appl_socket_property_set_recv_buffer(
-    struct appl_property * const
-        p_property,
+    struct appl_socket_property * const
+        p_socket_property,
     unsigned long int const
         i_recv_buffer)
 {
@@ -349,12 +394,12 @@ appl_socket_property_set_recv_buffer(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_property_set_ulong(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_recv_buffer,
             i_recv_buffer);
 
@@ -365,8 +410,8 @@ appl_socket_property_set_recv_buffer(
 
 enum appl_status
 appl_socket_property_set_send_buffer(
-    struct appl_property * const
-        p_property,
+    struct appl_socket_property * const
+        p_socket_property,
     unsigned long int const
         i_send_buffer)
 {
@@ -375,12 +420,12 @@ appl_socket_property_set_send_buffer(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_property_set_ulong(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_send_buffer,
             i_send_buffer);
 
@@ -391,8 +436,8 @@ appl_socket_property_set_send_buffer(
 
 enum appl_status
 appl_socket_property_set_connect_timeout(
-    struct appl_property * const
-        p_property,
+    struct appl_socket_property * const
+        p_socket_property,
     unsigned long int const
         i_connect_timeout)
 {
@@ -401,12 +446,12 @@ appl_socket_property_set_connect_timeout(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_property_set_ulong(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_connect_timeout,
             i_connect_timeout);
 
@@ -417,8 +462,8 @@ appl_socket_property_set_connect_timeout(
 
 enum appl_status
 appl_socket_property_set_accept_timeout(
-    struct appl_property * const
-        p_property,
+    struct appl_socket_property * const
+        p_socket_property,
     unsigned long int const
         i_accept_timeout)
 {
@@ -427,12 +472,12 @@ appl_socket_property_set_accept_timeout(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_property_set_ulong(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_accept_timeout,
             i_accept_timeout);
 
@@ -443,8 +488,8 @@ appl_socket_property_set_accept_timeout(
 
 enum appl_status
 appl_socket_property_set_join_address(
-    struct appl_property * const
-        p_property,
+    struct appl_socket_property * const
+        p_socket_property,
     struct appl_address const * const
         p_join_address)
 {
@@ -453,7 +498,7 @@ appl_socket_property_set_join_address(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     union appl_socket_ptr
@@ -471,7 +516,7 @@ appl_socket_property_set_join_address(
 
     e_status =
         appl_property_set_ptr(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_join_address,
             o_join_address.p_value);
 
@@ -482,8 +527,8 @@ appl_socket_property_set_join_address(
 
 enum appl_status
 appl_socket_property_set_join_interface(
-    struct appl_property * const
-        p_property,
+    struct appl_socket_property * const
+        p_socket_property,
     struct appl_address const * const
         p_interface_address)
 {
@@ -492,7 +537,7 @@ appl_socket_property_set_join_interface(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     union appl_address_ptr
@@ -503,7 +548,7 @@ appl_socket_property_set_join_interface(
 
     e_status =
         appl_property_set_ptr(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_join_interface,
             o_interface_address.p_value);
 
@@ -514,8 +559,8 @@ appl_socket_property_set_join_interface(
 
 enum appl_status
 appl_socket_property_get_protocol(
-    struct appl_property const * const
-        p_property,
+    struct appl_socket_property const * const
+        p_socket_property,
     enum appl_socket_protocol * const
         r_socket_protocol)
 {
@@ -527,12 +572,12 @@ appl_socket_property_get_protocol(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_property_get_ulong(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_protocol,
             &(
                 u_value));
@@ -554,8 +599,8 @@ appl_socket_property_get_protocol(
 
 enum appl_status
 appl_socket_property_get_bind_address(
-    struct appl_property const * const
-        p_property,
+    struct appl_socket_property const * const
+        p_socket_property,
     struct appl_address const * * const
         r_bind_address)
 {
@@ -564,7 +609,7 @@ appl_socket_property_get_bind_address(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     union appl_address_ptr
@@ -572,7 +617,7 @@ appl_socket_property_get_bind_address(
 
     e_status =
         appl_property_get_ptr(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_bind_address,
             &(
                 o_bind_address.p_value));
@@ -593,8 +638,8 @@ appl_socket_property_get_bind_address(
 
 enum appl_status
 appl_socket_property_get_connect_address(
-    struct appl_property const * const
-        p_property,
+    struct appl_socket_property const * const
+        p_socket_property,
     struct appl_address const * * const
         r_connect_address)
 {
@@ -603,7 +648,7 @@ appl_socket_property_get_connect_address(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     union appl_address_ptr
@@ -611,7 +656,7 @@ appl_socket_property_get_connect_address(
 
     e_status =
         appl_property_get_ptr(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_connect_address,
             &(
                 o_address_ptr.p_value));
@@ -632,8 +677,8 @@ appl_socket_property_get_connect_address(
 
 enum appl_status
 appl_socket_property_get_listen_count(
-    struct appl_property const * const
-        p_property,
+    struct appl_socket_property const * const
+        p_socket_property,
     unsigned long int * const
         r_listen_count)
 {
@@ -642,12 +687,12 @@ appl_socket_property_get_listen_count(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_property_get_ulong(
-            p_property,
+            p_socket_property,
             appl_socket_option_id_listen_count,
             r_listen_count);
 
@@ -658,8 +703,8 @@ appl_socket_property_get_listen_count(
 
 enum appl_status
 appl_socket_property_get_recv_timeout(
-    struct appl_property const * const
-        p_property,
+    struct appl_socket_property const * const
+        p_socket_property,
     unsigned long int * const
         r_recv_timeout)
 {
@@ -668,11 +713,11 @@ appl_socket_property_get_recv_timeout(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property,
+        p_socket_property,
         r_recv_timeout);
 
     e_status =
@@ -685,8 +730,8 @@ appl_socket_property_get_recv_timeout(
 
 enum appl_status
 appl_socket_property_get_send_timeout(
-    struct appl_property const * const
-        p_property,
+    struct appl_socket_property const * const
+        p_socket_property,
     unsigned long int * const
         r_send_timeout)
 {
@@ -695,11 +740,11 @@ appl_socket_property_get_send_timeout(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property,
+        p_socket_property,
         r_send_timeout);
 
     e_status =
@@ -712,8 +757,8 @@ appl_socket_property_get_send_timeout(
 
 enum appl_status
 appl_socket_property_get_recv_buffer(
-    struct appl_property const * const
-        p_property,
+    struct appl_socket_property const * const
+        p_socket_property,
     unsigned long int * const
         r_recv_buffer)
 {
@@ -722,11 +767,11 @@ appl_socket_property_get_recv_buffer(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property,
+        p_socket_property,
         r_recv_buffer);
 
     e_status =
@@ -739,8 +784,8 @@ appl_socket_property_get_recv_buffer(
 
 enum appl_status
 appl_socket_property_get_send_buffer(
-    struct appl_property const * const
-        p_property,
+    struct appl_socket_property const * const
+        p_socket_property,
     unsigned long int * const
         r_send_buffer)
 {
@@ -749,11 +794,11 @@ appl_socket_property_get_send_buffer(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property,
+        p_socket_property,
         r_send_buffer);
 
     e_status =
@@ -766,8 +811,8 @@ appl_socket_property_get_send_buffer(
 
 enum appl_status
 appl_socket_property_get_connect_timeout(
-    struct appl_property const * const
-        p_property,
+    struct appl_socket_property const * const
+        p_socket_property,
     unsigned long int * const
         r_connect_timeout)
 {
@@ -776,11 +821,11 @@ appl_socket_property_get_connect_timeout(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property,
+        p_socket_property,
         r_connect_timeout);
 
     e_status =
@@ -793,8 +838,8 @@ appl_socket_property_get_connect_timeout(
 
 enum appl_status
 appl_socket_property_get_accept_timeout(
-    struct appl_property const * const
-        p_property,
+    struct appl_socket_property const * const
+        p_socket_property,
     unsigned long int * const
         r_accept_timeout)
 {
@@ -803,11 +848,11 @@ appl_socket_property_get_accept_timeout(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property,
+        p_socket_property,
         r_accept_timeout);
 
     e_status =
@@ -820,8 +865,8 @@ appl_socket_property_get_accept_timeout(
 
 enum appl_status
 appl_socket_property_get_join_address(
-    struct appl_property const * const
-        p_property,
+    struct appl_socket_property const * const
+        p_socket_property,
     struct appl_address const * * const
         r_join_address)
 {
@@ -830,11 +875,11 @@ appl_socket_property_get_join_address(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property,
+        p_socket_property,
         r_join_address);
 
     e_status =
@@ -847,8 +892,8 @@ appl_socket_property_get_join_address(
 
 enum appl_status
 appl_socket_property_get_join_interface(
-    struct appl_property const * const
-        p_property,
+    struct appl_socket_property const * const
+        p_socket_property,
     struct appl_address const * * const
         r_interface_address)
 {
@@ -857,11 +902,11 @@ appl_socket_property_get_join_interface(
 
 #if defined APPL_DEBUG
     appl_socket_property_assert_guid(
-        p_property);
+        p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
     appl_unused(
-        p_property,
+        p_socket_property,
         r_interface_address);
 
     e_status =

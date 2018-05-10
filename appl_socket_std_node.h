@@ -18,7 +18,7 @@
 
 struct appl_context;
 
-struct appl_property;
+struct appl_socket_property;
 
 struct appl_socket;
 
@@ -41,7 +41,7 @@ class appl_socket_std_node : public appl_socket
             s_create(
                 struct appl_context * const
                     p_context,
-                struct appl_property const * const
+                struct appl_socket_property const * const
                     p_socket_descriptor,
                 struct appl_socket * * const
                     r_socket);
@@ -76,7 +76,7 @@ class appl_socket_std_node : public appl_socket
 
         enum appl_status
         init(
-            struct appl_property const * const
+            struct appl_socket_property const * const
                 p_socket_descriptor);
 
         enum appl_status
@@ -86,22 +86,22 @@ class appl_socket_std_node : public appl_socket
 
         enum appl_status
         init_socket(
-            struct appl_property const * const
+            struct appl_socket_property const * const
                 p_socket_descriptor);
 
         enum appl_status
         init_bind(
-            struct appl_property const * const
+            struct appl_socket_property const * const
                 p_socket_descriptor);
 
         enum appl_status
         init_connect(
-            struct appl_property const * const
+            struct appl_socket_property const * const
                 p_socket_descriptor);
 
         enum appl_status
         init_listen(
-            struct appl_property const * const
+            struct appl_socket_property const * const
                 p_socket_descriptor);
 
         virtual

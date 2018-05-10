@@ -46,7 +46,7 @@ enum appl_status
     appl_socket_std_node::s_create(
         struct appl_context * const
             p_context,
-        struct appl_property const * const
+        struct appl_socket_property const * const
             p_socket_descriptor,
         struct appl_socket * * const
             r_socket)
@@ -116,7 +116,7 @@ void
 //
 enum appl_status
 appl_socket_std_node::init(
-    struct appl_property const * const
+    struct appl_socket_property const * const
         p_socket_descriptor)
 {
     enum appl_status
@@ -215,7 +215,7 @@ appl_socket_std_node::init_fd(
 //
 enum appl_status
 appl_socket_std_node::init_socket(
-    struct appl_property const * const
+    struct appl_socket_property const * const
         p_socket_descriptor)
 {
     enum appl_status
@@ -281,7 +281,7 @@ appl_socket_std_node::init_socket(
 //
 enum appl_status
 appl_socket_std_node::init_bind(
-    struct appl_property const * const
+    struct appl_socket_property const * const
         p_socket_descriptor)
 {
     enum appl_status
@@ -340,7 +340,7 @@ appl_socket_std_node::init_bind(
 //
 enum appl_status
 appl_socket_std_node::init_connect(
-    struct appl_property const * const
+    struct appl_socket_property const * const
         p_socket_descriptor)
 {
     enum appl_status
@@ -399,7 +399,7 @@ appl_socket_std_node::init_connect(
 //
 enum appl_status
 appl_socket_std_node::init_listen(
-    struct appl_property const * const
+    struct appl_socket_property const * const
         p_socket_descriptor)
 {
     enum appl_status

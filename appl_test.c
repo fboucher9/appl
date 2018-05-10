@@ -705,7 +705,7 @@ appl_test_socket(
         }
 
         {
-            struct appl_property *
+            struct appl_socket_property *
                 p_socket_descriptor;
 
             e_status =
@@ -781,9 +781,8 @@ appl_test_socket(
 
                 }
 
-                appl_object_destroy(
-                    appl_property_parent(
-                        p_socket_descriptor));
+                appl_socket_property_destroy(
+                    p_socket_descriptor);
             }
         }
 
