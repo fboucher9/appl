@@ -79,6 +79,31 @@ class appl_socket_w32_node : public appl_socket
             struct appl_socket_property const * const
                 p_socket_descriptor);
 
+        enum appl_status
+        init_fd(
+            SOCKET const * const
+                p_init_descriptor);
+
+        enum appl_status
+        init_socket(
+            struct appl_socket_property const * const
+                p_socket_descriptor);
+
+        enum appl_status
+        init_bind(
+            struct appl_socket_property const * const
+                p_socket_descriptor);
+
+        enum appl_status
+        init_listen(
+            struct appl_socket_property const * const
+                p_socket_descriptor);
+
+        enum appl_status
+        init_connect(
+            struct appl_socket_property const * const
+                p_socket_descriptor);
+
         virtual
         enum appl_status
         v_cleanup(void);
