@@ -38,7 +38,7 @@ enum appl_status
     appl_socket_w32_node::s_create(
         struct appl_context * const
             p_context,
-        struct appl_property const * const
+        struct appl_socket_property const * const
             p_socket_descriptor,
         struct appl_socket * * const
             r_socket)
@@ -108,7 +108,7 @@ void
 //
 enum appl_status
 appl_socket_w32_node::init(
-    struct appl_property const * const
+    struct appl_socket_property const * const
         p_socket_descriptor)
 {
     enum appl_status
@@ -297,6 +297,23 @@ appl_socket_w32_node::v_cleanup(void)
         e_status;
 
 } // v_cleanup()
+
+//
+//
+//
+enum appl_status
+appl_socket_w32_node::v_accept(
+    struct appl_socket * * const
+        r_socket,
+    struct appl_address * * const
+        r_address)
+{
+    appl_unused(
+        r_socket,
+        r_address);
+    return
+        appl_status_not_implemented;
+} // v_accept()
 
 //
 //

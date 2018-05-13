@@ -71,7 +71,7 @@ class appl_socket_w32_mgr : public appl_socket_mgr
         virtual
         enum appl_status
             v_create_socket(
-                struct appl_property const * const
+                struct appl_socket_property const * const
                     p_socket_descriptor,
                 struct appl_socket * * const
                     r_socket_node);

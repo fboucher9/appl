@@ -18,7 +18,7 @@
 
 struct appl_context;
 
-struct appl_property;
+struct appl_socket_property;
 
 struct appl_socket;
 
@@ -41,7 +41,7 @@ class appl_socket_w32_node : public appl_socket
             s_create(
                 struct appl_context * const
                     p_context,
-                struct appl_property const * const
+                struct appl_socket_property const * const
                     p_socket_descriptor,
                 struct appl_socket * * const
                     r_socket);
@@ -76,12 +76,20 @@ class appl_socket_w32_node : public appl_socket
 
         enum appl_status
         init(
-            struct appl_property const * const
+            struct appl_socket_property const * const
                 p_socket_descriptor);
 
         virtual
         enum appl_status
         v_cleanup(void);
+
+        virtual
+        enum appl_status
+        v_accept(
+            struct appl_socket * * const
+                r_socket,
+            struct appl_address * * const
+                r_address);
 
         virtual
         enum appl_status
