@@ -4,9 +4,30 @@
 
 */
 
+/* Reverse include guard */
+#if defined INC_APPL_LIBRARY_W32_NODE_H
+#error include appl_library_w32_node.h once
+#endif /* #if defined INC_APPL_LIBRARY_W32_NODE_H */
+
+#define INC_APPL_LIBRARY_W32_NODE_H
+
+/* Header file dependency */
+#if ! defined INC_APPL_LIBRARY_NODE_H
+#error include appl_library_node.h before appl_library_w32_node.h
+#endif /* #if ! defined INC_APPL_LIBRARY_NODE_H */
+
 struct appl_context;
 
 struct appl_library_descriptor;
+
+struct appl_library;
+
+/* Assert compiler */
+#if ! defined __cplusplus
+#error use c++ compiler
+#endif /* #if ! defined __cplusplus */
+
+class appl_library_w32_node;
 
 //
 //

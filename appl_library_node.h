@@ -4,6 +4,25 @@
 
 */
 
+/* Reverse include guard */
+#if defined INC_APPL_LIBRARY_NODE_H
+#error include appl_library_node.h once
+#endif /* #if defined INC_APPL_LIBRARY_NODE_H */
+
+#define INC_APPL_LIBRARY_NODE_H
+
+/* Header file dependency */
+#if ! defined INC_APPL_OBJECT_H
+#error include appl_object.h before appl_library_node.h
+#endif /* #if ! defined INC_APPL_OBJECT_H */
+
+struct appl_library;
+
+/* Assert compiler */
+#if ! defined __cplusplus
+#error use c++ compiler
+#endif /* #if ! defined __cplusplus */
+
 //
 //
 //

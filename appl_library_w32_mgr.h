@@ -4,7 +4,28 @@
 
 */
 
+/* Reverse include guard */
+#if defined INC_APPL_LIBRARY_W32_MGR_H
+#error include appl_library_w32_mgr.h once
+#endif /* #if defined INC_APPL_LIBRARY_W32_MGR_H */
+
+#define INC_APPL_LIBRARY_W32_MGR_H
+
+/* Header file dependency */
+#if ! defined INC_APPL_LIBRARY_MGR_H
+#error include appl_library_mgr.h before appl_library_w32_mgr.h
+#endif /* #if ! defined INC_APPL_LIBRARY_MGR_H */
+
 struct appl_context;
+
+struct appl_library_mgr;
+
+struct appl_library_descriptor;
+
+/* Assert compiler */
+#if ! defined __cplusplus
+#error use c++ compiler
+#endif /* #if ! defined __cplusplus */
 
 class appl_library_w32_mgr;
 
