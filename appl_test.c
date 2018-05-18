@@ -590,11 +590,94 @@ static void appl_test_thread(
 
 }
 
+struct appl_test_socket_descriptor
+{
+    char
+        b_server;
+
+}; /* struct appl_test_socket_descriptor */
+
+static
+void
+appl_test_socket_handshake(
+    struct appl_socket * const
+        p_socket)
+{
+    enum appl_status
+        e_status;
+
+    unsigned long int
+        i_count;
+
+    /* test of write */
+    {
+        static unsigned char a_buf[] =
+        {
+            'h',
+            'e',
+            'l',
+            'l',
+            'o',
+            '!',
+            '\n'
+        };
+
+        e_status =
+            appl_socket_send(
+                p_socket,
+                a_buf,
+                a_buf + sizeof(a_buf),
+                &(
+                    i_count));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            appl_print0("sent ");
+            appl_print_number((signed long int)(i_count), 0, 0);
+            appl_print0(" bytes\n");
+        }
+        else
+        {
+            appl_print0("socket send error\n");
+        }
+    }
+
+    /* test of read */
+    {
+        unsigned char a_result[64u];
+
+        e_status =
+            appl_socket_recv(
+                p_socket,
+                a_result,
+                a_result + sizeof(a_result),
+                &(
+                    i_count));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            appl_print0("recv result = [");
+            appl_print(a_result, a_result + i_count);
+            appl_print0("]\n");
+        }
+        else
+        {
+            appl_print0("socket recv error\n");
+        }
+    }
+}
+
 static
 void
 appl_test_socket(
     struct appl_context * const
-        p_context)
+        p_context,
+    struct appl_test_socket_descriptor const * const
+        p_descriptor)
 {
     static unsigned char const g_name[] =
     {
@@ -718,21 +801,36 @@ appl_test_socket(
                 appl_status_ok
                 == e_status)
             {
-                e_status =
-                    appl_socket_property_set_bind_address(
-                        p_socket_descriptor,
-                        p_address);
+                if (
+                    p_descriptor->b_server)
+                {
+                    /* setup bind address ... */
+                    e_status =
+                        appl_socket_property_set_bind_address(
+                            p_socket_descriptor,
+                            p_address);
+                }
+                else
+                {
+                    /* setup connect address ... */
+                    e_status =
+                        appl_socket_property_set_connect_address(
+                            p_socket_descriptor,
+                            p_address);
+                }
 
                 if (
                     appl_status_ok
                     == e_status)
                 {
-                    /* setup connect address ... */
-
-                    e_status =
-                        appl_socket_property_set_listen_count(
-                            p_socket_descriptor,
-                            10);
+                    if (
+                        p_descriptor->b_server)
+                    {
+                        e_status =
+                            appl_socket_property_set_listen_count(
+                                p_socket_descriptor,
+                                10);
+                    }
 
                     if (
                         appl_status_ok
@@ -749,8 +847,8 @@ appl_test_socket(
                             appl_status_ok
                             == e_status)
                         {
-                            static char g_test_accept = 0;
-                            if (g_test_accept)
+                            if (
+                                p_descriptor->b_server)
                             {
                                 struct appl_socket *
                                     p_remote_socket;
@@ -770,7 +868,23 @@ appl_test_socket(
                                     appl_status_ok
                                     == e_status)
                                 {
+                                    /* Use this socket ... */
+                                    appl_test_socket_handshake(
+                                        p_remote_socket);
+
+                                    appl_object_destroy(
+                                        appl_address_parent(
+                                            p_remote_address));
+
+                                    appl_object_destroy(
+                                        appl_socket_parent(
+                                            p_remote_socket));
                                 }
+                            }
+                            else
+                            {
+                                appl_test_socket_handshake(
+                                    p_socket);
                             }
 
                             appl_object_destroy(
@@ -1336,8 +1450,66 @@ appl_main(
 
     if (1)
     {
+        struct appl_test_socket_descriptor
+            o_test_socket_descriptor;
+
+        o_test_socket_descriptor.b_server =
+            0;
+
+        {
+            unsigned long int
+                argc;
+
+            e_status =
+                appl_options_count(
+                    appl_context_parent(
+                        p_context),
+                    &(
+                        argc));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                if (
+                    argc > 1)
+                {
+                    unsigned char const *
+                        p_arg_min;
+
+                    unsigned char const *
+                        p_arg_max;
+
+                    e_status =
+                        appl_options_get(
+                            appl_context_parent(
+                                p_context),
+                            1u,
+                            &(
+                                p_arg_min),
+                            &(
+                                p_arg_max));
+
+                    if (
+                        appl_status_ok
+                        == e_status)
+                    {
+                        if (
+                            ('-' == p_arg_min[0u])
+                            && ('s' == p_arg_min[1u]))
+                        {
+                            o_test_socket_descriptor.b_server =
+                                1;
+                        }
+                    }
+                }
+            }
+        }
+
         appl_test_socket(
-            p_context);
+            p_context,
+            &(
+                o_test_socket_descriptor));
     }
 
     if (1)
