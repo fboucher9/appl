@@ -58,6 +58,8 @@ test_appl-deps = \
     appl_library_node.cpp \
     appl_library_w32_mgr.cpp \
     appl_library_w32_node.cpp \
+    appl_library_std_mgr.cpp \
+    appl_library_std_node.cpp \
     appl_list.cpp \
     appl_mutex_handle.cpp \
     appl_mutex_mgr.cpp \
@@ -106,7 +108,7 @@ test_appl-deps = \
     appl_thread_w32_node.cpp
 
 # List of libraries required to link test application
-test_appl-libs = pthread rt winsock2
+test_appl-libs = pthread dl rt winsock2
 
 APPL_LIBRARY-winsock2-mingw-lflags = -lws2_32
 

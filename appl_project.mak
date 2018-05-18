@@ -30,6 +30,10 @@ APPL_LIBRARY-rt-gnu-lflags = -lrt
 APPL_LIBRARY-rt-clang-lflags = -lrt
 APPL_LIBRARY-rt-mingw-lflags = -lwinmm
 
+APPL_LIBRARY-dl-gnu-lflags = -ldl
+APPL_LIBRARY-dl-clang-lflags = -ldl
+APPL_LIBRARY-dl-mingw-lflags =
+
 # Macro to expand list of includes
 appl-expand-incs = $(foreach x,$(1), -I$(x))
 

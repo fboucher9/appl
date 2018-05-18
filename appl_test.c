@@ -1029,7 +1029,11 @@ appl_test_library(
 {
     static unsigned char const g_library_name [] =
     {
+#if defined APPL_OS_WINDOWS
         'u', 's', 'e', 'r', '3', '2'
+#else /* #if defined APPL_OS_WINDOWS */
+        'l', 'i', 'b', 'r', 't', '.', 's', 'o'
+#endif /* #if defined APPL_OS_WINDOWS */
     };
 
     enum appl_status
@@ -1061,7 +1065,11 @@ appl_test_library(
     {
         static unsigned char const g_function_name[] =
         {
+#if defined APPL_OS_WINDOWS
             'R', 'e', 'l', 'e', 'a', 's', 'e', 'D', 'C'
+#else /* #if defined APPL_OS_WINDOWS */
+            'c', 'l', 'o', 'c', 'k', '_', 'g', 'e', 't', 't', 'i', 'm', 'e'
+#endif /* #if defined APPL_OS_WINDOWS */
         };
 
         void *
