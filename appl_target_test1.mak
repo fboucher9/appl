@@ -54,6 +54,10 @@ test_appl-deps = \
     appl_heap_std.cpp \
     appl_library_handle.cpp \
     appl_library_service.cpp \
+    appl_library_mgr.cpp \
+    appl_library_node.cpp \
+    appl_library_w32_mgr.cpp \
+    appl_library_w32_node.cpp \
     appl_list.cpp \
     appl_mutex_handle.cpp \
     appl_mutex_mgr.cpp \

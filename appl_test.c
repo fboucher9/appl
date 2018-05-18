@@ -1027,8 +1027,79 @@ appl_test_library(
     struct appl_context * const
         p_context)
 {
-    (void)(
-        p_context);
+    static unsigned char const g_library_name [] =
+    {
+        'u', 's', 'e', 'r', '3', '2'
+    };
+
+    enum appl_status
+        e_status;
+
+    struct appl_library_descriptor
+        o_library_descriptor;
+
+    struct appl_library *
+        p_library;
+
+    o_library_descriptor.p_name_min =
+        g_library_name;
+
+    o_library_descriptor.p_name_max =
+        g_library_name + sizeof(g_library_name);
+
+    e_status =
+        appl_library_create(
+            p_context,
+            &(
+                o_library_descriptor),
+            &(
+                p_library));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        static unsigned char const g_function_name[] =
+        {
+            'R', 'e', 'l', 'e', 'a', 's', 'e', 'D', 'C'
+        };
+
+        void *
+            p_value;
+
+        e_status =
+            appl_library_query(
+                p_library,
+                g_function_name,
+                g_function_name + sizeof(g_function_name),
+                &(
+                    p_value));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            appl_print0("query = [");
+            appl_print_number(
+                (signed long int)(appl_ptrdiff_t)(
+                    p_value),
+                appl_buf_print_flag_hex
+                | appl_buf_print_flag_zero,
+                16);
+            appl_print0("]\n");
+        }
+        else
+        {
+            appl_print0("unable to query symbol\n");
+        }
+
+        appl_library_destroy(
+            p_library);
+    }
+    else
+    {
+        appl_print0("unable to load library\n");
+    }
 
 } /* appl_test_library() */
 

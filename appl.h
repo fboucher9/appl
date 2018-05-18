@@ -53,6 +53,8 @@ Description:
 
 #define APPL_CONFIG_WITH_ENV
 
+#define APPL_CONFIG_WITH_LIBRARY
+
 #include <appl_status.h>
 
 #include <appl_buf.h>
@@ -138,6 +140,12 @@ Description:
 #include <appl_env_handle.h>
 
 #endif /* #if defined(APPL_CONFIG_WITH_ENV) */
+
+#if defined APPL_CONFIG_WITH_LIBRARY
+
+#include <appl_library_handle.h>
+
+#endif /* #if defined APPL_CONFIG_WITH_LIBRARY */
 
 #if defined(APPL_CONFIG_WITH_MAIN)
 
