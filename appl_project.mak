@@ -1,5 +1,12 @@
 # See LICENSE for license details
 
+#
+#
+#
+
+ifndef appl_project.mak-included
+appl_project.mak-included := 1
+
 # Select a toolchain
 # May be gnu, clang, mingw
 APPL_TOOLCHAIN ?= gnu clang mingw
@@ -176,5 +183,7 @@ appl_clean:
 
 # Include automatic header file dependency files
 include $(wildcard $(APPL_HEADER_DEPS))
+
+endif # ifndef appl_project.mak-included
 
 # end-of-file: appl_project.mak

@@ -1,5 +1,12 @@
 # See LICENSE for license details
 
+#
+#
+#
+
+ifndef appl_toolchain_native.mak-included
+appl_toolchain_native.mak-included := 1
+
 APPL_TOOLCHAIN_NATIVE_CC ?= $(CC)
 APPL_TOOLCHAIN_NATIVE_CXX ?= $(CXX)
 APPL_TOOLCHAIN_NATIVE_CFLAGS ?= $(CFLAGS)
@@ -21,3 +28,6 @@ define appl-toolchain-native-cxx-compiler
 	$(APPL_VERBOSE)$(APPL_TOOLCHAIN_NATIVE_CXX) @$(strip $(1)).cmd
 endef
 
+endif # ifndef appl_toolchain_native.mak-included
+
+# end-of-file: appl_toolchain_native.mak

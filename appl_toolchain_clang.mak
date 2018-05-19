@@ -1,5 +1,12 @@
 # See LICENSE for license details
 
+#
+#
+#
+
+ifndef appl_toolchain_clang.mak-included
+appl_toolchain_clang.mak-included := 1
+
 # Setup clang C compiler program
 appl-clang-cc = clang
 
@@ -77,3 +84,6 @@ define appl-toolchain-clang-debug-exe-cxx-compiler
 	$(APPL_VERBOSE)$(appl-clang-cxx) @$(strip $(1)).cmd
 endef
 
+endif # ifndef appl_toolchain_clang.mak-included
+
+# end-of-file: appl_toolchain_clang.mak

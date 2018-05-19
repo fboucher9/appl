@@ -1,5 +1,12 @@
 # See LICENSE for license details
 
+#
+#
+#
+
+ifndef appl_toolchain_gnu.mak-included
+appl_toolchain_gnu.mak-included := 1
+
 # Select a C compiler program
 appl-toolchain-gnu-cc = $(CC)
 
@@ -338,3 +345,6 @@ define appl-toolchain-gnu-release-lib-cxx-compiler
 	$(APPL_VERBOSE)$(appl-toolchain-gnu-cxx) @$(strip $(1)).cmd
 endef
 
+endif # ifndef appl_toolchain_gnu.mak-included
+
+# end-of-file: appl_toolchain_gnu.mak

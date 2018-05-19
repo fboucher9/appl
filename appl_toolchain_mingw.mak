@@ -1,5 +1,12 @@
 # See LICENSE for license details
 
+#
+#
+#
+
+ifndef appl_toolchain_mingw.mak-included
+appl_toolchain_mingw.mak-included := 1
+
 # Setup mingw toolchain program
 APPL_TOOLCHAIN_MINGW_CC ?= x86_64-w64-mingw32-gcc
 APPL_TOOLCHAIN_MINGW_CXX ?= x86_64-w64-mingw32-g++
@@ -331,3 +338,6 @@ define appl-toolchain-mingw-debug-lib-cxx-compiler
 	$(APPL_VERBOSE)$(APPL_TOOLCHAIN_MINGW_CXX) @$(strip $(1)).cmd
 endef
 
+endif # ifndef appl_toolchain_mingw.mak-included
+
+# end-of-file: appl_toolchain_mingw.mak

@@ -1,5 +1,12 @@
 # See LICENSE for license details
 
+#
+#
+#
+
+ifndef appl_toolchain_gnudbg32.mak-included
+appl_toolchain_gnudbg32.mak-included := 1
+
 appl-toolchain-gnudbg32-cflags = \
     $(CFLAGS) \
     $(appl-gnu-common-flags) \
@@ -35,3 +42,6 @@ define appl-toolchain-gnudbg32-cxx-compiler
 	$(APPL_VERBOSE)$(appl-gnu-cxx) @$(strip $(1)).cmd
 endef
 
+endif # ifndef appl_toolchain_gnudbg32.mak-included
+
+# end-of-file: appl_toolchain_gnudbg32.mak
