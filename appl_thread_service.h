@@ -61,6 +61,12 @@ class appl_thread_service
 
         static
         enum appl_status
+        s_detach(
+            struct appl_thread * const
+                p_thread);
+
+        static
+        enum appl_status
         s_stop(
             struct appl_thread * const
                 p_thread,

@@ -70,6 +70,20 @@ appl_thread_start(
 
 */
 enum appl_status
+appl_thread_detach(
+    struct appl_thread * const
+        p_thread)
+{
+    return
+        appl_thread_service::s_detach(
+            p_thread);
+
+} /* appl_thread_detach() */
+
+/*
+
+*/
+enum appl_status
 appl_thread_stop(
     struct appl_thread * const
         p_thread,

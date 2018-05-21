@@ -28,22 +28,6 @@ struct appl_thread_descriptor
     void *
         p_context;
 
-    /* -- */
-
-    unsigned char const *
-        p_name_min;
-
-    unsigned char const *
-        p_name_max;
-
-    /* -- */
-
-    unsigned long int
-        i_stack_size;
-
-    unsigned long int
-        ul_padding[1u];
-
 }; /* struct appl_thread_descriptor */
 
 /* end-of-file: appl_thread_descriptor.h */

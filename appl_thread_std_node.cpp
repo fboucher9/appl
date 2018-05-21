@@ -101,7 +101,8 @@ appl_thread_std_node::appl_thread_std_node() :
     m_event(),
     m_thread(),
     m_thread_result(),
-    m_running(false)
+    m_running(false),
+    m_detached(false)
 {
 }
 
@@ -190,33 +191,6 @@ void
             0
             == i_lock_result)
         {
-            m_running =
-                false;
-
-            m_thread_result =
-                p_thread_result;
-
-            int
-                i_signal_result;
-
-            i_signal_result =
-                pthread_cond_signal(
-                    &(
-                        m_event));
-
-            appl_unused(
-                i_signal_result);
-
-            int
-                i_unlock_result;
-
-            i_unlock_result =
-                pthread_mutex_unlock(
-                    &(
-                        m_lock));
-
-            appl_unused(
-                i_unlock_result);
         }
         else
         {
@@ -248,16 +222,82 @@ void
                 s_msg + sizeof s_msg,
                 i_detach_result);
 #endif /* #if defined APPL_DEBUG */
+        }
 
-            m_running =
-                false;
+        m_running =
+            false;
 
-            m_thread_result =
-                p_thread_result;
+        m_thread_result =
+            p_thread_result;
 
+        int
+            i_signal_result;
+
+        i_signal_result =
             pthread_cond_signal(
                 &(
                     m_event));
+
+        appl_unused(
+            i_signal_result);
+
+        if (
+            0
+            == i_lock_result)
+        {
+            int
+                i_unlock_result;
+
+            i_unlock_result =
+                pthread_mutex_unlock(
+                    &(
+                        m_lock));
+
+            appl_unused(
+                i_unlock_result);
+        }
+        else
+        {
+#if defined APPL_DEBUG
+            static unsigned char const s_msg[] =
+            {
+                'p',
+                't',
+                'h',
+                'r',
+                'e',
+                'a',
+                'd',
+                '_',
+                'm',
+                'u',
+                't',
+                'e',
+                'x',
+                '_',
+                'u',
+                'n',
+                'l',
+                'o',
+                'c',
+                'k'
+            };
+
+            oops(
+                s_msg,
+                s_msg + sizeof s_msg,
+                i_detach_result);
+#endif /* #if defined APPL_DEBUG */
+        }
+
+        if (
+            m_detached)
+        {
+            m_detached =
+                false;
+
+            /* Kill ourselves */
+            destroy();
         }
     }
     else
@@ -397,6 +437,55 @@ appl_thread_std_node::v_start(void)
 //
 //
 enum appl_status
+    appl_thread_std_node::v_detach(void)
+{
+    enum appl_status
+        e_status;
+
+    int
+        i_lock_result;
+
+    i_lock_result =
+        pthread_mutex_lock(
+            &(
+                m_lock));
+
+    if (
+        0
+        == i_lock_result)
+    {
+        m_detached =
+            true;
+
+        e_status =
+            appl_status_ok;
+
+        int
+            i_unlock_result;
+
+        i_unlock_result =
+            pthread_mutex_unlock(
+                &(
+                    m_lock));
+
+        appl_unused(
+            i_unlock_result);
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // v_detach()
+
+//
+//
+//
+enum appl_status
     appl_thread_std_node::v_stop(
         unsigned long int const
             i_wait_freq,
@@ -410,6 +499,29 @@ enum appl_status
 
     int
         i_lock_result;
+
+    /* if m_detached then there's a risk of segfault */
+#if defined APPL_DEBUG
+    {
+        if (m_detached)
+        {
+            static unsigned char const s_msg[] =
+            {
+                'v',
+                '_',
+                's',
+                't',
+                'o',
+                'p'
+            };
+
+            oops(
+                s_msg,
+                s_msg + sizeof s_msg,
+                0);
+        }
+    }
+#endif /* #if defined APPL_DEBUG */
 
     i_lock_result =
         pthread_mutex_lock(
@@ -682,6 +794,24 @@ enum appl_status
         &(
             m_descriptor.p_context));
 
+    unsigned char
+        b_detach_state;
+
+    if (
+        appl_status_ok
+        == appl_thread_property_get_detach_state(
+            p_thread_property,
+            &(
+                b_detach_state)))
+    {
+        if (
+            b_detach_state)
+        {
+            m_detached =
+                true;
+        }
+    }
+
     int
         i_mutex_result;
 
@@ -746,16 +876,25 @@ enum appl_status
     enum appl_status
         e_status;
 
-    pthread_cond_destroy(
-        &(
-            m_event));
+    if (
+        m_running || m_detached)
+    {
+        e_status =
+            appl_status_fail;
+    }
+    else
+    {
+        pthread_cond_destroy(
+            &(
+                m_event));
 
-    pthread_mutex_destroy(
-        &(
-            m_lock));
+        pthread_mutex_destroy(
+            &(
+                m_lock));
 
-    e_status =
-        appl_status_ok;
+        e_status =
+            appl_status_ok;
+    }
 
     return
         e_status;

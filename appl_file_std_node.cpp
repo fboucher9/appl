@@ -32,6 +32,10 @@
 
 #include <appl_file_descriptor.h>
 
+#include <appl_buf0.h>
+
+#include <appl_convert.h>
+
 //
 //
 //
@@ -146,18 +150,20 @@ enum appl_status
     else if (
         appl_file_type_disk == p_file_descriptor->e_type)
     {
-        char *
+        unsigned char *
             a_pathname;
 
-        a_pathname =
-            static_cast<char *>(
-                malloc(
-                    static_cast<appl_size_t>(
-                        p_file_descriptor->p_name_max
-                        - p_file_descriptor->p_name_min)));
+        e_status =
+            appl_buf0_create(
+                this,
+                p_file_descriptor->p_name_min,
+                p_file_descriptor->p_name_max,
+                &(
+                    a_pathname));
 
         if (
-            a_pathname)
+            appl_status_ok
+            == e_status)
         {
             memcpy(
                 a_pathname,
@@ -222,7 +228,8 @@ enum appl_status
 
             m_fd =
                 open(
-                    a_pathname,
+                    appl_convert(
+                        a_pathname),
                     i_flags,
                     i_mode);
 
@@ -238,14 +245,9 @@ enum appl_status
                     appl_status_fail;
             }
 
-            free(
-                static_cast<void *>(
-                    a_pathname));
-        }
-        else
-        {
-            e_status =
-                appl_status_out_of_memory;
+            appl_buf0_destroy(
+                this,
+                a_pathname);
         }
     }
     else

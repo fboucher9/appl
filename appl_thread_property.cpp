@@ -48,8 +48,11 @@ enum appl_thread_property_id
     /* ulong for initial stack size in bytes */
     appl_thread_property_id_stack_size = 4,
 
+    /* ulong for initial detach state */
+    appl_thread_property_id_detach_state = 5,
+
     /* maximum number of property ids */
-    appl_thread_property_id_max = 5
+    appl_thread_property_id_max = 6
 
 }; /* enum appl_thread_property_id */
 
@@ -226,6 +229,29 @@ appl_thread_property_set_context(
 
 */
 enum appl_status
+appl_thread_property_set_detach_state(
+    struct appl_thread_property * const
+        p_thread_property,
+    unsigned char const
+        b_detach_state)
+{
+#if defined APPL_DEBUG
+    appl_thread_property_assert_guid(
+        p_thread_property);
+#endif /* #if defined APPL_DEBUG */
+
+    return
+        appl_property_set_ulong(
+            p_thread_property,
+            appl_thread_property_id_detach_state,
+            b_detach_state);
+
+} /* appl_thread_property_set_detach_state() */
+
+/*
+
+*/
+enum appl_status
 appl_thread_property_get_callback(
     struct appl_thread_property const * const
         p_thread_property,
@@ -287,5 +313,47 @@ appl_thread_property_get_context(
             r_thread_context);
 
 } /* appl_thread_property_get_context() */
+
+/*
+
+*/
+enum appl_status
+appl_thread_property_get_detach_state(
+    struct appl_thread_property const * const
+        p_thread_property,
+    unsigned char * const
+        r_detach_state)
+{
+    enum appl_status
+        e_status;
+
+    unsigned long int
+        i_value;
+
+#if defined APPL_DEBUG
+    appl_thread_property_assert_guid(
+        p_thread_property);
+#endif /* #if defined APPL_DEBUG */
+
+    e_status =
+        appl_property_get_ulong(
+            p_thread_property,
+            appl_thread_property_id_detach_state,
+            &(
+                i_value));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_detach_state) =
+                i_value ? 1u : 0u;
+    }
+
+    return
+        e_status;
+
+} /* appl_thread_property_get_detach_state() */
 
 /* end-of-file: appl_thread_property.cpp */

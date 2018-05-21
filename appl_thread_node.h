@@ -39,6 +39,10 @@ struct appl_thread : public appl_object
 
         virtual
         enum appl_status
+            v_detach(void);
+
+        virtual
+        enum appl_status
             v_stop(
                 unsigned long int const
                     i_wait_freq,

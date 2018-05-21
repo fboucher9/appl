@@ -671,6 +671,218 @@ appl_test_socket_handshake(
     }
 }
 
+struct appl_test_socket_connection_context
+{
+    struct appl_context *
+        p_context;
+
+    struct appl_socket *
+        p_remote_socket;
+
+    struct appl_address *
+        p_remote_address;
+
+    struct appl_thread *
+        p_thread;
+
+}; /* struct appl_test_socket_connection_context */
+
+static
+void
+appl_test_socket_connection_thread_handler(
+    struct appl_test_socket_connection_context * const
+        p_test_socket_connection_context)
+{
+    appl_print0("connection enter...\n");
+
+    /* Use this socket ... */
+    appl_test_socket_handshake(
+        p_test_socket_connection_context->p_remote_socket);
+
+    appl_object_destroy(
+        appl_address_parent(
+            p_test_socket_connection_context->p_remote_address));
+
+    appl_object_destroy(
+        appl_socket_parent(
+            p_test_socket_connection_context->p_remote_socket));
+
+    appl_heap_free(
+        appl_context_parent(
+            p_test_socket_connection_context->p_context),
+        (void *)(
+            p_test_socket_connection_context));
+
+    appl_print0("connection ...leave\n");
+
+    appl_thread_detach(
+        p_test_socket_connection_context->p_thread);
+
+} /* appl_test_socket_connection_thread_handler() */
+
+static
+void *
+appl_test_socket_connection_thread_entry(
+    void * const
+        p_thread_context)
+{
+    struct appl_test_socket_connection_context *
+        p_test_socket_connection_context;
+
+    p_test_socket_connection_context =
+        (struct appl_test_socket_connection_context *)(
+            p_thread_context);
+
+    appl_test_socket_connection_thread_handler(
+        p_test_socket_connection_context);
+
+    return
+        (void *)(
+            0);
+
+} /* appl_test_socket_connection_thread_entry() */
+
+static
+void
+appl_test_socket_process_client(
+    struct appl_context * const
+        p_context,
+    struct appl_socket * const
+        p_remote_socket,
+    struct appl_address * const
+        p_remote_address)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_test_socket_connection_context *
+        p_test_socket_connection_context;
+
+    e_status =
+        appl_heap_alloc(
+            appl_context_parent(
+                p_context),
+            (unsigned long int)(
+                sizeof(
+                    struct appl_test_socket_connection_context)),
+            (void * *)(
+                &(
+                    p_test_socket_connection_context)));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        unsigned char
+            b_free_connection_context;
+
+        /* create a thread for client */
+        struct appl_thread_property *
+            p_thread_property;
+
+        b_free_connection_context =
+            1;
+
+        p_test_socket_connection_context->p_context =
+            p_context;
+
+        p_test_socket_connection_context->p_remote_socket =
+            p_remote_socket;
+
+        p_test_socket_connection_context->p_remote_address =
+            p_remote_address;
+
+        e_status =
+            appl_thread_property_create(
+                p_context,
+                &(
+                    p_thread_property));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            e_status =
+                appl_thread_property_set_callback(
+                    p_thread_property,
+                    &(
+                        appl_test_socket_connection_thread_entry));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_thread_property_set_context(
+                        p_thread_property,
+                        (void *)(
+                            p_test_socket_connection_context));
+            }
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_thread_create(
+                        appl_context_parent(
+                            p_context),
+                        p_thread_property,
+                        &(
+                            p_test_socket_connection_context->p_thread));
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    e_status =
+                        appl_thread_start(
+                            p_test_socket_connection_context->p_thread);
+
+                    if (
+                        appl_status_ok
+                        == e_status)
+                    {
+                        b_free_connection_context =
+                            0;
+                    }
+
+                    if (
+                        b_free_connection_context)
+                    {
+                        appl_object_destroy(
+                            appl_thread_parent(
+                                p_test_socket_connection_context->p_thread));
+                    }
+                }
+            }
+
+            appl_object_destroy(
+                appl_property_parent(
+                    appl_thread_property_parent(
+                        p_thread_property)));
+        }
+
+        if (
+            b_free_connection_context)
+        {
+            appl_object_destroy(
+                appl_address_parent(
+                    p_test_socket_connection_context->p_remote_address));
+
+            appl_object_destroy(
+                appl_socket_parent(
+                    p_test_socket_connection_context->p_remote_socket));
+
+            appl_heap_free(
+                appl_context_parent(
+                    p_context),
+                (void *)(
+                    p_test_socket_connection_context));
+        }
+    }
+}
+
 static
 void
 appl_test_socket(
@@ -868,17 +1080,15 @@ appl_test_socket(
                                     appl_status_ok
                                     == e_status)
                                 {
-                                    /* Use this socket ... */
-                                    appl_test_socket_handshake(
-                                        p_remote_socket);
+                                    appl_test_socket_process_client(
+                                        p_context,
+                                        p_remote_socket,
+                                        p_remote_address);
 
-                                    appl_object_destroy(
-                                        appl_address_parent(
-                                            p_remote_address));
-
-                                    appl_object_destroy(
-                                        appl_socket_parent(
-                                            p_remote_socket));
+                                    /* wait for thread to finish */
+                                    appl_test_sleep_msec(
+                                        p_context,
+                                        1000ul);
                                 }
                             }
                             else

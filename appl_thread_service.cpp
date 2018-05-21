@@ -122,6 +122,26 @@ appl_thread_service::s_start(
 //
 //
 enum appl_status
+appl_thread_service::s_detach(
+    struct appl_thread * const
+        p_thread)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_thread->v_detach();
+
+    return
+        e_status;
+
+} // s_detach()
+
+
+//
+//
+//
+enum appl_status
 appl_thread_service::s_stop(
     struct appl_thread * const
         p_thread,

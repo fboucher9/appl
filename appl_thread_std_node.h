@@ -60,6 +60,10 @@ class appl_thread_std_node : public appl_thread
 
         virtual
         enum appl_status
+            v_detach(void);
+
+        virtual
+        enum appl_status
             v_stop(
                 unsigned long int const
                     i_wait_freq,
@@ -77,11 +81,15 @@ class appl_thread_std_node : public appl_thread
         struct appl_thread_descriptor
             m_descriptor;
 
+        // --
+
         pthread_mutex_t
             m_lock;
 
         pthread_cond_t
             m_event;
+
+        // --
 
         pthread_t
             m_thread;
@@ -89,11 +97,18 @@ class appl_thread_std_node : public appl_thread
         void *
             m_thread_result;
 
+        // --
+
         bool
             m_running;
 
+        bool
+            m_detached;
+
         unsigned char
-            uc_padding[7u];
+            uc_padding[6u];
+
+        // --
 
         appl_thread_std_node(
             class appl_thread_std_node const & r);

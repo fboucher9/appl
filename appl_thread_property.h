@@ -59,6 +59,13 @@ appl_thread_property_set_context(
         p_thread_context);
 
 enum appl_status
+appl_thread_property_set_detach_state(
+    struct appl_thread_property * const
+        p_thread_property,
+    unsigned char const
+        b_detach_state);
+
+enum appl_status
 appl_thread_property_get_callback(
     struct appl_thread_property const * const
         p_thread_property,
@@ -72,6 +79,13 @@ appl_thread_property_get_context(
         p_thread_property,
     void * * const
         r_thread_context);
+
+enum appl_status
+appl_thread_property_get_detach_state(
+    struct appl_thread_property const * const
+        p_thread_property,
+    unsigned char * const
+        r_detach_state);
 
 #if defined __cplusplus
 } /* extern "C" */
