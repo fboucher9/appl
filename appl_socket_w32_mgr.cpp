@@ -130,8 +130,33 @@ enum appl_status
     if (
         0 == iWSAStartupResult)
     {
-        e_status =
-            appl_status_ok;
+        WORD
+            wVersionAnswered;
+
+        wVersionAnswered =
+            oWSAStartupData.wVersion;
+
+        if (
+            (
+                2 == LOBYTE(wVersionAnswered))
+            && (
+                2 == LOBYTE(wVersionAnswered)))
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+
+        if (
+            appl_status_ok
+            != e_status)
+        {
+            WSACleanup();
+        }
     }
     else
     {
