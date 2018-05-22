@@ -15,6 +15,8 @@ struct appl_address_property;
 
 struct appl_socket_property;
 
+struct appl_poll_descriptor;
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -44,6 +46,18 @@ class appl_socket_mgr : public appl_object
                     p_socket_descriptor,
                 struct appl_socket * * const
                     r_socket_node);
+
+        virtual
+        enum appl_status
+            v_poll(
+                struct appl_poll_descriptor const * const
+                    p_poll_descriptor_min,
+                struct appl_poll_descriptor const * const
+                    p_poll_descriptor_max,
+                unsigned long int const
+                    i_wait_freq,
+                unsigned long int const
+                    i_wait_count);
 
     protected:
 

@@ -10,13 +10,22 @@
 
 #define INC_APPL_POLL_DESCRIPTOR_H
 
+struct appl_socket_handle;
+
 struct appl_poll_descriptor;
 
-#define APPL_POLL_FLAG_READ 1u
+/*
 
-#define APPL_POLL_FLAG_WRITE 2u
+*/
+enum appl_poll_flag
+{
+    appl_poll_flag_read = 1,
 
-#define APPL_POLL_FLAG_ERROR 4u
+    appl_poll_flag_write = 2,
+
+    appl_poll_flag_error = 4
+
+}; /* enum appl_poll_flag */
 
 /*
 
@@ -43,7 +52,7 @@ struct appl_poll_descriptor
 
     /* -- */
 
-    unsigned int
+    signed int
         i_poll_flags;
 
     unsigned int

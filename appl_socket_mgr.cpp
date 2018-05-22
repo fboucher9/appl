@@ -72,6 +72,37 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_socket_mgr::v_poll(
+        struct appl_poll_descriptor const * const
+            p_poll_descriptor_min,
+        struct appl_poll_descriptor const * const
+            p_poll_descriptor_max,
+        unsigned long int const
+            i_wait_freq,
+        unsigned long int const
+            i_wait_count)
+{
+    enum appl_status
+        e_status;
+
+    appl_unused(
+        p_poll_descriptor_min,
+        p_poll_descriptor_max,
+        i_wait_freq,
+        i_wait_count);
+
+    e_status =
+        appl_status_not_implemented;
+
+    return
+        e_status;
+
+} // v_poll()
+
+//
+//
+//
 appl_socket_mgr::appl_socket_mgr() :
     appl_object()
 {
