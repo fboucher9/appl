@@ -30,6 +30,10 @@
 
 #include <appl_unused.h>
 
+#include <appl_buf.h>
+
+#include <appl_convert.h>
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -621,13 +625,36 @@ appl_socket_w32_node::v_send(
     enum appl_status
         e_status;
 
-    appl_unused(
-        p_buf_min,
-        p_buf_max,
-        r_count);
+    signed long int
+        i_send_result;
 
-    e_status =
-        appl_status_not_implemented;
+    i_send_result =
+        static_cast<signed long int>(
+            send(
+                m_fd,
+                appl_convert(
+                    p_buf_min),
+                appl_buf_len(
+                    p_buf_min,
+                    p_buf_max),
+                0));
+
+    if (
+        0 <= i_send_result)
+    {
+        *(
+            r_count) =
+            static_cast<unsigned long int>(
+                i_send_result);
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;
@@ -649,13 +676,36 @@ appl_socket_w32_node::v_recv(
     enum appl_status
         e_status;
 
-    appl_unused(
-        p_buf_min,
-        p_buf_max,
-        r_count);
+    signed long int
+        i_recv_result;
 
-    e_status =
-        appl_status_not_implemented;
+    i_recv_result =
+        static_cast<signed long int>(
+            recv(
+                m_fd,
+                appl_convert(
+                    p_buf_min),
+                appl_buf_len(
+                    p_buf_min,
+                    p_buf_max),
+                0));
+
+    if (
+        0 <= i_recv_result)
+    {
+        *(
+            r_count) =
+            static_cast<unsigned long int>(
+                i_recv_result);
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;
