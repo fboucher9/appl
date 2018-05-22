@@ -51,6 +51,8 @@ enum appl_status
             p_context,
             (&
                 appl_socket_w32_mgr::s_new),
+            (&
+                appl_socket_w32_mgr::init),
             &(
                 p_socket_w32_mgr));
 
@@ -95,6 +97,71 @@ void
         class appl_socket_w32_mgr;
 
 } // s_new()
+
+//
+//
+//
+enum appl_status
+    appl_socket_w32_mgr::init(void)
+{
+    enum appl_status
+        e_status;
+
+    WORD
+        wVersionRequested;
+
+    int
+        iWSAStartupResult;
+
+    WSADATA
+        oWSAStartupData;
+
+    wVersionRequested =
+        MAKEWORD(
+            2,
+            2);
+
+    iWSAStartupResult =
+        WSAStartup(
+            wVersionRequested,
+            &(
+                oWSAStartupData));
+
+    if (
+        0 == iWSAStartupResult)
+    {
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // init()
+
+//
+//
+//
+enum appl_status
+    appl_socket_w32_mgr::v_cleanup(void)
+{
+    enum appl_status
+        e_status;
+
+    WSACleanup();
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // v_cleanup()
 
 //
 //
