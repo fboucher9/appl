@@ -2,6 +2,12 @@
 
 /*
 
+Module: appl_chunk.cpp
+
+Description:
+
+    See appl_chunk.h for more details.
+
 */
 
 #include <appl_status.h>
@@ -21,6 +27,9 @@
 #include <appl_unused.h>
 
 //
+//  Class: appl_chunk_node
+//
+//  Description:
 //
 //
 struct appl_chunk_node : public appl_list
@@ -31,12 +40,12 @@ struct appl_chunk_node : public appl_list
     unsigned char
         uc_padding[7u];
 
-    /* -- */
+    // --
 
     unsigned char
         a_data[120u];
 
-}; /* struct appl_chunk_node */
+}; // struct appl_chunk_node
 
 //
 //
@@ -287,7 +296,7 @@ appl_chunk::f_write_char(
     enum appl_status
         e_status;
 
-    /* Is the list empty? */
+    // Is the list empty?
     if (
         o_nodes.o_prev.p_node != &(o_nodes))
     {
@@ -296,7 +305,7 @@ appl_chunk::f_write_char(
             static_cast<struct appl_chunk_node *>(
                 o_nodes.o_prev.p_node);
 
-        /* Is there room in current chunk? */
+        // Is there room in current chunk?
         if (
             p_chunk_node->i_data_len < sizeof(p_chunk_node->a_data))
         {
