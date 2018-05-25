@@ -19,6 +19,7 @@ appl_base-deps := \
     appl_address_std_node.cpp \
     appl_buf.cpp \
     appl_buf0.cpp \
+    appl_chunk.cpp \
     appl_clock.cpp \
     appl_clock_handle.cpp \
     appl_clock_service.cpp \
