@@ -70,6 +70,11 @@ Example:
 
 #define INC_APPL_CHUNK_H
 
+/* Header file dependency */
+#if ! defined INC_APPL_STATUS_H
+#error include appl_status.h before appl_chunk.h
+#endif /* #if ! defined INC_APPL_STATUS_H */
+
 struct appl_context;
 
 struct appl_chunk;

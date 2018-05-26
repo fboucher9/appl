@@ -30,7 +30,8 @@ Description:
 //  Class: appl_chunk_node
 //
 //  Description:
-//
+//      Single chunk of characters.  This structure is part of a linked list.
+//      Maximum chunk size of 256 so that offsets may use 8-bit integer type.
 //
 struct appl_chunk_node : public appl_list
 {
@@ -48,34 +49,32 @@ struct appl_chunk_node : public appl_list
 }; // struct appl_chunk_node
 
 //
+//  Class: appl_chunk
 //
+//  Description:
+//      Interface for serial buffer of unknown length.
 //
 struct appl_chunk : public appl_object
 {
     public:
 
-        static
+        virtual
         enum appl_status
-        s_create(
-            struct appl_context * const
-                p_context,
-            struct appl_chunk * * const
-                r_chunk);
-
-        enum appl_status
-        f_write(
+        v_write(
             unsigned char const * const
                 p_buf_min,
             unsigned char const * const
                 p_buf_max);
 
+        virtual
         enum appl_status
-        f_length(
+        v_length(
             unsigned long int * const
                 r_length) const;
 
+        virtual
         enum appl_status
-        f_read(
+        v_read(
             unsigned char * const
                 p_buf_min,
             unsigned char * const
@@ -90,6 +89,111 @@ struct appl_chunk : public appl_object
 
     private:
 
+        appl_chunk(
+            struct appl_chunk const & r);
+
+        struct appl_chunk &
+            operator =(
+                struct appl_chunk const & r);
+
+}; // struct appl_chunk
+
+//
+//
+//
+enum appl_status
+appl_chunk::v_write(
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max)
+{
+    appl_unused(
+        p_buf_min,
+        p_buf_max);
+
+    return
+        appl_status_not_implemented;
+
+} // v_write()
+
+//
+//
+//
+enum appl_status
+appl_chunk::v_length(
+    unsigned long int * const
+        r_length) const
+{
+    appl_unused(
+        r_length);
+
+    return
+        appl_status_not_implemented;
+
+} // v_length()
+
+//
+//
+//
+enum appl_status
+appl_chunk::v_read(
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_max) const
+{
+    appl_unused(
+        p_buf_min,
+        p_buf_max);
+
+    return
+        appl_status_not_implemented;
+
+} // v_read()
+
+//
+//
+//
+appl_chunk::appl_chunk() :
+    appl_object()
+{
+}
+
+//
+//
+//
+appl_chunk::~appl_chunk()
+{
+}
+
+//
+//  Class: appl_chunk_std
+//
+//  Description:
+//      Standard implementation for appl_chunk interface.
+//
+class appl_chunk_std : public appl_chunk
+{
+    public:
+
+        static
+        enum appl_status
+        s_create(
+            struct appl_context * const
+                p_context,
+            struct appl_chunk * * const
+                r_chunk);
+
+    protected:
+
+        appl_chunk_std();
+
+        virtual
+        ~appl_chunk_std();
+
+    private:
+
         struct appl_list
             o_nodes;
 
@@ -101,12 +205,12 @@ struct appl_chunk : public appl_object
         unsigned long int
             ul_padding[1u];
 
-        appl_chunk(
-            struct appl_chunk const & r);
+        appl_chunk_std(
+            struct appl_chunk_std const & r);
 
-        struct appl_chunk &
+        struct appl_chunk_std &
             operator =(
-                struct appl_chunk const & r);
+                struct appl_chunk_std const & r);
 
         static
         void
@@ -121,6 +225,28 @@ struct appl_chunk : public appl_object
         enum appl_status
             v_cleanup(void);
 
+        virtual
+        enum appl_status
+            v_write(
+                unsigned char const * const
+                    p_buf_min,
+                unsigned char const * const
+                    p_buf_max);
+
+        virtual
+        enum appl_status
+            v_length(
+                unsigned long int * const
+                    r_length) const;
+
+        virtual
+        enum appl_status
+            v_read(
+                unsigned char * const
+                    p_buf_min,
+                unsigned char * const
+                    p_buf_max) const;
+
         enum appl_status
         f_append_node(
             unsigned char const
@@ -131,34 +257,53 @@ struct appl_chunk : public appl_object
             unsigned char const
                 c_value);
 
-}; // struct appl_chunk
+}; // struct appl_chunk_std
 
 //
 //
 //
 enum appl_status
-appl_chunk::s_create(
+appl_chunk_std::s_create(
     struct appl_context * const
         p_context,
     struct appl_chunk * * const
         r_chunk)
 {
-    return
+    enum appl_status
+        e_status;
+
+    class appl_chunk_std *
+        p_chunk_std;
+
+    e_status =
         appl_object::s_create(
             p_context,
             (&
-                appl_chunk::s_new),
+                appl_chunk_std::s_new),
             (&
-                appl_chunk::init),
-            r_chunk);
+                appl_chunk_std::init),
+            &(
+                p_chunk_std));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_chunk) =
+            p_chunk_std;
+    }
+
+    return
+        e_status;
 
 } // s_create()
 
 //
 //
 //
-appl_chunk::appl_chunk() :
-    appl_object(),
+appl_chunk_std::appl_chunk_std() :
+    appl_chunk(),
     o_nodes(),
     i_total_len()
 {
@@ -167,7 +312,7 @@ appl_chunk::appl_chunk() :
 //
 //
 //
-appl_chunk::~appl_chunk()
+appl_chunk_std::~appl_chunk_std()
 {
 }
 
@@ -175,12 +320,12 @@ appl_chunk::~appl_chunk()
 //
 //
 void
-    appl_chunk::s_new(
+    appl_chunk_std::s_new(
         void * const
             p_placement)
 {
     new (p_placement)
-        struct appl_chunk;
+        struct appl_chunk_std;
 
 } // s_new()
 
@@ -188,7 +333,7 @@ void
 //
 //
 enum appl_status
-appl_chunk::init(void)
+appl_chunk_std::init(void)
 {
     enum appl_status
         e_status;
@@ -212,7 +357,7 @@ appl_chunk::init(void)
 //
 //
 enum appl_status
-appl_chunk::v_cleanup(void)
+appl_chunk_std::v_cleanup(void)
 {
     enum appl_status
         e_status;
@@ -246,7 +391,7 @@ appl_chunk::v_cleanup(void)
 //
 //
 enum appl_status
-appl_chunk::f_append_node(
+appl_chunk_std::f_append_node(
     unsigned char const
         c_value)
 {
@@ -289,7 +434,7 @@ appl_chunk::f_append_node(
 //
 //
 enum appl_status
-appl_chunk::f_write_char(
+appl_chunk_std::f_write_char(
     unsigned char const
         c_value)
 {
@@ -340,7 +485,7 @@ appl_chunk::f_write_char(
 //
 //
 enum appl_status
-appl_chunk::f_write(
+appl_chunk_std::v_write(
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
@@ -382,10 +527,10 @@ appl_chunk::f_write(
     return
         e_status;
 
-} // f_write()
+} // v_write()
 
 enum appl_status
-appl_chunk::f_length(
+appl_chunk_std::v_length(
     unsigned long int * const
         r_length) const
 {
@@ -402,13 +547,13 @@ appl_chunk::f_length(
     return
         e_status;
 
-} // f_length()
+} // v_length()
 
 //
 //
 //
 enum appl_status
-appl_chunk::f_read(
+appl_chunk_std::v_read(
     unsigned char * const
         p_buf_min,
     unsigned char * const
@@ -490,7 +635,7 @@ appl_chunk::f_read(
     return
         e_status;
 
-} // f_read()
+} // v_read()
 
 //
 //
@@ -554,7 +699,7 @@ appl_chunk_service::s_create(
         r_chunk)
 {
     return
-        appl_chunk::s_create(
+        appl_chunk_std::s_create(
             p_context,
             r_chunk);
 
@@ -586,7 +731,7 @@ appl_chunk_service::s_write(
         p_buf_max)
 {
     return
-        p_chunk->f_write(
+        p_chunk->v_write(
             p_buf_min,
             p_buf_max);
 
@@ -603,7 +748,7 @@ appl_chunk_service::s_length(
         r_length)
 {
     return
-        p_chunk->f_length(
+        p_chunk->v_length(
             r_length);
 
 } // s_length()
@@ -621,7 +766,7 @@ appl_chunk_service::s_read(
         p_buf_max)
 {
     return
-        p_chunk->f_read(
+        p_chunk->v_read(
             p_buf_min,
             p_buf_max);
 
