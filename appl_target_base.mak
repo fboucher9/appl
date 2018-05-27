@@ -85,6 +85,10 @@ appl_base-deps := \
     appl_property_handle.cpp \
     appl_property_service.cpp \
     appl_property_std.cpp \
+    appl_random_handle.cpp \
+    appl_random_service.cpp \
+    appl_random_mgr.cpp \
+    appl_random_std_mgr.cpp \
     appl_refcount.cpp \
     appl_refcount_handle.cpp \
     appl_socket_descriptor.cpp \

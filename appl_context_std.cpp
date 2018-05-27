@@ -122,6 +122,10 @@
 
 #endif /* #if defined APPL_OS_Xx */
 
+#include <appl_random_mgr.h>
+
+#include <appl_random_std_mgr.h>
+
 extern
 enum appl_status
     appl_library_mgr_create(
@@ -840,6 +844,62 @@ void
 //
 //
 enum appl_status
+    appl_context_std::init_random_mgr(void)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        !b_init_random_mgr)
+    {
+        e_status =
+            appl_random_std_mgr::s_create(
+                m_context,
+                &(
+                    m_random_mgr));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            b_init_random_mgr =
+                true;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // init_random_mgr()
+
+//
+//
+//
+void
+    appl_context_std::cleanup_random_mgr(void)
+{
+    if (
+        b_init_random_mgr)
+    {
+        m_random_mgr->destroy();
+
+        m_random_mgr =
+            0;
+
+        b_init_random_mgr =
+            false;
+    }
+} // cleanup_random_mgr()
+
+//
+//
+//
+enum appl_status
     appl_context_std::create_instance(
         struct appl_context_descriptor const * const
             p_context_descriptor,
@@ -958,7 +1018,8 @@ appl_context_std::appl_context_std() :
     b_init_event_mgr(),
     b_init_socket_mgr(),
     b_init_env(),
-    b_init_library_mgr()
+    b_init_library_mgr(),
+    b_init_random_mgr()
 {
 }
 
@@ -1075,6 +1136,20 @@ enum appl_status
                                                 appl_status_ok
                                                 == e_status)
                                             {
+                                                e_status =
+                                                    init_random_mgr();
+
+                                                if (
+                                                    appl_status_ok
+                                                    == e_status)
+                                                {
+                                                    if (
+                                                        appl_status_ok != e_status)
+                                                    {
+                                                        cleanup_random_mgr();
+                                                    }
+                                                }
+
                                                 if (
                                                     appl_status_ok != e_status)
                                                 {

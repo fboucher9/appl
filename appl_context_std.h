@@ -95,8 +95,11 @@ class appl_context_std : public appl_context
         bool
             b_init_library_mgr;
 
+        bool
+            b_init_random_mgr;
+
         unsigned char
-            uc_padding[4u];
+            uc_padding[3u];
 
         appl_context_std(
             class appl_context_std const & r);
@@ -186,6 +189,12 @@ class appl_context_std : public appl_context
 
         void
             cleanup_library_mgr(void);
+
+        enum appl_status
+            init_random_mgr(void);
+
+        void
+            cleanup_random_mgr(void);
 
 }; // class appl_context_std
 
