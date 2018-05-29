@@ -67,15 +67,9 @@ class appl_random_std_mgr : public appl_random_mgr
 
         virtual
         enum appl_status
-        v_generate_seed(
-            unsigned long int * const
-                r_seed);
-
-        virtual
-        enum appl_status
         v_create_node(
-            unsigned long int const
-                i_seed,
+            struct appl_random_descriptor const * const
+                p_descriptor,
             struct appl_random * * const
                 r_node);
 

@@ -20,35 +20,18 @@ Description:
 
 */
 enum appl_status
-appl_random_generate_seed(
-    struct appl_context * const
-        p_context,
-    unsigned long int * const
-        r_seed)
-{
-    return
-        appl_random_service::s_generate_seed(
-            p_context,
-            r_seed);
-
-} /* generate_seed() */
-
-/*
-
-*/
-enum appl_status
 appl_random_create(
     struct appl_context * const
         p_context,
-    unsigned long int const
-        i_seed,
+    struct appl_random_descriptor const * const
+        p_descriptor,
     struct appl_random * * const
         r_random)
 {
     return
         appl_random_service::s_create(
             p_context,
-            i_seed,
+            p_descriptor,
             r_random);
 
 } /* create() */

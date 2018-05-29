@@ -31,19 +31,11 @@ class appl_random_service
 
         static
         enum appl_status
-        s_generate_seed(
-            struct appl_context * const
-                p_context,
-            unsigned long int * const
-                r_seed);
-
-        static
-        enum appl_status
         s_create(
             struct appl_context * const
                 p_context,
-            unsigned long int const
-                i_seed,
+            struct appl_random_descriptor const * const
+                p_descriptor,
             struct appl_random * * const
                 r_random);
 

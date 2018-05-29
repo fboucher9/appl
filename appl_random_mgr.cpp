@@ -12,37 +12,46 @@
 
 #include <appl_random_mgr.h>
 
+#include <appl_random.h>
+
+#include <appl_random_pseudo.h>
+
+#include <appl_random_handle.h>
+
 #include <appl_unused.h>
 
 //
 //
 //
 enum appl_status
-appl_random_mgr::v_generate_seed(
-    unsigned long int * const
-        r_seed)
-{
-    appl_unused(
-        r_seed);
-    return
-        appl_status_not_implemented;
-} // v_generate_seed()
-
-//
-//
-//
-enum appl_status
 appl_random_mgr::v_create_node(
-    unsigned long int const
-        i_seed,
+    struct appl_random_descriptor const * const
+        p_descriptor,
     struct appl_random * * const
         r_node)
 {
-    appl_unused(
-        i_seed,
-        r_node);
+    enum appl_status
+        e_status;
+
+    if (
+        appl_random_type_pseudo
+        == p_descriptor->e_type)
+    {
+        e_status =
+            appl_random_pseudo::s_create(
+                m_context,
+                p_descriptor->i_seed,
+                r_node);
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
     return
-        appl_status_not_implemented;
+        e_status;
+
 } // v_create_node()
 
 //

@@ -24,33 +24,17 @@
 //
 //
 enum appl_status
-appl_random_service::s_generate_seed(
-    struct appl_context * const
-        p_context,
-    unsigned long int * const
-        r_seed)
-{
-    return
-        p_context->m_random_mgr->v_generate_seed(
-            r_seed);
-
-} // s_generate_seed()
-
-//
-//
-//
-enum appl_status
 appl_random_service::s_create(
     struct appl_context * const
         p_context,
-    unsigned long int const
-        i_seed,
+    struct appl_random_descriptor const * const
+        p_descriptor,
     struct appl_random * * const
         r_random)
 {
     return
         p_context->m_random_mgr->v_create_node(
-            i_seed,
+            p_descriptor,
             r_random);
 
 } // s_create()
