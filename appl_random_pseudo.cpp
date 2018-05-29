@@ -65,7 +65,7 @@ appl_random_pseudo::s_create(
 //
 appl_random_pseudo::appl_random_pseudo() :
     appl_random(),
-    m_seed()
+    m_seed(1)
 {
 }
 
@@ -116,12 +116,53 @@ appl_random_pseudo::v_pick(
     unsigned long int * const
         r_value)
 {
-    appl_unused(
-        i_value_max,
-        r_value);
+    enum appl_status
+        e_status;
+
+    unsigned long int
+        i_value;
+
+    m_seed =
+        (
+            (
+                m_seed
+                * 1103515245ul)
+            + 12345ul);
+
+    i_value =
+        ((m_seed >> 18u) & 0x000003FFul);
+
+    m_seed =
+        (
+            (
+                m_seed
+                * 1103515245ul)
+            + 12345ul);
+
+    i_value |=
+        ((m_seed >> 8u) & 0x000FFC00ul);
+
+    m_seed =
+        (
+            (
+                m_seed
+                * 1103515245ul)
+            + 12345ul);
+
+    i_value |=
+        ((m_seed << 6u) & 0x7FF00000ul);
+
+    *(
+        r_value) =
+        (
+            i_value
+            % i_value_max);
+
+    e_status =
+        appl_status_ok;
 
     return
-        appl_status_not_implemented;
+        e_status;
 
 } // v_pick()
 
