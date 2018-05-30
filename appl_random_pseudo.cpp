@@ -150,13 +150,23 @@ appl_random_pseudo::v_pick(
             + 12345ul);
 
     i_value |=
-        ((m_seed << 6u) & 0x7FF00000ul);
+        ((m_seed << 2u) & 0x7FF00000ul);
 
-    *(
-        r_value) =
-        (
-            i_value
-            % i_value_max);
+    if (
+        i_value_max)
+    {
+        *(
+            r_value) =
+            (
+                i_value
+                % i_value_max);
+    }
+    else
+    {
+        *(
+            r_value) =
+            i_value;
+    }
 
     e_status =
         appl_status_ok;

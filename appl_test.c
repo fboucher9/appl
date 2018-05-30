@@ -1488,6 +1488,10 @@ appl_test_random(
             appl_status_ok
             == e_status)
         {
+            appl_print0("random: seed=[");
+            appl_print_number((signed long int)(i_value), 0, 0);
+            appl_print0("]\n");
+
             o_random2_descriptor.e_type =
                 appl_random_type_pseudo;
 
@@ -1517,6 +1521,97 @@ appl_test_random(
                     appl_status_ok
                     == e_status)
                 {
+                    appl_print0("random: value=[");
+                    appl_print_number((signed long int)(i_value), 0, 0);
+                    appl_print0("/20]\n");
+
+#if 1
+                    /* Do a verification of randomness */
+                    {
+                        unsigned long int
+                            i;
+
+                        unsigned long int
+                            t;
+
+                        signed long int
+                            a_count[31u];
+
+                        for (i=0; i<31u; i++)
+                        {
+                            a_count[i] = 0l;
+                        }
+
+                        for (t=0; t<0x10000; t++)
+                        {
+                            appl_random_pick(
+                                p_random2,
+                                0,
+                                &(
+                                    i_value));
+
+                            for (i=0; i<31u; i++)
+                            {
+                                if ((i_value >> i) & 1ul)
+                                {
+                                    a_count[i] ++;
+                                }
+                                else
+                                {
+                                    a_count[i] --;
+                                }
+                            }
+                        }
+
+                        for (i=0; i<31u; i++)
+                        {
+                            appl_print0("random: bit count ");
+                            appl_print_number((signed long int)(i), 0, 0);
+                            appl_print0(" = ");
+                            appl_print_number((signed long int)(a_count[i]), 0, 0);
+                            appl_print0("\n");
+                        }
+                    }
+#endif
+
+#if 1
+                    /* Fairness of picks */
+                    {
+                        unsigned long int
+                            i;
+
+                        unsigned long int
+                            t;
+
+                        unsigned long int
+                            a_count[6u];
+
+                        for (i=0; i<6u; i++)
+                        {
+                            a_count[i] = 0ul;
+                        }
+
+                        for (t=0; t<0x10000; t++)
+                        {
+                            appl_random_pick(
+                                p_random2,
+                                6ul,
+                                &(
+                                    i_value));
+
+                            a_count[i_value] ++;
+                        }
+
+                        for (i=0; i<6u; i++)
+                        {
+                            appl_print0("random: face count ");
+                            appl_print_number((signed long int)(i), 0, 0);
+                            appl_print0(" = ");
+                            appl_print_number((signed long int)(a_count[i]), 0, 0);
+                            appl_print0("\n");
+                        }
+                    }
+#endif
                 }
                 else
                 {

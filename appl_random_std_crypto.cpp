@@ -134,11 +134,21 @@ appl_random_std_crypto::v_pick(
                     ((a_data[0u] & 0xFFu) << 0u)
                     | ((a_data[1u] & 0xFFu) << 8u)
                     | ((a_data[2u] & 0xFFu) << 16u)
-                    | ((a_data[3u] & 0xFFu) << 24u));
+                    | ((a_data[3u] & 0x7Fu) << 24u));
 
-            *(
-                r_value) =
-                i_value % i_value_max;
+            if (
+                i_value_max)
+            {
+                *(
+                    r_value) =
+                    i_value % i_value_max;
+            }
+            else
+            {
+                *(
+                    r_value) =
+                    i_value;
+            }
 
             e_status =
                 appl_status_ok;
