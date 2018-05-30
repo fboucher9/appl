@@ -1249,6 +1249,8 @@ enum appl_status
 
     // destroy objects
 
+    cleanup_random_mgr();
+
     cleanup_library_mgr();
 
     cleanup_env();

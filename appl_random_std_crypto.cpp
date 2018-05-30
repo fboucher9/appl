@@ -4,6 +4,8 @@
 
 */
 
+#include <stdio.h>
+
 #include <appl_status.h>
 
 #include <appl_types.h>
@@ -92,12 +94,72 @@ appl_random_std_crypto::v_pick(
     unsigned long int * const
         r_value)
 {
-    appl_unused(
-        i_value_max,
-        r_value);
+    enum appl_status
+        e_status;
+
+    FILE *
+        fp;
+
+    fp =
+        fopen(
+            "/dev/urandom",
+            "rb");
+
+    if (
+        fp)
+    {
+        signed long int
+            i_read_result;
+
+        unsigned char
+            a_data[4u];
+
+
+        i_read_result =
+            static_cast<signed long int>(
+                fread(
+                    a_data,
+                    4u,
+                    1u,
+                    fp));
+
+        if (
+            1 == i_read_result)
+        {
+            unsigned long int
+                i_value;
+
+            i_value =
+                (
+                    ((a_data[0u] & 0xFFu) << 0u)
+                    | ((a_data[1u] & 0xFFu) << 8u)
+                    | ((a_data[2u] & 0xFFu) << 16u)
+                    | ((a_data[3u] & 0xFFu) << 24u));
+
+            *(
+                r_value) =
+                i_value % i_value_max;
+
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+
+        fclose(
+            fp);
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_not_implemented;
+        e_status;
 
 } // v_pick()
 

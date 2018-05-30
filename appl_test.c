@@ -1435,6 +1435,119 @@ appl_test_library(
 
 } /* appl_test_library() */
 
+static
+void
+appl_test_random(
+    struct appl_context * const
+        p_context)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_random_descriptor
+        o_random1_descriptor;
+
+    struct appl_random_descriptor
+        o_random2_descriptor;
+
+    struct appl_random *
+        p_random1;
+
+    struct appl_random *
+        p_random2;
+
+    o_random1_descriptor.e_type =
+        appl_random_type_crypto;
+
+    o_random1_descriptor.i_seed =
+        12345ul;
+
+    e_status =
+        appl_random_create(
+            p_context,
+            &(
+                o_random1_descriptor),
+            &(
+                p_random1));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        unsigned long int
+            i_value;
+
+        e_status =
+            appl_random_pick(
+                p_random1,
+                1000ul * 1000ul * 1000ul,
+                &(
+                    i_value));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            o_random2_descriptor.e_type =
+                appl_random_type_pseudo;
+
+            o_random2_descriptor.i_seed =
+                i_value;
+
+            e_status =
+                appl_random_create(
+                    p_context,
+                    &(
+                        o_random2_descriptor),
+                    &(
+                        p_random2));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_random_pick(
+                        p_random2,
+                        20,
+                        &(
+                            i_value));
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                }
+                else
+                {
+                    appl_print0("failed appl_random_pick(2)\n");
+                }
+
+                appl_object_destroy(
+                    appl_random_parent(
+                        p_random2));
+            }
+            else
+            {
+                appl_print0("failed appl_random_create(2)\n");
+            }
+        }
+        else
+        {
+            appl_print0("failed appl_random_pick(1)\n");
+        }
+
+        appl_object_destroy(
+            appl_random_parent(
+                p_random1));
+    }
+    else
+    {
+        appl_print0("failed appl_random_create(1)\n");
+    }
+
+} /* appl_test_random() */
+
 enum appl_status
 appl_main(
     struct appl_context * const
@@ -1737,6 +1850,12 @@ appl_main(
     if (1)
     {
         appl_test_library(
+            p_context);
+    }
+
+    if (1)
+    {
+        appl_test_random(
             p_context);
     }
 
