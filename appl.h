@@ -55,6 +55,8 @@ Description:
 
 #define APPL_CONFIG_WITH_LIBRARY
 
+#define APPL_CONFIG_WITH_RANDOM
+
 #include <appl_status.h>
 
 #include <appl_buf.h>
@@ -146,6 +148,12 @@ Description:
 #include <appl_library_handle.h>
 
 #endif /* #if defined APPL_CONFIG_WITH_LIBRARY */
+
+#if defined APPL_CONFIG_WITH_RANDOM
+
+#include <appl_random_handle.h>
+
+#endif /* #if defined APPL_CONFIG_WITH_RANDOM */
 
 #if defined(APPL_CONFIG_WITH_MAIN)
 

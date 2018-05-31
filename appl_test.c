@@ -1435,6 +1435,214 @@ appl_test_library(
 
 } /* appl_test_library() */
 
+static
+void
+appl_test_random(
+    struct appl_context * const
+        p_context)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_random_descriptor
+        o_random1_descriptor;
+
+    struct appl_random_descriptor
+        o_random2_descriptor;
+
+    struct appl_random *
+        p_random1;
+
+    struct appl_random *
+        p_random2;
+
+    o_random1_descriptor.e_type =
+        appl_random_type_crypto;
+
+    o_random1_descriptor.i_seed =
+        12345ul;
+
+    e_status =
+        appl_random_create(
+            p_context,
+            &(
+                o_random1_descriptor),
+            &(
+                p_random1));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        unsigned long int
+            i_value;
+
+        e_status =
+            appl_random_pick(
+                p_random1,
+                1000ul * 1000ul * 1000ul,
+                &(
+                    i_value));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            appl_print0("random: seed=[");
+            appl_print_number((signed long int)(i_value), 0, 0);
+            appl_print0("]\n");
+
+            o_random2_descriptor.e_type =
+                appl_random_type_pseudo;
+
+            o_random2_descriptor.i_seed =
+                i_value;
+
+            e_status =
+                appl_random_create(
+                    p_context,
+                    &(
+                        o_random2_descriptor),
+                    &(
+                        p_random2));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_random_pick(
+                        p_random2,
+                        20,
+                        &(
+                            i_value));
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    appl_print0("random: value=[");
+                    appl_print_number((signed long int)(i_value), 0, 0);
+                    appl_print0("/20]\n");
+
+#if 1
+                    /* Do a verification of randomness */
+                    {
+                        unsigned long int
+                            i;
+
+                        unsigned long int
+                            t;
+
+                        signed long int
+                            a_count[31u];
+
+                        for (i=0; i<31u; i++)
+                        {
+                            a_count[i] = 0l;
+                        }
+
+                        for (t=0; t<0x10000; t++)
+                        {
+                            appl_random_pick(
+                                p_random2,
+                                0,
+                                &(
+                                    i_value));
+
+                            for (i=0; i<31u; i++)
+                            {
+                                if ((i_value >> i) & 1ul)
+                                {
+                                    a_count[i] ++;
+                                }
+                                else
+                                {
+                                    a_count[i] --;
+                                }
+                            }
+                        }
+
+                        for (i=0; i<31u; i++)
+                        {
+                            appl_print0("random: bit count ");
+                            appl_print_number((signed long int)(i), 0, 0);
+                            appl_print0(" = ");
+                            appl_print_number((signed long int)(a_count[i]), 0, 0);
+                            appl_print0("\n");
+                        }
+                    }
+#endif
+
+#if 1
+                    /* Fairness of picks */
+                    {
+                        unsigned long int
+                            i;
+
+                        unsigned long int
+                            t;
+
+                        unsigned long int
+                            a_count[6u];
+
+                        for (i=0; i<6u; i++)
+                        {
+                            a_count[i] = 0ul;
+                        }
+
+                        for (t=0; t<0x10000; t++)
+                        {
+                            appl_random_pick(
+                                p_random2,
+                                6ul,
+                                &(
+                                    i_value));
+
+                            a_count[i_value] ++;
+                        }
+
+                        for (i=0; i<6u; i++)
+                        {
+                            appl_print0("random: face count ");
+                            appl_print_number((signed long int)(i), 0, 0);
+                            appl_print0(" = ");
+                            appl_print_number((signed long int)(a_count[i]), 0, 0);
+                            appl_print0("\n");
+                        }
+                    }
+#endif
+                }
+                else
+                {
+                    appl_print0("failed appl_random_pick(2)\n");
+                }
+
+                appl_object_destroy(
+                    appl_random_parent(
+                        p_random2));
+            }
+            else
+            {
+                appl_print0("failed appl_random_create(2)\n");
+            }
+        }
+        else
+        {
+            appl_print0("failed appl_random_pick(1)\n");
+        }
+
+        appl_object_destroy(
+            appl_random_parent(
+                p_random1));
+    }
+    else
+    {
+        appl_print0("failed appl_random_create(1)\n");
+    }
+
+} /* appl_test_random() */
+
 enum appl_status
 appl_main(
     struct appl_context * const
@@ -1737,6 +1945,12 @@ appl_main(
     if (1)
     {
         appl_test_library(
+            p_context);
+    }
+
+    if (1)
+    {
+        appl_test_random(
             p_context);
     }
 

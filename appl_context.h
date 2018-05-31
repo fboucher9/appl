@@ -52,6 +52,8 @@ class appl_env;
 
 class appl_library_mgr;
 
+class appl_random_mgr;
+
 //
 //
 //
@@ -101,6 +103,9 @@ struct appl_context : public appl_object
 
         class appl_library_mgr *
             m_library_mgr;
+
+        class appl_random_mgr *
+            m_random_mgr;
 
         /* -- */
 

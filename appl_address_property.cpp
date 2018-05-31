@@ -351,8 +351,7 @@ appl_address_property_set_port(
         appl_property_set_ulong(
             p_address_property,
             appl_address_property_id_port,
-            static_cast<unsigned long int>(
-                i_port));
+            i_port);
 
 } /* appl_address_property_set_port() */
 

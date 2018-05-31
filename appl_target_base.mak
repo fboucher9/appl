@@ -19,6 +19,7 @@ appl_base-deps := \
     appl_address_std_node.cpp \
     appl_buf.cpp \
     appl_buf0.cpp \
+    appl_chunk.cpp \
     appl_clock.cpp \
     appl_clock_handle.cpp \
     appl_clock_service.cpp \
@@ -84,6 +85,13 @@ appl_base-deps := \
     appl_property_handle.cpp \
     appl_property_service.cpp \
     appl_property_std.cpp \
+    appl_random_handle.cpp \
+    appl_random_service.cpp \
+    appl_random_mgr.cpp \
+    appl_random.cpp \
+    appl_random_std_mgr.cpp \
+    appl_random_pseudo.cpp \
+    appl_random_std_crypto.cpp \
     appl_refcount.cpp \
     appl_refcount_handle.cpp \
     appl_socket_descriptor.cpp \
