@@ -55,6 +55,19 @@ class appl_context_std : public appl_context
 
     private:
 
+        static
+        struct init_cleanup_item
+        {
+            enum appl_status
+                (appl_context_std::* p_init)(void);
+
+            void
+                (appl_context_std::* p_cleanup)(void);
+
+        }
+        const
+        g_init_cleanup_items[];
+
         /* -- */
 
         bool

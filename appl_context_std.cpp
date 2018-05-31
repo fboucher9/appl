@@ -1041,6 +1041,48 @@ void
 
 } // placement_new()
 
+struct appl_context_std::init_cleanup_item
+const
+appl_context_std::g_init_cleanup_items[] =
+{
+    {
+        & appl_context_std::init_thread_mgr,
+        & appl_context_std::cleanup_thread_mgr
+    },
+    {
+        & appl_context_std::init_file_mgr,
+        & appl_context_std::cleanup_file_mgr
+    },
+    {
+        & appl_context_std::init_mutex_mgr,
+        & appl_context_std::cleanup_mutex_mgr
+    },
+    {
+        & appl_context_std::init_clock,
+        & appl_context_std::cleanup_clock
+    },
+    {
+        & appl_context_std::init_event_mgr,
+        & appl_context_std::cleanup_event_mgr
+    },
+    {
+        & appl_context_std::init_socket_mgr,
+        & appl_context_std::cleanup_socket_mgr
+    },
+    {
+        & appl_context_std::init_env,
+        & appl_context_std::cleanup_env
+    },
+    {
+        & appl_context_std::init_library_mgr,
+        & appl_context_std::cleanup_library_mgr
+    },
+    {
+        & appl_context_std::init_random_mgr,
+        & appl_context_std::cleanup_random_mgr
+    }
+};
+
 //
 //
 //
@@ -1080,129 +1122,46 @@ enum appl_status
                 appl_status_ok
                 == e_status)
             {
-                e_status =
-                    init_thread_mgr();
+                unsigned int
+                    i_item_iterator;
 
-                if (
-                    appl_status_ok
-                    == e_status)
+                i_item_iterator =
+                    0;
+
+                while (
+                    (
+                        appl_status_ok
+                        == e_status)
+                    && (
+                        i_item_iterator
+                        < sizeof(g_init_cleanup_items) / sizeof(g_init_cleanup_items[0u])))
                 {
+                    struct init_cleanup_item const *
+                        p_item;
+
+                    p_item =
+                        g_init_cleanup_items + i_item_iterator;
+
                     e_status =
-                        init_file_mgr();
+                        ((this)->*(p_item->p_init))();
 
                     if (
                         appl_status_ok
                         == e_status)
                     {
-                        e_status =
-                            init_mutex_mgr();
-
-                        if (
-                            appl_status_ok
-                            == e_status)
-                        {
-                            e_status =
-                                init_clock();
-
-                            if (
-                                appl_status_ok
-                                == e_status)
-                            {
-                                e_status =
-                                    init_event_mgr();
-
-                                if (
-                                    appl_status_ok
-                                    == e_status)
-                                {
-                                    e_status =
-                                        init_socket_mgr();
-
-                                    if (
-                                        appl_status_ok
-                                        == e_status)
-                                    {
-                                        e_status =
-                                            init_env();
-
-                                        if (
-                                            appl_status_ok
-                                            == e_status)
-                                        {
-                                            e_status =
-                                                init_library_mgr();
-
-                                            if (
-                                                appl_status_ok
-                                                == e_status)
-                                            {
-                                                e_status =
-                                                    init_random_mgr();
-
-                                                if (
-                                                    appl_status_ok
-                                                    == e_status)
-                                                {
-                                                    if (
-                                                        appl_status_ok != e_status)
-                                                    {
-                                                        cleanup_random_mgr();
-                                                    }
-                                                }
-
-                                                if (
-                                                    appl_status_ok != e_status)
-                                                {
-                                                    cleanup_library_mgr();
-                                                }
-                                            }
-
-                                            if (
-                                                appl_status_ok != e_status)
-                                            {
-                                                cleanup_env();
-                                            }
-                                        }
-
-                                        if (
-                                            appl_status_ok != e_status)
-                                        {
-                                            cleanup_socket_mgr();
-                                        }
-                                    }
-
-                                    if (
-                                        appl_status_ok != e_status)
-                                    {
-                                        cleanup_event_mgr();
-                                    }
-                                }
-
-                                if (
-                                    appl_status_ok != e_status)
-                                {
-                                    cleanup_clock();
-                                }
-                            }
-
-                            if (
-                                appl_status_ok != e_status)
-                            {
-                                cleanup_mutex_mgr();
-                            }
-                        }
-
-                        if (
-                            appl_status_ok != e_status)
-                        {
-                            cleanup_file_mgr();
-                        }
+                        i_item_iterator ++;
                     }
-
-                    if (
-                        appl_status_ok != e_status)
+                    else
                     {
-                        cleanup_thread_mgr();
+                        while (i_item_iterator)
+                        {
+                            i_item_iterator --;
+
+                            p_item =
+                                g_init_cleanup_items + i_item_iterator;
+
+                            ((this)->*(p_item->p_cleanup))();
+                        }
                     }
                 }
 
@@ -1249,23 +1208,25 @@ enum appl_status
 
     // destroy objects
 
-    cleanup_random_mgr();
+    unsigned int
+        i_item_iterator;
 
-    cleanup_library_mgr();
+    i_item_iterator =
+        sizeof(g_init_cleanup_items) / sizeof(g_init_cleanup_items[0u]);
 
-    cleanup_env();
+    while (
+        i_item_iterator)
+    {
+        i_item_iterator --;
 
-    cleanup_socket_mgr();
+        struct init_cleanup_item const *
+            p_item;
 
-    cleanup_event_mgr();
+        p_item =
+            g_init_cleanup_items + i_item_iterator;
 
-    cleanup_clock();
-
-    cleanup_mutex_mgr();
-
-    cleanup_file_mgr();
-
-    cleanup_thread_mgr();
+        ((this)->*(p_item->p_cleanup))();
+    }
 
     cleanup_options();
 
