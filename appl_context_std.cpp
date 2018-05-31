@@ -124,7 +124,15 @@
 
 #include <appl_random_mgr.h>
 
+#if defined APPL_OS_LINUX
+
 #include <appl_random_std_mgr.h>
+
+#elif defined APPL_OS_WINDOWS
+
+#include <appl_random_w32_mgr.h>
+
+#endif
 
 extern
 enum appl_status
@@ -852,11 +860,22 @@ enum appl_status
     if (
         !b_init_random_mgr)
     {
+#if defined APPL_OS_LINUX
         e_status =
             appl_random_std_mgr::s_create(
                 m_context,
                 &(
                     m_random_mgr));
+#elif defined APPL_OS_WINDOWS
+        e_status =
+            appl_random_w32_mgr::s_create(
+                m_context,
+                &(
+                    m_random_mgr));
+#else /* #if defined APPL_OS_LINUX */
+        e_status =
+            appl_status_not_implemented;
+#endif /* #if defined APPL_OS_LINUX */
 
         if (
             appl_status_ok

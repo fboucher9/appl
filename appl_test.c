@@ -1542,7 +1542,7 @@ appl_test_random(
                             a_count[i] = 0l;
                         }
 
-                        for (t=0; t<0x10000; t++)
+                        for (t=0; t<0x1000; t++)
                         {
                             appl_random_pick(
                                 p_random2,
@@ -1591,7 +1591,7 @@ appl_test_random(
                             a_count[i] = 0ul;
                         }
 
-                        for (t=0; t<0x10000; t++)
+                        for (t=0; t<0x1000; t++)
                         {
                             appl_random_pick(
                                 p_random2,

@@ -4,7 +4,7 @@
 
 */
 
-#if defined APPL_OS_LINUX
+#if defined APPL_OS_WINDOWS
 
 #include <appl_status.h>
 
@@ -14,21 +14,19 @@
 
 #include <appl_random_mgr.h>
 
-#include <appl_random_std_mgr.h>
+#include <appl_random_w32_mgr.h>
 
 #include <appl_random_handle.h>
 
 #include <appl_random.h>
 
-#include <appl_random_std_crypto.h>
-
-#include <appl_unused.h>
+#include <appl_random_w32_crypto.h>
 
 //
 //
 //
 enum appl_status
-appl_random_std_mgr::s_create(
+appl_random_w32_mgr::s_create(
     struct appl_context * const
         p_context,
     class appl_random_mgr * * const
@@ -37,18 +35,18 @@ appl_random_std_mgr::s_create(
     enum appl_status
         e_status;
 
-    class appl_random_std_mgr *
-        p_random_std_mgr;
+    class appl_random_w32_mgr *
+        p_random_w32_mgr;
 
     e_status =
         appl_object::s_create(
             p_context,
             (&
-                appl_random_std_mgr::s_new),
+                appl_random_w32_mgr::s_new),
             (&
-                appl_random_std_mgr::init),
+                appl_random_w32_mgr::init),
             &(
-                p_random_std_mgr));
+                p_random_w32_mgr));
 
     if (
         appl_status_ok
@@ -56,7 +54,7 @@ appl_random_std_mgr::s_create(
     {
         *(
             r_random_mgr) =
-            p_random_std_mgr;
+            p_random_w32_mgr;
     }
 
     return
@@ -67,7 +65,7 @@ appl_random_std_mgr::s_create(
 //
 //
 //
-appl_random_std_mgr::appl_random_std_mgr() :
+appl_random_w32_mgr::appl_random_w32_mgr() :
     appl_random_mgr()
 {
 }
@@ -75,7 +73,7 @@ appl_random_std_mgr::appl_random_std_mgr() :
 //
 //
 //
-appl_random_std_mgr::~appl_random_std_mgr()
+appl_random_w32_mgr::~appl_random_w32_mgr()
 {
 }
 
@@ -83,12 +81,12 @@ appl_random_std_mgr::~appl_random_std_mgr()
 //
 //
 void
-    appl_random_std_mgr::s_new(
+    appl_random_w32_mgr::s_new(
         void * const
             p_placement)
 {
     new (p_placement)
-        class appl_random_std_mgr;
+        class appl_random_w32_mgr;
 
 } // s_new()
 
@@ -96,7 +94,7 @@ void
 //
 //
 enum appl_status
-    appl_random_std_mgr::init(void)
+    appl_random_w32_mgr::init(void)
 {
     return
         appl_status_ok;
@@ -107,7 +105,7 @@ enum appl_status
 //
 //
 enum appl_status
-appl_random_std_mgr::v_create_node(
+appl_random_w32_mgr::v_create_node(
     struct appl_random_descriptor const * const
         p_descriptor,
     struct appl_random * * const
@@ -121,7 +119,7 @@ appl_random_std_mgr::v_create_node(
         == p_descriptor->e_type)
     {
         e_status =
-            appl_random_std_crypto::s_create(
+            appl_random_w32_crypto::s_create(
                 m_context,
                 r_node);
     }
@@ -138,6 +136,6 @@ appl_random_std_mgr::v_create_node(
 
 } // v_create_node()
 
-#endif /* #if defined APPL_OS_LINUX */
+#endif /* #if defined APPL_OS_WINDOWS */
 
-/* end-of-file: appl_random_std_mgr.cpp */
+/* end-of-file: appl_random_w32_mgr.cpp */

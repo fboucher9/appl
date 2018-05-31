@@ -90,8 +90,10 @@ appl_base-deps := \
     appl_random_mgr.cpp \
     appl_random.cpp \
     appl_random_std_mgr.cpp \
+    appl_random_w32_mgr.cpp \
     appl_random_pseudo.cpp \
     appl_random_std_crypto.cpp \
+    appl_random_w32_crypto.cpp \
     appl_refcount.cpp \
     appl_refcount_handle.cpp \
     appl_socket_descriptor.cpp \
