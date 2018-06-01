@@ -81,4 +81,100 @@ appl_convert(
 
 } // appl_convert()
 
+//
+//
+//
+static
+inline
+unsigned short int
+appl_store_to_uchar(
+    unsigned long int const
+        u_value)
+{
+    return
+        static_cast<unsigned char>(
+            u_value);
+
+} // appl_store()
+
+//
+//
+//
+static
+inline
+unsigned short int
+appl_store_to_ushort(
+    unsigned long int const
+        u_value)
+{
+    return
+        static_cast<unsigned short int>(
+            u_value);
+
+} // appl_store()
+
+//
+//
+//
+static
+inline
+unsigned int
+appl_store_to_uint(
+    unsigned long int const
+        u_value)
+{
+    return
+        static_cast<unsigned int>(
+            u_value);
+
+} // appl_store()
+
+//
+//
+//
+#if defined INC_APPL_TYPES_H
+static
+inline
+unsigned long int
+appl_store_to_ulong(
+    appl_ull_t const
+        u_value)
+{
+    return
+        static_cast<unsigned long int>(
+            u_value);
+
+} // appl_store()
+#endif /* #if defined INC_APPL_TYPES_H */
+
+//
+//
+//
+static
+inline
+unsigned long int
+appl_sign_convert_to_unsigned(
+    signed long int const
+        i_value)
+{
+    return
+        static_cast<unsigned long int>(
+            i_value);
+} // appl_sign_convert_l()
+
+//
+//
+//
+static
+inline
+signed long int
+appl_sign_convert_to_signed(
+    unsigned long int const
+        u_value)
+{
+    return
+        static_cast<signed long int>(
+            u_value);
+} // appl_sign_convert_u()
+
 /* end-of-file: appl_convert.h */

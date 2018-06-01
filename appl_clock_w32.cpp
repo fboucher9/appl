@@ -20,6 +20,8 @@
 
 #include <appl_unused.h>
 
+#include <appl_convert.h>
+
 //
 //
 //
@@ -181,11 +183,14 @@ appl_math_muldiv(
     unsigned long int const
         i_div)
 {
+    appl_ull_t const
+        ll_value =
+            i_value;
+
     return
-        static_cast<unsigned long int>(
+        appl_store_to_ulong(
             (
-                static_cast<appl_ull_t>(
-                    i_value)
+                ll_value
                 * i_mul)
             / i_div);
 
@@ -232,9 +237,15 @@ appl_clock_w32::v_read(
             unsigned long int
                 i_time_count;
 
+            appl_ull_t
+                ll_time_count;
+
+            ll_time_count =
+                ((liCounter.QuadPart * i_time_freq) / liFreq.QuadPart);
+
             i_time_count =
-                static_cast<unsigned long int>(
-                    (liCounter.QuadPart * i_time_freq) / liFreq.QuadPart);
+                appl_store_to_ulong(
+                    ll_time_count);
 
             *(
                 p_time_count) =
@@ -286,7 +297,7 @@ appl_clock_w32::v_delay(
                 i_time_freq);
 
         SleepEx(
-            static_cast<unsigned int>(
+            appl_store_to_uint(
                 i_time_msec),
             TRUE);
 

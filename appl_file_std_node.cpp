@@ -168,9 +168,9 @@ enum appl_status
             memcpy(
                 a_pathname,
                 p_file_descriptor->p_name_min,
-                static_cast<appl_size_t>(
-                    p_file_descriptor->p_name_max
-                    - p_file_descriptor->p_name_min));
+                appl_buf_len(
+                    p_file_descriptor->p_name_min,
+                    p_file_descriptor->p_name_max));
 
             *(
                 a_pathname
@@ -313,16 +313,15 @@ enum appl_status
         read(
             m_fd,
             p_buf_min,
-            static_cast<unsigned int>(
-                static_cast<appl_size_t>(
-                    p_buf_max
-                    - p_buf_min)));
+            appl_buf_len(
+                p_buf_min,
+                p_buf_max));
 
     if (
         i_read_result > 0)
     {
         *(r_count) =
-            static_cast<unsigned long int>(
+            appl_sign_convert_to_unsigned(
                 i_read_result);
 
         e_status =
@@ -358,20 +357,18 @@ enum appl_status
         i_write_result;
 
     i_write_result =
-        static_cast<signed long int>(
-            write(
-                m_fd,
+        write(
+            m_fd,
+            p_buf_min,
+            appl_buf_len(
                 p_buf_min,
-                static_cast<unsigned int>(
-                    static_cast<appl_size_t>(
-                        p_buf_max
-                        - p_buf_min))));
+                p_buf_max));
 
     if (
         0 < i_write_result)
     {
         *(r_count) =
-            static_cast<unsigned long int>(
+            appl_sign_convert_to_unsigned(
                 i_write_result);
 
         e_status =

@@ -158,9 +158,8 @@ appl_socket_w32_node::init(
                 reinterpret_cast<char const *>(
                     &(
                         i_reuseaddr_value)),
-                static_cast<int>(
-                    sizeof(
-                        i_reuseaddr_value)));
+                sizeof(
+                    i_reuseaddr_value));
     }
 #endif
 
@@ -263,11 +262,10 @@ appl_socket_w32_node::init_socket(
         appl_socket_protocol_tcp_stream == e_protocol)
     {
         m_fd =
-            static_cast<SOCKET>(
-                socket(
-                    AF_INET,
-                    SOCK_STREAM,
-                    0));
+            socket(
+                AF_INET,
+                SOCK_STREAM,
+                0);
 
         if (
             INVALID_SOCKET != m_fd)
@@ -376,7 +374,7 @@ appl_socket_w32_node::init_listen(
             i_listen_result =
             listen(
                 m_fd,
-                static_cast<int>(
+                appl_sign_convert_to_signed(
                     i_listen_count));
 
         if (
@@ -541,7 +539,7 @@ appl_socket_w32_node::v_accept(
                 i_address_length;
 
             i_address_length =
-                static_cast<int>(
+                appl_sign_convert_to_signed(
                     sizeof(
                         p_address_std_node->m_sockaddr.o_sockaddr_storage));
 
@@ -629,22 +627,21 @@ appl_socket_w32_node::v_send(
         i_send_result;
 
     i_send_result =
-        static_cast<signed long int>(
-            send(
-                m_fd,
-                appl_convert(
-                    p_buf_min),
-                appl_buf_len(
-                    p_buf_min,
-                    p_buf_max),
-                0));
+        send(
+            m_fd,
+            appl_convert(
+                p_buf_min),
+            appl_buf_len(
+                p_buf_min,
+                p_buf_max),
+            0);
 
     if (
         0 <= i_send_result)
     {
         *(
             r_count) =
-            static_cast<unsigned long int>(
+            appl_sign_convert_to_unsigned(
                 i_send_result);
 
         e_status =
@@ -680,22 +677,21 @@ appl_socket_w32_node::v_recv(
         i_recv_result;
 
     i_recv_result =
-        static_cast<signed long int>(
-            recv(
-                m_fd,
-                appl_convert(
-                    p_buf_min),
-                appl_buf_len(
-                    p_buf_min,
-                    p_buf_max),
-                0));
+        recv(
+            m_fd,
+            appl_convert(
+                p_buf_min),
+            appl_buf_len(
+                p_buf_min,
+                p_buf_max),
+            0);
 
     if (
         0 <= i_recv_result)
     {
         *(
             r_count) =
-            static_cast<unsigned long int>(
+            appl_sign_convert_to_unsigned(
                 i_recv_result);
 
         e_status =

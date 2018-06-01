@@ -28,6 +28,8 @@
 
 #include <appl_unused.h>
 
+#include <appl_convert.h>
+
 /* Unique identifier for appl_socket_property structure */
 static unsigned long int const APPL_SOCKET_PROPERTY_GUID = 0x77ca3c76ul;
 
@@ -228,12 +230,17 @@ appl_socket_property_set_protocol(
         p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
+    unsigned long int
+        u_value;
+
+    u_value =
+        e_socket_protocol;
+
     e_status =
         appl_property_set_ulong(
             p_socket_property,
             appl_socket_option_id_protocol,
-            static_cast<unsigned long int>(
-                e_socket_protocol));
+            u_value);
 
     return
         e_status;
@@ -586,10 +593,16 @@ appl_socket_property_get_protocol(
         appl_status_ok
         == e_status)
     {
-        *(
-            r_socket_protocol) =
+        enum appl_socket_protocol
+            e_socket_protocol;
+
+        e_socket_protocol =
             static_cast<enum appl_socket_protocol>(
                 u_value);
+
+        *(
+            r_socket_protocol) =
+            e_socket_protocol;
     }
 
     return
