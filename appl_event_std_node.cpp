@@ -32,6 +32,8 @@
 
 #include <appl_unused.h>
 
+#include <appl_convert.h>
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -253,20 +255,29 @@ enum appl_status
         == i_clock_result)
     {
         appl_ull_t
-            i_abstime;
+            ll_abstime;
 
-        i_abstime =
-            static_cast<appl_ull_t>(
+        appl_ull_t const
+            ll_now_sec =
+            o_now.tv_sec;
+
+        appl_ull_t const
+            ll_now_nsec =
+            o_now.tv_nsec;
+
+        appl_ull_t const
+            ll_wait_count =
+            i_wait_count;
+
+        ll_abstime =
+            (
                 (
-                 static_cast<appl_ull_t>(
-                     o_now.tv_sec)
+                 ll_now_sec
                  * 1000000000ul)
-                + static_cast<appl_ull_t>(
-                    o_now.tv_nsec)
+                + ll_now_nsec
                 + (
                     (
-                        static_cast<appl_ull_t>(
-                            i_wait_count)
+                        ll_wait_count
                         * 1000000000ul)
                     / i_wait_freq));
 
@@ -275,12 +286,12 @@ enum appl_status
             o_abstime;
 
         o_abstime.tv_sec =
-            static_cast<time_t>(
-                i_abstime / 1000000000ul);
+            appl_store_to_ulong(
+                ll_abstime / 1000000000ul);
 
         o_abstime.tv_nsec =
-            static_cast<signed long int>(
-                i_abstime % 1000000000ul);
+            appl_store_to_ulong(
+                ll_abstime % 1000000000ul);
 
         int
             i_pthread_result;

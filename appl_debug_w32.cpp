@@ -18,6 +18,8 @@
 
 #include <appl_debug_w32.h>
 
+#include <appl_buf.h>
+
 //
 //
 //
@@ -131,9 +133,9 @@ enum appl_status
             WriteFile(
                 h_stderr_file,
                 p_msg_min,
-                static_cast<DWORD>(
-                    p_msg_max
-                    - p_msg_min),
+                appl_buf_len(
+                    p_msg_min,
+                    p_msg_max),
                 &(
                     dwBytesWritten),
                 NULL);

@@ -452,7 +452,7 @@ appl_address_property_get_port(
     {
         *(
             r_port) =
-            static_cast<unsigned short int>(
+            appl_store_to_ushort(
                 u_value);
     }
 

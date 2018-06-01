@@ -328,9 +328,8 @@ enum appl_status
         i_port;
 
     i_port =
-        static_cast<unsigned short int>(
-            ntohs(
-                p_sockaddr_in->sin_port));
+        ntohs(
+            p_sockaddr_in->sin_port);
 
     *(
         r_port) =

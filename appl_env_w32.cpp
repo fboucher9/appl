@@ -141,8 +141,7 @@ enum appl_status
 
             e_status =
                 p_heap->alloc_object_array(
-                    static_cast<appl_size_t>(
-                        dwResult + 1),
+                    dwResult + 1,
                     &(
                         p_value0));
 
