@@ -8,6 +8,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_convert.h>
+
 /*
 
 */
@@ -19,7 +21,7 @@ appl_buf_len(
         p_buf_max)
 {
     return
-        static_cast<unsigned long int>(
+        appl_convert::to_ulong(
             p_buf_max
             - p_buf_min);
 
@@ -449,12 +451,12 @@ appl_buf_compare(
         }
 
         i_result =
-            static_cast<signed int>(
-                static_cast<signed int>(
-                    static_cast<unsigned int>(
+            appl_convert::to_int(
+                appl_convert::to_int(
+                    appl_convert::to_uint(
                         c_left))
-                - static_cast<signed int>(
-                    static_cast<unsigned int>(
+                - appl_convert::to_int(
+                    appl_convert::to_uint(
                         c_right)));
     }
 
@@ -532,7 +534,7 @@ build_digits(
             n;
 
         n =
-            static_cast<unsigned int>(
+            appl_convert::to_uint(
                 u_value
                 % i_base);
 
@@ -623,7 +625,7 @@ appl_buf_print_number(
     if (appl_buf_print_flag_unsigned & i_flags)
     {
         u_value =
-            static_cast<unsigned long int>(
+            appl_convert::to_unsigned(
                 i_value);
 
         b_negative =
@@ -635,7 +637,7 @@ appl_buf_print_number(
             i_value >= 0l)
         {
             u_value =
-                static_cast<unsigned long int>(
+                appl_convert::to_unsigned(
                     i_value);
 
             b_negative =
@@ -644,7 +646,7 @@ appl_buf_print_number(
         else
         {
             u_value =
-                static_cast<unsigned long int>(
+                appl_convert::to_unsigned(
                     -i_value);
 
             b_negative =
@@ -716,9 +718,9 @@ appl_buf_print_number(
     i_width =
         i_width_const;
 
-    if (i_width > (i_count + static_cast<unsigned int>(b_sign)))
+    if (i_width > (i_count + b_sign))
     {
-        i_width = (i_width - i_count - static_cast<unsigned int>(b_sign));
+        i_width = (i_width - i_count - b_sign);
     }
 
     /* space padding for right align */

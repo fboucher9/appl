@@ -331,6 +331,16 @@ void
 
 } // thread_handler()
 
+union appl_thread_std_node_thread_context_ptr
+{
+    void *
+        p_thread_context;
+
+    class appl_thread_std_node *
+        p_thread_std_node;
+
+}; // appl_thread_std_node_thread_context_ptr
+
 //
 //
 //
@@ -339,10 +349,15 @@ void *
         void *
             p_thread_context)
 {
+    union appl_thread_std_node_thread_context_ptr
+        o_thread_context_ptr;
+
+    o_thread_context_ptr.p_thread_context =
+        p_thread_context;
+
     class appl_thread_std_node * const
         p_thread_std_node =
-        static_cast<class appl_thread_std_node *>(
-            p_thread_context);
+        o_thread_context_ptr.p_thread_std_node;
 
     p_thread_std_node->thread_handler();
 
@@ -379,6 +394,12 @@ appl_thread_std_node::v_start(void)
             int
                 i_create_result;
 
+            union appl_thread_std_node_thread_context_ptr
+                o_thread_context_ptr;
+
+            o_thread_context_ptr.p_thread_std_node =
+                this;
+
             i_create_result =
                 pthread_create(
                     &(
@@ -386,8 +407,7 @@ appl_thread_std_node::v_start(void)
                     NULL,
                     &(
                         appl_thread_std_node::thread_entry),
-                    static_cast<void *>(
-                        this));
+                    o_thread_context_ptr.p_thread_context);
 
             if (
                 0

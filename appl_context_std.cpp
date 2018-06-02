@@ -964,11 +964,14 @@ enum appl_status
             void *
                 p_placement;
 
+            appl_size_t const
+                i_placement_len =
+                sizeof(
+                    class appl_context_std);
+
             e_status =
                 p_heap->v_alloc(
-                    static_cast<unsigned long int>(
-                        sizeof(
-                            class appl_context_std)),
+                    i_placement_len,
                     &(
                         p_placement));
 
@@ -978,10 +981,13 @@ enum appl_status
                 class appl_context_std *
                     p_context_std;
 
+                struct appl_context * const
+                    p_dummy_context =
+                    0;
+
                 e_status =
                     appl_object::s_init(
-                        static_cast<struct appl_context *>(
-                            0),
+                        p_dummy_context,
                         p_placement,
                         (&
                             appl_context_std::placement_new),
@@ -1258,8 +1264,7 @@ enum appl_status
     // manual delete
     void * const
         p_placement =
-        static_cast<void *>(
-            this);
+        this;
 
     delete
         this;

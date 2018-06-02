@@ -22,6 +22,8 @@
 
 #include <appl_unused.h>
 
+#include <appl_convert.h>
+
 //
 //
 //
@@ -109,8 +111,9 @@ appl_random_w32_crypto::v_pick(
         i_value;
 
     i_value =
-        static_cast<unsigned long int>(
-            time(NULL));
+        appl_convert::to_ulong(
+            appl_convert::to_unsigned(
+                time(NULL)));
 
     if (
         i_value_max)

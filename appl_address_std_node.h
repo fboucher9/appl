@@ -80,6 +80,34 @@ class appl_address_std_node : public appl_address
             operator =(
                 class appl_address_std_node const  & r);
 
+        //
+        //
+        //
+        static
+        class appl_address_std_node const *
+        convert_handle(
+            struct appl_address const * const
+                p_address)
+        {
+            return
+                static_cast<class appl_address_std_node const *>(
+                    p_address);
+        } // convert_handle()
+
+        //
+        //
+        //
+        static
+        class appl_address_std_node *
+        convert_handle(
+            struct appl_address * const
+                p_address)
+        {
+            return
+                static_cast<class appl_address_std_node *>(
+                    p_address);
+        } // convert_handle()
+
         static
         void
             s_new(
