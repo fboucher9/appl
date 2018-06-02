@@ -40,8 +40,7 @@ enum appl_status
 
         void * const
             p_placement =
-            static_cast<void *>(
-                this);
+            this;
 
         delete
             this;
@@ -76,13 +75,15 @@ appl_object::operator new(
     appl_size_t const
         i_buf_len)
 {
-    static unsigned int g_uiDummy = 12345;
+    static unsigned char g_uiDummy = 123;
     appl_unused(
         i_buf_len);
+    void * const
+        p_result =
+        &(
+            g_uiDummy);
     return
-        static_cast<void *>(
-            &(
-                g_uiDummy));
+        p_result;
 } // operator new
 
 void

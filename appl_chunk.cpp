@@ -49,6 +49,32 @@ struct appl_chunk_node : public appl_list
 }; // struct appl_chunk_node
 
 //
+//
+//
+union appl_chunk_node_ptr
+{
+    struct appl_list *
+        p_node;
+
+    struct appl_chunk_node *
+        p_chunk_node;
+
+}; // union appl_chunk_node_ptr
+
+//
+//
+//
+union appl_chunk_node_cptr
+{
+    struct appl_list const *
+        pc_node;
+
+    struct appl_chunk_node const *
+        pc_chunk_node;
+
+}; // union appl_chunk_node_ptr
+
+//
 //  Class: appl_chunk
 //
 //  Description:
@@ -368,17 +394,18 @@ appl_chunk_std::v_cleanup(void)
     while (
         o_nodes.o_prev.p_node != &(o_nodes))
     {
-        struct appl_chunk_node * const
-            p_chunk_node =
-            static_cast<struct appl_chunk_node *>(
-                o_nodes.o_prev.p_node);
+        union appl_chunk_node_ptr
+            o_chunk_node_ptr;
+
+        o_chunk_node_ptr.p_node =
+            o_nodes.o_prev.p_node;
 
         appl_list_join(
-            p_chunk_node,
-            p_chunk_node);
+            o_chunk_node_ptr.p_chunk_node,
+            o_chunk_node_ptr.p_chunk_node);
 
         m_context->m_heap->v_free(
-            p_chunk_node);
+            o_chunk_node_ptr.p_chunk_node);
     }
 
     e_status =
@@ -447,10 +474,15 @@ appl_chunk_std::f_write_char(
     if (
         o_nodes.o_prev.p_node != &(o_nodes))
     {
+        union appl_chunk_node_ptr
+            o_chunk_node_ptr;
+
+        o_chunk_node_ptr.p_node =
+            o_nodes.o_prev.p_node;
+
         struct appl_chunk_node * const
             p_chunk_node =
-            static_cast<struct appl_chunk_node *>(
-                o_nodes.o_prev.p_node);
+            o_chunk_node_ptr.p_chunk_node;
 
         // Is there room in current chunk?
         if (
@@ -567,8 +599,8 @@ appl_chunk_std::v_read(
     unsigned char *
         p_buf_iterator;
 
-    struct appl_list const *
-        p_node_iterator;
+    union appl_chunk_node_cptr
+        o_node_iterator;
 
     e_status =
         appl_status_ok;
@@ -576,7 +608,7 @@ appl_chunk_std::v_read(
     p_buf_iterator =
         p_buf_min;
 
-    p_node_iterator =
+    o_node_iterator.pc_node =
         &(
             o_nodes);
 
@@ -588,16 +620,15 @@ appl_chunk_std::v_read(
             p_buf_iterator
             != p_buf_max))
     {
-        p_node_iterator =
-            p_node_iterator->o_next.pc_node;
+        o_node_iterator.pc_node =
+            o_node_iterator.pc_node->o_next.pc_node;
 
         if (
-            p_node_iterator != &(o_nodes))
+            o_node_iterator.pc_node != &(o_nodes))
         {
             struct appl_chunk_node const * const
                 p_chunk_node =
-                static_cast<struct appl_chunk_node const *>(
-                    p_node_iterator);
+                o_node_iterator.pc_chunk_node;
 
             unsigned char const *
                 p_data_iterator;

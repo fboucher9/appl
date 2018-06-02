@@ -12,6 +12,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_convert.h>
+
 /*
 
 */
@@ -101,7 +103,7 @@ appl_buf0_len(
     }
 
     return
-        static_cast<unsigned long int>(
+        appl_convert::to_ulong(
             p_buf_it
             - p_buf_0);
 

@@ -75,6 +75,16 @@ struct appl_thread_property : public appl_property
 {
 };
 
+union appl_thread_property_ptr
+{
+    struct appl_property *
+        p_property;
+
+    struct appl_thread_property *
+        p_thread_property;
+
+}; /* union appl_thread_property_ptr */
+
 /*
 
 */
@@ -107,10 +117,15 @@ appl_thread_property_create(
             appl_thread_property_id_guid,
             APPL_THREAD_DESCRIPTOR_GUID);
 
+        union appl_thread_property_ptr
+            o_thread_property_ptr;
+
+        o_thread_property_ptr.p_property =
+            p_property;
+
         *(
             r_thread_property) =
-            static_cast<struct appl_thread_property *>(
-                p_property);
+            o_thread_property_ptr.p_thread_property;
     }
 
     return

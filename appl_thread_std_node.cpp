@@ -48,6 +48,8 @@
 
 #include <appl_unused.h>
 
+#include <appl_convert.h>
+
 //
 //
 //
@@ -143,8 +145,7 @@ appl_thread_std_node::oops(
                         s_msg + sizeof s_msg,
                         '('),
                     s_msg + sizeof s_msg,
-                    static_cast<signed long int>(
-                        i_status_code),
+                    i_status_code,
                     0,
                     0),
                 s_msg + sizeof s_msg,
@@ -330,6 +331,16 @@ void
 
 } // thread_handler()
 
+union appl_thread_std_node_thread_context_ptr
+{
+    void *
+        p_thread_context;
+
+    class appl_thread_std_node *
+        p_thread_std_node;
+
+}; // appl_thread_std_node_thread_context_ptr
+
 //
 //
 //
@@ -338,16 +349,20 @@ void *
         void *
             p_thread_context)
 {
+    union appl_thread_std_node_thread_context_ptr
+        o_thread_context_ptr;
+
+    o_thread_context_ptr.p_thread_context =
+        p_thread_context;
+
     class appl_thread_std_node * const
         p_thread_std_node =
-        static_cast<class appl_thread_std_node *>(
-            p_thread_context);
+        o_thread_context_ptr.p_thread_std_node;
 
     p_thread_std_node->thread_handler();
 
     return
-        static_cast<void *>(
-            0);
+        0;
 
 } // thread_entry()
 
@@ -379,6 +394,12 @@ appl_thread_std_node::v_start(void)
             int
                 i_create_result;
 
+            union appl_thread_std_node_thread_context_ptr
+                o_thread_context_ptr;
+
+            o_thread_context_ptr.p_thread_std_node =
+                this;
+
             i_create_result =
                 pthread_create(
                     &(
@@ -386,8 +407,7 @@ appl_thread_std_node::v_start(void)
                     NULL,
                     &(
                         appl_thread_std_node::thread_entry),
-                    static_cast<void *>(
-                        this));
+                    o_thread_context_ptr.p_thread_context);
 
             if (
                 0
@@ -588,11 +608,11 @@ enum appl_status
                     o_abstime;
 
                 o_abstime.tv_sec =
-                    static_cast<time_t>(
+                    appl_convert::to_long(
                         ll_abstime / 1000000000ul);
 
                 o_abstime.tv_nsec =
-                    static_cast<signed long int>(
+                    appl_convert::to_long(
                         ll_abstime % 1000000000ul);
 
                 int

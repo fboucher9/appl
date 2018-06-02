@@ -48,10 +48,13 @@ enum appl_status
         class appl_heap_std *
             p_heap_std;
 
+        struct appl_context * const
+            p_context =
+            0;
+
         e_status =
             appl_object::s_init<appl_heap_std>(
-                static_cast<struct appl_context *>(
-                    0),
+                p_context,
                 p_placement,
                 (&
                     appl_heap_std::placement_new),
@@ -121,8 +124,7 @@ appl_heap_std::v_cleanup(void)
 {
     void * const
         p_placement =
-        static_cast<void *>(
-            this);
+        this;
 
     delete
         this;

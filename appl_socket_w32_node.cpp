@@ -141,13 +141,20 @@ appl_socket_w32_node::init(
         appl_status_ok
         == e_status)
     {
-        BOOL
-            i_reuseaddr_value;
+        union reuseaddr_value
+        {
+            BOOL
+                b;
+
+            char
+                a[1u];
+
+        } o_reuseaddr_value;
 
         int
             i_setsockopt_result;
 
-        i_reuseaddr_value =
+        o_reuseaddr_value.b =
             TRUE;
 
         i_setsockopt_result =
@@ -155,9 +162,7 @@ appl_socket_w32_node::init(
                 m_fd,
                 SOL_SOCKET,
                 SO_REUSEADDR,
-                reinterpret_cast<char const *>(
-                    &(
-                        i_reuseaddr_value)),
+                o_reuseaddr_value.a,
                 sizeof(
                     i_reuseaddr_value));
     }
@@ -313,7 +318,7 @@ appl_socket_w32_node::init_bind(
     {
         class appl_address_std_node const * const
             p_address_std_node =
-            static_cast<class appl_address_std_node const *>(
+            appl_address_std_node::convert_handle(
                 p_bind_address);
 
         int const
@@ -374,7 +379,7 @@ appl_socket_w32_node::init_listen(
             i_listen_result =
             listen(
                 m_fd,
-                appl_sign_convert_to_signed(
+                appl_convert::to_signed(
                     i_listen_count));
 
         if (
@@ -424,7 +429,7 @@ appl_socket_w32_node::init_connect(
     {
         class appl_address_std_node const * const
             p_address_std_node =
-            static_cast<class appl_address_std_node const *>(
+            appl_address_std_node::convert_handle(
                 p_connect_address);
 
         int const
@@ -532,14 +537,14 @@ appl_socket_w32_node::v_accept(
         {
             class appl_address_std_node * const
                 p_address_std_node =
-                static_cast<class appl_address_std_node *>(
+                appl_address_std_node::convert_handle(
                     p_address);
 
             int
                 i_address_length;
 
             i_address_length =
-                appl_sign_convert_to_signed(
+                appl_convert::to_signed(
                     sizeof(
                         p_address_std_node->m_sockaddr.o_sockaddr_storage));
 
@@ -641,7 +646,7 @@ appl_socket_w32_node::v_send(
     {
         *(
             r_count) =
-            appl_sign_convert_to_unsigned(
+            appl_convert::to_unsigned(
                 i_send_result);
 
         e_status =
@@ -691,7 +696,7 @@ appl_socket_w32_node::v_recv(
     {
         *(
             r_count) =
-            appl_sign_convert_to_unsigned(
+            appl_convert::to_unsigned(
                 i_recv_result);
 
         e_status =
