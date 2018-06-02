@@ -93,9 +93,21 @@ appl_mutex_std_node::convert_handle(
     struct appl_mutex * const
         p_mutex)
 {
+    union appl_mutex_std_node_ptr
+    {
+        struct appl_mutex *
+            p_mutex;
+
+        class appl_mutex_std_node *
+            p_mutex_std_node;
+
+    } o_mutex_std_node_ptr;
+
+    o_mutex_std_node_ptr.p_mutex =
+        p_mutex;
+
     return
-        static_cast<class appl_mutex_std_node *>(
-            p_mutex);
+        o_mutex_std_node_ptr.p_mutex_std_node;
 
 } // convert_handle()
 

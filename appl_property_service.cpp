@@ -79,9 +79,8 @@ appl_property_service::s_set_ptr(
     union appl_property_value
         o_value;
 
-    o_value.p_value =
-        const_cast<void *>(
-            p_value);
+    o_value.pc_value =
+        p_value;
 
     e_status =
         p_property->v_set(

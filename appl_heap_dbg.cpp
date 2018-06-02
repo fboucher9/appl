@@ -84,10 +84,13 @@ enum appl_status
         o_descriptor.p_parent =
             p_parent;
 
+        struct appl_context *
+            p_dummy_context =
+            0;
+
         e_status =
             appl_object::s_init(
-                static_cast<struct appl_context *>(
-                    0),
+                p_dummy_context,
                 p_placement,
                 (&
                     appl_heap_dbg::placement_new),
@@ -254,16 +257,19 @@ enum appl_status
                     static_cast<struct appl_heap_dbg_header *>(
                         o_iterator.o_cur.p_node);
 
+                void * const
+                    pv_allocation =
+                    p_header + 1;
+
                 printf(" - allocation at %p of %lu bytes\n",
-                    static_cast<void *>(
-                        p_header + 1),
+                    pv_allocation,
                     appl_convert::to_ulong(
                         p_header->i_buf_len));
 
 #if defined APPL_OS_LINUX
                 backtrace_symbols_fd(
                     p_header->a_backtrace,
-                    static_cast<int>(
+                    appl_convert::to_int(
                         p_header->i_backtrace_count),
                     STDOUT_FILENO);
 #endif /* #if defined APPL_OS_LINUX */
@@ -287,8 +293,7 @@ enum appl_status
 
     void * const
         p_placement =
-        static_cast<void *>(
-            this);
+        this;
 
     delete
         this;
@@ -322,7 +327,7 @@ enum appl_status
             i_total_buf_len;
 
         i_total_buf_len =
-            static_cast<appl_size_t>(
+            (
                 i_buf_len
                 + sizeof(
                     struct appl_heap_dbg_header)
@@ -404,10 +409,13 @@ enum appl_status
                 &(
                     m_lock));
 
+            void * const
+                pv_allocation =
+                p_header + 1;
+
             *(
                 r_buf) =
-                static_cast<void *>(
-                    p_header + 1);
+                pv_allocation;
 
             e_status =
                 appl_status_ok;
@@ -468,8 +476,7 @@ enum appl_status
             p_allocation;
 
         p_allocation =
-            static_cast<void *>(
-                p_header);
+            p_header;
 
         struct appl_heap_dbg_footer *
             p_footer;

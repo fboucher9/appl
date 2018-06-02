@@ -44,6 +44,9 @@ union appl_property_value
     void *
         p_value;
 
+    void const *
+        pc_value;
+
     unsigned long int
         u_value;
 

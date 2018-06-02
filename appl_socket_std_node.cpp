@@ -36,6 +36,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_convert.h>
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -246,11 +248,10 @@ appl_socket_std_node::init_socket(
     {
         int const
             i_socket_result =
-            static_cast<int>(
-                socket(
-                    AF_INET,
-                    SOCK_STREAM,
-                    0));
+            socket(
+                AF_INET,
+                SOCK_STREAM,
+                0);
 
         if (
             -1 != i_socket_result)
@@ -301,7 +302,7 @@ appl_socket_std_node::init_bind(
     {
         class appl_address_std_node const * const
             p_address_std_node =
-            static_cast<class appl_address_std_node const *>(
+            appl_address_std_node::convert_handle(
                 p_bind_address);
 
         int const
@@ -360,7 +361,7 @@ appl_socket_std_node::init_connect(
     {
         class appl_address_std_node const * const
             p_address_std_node =
-            static_cast<class appl_address_std_node const *>(
+            appl_address_std_node::convert_handle(
                 p_connect_address);
 
         int const
@@ -408,21 +409,25 @@ appl_socket_std_node::init_listen(
         e_status;
 
     unsigned long int
-        i_listen_count;
+        ul_listen_count;
 
     if (
         appl_status_ok
         == appl_socket_property_get_listen_count(
             p_socket_descriptor,
             &(
-                i_listen_count)))
+                ul_listen_count)))
     {
+        int const
+            i_listen_count =
+            appl_convert::to_int(
+                ul_listen_count);
+
         int const
             i_listen_result =
             listen(
                 m_fd,
-                static_cast<int>(
-                    i_listen_count));
+                i_listen_count);
 
         if (
             0
@@ -519,14 +524,14 @@ appl_socket_std_node::v_accept(
         {
             class appl_address_std_node * const
                 p_address_std_node =
-                static_cast<class appl_address_std_node *>(
+                appl_address_std_node::convert_handle(
                     p_address);
 
             socklen_t
                 i_address_length;
 
             i_address_length =
-                static_cast<socklen_t>(
+                appl_convert::to_uint(
                     sizeof(
                         p_address_std_node->m_sockaddr.o_sockaddr_storage));
 
@@ -610,25 +615,24 @@ appl_socket_std_node::v_send(
     enum appl_status
         e_status;
 
-    signed long int
+    appl_ptrdiff_t
         i_send_result;
 
     i_send_result =
-        static_cast<signed long int>(
-            send(
-                m_fd,
+        send(
+            m_fd,
+            p_buf_min,
+            appl_buf_len(
                 p_buf_min,
-                appl_buf_len(
-                    p_buf_min,
-                    p_buf_max),
-                0));
+                p_buf_max),
+            0);
 
     if (
         -1 != i_send_result)
     {
         *(
             r_count) =
-            static_cast<unsigned long int>(
+            appl_convert::to_ulong(
                 i_send_result);
 
         e_status =
@@ -660,25 +664,24 @@ appl_socket_std_node::v_recv(
     enum appl_status
         e_status;
 
-    signed long int
+    appl_ptrdiff_t
         i_recv_result;
 
     i_recv_result =
-        static_cast<signed long int>(
-            recv(
-                m_fd,
+        recv(
+            m_fd,
+            p_buf_min,
+            appl_buf_len(
                 p_buf_min,
-                appl_buf_len(
-                    p_buf_min,
-                    p_buf_max),
-                0));
+                p_buf_max),
+            0);
 
     if (
         -1 != i_recv_result)
     {
         *(
             r_count) =
-            static_cast<unsigned long int>(
+            appl_convert::to_ulong(
                 i_recv_result);
 
         e_status =

@@ -110,20 +110,18 @@ appl_random_std_crypto::v_pick(
     if (
         fp)
     {
-        signed long int
+        appl_ptrdiff_t
             i_read_result;
 
         unsigned char
             a_data[4u];
 
-
         i_read_result =
-            static_cast<signed long int>(
-                fread(
-                    a_data,
-                    4u,
-                    1u,
-                    fp));
+            fread(
+                a_data,
+                4u,
+                1u,
+                fp);
 
         if (
             1 == i_read_result)

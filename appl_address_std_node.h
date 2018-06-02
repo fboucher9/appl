@@ -89,9 +89,22 @@ class appl_address_std_node : public appl_address
             struct appl_address const * const
                 p_address)
         {
+            union appl_address_std_node_ptr
+            {
+                struct appl_address const *
+                    p_address;
+
+                class appl_address_std_node const *
+                    p_address_std_node;
+
+            } o_address_std_node_ptr;
+
+            o_address_std_node_ptr.p_address =
+                p_address;
+
             return
-                static_cast<class appl_address_std_node const *>(
-                    p_address);
+                o_address_std_node_ptr.p_address_std_node;
+
         } // convert_handle()
 
         //
@@ -103,9 +116,22 @@ class appl_address_std_node : public appl_address
             struct appl_address * const
                 p_address)
         {
+            union appl_address_std_node_ptr
+            {
+                struct appl_address *
+                    p_address;
+
+                class appl_address_std_node *
+                    p_address_std_node;
+
+            } o_address_std_node_ptr;
+
+            o_address_std_node_ptr.p_address =
+                p_address;
+
             return
-                static_cast<class appl_address_std_node *>(
-                    p_address);
+                o_address_std_node_ptr.p_address_std_node;
+
         } // convert_handle()
 
         static
