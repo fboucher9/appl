@@ -20,6 +20,8 @@
 
 #include <appl_debug_std.h>
 
+#include <appl_buf.h>
+
 //
 //
 //
@@ -116,13 +118,12 @@ enum appl_status
         i_write_result;
 
     i_write_result =
-        static_cast<signed long int>(
-            write(
-                STDERR_FILENO,
+        write(
+            STDERR_FILENO,
+            p_msg_min,
+            appl_buf_len(
                 p_msg_min,
-                static_cast<unsigned int>(
-                    p_msg_max
-                    - p_msg_min)));
+                p_msg_max));
 
     if (
         i_write_result > 0)

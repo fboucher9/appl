@@ -36,6 +36,8 @@
 
 #include <appl_heap_dbg.h>
 
+#include <appl_convert.h>
+
 //
 //
 //
@@ -148,11 +150,9 @@ void
 
 } // placement_new()
 
-static unsigned char const g_appl_heap_dbg_header_magic =
-static_cast<unsigned char>(0xA1u);
+static unsigned char const g_appl_heap_dbg_header_magic = (0xA1u);
 
-static unsigned char const g_appl_heap_dbg_footer_magic =
-static_cast<unsigned char>(0x8Du);
+static unsigned char const g_appl_heap_dbg_footer_magic = (0x8Du);
 
 struct appl_heap_dbg_header : public appl_list
 {
@@ -257,7 +257,7 @@ enum appl_status
                 printf(" - allocation at %p of %lu bytes\n",
                     static_cast<void *>(
                         p_header + 1),
-                    static_cast<unsigned long int>(
+                    appl_convert::to_ulong(
                         p_header->i_buf_len));
 
 #if defined APPL_OS_LINUX

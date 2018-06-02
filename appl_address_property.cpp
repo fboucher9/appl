@@ -28,9 +28,9 @@
 
 #include <appl_debug_handle.h>
 
-#include <appl_convert.h>
-
 #endif /* #if defined APPL_DEBUG */
+
+#include <appl_convert.h>
 
 #define APPL_ADDRESS_PROPERTY_GUID (0xe0bfd095ul)
 

@@ -167,6 +167,8 @@ appl_chunk::~appl_chunk()
 {
 }
 
+class appl_chunk_std;
+
 //
 //  Class: appl_chunk_std
 //
@@ -206,11 +208,11 @@ class appl_chunk_std : public appl_chunk
             ul_padding[1u];
 
         appl_chunk_std(
-            struct appl_chunk_std const & r);
+            class appl_chunk_std const & r);
 
-        struct appl_chunk_std &
+        class appl_chunk_std &
             operator =(
-                struct appl_chunk_std const & r);
+                class appl_chunk_std const & r);
 
         static
         void
@@ -257,7 +259,7 @@ class appl_chunk_std : public appl_chunk
             unsigned char const
                 c_value);
 
-}; // struct appl_chunk_std
+}; // class appl_chunk_std
 
 //
 //
@@ -325,7 +327,7 @@ void
             p_placement)
 {
     new (p_placement)
-        struct appl_chunk_std;
+        class appl_chunk_std;
 
 } // s_new()
 

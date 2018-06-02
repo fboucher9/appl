@@ -134,6 +134,8 @@
 
 #endif
 
+#include <appl_convert.h>
+
 extern
 enum appl_status
     appl_library_mgr_create(
@@ -966,7 +968,7 @@ enum appl_status
 
             e_status =
                 p_heap->v_alloc(
-                    static_cast<unsigned long int>(
+                    appl_convert::to_ulong(
                         sizeof(
                             class appl_context_std)),
                     &(

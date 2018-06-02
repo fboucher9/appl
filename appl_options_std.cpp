@@ -22,6 +22,8 @@
 
 #include <appl_buf0.h>
 
+#include <appl_convert.h>
+
 //
 //
 //
@@ -147,7 +149,7 @@ appl_options_std::v_count(
 
     unsigned long int const
         i_count =
-        static_cast<unsigned long int>(
+        appl_convert::to_ulong(
             m_descriptor.p_arg_max
             - m_descriptor.p_arg_min);
 

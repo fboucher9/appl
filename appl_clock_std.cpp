@@ -20,6 +20,8 @@
 
 #include <appl_clock_std.h>
 
+#include <appl_convert.h>
+
 //
 //
 //
@@ -99,11 +101,14 @@ appl_math_muldiv(
     unsigned long int const
         i_div)
 {
+    appl_ull_t const
+        ll_value =
+        i_value;
+
     return
-        static_cast<unsigned long int>(
+        appl_convert::to_ulong(
             (
-                static_cast<appl_ull_t>(
-                    i_value)
+                ll_value
                 * i_mul)
             / i_div);
 
@@ -140,16 +145,24 @@ appl_clock_std::v_read(
         unsigned long int
             i_time_count;
 
+        unsigned long int const
+            i_clock_sec =
+            appl_convert::to_unsigned(
+                o_clock_value.tv_sec);
+
+        unsigned long int const
+            i_clock_nsec =
+            appl_convert::to_unsigned(
+                o_clock_value.tv_nsec);
+
         i_time_count =
             (
                 appl_math_muldiv(
-                    static_cast<unsigned long int>(
-                        o_clock_value.tv_sec),
+                    i_clock_sec,
                     i_time_freq,
                     1ul)
                 + appl_math_muldiv(
-                    static_cast<unsigned long int>(
-                        o_clock_value.tv_nsec),
+                    i_clock_nsec,
                     i_time_freq,
                     1000000000ul));
 
@@ -185,20 +198,24 @@ appl_clock_std::v_delay(
         e_status;
 
     unsigned long int
-        i_time_usec;
+        ul_time_usec;
 
     if (
         i_time_freq)
     {
-        i_time_usec =
+        ul_time_usec =
             appl_math_muldiv(
                 i_time_count,
                 1000000ul,
                 i_time_freq);
 
+        unsigned int const
+            ui_time_usec =
+            appl_convert::to_uint(
+                ul_time_usec);
+
         usleep(
-            static_cast<unsigned int>(
-                i_time_usec));
+            ui_time_usec);
 
         e_status =
             appl_status_ok;

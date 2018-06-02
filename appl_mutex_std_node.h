@@ -78,6 +78,12 @@ class appl_mutex_std_node : public appl_mutex
                 class appl_mutex_std_node const & r);
 
         static
+        class appl_mutex_std_node *
+        convert_handle(
+            struct appl_mutex * const
+                p_mutex);
+
+        static
         void
             placement_new(
                 void * const

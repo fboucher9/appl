@@ -88,6 +88,20 @@ appl_mutex_std_node::~appl_mutex_std_node()
 //
 //
 //
+class appl_mutex_std_node *
+appl_mutex_std_node::convert_handle(
+    struct appl_mutex * const
+        p_mutex)
+{
+    return
+        static_cast<class appl_mutex_std_node *>(
+            p_mutex);
+
+} // convert_handle()
+
+//
+//
+//
 void
     appl_mutex_std_node::placement_new(
         void * const

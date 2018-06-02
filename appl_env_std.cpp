@@ -32,6 +32,8 @@
 
 #include <appl_convert.h>
 
+#include <appl_buf.h>
+
 //
 //
 //
@@ -106,18 +108,18 @@ enum appl_status
     p_heap =
         m_context->m_heap;
 
-    appl_size_t const
+    unsigned long int const
         i_name_len =
-        static_cast<appl_size_t>(
-            p_name_max
-            - p_name_min);
+        appl_buf_len(
+            p_name_min,
+            p_name_max);
 
     char *
         p_name0;
 
     e_status =
         p_heap->alloc_object_array(
-            i_name_len + 1,
+            i_name_len + 1ul,
             &(
                 p_name0));
 
@@ -219,11 +221,11 @@ enum appl_status
         p_heap =
         m_context->m_heap;
 
-    appl_size_t const
+    unsigned long int const
         i_name_len =
-        static_cast<appl_size_t>(
-            p_name_max
-            - p_name_min);
+        appl_buf_len(
+            p_name_min,
+            p_name_max);
 
     char *
         p_name0;
@@ -246,11 +248,11 @@ enum appl_status
         p_name0[i_name_len] =
             0;
 
-        appl_size_t const
+        unsigned long int const
             i_value_len =
-            static_cast<appl_size_t>(
-                p_value_max
-                - p_value_min);
+            appl_buf_len(
+                p_value_min,
+                p_value_max);
 
         char *
             p_value0;
