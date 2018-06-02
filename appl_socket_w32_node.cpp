@@ -544,7 +544,7 @@ appl_socket_w32_node::v_accept(
                 i_address_length;
 
             i_address_length =
-                appl_convert::to_signed(
+                appl_convert::to_int(
                     sizeof(
                         p_address_std_node->m_sockaddr.o_sockaddr_storage));
 

@@ -584,10 +584,12 @@ enum appl_status
                     ll_wait_count;
 
                 ll_now_sec =
-                    o_now.tv_sec;
+                    appl_convert::to_unsigned(
+                        o_now.tv_sec);
 
                 ll_now_nsec =
-                    o_now.tv_nsec;
+                    appl_convert::to_unsigned(
+                        o_now.tv_nsec);
 
                 ll_wait_count =
                     i_wait_count;
