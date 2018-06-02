@@ -97,6 +97,16 @@ struct appl_socket_property : public appl_property
 {
 };
 
+union appl_socket_property_ptr
+{
+    struct appl_property *
+        p_property;
+
+    struct appl_socket_property *
+        p_socket_property;
+
+}; /* union appl_socket_property_ptr */
+
 enum appl_status
 appl_socket_property_create(
     struct appl_context * const
@@ -126,10 +136,15 @@ appl_socket_property_create(
             appl_socket_option_id_guid,
             APPL_SOCKET_PROPERTY_GUID);
 
+        union appl_socket_property_ptr
+            o_socket_property_ptr;
+
+        o_socket_property_ptr.p_property =
+            p_property;
+
         *(
             r_socket_property) =
-            static_cast<struct appl_socket_property *>(
-                p_property);
+            o_socket_property_ptr.p_socket_property;
     }
 
     return
