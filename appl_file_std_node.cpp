@@ -321,7 +321,7 @@ enum appl_status
         i_read_result > 0)
     {
         *(r_count) =
-            appl_sign_convert_to_unsigned(
+            appl_convert::to_unsigned(
                 i_read_result);
 
         e_status =
@@ -368,7 +368,7 @@ enum appl_status
         0 < i_write_result)
     {
         *(r_count) =
-            appl_sign_convert_to_unsigned(
+            appl_convert::to_unsigned(
                 i_write_result);
 
         e_status =

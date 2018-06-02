@@ -286,11 +286,11 @@ enum appl_status
             o_abstime;
 
         o_abstime.tv_sec =
-            appl_store_to_ulong(
+            appl_convert::to_long(
                 ll_abstime / 1000000000ul);
 
         o_abstime.tv_nsec =
-            appl_store_to_ulong(
+            appl_convert::to_long(
                 ll_abstime % 1000000000ul);
 
         int

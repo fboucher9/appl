@@ -374,7 +374,7 @@ appl_socket_w32_node::init_listen(
             i_listen_result =
             listen(
                 m_fd,
-                appl_sign_convert_to_signed(
+                appl_convert::to_signed(
                     i_listen_count));
 
         if (
@@ -539,7 +539,7 @@ appl_socket_w32_node::v_accept(
                 i_address_length;
 
             i_address_length =
-                appl_sign_convert_to_signed(
+                appl_convert::to_signed(
                     sizeof(
                         p_address_std_node->m_sockaddr.o_sockaddr_storage));
 
@@ -641,7 +641,7 @@ appl_socket_w32_node::v_send(
     {
         *(
             r_count) =
-            appl_sign_convert_to_unsigned(
+            appl_convert::to_unsigned(
                 i_send_result);
 
         e_status =
@@ -691,7 +691,7 @@ appl_socket_w32_node::v_recv(
     {
         *(
             r_count) =
-            appl_sign_convert_to_unsigned(
+            appl_convert::to_unsigned(
                 i_recv_result);
 
         e_status =

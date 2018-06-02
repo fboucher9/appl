@@ -188,7 +188,7 @@ appl_math_muldiv(
             i_value;
 
     return
-        appl_store_to_ulong(
+        appl_convert::to_ulong(
             (
                 ll_value
                 * i_mul)
@@ -244,7 +244,7 @@ appl_clock_w32::v_read(
                 ((liCounter.QuadPart * i_time_freq) / liFreq.QuadPart);
 
             i_time_count =
-                appl_store_to_ulong(
+                appl_convert::to_ulong(
                     ll_time_count);
 
             *(
@@ -297,7 +297,7 @@ appl_clock_w32::v_delay(
                 i_time_freq);
 
         SleepEx(
-            appl_store_to_uint(
+            appl_convert::to_uint(
                 i_time_msec),
             TRUE);
 
