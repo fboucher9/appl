@@ -633,7 +633,8 @@ appl_socket_std_node::v_send(
         *(
             r_count) =
             appl_convert::to_ulong(
-                i_send_result);
+                appl_convert::to_unsigned(
+                    i_send_result));
 
         e_status =
             appl_status_ok;
@@ -682,7 +683,8 @@ appl_socket_std_node::v_recv(
         *(
             r_count) =
             appl_convert::to_ulong(
-                i_recv_result);
+                appl_convert::to_unsigned(
+                    i_recv_result));
 
         e_status =
             appl_status_ok;

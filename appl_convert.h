@@ -97,8 +97,8 @@ class appl_convert
                 i_value)
         {
             return
-                static_cast<unsigned char>(
-                    i_value);
+                (
+                    i_value & 0xFFu);
         } // to_char()
 
         template <typename T>
@@ -110,8 +110,8 @@ class appl_convert
                 i_value)
         {
             return
-                static_cast<unsigned short int>(
-                    i_value);
+                (
+                    i_value & 0xFFFFu);
         } // to_short()
 
         template <typename T>
@@ -123,8 +123,8 @@ class appl_convert
                 i_value)
         {
             return
-                static_cast<unsigned int>(
-                    i_value);
+                (
+                    i_value & (~0u));
         } // to_int()
 
         template <typename T>
@@ -136,8 +136,8 @@ class appl_convert
                 i_value)
         {
             return
-                static_cast<unsigned long int>(
-                    i_value);
+                (
+                    i_value & (~0ul));
         } // to_long()
 
         template <typename T>
@@ -149,8 +149,8 @@ class appl_convert
                 i_value)
         {
             return
-                static_cast<signed char>(
-                    i_value);
+                (
+                    i_value & 0x7F);
 
         } // to_char()
 
@@ -163,8 +163,8 @@ class appl_convert
                 i_value)
         {
             return
-                static_cast<signed short int>(
-                    i_value);
+                (
+                    i_value & 0x7FFF);
         } // to_short()
 
         template <typename T>
@@ -176,8 +176,8 @@ class appl_convert
                 i_value)
         {
             return
-                static_cast<signed int>(
-                    i_value);
+                (
+                    i_value & ((~0u) >> 1));
         } // to_int()
 
         template <typename T>
@@ -189,8 +189,8 @@ class appl_convert
                 i_value)
         {
             return
-                static_cast<signed long int>(
-                    i_value);
+                (
+                    i_value & ((~0ul) >> 1));
         } // to_long()
 
         static

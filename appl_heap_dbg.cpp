@@ -295,10 +295,14 @@ enum appl_status
                     pv_allocation =
                     p_header + 1;
 
+                unsigned long int const
+                    ul_buf_len =
+                    appl_convert::to_ulong(
+                        p_header->i_buf_len);
+
                 printf(" - allocation at %p of %lu bytes\n",
                     pv_allocation,
-                    appl_convert::to_ulong(
-                        p_header->i_buf_len));
+                    ul_buf_len);
 
 #if defined APPL_OS_LINUX
                 backtrace_symbols_fd(

@@ -150,8 +150,9 @@ appl_options_std::v_count(
     unsigned long int const
         i_count =
         appl_convert::to_ulong(
-            m_descriptor.p_arg_max
-            - m_descriptor.p_arg_min);
+            appl_convert::to_unsigned(
+                m_descriptor.p_arg_max
+                - m_descriptor.p_arg_min));
 
     *(
         r_count) =

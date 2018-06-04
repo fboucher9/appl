@@ -8,6 +8,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_types.h>
+
 #include <appl_convert.h>
 
 /*
@@ -22,8 +24,9 @@ appl_buf_len(
 {
     return
         appl_convert::to_ulong(
-            p_buf_max
-            - p_buf_min);
+            appl_convert::to_unsigned(
+                p_buf_max
+                - p_buf_min));
 
 } /* appl_buf_len() */
 

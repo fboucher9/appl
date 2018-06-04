@@ -103,10 +103,6 @@ appl_random_w32_crypto::v_pick(
     enum appl_status
         e_status;
 
-    appl_unused(
-        i_value_max,
-        r_value);
-
     unsigned long int
         i_value;
 

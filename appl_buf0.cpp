@@ -12,6 +12,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_types.h>
+
 #include <appl_convert.h>
 
 /*
@@ -104,8 +106,9 @@ appl_buf0_len(
 
     return
         appl_convert::to_ulong(
-            p_buf_it
-            - p_buf_0);
+            appl_convert::to_unsigned(
+                p_buf_it
+                - p_buf_0));
 
 } /* len() */
 
