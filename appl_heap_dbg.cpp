@@ -177,12 +177,41 @@ struct appl_heap_dbg_header : public appl_list
 
 }; /* struct appl_heap_dbg_header */
 
+union appl_heap_dbg_header_ptr
+{
+    void *
+        p_void;
+
+    unsigned char *
+        p_uchar;
+
+    struct appl_list *
+        p_node;
+
+    struct appl_heap_dbg_header *
+        p_header;
+
+}; /* union appl_heap_dbg_header_ptr */
+
 struct appl_heap_dbg_footer
 {
     unsigned char
         a_footer[8u];
 
 }; /* struct appl_heap_dbg_footer */
+
+union appl_heap_dbg_footer_ptr
+{
+    void *
+        p_void;
+
+    unsigned char *
+        p_uchar;
+
+    struct appl_heap_dbg_footer *
+        p_footer;
+
+}; /* union appl_heap_dbg_footer_ptr */
 
 //
 //
@@ -250,12 +279,17 @@ enum appl_status
                     &(
                         o_iterator)))
             {
+                union appl_heap_dbg_header_ptr
+                    o_header_ptr;
+
+                o_header_ptr.p_node =
+                    o_iterator.o_cur.p_node;
+
                 struct appl_heap_dbg_header *
                     p_header;
 
                 p_header =
-                    static_cast<struct appl_heap_dbg_header *>(
-                        o_iterator.o_cur.p_node);
+                    o_header_ptr.p_header;
 
                 void * const
                     pv_allocation =
@@ -344,61 +378,60 @@ enum appl_status
             appl_status_ok
             == e_status)
         {
-            struct appl_heap_dbg_header *
-                p_header;
+            union appl_heap_dbg_header_ptr
+                o_header_ptr;
 
             pthread_mutex_lock(
                 &(
                     m_lock));
 
-            p_header =
-                static_cast<struct appl_heap_dbg_header *>(
-                    p_allocation);
+            o_header_ptr.p_void =
+                p_allocation;
 
             appl_list_init(
-                p_header);
+                o_header_ptr.p_header);
 
             appl_list_join(
-                p_header,
+                o_header_ptr.p_header,
                 &(
                     m_list));
 
-            p_header->i_buf_len =
+            o_header_ptr.p_header->i_buf_len =
                 i_buf_len;
 
 #if defined APPL_OS_LINUX
             /* Grab a backtrace */
-            p_header->i_backtrace_count =
-                backtrace(
-                    p_header->a_backtrace,
-                    8);
+            o_header_ptr.p_header->i_backtrace_count =
+                appl_convert::to_unsigned(
+                    backtrace(
+                        o_header_ptr.p_header->a_backtrace,
+                        8));
 #endif /* #if defined APPL_OS_LINUX */
 
             {
                 unsigned int i_header_iterator;
                 for (i_header_iterator = 0u;
-                    i_header_iterator < sizeof(p_header->a_header);
+                    i_header_iterator < sizeof(o_header_ptr.p_header->a_header);
                     i_header_iterator ++)
                 {
-                    p_header->a_header[i_header_iterator] =
+                    o_header_ptr.p_header->a_header[i_header_iterator] =
                         g_appl_heap_dbg_header_magic;
                 }
             }
 
-            struct appl_heap_dbg_footer *
-                p_footer;
+            union appl_heap_dbg_footer_ptr
+                o_footer_ptr;
 
-            p_footer =
-                reinterpret_cast<struct appl_heap_dbg_footer *>(
-                    p_header->a_header + 8 + i_buf_len);
+            o_footer_ptr.p_uchar =
+                o_header_ptr.p_header->a_header + 8 + i_buf_len;
 
             {
                 unsigned int i_footer_iterator;
                 for (i_footer_iterator = 0u;
-                    i_footer_iterator < sizeof(p_footer->a_footer);
+                    i_footer_iterator < sizeof(o_footer_ptr.p_footer->a_footer);
                     i_footer_iterator ++)
                 {
-                    p_footer->a_footer[i_footer_iterator] =
+                    o_footer_ptr.p_footer->a_footer[i_footer_iterator] =
                         g_appl_heap_dbg_footer_magic;
                 }
             }
@@ -411,7 +444,7 @@ enum appl_status
 
             void * const
                 pv_allocation =
-                p_header + 1;
+                o_header_ptr.p_header + 1;
 
             *(
                 r_buf) =
@@ -439,31 +472,31 @@ enum appl_status
         e_status;
 
     {
-        struct appl_heap_dbg_header *
-            p_header;
+        union appl_heap_dbg_header_ptr
+            o_header_ptr;
 
         pthread_mutex_lock(
             &(
                 m_lock));
 
-        p_header =
-            static_cast<struct appl_heap_dbg_header *>(
-                p_buf)
-            - 1;
+        o_header_ptr.p_void =
+            p_buf;
+
+        o_header_ptr.p_header --;
 
         appl_list_join(
-            p_header,
-            p_header);
+            o_header_ptr.p_header,
+            o_header_ptr.p_header);
 
         {
             unsigned int i_header_iterator;
             for (i_header_iterator = 0u;
-                i_header_iterator < sizeof(p_header->a_header);
+                i_header_iterator < sizeof(o_header_ptr.p_header->a_header);
                 i_header_iterator ++)
             {
                 if (
                     g_appl_heap_dbg_header_magic
-                    == p_header->a_header[i_header_iterator])
+                    == o_header_ptr.p_header->a_header[i_header_iterator])
                 {
                 }
                 else
@@ -476,26 +509,26 @@ enum appl_status
             p_allocation;
 
         p_allocation =
-            p_header;
+            o_header_ptr.p_header;
 
-        struct appl_heap_dbg_footer *
-            p_footer;
+        union appl_heap_dbg_footer_ptr
+            o_footer_ptr;
 
-        p_footer =
-            reinterpret_cast<struct appl_heap_dbg_footer *>(
-                static_cast<unsigned char *>(
-                    p_buf)
-                + p_header->i_buf_len);
+        o_footer_ptr.p_void =
+            p_buf;
+
+        o_footer_ptr.p_uchar +=
+            o_header_ptr.p_header->i_buf_len;
 
         {
             unsigned int i_footer_iterator;
             for (i_footer_iterator = 0u;
-                i_footer_iterator < sizeof(p_footer->a_footer);
+                i_footer_iterator < sizeof(o_footer_ptr.p_footer->a_footer);
                 i_footer_iterator ++)
             {
                 if (
                     g_appl_heap_dbg_footer_magic
-                    == p_footer->a_footer[i_footer_iterator])
+                    == o_footer_ptr.p_footer->a_footer[i_footer_iterator])
                 {
                 }
                 else
@@ -551,19 +584,19 @@ enum appl_status
             appl_status_ok
             == e_status)
         {
-            struct appl_heap_dbg_header const *
-                p_header;
+            union appl_heap_dbg_header_ptr
+                o_header_ptr;
 
-            p_header =
-                static_cast<struct appl_heap_dbg_header const *>(
-                    p_old_buf)
-                - 1;
+            o_header_ptr.p_void =
+                p_old_buf;
+
+            o_header_ptr.p_header --;
 
             appl_size_t
                 i_copy_len;
 
             i_copy_len =
-                p_header->i_buf_len;
+                o_header_ptr.p_header->i_buf_len;
 
             if (
                 i_copy_len > i_buf_len)

@@ -110,7 +110,7 @@ appl_random_std_crypto::v_pick(
     if (
         fp)
     {
-        appl_ptrdiff_t
+        appl_size_t
             i_read_result;
 
         unsigned char

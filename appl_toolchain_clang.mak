@@ -13,6 +13,9 @@ appl-clang-cc = clang
 # Setup clang C++ compiler program
 appl-clang-cxx = clang++
 
+# Setup clang librarian
+appl-clang-ar = $(AR)
+
 # Setup clang compiler options
 appl-clang-common-flags = \
     -g \
@@ -51,7 +54,40 @@ appl-clang-lib-flags = -DAPPL_BUILD_LIB
 appl-clang-lib-cflags =
 appl-clang-lib-cxxflags =
 
-appl-toolchain-clang-cflags = \
+appl-toolchain-clang-debug-exe-cflags = \
+    $(CFLAGS) \
+    $(appl-clang-common-flags) \
+    $(appl-clang-common-cflags) \
+    $(appl-clang-debug-flags) \
+    $(appl-clang-debug-cflags) \
+    $(appl-clang-exe-flags) \
+    $(appl-clang-exe-cflags)
+
+appl-toolchain-clang-debug-exe-cxxflags = \
+    $(CXXFLAGS) \
+    $(appl-clang-common-flags) \
+    $(appl-clang-common-cxxflags) \
+    $(appl-clang-debug-flags) \
+    $(appl-clang-debug-cxxflags) \
+    $(appl-clang-exe-flags) \
+    $(appl-clang-exe-cxxflags)
+
+define appl-toolchain-clang-debug-exe-linker
+	$(APPL_VERBOSE)echo -o $(1) $(appl-toolchain-clang-debug-exe-cflags) $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-clang-lflags)) > $(1).cmd
+	$(APPL_VERBOSE)$(appl-clang-cc) @$(strip $(1)).cmd
+endef
+
+define appl-toolchain-clang-debug-exe-c-compiler
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-clang-debug-exe-cflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)$(appl-clang-cc) @$(strip $(1)).cmd
+endef
+
+define appl-toolchain-clang-debug-exe-cxx-compiler
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-clang-debug-exe-cxxflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)$(appl-clang-cxx) @$(strip $(1)).cmd
+endef
+
+appl-toolchain-clang-release-exe-cflags = \
     $(CFLAGS) \
     $(appl-clang-common-flags) \
     $(appl-clang-common-cflags) \
@@ -60,7 +96,7 @@ appl-toolchain-clang-cflags = \
     $(appl-clang-exe-flags) \
     $(appl-clang-exe-cflags)
 
-appl-toolchain-clang-cxxflags = \
+appl-toolchain-clang-release-exe-cxxflags = \
     $(CXXFLAGS) \
     $(appl-clang-common-flags) \
     $(appl-clang-common-cxxflags) \
@@ -69,18 +105,82 @@ appl-toolchain-clang-cxxflags = \
     $(appl-clang-exe-flags) \
     $(appl-clang-exe-cxxflags)
 
-define appl-toolchain-clang-debug-exe-linker
-	$(APPL_VERBOSE)echo -o $(1) $(appl-toolchain-clang-cflags) $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-clang-lflags)) > $(1).cmd
+define appl-toolchain-clang-release-exe-linker
+	$(APPL_VERBOSE)echo -o $(1) $(appl-toolchain-clang-release-exe-cflags) $(3) $(2) $(foreach x,$(4),$(APPL_LIBRARY-$(x)-clang-lflags)) > $(1).cmd
 	$(APPL_VERBOSE)$(appl-clang-cc) @$(strip $(1)).cmd
 endef
 
-define appl-toolchain-clang-debug-exe-c-compiler
-	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-clang-cflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+define appl-toolchain-clang-release-exe-c-compiler
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-clang-release-exe-cflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(appl-clang-cc) @$(strip $(1)).cmd
 endef
 
-define appl-toolchain-clang-debug-exe-cxx-compiler
-	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-clang-cxxflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+define appl-toolchain-clang-release-exe-cxx-compiler
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-clang-release-exe-cxxflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)$(appl-clang-cxx) @$(strip $(1)).cmd
+endef
+
+appl-toolchain-clang-debug-lib-cflags = \
+    $(CFLAGS) \
+    $(appl-clang-common-flags) \
+    $(appl-clang-common-cflags) \
+    $(appl-clang-debug-flags) \
+    $(appl-clang-debug-cflags) \
+    $(appl-clang-lib-flags) \
+    $(appl-clang-lib-cflags)
+
+appl-toolchain-clang-debug-lib-cxxflags = \
+    $(CXXFLAGS) \
+    $(appl-clang-common-flags) \
+    $(appl-clang-common-cxxflags) \
+    $(appl-clang-debug-flags) \
+    $(appl-clang-debug-cxxflags) \
+    $(appl-clang-lib-flags) \
+    $(appl-clang-lib-cxxflags)
+
+define appl-toolchain-clang-debug-lib-linker
+	$(APPL_VERBOSE)$(appl-clang-ar) cr $(1) $(2)
+endef
+
+define appl-toolchain-clang-debug-lib-c-compiler
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-clang-debug-lib-cflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)$(appl-clang-cc) @$(strip $(1)).cmd
+endef
+
+define appl-toolchain-clang-debug-lib-cxx-compiler
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-clang-debug-lib-cxxflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)$(appl-clang-cxx) @$(strip $(1)).cmd
+endef
+
+appl-toolchain-clang-release-lib-cflags = \
+    $(CFLAGS) \
+    $(appl-clang-common-flags) \
+    $(appl-clang-common-cflags) \
+    $(appl-clang-release-flags) \
+    $(appl-clang-release-cflags) \
+    $(appl-clang-lib-flags) \
+    $(appl-clang-lib-cflags)
+
+appl-toolchain-clang-release-lib-cxxflags = \
+    $(CXXFLAGS) \
+    $(appl-clang-common-flags) \
+    $(appl-clang-common-cxxflags) \
+    $(appl-clang-release-flags) \
+    $(appl-clang-release-cxxflags) \
+    $(appl-clang-lib-flags) \
+    $(appl-clang-lib-cxxflags)
+
+define appl-toolchain-clang-release-lib-linker
+	$(APPL_VERBOSE)$(appl-clang-ar) cr $(1) $(2)
+endef
+
+define appl-toolchain-clang-release-lib-c-compiler
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-clang-release-lib-cflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)$(appl-clang-cc) @$(strip $(1)).cmd
+endef
+
+define appl-toolchain-clang-release-lib-cxx-compiler
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-clang-release-lib-cxxflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(appl-clang-cxx) @$(strip $(1)).cmd
 endef
 
