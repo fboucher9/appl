@@ -8,9 +8,15 @@
 
 #include <unistd.h>
 
+#include <fcntl.h>
+
+#include <errno.h>
+
 #include <sys/socket.h>
 
 #include <netinet/in.h>
+
+#include <poll.h>
 
 #include <appl_status.h>
 
@@ -372,6 +378,31 @@ appl_socket_std_node::init_connect(
     struct appl_address const *
         p_connect_address;
 
+    bool
+        b_connect_timeout;
+
+    unsigned long int
+        i_connect_timeout;
+
+    if (
+        appl_status_ok
+        == appl_socket_property_get_connect_timeout(
+            p_socket_descriptor,
+            &(
+                i_connect_timeout)))
+    {
+        b_connect_timeout =
+            true;
+    }
+    else
+    {
+        b_connect_timeout =
+            false;
+
+        i_connect_timeout =
+            0ul;
+    }
+
     if (
         appl_status_ok
         == appl_socket_property_get_connect_address(
@@ -383,6 +414,16 @@ appl_socket_std_node::init_connect(
             p_address_std_node =
             appl_address_std_node::convert_handle(
                 p_connect_address);
+
+        if (
+            b_connect_timeout)
+        {
+            // set socket to non-blocking mode
+            fcntl(m_fd, F_SETFL, O_NONBLOCK);
+
+            // clear the error number before calling
+            errno = 0;
+        }
 
         int const
             i_connect_result =
@@ -400,10 +441,95 @@ appl_socket_std_node::init_connect(
             e_status =
                 appl_status_ok;
         }
+        else if (
+            b_connect_timeout
+            && (
+                EINPROGRESS == errno))
+        {
+            /* Use poll to wait for completion */
+            struct pollfd
+                a_poll_table[1u];
+
+            a_poll_table[0u].fd =
+                m_fd;
+
+            a_poll_table[0u].events =
+                POLLIN | POLLOUT;
+
+            a_poll_table[0u].revents =
+                0;
+
+            int const
+                i_poll_result =
+                poll(
+                    a_poll_table,
+                    1,
+                    appl_convert::to_int(
+                        appl_convert::to_signed(
+                            i_connect_timeout)));
+
+            if (
+                0 == i_poll_result)
+            {
+                e_status =
+                    appl_status_fail;
+            }
+            else if (
+                0 < i_poll_result)
+            {
+                /* Get SO_ERROR option */
+                int
+                    i_sockopt_value;
+
+                socklen_t
+                    i_sockopt_length;
+
+                i_sockopt_length =
+                    appl_convert::to_uint(
+                        sizeof(i_sockopt_value));
+
+                int const
+                    i_sockopt_result =
+                    getsockopt(
+                        m_fd,
+                        SOL_SOCKET,
+                        SO_ERROR,
+                        &(
+                            i_sockopt_value),
+                        &(
+                            i_sockopt_length));
+
+                if (
+                    (
+                        0 == i_sockopt_result)
+                    && (
+                        0 == i_sockopt_value))
+                {
+                    e_status =
+                        appl_status_ok;
+                }
+                else
+                {
+                    e_status =
+                        appl_status_fail;
+                }
+            }
+            else
+            {
+                e_status =
+                    appl_status_fail;
+            }
+        }
         else
         {
             e_status =
                 appl_status_fail;
+        }
+
+        if (b_connect_timeout)
+        {
+            // restore original mode
+            fcntl(m_fd, F_SETFL, 0);
         }
     }
     else

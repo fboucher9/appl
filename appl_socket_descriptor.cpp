@@ -608,16 +608,31 @@ appl_socket_property_get_protocol(
         appl_status_ok
         == e_status)
     {
-        enum appl_socket_protocol
-            e_socket_protocol;
+        if (sizeof(enum appl_socket_protocol) == sizeof(unsigned int))
+        {
+            union appl_socket_protocol_int
+            {
+                enum appl_socket_protocol
+                    e_socket_protocol;
 
-        e_socket_protocol =
-            static_cast<enum appl_socket_protocol>(
-                u_value);
+                unsigned int
+                    i_value;
 
-        *(
-            r_socket_protocol) =
-            e_socket_protocol;
+            } o_socket_protocol;
+
+            o_socket_protocol.i_value =
+                appl_convert::to_uint(
+                    u_value);
+
+            *(
+                r_socket_protocol) =
+                o_socket_protocol.e_socket_protocol;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
     }
 
     return
@@ -850,12 +865,11 @@ appl_socket_property_get_connect_timeout(
         p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
-    appl_unused(
-        p_socket_property,
-        r_connect_timeout);
-
     e_status =
-        appl_status_not_implemented;
+        appl_property_get_ulong(
+            p_socket_property,
+            appl_socket_option_id_connect_timeout,
+            r_connect_timeout);
 
     return
         e_status;

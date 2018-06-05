@@ -1029,6 +1029,10 @@ appl_test_socket(
                         appl_socket_property_set_connect_address(
                             p_socket_descriptor,
                             p_address);
+
+                    appl_socket_property_set_connect_timeout(
+                        p_socket_descriptor,
+                        100ul);
                 }
 
                 if (
