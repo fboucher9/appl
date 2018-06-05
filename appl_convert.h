@@ -24,10 +24,21 @@ appl_convert(
     char const * const
         p_buffer0)
 {
+    union char_ptr
+    {
+        char const *
+            pc_char;
+
+        unsigned char const *
+            pc_uchar;
+
+    } o_storage;
+
+    o_storage.pc_char =
+        p_buffer0;
+
     return
-        static_cast<unsigned char const *>(
-            static_cast<void const *>(
-                p_buffer0));
+        o_storage.pc_uchar;
 
 } // appl_convert()
 
@@ -41,10 +52,21 @@ appl_convert(
     unsigned char const * const
         p_buffer)
 {
+    union char_ptr
+    {
+        unsigned char const *
+            pc_uchar;
+
+        char const *
+            pc_char;
+
+    } o_storage;
+
+    o_storage.pc_uchar =
+        p_buffer;
+
     return
-        static_cast<char const *>(
-            static_cast<void const *>(
-                p_buffer));
+        o_storage.pc_char;
 
 } // appl_convert()
 
@@ -58,10 +80,21 @@ appl_convert(
     unsigned char * const
         p_buffer)
 {
+    union char_ptr
+    {
+        unsigned char *
+            p_uchar;
+
+        char *
+            p_char;
+
+    } o_storage;
+
+    o_storage.p_uchar =
+        p_buffer;
+
     return
-        static_cast<char *>(
-            static_cast<void *>(
-                p_buffer));
+        o_storage.p_char;
 
 } // appl_convert()
 
@@ -200,9 +233,22 @@ class appl_convert
             unsigned char const
                 i_value)
         {
+            union to_signed_char
+            {
+                unsigned char
+                    i_unsigned;
+
+                signed char
+                    i_signed;
+
+            } o_storage;
+
+            o_storage.i_unsigned =
+                i_value;
+
             return
-                static_cast<signed char>(
-                    i_value);
+                o_storage.i_signed;
+
         } // to_signed()
 
         static
@@ -212,9 +258,22 @@ class appl_convert
             unsigned short int const
                 i_value)
         {
+            union to_signed_short
+            {
+                unsigned short int
+                    i_unsigned;
+
+                signed short int
+                    i_signed;
+
+            } o_storage;
+
+            o_storage.i_unsigned =
+                i_value;
+
             return
-                static_cast<signed short int>(
-                    i_value);
+                o_storage.i_signed;
+
         } // to_signed()
 
         static
@@ -224,9 +283,22 @@ class appl_convert
             unsigned int const
                 i_value)
         {
+            union to_signed_int
+            {
+                unsigned int
+                    i_unsigned;
+
+                signed int
+                    i_signed;
+
+            } o_storage;
+
+            o_storage.i_unsigned =
+                i_value;
+
             return
-                static_cast<signed int>(
-                    i_value);
+                o_storage.i_signed;
+
         } // to_signed()
 
         static
@@ -236,9 +308,22 @@ class appl_convert
             unsigned long int const
                 i_value)
         {
+            union to_signed_long
+            {
+                unsigned long int
+                    i_unsigned;
+
+                signed long int
+                    i_signed;
+
+            } o_storage;
+
+            o_storage.i_unsigned =
+                i_value;
+
             return
-                static_cast<signed long int>(
-                    i_value);
+                o_storage.i_signed;
+
         } // to_signed()
 
 #if defined INC_APPL_TYPES_H
@@ -249,9 +334,22 @@ class appl_convert
             appl_ull_t const
                 i_value)
         {
+            union to_signed_ll
+            {
+                appl_ull_t
+                    i_unsigned;
+
+                appl_sll_t
+                    i_signed;
+
+            } o_storage;
+
+            o_storage.i_unsigned =
+                i_value;
+
             return
-                static_cast<appl_sll_t>(
-                    i_value);
+                o_storage.i_signed;
+
         } // to_signed()
 #endif /* #if defined INC_APPL_TYPES_H */
 
@@ -262,9 +360,22 @@ class appl_convert
             signed char const
                 i_value)
         {
+            union to_unsigned_char
+            {
+                signed char
+                    i_signed;
+
+                unsigned char
+                    i_unsigned;
+
+            } o_storage;
+
+            o_storage.i_signed =
+                i_value;
+
             return
-                static_cast<unsigned char>(
-                    i_value);
+                o_storage.i_unsigned;
+
         } // to_unsigned()
 
         static
@@ -274,9 +385,22 @@ class appl_convert
             signed short int const
                 i_value)
         {
+            union to_unsigned_short
+            {
+                signed short int
+                    i_signed;
+
+                unsigned short int
+                    i_unsigned;
+
+            } o_storage;
+
+            o_storage.i_signed =
+                i_value;
+
             return
-                static_cast<unsigned short int>(
-                    i_value);
+                o_storage.i_unsigned;
+
         } // to_unsigned()
 
         static
@@ -286,9 +410,22 @@ class appl_convert
             signed int const
                 i_value)
         {
+            union to_unsigned_int
+            {
+                signed int
+                    i_signed;
+
+                unsigned int
+                    i_unsigned;
+
+            } o_storage;
+
+            o_storage.i_signed =
+                i_value;
+
             return
-                static_cast<unsigned int>(
-                    i_value);
+                o_storage.i_unsigned;
+
         } // to_unsigned()
 
         static
@@ -298,9 +435,22 @@ class appl_convert
             signed long int const
                 i_value)
         {
+            union to_unsigned_long
+            {
+                signed long int
+                    i_signed;
+
+                unsigned long int
+                    i_unsigned;
+
+            } o_storage;
+
+            o_storage.i_signed =
+                i_value;
+
             return
-                static_cast<unsigned long int>(
-                    i_value);
+                o_storage.i_unsigned;
+
         } // to_unsigned()
 
 #if defined INC_APPL_TYPES_H
@@ -311,9 +461,22 @@ class appl_convert
             appl_sll_t const
                 i_value)
         {
+            union to_unsigned_ll
+            {
+                appl_sll_t
+                    i_signed;
+
+                appl_ull_t
+                    i_unsigned;
+
+            } o_storage;
+
+            o_storage.i_signed =
+                i_value;
+
             return
-                static_cast<appl_ull_t>(
-                    i_value);
+                o_storage.i_unsigned;
+
         } // to_unsigned()
 #endif /* #if defined INC_APPL_TYPES_H */
 

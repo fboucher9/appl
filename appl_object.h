@@ -244,21 +244,27 @@ struct appl_object
             (*p_new)(
                 p_placement);
 
-            struct appl_object * const
-                p_object =
-                static_cast<struct appl_object *>(
-                    p_placement);
+            union object_ptr
+            {
+                void *
+                    p_placement;
 
-            p_object->m_context =
+                struct appl_object *
+                    p_object;
+
+                T_instance *
+                    p_instance;
+
+            } o_object_ptr;
+
+            o_object_ptr.p_placement =
+                p_placement;
+
+            o_object_ptr.p_object->m_context =
                 p_context;
 
-            T_instance * const
-                p_instance =
-                static_cast<T_instance *>(
-                    p_object);
-
             e_status =
-                ((p_instance)->*(p_init))(
+                ((o_object_ptr.p_instance)->*(p_init))(
                     p_descriptor);
 
             if (
@@ -267,12 +273,12 @@ struct appl_object
             {
                 *(
                     r_object) =
-                    p_instance;
+                    o_object_ptr.p_instance;
             }
             else
             {
                 delete
-                    p_object;
+                    o_object_ptr.p_object;
             }
 
             return
@@ -301,21 +307,27 @@ struct appl_object
             (*p_new)(
                 p_placement);
 
-            struct appl_object * const
-                p_object =
-                static_cast<struct appl_object *>(
-                    p_placement);
+            union object_ptr
+            {
+                void *
+                    p_placement;
 
-            p_object->m_context =
+                struct appl_object *
+                    p_object;
+
+                T_instance *
+                    p_instance;
+
+            } o_object_ptr;
+
+            o_object_ptr.p_placement =
+                p_placement;
+
+            o_object_ptr.p_object->m_context =
                 p_context;
 
-            T_instance * const
-                p_instance =
-                static_cast<T_instance *>(
-                    p_object);
-
             e_status =
-                ((p_instance)->*(p_init))();
+                ((o_object_ptr.p_instance)->*(p_init))();
 
             if (
                 appl_status_ok
@@ -323,12 +335,12 @@ struct appl_object
             {
                 *(
                     r_object) =
-                    p_instance;
+                    o_object_ptr.p_instance;
             }
             else
             {
                 delete
-                    p_object;
+                    o_object_ptr.p_object;
             }
 
             return
