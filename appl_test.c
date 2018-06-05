@@ -905,7 +905,7 @@ appl_test_socket(
         '.',
         '1',
         '0',
-        '4'
+        '2'
     };
 
     enum appl_status
@@ -1048,6 +1048,15 @@ appl_test_socket(
                         appl_status_ok
                         == e_status)
                     {
+                        /* Setup recv and send timeouts */
+                        appl_socket_property_set_recv_timeout(
+                            p_socket_descriptor,
+                            1000ul);
+
+                        appl_socket_property_set_send_timeout(
+                            p_socket_descriptor,
+                            1000ul);
+
                         e_status =
                             appl_socket_create(
                                 p_context,
@@ -1062,33 +1071,50 @@ appl_test_socket(
                             if (
                                 p_descriptor->b_server)
                             {
-                                struct appl_socket *
-                                    p_remote_socket;
+                                char
+                                    b_found_client;
 
-                                struct appl_address *
-                                    p_remote_address;
+                                b_found_client =
+                                    0;
 
-                                e_status =
-                                    appl_socket_accept(
-                                        p_socket,
-                                        &(
-                                            p_remote_socket),
-                                        &(
-                                            p_remote_address));
-
-                                if (
-                                    appl_status_ok
-                                    == e_status)
+                                while (
+                                    !b_found_client)
                                 {
-                                    appl_test_socket_process_client(
-                                        p_context,
-                                        p_remote_socket,
-                                        p_remote_address);
+                                    struct appl_socket *
+                                        p_remote_socket;
 
-                                    /* wait for thread to finish */
-                                    appl_test_sleep_msec(
-                                        p_context,
-                                        1000ul);
+                                    struct appl_address *
+                                        p_remote_address;
+
+                                    e_status =
+                                        appl_socket_accept(
+                                            p_socket,
+                                            &(
+                                                p_remote_socket),
+                                            &(
+                                                p_remote_address));
+
+                                    if (
+                                        appl_status_ok
+                                        == e_status)
+                                    {
+                                        appl_test_socket_process_client(
+                                            p_context,
+                                            p_remote_socket,
+                                            p_remote_address);
+
+                                        /* wait for thread to finish */
+                                        appl_test_sleep_msec(
+                                            p_context,
+                                            1000ul);
+
+                                        b_found_client =
+                                            1;
+                                    }
+                                    else
+                                    {
+                                        appl_print0("failed accept...\n");
+                                    }
                                 }
                             }
                             else

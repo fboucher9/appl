@@ -744,12 +744,11 @@ appl_socket_property_get_recv_timeout(
         p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
-    appl_unused(
-        p_socket_property,
-        r_recv_timeout);
-
     e_status =
-        appl_status_not_implemented;
+        appl_property_get_ulong(
+            p_socket_property,
+            appl_socket_option_id_recv_timeout,
+            r_recv_timeout);
 
     return
         e_status;
@@ -771,12 +770,11 @@ appl_socket_property_get_send_timeout(
         p_socket_property);
 #endif /* #if defined APPL_DEBUG */
 
-    appl_unused(
-        p_socket_property,
-        r_send_timeout);
-
     e_status =
-        appl_status_not_implemented;
+        appl_property_get_ulong(
+            p_socket_property,
+            appl_socket_option_id_send_timeout,
+            r_send_timeout);
 
     return
         e_status;

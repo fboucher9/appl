@@ -18,6 +18,8 @@
 
 #include <appl_object.h>
 
+#include <appl_object_handle.h>
+
 #include <appl_socket_descriptor.h>
 
 #include <appl_socket_node.h>
@@ -170,6 +172,24 @@ appl_socket_std_node::init(
     }
 
     // sockopt
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            init_recv_timeout(
+                p_socket_descriptor);
+    }
+
+    // sockopt
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            init_send_timeout(
+                p_socket_descriptor);
+    }
 
     if (
         appl_status_ok
@@ -457,6 +477,148 @@ appl_socket_std_node::init_listen(
 //
 //
 enum appl_status
+appl_socket_std_node::init_recv_timeout(
+    struct appl_socket_property const * const
+        p_socket_descriptor)
+{
+    enum appl_status
+        e_status;
+
+    unsigned long int
+        i_recv_timeout;
+
+    if (
+        appl_status_ok
+        == appl_socket_property_get_recv_timeout(
+            p_socket_descriptor,
+            &(
+                i_recv_timeout)))
+    {
+        struct timeval
+            o_sockopt_value;
+
+        o_sockopt_value.tv_sec =
+            appl_convert::to_signed(
+                i_recv_timeout / 1000ul);
+
+        o_sockopt_value.tv_usec =
+            appl_convert::to_signed(
+                (i_recv_timeout % 1000ul) * 1000ul);
+
+        socklen_t const
+            i_sockopt_length =
+            appl_convert::to_uint(
+                sizeof(o_sockopt_value));
+
+        int const
+            i_sockopt_result =
+            setsockopt(
+                m_fd,
+                SOL_SOCKET,
+                SO_RCVTIMEO,
+                &(
+                    o_sockopt_value),
+                i_sockopt_length);
+
+        if (
+            0
+            == i_sockopt_result)
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_ok;
+    }
+
+    return
+        e_status;
+
+} // init_recv_timeout()
+
+//
+//
+//
+enum appl_status
+appl_socket_std_node::init_send_timeout(
+    struct appl_socket_property const * const
+        p_socket_descriptor)
+{
+    enum appl_status
+        e_status;
+
+    unsigned long int
+        i_send_timeout;
+
+    if (
+        appl_status_ok
+        == appl_socket_property_get_send_timeout(
+            p_socket_descriptor,
+            &(
+                i_send_timeout)))
+    {
+        struct timeval
+            o_sockopt_value;
+
+        o_sockopt_value.tv_sec =
+            appl_convert::to_signed(
+                i_send_timeout / 1000ul);
+
+        o_sockopt_value.tv_usec =
+            appl_convert::to_signed(
+                (i_send_timeout % 1000ul) * 1000ul);
+
+        socklen_t const
+            i_sockopt_length =
+            appl_convert::to_uint(
+                sizeof(o_sockopt_value));
+
+        int const
+            i_sockopt_result =
+            setsockopt(
+                m_fd,
+                SOL_SOCKET,
+                SO_SNDTIMEO,
+                &(
+                    o_sockopt_value),
+                i_sockopt_length);
+
+        if (
+            0
+            == i_sockopt_result)
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_ok;
+    }
+
+    return
+        e_status;
+
+} // init_send_timeout()
+
+//
+//
+//
+enum appl_status
 appl_socket_std_node::v_cleanup(void)
 {
     enum appl_status
@@ -588,6 +750,9 @@ appl_socket_std_node::v_accept(
                 appl_status_ok
                 != e_status)
             {
+                appl_object_destroy(
+                    appl_address_parent(
+                        p_address));
             }
         }
 

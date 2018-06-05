@@ -104,6 +104,16 @@ class appl_socket_std_node : public appl_socket
             struct appl_socket_property const * const
                 p_socket_descriptor);
 
+        enum appl_status
+        init_recv_timeout(
+            struct appl_socket_property const * const
+                p_socket_descriptor);
+
+        enum appl_status
+        init_send_timeout(
+            struct appl_socket_property const * const
+                p_socket_descriptor);
+
         virtual
         enum appl_status
         v_cleanup(void);
