@@ -122,7 +122,7 @@ enum appl_status
 
         dwResult =
             GetEnvironmentVariableA(
-                appl_convert(
+                appl_convert::to_char_ptr(
                     p_name0),
                 NULL,
                 0);
@@ -154,9 +154,9 @@ enum appl_status
 
                 dwResult2 =
                     GetEnvironmentVariableA(
-                        appl_convert(
+                        appl_convert::to_char_ptr(
                             p_name0),
-                        appl_convert(
+                        appl_convert::to_char_ptr(
                             p_value0),
                         dwResult);
 
@@ -270,9 +270,9 @@ enum appl_status
 
             bResult =
                 SetEnvironmentVariableA(
-                    appl_convert(
+                    appl_convert::to_char_ptr(
                         p_name0),
-                    appl_convert(
+                    appl_convert::to_char_ptr(
                         p_value0));
 
             if (

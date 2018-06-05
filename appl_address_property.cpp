@@ -284,7 +284,7 @@ appl_address_property_assert_guid(
     {
         appl_debug_print0(
             p_address_property,
-            appl_convert(
+            appl_convert::to_uchar_ptr(
                 "invalid guid for appl_address_property object\n"));
     }
 }

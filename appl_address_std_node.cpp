@@ -269,7 +269,7 @@ enum appl_status
             m_sockaddr.o_sockaddr_in);
 
     // convert sin_addr to string
-    char * const
+    char const * const
         p_name0 =
         inet_ntoa(
             p_sockaddr_in->sin_addr);
@@ -277,20 +277,22 @@ enum appl_status
     if (
         p_name0)
     {
+        unsigned char const * const
+            p_name0u =
+            appl_convert::to_uchar_ptr(
+                p_name0);
+
         unsigned long int const
             i_name0_len =
             appl_buf0_len(
-                appl_convert(
-                    p_name0));
+                p_name0u);
 
         *(r_name_cur) =
             appl_buf_copy(
                 p_name_min,
                 p_name_max,
-                appl_convert(
-                    p_name0),
-                appl_convert(
-                    p_name0 + i_name0_len));
+                p_name0u,
+                p_name0u + i_name0_len);
 
         e_status =
             appl_status_ok;

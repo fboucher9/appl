@@ -45,11 +45,11 @@ main(
         o_context_descriptor;
 
     o_context_descriptor.p_arg_min =
-        appl_convert(
+        appl_convert::to_uchar_ptr_table(
             argv);
 
     o_context_descriptor.p_arg_max =
-        appl_convert(
+        appl_convert::to_uchar_ptr_table(
             argv + argc);
 
     /* Create context */

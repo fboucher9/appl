@@ -111,7 +111,7 @@ enum appl_status
     {
         m_library_handle =
             LoadLibraryA(
-                appl_convert(
+                appl_convert::to_char_ptr(
                     p_name0));
 
         if (
@@ -187,7 +187,7 @@ enum appl_status
         o_symbol_ptr.pfn =
             GetProcAddress(
                 m_library_handle,
-                appl_convert(
+                appl_convert::to_char_ptr(
                     p_symbol_name0));
 
         *(

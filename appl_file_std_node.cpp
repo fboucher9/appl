@@ -228,7 +228,7 @@ enum appl_status
 
             m_fd =
                 open(
-                    appl_convert(
+                    appl_convert::to_char_ptr(
                         a_pathname),
                     i_flags,
                     i_mode);

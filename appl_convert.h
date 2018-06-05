@@ -17,106 +17,6 @@
 //
 //
 //
-static
-inline
-unsigned char const *
-appl_convert(
-    char const * const
-        p_buffer0)
-{
-    union char_ptr
-    {
-        char const *
-            pc_char;
-
-        unsigned char const *
-            pc_uchar;
-
-    } o_storage;
-
-    o_storage.pc_char =
-        p_buffer0;
-
-    return
-        o_storage.pc_uchar;
-
-} // appl_convert()
-
-//
-//
-//
-static
-inline
-char const *
-appl_convert(
-    unsigned char const * const
-        p_buffer)
-{
-    union char_ptr
-    {
-        unsigned char const *
-            pc_uchar;
-
-        char const *
-            pc_char;
-
-    } o_storage;
-
-    o_storage.pc_uchar =
-        p_buffer;
-
-    return
-        o_storage.pc_char;
-
-} // appl_convert()
-
-//
-//
-//
-static
-inline
-char *
-appl_convert(
-    unsigned char * const
-        p_buffer)
-{
-    union char_ptr
-    {
-        unsigned char *
-            p_uchar;
-
-        char *
-            p_char;
-
-    } o_storage;
-
-    o_storage.p_uchar =
-        p_buffer;
-
-    return
-        o_storage.p_char;
-
-} // appl_convert()
-
-//
-//
-//
-static
-inline
-unsigned char * *
-appl_convert(
-    char * * const
-        argv)
-{
-    return
-        reinterpret_cast<unsigned char * * const>(
-            argv);
-
-} // appl_convert()
-
-//
-//
-//
 class appl_convert
 {
     public:
@@ -479,6 +379,118 @@ class appl_convert
 
         } // to_unsigned()
 #endif /* #if defined INC_APPL_TYPES_H */
+
+        //
+        //
+        //
+        static
+        inline
+        unsigned char const *
+        to_uchar_ptr(
+            char const * const
+                p_buffer0)
+        {
+            union char_ptr
+            {
+                char const *
+                    pc_char;
+
+                unsigned char const *
+                    pc_uchar;
+
+            } o_storage;
+
+            o_storage.pc_char =
+                p_buffer0;
+
+            return
+                o_storage.pc_uchar;
+
+        } // to_uchar_ptr()
+
+        //
+        //
+        //
+        static
+        inline
+        char const *
+        to_char_ptr(
+            unsigned char const * const
+                p_buffer)
+        {
+            union char_ptr
+            {
+                unsigned char const *
+                    pc_uchar;
+
+                char const *
+                    pc_char;
+
+            } o_storage;
+
+            o_storage.pc_uchar =
+                p_buffer;
+
+            return
+                o_storage.pc_char;
+
+        } // to_char_ptr()
+
+        //
+        //
+        //
+        static
+        inline
+        char *
+        to_char_ptr(
+            unsigned char * const
+                p_buffer)
+        {
+            union char_ptr
+            {
+                unsigned char *
+                    p_uchar;
+
+                char *
+                    p_char;
+
+            } o_storage;
+
+            o_storage.p_uchar =
+                p_buffer;
+
+            return
+                o_storage.p_char;
+
+        } // to_char_ptr()
+
+        //
+        //
+        //
+        static
+        inline
+        unsigned char * *
+        to_uchar_ptr_table(
+            char * * const
+                argv)
+        {
+            union uchar_ptr_table
+            {
+                char * *
+                    p_char_table;
+
+                unsigned char * *
+                    p_uchar_table;
+
+            } o_storage;
+
+            o_storage.p_char_table =
+                argv;
+
+            return
+                o_storage.p_uchar_table;
+
+        } // to_uchar_ptr_table()
 
 }; // appl_convert
 

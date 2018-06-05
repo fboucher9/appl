@@ -634,7 +634,7 @@ appl_socket_w32_node::v_send(
     i_send_result =
         send(
             m_fd,
-            appl_convert(
+            appl_convert::to_char_ptr(
                 p_buf_min),
             appl_buf_len(
                 p_buf_min,
@@ -684,7 +684,7 @@ appl_socket_w32_node::v_recv(
     i_recv_result =
         recv(
             m_fd,
-            appl_convert(
+            appl_convert::to_char_ptr(
                 p_buf_min),
             appl_buf_len(
                 p_buf_min,

@@ -116,7 +116,7 @@ enum appl_status
 
         p_dlopen_result =
             dlopen(
-                appl_convert(
+                appl_convert::to_char_ptr(
                     p_name0),
                 RTLD_LOCAL
                 | RTLD_NOW);
@@ -219,7 +219,7 @@ enum appl_status
         p_dlsym_result =
             dlsym(
                 m_library_handle,
-                appl_convert(
+                appl_convert::to_char_ptr(
                     p_name0));
 
         if (
