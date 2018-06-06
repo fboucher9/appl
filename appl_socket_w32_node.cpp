@@ -432,21 +432,94 @@ appl_socket_w32_node::init_connect(
             appl_address_std_node::convert_handle(
                 p_connect_address);
 
-        int const
-            i_connect_result =
-            connect(
-                m_fd,
-                &(
-                    p_address_std_node->m_sockaddr.o_sockaddr_base),
-                sizeof(
-                    p_address_std_node->m_sockaddr.o_sockaddr_in));
+        // setup an event object
+        WSAEVENT
+            h_event;
+
+        h_event =
+            WSACreateEvent();
 
         if (
-            0
-            == i_connect_result)
+            WSA_INVALID_EVENT != h_event)
         {
-            e_status =
-                appl_status_ok;
+            int const
+                i_event_select_result =
+                WSAEventSelect(
+                    m_fd,
+                    h_event,
+                    FD_CONNECT);
+
+            if (
+                0 == i_event_select_result)
+            {
+                int const
+                    i_connect_result =
+                    connect(
+                        m_fd,
+                        &(
+                            p_address_std_node->m_sockaddr.o_sockaddr_base),
+                        sizeof(
+                            p_address_std_node->m_sockaddr.o_sockaddr_in));
+
+                if (
+                    0
+                    == i_connect_result)
+                {
+                    e_status =
+                        appl_status_ok;
+                }
+                else
+                {
+                    // Wait for completion
+                    DWORD
+                        i_wait_event_result;
+
+                    DWORD
+                        i_wait_event_timeout;
+
+                    i_wait_event_timeout =
+                        2000;
+
+                    appl_socket_property_get_connect_timeout(
+                        p_socket_descriptor,
+                        &(
+                            i_wait_event_timeout));
+
+                    i_wait_event_result =
+                        WSAWaitForMultipleEvents(
+                            1,
+                            &h_event,
+                            FALSE,
+                            i_wait_event_timeout,
+                            TRUE);
+
+                    if (
+                        WSA_WAIT_EVENT_0 == i_wait_event_result)
+                    {
+                        e_status =
+                            appl_status_ok;
+                    }
+                    else
+                    {
+                        e_status =
+                            appl_status_fail;
+                    }
+                }
+
+                // set socket to blocking mode
+                WSAEventSelect(
+                    m_fd,
+                    h_event,
+                    0);
+            }
+            else
+            {
+                e_status =
+                    appl_status_fail;
+            }
+
+            WSACloseEvent(
+                h_event);
         }
         else
         {
