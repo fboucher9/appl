@@ -448,6 +448,8 @@ appl_chunk_std::f_append_node(
         p_chunk_node->a_data[0u] =
             c_value;
 
+        i_total_len ++;
+
         appl_list_join(
             p_chunk_node,
             &(
@@ -492,6 +494,8 @@ appl_chunk_std::f_write_char(
                 c_value;
 
             p_chunk_node->i_data_len ++;
+
+            i_total_len ++;
 
             e_status =
                 appl_status_ok;

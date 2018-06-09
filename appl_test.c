@@ -11,6 +11,8 @@
 
 #include <appl.h>
 
+#include <appl_chunk.h>
+
 static
 void
 appl_print(
@@ -325,6 +327,222 @@ appl_test_file_stdout(
     }
 
 }
+
+/*
+
+Function: appl_test_file_stdin
+
+Description:
+
+    Test stdin file handle.
+
+*/
+static
+void
+appl_test_file_stdin(
+    struct appl_context * const
+        p_context)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_file *
+        p_stdin_file;
+
+    struct appl_file_descriptor
+        o_stdin_file_descriptor;
+
+    o_stdin_file_descriptor.e_type =
+        appl_file_type_stdin;
+
+    o_stdin_file_descriptor.e_mode =
+        appl_file_mode_read;
+
+    e_status =
+        appl_file_create(
+            p_context,
+            &(
+                o_stdin_file_descriptor),
+            &(
+                p_stdin_file));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        char
+            b_more_lines;
+
+        b_more_lines =
+            1;
+
+        while (
+            (
+                appl_status_ok
+                == e_status)
+            && b_more_lines)
+        {
+            struct appl_chunk *
+                p_chunk;
+
+            e_status =
+                appl_chunk_create(
+                    p_context,
+                    &(
+                        p_chunk));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                char
+                    b_continue;
+
+                b_continue =
+                    1;
+
+                while (
+                    (
+                        appl_status_ok
+                        == e_status)
+                    && b_continue)
+                {
+                    unsigned char
+                        a_stdin_buf[32u];
+
+                    unsigned long int
+                        i_count;
+
+                    e_status =
+                        appl_file_read(
+                            p_stdin_file,
+                            a_stdin_buf,
+                            a_stdin_buf + sizeof(a_stdin_buf),
+                            &(
+                                i_count));
+
+                    if (
+                        appl_status_ok
+                        == e_status)
+                    {
+                        unsigned char *
+                            p_stdin_buf_iterator;
+
+                        p_stdin_buf_iterator =
+                            a_stdin_buf;
+
+                        while (
+                            p_stdin_buf_iterator < a_stdin_buf + i_count)
+                        {
+                            unsigned char
+                                c_stdin_buf_char;
+
+                            c_stdin_buf_char =
+                                *(
+                                    p_stdin_buf_iterator);
+
+                            if (
+                                '\n'
+                                == c_stdin_buf_char)
+                            {
+                                b_continue =
+                                    0;
+                            }
+                            else if (
+                                '\r'
+                                == c_stdin_buf_char)
+                            {
+                            }
+                            else
+                            {
+                                e_status =
+                                    appl_chunk_write(
+                                        p_chunk,
+                                        p_stdin_buf_iterator,
+                                        p_stdin_buf_iterator + 1);
+                            }
+
+                            p_stdin_buf_iterator ++;
+                        }
+                    }
+                }
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    unsigned long int
+                        i_line_length;
+
+                    e_status =
+                        appl_chunk_length(
+                            p_chunk,
+                            &(
+                                i_line_length));
+
+                    if (
+                        appl_status_ok
+                        == e_status)
+                    {
+                        union line_ptr
+                        {
+                            void *
+                                p_void;
+
+                            unsigned char *
+                                p_uchar;
+
+                        } o_line_ptr;
+
+                        e_status =
+                            appl_heap_alloc(
+                                appl_context_parent(
+                                    p_context),
+                                i_line_length,
+                                &(
+                                    o_line_ptr.p_void));
+
+                        if (
+                            appl_status_ok
+                            == e_status)
+                        {
+                            e_status =
+                                appl_chunk_read(
+                                    p_chunk,
+                                    o_line_ptr.p_uchar,
+                                    o_line_ptr.p_uchar + i_line_length);
+
+                            if (
+                                appl_status_ok
+                                == e_status)
+                            {
+                                /* Process a single line */
+                                appl_print0("echo \'");
+                                appl_print(
+                                    o_line_ptr.p_uchar,
+                                    o_line_ptr.p_uchar + i_line_length);
+                                appl_print0("\'\n");
+                            }
+
+                            appl_heap_free(
+                                appl_context_parent(
+                                    p_context),
+                                o_line_ptr.p_void);
+                        }
+                    }
+                }
+
+                appl_chunk_destroy(
+                    p_chunk);
+            }
+        }
+
+        appl_object_destroy(
+            appl_file_parent(
+                p_stdin_file));
+    }
+
+} /* appl_test_file_stdin() */
 
 static
 void
@@ -1893,6 +2111,12 @@ appl_main(
     if (1)
     {
         appl_test_file_stdout(
+            p_context);
+    }
+
+    if (1)
+    {
+        appl_test_file_stdin(
             p_context);
     }
 
