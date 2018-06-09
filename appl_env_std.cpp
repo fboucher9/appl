@@ -154,9 +154,9 @@ enum appl_status
             e_status =
                 appl_string_create_dup_buffer(
                     m_context,
-                    appl_convert::to_char_ptr(
+                    appl_convert::to_uchar_ptr(
                         p_value0),
-                    appl_convert::to_char_ptr(
+                    appl_convert::to_uchar_ptr(
                         p_value0 + i_value_len),
                     &(
                         p_string));
