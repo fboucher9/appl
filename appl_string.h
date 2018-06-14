@@ -39,12 +39,6 @@ struct appl_string : public appl_object
             s_create(
                 struct appl_context * const
                     p_context,
-                unsigned char const * const
-                    p_buf_min,
-                unsigned char const * const
-                    p_buf_cur,
-                unsigned char const * const
-                    p_buf_max,
                 unsigned long int const
                     i_alloc_len,
                 struct appl_string * * const
@@ -52,19 +46,17 @@ struct appl_string : public appl_object
 
         virtual
         enum appl_status
-            v_read(
-                unsigned char const * * const
-                    r_buf_min,
-                unsigned char const * * const
-                    r_buf_max) const;
+            v_length(
+                unsigned long int * const
+                    r_length) const;
 
         virtual
         enum appl_status
-            v_write(
-                unsigned char const * const
-                    p_buf_min,
-                unsigned char const * const
-                    p_buf_max);
+            v_get(
+                unsigned char * * const
+                    r_buf_min,
+                unsigned char * * const
+                    r_buf_max) const;
 
     protected:
 
@@ -74,16 +66,7 @@ struct appl_string : public appl_object
             m_buf_min;
 
         unsigned char *
-            m_buf_read;
-
-        unsigned char *
-            m_buf_write;
-
-        unsigned char *
             m_buf_max;
-
-        void *
-            pv_padding[1u];
 
         appl_string();
 

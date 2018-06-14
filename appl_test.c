@@ -1640,14 +1640,14 @@ appl_test_env(
         appl_status_ok
         == e_status)
     {
-        unsigned char const *
+        unsigned char *
             p_value_min;
 
-        unsigned char const *
+        unsigned char *
             p_value_max;
 
         e_status =
-            appl_string_read(
+            appl_string_get(
                 p_home_value,
                 &(
                     p_value_min),

@@ -29,12 +29,6 @@ enum appl_status
 appl_string_service::s_create(
     struct appl_object const * const
         p_object,
-    unsigned char const * const
-        p_buf_min,
-    unsigned char const * const
-        p_buf_cur,
-    unsigned char const * const
-        p_buf_max,
     unsigned long int const
         i_alloc_len,
     struct appl_string * * const
@@ -47,9 +41,6 @@ appl_string_service::s_create(
     return
         appl_string::s_create(
             p_context,
-            p_buf_min,
-            p_buf_cur,
-            p_buf_max,
             i_alloc_len,
             r_string);
 
@@ -59,38 +50,35 @@ appl_string_service::s_create(
 //
 //
 enum appl_status
-appl_string_service::s_read(
+appl_string_service::s_length(
     struct appl_string const * const
         p_string,
-    unsigned char const * * const
-        r_buf_min,
-    unsigned char const * * const
-        r_buf_max)
+    unsigned long int * const
+        r_length)
 {
     return
-        p_string->v_read(
-            r_buf_min,
-            r_buf_max);
+        p_string->v_length(
+            r_length);
 
-} // s_read()
+} // s_length()
 
 //
 //
 //
 enum appl_status
-appl_string_service::s_write(
-    struct appl_string * const
+appl_string_service::s_get(
+    struct appl_string const * const
         p_string,
-    unsigned char const * const
-        p_buf_min,
-    unsigned char const * const
-        p_buf_max)
+    unsigned char * * const
+        r_buf_min,
+    unsigned char * * const
+        r_buf_max)
 {
     return
-        p_string->v_write(
-            p_buf_min,
-            p_buf_max);
+        p_string->v_get(
+            r_buf_min,
+            r_buf_max);
 
-} // s_write()
+} // s_get()
 
 /* end-of-file: appl_string_service.cpp */
