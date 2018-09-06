@@ -107,12 +107,16 @@ class appl_heap_dbg : public appl_heap
         virtual
         enum appl_status
             v_free(
+                appl_size_t const
+                    i_buf_len,
                 void * const
                     p_buf);
 
         virtual
         enum appl_status
             v_realloc(
+                appl_size_t const
+                    i_old_len,
                 void * const
                     p_old_buf,
                 appl_size_t const

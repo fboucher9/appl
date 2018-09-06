@@ -144,6 +144,7 @@ struct appl_object
                     appl_object::s_init<T_instance, T_descriptor>(
                         p_context,
                         p_placement,
+                        i_placement_length,
                         p_new,
                         p_init,
                         p_descriptor,
@@ -155,6 +156,7 @@ struct appl_object
                 {
                     appl_object::free_placement(
                         p_context,
+                        i_placement_length,
                         p_placement);
                 }
             }
@@ -200,6 +202,7 @@ struct appl_object
                     appl_object::s_init<T_instance>(
                         p_context,
                         p_placement,
+                        i_placement_length,
                         p_new,
                         p_init,
                         r_object);
@@ -210,6 +213,7 @@ struct appl_object
                 {
                     appl_object::free_placement(
                         p_context,
+                        i_placement_length,
                         p_placement);
                 }
             }
@@ -227,6 +231,8 @@ struct appl_object
                     p_context,
                 void * const
                     p_placement,
+                appl_size_t const
+                    i_placement_length,
                 void (* const p_new)(
                     void * const
                         p_placement),
@@ -263,6 +269,9 @@ struct appl_object
             o_object_ptr.p_object->m_context =
                 p_context;
 
+            o_object_ptr.p_object->m_placement_length =
+                i_placement_length;
+
             e_status =
                 ((o_object_ptr.p_instance)->*(p_init))(
                     p_descriptor);
@@ -294,6 +303,8 @@ struct appl_object
                     p_context,
                 void * const
                     p_placement,
+                appl_size_t const
+                    i_placement_length,
                 void (* const p_new)(
                     void * const
                         p_placement),
@@ -325,6 +336,9 @@ struct appl_object
 
             o_object_ptr.p_object->m_context =
                 p_context;
+
+            o_object_ptr.p_object->m_placement_length =
+                i_placement_length;
 
             e_status =
                 ((o_object_ptr.p_instance)->*(p_init))();
@@ -401,6 +415,12 @@ struct appl_object
 
     private:
 
+        appl_size_t
+            m_placement_length;
+
+        appl_size_t
+            z_padding[1u];
+
         appl_object(
             struct appl_object const & r);
 
@@ -423,6 +443,8 @@ struct appl_object
             free_placement(
                 struct appl_context * const
                     p_context,
+                appl_size_t const
+                    i_buf_len,
                 void * const
                     p_placement);
 

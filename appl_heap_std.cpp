@@ -24,6 +24,8 @@
 
 #include <appl_heap_std.h>
 
+#include <appl_unused.h>
+
 //
 //
 //
@@ -38,9 +40,16 @@ enum appl_status
     void *
         p_placement;
 
+    appl_size_t
+        i_placement_len;
+
+    i_placement_len =
+        sizeof(
+            class appl_heap_std);
+
     p_placement =
         malloc(
-            sizeof(class appl_heap_std));
+            i_placement_len);
 
     if (
         p_placement)
@@ -56,6 +65,7 @@ enum appl_status
             appl_object::s_init<appl_heap_std>(
                 p_context,
                 p_placement,
+                i_placement_len,
                 (&
                     appl_heap_std::placement_new),
                 (&
@@ -185,11 +195,16 @@ enum appl_status
 //
 enum appl_status
     appl_heap_std::v_free(
+        appl_size_t const
+            i_buf_len,
         void * const
             p_buf)
 {
     enum appl_status
         e_status;
+
+    appl_unused(
+        i_buf_len);
 
     {
         free(
@@ -209,6 +224,8 @@ enum appl_status
 //
 enum appl_status
     appl_heap_std::v_realloc(
+        appl_size_t const
+            i_old_len,
         void * const
             p_old_buf,
         appl_size_t const
@@ -221,6 +238,9 @@ enum appl_status
 
     void *
         p_new_buf;
+
+    appl_unused(
+        i_old_len);
 
     p_new_buf =
         realloc(

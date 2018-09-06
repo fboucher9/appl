@@ -64,10 +64,16 @@ enum appl_status
     void *
         p_placement;
 
+    appl_size_t
+        i_placement_len;
+
+    i_placement_len =
+        sizeof(
+            class appl_heap_dbg);
+
     e_status =
         p_parent->v_alloc(
-            sizeof(
-                class appl_heap_dbg),
+            i_placement_len,
             &(
                 p_placement));
 
@@ -92,6 +98,7 @@ enum appl_status
             appl_object::s_init(
                 p_dummy_context,
                 p_placement,
+                i_placement_len,
                 (&
                     appl_heap_dbg::placement_new),
                 (&
@@ -112,6 +119,7 @@ enum appl_status
         else
         {
             p_parent->v_free(
+                i_placement_len,
                 p_placement);
         }
     }
@@ -337,6 +345,8 @@ enum appl_status
         this;
 
     p_parent->v_free(
+        sizeof(
+            class appl_heap_dbg),
         p_placement);
 
     return
@@ -469,6 +479,8 @@ enum appl_status
 //
 enum appl_status
     appl_heap_dbg::v_free(
+        appl_size_t const
+            i_buf_len,
         void * const
             p_buf)
 {
@@ -541,7 +553,19 @@ enum appl_status
             }
         }
 
+        appl_size_t
+            i_total_buf_len;
+
+        i_total_buf_len =
+            (
+                i_buf_len
+                + sizeof(
+                    struct appl_heap_dbg_header)
+                + sizeof(
+                    struct appl_heap_dbg_footer));
+
         m_parent->v_free(
+            i_total_buf_len,
             p_allocation);
 
         m_alloc_count --;
@@ -564,6 +588,8 @@ enum appl_status
 //
 enum appl_status
     appl_heap_dbg::v_realloc(
+        appl_size_t const
+            i_old_len,
         void * const
             p_old_buf,
         appl_size_t const
@@ -600,7 +626,7 @@ enum appl_status
                 i_copy_len;
 
             i_copy_len =
-                o_header_ptr.p_header->i_buf_len;
+                i_old_len;
 
             if (
                 i_copy_len > i_buf_len)
@@ -614,6 +640,7 @@ enum appl_status
                 i_copy_len);
 
             v_free(
+                i_old_len,
                 p_old_buf);
 
             *(

@@ -81,6 +81,11 @@ appl_base-deps := \
     appl_poll_mgr.cpp \
     appl_poll_node.cpp \
     appl_poll_service.cpp \
+    appl_pool.cpp \
+    appl_pool_std.cpp \
+    appl_pool_mgr.cpp \
+    appl_pool_handle.cpp \
+    appl_pool_service.cpp \
     appl_property.cpp \
     appl_property_handle.cpp \
     appl_property_service.cpp \

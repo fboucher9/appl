@@ -405,6 +405,7 @@ appl_chunk_std::v_cleanup(void)
             o_chunk_node_ptr.p_chunk_node);
 
         m_context->m_heap->v_free(
+            sizeof(*(o_chunk_node_ptr.p_chunk_node)),
             o_chunk_node_ptr.p_chunk_node);
     }
 

@@ -187,6 +187,7 @@ enum appl_status
         }
 
         p_heap->v_free(
+            i_name_len + 1ul,
             p_name0);
     }
     else
@@ -295,10 +296,12 @@ enum appl_status
             }
 
             p_heap->v_free(
+                i_value_len + 1,
                 p_value0);
         }
 
         p_heap->v_free(
+            i_name_len + 1,
             p_name0);
     }
 

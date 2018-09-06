@@ -43,6 +43,8 @@ enum appl_status
 appl_heap_free(
     struct appl_object const * const
         p_object,
+    unsigned long int const
+        i_length,
     void * const
         p_buf)
 {
@@ -52,6 +54,7 @@ appl_heap_free(
     e_status =
         appl_heap_service::s_free(
             p_object,
+            i_length,
             p_buf);
 
     return
@@ -66,6 +69,8 @@ enum appl_status
 appl_heap_realloc(
     struct appl_object const * const
         p_object,
+    unsigned long int const
+        i_old_len,
     void * const
         p_old_buf,
     unsigned long int const
@@ -79,6 +84,7 @@ appl_heap_realloc(
     e_status =
         appl_heap_service::s_realloc(
             p_object,
+            i_old_len,
             p_old_buf,
             i_length,
             r_new_buf);

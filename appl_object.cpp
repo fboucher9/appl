@@ -47,6 +47,7 @@ enum appl_status
 
         /* Free memory */
         p_heap->v_free(
+            m_placement_length,
             p_placement);
     }
 
@@ -59,7 +60,8 @@ enum appl_status
 //
 //
 appl_object::appl_object() :
-    m_context()
+    m_context(),
+    m_placement_length()
 {
 }
 
@@ -179,10 +181,13 @@ void
     appl_object::free_placement(
         struct appl_context * const
             p_context,
+        appl_size_t const
+            i_placement_length,
         void * const
             p_placement)
 {
     p_context->m_heap->v_free(
+        i_placement_length,
         p_placement);
 
 } // free_placement()

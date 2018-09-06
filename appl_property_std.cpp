@@ -275,7 +275,14 @@ enum appl_status
     if (
         b_nodes_allocated)
     {
+        appl_size_t
+            i_placement_length;
+
+        i_placement_length =
+            m_count * sizeof(a_nodes[0u]);
+
         m_context->m_heap->v_free(
+            i_placement_length,
             a_nodes);
 
         a_nodes =

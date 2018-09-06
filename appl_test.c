@@ -490,6 +490,7 @@ appl_test_line_create(
                         appl_heap_free(
                             appl_context_parent(
                                 p_context),
+                            i_line_length,
                             o_line_ptr.p_void);
                     }
                 }
@@ -513,9 +514,18 @@ appl_test_line_destroy(
     struct appl_buf * const
         p_line_buf)
 {
+    unsigned long int
+        i_length;
+
+    i_length =
+        (unsigned long int)(
+            p_line_buf->o_max.pc_uchar
+            - p_line_buf->o_min.pc_uchar);
+
     appl_heap_free(
         appl_context_parent(
             p_context),
+        i_length,
         p_line_buf->o_min.p_void);
 
 } /* appl_test_line_destroy() */
@@ -1021,6 +1031,9 @@ appl_test_socket_connection_thread_handler(
     appl_heap_free(
         appl_context_parent(
             p_test_socket_connection_context->p_context),
+        (unsigned long int)(
+            sizeof(
+                *p_test_socket_connection_context)),
         (void *)(
             p_test_socket_connection_context));
 
@@ -1188,6 +1201,9 @@ appl_test_socket_process_client(
             appl_heap_free(
                 appl_context_parent(
                     p_context),
+                (unsigned long int)(
+                    sizeof(
+                        struct appl_test_socket_connection_context)),
                 (void *)(
                     p_test_socket_connection_context));
         }

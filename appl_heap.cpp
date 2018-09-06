@@ -38,10 +38,13 @@ enum appl_status
 //
 enum appl_status
     appl_heap::v_free(
+        appl_size_t const
+            i_buf_len,
         void * const
             p_buf)
 {
     appl_unused(
+        i_buf_len,
         p_buf);
 
     return
@@ -54,6 +57,8 @@ enum appl_status
 //
 enum appl_status
     appl_heap::v_realloc(
+        appl_size_t const
+            i_old_len,
         void * const
             p_old_buf,
         appl_size_t const
@@ -62,6 +67,7 @@ enum appl_status
             r_new_buf)
 {
     appl_unused(
+        i_old_len,
         p_old_buf,
         i_buf_len,
         r_new_buf);

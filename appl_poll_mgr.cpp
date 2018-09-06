@@ -47,6 +47,9 @@ struct appl_poll_table
     void *
         p_allocation;
 
+    appl_size_t
+        i_allocation_length;
+
     /* -- */
 
     struct appl_poll * *
@@ -132,6 +135,9 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
+        p_poll_table->i_allocation_length =
+            i_allocation_length;
+
         p_poll_table->a_nodes =
             static_cast<struct appl_poll * *>(
                 p_poll_table->p_allocation);
@@ -232,6 +238,7 @@ void
         m_context->m_heap;
 
     p_heap->v_free(
+        p_poll_table->i_allocation_length,
         p_poll_table->p_allocation);
 
 } // destroy_poll_table()

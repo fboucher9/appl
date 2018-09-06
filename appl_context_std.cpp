@@ -991,6 +991,7 @@ enum appl_status
                     appl_object::s_init(
                         p_dummy_context,
                         p_placement,
+                        i_placement_len,
                         (&
                             appl_context_std::placement_new),
                         (&
@@ -1012,6 +1013,7 @@ enum appl_status
                     appl_status_ok != e_status)
                 {
                     p_heap->v_free(
+                        i_placement_len,
                         p_placement);
                 }
             }
@@ -1272,6 +1274,8 @@ enum appl_status
         this;
 
     p_heap->v_free(
+        sizeof(
+            *this),
         p_placement);
 
     p_heap->destroy();

@@ -42,6 +42,8 @@ class appl_heap_service
             s_free(
                 struct appl_object const * const
                     p_object,
+                unsigned long int const
+                    i_length,
                 void * const
                     p_buf);
 
@@ -50,6 +52,8 @@ class appl_heap_service
             s_realloc(
                 struct appl_object const * const
                     p_object,
+                unsigned long int const
+                    i_old_len,
                 void * const
                     p_old_buf,
                 unsigned long int const

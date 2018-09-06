@@ -82,9 +82,17 @@ appl_buf0_destroy(
     unsigned char * const
         p_buf0)
 {
+    unsigned long int
+        i_buf_len;
+
+    i_buf_len =
+        appl_buf0_len(
+            p_buf0);
+
     return
         appl_heap_free(
             p_object,
+            i_buf_len + 1,
             p_buf0);
 
 } /* destroy() */
