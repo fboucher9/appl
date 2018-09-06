@@ -47,20 +47,6 @@ class appl_heap_service
                 void * const
                     p_buf);
 
-        static
-        enum appl_status
-            s_realloc(
-                struct appl_object const * const
-                    p_object,
-                unsigned long int const
-                    i_old_len,
-                void * const
-                    p_old_buf,
-                unsigned long int const
-                    i_length,
-                void * * const
-                    r_new_buf);
-
 }; // class appl_heap_service
 
 /* end-of-file: appl_heap_service.h */

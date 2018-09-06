@@ -33,19 +33,6 @@ appl_heap_free(
     void * const
         p_buf);
 
-enum appl_status
-appl_heap_realloc(
-    struct appl_object const * const
-        p_object,
-    unsigned long int const
-        i_old_len,
-    void * const
-        p_old_buf,
-    unsigned long int const
-        i_length,
-    void * * const
-        r_new_buf);
-
 #if defined(__cplusplus)
 } /* extern "C" */
 #endif /* #if defined(__cplusplus) */

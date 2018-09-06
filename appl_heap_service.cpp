@@ -84,38 +84,4 @@ enum appl_status
 
 } // s_free()
 
-//
-//
-//
-enum appl_status
-    appl_heap_service::s_realloc(
-        struct appl_object const * const
-            p_object,
-        unsigned long int const
-            i_old_len,
-        void * const
-            p_old_buf,
-        unsigned long int const
-            i_length,
-        void * * const
-            r_new_buf)
-{
-    class appl_heap * const
-        p_heap =
-        get_heap_from_object(
-            p_object);
-
-    enum appl_status const
-        e_status =
-        p_heap->v_realloc(
-            i_old_len,
-            p_old_buf,
-            i_length,
-            r_new_buf);
-
-    return
-        e_status;
-
-} // s_realloc()
-
 /* end-of-file: appl_heap_service.cpp */
