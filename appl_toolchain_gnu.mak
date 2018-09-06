@@ -20,7 +20,7 @@ appl-toolchain-gnu-ar = $(AR)
 appl-toolchain-gnu-common-flags = \
     -g \
     -DAPPL_OS_LINUX \
-    -D_BSD_SOURCE \
+    -D_DEFAULT_SOURCE \
     -I$(APPL_SRC). \
     -pedantic \
     -Wall \

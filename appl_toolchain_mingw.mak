@@ -18,7 +18,7 @@ APPL_TOOLCHAIN_MINGW_AR ?= x86_64-w64-mingw32-ar
 # Common compiler flags for C and C++
 appl-toolchain-mingw-common-flags = \
     -g \
-    -D_BSD_SOURCE \
+    -D_DEFAULT_SOURCE \
     -DAPPL_OS_WINDOWS \
     -I$(APPL_SRC). \
     -pedantic \

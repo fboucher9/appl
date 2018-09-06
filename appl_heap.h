@@ -103,6 +103,6 @@ class appl_heap : public appl_object
             operator =(
                 class appl_heap const & r);
 
-}; // class appl_heap;
+}; // class appl_heap
 
 /* end-of-file: appl_heap.h */

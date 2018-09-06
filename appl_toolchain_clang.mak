@@ -21,7 +21,7 @@ appl-clang-common-flags = \
     -g \
     -O0 \
     -Weverything \
-    -D_BSD_SOURCE \
+    -D_DEFAULT_SOURCE \
     -DAPPL_OS_LINUX \
     -DAPPL_BUILD_EXE \
     -I$(APPL_SRC).
