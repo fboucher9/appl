@@ -341,8 +341,7 @@ enum appl_status
         p_placement =
         this;
 
-    delete
-        this;
+    appl_heap::v_cleanup();
 
     p_parent->v_free(
         sizeof(
