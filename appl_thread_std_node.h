@@ -108,8 +108,14 @@ class appl_thread_std_node : public appl_thread
         bool
             m_detached;
 
+        bool
+            m_kill;
+
+        bool
+            m_start;
+
         unsigned char
-            uc_padding[6u];
+            uc_padding[4u];
 
         // --
 

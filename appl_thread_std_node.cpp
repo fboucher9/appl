@@ -104,7 +104,9 @@ appl_thread_std_node::appl_thread_std_node() :
     m_thread(),
     m_thread_result(),
     m_running(false),
-    m_detached(false)
+    m_detached(false),
+    m_kill(false),
+    m_start(false)
 {
 }
 
@@ -173,9 +175,6 @@ void
         0
         == i_detach_result)
     {
-        (*(m_descriptor.p_entry))(
-            m_descriptor.p_context);
-
         int
             i_lock_result;
 
@@ -188,57 +187,112 @@ void
             0
             == i_lock_result)
         {
-        }
-        else
-        {
-#if defined APPL_DEBUG
-            static unsigned char const s_msg[] =
+            // wait for start event
+            while (
+                !(
+                    m_kill))
             {
-                'p',
-                't',
-                'h',
-                'r',
-                'e',
-                'a',
-                'd',
-                '_',
-                'm',
-                'u',
-                't',
-                'e',
-                'x',
-                '_',
-                'l',
-                'o',
-                'c',
-                'k'
-            };
+                if (
+                    m_start)
+                {
+                    pthread_cond_signal(
+                        &(
+                            m_event));
 
-            oops(
-                s_msg,
-                s_msg + sizeof s_msg,
-                i_detach_result);
+                    int
+                        i_unlock_result;
+
+                    i_unlock_result =
+                        pthread_mutex_unlock(
+                            &(
+                                m_lock));
+
+                    if (
+                        0
+                        == i_unlock_result)
+                    {
+                        (*(m_descriptor.p_entry))(
+                            m_descriptor.p_context);
+
+                        int
+                            i_lock_result2;
+
+                        i_lock_result2 =
+                            pthread_mutex_lock(
+                                &(
+                                    m_lock));
+
+                        if (
+                            0
+                            == i_lock_result2)
+                        {
+                            m_start =
+                                false;
+
+                            int
+                                i_signal_result;
+
+                            i_signal_result =
+                                pthread_cond_signal(
+                                    &(
+                                        m_event));
+
+                            appl_unused(
+                                i_signal_result);
+                        }
+                    }
+                    else
+                    {
+#if defined APPL_DEBUG
+                        static unsigned char const s_msg[] =
+                        {
+                            'p',
+                            't',
+                            'h',
+                            'r',
+                            'e',
+                            'a',
+                            'd',
+                            '_',
+                            'm',
+                            'u',
+                            't',
+                            'e',
+                            'x',
+                            '_',
+                            'u',
+                            'n',
+                            'l',
+                            'o',
+                            'c',
+                            'k'
+                        };
+
+                        oops(
+                            s_msg,
+                            s_msg + sizeof s_msg,
+                            i_unlock_result);
 #endif /* #if defined APPL_DEBUG */
-        }
+                    }
+                }
+                else
+                {
+                    // wait for start event
+                    pthread_cond_wait(
+                        &(
+                            m_event),
+                        &(
+                            m_lock));
+                }
+            }
 
-        m_running =
-            false;
+            m_running =
+                false;
 
-        int
-            i_signal_result;
-
-        i_signal_result =
             pthread_cond_signal(
                 &(
                     m_event));
 
-        appl_unused(
-            i_signal_result);
-
-        if (
-            0
-            == i_lock_result)
-        {
             int
                 i_unlock_result;
 
@@ -269,8 +323,6 @@ void
                 'e',
                 'x',
                 '_',
-                'u',
-                'n',
                 'l',
                 'o',
                 'c',
@@ -280,9 +332,12 @@ void
             oops(
                 s_msg,
                 s_msg + sizeof s_msg,
-                i_detach_result);
+                i_lock_result);
 #endif /* #if defined APPL_DEBUG */
         }
+
+        m_running =
+            false;
 
         if (
             m_detached)
@@ -385,54 +440,50 @@ appl_thread_std_node::v_start(
         0
         == i_lock_result)
     {
+        m_descriptor.p_entry =
+            p_callback;
+
+        m_descriptor.p_context =
+            p_context;
+
         if (
             !(
                 m_running))
         {
-            int
-                i_create_result;
-
-            union appl_thread_std_node_thread_context_ptr
-                o_thread_context_ptr;
-
-            m_descriptor.p_entry =
-                p_callback;
-
-            m_descriptor.p_context =
-                p_context;
-
-            o_thread_context_ptr.p_thread_std_node =
-                this;
-
-            i_create_result =
-                pthread_create(
-                    &(
-                        m_thread),
-                    NULL,
-                    &(
-                        appl_thread_std_node::thread_entry),
-                    o_thread_context_ptr.p_thread_context);
-
-            if (
-                0
-                == i_create_result)
-            {
-                m_running =
-                    true;
-
-                e_status =
-                    appl_status_ok;
-            }
-            else
-            {
-                e_status =
-                    appl_status_fail;
-            }
+            e_status =
+                appl_status_fail;
         }
         else
         {
+            int
+                i_signal_result;
+
+            m_start =
+                true;
+
+            i_signal_result =
+                pthread_cond_signal(
+                    &(
+                        m_event));
+
+            appl_unused(
+                i_signal_result);
+
+            int
+                i_wait_result;
+
+            i_wait_result =
+                pthread_cond_wait(
+                    &(
+                        m_event),
+                    &(
+                        m_lock));
+
+            appl_unused(
+                i_wait_result);
+
             e_status =
-                appl_status_fail;
+                appl_status_ok;
         }
 
         int
@@ -555,7 +606,7 @@ enum appl_status
         == i_lock_result)
     {
         if (
-            m_running)
+            m_start)
         {
             struct timespec
                 o_now;
@@ -661,7 +712,7 @@ enum appl_status
         {
             if (
                 !(
-                    m_running))
+                    m_start))
             {
                 e_status =
                     appl_status_ok;
@@ -862,8 +913,48 @@ enum appl_status
             0
             == i_cond_result)
         {
-            e_status =
-                appl_status_ok;
+            int
+                i_create_result;
+
+            union appl_thread_std_node_thread_context_ptr
+                o_thread_context_ptr;
+
+            o_thread_context_ptr.p_thread_std_node =
+                this;
+
+            i_create_result =
+                pthread_create(
+                    &(
+                        m_thread),
+                    NULL,
+                    &(
+                        appl_thread_std_node::thread_entry),
+                    o_thread_context_ptr.p_thread_context);
+
+            if (
+                0
+                == i_create_result)
+            {
+                m_running =
+                    true;
+
+                e_status =
+                    appl_status_ok;
+            }
+            else
+            {
+                e_status =
+                    appl_status_fail;
+            }
+
+            if (
+                appl_status_ok
+                != e_status)
+            {
+                pthread_cond_destroy(
+                    &(
+                        m_event));
+            }
         }
         else
         {
@@ -899,6 +990,62 @@ enum appl_status
 {
     enum appl_status
         e_status;
+
+    // kill the thread
+    int
+        i_lock_result;
+
+    i_lock_result =
+        pthread_mutex_lock(
+            &(
+                m_lock));
+
+    if (
+        0
+        == i_lock_result)
+    {
+        while (
+            m_running)
+        {
+            m_kill =
+                true;
+
+            int
+                i_signal_result;
+
+            i_signal_result =
+                pthread_cond_signal(
+                    &(
+                        m_event));
+
+            appl_unused(
+                i_signal_result);
+
+            int
+                i_wait_result;
+
+            i_wait_result =
+                pthread_cond_wait(
+                    &(
+                        m_event),
+                    &(
+                        m_lock));
+
+            appl_unused(
+                i_wait_result);
+        }
+
+        int
+            i_unlock_result;
+
+        i_unlock_result =
+            pthread_mutex_unlock(
+                &(
+                    m_lock));
+
+        appl_unused(
+            i_unlock_result);
+    }
 
     if (
         m_running || m_detached)
