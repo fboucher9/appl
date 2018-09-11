@@ -56,7 +56,12 @@ class appl_thread_std_node : public appl_thread
 
         virtual
         enum appl_status
-            v_start(void);
+            v_start(
+                void (* const p_callback)(
+                    void * const
+                        p_context),
+                void * const
+                    p_context);
 
         virtual
         enum appl_status
@@ -68,9 +73,7 @@ class appl_thread_std_node : public appl_thread
                 unsigned long int const
                     i_wait_freq,
                 unsigned long int const
-                    i_wait_count,
-                void * * const
-                    r_result);
+                    i_wait_count);
 
         virtual
         enum appl_status

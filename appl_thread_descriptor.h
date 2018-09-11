@@ -12,7 +12,7 @@
 #define INC_APPL_THREAD_DESCRIPTOR_H
 
 typedef
-void *
+void
 (appl_thread_callback)(
     void * const
         p_thread_context);

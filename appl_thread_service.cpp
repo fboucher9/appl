@@ -105,13 +105,20 @@ appl_thread_service::s_convert(
 enum appl_status
 appl_thread_service::s_start(
     struct appl_thread * const
-        p_thread)
+        p_thread,
+    void (* const p_callback)(
+        void * const
+            p_context),
+    void * const
+        p_context)
 {
     enum appl_status
         e_status;
 
     e_status =
-        p_thread->v_start();
+        p_thread->v_start(
+            p_callback,
+            p_context);
 
     return
         e_status;
@@ -148,9 +155,7 @@ appl_thread_service::s_stop(
     unsigned long int const
         i_wait_freq,
     unsigned long int const
-        i_wait_count,
-    void * * const
-        r_thread_result)
+        i_wait_count)
 {
     enum appl_status
         e_status;
@@ -158,8 +163,7 @@ appl_thread_service::s_stop(
     e_status =
         p_thread->v_stop(
             i_wait_freq,
-            i_wait_count,
-            r_thread_result);
+            i_wait_count);
 
     return
         e_status;

@@ -44,41 +44,11 @@ appl_thread_property_const_parent(
         p_thread_property);
 
 enum appl_status
-appl_thread_property_set_callback(
-    struct appl_thread_property * const
-        p_thread_property,
-    void * (* p_thread_callback)(
-        void * const
-            p_thread_context));
-
-enum appl_status
-appl_thread_property_set_context(
-    struct appl_thread_property * const
-        p_thread_property,
-    void * const
-        p_thread_context);
-
-enum appl_status
 appl_thread_property_set_detach_state(
     struct appl_thread_property * const
         p_thread_property,
     unsigned char const
         b_detach_state);
-
-enum appl_status
-appl_thread_property_get_callback(
-    struct appl_thread_property const * const
-        p_thread_property,
-    void * (* * r_thread_callback)(
-        void * const
-            p_thread_context));
-
-enum appl_status
-appl_thread_property_get_context(
-    struct appl_thread_property const * const
-        p_thread_property,
-    void * * const
-        r_thread_context);
 
 enum appl_status
 appl_thread_property_get_detach_state(

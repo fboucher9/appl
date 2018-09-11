@@ -58,11 +58,18 @@ appl_thread_const_parent(
 enum appl_status
 appl_thread_start(
     struct appl_thread * const
-        p_thread)
+        p_thread,
+    void (* const p_callback)(
+        void * const
+            p_context),
+    void * const
+        p_context)
 {
     return
         appl_thread_service::s_start(
-            p_thread);
+            p_thread,
+            p_callback,
+            p_context);
 
 } /* appl_thread_start() */
 
@@ -90,16 +97,13 @@ appl_thread_stop(
     unsigned long int const
         i_wait_freq,
     unsigned long int const
-        i_wait_count,
-    void * * const
-        r_thread_result)
+        i_wait_count)
 {
     return
         appl_thread_service::s_stop(
             p_thread,
             i_wait_freq,
-            i_wait_count,
-            r_thread_result);
+            i_wait_count);
 
 } /* appl_thread_stop() */
 

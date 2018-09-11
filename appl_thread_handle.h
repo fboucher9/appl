@@ -45,7 +45,12 @@ appl_thread_const_parent(
 enum appl_status
 appl_thread_start(
     struct appl_thread * const
-        p_thread);
+        p_thread,
+    void (* const p_callback)(
+        void * const
+            p_context),
+    void * const
+        p_context);
 
 enum appl_status
 appl_thread_detach(
@@ -59,9 +64,7 @@ appl_thread_stop(
     unsigned long int const
         i_wait_freq,
     unsigned long int const
-        i_wait_count,
-    void * * const
-        r_thread_result);
+        i_wait_count);
 
 enum appl_status
 appl_thread_interrupt(

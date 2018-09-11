@@ -23,8 +23,16 @@
 //
 //
 enum appl_status
-    appl_thread::v_start(void)
+    appl_thread::v_start(
+        void (* const p_callback)(
+            void * const
+                p_context),
+        void * const
+            p_context)
 {
+    appl_unused(
+        p_callback,
+        p_context);
     return
         appl_status_fail;
 } // v_start()
@@ -47,14 +55,11 @@ enum appl_status
         unsigned long int const
             i_wait_freq,
         unsigned long int const
-            i_wait_count,
-        void * * const
-            r_result)
+            i_wait_count)
 {
     appl_unused(
         i_wait_freq,
-        i_wait_count,
-        r_result);
+        i_wait_count);
     return
         appl_status_fail;
 } // wait_result()

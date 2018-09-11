@@ -162,9 +162,6 @@ appl_thread_std_node::oops(
 void
     appl_thread_std_node::thread_handler(void)
 {
-    void *
-        p_thread_result;
-
     int
         i_detach_result;
 
@@ -176,9 +173,8 @@ void
         0
         == i_detach_result)
     {
-        p_thread_result =
-            (*(m_descriptor.p_entry))(
-                m_descriptor.p_context);
+        (*(m_descriptor.p_entry))(
+            m_descriptor.p_context);
 
         int
             i_lock_result;
@@ -227,9 +223,6 @@ void
 
         m_running =
             false;
-
-        m_thread_result =
-            p_thread_result;
 
         int
             i_signal_result;
@@ -370,7 +363,12 @@ void *
 //
 //
 enum appl_status
-appl_thread_std_node::v_start(void)
+appl_thread_std_node::v_start(
+    void (* const p_callback)(
+        void * const
+            p_context),
+    void * const
+        p_context)
 {
     enum appl_status
         e_status;
@@ -396,6 +394,12 @@ appl_thread_std_node::v_start(void)
 
             union appl_thread_std_node_thread_context_ptr
                 o_thread_context_ptr;
+
+            m_descriptor.p_entry =
+                p_callback;
+
+            m_descriptor.p_context =
+                p_context;
 
             o_thread_context_ptr.p_thread_std_node =
                 this;
@@ -510,9 +514,7 @@ enum appl_status
         unsigned long int const
             i_wait_freq,
         unsigned long int const
-            i_wait_count,
-        void * * const
-            r_result)
+            i_wait_count)
 {
     enum appl_status
         e_status;
@@ -661,10 +663,6 @@ enum appl_status
                 !(
                     m_running))
             {
-                *(
-                    r_result) =
-                    m_thread_result;
-
                 e_status =
                     appl_status_ok;
             }
@@ -819,16 +817,6 @@ enum appl_status
 {
     enum appl_status
         e_status;
-
-    appl_thread_property_get_callback(
-        p_thread_property,
-        &(
-            m_descriptor.p_entry));
-
-    appl_thread_property_get_context(
-        p_thread_property,
-        &(
-            m_descriptor.p_context));
 
     unsigned char
         b_detach_state;

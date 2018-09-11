@@ -196,7 +196,7 @@ struct appl_test_thread_context
 }; /* struct appl_test_thread_context */
 
 static
-void *
+void
 appl_test_thread_entry(
     void * const
         p_context)
@@ -255,9 +255,6 @@ appl_test_thread_entry(
                 p_test_thread_context->p_mutex);
         }
     }
-
-    return
-        (void *)(0x1234);
 
 } /* appl_test_thread_entry() */
 
@@ -779,16 +776,6 @@ static void appl_test_thread(
         &(
             p_property));
 
-    appl_thread_property_set_callback(
-        p_property,
-        &(
-            appl_test_thread_entry));
-
-    appl_thread_property_set_context(
-        p_property,
-        &(
-            o_test_thread_context));
-
     e_status =
         appl_thread_create(
             appl_context_parent(
@@ -803,15 +790,16 @@ static void appl_test_thread(
     {
         e_status =
             appl_thread_start(
-                p_thread);
+                p_thread,
+                &(
+                    appl_test_thread_entry),
+                &(
+                    o_test_thread_context));
 
         if (
             appl_status_ok
             == e_status)
         {
-            void *
-                p_thread_result;
-
             appl_test_sleep_msec(
                 p_context,
                 200ul);
@@ -870,24 +858,12 @@ static void appl_test_thread(
                 appl_thread_stop(
                     p_thread,
                     1,
-                    1,
-                    &(
-                        p_thread_result));
+                    1);
 
             if (
                 appl_status_ok
                 == e_status)
             {
-                appl_print0(
-                    "thread result = ");
-                appl_print_number(
-                    (signed long int)(appl_ptrdiff_t)(
-                        p_thread_result),
-                    appl_buf_print_flag_hex
-                    | appl_buf_print_flag_unsigned,
-                    0);
-                appl_print0(
-                    "\n");
             }
         }
 
@@ -1045,7 +1021,7 @@ appl_test_socket_connection_thread_handler(
 } /* appl_test_socket_connection_thread_handler() */
 
 static
-void *
+void
 appl_test_socket_connection_thread_entry(
     void * const
         p_thread_context)
@@ -1059,10 +1035,6 @@ appl_test_socket_connection_thread_entry(
 
     appl_test_socket_connection_thread_handler(
         p_test_socket_connection_context);
-
-    return
-        (void *)(
-            0);
 
 } /* appl_test_socket_connection_thread_entry() */
 
@@ -1127,57 +1099,39 @@ appl_test_socket_process_client(
             == e_status)
         {
             e_status =
-                appl_thread_property_set_callback(
+                appl_thread_create(
+                    appl_context_parent(
+                        p_context),
                     p_thread_property,
                     &(
-                        appl_test_socket_connection_thread_entry));
+                        p_test_socket_connection_context->p_thread));
 
             if (
                 appl_status_ok
                 == e_status)
             {
                 e_status =
-                    appl_thread_property_set_context(
-                        p_thread_property,
+                    appl_thread_start(
+                        p_test_socket_connection_context->p_thread,
+                        &(
+                            appl_test_socket_connection_thread_entry),
                         (void *)(
                             p_test_socket_connection_context));
-            }
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                e_status =
-                    appl_thread_create(
-                        appl_context_parent(
-                            p_context),
-                        p_thread_property,
-                        &(
-                            p_test_socket_connection_context->p_thread));
 
                 if (
                     appl_status_ok
                     == e_status)
                 {
-                    e_status =
-                        appl_thread_start(
-                            p_test_socket_connection_context->p_thread);
+                    b_free_connection_context =
+                        0;
+                }
 
-                    if (
-                        appl_status_ok
-                        == e_status)
-                    {
-                        b_free_connection_context =
-                            0;
-                    }
-
-                    if (
-                        b_free_connection_context)
-                    {
-                        appl_object_destroy(
-                            appl_thread_parent(
-                                p_test_socket_connection_context->p_thread));
-                    }
+                if (
+                    b_free_connection_context)
+                {
+                    appl_object_destroy(
+                        appl_thread_parent(
+                            p_test_socket_connection_context->p_thread));
                 }
             }
 
