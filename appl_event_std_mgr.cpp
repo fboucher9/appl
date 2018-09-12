@@ -4,7 +4,15 @@
 
 */
 
+#if defined APPL_OS_LINUX
+
 #include <pthread.h>
+
+#else /* #if defined APPL_OS_LINUX */
+
+#include <windows.h>
+
+#endif /* #if defined APPL_OS_LINUX */
 
 #include <appl_status.h>
 
@@ -17,6 +25,8 @@
 #include <appl_event_std_mgr.h>
 
 #include <appl_event_node.h>
+
+#include <appl_event_impl.h>
 
 #include <appl_event_std_node.h>
 

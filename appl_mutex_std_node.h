@@ -61,11 +61,11 @@ class appl_mutex_std_node : public appl_mutex
 
     private:
 
-        pthread_mutex_t
-            m_pthread_mutex_storage;
+        class appl_mutex_impl
+            m_mutex_impl;
 
         bool
-            m_pthread_mutex_initialized;
+            m_mutex_impl_initialized;
 
         unsigned char
             m_uc_padding[7u];

@@ -63,7 +63,7 @@ class appl_heap_dbg : public appl_heap
         struct appl_list
             m_list;
 
-        pthread_mutex_t
+        class appl_mutex_impl
             m_lock;
 
         signed long int

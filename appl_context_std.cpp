@@ -8,6 +8,12 @@
 
 #include <pthread.h>
 
+#if defined APPL_OS_WINDOWS
+
+#include <windows.h>
+
+#endif /* #if defined APPL_OS_WINDOWS */
+
 #endif /* #if defined APPL_DEBUG */
 
 #include <appl_status.h>
@@ -33,6 +39,8 @@
 #if defined APPL_DEBUG
 
 #include <appl_list.h>
+
+#include <appl_mutex_impl.h>
 
 #include <appl_heap_dbg.h>
 

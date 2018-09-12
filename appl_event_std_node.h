@@ -55,11 +55,11 @@ class appl_event_std_node : public appl_event
 
     private:
 
-        pthread_cond_t
-            m_pthread_event_storage;
+        class appl_event_impl
+            m_event_impl;
 
         bool
-            m_pthread_event_initialized;
+            m_event_impl_initialized;
 
         unsigned char
             m_uc_padding[7u];

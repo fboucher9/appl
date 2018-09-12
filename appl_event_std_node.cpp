@@ -4,17 +4,15 @@
 
 */
 
+#if defined APPL_OS_LINUX
+
 #include <pthread.h>
 
-#if defined APPL_OS_WINDOWS
+#else /* #if defined APPL_OS_LINUX */
 
-#include <pthread_time.h>
+#include <windows.h>
 
-#else /* */
-
-#include <time.h>
-
-#endif /* */
+#endif /* #if defined APPL_OS_LINUX */
 
 #include <appl_status.h>
 
@@ -24,9 +22,13 @@
 
 #include <appl_event_node.h>
 
+#include <appl_event_impl.h>
+
 #include <appl_event_std_node.h>
 
 #include <appl_mutex_node.h>
+
+#include <appl_mutex_impl.h>
 
 #include <appl_mutex_std_node.h>
 
@@ -89,8 +91,8 @@ enum appl_status
 //
 appl_event_std_node::appl_event_std_node() :
     appl_event(),
-    m_pthread_event_storage(),
-    m_pthread_event_initialized()
+    m_event_impl(),
+    m_event_impl_initialized()
 {
 }
 
@@ -123,29 +125,15 @@ enum appl_status
     enum appl_status
         e_status;
 
-    int
-        i_pthread_result;
-
-    i_pthread_result =
-        pthread_cond_init(
-            &(
-                m_pthread_event_storage),
-            NULL);
+    e_status =
+        m_event_impl.init();
 
     if (
-        0
-        == i_pthread_result)
+        appl_status_ok
+        == e_status)
     {
-        m_pthread_event_initialized =
+        m_event_impl_initialized =
             true;
-
-        e_status =
-            appl_status_ok;
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
     }
 
     return
@@ -163,13 +151,11 @@ enum appl_status
         e_status;
 
     if (
-        m_pthread_event_initialized)
+        m_event_impl_initialized)
     {
-        pthread_cond_destroy(
-            &(
-                m_pthread_event_storage));
+        m_event_impl.cleanup();
 
-        m_pthread_event_initialized =
+        m_event_impl_initialized =
             false;
     }
 
@@ -190,20 +176,11 @@ enum appl_status
     enum appl_status
         e_status;
 
-    int
-        i_pthread_result;
-
-    i_pthread_result =
-        pthread_cond_signal(
-            &(
-                m_pthread_event_storage));
-
     if (
-        0
-        == i_pthread_result)
+        m_event_impl_initialized)
     {
         e_status =
-            appl_status_ok;
+            m_event_impl.signal();
     }
     else
     {
@@ -231,96 +208,22 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_mutex_std_node *
-        p_mutex_std_node;
-
-    p_mutex_std_node =
-        appl_mutex_std_node::convert_handle(
-            p_mutex_node);
-
-    int
-        i_clock_result;
-
-    struct timespec
-        o_now;
-
-    i_clock_result =
-        clock_gettime(
-            CLOCK_REALTIME,
-            &(
-                o_now));
-
     if (
-        0
-        == i_clock_result)
+        m_event_impl_initialized)
     {
-        appl_ull_t
-            ll_abstime;
+        class appl_mutex_std_node *
+            p_mutex_std_node;
 
-        appl_ull_t const
-            ll_now_sec =
-            appl_convert::to_unsigned(
-                o_now.tv_sec);
+        p_mutex_std_node =
+            appl_mutex_std_node::convert_handle(
+                p_mutex_node);
 
-        appl_ull_t const
-            ll_now_nsec =
-            appl_convert::to_unsigned(
-                o_now.tv_nsec);
-
-        appl_ull_t const
-            ll_wait_count =
-            i_wait_count;
-
-        ll_abstime =
-            (
-                (
-                 ll_now_sec
-                 * 1000000000ul)
-                + ll_now_nsec
-                + (
-                    (
-                        ll_wait_count
-                        * 1000000000ul)
-                    / i_wait_freq));
-
-        /* Default timeout ... */
-        struct timespec
-            o_abstime;
-
-        o_abstime.tv_sec =
-            appl_convert::to_signed(
-                appl_convert::to_ulong(
-                    ll_abstime / 1000000000ul));
-
-        o_abstime.tv_nsec =
-            appl_convert::to_signed(
-                appl_convert::to_ulong(
-                    ll_abstime % 1000000000ul));
-
-        int
-            i_pthread_result;
-
-        i_pthread_result =
-            pthread_cond_timedwait(
+        e_status =
+            m_event_impl.wait(
                 &(
-                    m_pthread_event_storage),
-                &(
-                    p_mutex_std_node->m_pthread_mutex_storage),
-                &(
-                    o_abstime));
-
-        if (
-            0
-            == i_pthread_result)
-        {
-            e_status =
-                appl_status_ok;
-        }
-        else
-        {
-            e_status =
-                appl_status_fail;
-        }
+                    p_mutex_std_node->m_mutex_impl),
+                i_wait_freq,
+                i_wait_count);
     }
     else
     {

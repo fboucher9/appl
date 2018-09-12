@@ -6,6 +6,12 @@
 
 #include <pthread.h>
 
+#if defined APPL_OS_WINDOWS
+
+#include <windows.h>
+
+#endif /* #if defined APPL_OS_WINDOWS */
+
 #include <appl_status.h>
 
 #include <appl_types.h>
@@ -19,6 +25,10 @@
 #include <appl_thread_std_mgr.h>
 
 #include <appl_thread_node.h>
+
+#include <appl_mutex_impl.h>
+
+#include <appl_event_impl.h>
 
 #include <appl_thread_std_node.h>
 

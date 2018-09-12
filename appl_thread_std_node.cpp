@@ -14,7 +14,7 @@
 
 #if defined APPL_OS_WINDOWS
 
-#include <pthread_time.h>
+#include <windows.h>
 
 #endif /* #if defined APPL_OS_WINDOWS */
 
@@ -35,6 +35,10 @@
 #include <appl_thread_property.h>
 
 #include <appl_thread_node.h>
+
+#include <appl_mutex_impl.h>
+
+#include <appl_event_impl.h>
 
 #include <appl_thread_std_node.h>
 
@@ -173,15 +177,13 @@ void
         0
         == i_detach_result)
     {
-        int const
-            i_lock_result =
-            pthread_mutex_lock(
-                &(
-                    m_lock));
+        enum appl_status const
+            e_lock_status =
+            m_lock.lock();
 
         if (
-            0
-            == i_lock_result)
+            appl_status_ok
+            == e_lock_status)
         {
             // wait for start event
             while (
@@ -195,44 +197,31 @@ void
                         o_descriptor =
                         m_descriptor;
 
-                    pthread_cond_signal(
-                        &(
-                            m_event));
+                    m_event.signal();
 
-                    int const
-                        i_unlock_result =
-                        pthread_mutex_unlock(
-                            &(
-                                m_lock));
+                    enum appl_status const
+                        e_unlock_status =
+                        m_lock.unlock();
 
                     if (
-                        0
-                        == i_unlock_result)
+                        appl_status_ok
+                        == e_unlock_status)
                     {
                         (*(o_descriptor.p_entry))(
                             o_descriptor.p_context);
 
-                        int const
-                            i_lock_result2 =
-                            pthread_mutex_lock(
-                                &(
-                                    m_lock));
+                        enum appl_status const
+                            e_lock_status2 =
+                            m_lock.lock();
 
                         if (
-                            0
-                            == i_lock_result2)
+                            appl_status_ok
+                            == e_lock_status2)
                         {
                             m_start =
                                 false;
 
-                            int const
-                                i_signal_result =
-                                pthread_cond_signal(
-                                    &(
-                                        m_event));
-
-                            appl_unused(
-                                i_signal_result);
+                            m_event.signal();
                         }
                     }
                     else
@@ -265,38 +254,32 @@ void
                         oops(
                             s_msg,
                             s_msg + sizeof s_msg,
-                            i_unlock_result);
+                            e_unlock_status);
 #endif /* #if defined APPL_DEBUG */
                     }
                 }
                 else
                 {
                     // wait for start event
-                    pthread_cond_wait(
+                    m_event.wait(
                         &(
-                            m_event),
-                        &(
-                            m_lock));
+                            m_lock),
+                        1,
+                        1);
                 }
             }
 
             m_running =
                 false;
 
-            pthread_cond_signal(
-                &(
-                    m_event));
+            m_event.signal();
 
-            int
-                i_unlock_result;
-
-            i_unlock_result =
-                pthread_mutex_unlock(
-                    &(
-                        m_lock));
+            enum appl_status const
+                e_unlock_status =
+                m_lock.unlock();
 
             appl_unused(
-                i_unlock_result);
+                e_unlock_status);
         }
         else
         {
@@ -326,7 +309,7 @@ void
             oops(
                 s_msg,
                 s_msg + sizeof s_msg,
-                i_lock_result);
+                e_lock_status);
 #endif /* #if defined APPL_DEBUG */
         }
 
@@ -422,17 +405,12 @@ appl_thread_std_node::v_start(
     enum appl_status
         e_status;
 
-    int
-        i_lock_result;
-
-    i_lock_result =
-        pthread_mutex_lock(
-            &(
-                m_lock));
+    e_status =
+        m_lock.lock();
 
     if (
-        0
-        == i_lock_result)
+        appl_status_ok
+        == e_status)
     {
         m_descriptor.p_entry =
             p_callback;
@@ -449,52 +427,37 @@ appl_thread_std_node::v_start(
         }
         else
         {
-            int
-                i_signal_result;
-
             m_start =
                 true;
 
-            i_signal_result =
-                pthread_cond_signal(
-                    &(
-                        m_event));
+            enum appl_status const
+                e_signal_result =
+                m_event.signal();
 
             appl_unused(
-                i_signal_result);
+                e_signal_result);
 
-            int
-                i_wait_result;
-
-            i_wait_result =
-                pthread_cond_wait(
+            enum appl_status const
+                e_wait_result =
+                m_event.wait(
                     &(
-                        m_event),
-                    &(
-                        m_lock));
+                        m_lock),
+                    1,
+                    1);
 
             appl_unused(
-                i_wait_result);
+                e_wait_result);
 
             e_status =
                 appl_status_ok;
         }
 
-        int
-            i_unlock_result;
-
-        i_unlock_result =
-            pthread_mutex_unlock(
-                &(
-                    m_lock));
+        enum appl_status const
+            e_unlock_result =
+            m_lock.unlock();
 
         appl_unused(
-            i_unlock_result);
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
+            e_unlock_result);
     }
 
     return
@@ -511,39 +474,17 @@ enum appl_status
     enum appl_status
         e_status;
 
-    int
-        i_lock_result;
-
-    i_lock_result =
-        pthread_mutex_lock(
-            &(
-                m_lock));
+    e_status =
+        m_lock.lock();
 
     if (
-        0
-        == i_lock_result)
+        appl_status_ok
+        == e_status)
     {
         m_detached =
             true;
 
-        e_status =
-            appl_status_ok;
-
-        int
-            i_unlock_result;
-
-        i_unlock_result =
-            pthread_mutex_unlock(
-                &(
-                    m_lock));
-
-        appl_unused(
-            i_unlock_result);
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
+        m_lock.unlock();
     }
 
     return
@@ -563,9 +504,6 @@ enum appl_status
 {
     enum appl_status
         e_status;
-
-    int
-        i_lock_result;
 
     /* if m_detached then there's a risk of segfault */
 #if defined APPL_DEBUG
@@ -590,109 +528,30 @@ enum appl_status
     }
 #endif /* #if defined APPL_DEBUG */
 
-    i_lock_result =
-        pthread_mutex_lock(
-            &(
-                m_lock));
+    enum appl_status const
+        e_lock_result =
+        m_lock.lock();
 
     if (
-        0
-        == i_lock_result)
+        appl_status_ok
+        == e_lock_result)
     {
         if (
             m_start)
         {
-            struct timespec
-                o_now;
-
-            int
-                i_clock_result;
-
-            i_clock_result =
-                clock_gettime(
-                    CLOCK_REALTIME,
+            enum appl_status const
+                e_wait_result =
+                m_event.wait(
                     &(
-                        o_now));
+                        m_lock),
+                    i_wait_freq,
+                    i_wait_count);
 
-            if (
-                0
-                == i_clock_result)
-            {
-                appl_ull_t
-                    ll_abstime;
+            appl_unused(
+                e_wait_result);
 
-                appl_ull_t
-                    ll_now_sec;
-
-                appl_ull_t
-                    ll_now_nsec;
-
-                appl_ull_t
-                    ll_wait_count;
-
-                ll_now_sec =
-                    appl_convert::to_unsigned(
-                        o_now.tv_sec);
-
-                ll_now_nsec =
-                    appl_convert::to_unsigned(
-                        o_now.tv_nsec);
-
-                ll_wait_count =
-                    i_wait_count;
-
-                ll_abstime =
-                        (
-                            ll_now_sec
-                            * 1000000000ul)
-                        + ll_now_nsec
-                        + (
-                            (
-                                ll_wait_count
-                                * 1000000000ul)
-                            / i_wait_freq);
-
-                /* Default timeout ... */
-                struct timespec
-                    o_abstime;
-
-                o_abstime.tv_sec =
-                    appl_convert::to_long(
-                        ll_abstime / 1000000000ul);
-
-                o_abstime.tv_nsec =
-                    appl_convert::to_long(
-                        ll_abstime % 1000000000ul);
-
-                int
-                    i_wait_result;
-
-                i_wait_result =
-                    pthread_cond_timedwait(
-                        &(
-                            m_event),
-                        &(
-                            m_lock),
-                        &(
-                            o_abstime));
-
-                if (
-                    0
-                    == i_wait_result)
-                {
-                }
-                else
-                {
-                }
-
-                e_status =
-                    appl_status_ok;
-            }
-            else
-            {
-                e_status =
-                    appl_status_fail;
-            }
+            e_status =
+                appl_status_ok;
         }
         else
         {
@@ -718,16 +577,12 @@ enum appl_status
             }
         }
 
-        int
-            i_unlock_result;
-
-        i_unlock_result =
-            pthread_mutex_unlock(
-                &(
-                    m_lock));
+        enum appl_status const
+            e_unlock_result =
+            m_lock.unlock();
 
         appl_unused(
-            i_unlock_result);
+            e_unlock_result);
     }
     else
     {
@@ -881,31 +736,19 @@ enum appl_status
         }
     }
 
-    int
-        i_mutex_result;
-
-    i_mutex_result =
-        pthread_mutex_init(
-            &(
-                m_lock),
-            NULL);
+    e_status =
+        m_lock.init();
 
     if (
-        0
-        == i_mutex_result)
+        appl_status_ok
+        == e_status)
     {
-        int
-            i_cond_result;
-
-        i_cond_result =
-            pthread_cond_init(
-                &(
-                    m_event),
-                NULL);
+        e_status =
+            m_event.init();
 
         if (
-            0
-            == i_cond_result)
+            appl_status_ok
+            == e_status)
         {
             int
                 i_create_result;
@@ -945,9 +788,7 @@ enum appl_status
                 appl_status_ok
                 != e_status)
             {
-                pthread_cond_destroy(
-                    &(
-                        m_event));
+                m_event.cleanup();
             }
         }
         else
@@ -960,9 +801,7 @@ enum appl_status
             appl_status_ok
             != e_status)
         {
-            pthread_mutex_destroy(
-                &(
-                    m_lock));
+            m_lock.cleanup();
         }
     }
     else
@@ -986,17 +825,13 @@ enum appl_status
         e_status;
 
     // kill the thread
-    int
-        i_lock_result;
-
-    i_lock_result =
-        pthread_mutex_lock(
-            &(
-                m_lock));
+    enum appl_status const
+        e_lock_result =
+        m_lock.lock();
 
     if (
-        0
-        == i_lock_result)
+        appl_status_ok
+        == e_lock_result)
     {
         while (
             m_running)
@@ -1004,41 +839,21 @@ enum appl_status
             m_kill =
                 true;
 
-            int
-                i_signal_result;
+            m_event.signal();
 
-            i_signal_result =
-                pthread_cond_signal(
-                    &(
-                        m_event));
-
-            appl_unused(
-                i_signal_result);
-
-            int
-                i_wait_result;
-
-            i_wait_result =
-                pthread_cond_wait(
-                    &(
-                        m_event),
-                    &(
-                        m_lock));
-
-            appl_unused(
-                i_wait_result);
+            m_event.wait(
+                &(
+                    m_lock),
+                1,
+                1);
         }
 
-        int
-            i_unlock_result;
-
-        i_unlock_result =
-            pthread_mutex_unlock(
-                &(
-                    m_lock));
+        enum appl_status const
+            e_unlock_result =
+            m_lock.unlock();
 
         appl_unused(
-            i_unlock_result);
+            e_unlock_result);
     }
 
     if (
@@ -1049,13 +864,9 @@ enum appl_status
     }
     else
     {
-        pthread_cond_destroy(
-            &(
-                m_event));
+        m_event.cleanup();
 
-        pthread_mutex_destroy(
-            &(
-                m_lock));
+        m_lock.cleanup();
 
         e_status =
             appl_status_ok;

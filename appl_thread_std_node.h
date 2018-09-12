@@ -86,10 +86,10 @@ class appl_thread_std_node : public appl_thread
 
         // --
 
-        pthread_mutex_t
+        class appl_mutex_impl
             m_lock;
 
-        pthread_cond_t
+        class appl_event_impl
             m_event;
 
         // --

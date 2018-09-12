@@ -6,8 +6,6 @@
 
 #if defined APPL_DEBUG
 
-#include <pthread.h>
-
 #include <stdio.h>
 
 #include <stdlib.h>
@@ -16,9 +14,15 @@
 
 #if defined APPL_OS_LINUX
 
+#include <pthread.h>
+
 #include <unistd.h>
 
 #include <execinfo.h>
+
+#else /* #if defined APPL_OS_LINUX */
+
+#include <windows.h>
 
 #endif /* #if defined APPL_OS_LINUX */
 
@@ -33,6 +37,8 @@
 #include <appl_heap.h>
 
 #include <appl_list.h>
+
+#include <appl_mutex_impl.h>
 
 #include <appl_heap_dbg.h>
 
@@ -243,10 +249,7 @@ enum appl_status
         &(
             m_list));
 
-    pthread_mutex_init(
-        &(
-            m_lock),
-        NULL);
+    m_lock.init();
 
     e_status =
         appl_status_ok;
@@ -394,9 +397,7 @@ enum appl_status
             union appl_heap_dbg_header_ptr
                 o_header_ptr;
 
-            pthread_mutex_lock(
-                &(
-                    m_lock));
+            m_lock.lock();
 
             o_header_ptr.p_void =
                 p_allocation;
@@ -451,9 +452,7 @@ enum appl_status
 
             m_alloc_count ++;
 
-            pthread_mutex_unlock(
-                &(
-                    m_lock));
+            m_lock.unlock();
 
             void * const
                 pv_allocation =
@@ -490,9 +489,7 @@ enum appl_status
         union appl_heap_dbg_header_ptr
             o_header_ptr;
 
-        pthread_mutex_lock(
-            &(
-                m_lock));
+        m_lock.lock();
 
         o_header_ptr.p_void =
             p_buf;
@@ -569,9 +566,7 @@ enum appl_status
 
         m_alloc_count --;
 
-        pthread_mutex_unlock(
-            &(
-                m_lock));
+        m_lock.unlock();
 
         e_status =
             appl_status_ok;

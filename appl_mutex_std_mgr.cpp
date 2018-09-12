@@ -4,7 +4,15 @@
 
 */
 
+#if defined APPL_OS_LINUX
+
 #include <pthread.h>
+
+#else /* #if defined APPL_OS_LINUX */
+
+#include <windows.h>
+
+#endif /* #if defined APPL_OS_LINUX */
 
 #include <appl_status.h>
 
@@ -17,6 +25,8 @@
 #include <appl_mutex_std_mgr.h>
 
 #include <appl_mutex_node.h>
+
+#include <appl_mutex_impl.h>
 
 #include <appl_mutex_std_node.h>
 

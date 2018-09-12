@@ -4,7 +4,15 @@
 
 */
 
+#if defined APPL_OS_LINUX
+
 #include <pthread.h>
+
+#else /* #if defined APPL_OS_LINUX */
+
+#include <windows.h>
+
+#endif /* #if defined APPL_OS_LINUX */
 
 #include <appl_status.h>
 
@@ -13,6 +21,8 @@
 #include <appl_object.h>
 
 #include <appl_mutex_node.h>
+
+#include <appl_mutex_impl.h>
 
 #include <appl_mutex_std_node.h>
 
@@ -73,8 +83,8 @@ enum appl_status
 //
 appl_mutex_std_node::appl_mutex_std_node() :
     appl_mutex(),
-    m_pthread_mutex_storage(),
-    m_pthread_mutex_initialized()
+    m_mutex_impl(),
+    m_mutex_impl_initialized()
 {
 }
 
@@ -133,29 +143,15 @@ enum appl_status
     enum appl_status
         e_status;
 
-    int
-        i_pthread_result;
-
-    i_pthread_result =
-        pthread_mutex_init(
-            &(
-                m_pthread_mutex_storage),
-            NULL);
+    e_status =
+        m_mutex_impl.init();
 
     if (
-        0
-        == i_pthread_result)
+        appl_status_ok
+        == e_status)
     {
-        m_pthread_mutex_initialized =
+        m_mutex_impl_initialized =
             true;
-
-        e_status =
-            appl_status_ok;
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
     }
 
     return
@@ -173,13 +169,11 @@ enum appl_status
         e_status;
 
     if (
-        m_pthread_mutex_initialized)
+        m_mutex_impl_initialized)
     {
-        pthread_mutex_destroy(
-            &(
-                m_pthread_mutex_storage));
+        m_mutex_impl.cleanup();
 
-        m_pthread_mutex_initialized =
+        m_mutex_impl_initialized =
             false;
     }
 
@@ -200,26 +194,8 @@ enum appl_status
     enum appl_status
         e_status;
 
-    int
-        i_pthread_result;
-
-    i_pthread_result =
-        pthread_mutex_lock(
-            &(
-                m_pthread_mutex_storage));
-
-    if (
-        0
-        == i_pthread_result)
-    {
-        e_status =
-            appl_status_ok;
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
-    }
+    e_status =
+        m_mutex_impl.lock();
 
     return
         e_status;
@@ -235,26 +211,8 @@ enum appl_status
     enum appl_status
         e_status;
 
-    int
-        i_pthread_result;
-
-    i_pthread_result =
-        pthread_mutex_unlock(
-            &(
-                m_pthread_mutex_storage));
-
-    if (
-        0
-        == i_pthread_result)
-    {
-        e_status =
-            appl_status_ok;
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
-    }
+    e_status =
+        m_mutex_impl.unlock();
 
     return
         e_status;
