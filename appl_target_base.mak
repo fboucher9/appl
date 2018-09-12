@@ -43,6 +43,7 @@ appl_base-deps := \
     appl_event_service.cpp \
     appl_event_std_mgr.cpp \
     appl_event_std_node.cpp \
+    appl_event_impl.cpp \
     appl_file_handle.cpp \
     appl_file_mgr.cpp \
     appl_file_node.cpp \
@@ -69,6 +70,7 @@ appl_base-deps := \
     appl_mutex_service.cpp \
     appl_mutex_std_mgr.cpp \
     appl_mutex_std_node.cpp \
+    appl_mutex_impl.cpp \
     appl_node.cpp \
     appl_node_iterator.cpp \
     appl_object.cpp \

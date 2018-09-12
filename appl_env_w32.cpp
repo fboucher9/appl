@@ -194,6 +194,7 @@ enum appl_status
                 }
 
                 p_heap->v_free(
+                    dwResult + 1,
                     p_value0);
             }
         }

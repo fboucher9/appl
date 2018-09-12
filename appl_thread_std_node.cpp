@@ -164,10 +164,8 @@ appl_thread_std_node::oops(
 void
     appl_thread_std_node::thread_handler(void)
 {
-    int
-        i_detach_result;
-
-    i_detach_result =
+    int const
+        i_detach_result =
         pthread_detach(
             m_thread);
 
@@ -175,10 +173,8 @@ void
         0
         == i_detach_result)
     {
-        int
-            i_lock_result;
-
-        i_lock_result =
+        int const
+            i_lock_result =
             pthread_mutex_lock(
                 &(
                     m_lock));
@@ -195,14 +191,16 @@ void
                 if (
                     m_start)
                 {
+                    struct appl_thread_descriptor const
+                        o_descriptor =
+                        m_descriptor;
+
                     pthread_cond_signal(
                         &(
                             m_event));
 
-                    int
-                        i_unlock_result;
-
-                    i_unlock_result =
+                    int const
+                        i_unlock_result =
                         pthread_mutex_unlock(
                             &(
                                 m_lock));
@@ -211,13 +209,11 @@ void
                         0
                         == i_unlock_result)
                     {
-                        (*(m_descriptor.p_entry))(
-                            m_descriptor.p_context);
+                        (*(o_descriptor.p_entry))(
+                            o_descriptor.p_context);
 
-                        int
-                            i_lock_result2;
-
-                        i_lock_result2 =
+                        int const
+                            i_lock_result2 =
                             pthread_mutex_lock(
                                 &(
                                     m_lock));
@@ -229,10 +225,8 @@ void
                             m_start =
                                 false;
 
-                            int
-                                i_signal_result;
-
-                            i_signal_result =
+                            int const
+                                i_signal_result =
                                 pthread_cond_signal(
                                     &(
                                         m_event));
