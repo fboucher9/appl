@@ -81,6 +81,10 @@ class appl_thread_w32_node : public appl_thread
         enum appl_status
             v_interrupt(void);
 
+        virtual
+        enum appl_status
+            v_detach(void);
+
     private:
 
         struct appl_thread_descriptor
@@ -113,8 +117,11 @@ class appl_thread_w32_node : public appl_thread
         bool
             m_kill;
 
+        bool
+            m_detached;
+
         unsigned char
-            uc_padding[5u];
+            uc_padding[4u];
 
         appl_thread_w32_node(
             class appl_thread_w32_node const & r);

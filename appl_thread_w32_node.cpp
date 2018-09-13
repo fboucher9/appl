@@ -89,7 +89,8 @@ appl_thread_w32_node::appl_thread_w32_node() :
         INVALID_HANDLE_VALUE),
     m_running(false),
     m_start(false),
-    m_kill(false)
+    m_kill(false),
+    m_detached(false)
 {
 }
 
@@ -276,6 +277,33 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_thread_w32_node::v_detach(void)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        m_lock.lock();
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        m_detached =
+            true;
+
+        m_lock.unlock();
+    }
+
+    return
+        e_status;
+
+} // v_detach()
+
+//
+//
+//
 void
     appl_thread_w32_node::placement_new(
         void * const
@@ -300,8 +328,23 @@ enum appl_status
     DWORD
         dwThreadId;
 
-    appl_unused(
-        p_thread_property);
+    unsigned char
+        b_detach_state;
+
+    if (
+        appl_status_ok
+        == appl_thread_property_get_detach_state(
+            p_thread_property,
+            &(
+                b_detach_state)))
+    {
+        if (
+            b_detach_state)
+        {
+            m_detached =
+                true;
+        }
+    }
 
     m_lock.init();
 
@@ -349,7 +392,7 @@ enum appl_status
 
     m_lock.lock();
 
-    if (
+    while (
         m_running)
     {
         m_kill =
@@ -499,10 +542,15 @@ void
 
     m_lock.unlock();
 
-    m_running =
-        false;
-
     // automatic delete if detached...
+    if (
+        m_detached)
+    {
+        m_detached =
+            false;
+
+        destroy();
+    }
 
 } // thread_handler()
 
