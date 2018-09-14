@@ -30,7 +30,8 @@ appl_context::appl_context() :
     m_socket_mgr(),
     m_env(),
     m_library_mgr(),
-    m_random_mgr()
+    m_random_mgr(),
+    m_thread_cache_mgr()
 #if defined APPL_DEBUG
     ,
     m_debug()

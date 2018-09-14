@@ -115,6 +115,7 @@ appl_base-deps := \
     appl_string.cpp \
     appl_string_handle.cpp \
     appl_string_service.cpp \
+    appl_thread_cache.cpp \
     appl_thread_handle.cpp \
     appl_thread_mgr.cpp \
     appl_thread_node.cpp \
@@ -123,7 +124,7 @@ appl_base-deps := \
     appl_thread_std_mgr.cpp \
     appl_thread_std_node.cpp \
     appl_thread_w32_mgr.cpp \
-    appl_thread_w32_node.cpp
+    appl_thread_w32_node.cpp \
 
 endif # ifndef appl_target_base.mak-included
 

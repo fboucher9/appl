@@ -54,6 +54,8 @@ class appl_library_mgr;
 
 class appl_random_mgr;
 
+class appl_thread_cache_mgr;
+
 //
 //
 //
@@ -106,6 +108,14 @@ struct appl_context : public appl_object
 
         class appl_random_mgr *
             m_random_mgr;
+
+        /* -- */
+
+        class appl_thread_cache_mgr *
+            m_thread_cache_mgr;
+
+        void *
+            pv_padding[1u];
 
         /* -- */
 
