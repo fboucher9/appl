@@ -12,6 +12,7 @@ appl_target_base.mak-included := 1
 
 appl_base-deps := \
     appl.cpp \
+    appl_tree.cpp \
     appl_address_handle.cpp \
     appl_address_node.cpp \
     appl_address_property.cpp \
