@@ -61,8 +61,10 @@ class appl_mutex_impl
 
 #endif /* #if defined APPL_OS_Xx */
 
-            unsigned char
-                m_padding[((sizeof(m_private) + 7u) / 8u) * 8u];
+            appl_ull_t
+                m_padding[
+                    (sizeof(m_private) + sizeof(appl_ull_t) - 1u)
+                    / sizeof(appl_ull_t)];
 
         } m_storage;
 

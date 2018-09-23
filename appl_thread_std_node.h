@@ -94,11 +94,17 @@ class appl_thread_std_node : public appl_thread
 
         // --
 
-        pthread_t
-            m_thread;
+        union appl_thread_std_node_storage
+        {
+            pthread_t
+                m_thread;
 
-        void *
-            m_thread_result;
+            appl_ull_t
+                m_padding[
+                    (sizeof(m_thread) + sizeof(appl_ull_t) - 1u)
+                    / sizeof(appl_ull_t)];
+
+        } m_thread_storage;
 
         // --
 

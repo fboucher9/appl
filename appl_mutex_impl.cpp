@@ -12,6 +12,8 @@
 #include <windows.h>
 #endif /* #if defined APPL_OS_Xx */
 
+#include <appl_types.h>
+
 #include <appl_mutex_impl.h>
 
 #include <appl_debug_handle.h>

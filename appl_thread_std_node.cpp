@@ -105,8 +105,7 @@ appl_thread_std_node::appl_thread_std_node() :
     m_descriptor(),
     m_lock(),
     m_event(),
-    m_thread(),
-    m_thread_result(),
+    m_thread_storage(),
     m_running(false),
     m_detached(false),
     m_kill(false),
@@ -171,7 +170,7 @@ void
     int const
         i_detach_result =
         pthread_detach(
-            m_thread);
+            m_thread_storage.m_thread);
 
     if (
         0
@@ -660,7 +659,7 @@ enum appl_status
 
         i_external_result =
             pthread_kill(
-                m_thread,
+                m_thread_storage.m_thread,
                 SIGURG);
 
         if (
@@ -762,7 +761,7 @@ enum appl_status
             i_create_result =
                 pthread_create(
                     &(
-                        m_thread),
+                        m_thread_storage.m_thread),
                     NULL,
                     &(
                         appl_thread_std_node::thread_entry),
