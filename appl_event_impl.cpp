@@ -27,7 +27,7 @@
 //
 //
 appl_event_impl::appl_event_impl() :
-    m_private()
+    m_storage()
 {
 }
 
@@ -53,7 +53,7 @@ enum appl_status
         i_init_result =
         pthread_cond_init(
             &(
-                m_private),
+                m_storage.m_private),
             NULL);
 
     if (
@@ -73,7 +73,7 @@ enum appl_status
 
     InitializeConditionVariable(
         &(
-            m_private));
+            m_storage.m_private));
 
     e_status =
         appl_status_ok;
@@ -100,7 +100,7 @@ enum appl_status
         i_destroy_result =
         pthread_cond_destroy(
             &(
-                m_private));
+                m_storage.m_private));
 
     if (
         0
@@ -142,7 +142,7 @@ enum appl_status
         i_signal_result =
         pthread_cond_signal(
             &(
-                m_private));
+                m_storage.m_private));
 
     if (
         0
@@ -161,7 +161,7 @@ enum appl_status
 
     WakeConditionVariable(
         &(
-            m_private));
+            m_storage.m_private));
 
     e_status =
         appl_status_ok;
@@ -256,9 +256,9 @@ enum appl_status
             i_wait_result =
             pthread_cond_timedwait(
                 &(
-                    m_private),
+                    m_storage.m_private),
                 &(
-                    p_mutex_impl->m_private),
+                    p_mutex_impl->m_storage.m_private),
                 &(
                     o_abstime));
 
@@ -296,9 +296,9 @@ enum appl_status
         b_sleep_result =
         SleepConditionVariableCS(
             &(
-                m_private),
+                m_storage.m_private),
             &(
-                p_mutex_impl->m_private),
+                p_mutex_impl->m_storage.m_private),
             i_timeout_msec);
 
     if (

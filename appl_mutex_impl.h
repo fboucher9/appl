@@ -47,13 +47,24 @@ class appl_mutex_impl
 
     private:
 
+        union appl_mutex_impl_storage
+        {
 #if defined APPL_OS_LINUX
-        pthread_mutex_t
-            m_private;
+
+            pthread_mutex_t
+                m_private;
+
 #else /* #if defined APPL_OS_Xx */
-        CRITICAL_SECTION
-            m_private;
+
+            CRITICAL_SECTION
+                m_private;
+
 #endif /* #if defined APPL_OS_Xx */
+
+            unsigned char
+                m_padding[((sizeof(m_private) + 7u) / 8u) * 8u];
+
+        } m_storage;
 
         appl_mutex_impl(
             class appl_mutex_impl const & r);

@@ -48,17 +48,26 @@ class appl_event_impl
 
     private:
 
+        union appl_event_impl_storage
+        {
+
 #if defined APPL_OS_LINUX
 
-        pthread_cond_t
-            m_private;
+            pthread_cond_t
+                m_private;
 
 #else /* #if defined APPL_OS_Xx */
 
-        CONDITION_VARIABLE
-            m_private;
+            CONDITION_VARIABLE
+                m_private;
+
 
 #endif /* #if defined APPL_OS_Xx */
+
+            unsigned char
+                m_padding[((sizeof(m_private) + 7u) / 8u) * 8u];
+
+        } m_storage;
 
         appl_event_impl(
             class appl_event_impl const & r);

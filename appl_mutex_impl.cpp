@@ -20,7 +20,7 @@
 //
 //
 appl_mutex_impl::appl_mutex_impl() :
-    m_private()
+    m_storage()
 {
 }
 
@@ -46,7 +46,7 @@ enum appl_status
         i_init_result =
         pthread_mutex_init(
             &(
-                m_private),
+                m_storage.m_private),
             NULL);
 
     if (
@@ -66,7 +66,7 @@ enum appl_status
 
     InitializeCriticalSection(
         &(
-            m_private));
+            m_storage.m_private));
 
     e_status =
         appl_status_ok;
@@ -93,7 +93,7 @@ enum appl_status
         i_destroy_result =
         pthread_mutex_destroy(
             &(
-                m_private));
+                m_storage.m_private));
 
     if (
         0
@@ -112,7 +112,7 @@ enum appl_status
 
     DeleteCriticalSection(
         &(
-            m_private));
+            m_storage.m_private));
 
     e_status =
         appl_status_ok;
@@ -139,7 +139,7 @@ enum appl_status
         i_lock_result =
         pthread_mutex_lock(
             &(
-                m_private));
+                m_storage.m_private));
 
     if (
         0
@@ -158,7 +158,7 @@ enum appl_status
 
     EnterCriticalSection(
         &(
-            m_private));
+            m_storage.m_private));
 
     e_status =
         appl_status_ok;
@@ -185,7 +185,7 @@ enum appl_status
         i_unlock_result =
         pthread_mutex_unlock(
             &(
-                m_private));
+                m_storage.m_private));
 
     if (
         0
@@ -204,7 +204,7 @@ enum appl_status
 
     LeaveCriticalSection(
         &(
-            m_private));
+            m_storage.m_private));
 
     e_status =
         appl_status_ok;
