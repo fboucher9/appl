@@ -9,9 +9,13 @@
 
 #include <stdio.h>
 
+#include <string.h>
+
 #include <appl.h>
 
 #include <appl_chunk.h>
+
+#include <appl_tree.h>
 
 static
 void
@@ -1954,6 +1958,282 @@ appl_test_random(
 
 } /* appl_test_random() */
 
+/*
+
+*/
+struct appl_test_tree_node
+{
+    struct appl_tree_node
+        o_tree_node;
+
+    char const *
+        p_value;
+
+}; /* struct appl_test_tree_node */
+
+/*
+
+*/
+static
+struct appl_test_tree_node *
+appl_test_tree_node_create(
+    struct appl_context * const
+        p_context,
+    char const * const
+        p_value)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_test_tree_node *
+        p_test_tree_node;
+
+    e_status =
+        appl_heap_alloc(
+            appl_context_parent(
+                p_context),
+            (unsigned long int)(
+                sizeof(
+                    struct appl_test_tree_node)),
+            (void * *)(
+                &(
+                    p_test_tree_node)));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        appl_tree_init(
+            &(
+                p_test_tree_node->o_tree_node));
+
+        p_test_tree_node->p_value =
+            p_value;
+    }
+    else
+    {
+        p_test_tree_node =
+            (struct appl_test_tree_node *)(
+                0);
+    }
+
+    return
+        p_test_tree_node;
+
+} /* appl_test_tree_node_create() */
+
+static
+int
+appl_test_tree_compare(
+    void * const
+        p_context,
+    struct appl_tree_node const * const
+        p_tree_node_1,
+    struct appl_tree_node const * const
+        p_tree_node_2)
+{
+    int
+        i_result;
+
+    struct appl_test_tree_node const *
+        p_test_tree_node_1;
+
+    struct appl_test_tree_node const *
+        p_test_tree_node_2;
+
+    (void)(
+        p_context);
+
+    p_test_tree_node_1 =
+        (struct appl_test_tree_node const *)(
+            p_tree_node_1);
+
+    p_test_tree_node_2 =
+        (struct appl_test_tree_node const *)(
+            p_tree_node_2);
+
+    i_result =
+        strcmp(
+            p_test_tree_node_1->p_value,
+            p_test_tree_node_2->p_value);
+
+    return
+        i_result;
+
+} /* appl_test_tree_compare() */
+
+static
+void
+appl_test_tree_dump(
+    struct appl_context * const
+        p_context,
+    struct appl_tree_node const * const
+        p_tree_node,
+    unsigned int const
+        i_level)
+{
+    if (
+        p_tree_node)
+    {
+        struct appl_test_tree_node const *
+            p_test_tree_node;
+
+        p_test_tree_node =
+            (struct appl_test_tree_node const *)(
+                p_tree_node);
+
+        /* Print node */
+        printf(
+            "%.*s (%u/%u) %s\n",
+            (int)(i_level),
+            "----------",
+            p_test_tree_node->o_tree_node.i_count,
+            p_test_tree_node->o_tree_node.i_height,
+            p_test_tree_node->p_value);
+
+        /* Print children */
+        appl_test_tree_dump(
+            p_context,
+            p_test_tree_node->o_tree_node.p_child_left,
+            i_level + 1);
+
+        appl_test_tree_dump(
+            p_context,
+            p_test_tree_node->o_tree_node.p_child_right,
+            i_level + 1);
+    }
+}
+
+static
+struct appl_tree_node *
+appl_test_tree_free(
+    struct appl_context * const
+        p_context,
+    struct appl_tree_node * const
+        p_tree_node)
+{
+    if (
+        p_tree_node)
+    {
+        p_tree_node->p_child_left =
+            appl_test_tree_free(
+                p_context,
+                p_tree_node->p_child_left);
+
+        p_tree_node->p_child_right =
+            appl_test_tree_free(
+                p_context,
+                p_tree_node->p_child_right);
+
+        appl_heap_free(
+            appl_context_parent(
+                p_context),
+            (unsigned long int)(
+                sizeof(
+                    struct appl_test_tree_node)),
+            (void *)(
+                p_tree_node));
+    }
+
+    return
+        (struct appl_tree_node *)(
+            0);
+
+}
+
+/*
+
+Function: appl_test_tree()
+
+Description:
+    Test tree interface.
+
+*/
+static
+void
+appl_test_tree(
+    struct appl_context * const
+        p_context)
+{
+    struct appl_tree_intf
+        o_tree_intf;
+
+    struct appl_tree_node *
+        p_tree_root;
+
+    o_tree_intf.p_compare =
+        &(
+            appl_test_tree_compare);
+
+    o_tree_intf.p_context =
+        (void *)(
+            0);
+
+    p_tree_root =
+        (struct appl_tree_node *)(
+            0);
+
+    /* Attach some nodes to tree */
+    {
+        static char const * const a_values[] =
+        {
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f"
+        };
+
+        unsigned int
+            i;
+
+        i = 0u;
+
+        while (i < sizeof(a_values) / sizeof(a_values[0u]))
+        {
+            struct appl_test_tree_node *
+                p_test_tree_node;
+
+            p_test_tree_node =
+                appl_test_tree_node_create(
+                    p_context,
+                    a_values[i]);
+
+            if (
+                p_test_tree_node)
+            {
+                p_tree_root =
+                    appl_tree_attach(
+                        &(
+                            o_tree_intf),
+                        p_tree_root,
+                        &(
+                            p_test_tree_node->o_tree_node));
+            }
+
+            i++;
+        }
+    }
+
+    /* Dump state of tree */
+    {
+        appl_test_tree_dump(
+            p_context,
+            p_tree_root,
+            1);
+    }
+
+    /* Free memory of tree */
+    {
+        p_tree_root =
+            appl_test_tree_free(
+                p_context,
+                p_tree_root);
+    }
+
+} /* appl_test_tree() */
+
 enum appl_status
 appl_main(
     struct appl_context * const
@@ -2177,13 +2457,13 @@ appl_main(
             p_context);
     }
 
-    if (1)
+    if (0)
     {
         appl_test_file_stdin(
             p_context);
     }
 
-    if (1)
+    if (0)
     {
         struct appl_test_socket_descriptor
             o_test_socket_descriptor;
@@ -2268,6 +2548,12 @@ appl_main(
     if (1)
     {
         appl_test_random(
+            p_context);
+    }
+
+    if (1)
+    {
+        appl_test_tree(
             p_context);
     }
 
