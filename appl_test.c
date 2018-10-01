@@ -2182,7 +2182,8 @@ appl_test_tree(
             "c",
             "d",
             "e",
-            "f"
+            "f",
+            "g"
         };
 
         unsigned int
@@ -2218,6 +2219,27 @@ appl_test_tree(
 
     /* Dump state of tree */
     {
+        appl_test_tree_dump(
+            p_context,
+            p_tree_root,
+            1);
+    }
+
+    /* Detach root node */
+    {
+        struct appl_tree_node *
+            p_node;
+
+        p_node =
+            p_tree_root;
+
+        p_tree_root =
+            appl_tree_detach(
+                &(
+                    o_tree_intf),
+                p_tree_root,
+                p_node);
+
         appl_test_tree_dump(
             p_context,
             p_tree_root,

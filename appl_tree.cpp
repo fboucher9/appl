@@ -359,42 +359,51 @@ appl_tree_balance(
     struct appl_tree_node * const
         p_tree_node)
 {
-    int
-        i_height_left;
-
-    int
-        i_height_right;
-
-    appl_tree_recalc(
-        p_tree_node);
-
-    i_height_left =
-        appl_tree_height(
-            p_tree_node->p_child_left);
-
-    i_height_right =
-        appl_tree_height(
-            p_tree_node->p_child_right);
-
     if (
-        (i_height_right - i_height_left) >= 2)
+        p_tree_node)
     {
-        /* right side is higher */
-        /* use rotate left */
+        int
+            i_height_left;
 
-        return
-            appl_tree_rotate_left(
-                p_tree_node);
+        int
+            i_height_right;
 
-    }
-    else if (
-        (i_height_right - i_height_left) <= -2)
-    {
-        /* left side is higher */
-        /* use rotate right */
-        return
-            appl_tree_rotate_right(
-                p_tree_node);
+        appl_tree_recalc(
+            p_tree_node);
+
+        i_height_left =
+            appl_tree_height(
+                p_tree_node->p_child_left);
+
+        i_height_right =
+            appl_tree_height(
+                p_tree_node->p_child_right);
+
+        if (
+            (i_height_right - i_height_left) >= 2)
+        {
+            /* right side is higher */
+            /* use rotate left */
+
+            return
+                appl_tree_rotate_left(
+                    p_tree_node);
+
+        }
+        else if (
+            (i_height_right - i_height_left) <= -2)
+        {
+            /* left side is higher */
+            /* use rotate right */
+
+            return
+                appl_tree_rotate_right(
+                    p_tree_node);
+        }
+        else
+        {
+            /* No balance required */
+        }
     }
     else
     {
@@ -639,63 +648,163 @@ appl_tree_parent(
 }
 #endif
 
+#if 0
+/*
+.           |
+.           x
+.          /
+.         i
+.          \
+.           c
+.
+*/
 static
 struct appl_tree_node *
-appl_tree_detach_node(
-    struct appl_tree_node * const
-        p_tree_node)
-{
+appl_tree_swap(
     struct appl_tree_node *
-        p_new_top;
-
-    if (
-        p_tree_node->p_child_left)
+        p_node_i,
+    struct appl_tree_node *
+        p_node_x,
+    struct appl_tree_node *
+        p_node_c)
+{
+    if (p_node_i->p_child_right == p_node_c)
     {
-        /*       |          |
-                 x    =>    A
-                / \          \
-               A   B          B      */
+        struct appl_tree_node *
+            p_node_a;
 
-        /*   |           |
-             x     =>    A
-            /
-           A                    */
+        struct appl_tree_node *
+            p_node_b;
 
-        p_new_top =
-            p_tree_node->p_child_left;
+        p_node_a =
+            p_node_x->p_child_left;
 
-        struct appl_tree_node * const
-            p_node_max =
-            appl_tree_find_max(
-                p_tree_node->p_child_left);
+        p_node_b =
+            p_node_x->p_child_right;
+
+        p_node_i->p_child_right =
+            p_node_x;
+
+        p_node_x->p_child_left =
+            p_node_c->p_child_left;
+
+        p_node_x->p_child_right =
+            p_node_c->p_child_right;
 
         if (
-            p_node_max)
+            p_node_c != p_node_a)
         {
-            p_node_max->p_child_right =
-                p_tree_node->p_child_right;
+            p_node_c->p_child_left =
+                p_node_a;
         }
+        else
+        {
+            p_node_c->p_child_left =
+                0;
+        }
+
+        p_node_c->p_child_right =
+            p_node_b;
+
+        return
+            p_node_c;
     }
     else
     {
-        /*   |              |
-             x      =>      B
-              \
-               B                    */
+        return
+            appl_tree_swap(
+                p_node_i->p_child_right,
+                p_node_x,
+                p_node_c);
+    }
+}
+#endif
 
-        p_new_top =
-            p_tree_node->p_child_right;
+/*
+
+Function: appl_tree_detach()
+
+Description:
+
+    Detach a node from the tree.
+
+Comments:
+
+    -   Simple case #1
+            Detach of leaf
+            return NULL
+
+    -   Simple case #2
+            if (x->right is NULL)
+                left->right = x->right
+                return x->left
+            if (x->left is NULL)
+                return x->right
+
+    -   Simple case #3
+            One child on each side
+            left->right = x->right
+            return left
+
+    -   Problem occurs when there are two children.  We must locate the
+        inorder next or previous element and exchange.  Then repeat the
+        detach.
+
+    -   To exchange two nodes:
+
+            |
+            x
+           / \
+          a   b
+           \
+            m
+           /
+          y
+
+        a = x->left
+        b = x->right
+        m = find_prev(x)
+        y = m->left
+        x->left = NULL
+        x->right = NULL
+        m->left = a
+        m->right = b
+        if (a != m)
+        {
+            a->max_right = y
+        }
+        return m
+        balance from m to root
+
+        If one of the sides has only one node:
+
+            |
+            x
+           / \
+          a   b
+
+            |
+            a
+             \
+              b
+
+*/
+
+static
+void
+appl_tree_recalc_right(
+    struct appl_tree_node * const
+        p_tree_node_iterator)
+{
+    if (
+        p_tree_node_iterator->p_child_right)
+    {
+        appl_tree_recalc_right(
+            p_tree_node_iterator->p_child_right);
     }
 
-    p_tree_node->p_child_left =
-        0;
-
-    p_tree_node->p_child_right =
-        0;
-
-    return
-        p_new_top;
-
+    appl_tree_recalc(
+        p_tree_node_iterator);
 }
 
 struct appl_tree_node *
@@ -707,12 +816,213 @@ appl_tree_detach(
     struct appl_tree_node * const
         p_tree_node_child)
 {
+    struct appl_tree_node *
+        p_tree_node_result;
+
     if (
         p_tree_node_parent == p_tree_node_child)
     {
-        return
-            appl_tree_detach_node(
-                p_tree_node_child);
+        struct appl_tree_node *
+            p_new_top;
+
+        if (
+            p_tree_node_child->p_child_left)
+        {
+            if (
+                p_tree_node_child->p_child_right)
+            {
+                if (1) /* debalanced method */
+                {
+                    /*       |          |
+                    .        x    =>    A
+                    .       / \          \
+                    .      A   B          B      */
+
+                    struct appl_tree_node * const
+                        p_node_max =
+                        appl_tree_find_max(
+                            p_tree_node_child->p_child_left);
+
+                    p_new_top =
+                        p_tree_node_child->p_child_left;
+
+                    p_node_max->p_child_right =
+                        p_tree_node_child->p_child_right;
+
+                    p_tree_node_child->p_child_left =
+                        0;
+
+                    p_tree_node_child->p_child_right =
+                        0;
+
+                    /* Recalc all nodes from A to B */
+                    appl_tree_recalc_right(
+                        p_new_top);
+
+                    p_tree_node_result =
+                        appl_tree_balance(
+                            p_new_top);
+                }
+
+                if (0) /* swap method */
+                {
+                    /*
+                    .       |
+                    .       x
+                    .      / \
+                    .     a   b
+                    .      \
+                    .       c
+                    .      /
+                    .     d
+                    */
+
+                    struct appl_tree_node *
+                        p_node_a;
+
+                    struct appl_tree_node *
+                        p_node_b;
+
+                    struct appl_tree_node *
+                        p_node_c;
+
+                    struct appl_tree_node *
+                        p_node_d;
+
+                    p_node_a =
+                        p_tree_node_child->p_child_left;
+
+                    p_node_b =
+                        p_tree_node_child->p_child_right;
+
+                    p_node_c =
+                        appl_tree_find_max(
+                            p_node_a);
+
+                    if (
+                        p_node_c != p_node_a)
+                    {
+                        p_node_d =
+                            p_node_c->p_child_left;
+
+                        /* Need parent of p_node_c */
+                        {
+                            struct appl_tree_node *
+                                p_tree_node_iterator;
+
+                            p_tree_node_iterator =
+                                p_node_a;
+
+                            while (p_tree_node_iterator->p_child_right != p_node_c)
+                            {
+                                p_tree_node_iterator =
+                                    p_tree_node_iterator->p_child_right;
+                            }
+
+                            p_tree_node_iterator->p_child_right =
+                                p_tree_node_child;
+                        }
+
+                        p_tree_node_child->p_child_right =
+                            0;
+
+                        p_tree_node_child->p_child_left =
+                            p_node_d;
+
+                        p_node_c->p_child_right =
+                            p_node_b;
+
+                        /* Recurse detach starting from a */
+                        p_node_c->p_child_left =
+                            appl_tree_detach(
+                                p_tree_intf,
+                                p_node_a,
+                                p_tree_node_child);
+
+                        p_new_top =
+                            p_node_c;
+
+                        p_tree_node_child->p_child_left =
+                            0;
+
+                        p_tree_node_child->p_child_right =
+                            0;
+
+                        p_tree_node_result =
+                            appl_tree_balance(
+                                p_new_top);
+                    }
+                    else
+                    {
+                        /* Simple case #3 */
+
+                        /*
+                        .           |               |
+                        .           x     ->        a
+                        .          / \               \
+                        .         a   b               b
+                        .
+                        */
+
+                        p_tree_node_child->p_child_left->p_child_right =
+                            p_tree_node_child->p_child_right;
+
+                        p_new_top =
+                            p_tree_node_child->p_child_left;
+
+                        p_tree_node_child->p_child_left =
+                            0;
+
+                        p_tree_node_child->p_child_right =
+                            0;
+
+                        p_tree_node_result =
+                            appl_tree_balance(
+                                p_new_top);
+                    }
+                }
+            }
+            else
+            {
+                /*    |           |
+                .     x     =>    A
+                .    /
+                .   A                    */
+
+                p_new_top =
+                    p_tree_node_child->p_child_left;
+
+                p_tree_node_child->p_child_left =
+                    0;
+
+                p_tree_node_child->p_child_right =
+                    0;
+
+                p_tree_node_result =
+                    appl_tree_balance(
+                        p_new_top);
+            }
+        }
+        else
+        {
+            /*  |              |
+            .   x      =>      B
+            .    \
+            .     B              */
+
+            p_new_top =
+                p_tree_node_child->p_child_right;
+
+            p_tree_node_child->p_child_left =
+                0;
+
+            p_tree_node_child->p_child_right =
+                0;
+
+            p_tree_node_result =
+                appl_tree_balance(
+                    p_new_top);
+        }
     }
     else
     {
@@ -722,7 +1032,9 @@ appl_tree_detach(
             /* Found node and parent */
             /* Check if node must be pushed to bottom */
             p_tree_node_parent->p_child_left =
-                appl_tree_detach_node(
+                appl_tree_detach(
+                    p_tree_intf,
+                    p_tree_node_parent->p_child_left,
                     p_tree_node_child);
         }
         else if (
@@ -731,7 +1043,9 @@ appl_tree_detach(
             /* Found node and parent */
             /* Check if node must be pushed to bottom */
             p_tree_node_parent->p_child_right =
-                appl_tree_detach_node(
+                appl_tree_detach(
+                    p_tree_intf,
+                    p_tree_node_parent->p_child_right,
                     p_tree_node_child);
         }
         else
@@ -770,12 +1084,14 @@ appl_tree_detach(
             }
         }
 
-        appl_tree_recalc(
-            p_tree_node_parent);
-
-        return
-            p_tree_node_parent;
+        p_tree_node_result =
+            appl_tree_balance(
+                p_tree_node_parent);
     }
-}
+
+    return
+        p_tree_node_result;
+
+} /* appl_tree_detach() */
 
 /* end-of-file: appl_tree.cpp */
