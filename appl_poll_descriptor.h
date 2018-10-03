@@ -10,7 +10,7 @@
 
 #define INC_APPL_POLL_DESCRIPTOR_H
 
-struct appl_socket_handle;
+struct appl_socket;
 
 struct appl_poll_descriptor;
 
@@ -32,14 +32,14 @@ enum appl_poll_flag
 */
 struct appl_poll_descriptor
 {
-    struct appl_socket_handle *
-        p_socket_handle;
+    struct appl_socket *
+        p_socket;
 
-    enum appl_status
+    void
         (* p_callback)(
             void * const
                 p_context,
-            unsigned int
+            signed int const
                 i_poll_flags);
 
     /* -- */
