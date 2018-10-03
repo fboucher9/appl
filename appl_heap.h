@@ -79,6 +79,22 @@ class appl_heap : public appl_object
                 void * const
                     p_buf);
 
+        template <typename T_instance>
+        enum appl_status
+            free_object_array(
+                unsigned long int
+                    i_count,
+                T_instance * const
+                    p_object_array)
+        {
+            return
+                v_free(
+                    sizeof(
+                        T_instance)
+                    * i_count,
+                    p_object_array);
+        }
+
     protected:
 
         appl_heap();
