@@ -117,6 +117,20 @@ class appl_socket_service
             unsigned long int const
                 i_wait_count);
 
+        static
+        enum appl_status
+        s_poll(
+            struct appl_context * const
+                p_context,
+            struct appl_poll_descriptor const * const
+                p_poll_descriptor_min,
+            struct appl_poll_descriptor const * const
+                p_poll_descriptor_max,
+            unsigned long int const
+                i_wait_freq,
+            unsigned long int const
+                i_wait_count);
+
 }; // class appl_socket_service
 
 /* end-of-file: appl_socket_service.h */

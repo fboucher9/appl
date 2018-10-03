@@ -17,6 +17,8 @@
 
 #include <appl_tree.h>
 
+#include <appl_poll_descriptor.h>
+
 static
 void
 appl_print(
@@ -900,6 +902,69 @@ struct appl_test_socket_descriptor
 
 static
 void
+appl_test_socket_fill_descriptor(
+    struct appl_context * const
+        p_context,
+    struct appl_test_socket_descriptor * const
+        p_descriptor)
+{
+    enum appl_status
+        e_status;
+
+    unsigned long int
+        argc;
+
+    p_descriptor->b_server =
+        0;
+
+    e_status =
+        appl_options_count(
+            appl_context_parent(
+                p_context),
+            &(
+                argc));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        if (
+            argc > 1)
+        {
+            unsigned char const *
+                p_arg_min;
+
+            unsigned char const *
+                p_arg_max;
+
+            e_status =
+                appl_options_get(
+                    appl_context_parent(
+                        p_context),
+                    1u,
+                    &(
+                        p_arg_min),
+                    &(
+                        p_arg_max));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                if (
+                    ('-' == p_arg_min[0u])
+                    && ('s' == p_arg_min[1u]))
+                {
+                    p_descriptor->b_server =
+                        1;
+                }
+            }
+        }
+    }
+}
+
+static
+void
 appl_test_socket_handshake(
     struct appl_socket * const
         p_socket)
@@ -1170,6 +1235,70 @@ appl_test_socket_process_client(
 
 static
 void
+appl_test_socket_accept_cb(
+    void * const
+        p_callback_context,
+    signed int const
+        i_poll_flags)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_socket *
+        p_remote_socket;
+
+    struct appl_address *
+        p_remote_address;
+
+    struct appl_socket *
+        p_socket;
+
+    struct appl_context *
+        p_context;
+
+    (void)(
+        i_poll_flags);
+
+    p_socket =
+        (struct appl_socket *)(
+            p_callback_context);
+
+    p_context =
+        appl_object_get_context(
+            appl_socket_parent(
+                p_socket));
+
+    e_status =
+        appl_socket_accept(
+            p_socket,
+            &(
+                p_remote_socket),
+            &(
+                p_remote_address));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        appl_test_socket_process_client(
+            p_context,
+            p_remote_socket,
+            p_remote_address);
+
+        /* wait for thread to finish */
+        appl_test_sleep_msec(
+            p_context,
+            1000ul);
+    }
+    else
+    {
+        appl_print0("failed accept...\n");
+    }
+
+} /* appl_test_socket_accept_cb() */
+
+static
+void
 appl_test_socket(
     struct appl_context * const
         p_context,
@@ -1190,7 +1319,7 @@ appl_test_socket(
         '.',
         '1',
         '0',
-        '2'
+        '7'
     };
 
     enum appl_status
@@ -1369,40 +1498,43 @@ appl_test_socket(
                                 while (
                                     !b_found_client)
                                 {
-                                    struct appl_socket *
-                                        p_remote_socket;
+                                    /* First do a poll to verify if accept is
+                                    ready to be called... */
 
-                                    struct appl_address *
-                                        p_remote_address;
+                                    struct appl_poll_descriptor
+                                        a_poll_descriptor[1u];
+
+                                    a_poll_descriptor[0u].p_socket =
+                                        p_socket;
+
+                                    a_poll_descriptor[0u].p_callback =
+                                        &(
+                                            appl_test_socket_accept_cb);
+
+                                    a_poll_descriptor[0u].p_context =
+                                        p_socket;
+
+                                    a_poll_descriptor[0u].i_poll_flags =
+                                        appl_poll_flag_read;
 
                                     e_status =
-                                        appl_socket_accept(
-                                            p_socket,
-                                            &(
-                                                p_remote_socket),
-                                            &(
-                                                p_remote_address));
+                                        appl_socket_poll(
+                                            p_context,
+                                            a_poll_descriptor,
+                                            a_poll_descriptor + 1u,
+                                            1000ul,
+                                            1000ul);
 
                                     if (
                                         appl_status_ok
                                         == e_status)
                                     {
-                                        appl_test_socket_process_client(
-                                            p_context,
-                                            p_remote_socket,
-                                            p_remote_address);
-
-                                        /* wait for thread to finish */
-                                        appl_test_sleep_msec(
-                                            p_context,
-                                            1000ul);
-
                                         b_found_client =
                                             1;
                                     }
                                     else
                                     {
-                                        appl_print0("failed accept...\n");
+                                        /* error or timeout */
                                     }
                                 }
                             }
@@ -2490,58 +2622,10 @@ appl_main(
         struct appl_test_socket_descriptor
             o_test_socket_descriptor;
 
-        o_test_socket_descriptor.b_server =
-            0;
-
-        {
-            unsigned long int
-                argc;
-
-            e_status =
-                appl_options_count(
-                    appl_context_parent(
-                        p_context),
-                    &(
-                        argc));
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                if (
-                    argc > 1)
-                {
-                    unsigned char const *
-                        p_arg_min;
-
-                    unsigned char const *
-                        p_arg_max;
-
-                    e_status =
-                        appl_options_get(
-                            appl_context_parent(
-                                p_context),
-                            1u,
-                            &(
-                                p_arg_min),
-                            &(
-                                p_arg_max));
-
-                    if (
-                        appl_status_ok
-                        == e_status)
-                    {
-                        if (
-                            ('-' == p_arg_min[0u])
-                            && ('s' == p_arg_min[1u]))
-                        {
-                            o_test_socket_descriptor.b_server =
-                                1;
-                        }
-                    }
-                }
-            }
-        }
+        appl_test_socket_fill_descriptor(
+            p_context,
+            &(
+                o_test_socket_descriptor));
 
         appl_test_socket(
             p_context,

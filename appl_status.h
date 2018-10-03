@@ -31,7 +31,10 @@ enum appl_status
     appl_status_out_of_memory = 3,
 
     /* Function not implemented */
-    appl_status_not_implemented = 4
+    appl_status_not_implemented = 4,
+
+    /* Timeout occured */
+    appl_status_timeout = 5
 
 }; /* enum appl_status */
 

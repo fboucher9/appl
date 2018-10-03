@@ -24,6 +24,8 @@ struct appl_address;
 
 struct appl_socket_property;
 
+struct appl_poll_descriptor;
+
 #if defined(__cplusplus)
 extern "C" {
 #endif /* #if defined(__cplusplus) */
@@ -110,6 +112,19 @@ appl_socket_wait(
         p_socket,
     enum appl_socket_wait_type const
         e_wait_type,
+    unsigned long int const
+        i_wait_freq,
+    unsigned long int const
+        i_wait_count);
+
+enum appl_status
+appl_socket_poll(
+    struct appl_context * const
+        p_context,
+    struct appl_poll_descriptor const * const
+        p_poll_descriptor_min,
+    struct appl_poll_descriptor const * const
+        p_poll_descriptor_max,
     unsigned long int const
         i_wait_freq,
     unsigned long int const

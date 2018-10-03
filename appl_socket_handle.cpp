@@ -243,4 +243,33 @@ appl_socket_wait(
 
 } /* appl_socket_wait() */
 
+enum appl_status
+appl_socket_poll(
+    struct appl_context * const
+        p_context,
+    struct appl_poll_descriptor const * const
+        p_poll_descriptor_min,
+    struct appl_poll_descriptor const * const
+        p_poll_descriptor_max,
+    unsigned long int const
+        i_wait_freq,
+    unsigned long int const
+        i_wait_count)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_socket_service::s_poll(
+            p_context,
+            p_poll_descriptor_min,
+            p_poll_descriptor_max,
+            i_wait_freq,
+            i_wait_count);
+
+    return
+        e_status;
+
+} /* appl_socket_poll() */
+
 /* end-of-file: appl_socket_handle.cpp */

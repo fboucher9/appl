@@ -76,6 +76,18 @@ class appl_socket_std_mgr : public appl_socket_mgr
                 struct appl_socket * * const
                     r_socket_node);
 
+        virtual
+        enum appl_status
+            v_poll(
+                struct appl_poll_descriptor const * const
+                    p_poll_descriptor_min,
+                struct appl_poll_descriptor const * const
+                    p_poll_descriptor_max,
+                unsigned long int const
+                    i_wait_freq,
+                unsigned long int const
+                    i_wait_count);
+
 }; // class appl_socket_std_mgr
 
 /* end-of-file: appl_socket_std_mgr.h */

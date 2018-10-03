@@ -27,6 +27,8 @@ struct appl_socket;
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
+class appl_socket_std_mgr;
+
 class appl_socket_std_node;
 
 //
@@ -35,6 +37,8 @@ class appl_socket_std_node;
 class appl_socket_std_node : public appl_socket
 {
     public:
+
+        friend class appl_socket_std_mgr;
 
         static
         enum appl_status

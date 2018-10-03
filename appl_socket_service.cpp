@@ -269,4 +269,39 @@ appl_socket_service::s_wait(
 
 } // s_wait()
 
+//
+//
+//
+enum appl_status
+appl_socket_service::s_poll(
+    struct appl_context * const
+        p_context,
+    struct appl_poll_descriptor const * const
+        p_poll_descriptor_min,
+    struct appl_poll_descriptor const * const
+        p_poll_descriptor_max,
+    unsigned long int const
+        i_wait_freq,
+    unsigned long int const
+        i_wait_count)
+{
+    enum appl_status
+        e_status;
+
+    class appl_socket_mgr * const
+        p_socket_mgr =
+        p_context->m_socket_mgr;
+
+    e_status =
+        p_socket_mgr->v_poll(
+            p_poll_descriptor_min,
+            p_poll_descriptor_max,
+            i_wait_freq,
+            i_wait_count);
+
+    return
+        e_status;
+
+} // s_poll()
+
 /* end-of-file: appl_socket_service.cpp */
