@@ -142,6 +142,12 @@
 
 #endif
 
+#include <appl_log_handle.h>
+
+#include <appl_log.h>
+
+#include <appl_log_std.h>
+
 #include <appl_convert.h>
 
 extern
@@ -929,6 +935,68 @@ void
 //
 //
 enum appl_status
+    appl_context_std::init_log(void)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        !b_init_log)
+    {
+        class appl_log_std *
+            p_log_std;
+
+        e_status =
+            appl_log_std::s_create(
+                m_context,
+                &(
+                    p_log_std));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            m_log =
+                p_log_std;
+
+            b_init_log =
+                true;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // init_log()
+
+//
+//
+//
+void
+    appl_context_std::cleanup_log(void)
+{
+    if (
+        b_init_log)
+    {
+        m_log->destroy();
+
+        m_log =
+            0;
+
+        b_init_log =
+            false;
+    }
+} // cleanup_log()
+
+//
+//
+//
+enum appl_status
     appl_context_std::create_instance(
         struct appl_context_descriptor const * const
             p_context_descriptor,
@@ -1056,7 +1124,8 @@ appl_context_std::appl_context_std() :
     b_init_socket_mgr(),
     b_init_env(),
     b_init_library_mgr(),
-    b_init_random_mgr()
+    b_init_random_mgr(),
+    b_init_log()
 {
 }
 
@@ -1067,6 +1136,9 @@ appl_context_std::~appl_context_std()
 {
 }
 
+//
+//
+//
 void
     appl_context_std::placement_new(
         void * const
@@ -1117,6 +1189,10 @@ appl_context_std::g_init_cleanup_items[] =
     {
         & appl_context_std::init_random_mgr,
         & appl_context_std::cleanup_random_mgr
+    },
+    {
+        & appl_context_std::init_log,
+        & appl_context_std::cleanup_log
     }
 };
 

@@ -111,8 +111,11 @@ class appl_context_std : public appl_context
         bool
             b_init_random_mgr;
 
+        bool
+            b_init_log;
+
         unsigned char
-            uc_padding[3u];
+            uc_padding[2u];
 
         appl_context_std(
             class appl_context_std const & r);
@@ -208,6 +211,12 @@ class appl_context_std : public appl_context
 
         void
             cleanup_random_mgr(void);
+
+        enum appl_status
+            init_log(void);
+
+        void
+            cleanup_log(void);
 
 }; // class appl_context_std
 

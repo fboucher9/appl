@@ -65,6 +65,11 @@ appl_base-deps := \
     appl_library_std_mgr.cpp \
     appl_library_std_node.cpp \
     appl_list.cpp \
+    appl_log_handle.cpp \
+    appl_log_service.cpp \
+    appl_log.cpp \
+    appl_log_std.cpp \
+    appl_log_impl.cpp \
     appl_mutex_handle.cpp \
     appl_mutex_mgr.cpp \
     appl_mutex_node.cpp \
@@ -116,6 +121,7 @@ appl_base-deps := \
     appl_string.cpp \
     appl_string_handle.cpp \
     appl_string_service.cpp \
+    appl_thread_impl.cpp \
     appl_thread_cache.cpp \
     appl_thread_handle.cpp \
     appl_thread_mgr.cpp \

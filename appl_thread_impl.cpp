@@ -1,0 +1,283 @@
+/* See LICENSE for license details */
+
+/*
+
+*/
+
+#if defined APPL_OS_LINUX
+
+#include <pthread.h>
+
+#include <signal.h>
+
+#else /* #if defined APPL_OS_Xx */
+
+#include <windows.h>
+
+#endif /* #if defined APPL_OS_Xx */
+
+#include <appl_status.h>
+
+#include <appl_types.h>
+
+#include <appl_thread_descriptor.h>
+
+#include <appl_thread_impl.h>
+
+#include <appl_unused.h>
+
+//
+//
+//
+appl_thread_impl::appl_thread_impl() :
+    m_descriptor(),
+    m_storage(),
+    m_start()
+{
+}
+
+//
+//
+//
+appl_thread_impl::~appl_thread_impl()
+{
+}
+
+#if defined APPL_OS_LINUX
+
+union appl_thread_impl_callback_ptr
+{
+    void *
+        p_thread_context;
+
+    class appl_thread_impl *
+        p_thread_impl;
+
+};
+
+#endif /* #if defined APPL_OS_Xx */
+
+//
+//
+//
+enum appl_status
+    appl_thread_impl::f_start(
+        struct appl_thread_descriptor const * const
+            p_descriptor)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        !(m_start))
+    {
+        m_descriptor =
+            *(
+                p_descriptor);
+
+#if defined APPL_OS_LINUX
+        int
+            i_create_result;
+
+        i_create_result =
+            pthread_create(
+                &(
+                    m_storage.m_thread),
+                NULL,
+                &(
+                    appl_thread_impl::thread_linux_entry),
+                this);
+
+        if (
+            0
+            == i_create_result)
+        {
+            m_start =
+                true;
+
+            e_status =
+                appl_status_ok;
+
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+
+#else /* #if defined APPL_OS_Xx */
+
+        e_status =
+            appl_status_fail;
+
+#endif /* #if defined APPL_OS_Xx */
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // f_start()
+
+#if defined APPL_OS_LINUX
+
+/*
+
+*/
+static
+void
+dummy_urgent_signal_handler(
+    int
+        i_unused)
+{
+    appl_unused(
+        i_unused);
+} /* dummy_urgent_signal_handler() */
+
+#endif /* #if defined APPL_OS_Xx */
+
+//
+//
+//
+enum appl_status
+    appl_thread_impl::f_interrupt(void)
+{
+    enum appl_status
+        e_status;
+
+#if defined APPL_OS_LINUX
+
+    // setup SIGURG handler
+    struct sigaction
+        o_new_action;
+
+    struct sigaction
+        o_old_action;
+
+    o_new_action.sa_handler =
+        &(
+            dummy_urgent_signal_handler);
+
+    sigemptyset(
+        &(
+            o_new_action.sa_mask));
+
+    o_new_action.sa_flags = 0;
+
+    int
+        i_sigaction_result;
+
+    i_sigaction_result =
+        sigaction(
+            SIGURG,
+            &(
+                o_new_action),
+            &(
+                o_old_action));
+
+    if (
+        0
+        == i_sigaction_result)
+    {
+        int
+            i_external_result;
+
+        i_external_result =
+            pthread_kill(
+                m_storage.m_thread,
+                SIGURG);
+
+        if (
+            0
+            == i_external_result)
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+#else /* #if defined APPL_OS_Xx */
+
+    e_status =
+        appl_status_not_implemented;
+
+#endif /* #if defined APPL_OS_Xx */
+
+    return
+        e_status;
+
+} // f_interrupt()
+
+//
+//
+//
+#if defined APPL_OS_LINUX
+
+void *
+    appl_thread_impl::thread_linux_handler(void)
+{
+    int const
+        i_detach_result =
+        pthread_detach(
+            m_storage.m_thread);
+
+    if (
+        0
+        == i_detach_result)
+    {
+        (*(m_descriptor.p_entry))(
+            m_descriptor.p_context);
+    }
+    else
+    {
+    }
+
+    return
+        0;
+
+} // thread_linux_handler()
+
+#endif /* #if defined APPL_OS_Xx */
+
+//
+//
+//
+#if defined APPL_OS_LINUX
+
+void *
+    appl_thread_impl::thread_linux_entry(
+        void *
+            p_thread_context)
+{
+    union appl_thread_impl_callback_ptr
+        o_callback_ptr;
+
+    o_callback_ptr.p_thread_context =
+        p_thread_context;
+
+    class appl_thread_impl * const
+        p_thread_impl =
+        o_callback_ptr.p_thread_impl;
+
+    return
+        p_thread_impl->thread_linux_handler();
+
+} // thread_linux_entry()
+
+#endif /* #if defined APPL_OS_Xx */
+
+/* end-of-file: appl_thread_impl.cpp */

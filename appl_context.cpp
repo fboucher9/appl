@@ -31,7 +31,8 @@ appl_context::appl_context() :
     m_env(),
     m_library_mgr(),
     m_random_mgr(),
-    m_thread_cache_mgr()
+    m_thread_cache_mgr(),
+    m_log()
 #if defined APPL_DEBUG
     ,
     m_debug()
