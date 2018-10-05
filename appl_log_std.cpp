@@ -14,6 +14,8 @@
 
 #include <appl_log.h>
 
+#include <appl_log_impl.h>
+
 #include <appl_log_std.h>
 
 #include <appl_unused.h>
@@ -46,7 +48,9 @@ enum appl_status
 //
 //
 //
-appl_log_std::appl_log_std()
+appl_log_std::appl_log_std() :
+    appl_log(),
+    m_log_impl()
 {
 }
 
@@ -86,13 +90,12 @@ enum appl_status
     enum appl_status
         e_status;
 
-    appl_unused(
-        e_level,
-        p_message_min,
-        p_message_max);
-
     e_status =
-        appl_status_not_implemented;
+        m_log_impl.f_print(
+            m_context,
+            e_level,
+            p_message_min,
+            p_message_max);
 
     return
         e_status;

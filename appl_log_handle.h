@@ -24,11 +24,11 @@ struct appl_context;
 
 enum appl_log_level
 {
-    appl_log_error = 1,
+    appl_log_level_error = 1,
 
-    appl_log_warning = 2,
+    appl_log_level_warning = 2,
 
-    appl_log_info = 3
+    appl_log_level_info = 3
 
 };
 

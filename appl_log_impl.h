@@ -45,6 +45,18 @@ class appl_log_impl
                 unsigned char const * const
                     p_message_max);
 
+    private:
+
+        unsigned long int
+            ul_impl_padding[2u];
+
+        appl_log_impl(
+            class appl_log_impl const & r);
+
+        class appl_log_impl &
+            operator =(
+                class appl_log_impl const & r);
+
 }; // class appl_log_impl
 
 /* end-of-file: appl_log_impl.h */

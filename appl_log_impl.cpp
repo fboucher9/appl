@@ -4,19 +4,23 @@
 
 */
 
-#include <appl_status.h>
-
 #if defined APPL_OS_LINUX
 
 #include <syslog.h>
 
 #endif /* #if defined APPL_OS_LINUX */
 
+#include <appl_status.h>
+
+#include <appl_types.h>
+
 #include <appl_log_handle.h>
 
 #include <appl_log_impl.h>
 
 #include <appl_unused.h>
+
+#include <appl_convert.h>
 
 //
 //
@@ -49,14 +53,54 @@ enum appl_status
     enum appl_status
         e_status;
 
-    appl_unused(
-        p_context,
-        e_level,
-        p_message_min,
-        p_message_max);
+#if defined APPL_OS_LINUX
 
-    e_status =
-        appl_status_not_implemented;
+    {
+        appl_unused(
+            p_context);
+
+        appl_ptrdiff_t const
+            l_message_len =
+            p_message_max
+            - p_message_min;
+
+        int const
+            i_message_len =
+            appl_convert::to_int(
+                l_message_len);
+
+        int const
+            i_syslog_priority =
+            (appl_log_level_error == e_level)
+            ? LOG_ERR
+            : (appl_log_level_warning == e_level)
+            ? LOG_WARNING
+            : LOG_NOTICE;
+
+        syslog(
+            i_syslog_priority,
+            "%.*s",
+            i_message_len,
+            p_message_min);
+
+        e_status =
+            appl_status_ok;
+    }
+
+#else /* #if defined APPL_OS_Xx */
+
+    {
+        appl_unused(
+            p_context,
+            e_level,
+            p_message_min,
+            p_message_max);
+
+        e_status =
+            appl_status_not_implemented;
+    }
+
+#endif /* #if defined APPL_OS_Xx */
 
     return
         e_status;

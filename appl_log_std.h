@@ -16,6 +16,11 @@
 #error include appl_log.h before
 #endif /* #if ! defined INC_APPL_LOG_H */
 
+/* Header file dependency */
+#if ! defined INC_APPL_LOG_IMPL_H
+#error include appl_log_impl.h before
+#endif /* #if ! defined INC_APPL_LOG_IMPL_H */
+
 struct appl_context;
 
 /* Assert compiler */
@@ -46,6 +51,9 @@ class appl_log_std : public appl_log
         ~appl_log_std();
 
     private:
+
+        class appl_log_impl
+            m_log_impl;
 
         static
         void

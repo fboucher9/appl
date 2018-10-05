@@ -2663,6 +2663,22 @@ appl_main(
             p_context);
     }
 
+    if (1)
+    {
+        static unsigned char const s_msg[] =
+        {
+            'b',
+            'y',
+            'e'
+        };
+
+        appl_log_print(
+            p_context,
+            appl_log_level_info,
+            s_msg,
+            s_msg + sizeof(s_msg));
+    }
+
     e_status =
         appl_status_ok;
 

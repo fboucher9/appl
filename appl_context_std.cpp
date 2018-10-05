@@ -146,6 +146,8 @@
 
 #include <appl_log.h>
 
+#include <appl_log_impl.h>
+
 #include <appl_log_std.h>
 
 #include <appl_convert.h>
