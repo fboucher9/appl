@@ -40,6 +40,8 @@
 
 #include <appl_event_impl.h>
 
+#include <appl_thread_impl.h>
+
 #include <appl_thread_std_node.h>
 
 #if defined APPL_DEBUG
@@ -105,7 +107,7 @@ appl_thread_std_node::appl_thread_std_node() :
     m_descriptor(),
     m_lock(),
     m_event(),
-    m_thread_storage(),
+    m_thread_impl(),
     m_running(false),
     m_detached(false),
     m_kill(false),
@@ -167,163 +169,109 @@ appl_thread_std_node::oops(
 void
     appl_thread_std_node::thread_handler(void)
 {
-    int const
-        i_detach_result =
-        pthread_detach(
-            m_thread_storage.m_thread);
+    enum appl_status const
+        e_lock_status =
+        m_lock.lock();
 
     if (
-        0
-        == i_detach_result)
+        appl_status_ok
+        == e_lock_status)
     {
-        enum appl_status const
-            e_lock_status =
-            m_lock.lock();
-
-        if (
-            appl_status_ok
-            == e_lock_status)
+        // wait for start event
+        while (
+            !(
+                m_kill))
         {
-            // wait for start event
-            while (
-                !(
-                    m_kill))
+            if (
+                m_start)
             {
-                if (
-                    m_start)
-                {
-                    struct appl_thread_descriptor const
-                        o_descriptor =
-                        m_descriptor;
+                struct appl_thread_descriptor const
+                    o_descriptor =
+                    m_descriptor;
 
-                    m_event.signal();
+                m_event.signal();
+
+                enum appl_status const
+                    e_unlock_status =
+                    m_lock.unlock();
+
+                if (
+                    appl_status_ok
+                    == e_unlock_status)
+                {
+                    (*(o_descriptor.p_entry))(
+                        o_descriptor.p_context);
 
                     enum appl_status const
-                        e_unlock_status =
-                        m_lock.unlock();
+                        e_lock_status2 =
+                        m_lock.lock();
 
                     if (
                         appl_status_ok
-                        == e_unlock_status)
+                        == e_lock_status2)
                     {
-                        (*(o_descriptor.p_entry))(
-                            o_descriptor.p_context);
+                        m_start =
+                            false;
 
-                        enum appl_status const
-                            e_lock_status2 =
-                            m_lock.lock();
-
-                        if (
-                            appl_status_ok
-                            == e_lock_status2)
-                        {
-                            m_start =
-                                false;
-
-                            m_event.signal();
-                        }
-                    }
-                    else
-                    {
-#if defined APPL_DEBUG
-                        static unsigned char const s_msg[] =
-                        {
-                            'p',
-                            't',
-                            'h',
-                            'r',
-                            'e',
-                            'a',
-                            'd',
-                            '_',
-                            'm',
-                            'u',
-                            't',
-                            'e',
-                            'x',
-                            '_',
-                            'u',
-                            'n',
-                            'l',
-                            'o',
-                            'c',
-                            'k'
-                        };
-
-                        oops(
-                            s_msg,
-                            s_msg + sizeof s_msg,
-                            e_unlock_status);
-#endif /* #if defined APPL_DEBUG */
+                        m_event.signal();
                     }
                 }
                 else
                 {
-                    // wait for start event
-                    m_event.wait(
-                        &(
-                            m_lock),
-                        1,
-                        1);
+#if defined APPL_DEBUG
+                    static unsigned char const s_msg[] =
+                    {
+                        'p',
+                        't',
+                        'h',
+                        'r',
+                        'e',
+                        'a',
+                        'd',
+                        '_',
+                        'm',
+                        'u',
+                        't',
+                        'e',
+                        'x',
+                        '_',
+                        'u',
+                        'n',
+                        'l',
+                        'o',
+                        'c',
+                        'k'
+                    };
+
+                    oops(
+                        s_msg,
+                        s_msg + sizeof s_msg,
+                        e_unlock_status);
+#endif /* #if defined APPL_DEBUG */
                 }
             }
-
-            m_running =
-                false;
-
-            m_event.signal();
-
-            enum appl_status const
-                e_unlock_status =
-                m_lock.unlock();
-
-            appl_unused(
-                e_unlock_status);
-        }
-        else
-        {
-#if defined APPL_DEBUG
-            static unsigned char const s_msg[] =
+            else
             {
-                'p',
-                't',
-                'h',
-                'r',
-                'e',
-                'a',
-                'd',
-                '_',
-                'm',
-                'u',
-                't',
-                'e',
-                'x',
-                '_',
-                'l',
-                'o',
-                'c',
-                'k'
-            };
-
-            oops(
-                s_msg,
-                s_msg + sizeof s_msg,
-                e_lock_status);
-#endif /* #if defined APPL_DEBUG */
+                // wait for start event
+                m_event.wait(
+                    &(
+                        m_lock),
+                    1,
+                    1);
+            }
         }
 
         m_running =
             false;
 
-        if (
-            m_detached)
-        {
-            m_detached =
-                false;
+        m_event.signal();
 
-            /* Kill ourselves */
-            destroy();
-        }
+        enum appl_status const
+            e_unlock_status =
+            m_lock.unlock();
+
+        appl_unused(
+            e_unlock_status);
     }
     else
     {
@@ -338,19 +286,36 @@ void
             'a',
             'd',
             '_',
-            'd',
-            'e',
+            'm',
+            'u',
             't',
-            'a',
+            'e',
+            'x',
+            '_',
+            'l',
+            'o',
             'c',
-            'h'
+            'k'
         };
 
         oops(
             s_msg,
             s_msg + sizeof s_msg,
-            i_detach_result);
+            e_lock_status);
 #endif /* #if defined APPL_DEBUG */
+    }
+
+    m_running =
+        false;
+
+    if (
+        m_detached)
+    {
+        m_detached =
+            false;
+
+        /* Kill ourselves */
+        destroy();
     }
 
 } // thread_handler()
@@ -368,7 +333,7 @@ union appl_thread_std_node_thread_context_ptr
 //
 //
 //
-void *
+void
     appl_thread_std_node::thread_entry(
         void *
             p_thread_context)
@@ -384,9 +349,6 @@ void *
         o_thread_context_ptr.p_thread_std_node;
 
     p_thread_std_node->thread_handler();
-
-    return
-        0;
 
 } // thread_entry()
 
@@ -594,23 +556,6 @@ enum appl_status
 
 } // wait_result()
 
-#if defined APPL_OS_LINUX
-
-/*
-
-*/
-static
-void
-dummy_urgent_signal_handler(
-    int
-        i_unused)
-{
-    appl_unused(
-        i_unused);
-} /* dummy_urgent_signal_handler() */
-
-#endif /* #if defined APPL_OS_LINUX */
-
 //
 //
 //
@@ -620,59 +565,44 @@ enum appl_status
     enum appl_status
         e_status;
 
-#if defined APPL_OS_LINUX
-
-    // setup SIGURG handler
-    struct sigaction
-        o_new_action;
-
-    struct sigaction
-        o_old_action;
-
-    o_new_action.sa_handler =
-        &(
-            dummy_urgent_signal_handler);
-
-    sigemptyset(
-        &(
-            o_new_action.sa_mask));
-
-    o_new_action.sa_flags = 0;
-
-    int
-        i_sigaction_result;
-
-    i_sigaction_result =
-        sigaction(
-            SIGURG,
-            &(
-                o_new_action),
-            &(
-                o_old_action));
+    enum appl_status const
+        e_lock_status =
+        m_lock.lock();
 
     if (
-        0
-        == i_sigaction_result)
+        appl_status_ok
+        == e_lock_status)
     {
-        int
-            i_external_result;
-
-        i_external_result =
-            pthread_kill(
-                m_thread_storage.m_thread,
-                SIGURG);
-
         if (
-            0
-            == i_external_result)
+            m_running)
         {
             e_status =
-                appl_status_ok;
+                m_thread_impl.f_interrupt();
         }
         else
         {
             e_status =
                 appl_status_fail;
+        }
+
+        enum appl_status const
+            e_unlock_status =
+            m_lock.unlock();
+
+        if (
+            appl_status_ok
+            == e_unlock_status)
+        {
+        }
+        else
+        {
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_status_fail;
+            }
         }
     }
     else
@@ -680,13 +610,6 @@ enum appl_status
         e_status =
             appl_status_fail;
     }
-
-#elif defined APPL_OS_WINDOWS
-
-    e_status =
-        appl_status_not_implemented;
-
-#endif /* #if defined APPL_OS_Xx */
 
     return
         e_status;
@@ -749,38 +672,33 @@ enum appl_status
             appl_status_ok
             == e_status)
         {
-            int
-                i_create_result;
-
             union appl_thread_std_node_thread_context_ptr
                 o_thread_context_ptr;
 
             o_thread_context_ptr.p_thread_std_node =
                 this;
 
-            i_create_result =
-                pthread_create(
+            struct appl_thread_descriptor
+                o_thread_descriptor;
+
+            o_thread_descriptor.p_entry =
+                &(
+                    appl_thread_std_node::thread_entry);
+
+            o_thread_descriptor.p_context =
+                o_thread_context_ptr.p_thread_context;
+
+            e_status =
+                m_thread_impl.f_start(
                     &(
-                        m_thread_storage.m_thread),
-                    NULL,
-                    &(
-                        appl_thread_std_node::thread_entry),
-                    o_thread_context_ptr.p_thread_context);
+                        o_thread_descriptor));
 
             if (
-                0
-                == i_create_result)
+                appl_status_ok
+                == e_status)
             {
                 m_running =
                     true;
-
-                e_status =
-                    appl_status_ok;
-            }
-            else
-            {
-                e_status =
-                    appl_status_fail;
             }
 
             if (

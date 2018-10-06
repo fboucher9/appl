@@ -30,6 +30,8 @@
 
 #include <appl_event_impl.h>
 
+#include <appl_thread_impl.h>
+
 #include <appl_thread_std_node.h>
 
 enum appl_status

@@ -28,6 +28,11 @@ struct appl_thread_property;
 #error include appl_thread_node.h before
 #endif /* #if !defined(INC_APPL_THREAD_NODE_H) */
 
+/* Header file dependency */
+#if ! defined INC_APPL_THREAD_IMPL_H
+#error include appl_thread_impl.h before
+#endif /* #if ! defined INC_APPL_THREAD_IMPL_H */
+
 class appl_thread_std_node;
 
 //
@@ -94,17 +99,8 @@ class appl_thread_std_node : public appl_thread
 
         // --
 
-        union appl_thread_std_node_storage
-        {
-            pthread_t
-                m_thread;
-
-            appl_ull_t
-                m_padding[
-                    (sizeof(m_thread) + sizeof(appl_ull_t) - 1u)
-                    / sizeof(appl_ull_t)];
-
-        } m_thread_storage;
+        class appl_thread_impl
+            m_thread_impl;
 
         // --
 
@@ -142,7 +138,7 @@ class appl_thread_std_node : public appl_thread
             thread_handler(void);
 
         static
-        void *
+        void
             thread_entry(
                 void *
                     p_thread_context);
