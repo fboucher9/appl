@@ -16,7 +16,7 @@
 
 #include <appl_pool_mgr.h>
 
-#include <appl_unused.h>
+#include <appl_context.h>
 
 //
 //
@@ -30,13 +30,10 @@ enum appl_status
         struct appl_pool * * const
             r_pool)
 {
-    appl_unused(
-        p_context,
-        i_length,
-        r_pool);
-
     return
-        appl_status_not_implemented;
+        p_context->m_pool_mgr->v_create_node(
+            i_length,
+            r_pool);
 
 } // s_create()
 

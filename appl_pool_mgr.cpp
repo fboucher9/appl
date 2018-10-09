@@ -4,6 +4,16 @@
 
 */
 
+#if defined APPL_OS_LINUX
+
+#include <pthread.h>
+
+#else /* #if defined APPL_OS_Xx */
+
+#include <windows.h>
+
+#endif /* #if defined APPL_OS_Xx */
+
 #include <appl_status.h>
 
 #include <appl_types.h>
@@ -12,12 +22,43 @@
 
 #include <appl_pool_mgr.h>
 
-#include <appl_unused.h>
+#include <appl_pool.h>
+
+#include <appl_list.h>
+
+#include <appl_mutex_impl.h>
+
+#include <appl_pool_std.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
+
+//
+//
+//
+enum appl_status
+    appl_pool_mgr::s_create(
+        struct appl_context * const
+            p_context,
+        class appl_pool_mgr * * const
+            r_instance)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_object::s_create(
+            p_context,
+            (&
+                appl_pool_mgr::s_new),
+            r_instance);
+
+    return
+        e_status;
+
+} // s_create()
 
 //
 //
@@ -32,12 +73,24 @@ enum appl_status
     enum appl_status
         e_status;
 
-    appl_unused(
-        i_buf_len,
-        r_pool_node);
+    class appl_pool_std *
+        p_pool_std;
 
     e_status =
-        appl_status_not_implemented;
+        appl_pool_std::s_create(
+            m_context,
+            i_buf_len,
+            &(
+                p_pool_std));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_pool_node) =
+            p_pool_std;
+    }
 
     return
         e_status;
@@ -58,3 +111,18 @@ appl_pool_mgr::~appl_pool_mgr()
 {
 }
 
+//
+//
+//
+void
+    appl_pool_mgr::s_new(
+        void * const
+            p_placement)
+{
+    new (
+        p_placement)
+        class appl_pool_mgr;
+
+} // s_new()
+
+/* end-of-file: appl_pool_mgr.cpp */

@@ -17,6 +17,8 @@
 
 class appl_file_std_mgr;
 
+struct appl_pool;
+
 //
 //
 //
@@ -41,6 +43,12 @@ class appl_file_std_mgr : public appl_file_mgr
 
     private:
 
+        struct appl_pool *
+            m_pool;
+
+        void *
+            pv_padding[1u];
+
         appl_file_std_mgr(
             class appl_file_std_mgr const & r);
 
@@ -53,6 +61,13 @@ class appl_file_std_mgr : public appl_file_mgr
             placement_new(
                 void * const
                     p_placement);
+
+        enum appl_status
+            f_init(void);
+
+        virtual
+        enum appl_status
+            v_cleanup(void);
 
         virtual
         enum appl_status

@@ -32,6 +32,14 @@ class appl_pool_mgr : public appl_object
 {
     public:
 
+        static
+        enum appl_status
+            s_create(
+                struct appl_context * const
+                    p_context,
+                class appl_pool_mgr * * const
+                    r_instance);
+
         virtual
         enum appl_status
             v_create_node(
@@ -48,6 +56,12 @@ class appl_pool_mgr : public appl_object
         ~appl_pool_mgr();
 
     private:
+
+        static
+        void
+            s_new(
+                void * const
+                    p_placement);
 
         appl_pool_mgr(
             class appl_pool_mgr const & r);

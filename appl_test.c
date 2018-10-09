@@ -2376,6 +2376,10 @@ appl_test_tree(
             p_context,
             p_tree_root,
             1);
+
+        appl_test_tree_free(
+            p_context,
+            p_node);
     }
 
     /* Free memory of tree */

@@ -42,12 +42,16 @@ enum appl_status
             p_placement =
             this;
 
+        appl_size_t const
+            i_placement_length =
+            m_placement_length;
+
         delete
             this;
 
         /* Free memory */
         p_heap->v_free(
-            m_placement_length,
+            i_placement_length,
             p_placement);
     }
 

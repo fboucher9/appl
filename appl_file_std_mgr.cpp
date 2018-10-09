@@ -18,6 +18,10 @@
 
 #include <appl_file_std_node.h>
 
+#include <appl_object_handle.h>
+
+#include <appl_pool_handle.h>
+
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -43,6 +47,8 @@ enum appl_status
             p_context,
             (&
                 appl_file_std_mgr::placement_new),
+            (&
+                appl_file_std_mgr::f_init),
             &(
                 p_file_std_mgr));
 
@@ -64,7 +70,8 @@ enum appl_status
 //
 //
 appl_file_std_mgr::appl_file_std_mgr() :
-    appl_file_mgr()
+    appl_file_mgr(),
+    m_pool()
 {
 }
 
@@ -92,6 +99,60 @@ void
 //
 //
 enum appl_status
+    appl_file_std_mgr::f_init(void)
+{
+    enum appl_status
+        e_status;
+
+    unsigned long int const
+        i_length =
+        sizeof(
+            class appl_file_std_node);
+
+    e_status =
+        appl_pool_create(
+            m_context,
+            i_length,
+            &(
+                m_pool));
+
+    return
+        e_status;
+
+} // f_init()
+
+//
+//
+//
+enum appl_status
+    appl_file_std_mgr::v_cleanup(void)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        m_pool)
+    {
+        appl_object_destroy(
+            appl_pool_parent(
+                m_pool));
+
+        m_pool =
+            0;
+    }
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // v_cleanup()
+
+//
+//
+//
+enum appl_status
     appl_file_std_mgr::v_create_node(
         struct appl_file_descriptor const * const
             p_file_descriptor,
@@ -101,9 +162,11 @@ enum appl_status
     enum appl_status
         e_status;
 
+    // Use a pool to allocate memory for a node
     e_status =
         appl_file_std_node::create_instance(
             m_context,
+            m_pool,
             p_file_descriptor,
             r_file);
 

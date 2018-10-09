@@ -19,6 +19,11 @@
 #error include appl_list.h before
 #endif /* #if ! defined INC_APPL_LIST_H */
 
+/* Header file dependencies */
+#if ! defined INC_APPL_MUTEX_IMPL_H
+#error include appl_mutex_impl.h before
+#endif /* #if ! defined INC_APPL_MUTEX_IMPL_H */
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -58,7 +63,7 @@ class appl_pool_std : public appl_pool
             m_available_items;
 
         // lock
-        pthread_mutex_t
+        class appl_mutex_impl
             m_lock;
 
         // size in bytes of each item

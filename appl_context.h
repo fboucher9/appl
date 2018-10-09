@@ -58,6 +58,8 @@ class appl_thread_cache_mgr;
 
 struct appl_log;
 
+class appl_pool_mgr;
+
 //
 //
 //
@@ -118,6 +120,14 @@ struct appl_context : public appl_object
 
         struct appl_log *
             m_log;
+
+        /* -- */
+
+        class appl_pool_mgr *
+            m_pool_mgr;
+
+        void *
+            pv_padding[1u];
 
         /* -- */
 

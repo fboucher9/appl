@@ -4,6 +4,16 @@
 
 */
 
+#if defined APPL_OS_LINUX
+
+#include <pthread.h>
+
+#else /* #if defined APPL_OS_Xx */
+
+#include <windows.h>
+
+#endif /* #if defined APPL_OS_Xx */
+
 #include <appl_status.h>
 
 #include <appl_types.h>
@@ -14,11 +24,15 @@
 
 #include <appl_pool.h>
 
-#include <pthread.h>
+#include <appl_mutex_impl.h>
 
 #include <appl_pool_std.h>
 
 #include <appl_unused.h>
+
+#include <appl_context.h>
+
+#include <appl_heap.h>
 
 struct appl_pool_std_descriptor
 {
@@ -31,6 +45,16 @@ struct appl_pool_std_descriptor
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
+
+union appl_pool_node_ptr
+{
+    void *
+        p_void;
+
+    struct appl_list *
+        p_list;
+
+};
 
 //
 //
@@ -111,31 +135,18 @@ enum appl_status
         &(
             m_available_items));
 
-    int
-        i_pthread_mutex_result;
-
-    i_pthread_mutex_result =
-        pthread_mutex_init(
-            &(
-                m_lock),
-            0);
+    e_status =
+        m_lock.init();
 
     if (
-        0 == i_pthread_mutex_result)
+        appl_status_ok
+        == e_status)
     {
         m_buf_len =
             p_descriptor->i_buf_len;
 
         m_available_count =
             0u;
-
-        e_status =
-            appl_status_ok;
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
     }
 
     return
@@ -153,7 +164,25 @@ enum appl_status
         e_status;
 
     // assert if allocated items remain
+
     // free all reuseable items
+    while (m_available_items.o_next.p_node != &(m_available_items))
+    {
+        struct appl_list * const
+            p_node =
+            m_available_items.o_next.p_node;
+
+        appl_list_join(
+            p_node,
+            p_node);
+
+        m_context->m_heap->v_free(
+            m_buf_len,
+            p_node);
+    }
+
+    m_lock.cleanup();
+
     e_status =
         appl_status_ok;
 
@@ -173,46 +202,86 @@ enum appl_status
     enum appl_status
         e_status;
 
-    appl_unused(
-        r_buf);
-
-    int
-        i_pthread_mutex_result;
-
-    i_pthread_mutex_result =
-        pthread_mutex_lock(
-            &(
-                m_lock));
-
     if (
-        0 == i_pthread_mutex_result)
+        appl_status_ok
+        == m_lock.lock())
     {
+        void *
+            p_buf;
+
+        bool
+            b_found;
+
+        p_buf =
+            0;
+
+        b_found =
+            false;
+
         // Are there available items?
         if (
             m_available_items.o_next.p_node != &(m_available_items))
         {
-            struct appl_list *
-                p_node;
+            union appl_pool_node_ptr
+                o_node_ptr;
 
-            p_node =
+            o_node_ptr.p_list =
                 m_available_items.o_next.p_node;
 
             appl_list_join(
-                p_node,
-                p_node);
+                o_node_ptr.p_list,
+                o_node_ptr.p_list);
+
+            o_node_ptr.p_list->o_next.p_node =
+                0;
+
+            o_node_ptr.p_list->o_prev.p_node =
+                0;
+
+            p_buf =
+                o_node_ptr.p_void;
+
+            b_found =
+                true;
+        }
+
+        m_lock.unlock();
+
+        if (
+            !(
+                b_found))
+        {
+            // allocate new item
+            e_status =
+                m_context->m_heap->v_alloc(
+                    m_buf_len,
+                    &(
+                        p_buf));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                b_found =
+                    true;
+            }
+        }
+
+        if (
+            b_found)
+        {
+            *(
+                r_buf) =
+                p_buf;
+
+            e_status =
+                appl_status_ok;
         }
         else
         {
-            // allocate new item
-            // allocate group of free items
+            e_status =
+                appl_status_out_of_memory;
         }
-
-        e_status =
-            appl_status_ok;
-
-        pthread_mutex_unlock(
-            &(
-                m_lock));
     }
     else
     {
@@ -236,13 +305,43 @@ enum appl_status
     enum appl_status
         e_status;
 
-    // place object into linked list
+    if (
+        appl_status_ok
+        == m_lock.lock())
+    {
+        union appl_pool_node_ptr
+            o_node_ptr;
 
-    appl_unused(
-        p_buf);
+        o_node_ptr.p_void =
+            p_buf;
 
-    e_status =
-        appl_status_not_implemented;
+        // place object into linked list
+        appl_list_init(
+            o_node_ptr.p_list);
+
+        appl_list_join(
+            o_node_ptr.p_list,
+            &(
+                m_available_items));
+
+        if (
+            appl_status_ok
+            == m_lock.unlock())
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;

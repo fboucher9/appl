@@ -114,8 +114,13 @@ class appl_context_std : public appl_context
         bool
             b_init_log;
 
+        bool
+            b_init_pool_mgr;
+
         unsigned char
-            uc_padding[2u];
+            uc_padding[1u];
+
+        /* -- */
 
         appl_context_std(
             class appl_context_std const & r);
@@ -217,6 +222,12 @@ class appl_context_std : public appl_context
 
         void
             cleanup_log(void);
+
+        enum appl_status
+            init_pool_mgr(void);
+
+        void
+            cleanup_pool_mgr(void);
 
 }; // class appl_context_std
 

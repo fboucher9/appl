@@ -150,6 +150,8 @@
 
 #include <appl_log_std.h>
 
+#include <appl_pool_mgr.h>
+
 #include <appl_convert.h>
 
 extern
@@ -999,6 +1001,62 @@ void
 //
 //
 enum appl_status
+    appl_context_std::init_pool_mgr(void)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        !b_init_pool_mgr)
+    {
+        e_status =
+            appl_pool_mgr::s_create(
+                m_context,
+                &(
+                    m_pool_mgr));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            b_init_pool_mgr =
+                true;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // init_pool_mgr()
+
+//
+//
+//
+void
+    appl_context_std::cleanup_pool_mgr(void)
+{
+    if (
+        b_init_pool_mgr)
+    {
+        m_pool_mgr->destroy();
+
+        m_pool_mgr =
+            0;
+
+        b_init_pool_mgr =
+            false;
+    }
+} // cleanup_pool_mgr()
+
+//
+//
+//
+enum appl_status
     appl_context_std::create_instance(
         struct appl_context_descriptor const * const
             p_context_descriptor,
@@ -1127,7 +1185,8 @@ appl_context_std::appl_context_std() :
     b_init_env(),
     b_init_library_mgr(),
     b_init_random_mgr(),
-    b_init_log()
+    b_init_log(),
+    b_init_pool_mgr()
 {
 }
 
@@ -1156,6 +1215,10 @@ struct appl_context_std::init_cleanup_item
 const
 appl_context_std::g_init_cleanup_items[] =
 {
+    {
+        & appl_context_std::init_pool_mgr,
+        & appl_context_std::cleanup_pool_mgr
+    },
     {
         & appl_context_std::init_thread_mgr,
         & appl_context_std::cleanup_thread_mgr

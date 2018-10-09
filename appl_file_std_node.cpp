@@ -36,6 +36,8 @@
 
 #include <appl_convert.h>
 
+#include <appl_pool.h>
+
 //
 //
 //
@@ -43,6 +45,8 @@ enum appl_status
     appl_file_std_node::create_instance(
         struct appl_context * const
             p_context,
+        struct appl_pool * const
+            p_pool,
         struct appl_file_descriptor const * const
             p_file_descriptor,
         struct appl_file * * const
@@ -54,16 +58,68 @@ enum appl_status
     class appl_file_std_node *
         p_file_std_node;
 
-    e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_file_std_node::placement_new ),
-            (&
-                appl_file_std_node::init ),
-            p_file_descriptor,
-            &(
-                p_file_std_node));
+    struct appl_file_std_node_descriptor
+        o_file_std_node_descriptor;
+
+    o_file_std_node_descriptor.p_pool =
+        p_pool;
+
+    o_file_std_node_descriptor.p_file_descriptor =
+        p_file_descriptor;
+
+    if (
+        p_pool)
+    {
+        void *
+            p_placement;
+
+        e_status =
+            p_pool->v_alloc(
+                &(
+                    p_placement));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            e_status =
+                appl_object::s_init(
+                    p_context,
+                    p_placement,
+                    sizeof(class appl_file_std_node),
+                    (&
+                        appl_file_std_node::placement_new ),
+                    (&
+                        appl_file_std_node::init ),
+                    &(
+                        o_file_std_node_descriptor),
+                    &(
+                        p_file_std_node));
+
+            if (
+                appl_status_ok
+                != e_status)
+            {
+                p_pool->v_free(
+                    p_placement);
+            }
+        }
+
+    }
+    else
+    {
+        e_status =
+            appl_object::s_create(
+                p_context,
+                (&
+                    appl_file_std_node::placement_new ),
+                (&
+                    appl_file_std_node::init ),
+                &(
+                    o_file_std_node_descriptor),
+                &(
+                    p_file_std_node));
+    }
 
     if (
         appl_status_ok
@@ -84,6 +140,7 @@ enum appl_status
 //
 appl_file_std_node::appl_file_std_node() :
     appl_file(),
+    m_pool(),
     m_fd(),
     m_close(false)
 {
@@ -114,11 +171,18 @@ void
 //
 enum appl_status
     appl_file_std_node::init(
-        struct appl_file_descriptor const * const
-            p_file_descriptor)
+        struct appl_file_std_node_descriptor const * const
+            p_file_std_node_descriptor)
 {
     enum appl_status
         e_status;
+
+    m_pool =
+        p_file_std_node_descriptor->p_pool;
+
+    struct appl_file_descriptor const * const
+        p_file_descriptor =
+        p_file_std_node_descriptor->p_file_descriptor;
 
     if (
         appl_file_type_stdin == p_file_descriptor->e_type)
@@ -283,8 +347,32 @@ enum appl_status
             false;
     }
 
-    e_status =
-        appl_status_ok;
+    // Free ourselves using mgr pool...
+    if (
+        m_pool)
+    {
+        struct appl_pool * const
+            p_pool =
+            m_pool;
+
+        void * const
+            p_placement =
+            this;
+
+        delete
+            this;
+
+        p_pool->v_free(
+            p_placement);
+
+        e_status =
+            appl_status_fail;
+    }
+    else
+    {
+        e_status =
+            appl_status_ok;
+    }
 
     return
         e_status;
