@@ -24,9 +24,7 @@
 
 #include <appl_thread_descriptor.h>
 
-#include <appl_mutex_impl.h>
-
-#include <appl_event_impl.h>
+#include <appl_thread_impl.h>
 
 #include <appl_thread_w32_node.h>
 

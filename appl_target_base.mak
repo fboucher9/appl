@@ -99,6 +99,11 @@ appl_base-deps := \
     appl_property_handle.cpp \
     appl_property_service.cpp \
     appl_property_std.cpp \
+    appl_queue.cpp \
+    appl_queue_handle.cpp \
+    appl_queue_impl.cpp \
+    appl_queue_service.cpp \
+    appl_queue_std.cpp \
     appl_random_handle.cpp \
     appl_random_service.cpp \
     appl_random_mgr.cpp \

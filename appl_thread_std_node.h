@@ -36,6 +36,61 @@ struct appl_thread_property;
 class appl_thread_std_node;
 
 //
+//      How to remove mutex and event from thread impl?
+//          Required to delay start a threa
+//          Required to wait for stop
+//
+
+//
+//      Removal of v_start method:
+//          To start the thread on v_start, we must
+//          push a descriptor onto a queue.
+//
+
+//
+//      Removal of v_stop method:
+//          Thread pushes result onto queue
+//          Application pops result from queue
+//          Who allocates memory for queue?
+//
+
+#if 0
+class appl_thread_sync
+{
+    public:
+
+        enum appl_status
+            set_value(
+                void * const
+                    p_value);
+
+        enum appl_status
+            get_value(
+                unsigned long int const
+                    i_wait_freq,
+                unsigned long int const
+                    i_wait_count,
+                void * * const
+                    r_value);
+
+    private:
+
+        class appl_mutex_impl *
+            m_lock;
+
+        class appl_event_impl *
+            m_event;
+
+        struct appl_thread *
+            m_thread;
+
+        void *
+            m_value;
+
+}; // class appl_thread_sync
+#endif
+
+//
 //
 //
 class appl_thread_std_node : public appl_thread
@@ -62,23 +117,8 @@ class appl_thread_std_node : public appl_thread
         virtual
         enum appl_status
             v_start(
-                void (* const p_callback)(
-                    void * const
-                        p_context),
-                void * const
-                    p_context);
-
-        virtual
-        enum appl_status
-            v_detach(void);
-
-        virtual
-        enum appl_status
-            v_stop(
-                unsigned long int const
-                    i_wait_freq,
-                unsigned long int const
-                    i_wait_count);
+                struct appl_thread_descriptor const * const
+                    p_thread_descriptor);
 
         virtual
         enum appl_status
@@ -86,38 +126,10 @@ class appl_thread_std_node : public appl_thread
 
     private:
 
-        struct appl_thread_descriptor
-            m_descriptor;
-
-        // --
-
-        class appl_mutex_impl
-            m_lock;
-
-        class appl_event_impl
-            m_event;
-
         // --
 
         class appl_thread_impl
             m_thread_impl;
-
-        // --
-
-        bool
-            m_running;
-
-        bool
-            m_detached;
-
-        bool
-            m_kill;
-
-        bool
-            m_start;
-
-        unsigned char
-            uc_padding[4u];
 
         // --
 
@@ -134,15 +146,6 @@ class appl_thread_std_node : public appl_thread
                 void * const
                     p_placement);
 
-        void
-            thread_handler(void);
-
-        static
-        void
-            thread_entry(
-                void *
-                    p_thread_context);
-
         enum appl_status
             init(
                 struct appl_thread_property const * const
@@ -151,17 +154,6 @@ class appl_thread_std_node : public appl_thread
         virtual
         enum appl_status
             v_cleanup(void);
-
-#if defined APPL_DEBUG
-        void
-            oops(
-                unsigned char const * const
-                    p_msg_min,
-                unsigned char const * const
-                    p_msg_max,
-                int const
-                    i_status_code);
-#endif /* #if defined APPL_DEBUG */
 
 }; // class appl_thread_std_node
 

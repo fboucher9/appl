@@ -41,7 +41,6 @@ appl_event_service::s_create(
 
     e_status =
         p_event_mgr->v_create(
-            p_context,
             p_event_descriptor,
             r_event);
 

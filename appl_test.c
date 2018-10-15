@@ -15,10 +15,6 @@
 
 #include <appl_chunk.h>
 
-#include <appl_tree.h>
-
-#include <appl_poll_descriptor.h>
-
 static
 void
 appl_print(
@@ -190,11 +186,11 @@ struct appl_test_thread_context
     void *
         pv_padding[1u];
 
-    char
-        b_event_signaled;
-
     char volatile
         b_kill;
+
+    char volatile
+        b_done;
 
     unsigned char
         uc_padding[6u];
@@ -210,57 +206,108 @@ appl_test_thread_entry(
     struct appl_test_thread_context *
         p_test_thread_context;
 
+    char
+        b_continue;
+
+    b_continue =
+        1;
+
     p_test_thread_context =
         (struct appl_test_thread_context *)(
             p_context);
 
-    appl_print0(
-        "hello world!\n");
+    appl_mutex_lock(
+        p_test_thread_context->p_mutex);
 
-    appl_test_sleep_msec(
-        p_test_thread_context->p_context,
-        100ul);
+    if (
+        p_test_thread_context->b_kill)
+    {
+        b_continue =
+            0;
+    }
+
+    appl_mutex_unlock(
+        p_test_thread_context->p_mutex);
+
+    if (
+        b_continue)
+    {
+        appl_print0(
+            "hello world!\n");
+
+        appl_test_sleep_msec(
+            p_test_thread_context->p_context,
+            100ul);
+    }
+
+    appl_mutex_lock(
+        p_test_thread_context->p_mutex);
+
+    if (
+        p_test_thread_context->b_kill)
+    {
+        b_continue =
+            0;
+    }
+
+    appl_mutex_unlock(
+        p_test_thread_context->p_mutex);
+
+    if (
+        b_continue)
+    {
+        appl_print0(
+            "thread wait 1 sec...\n");
+
+        appl_test_sleep_msec(
+            p_test_thread_context->p_context,
+            1000ul);
+
+        appl_print0(
+            "... thread wait 1 sec\n");
+    }
+
+    appl_mutex_lock(
+        p_test_thread_context->p_mutex);
+
+    if (
+        p_test_thread_context->b_kill)
+    {
+        b_continue =
+            0;
+    }
+
+    appl_mutex_unlock(
+        p_test_thread_context->p_mutex);
+
+    if (
+        b_continue)
+    {
+        appl_print0(
+            "thread wait 1 sec...\n");
+
+        appl_test_sleep_msec(
+            p_test_thread_context->p_context,
+            1000ul);
+
+        appl_print0(
+            "... thread wait 1 sec\n");
+    }
 
     appl_mutex_lock(
         p_test_thread_context->p_mutex);
 
     appl_print0(
-        "thread wait 1 sec...\n");
+        "signal event!\n");
 
-    appl_test_sleep_msec(
-        p_test_thread_context->p_context,
-        1000ul);
+    p_test_thread_context->b_done =
+        1;
 
-    appl_print0(
-        "... thread wait 1 sec\n");
+    appl_event_signal(
+        p_test_thread_context->p_event);
 
     appl_mutex_unlock(
         p_test_thread_context->p_mutex);
-
-    if (!(p_test_thread_context->b_kill))
-    {
-        appl_test_sleep_msec(
-            p_test_thread_context->p_context,
-            1000ul);
-
-        if (!(p_test_thread_context->b_kill))
-        {
-            appl_mutex_lock(
-                p_test_thread_context->p_mutex);
-
-            appl_print0(
-                "signal event!\n");
-
-            p_test_thread_context->b_event_signaled =
-                1;
-
-            appl_event_signal(
-                p_test_thread_context->p_event);
-
-            appl_mutex_unlock(
-                p_test_thread_context->p_mutex);
-        }
-    }
 
 } /* appl_test_thread_entry() */
 
@@ -771,10 +818,10 @@ static void appl_test_thread(
     o_test_thread_context.p_event =
         p_event;
 
-    o_test_thread_context.b_event_signaled =
+    o_test_thread_context.b_kill =
         0;
 
-    o_test_thread_context.b_kill =
+    o_test_thread_context.b_done =
         0;
 
     appl_thread_property_create(
@@ -794,13 +841,22 @@ static void appl_test_thread(
         appl_status_ok
         == e_status)
     {
+        struct appl_thread_descriptor
+            o_thread_descriptor;
+
+        o_thread_descriptor.p_entry =
+            &(
+                appl_test_thread_entry);
+
+        o_thread_descriptor.p_context =
+            &(
+                o_test_thread_context);
+
         e_status =
             appl_thread_start(
                 p_thread,
                 &(
-                    appl_test_thread_entry),
-                &(
-                    o_test_thread_context));
+                    o_thread_descriptor));
 
         if (
             appl_status_ok
@@ -850,21 +906,29 @@ static void appl_test_thread(
                 p_mutex);
 #endif
 
-#if 1
-            /* Use interrupt to stop the sleep */
-            o_test_thread_context.b_kill =
-                1;
+            appl_mutex_lock(
+                p_mutex);
 
-            e_status =
-                appl_thread_interrupt(
-                    p_thread);
-#endif
+            while (
+                !(o_test_thread_context.b_done))
+            {
+                /* Use interrupt to stop the sleep */
+                o_test_thread_context.b_kill =
+                    1;
 
-            e_status =
-                appl_thread_stop(
-                    p_thread,
-                    1,
-                    1);
+                e_status =
+                    appl_thread_interrupt(
+                        p_thread);
+
+                appl_event_wait(
+                    p_event,
+                    p_mutex,
+                    1000u,
+                    1000u);
+            }
+
+            appl_mutex_unlock(
+                p_mutex);
 
             if (
                 appl_status_ok
@@ -1084,8 +1148,10 @@ appl_test_socket_connection_thread_handler(
 
     appl_print0("connection ...leave\n");
 
+#if 0
     appl_thread_detach(
         p_test_socket_connection_context->p_thread);
+#endif
 
 } /* appl_test_socket_connection_thread_handler() */
 
@@ -1179,13 +1245,21 @@ appl_test_socket_process_client(
                 appl_status_ok
                 == e_status)
             {
+                struct appl_thread_descriptor
+                    o_thread_descriptor;
+
+                o_thread_descriptor.p_entry =
+                    &(
+                        appl_test_socket_connection_thread_entry);
+
+                o_thread_descriptor.p_context =
+                    p_test_socket_connection_context;
+
                 e_status =
                     appl_thread_start(
                         p_test_socket_connection_context->p_thread,
                         &(
-                            appl_test_socket_connection_thread_entry),
-                        (void *)(
-                            p_test_socket_connection_context));
+                            o_thread_descriptor));
 
                 if (
                     appl_status_ok
@@ -2392,6 +2466,28 @@ appl_test_tree(
 
 } /* appl_test_tree() */
 
+/*
+
+*/
+static
+void
+appl_test_thread_cache(
+    struct appl_context const * const
+        p_context)
+{
+    (void)(
+        p_context);
+
+    /* Create a thread */
+
+    /* Reuse same thread */
+
+    /* Create a second thread */
+
+    /* Reuse one of the threads */
+
+} /* appl_test_thread_cache() */
+
 enum appl_status
 appl_main(
     struct appl_context * const
@@ -2401,18 +2497,21 @@ appl_main(
         e_status;
 
     /* Print the argument list */
+    if (1)
     {
         appl_test_options(
             p_context);
     }
 
     /* Test memory leak */
+    if (1)
     {
         appl_test_memory_leak(
             p_context);
     }
 
     /* Test thread */
+    if (1)
     {
         appl_test_thread(
             p_context);
@@ -2451,11 +2550,11 @@ appl_main(
                 'u',
                 'g',
                 '_',
-                'p',
+                'b',
                 'r',
-                'i',
-                'n',
-                't',
+                'e',
+                'a',
+                'k',
                 '\n'
             };
 
@@ -2472,7 +2571,7 @@ appl_main(
     }
 #endif /* #if defined APPL_DEBUG */
 
-    if (1)
+    if (0)
     {
         /* test read */
         if (1)
@@ -2649,13 +2748,13 @@ appl_main(
             p_context);
     }
 
-    if (1)
+    if (0)
     {
         appl_test_library(
             p_context);
     }
 
-    if (1)
+    if (0)
     {
         appl_test_random(
             p_context);
@@ -2667,7 +2766,7 @@ appl_main(
             p_context);
     }
 
-    if (1)
+    if (0)
     {
         static unsigned char const s_msg[] =
         {
@@ -2681,6 +2780,13 @@ appl_main(
             appl_log_level_info,
             s_msg,
             s_msg + sizeof(s_msg));
+    }
+
+    if (1)
+    {
+        /* Test of thread cache... */
+        appl_test_thread_cache(
+            p_context);
     }
 
     e_status =

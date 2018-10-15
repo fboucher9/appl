@@ -15,6 +15,8 @@ struct appl_thread;
 
 struct appl_thread_property;
 
+struct appl_thread_descriptor;
+
 struct appl_context;
 
 /* Assert compiler */
@@ -58,27 +60,8 @@ class appl_thread_service
         s_start(
             struct appl_thread * const
                 p_thread,
-            void (* const p_callback)(
-                void * const
-                    p_context),
-            void * const
-                p_context);
-
-        static
-        enum appl_status
-        s_detach(
-            struct appl_thread * const
-                p_thread);
-
-        static
-        enum appl_status
-        s_stop(
-            struct appl_thread * const
-                p_thread,
-            unsigned long int const
-                i_wait_freq,
-            unsigned long int const
-                i_wait_count);
+            struct appl_thread_descriptor const * const
+                p_thread_descriptor);
 
         static
         enum appl_status

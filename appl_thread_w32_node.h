@@ -63,65 +63,21 @@ class appl_thread_w32_node : public appl_thread
         virtual
         enum appl_status
             v_start(
-                void (* const p_callback)(
-                    void * const
-                        p_context),
-                void * const
-                    p_context);
-
-        virtual
-        enum appl_status
-            v_stop(
-                unsigned long int const
-                    i_wait_freq,
-                unsigned long int const
-                    i_wait_count);
+                struct appl_thread_descriptor const * const
+                    p_thread_descriptor);
 
         virtual
         enum appl_status
             v_interrupt(void);
 
-        virtual
-        enum appl_status
-            v_detach(void);
-
     private:
 
-        struct appl_thread_descriptor
-            m_descriptor;
-
         // --
 
-        class appl_mutex_impl
-            m_lock;
-
-        class appl_event_impl
-            m_event;
+        class appl_thread_impl
+            m_thread_impl;
 
         // --
-
-        HANDLE
-            m_w32_thread_handle;
-
-        void *
-            pv_padding[1u];
-
-        // --
-
-        bool
-            m_running;
-
-        bool
-            m_start;
-
-        bool
-            m_kill;
-
-        bool
-            m_detached;
-
-        unsigned char
-            uc_padding[4u];
 
         appl_thread_w32_node(
             class appl_thread_w32_node const & r);
@@ -144,16 +100,6 @@ class appl_thread_w32_node : public appl_thread
         virtual
         enum appl_status
             v_cleanup(void);
-
-        static
-        DWORD
-        CALLBACK
-            thread_entry(
-                void * const
-                    p_thread_ctxt);
-
-        void
-            thread_handler(void);
 
 }; // class appl_thread_w32_node
 

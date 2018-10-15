@@ -34,8 +34,6 @@ class appl_event_mgr : public appl_object
         virtual
         enum appl_status
             v_create(
-                struct appl_context * const
-                    p_context,
                 struct appl_event_descriptor const * const
                     p_event_descriptor,
                 struct appl_event * * const

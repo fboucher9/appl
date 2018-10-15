@@ -16,7 +16,9 @@
 
 #include <appl_mutex_impl.h>
 
+#if defined APPL_DEBUG
 #include <appl_debug_handle.h>
+#endif /* #if defined APPL_DEBUG */
 
 //
 //

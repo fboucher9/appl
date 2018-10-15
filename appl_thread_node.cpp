@@ -24,45 +24,14 @@
 //
 enum appl_status
     appl_thread::v_start(
-        void (* const p_callback)(
-            void * const
-                p_context),
-        void * const
-            p_context)
+        struct appl_thread_descriptor const * const
+            p_thread_descriptor)
 {
     appl_unused(
-        p_callback,
-        p_context);
+        p_thread_descriptor);
     return
         appl_status_fail;
 } // v_start()
-
-//
-//
-//
-enum appl_status
-    appl_thread::v_detach(void)
-{
-    return
-        appl_status_not_implemented;
-} // v_detach()
-
-//
-//
-//
-enum appl_status
-    appl_thread::v_stop(
-        unsigned long int const
-            i_wait_freq,
-        unsigned long int const
-            i_wait_count)
-{
-    appl_unused(
-        i_wait_freq,
-        i_wait_count);
-    return
-        appl_status_fail;
-} // wait_result()
 
 //
 //

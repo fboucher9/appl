@@ -32,8 +32,6 @@ Comments:
 
 #include <appl_mutex_handle.h>
 
-#include <appl_event_handle.h>
-
 #include <appl_thread_descriptor.h>
 
 struct appl_thread_property;
@@ -69,17 +67,22 @@ struct appl_thread_cache : public appl_thread
 {
     public:
 
+        //
+        //
+        //
         appl_thread_cache() :
             appl_thread(),
             m_thread_cache_mgr(),
             m_thread_cache_node(),
             m_thread_handle(),
-            m_lock(),
-            m_event(),
+            m_detached(),
             m_descriptor()
         {
         }
 
+        //
+        //
+        //
         virtual
         ~appl_thread_cache()
         {
@@ -115,23 +118,7 @@ struct appl_thread_cache : public appl_thread
                 appl_status_ok
                 == e_status)
             {
-                union appl_thread_cache_task_ptr
-                    o_task_ptr;
-
-                o_task_ptr.p_thread_cache =
-                    this;
-
-                e_status =
-                    m_thread_handle->v_start(
-                        &(
-                            appl_thread_cache::s_task),
-                        o_task_ptr.p_thread_context);
-
-                if (
-                    appl_status_ok
-                    == e_status)
-                {
-                }
+                // Do not start it yet...
             }
 
             return
@@ -139,55 +126,45 @@ struct appl_thread_cache : public appl_thread
 
         } // f_init()
 
+        //
+        //
+        //
         virtual
         enum appl_status
             v_start(
-                void (* const p_callback)(
-                    void * const p_context),
-                void * const
-                    p_context)
+                struct appl_thread_descriptor const * const
+                    p_thread_descriptor)
         {
+            m_descriptor =
+                *(
+                    p_thread_descriptor);
+
+            union appl_thread_cache_task_ptr
+                o_task_ptr;
+
+            o_task_ptr.p_thread_cache =
+                this;
+
+            struct appl_thread_descriptor
+                o_thread_descriptor;
+
+            o_thread_descriptor.p_entry =
+                (&
+                    appl_thread_cache::s_task);
+
+            o_thread_descriptor.p_context =
+                o_task_ptr.p_thread_context;
+
             return
                 m_thread_handle->v_start(
-                    p_callback,
-                    p_context);
+                    &(
+                        o_thread_descriptor));
 
         } // v_start()
 
-        virtual
-        enum appl_status
-            v_detach(void)
-        {
-            enum appl_status
-                e_status;
-
-            // detach does not work, because we lose the thread handle!
-
-            // we would need to hook the automatic destroy...
-
-            e_status =
-                appl_status_fail;
-
-            return
-                e_status;
-
-        } // v_detach()
-
-        virtual
-        enum appl_status
-            v_stop(
-                unsigned long int const
-                    i_wait_freq,
-                unsigned long int const
-                    i_wait_count)
-        {
-            return
-                m_thread_handle->v_stop(
-                    i_wait_freq,
-                    i_wait_count);
-
-        } // v_stop()
-
+        //
+        //
+        //
         virtual
         enum appl_status
             v_interrupt(void)
@@ -205,14 +182,23 @@ struct appl_thread_cache : public appl_thread
         class appl_thread_cache_node *
             m_thread_cache_node;
 
+        // --
+
         struct appl_thread *
             m_thread_handle;
 
-        struct appl_mutex *
-            m_lock;
+        void *
+            pv_padding[1u];
 
-        struct appl_event *
-            m_event;
+        // --
+
+        bool
+            m_detached;
+
+        unsigned char
+            uc_padding[7u];
+
+        // --
 
         struct appl_thread_descriptor
             m_descriptor;
@@ -228,14 +214,8 @@ struct appl_thread_cache : public appl_thread
 
         } // s_new()
 
-        //
-        //
-        //
         void
-            f_task(void)
-        {
-
-        } // f_task()
+            f_task(void);
 
         //
         //
@@ -412,7 +392,7 @@ class appl_thread_cache_mgr : public appl_object
 
         static
         enum appl_status
-            f_create_instance(
+            s_create(
                 struct appl_context * const
                     p_context,
                 class appl_thread_cache_mgr * * const
@@ -641,7 +621,31 @@ enum appl_status
     return
         e_status;
 
-}
+} // v_cleanup()
+
+//
+//
+//
+void
+    appl_thread_cache::f_task(void)
+{
+    (*(m_descriptor.p_entry))(
+        m_descriptor.p_context);
+
+    // Handle of detach...
+    if (
+        m_detached)
+    {
+        if (
+            m_thread_cache_mgr)
+        {
+            m_thread_cache_mgr->f_retire(
+                m_thread_cache_node);
+        }
+    }
+
+} // f_task()
+
 //
 //
 //
@@ -649,6 +653,9 @@ class appl_thread_cache_service
 {
     public:
 
+        //
+        //
+        //
         static
         enum appl_status
             s_create(
@@ -674,6 +681,9 @@ class appl_thread_cache_service
 
         } // s_create()
 
+        //
+        //
+        //
         static
         struct appl_thread *
             s_parent(
@@ -720,5 +730,54 @@ struct appl_thread *
             p_thread_cache);
 
 } /* parent() */
+
+extern
+enum appl_status
+appl_thread_cache_mgr_create(
+    struct appl_context * const
+        p_context,
+    class appl_thread_cache_mgr * * const
+        r_instance);
+
+extern
+void
+appl_thread_cache_mgr_destroy(
+    class appl_thread_cache_mgr * const
+        p_thread_cache_mgr);
+
+//
+//
+//
+enum appl_status
+appl_thread_cache_mgr_create(
+    struct appl_context * const
+        p_context,
+    class appl_thread_cache_mgr * * const
+        r_instance)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_thread_cache_mgr::s_create(
+            p_context,
+            r_instance);
+
+    return
+        e_status;
+
+} // appl_thread_cache_mgr_create()
+
+//
+//
+//
+void
+appl_thread_cache_mgr_destroy(
+    class appl_thread_cache_mgr * const
+        p_thread_cache_mgr)
+{
+    p_thread_cache_mgr->destroy();
+
+} // appl_thread_cache_mgr_destroy()
 
 /* end-of-file: appl_thread_cache.cpp */

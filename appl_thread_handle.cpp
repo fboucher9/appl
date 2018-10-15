@@ -59,53 +59,15 @@ enum appl_status
 appl_thread_start(
     struct appl_thread * const
         p_thread,
-    void (* const p_callback)(
-        void * const
-            p_context),
-    void * const
-        p_context)
+    struct appl_thread_descriptor const * const
+        p_thread_descriptor)
 {
     return
         appl_thread_service::s_start(
             p_thread,
-            p_callback,
-            p_context);
+            p_thread_descriptor);
 
 } /* appl_thread_start() */
-
-/*
-
-*/
-enum appl_status
-appl_thread_detach(
-    struct appl_thread * const
-        p_thread)
-{
-    return
-        appl_thread_service::s_detach(
-            p_thread);
-
-} /* appl_thread_detach() */
-
-/*
-
-*/
-enum appl_status
-appl_thread_stop(
-    struct appl_thread * const
-        p_thread,
-    unsigned long int const
-        i_wait_freq,
-    unsigned long int const
-        i_wait_count)
-{
-    return
-        appl_thread_service::s_stop(
-            p_thread,
-            i_wait_freq,
-            i_wait_count);
-
-} /* appl_thread_stop() */
 
 /*
 

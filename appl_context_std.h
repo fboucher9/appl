@@ -117,8 +117,8 @@ class appl_context_std : public appl_context
         bool
             b_init_pool_mgr;
 
-        unsigned char
-            uc_padding[1u];
+        bool
+            b_init_thread_cache_mgr;
 
         /* -- */
 
@@ -228,6 +228,12 @@ class appl_context_std : public appl_context
 
         void
             cleanup_pool_mgr(void);
+
+        enum appl_status
+            init_thread_cache_mgr(void);
+
+        void
+            cleanup_thread_cache_mgr(void);
 
 }; // class appl_context_std
 

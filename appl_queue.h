@@ -12,58 +12,62 @@
 #define INC_APPL_QUEUE_H
 
 /* Header file dependency */
+#if ! defined INC_APPL_OBJECT_H
+#error include appl_object.h before
+#endif /* #if ! defined INC_APPL_OBJECT_H */
+
+/* Header file dependency */
+#if ! defined INC_APPL_LIST_H
+#error include appl_list.h before
+#endif /* #if ! defined INC_APPL_LIST_H */
+
 /* ... */
 
-class appl_queue;
+struct appl_context;
+
+struct appl_queue;
+
+struct appl_mutex;
+
+struct appl_event;
+
+/* Assert compiler */
+#if ! defined __cplusplus
+#error use c++ compiler
+#endif /* #if ! defined __cplusplus */
 
 //
 //
 //
-class appl_queue : public appl_object
+struct appl_queue : public appl_object
 {
     public:
-
-        static
-        enum appl_status
-            s_create(
-                struct appl_context * const
-                    p_context,
-                class appl_queue * * const
-                    r_queue);
 
         virtual
         enum appl_status
             v_push(
-                class appl_node * const
-                    p_node);
+                struct appl_list * const
+                    p_node,
+                unsigned long int const
+                    i_wait_freq,
+                unsigned long int const
+                    i_wait_count);
 
         virtual
         enum appl_status
             v_pop(
-                class appl_node * const
-                    p_node);
+                struct appl_list * * const
+                    r_node,
+                unsigned long int const
+                    i_wait_freq,
+                unsigned long int const
+                    i_wait_count);
 
-        // unblock a thread that is waiting for a push or pop
         virtual
         enum appl_status
-            v_kill(void);
+            v_interrupt(void);
 
     protected:
-
-        class appl_mutex_node *
-            m_lock;
-
-        class appl_event_node *
-            m_event;
-
-        class appl_node
-            m_list;
-
-        bool
-            m_kill;
-
-        unsigned char
-            uc_padding[7u];
 
         appl_queue();
 
@@ -73,18 +77,12 @@ class appl_queue : public appl_object
     private:
 
         appl_queue(
-            class appl_queue const & r);
+            struct appl_queue const & r);
 
-        class appl_queue &
+        struct appl_queue &
             operator =(
-                class appl_queue const & r);
+                struct appl_queue const & r);
 
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
-
-}; // class appl_queue
+}; // struct appl_queue
 
 /* end-of-file: appl_queue.h */

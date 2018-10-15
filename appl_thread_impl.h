@@ -72,12 +72,6 @@ class appl_thread_impl
 
         // --
 
-        bool
-            m_start;
-
-        unsigned char
-            uc_padding[7u];
-
         appl_thread_impl(
             class appl_thread_impl const & r);
 
@@ -97,6 +91,16 @@ class appl_thread_impl
                     p_thread_context);
 
 #else /* #if defined APPL_OS_Xx */
+
+        DWORD
+            thread_windows_handler(void);
+
+        static
+        DWORD
+        CALLBACK
+            thread_windows_entry(
+                void * const
+                    p_thread_context);
 
 #endif /* #if defined APPL_OS_Xx */
 

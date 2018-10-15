@@ -16,6 +16,8 @@ Description:
 
 struct appl_thread;
 
+struct appl_thread_descriptor;
+
 struct appl_context;
 
 #if !defined(__cplusplus)
@@ -36,23 +38,8 @@ struct appl_thread : public appl_object
         virtual
         enum appl_status
             v_start(
-                void (* const p_callback)(
-                    void * const
-                        p_context),
-                void * const
-                    p_context);
-
-        virtual
-        enum appl_status
-            v_detach(void);
-
-        virtual
-        enum appl_status
-            v_stop(
-                unsigned long int const
-                    i_wait_freq,
-                unsigned long int const
-                    i_wait_count);
+                struct appl_thread_descriptor const * const
+                    p_thread_descriptor);
 
         virtual
         enum appl_status

@@ -152,6 +152,8 @@
 
 #include <appl_pool_mgr.h>
 
+#include <appl_thread_cache.h>
+
 #include <appl_convert.h>
 
 extern
@@ -1053,6 +1055,73 @@ void
     }
 } // cleanup_pool_mgr()
 
+extern
+enum appl_status
+appl_thread_cache_mgr_create(
+    struct appl_context * const
+        p_context,
+    class appl_thread_cache_mgr * * const
+        r_instance);
+
+//
+//
+//
+enum appl_status
+    appl_context_std::init_thread_cache_mgr(void)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        !(
+            b_init_thread_cache_mgr))
+    {
+        e_status =
+            appl_thread_cache_mgr_create(
+                m_context,
+                &(
+                    m_thread_cache_mgr));
+
+        b_init_thread_cache_mgr =
+            true;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // init_thread_cache_mgr()
+
+extern
+void
+appl_thread_cache_mgr_destroy(
+    class appl_thread_cache_mgr * const
+        p_thread_cache_mgr);
+
+//
+//
+//
+void
+    appl_context_std::cleanup_thread_cache_mgr(void)
+{
+    if (
+        b_init_thread_cache_mgr)
+    {
+        appl_thread_cache_mgr_destroy(
+            m_thread_cache_mgr);
+
+        m_thread_cache_mgr =
+            0;
+
+        b_init_thread_cache_mgr =
+            false;
+    }
+} // cleanup_thread_cache_mgr()
+
 //
 //
 //
@@ -1186,7 +1255,8 @@ appl_context_std::appl_context_std() :
     b_init_library_mgr(),
     b_init_random_mgr(),
     b_init_log(),
-    b_init_pool_mgr()
+    b_init_pool_mgr(),
+    b_init_thread_cache_mgr()
 {
 }
 
@@ -1258,6 +1328,10 @@ appl_context_std::g_init_cleanup_items[] =
     {
         & appl_context_std::init_log,
         & appl_context_std::cleanup_log
+    },
+    {
+        & appl_context_std::init_thread_cache_mgr,
+        & appl_context_std::cleanup_thread_cache_mgr
     }
 };
 

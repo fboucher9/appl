@@ -67,6 +67,8 @@ Description:
 
 #include <appl_list.h>
 
+#include <appl_tree.h>
+
 #include <appl_object_handle.h>
 
 #include <appl_context_handle.h>
@@ -115,6 +117,8 @@ Description:
 
 #include <appl_thread_handle.h>
 
+#include <appl_thread_cache.h>
+
 #include <appl_event_handle.h>
 
 #include <appl_mutex_handle.h>
@@ -128,6 +132,8 @@ Description:
 #include <appl_address_handle.h>
 
 #include <appl_socket_descriptor.h>
+
+#include <appl_poll_descriptor.h>
 
 #include <appl_socket_handle.h>
 

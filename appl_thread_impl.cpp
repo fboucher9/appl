@@ -31,8 +31,7 @@
 //
 appl_thread_impl::appl_thread_impl() :
     m_descriptor(),
-    m_storage(),
-    m_start()
+    m_storage()
 {
 }
 
@@ -43,8 +42,6 @@ appl_thread_impl::~appl_thread_impl()
 {
 }
 
-#if defined APPL_OS_LINUX
-
 union appl_thread_impl_callback_ptr
 {
     void *
@@ -54,8 +51,6 @@ union appl_thread_impl_callback_ptr
         p_thread_impl;
 
 };
-
-#endif /* #if defined APPL_OS_Xx */
 
 //
 //
@@ -68,55 +63,96 @@ enum appl_status
     enum appl_status
         e_status;
 
-    if (
-        !(m_start))
-    {
-        m_descriptor =
-            *(
-                p_descriptor);
+    m_descriptor =
+        *(
+            p_descriptor);
 
 #if defined APPL_OS_LINUX
-        int
-            i_create_result;
+    int
+        i_create_result;
 
-        i_create_result =
-            pthread_create(
-                &(
-                    m_storage.m_thread),
-                NULL,
-                &(
-                    appl_thread_impl::thread_linux_entry),
-                this);
+    i_create_result =
+        pthread_create(
+            &(
+                m_storage.m_thread),
+            NULL,
+            &(
+                appl_thread_impl::thread_linux_entry),
+            this);
 
-        if (
-            0
-            == i_create_result)
-        {
-            m_start =
-                true;
-
-            e_status =
-                appl_status_ok;
-
-        }
-        else
-        {
-            e_status =
-                appl_status_fail;
-        }
-
-#else /* #if defined APPL_OS_Xx */
-
+    if (
+        0
+        == i_create_result)
+    {
         e_status =
-            appl_status_fail;
+            appl_status_ok;
 
-#endif /* #if defined APPL_OS_Xx */
     }
     else
     {
         e_status =
             appl_status_fail;
     }
+
+#else /* #if defined APPL_OS_Xx */
+
+    DWORD
+        dwThreadId;
+
+    m_storage.m_thread =
+        CreateThread(
+            NULL,
+            0,
+            &(
+                appl_thread_impl::thread_windows_entry),
+            this,
+            0,
+            &(
+                dwThreadId));
+
+    if (
+        INVALID_HANDLE_VALUE != m_storage.m_thread)
+    {
+        e_status =
+            appl_status_ok;
+
+        if (0)
+        {
+            DWORD const
+                dwWaitResult =
+                WaitForSingleObject(
+                    m_storage.m_thread,
+                    INFINITE);
+
+            if (
+                WAIT_OBJECT_0 == dwWaitResult)
+            {
+                e_status =
+                    appl_status_ok;
+            }
+            else
+            {
+                e_status =
+                    appl_status_fail;
+            }
+
+            if (INVALID_HANDLE_VALUE != m_storage.m_thread)
+            {
+                CloseHandle(
+                    m_storage.m_thread);
+
+                m_storage.m_thread =
+                    INVALID_HANDLE_VALUE;
+            }
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+#endif /* #if defined APPL_OS_Xx */
 
     return
         e_status;
@@ -137,6 +173,22 @@ dummy_urgent_signal_handler(
     appl_unused(
         i_unused);
 } /* dummy_urgent_signal_handler() */
+
+#else /* #if defined APPL_OS_Xx */
+
+//
+//
+//
+static
+VOID
+CALLBACK
+DummyAPCEntry(
+    ULONG_PTR dwParam)
+{
+    appl_unused(
+        dwParam);
+
+} // DummyAPCEntry
 
 #endif /* #if defined APPL_OS_Xx */
 
@@ -212,8 +264,27 @@ enum appl_status
 
 #else /* #if defined APPL_OS_Xx */
 
-    e_status =
-        appl_status_not_implemented;
+    DWORD const
+        dwQueueResult =
+        QueueUserAPC(
+            &(
+                DummyAPCEntry),
+            m_storage.m_thread,
+            0);
+
+    if (
+        0 != dwQueueResult)
+    {
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        // GetLastError...
+
+        e_status =
+            appl_status_fail;
+    }
 
 #endif /* #if defined APPL_OS_Xx */
 
@@ -277,6 +348,56 @@ void *
         p_thread_impl->thread_linux_handler();
 
 } // thread_linux_entry()
+
+#endif /* #if defined APPL_OS_Xx */
+
+#if defined APPL_OS_WINDOWS
+
+//
+//
+//
+DWORD
+CALLBACK
+    appl_thread_impl::thread_windows_entry(
+        void * const
+            p_thread_context)
+{
+    union appl_thread_impl_callback_ptr
+        o_callback_ptr;
+
+    o_callback_ptr.p_thread_context =
+        p_thread_context;
+
+    class appl_thread_impl * const
+        p_thread_impl =
+        o_callback_ptr.p_thread_impl;
+
+    return
+        p_thread_impl->thread_windows_handler();
+
+} // thread_entry()
+
+#endif /* #if defined APPL_OS_Xx */
+
+#if defined APPL_OS_WINDOWS
+
+//
+//
+//
+DWORD
+    appl_thread_impl::thread_windows_handler(void)
+{
+    (*(m_descriptor.p_entry))(
+        m_descriptor.p_context);
+
+    DWORD const
+        u_exit_code =
+        0u;
+
+    return
+        u_exit_code;
+
+} // thread_windows_handler()
 
 #endif /* #if defined APPL_OS_Xx */
 

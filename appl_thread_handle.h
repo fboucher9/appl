@@ -17,6 +17,8 @@ struct appl_thread;
 
 struct appl_thread_property;
 
+struct appl_thread_descriptor;
+
 struct appl_object;
 
 #if defined(__cplusplus)
@@ -46,11 +48,8 @@ enum appl_status
 appl_thread_start(
     struct appl_thread * const
         p_thread,
-    void (* const p_callback)(
-        void * const
-            p_context),
-    void * const
-        p_context);
+    struct appl_thread_descriptor const * const
+        p_thread_descriptor);
 
 enum appl_status
 appl_thread_detach(
