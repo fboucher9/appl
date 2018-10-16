@@ -177,14 +177,15 @@ struct appl_test_thread_context
     struct appl_context *
         p_context;
 
-    struct appl_mutex *
-        p_mutex;
+    struct appl_queue *
+        p_queue;
 
-    struct appl_event *
-        p_event;
+    /* -- */
 
-    void *
-        pv_padding[1u];
+    struct appl_list
+        o_dummy_result;
+
+    /* -- */
 
     char volatile
         b_kill;
@@ -216,18 +217,12 @@ appl_test_thread_entry(
         (struct appl_test_thread_context *)(
             p_context);
 
-    appl_mutex_lock(
-        p_test_thread_context->p_mutex);
-
     if (
         p_test_thread_context->b_kill)
     {
         b_continue =
             0;
     }
-
-    appl_mutex_unlock(
-        p_test_thread_context->p_mutex);
 
     if (
         b_continue)
@@ -240,18 +235,12 @@ appl_test_thread_entry(
             100ul);
     }
 
-    appl_mutex_lock(
-        p_test_thread_context->p_mutex);
-
     if (
         p_test_thread_context->b_kill)
     {
         b_continue =
             0;
     }
-
-    appl_mutex_unlock(
-        p_test_thread_context->p_mutex);
 
     if (
         b_continue)
@@ -267,18 +256,12 @@ appl_test_thread_entry(
             "... thread wait 1 sec\n");
     }
 
-    appl_mutex_lock(
-        p_test_thread_context->p_mutex);
-
     if (
         p_test_thread_context->b_kill)
     {
         b_continue =
             0;
     }
-
-    appl_mutex_unlock(
-        p_test_thread_context->p_mutex);
 
     if (
         b_continue)
@@ -293,21 +276,16 @@ appl_test_thread_entry(
         appl_print0(
             "... thread wait 1 sec\n");
     }
-
-    appl_mutex_lock(
-        p_test_thread_context->p_mutex);
 
     appl_print0(
         "signal event!\n");
 
-    p_test_thread_context->b_done =
-        1;
-
-    appl_event_signal(
-        p_test_thread_context->p_event);
-
-    appl_mutex_unlock(
-        p_test_thread_context->p_mutex);
+    appl_queue_push(
+        p_test_thread_context->p_queue,
+        &(
+            p_test_thread_context->o_dummy_result),
+        1000ul,
+        1000ul);
 
 } /* appl_test_thread_entry() */
 
@@ -777,51 +755,39 @@ static void appl_test_thread(
     struct appl_thread *
         p_thread;
 
-    struct appl_mutex *
-        p_mutex;
-
-    struct appl_event *
-        p_event;
+    struct appl_queue *
+        p_queue;
 
     struct appl_thread_property *
         p_property;
 
-    struct appl_mutex_descriptor
-        o_mutex_descriptor;
-
-    struct appl_event_descriptor
-        o_event_descriptor;
+    struct appl_queue_descriptor
+        o_queue_descriptor;
 
     struct appl_test_thread_context
         o_test_thread_context;
 
-    appl_mutex_create(
-        p_context,
-        &(
-            o_mutex_descriptor),
-        &(
-            p_mutex));
+    o_queue_descriptor.i_max_count =
+        1;
 
-    appl_event_create(
+    appl_queue_create(
         p_context,
         &(
-            o_event_descriptor),
+            o_queue_descriptor),
         &(
-            p_event));
+            p_queue));
 
     o_test_thread_context.p_context =
         p_context;
 
-    o_test_thread_context.p_mutex =
-        p_mutex;
+    o_test_thread_context.p_queue =
+        p_queue;
 
-    o_test_thread_context.p_event =
-        p_event;
+    appl_list_init(
+        &(
+            o_test_thread_context.o_dummy_result));
 
     o_test_thread_context.b_kill =
-        0;
-
-    o_test_thread_context.b_done =
         0;
 
     appl_thread_property_create(
@@ -862,73 +828,52 @@ static void appl_test_thread(
             appl_status_ok
             == e_status)
         {
+            char
+                b_continue;
+
             appl_test_sleep_msec(
                 p_context,
                 200ul);
 
-#if 0
-            appl_mutex_lock(
-                p_mutex);
-
-            appl_print0(
-                "main sleep 1 sec ...\n");
-
-            appl_test_sleep_msec(
-                p_context,
-                1000ul);
-
-            appl_print0(
-                "... main sleep 1 sec\n");
-
-            appl_mutex_unlock(
-                p_mutex);
-#endif
-
-#if 0
-            /* Wait for event */
-            appl_mutex_lock(
-                p_mutex);
-
-            appl_print0(
-                "wait for event...\n");
-
-            while (!(o_test_thread_context.b_event_signaled))
-            {
-                appl_event_wait(
-                    p_event,
-                    p_mutex);
-            }
-
-            appl_print0(
-                "... wait done.\n");
-
-            appl_mutex_unlock(
-                p_mutex);
-#endif
-
-            appl_mutex_lock(
-                p_mutex);
+            b_continue =
+                1;
 
             while (
-                !(o_test_thread_context.b_done))
+                b_continue)
             {
+                struct appl_list *
+                    p_dummy_result;
+
                 /* Use interrupt to stop the sleep */
                 o_test_thread_context.b_kill =
                     1;
+
+                appl_print0("interrupt thread\n");
 
                 e_status =
                     appl_thread_interrupt(
                         p_thread);
 
-                appl_event_wait(
-                    p_event,
-                    p_mutex,
-                    1000u,
-                    1000u);
-            }
+                e_status =
+                    appl_queue_pop(
+                        p_queue,
+                        &(
+                            p_dummy_result),
+                        1000ul,
+                        1000ul);
 
-            appl_mutex_unlock(
-                p_mutex);
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    b_continue =
+                        0;
+                }
+                else
+                {
+                    appl_print0("queue pop timeout\n");
+                }
+            }
 
             if (
                 appl_status_ok
@@ -948,12 +893,8 @@ static void appl_test_thread(
                 p_property)));
 
     appl_object_destroy(
-        appl_event_parent(
-            p_event));
-
-    appl_object_destroy(
-        appl_mutex_parent(
-            p_mutex));
+        appl_queue_parent(
+            p_queue));
 
 }
 

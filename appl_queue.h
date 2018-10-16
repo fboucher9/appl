@@ -16,20 +16,13 @@
 #error include appl_object.h before
 #endif /* #if ! defined INC_APPL_OBJECT_H */
 
-/* Header file dependency */
-#if ! defined INC_APPL_LIST_H
-#error include appl_list.h before
-#endif /* #if ! defined INC_APPL_LIST_H */
-
 /* ... */
 
 struct appl_context;
 
 struct appl_queue;
 
-struct appl_mutex;
-
-struct appl_event;
+struct appl_list;
 
 /* Assert compiler */
 #if ! defined __cplusplus

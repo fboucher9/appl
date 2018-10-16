@@ -34,13 +34,34 @@ enum appl_status
         struct appl_queue * * const
             r_queue)
 {
-    appl_unused(
-        p_context,
-        p_descriptor,
-        r_queue);
+    enum appl_status
+        e_status;
+
+    class appl_queue_std *
+        p_queue_std;
+
+    e_status =
+        appl_object::s_create(
+            p_context,
+            (&
+                appl_queue_std::s_new),
+            (&
+                appl_queue_std::f_init),
+            p_descriptor,
+            &(
+                p_queue_std));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            r_queue) =
+            p_queue_std;
+    }
 
     return
-        appl_status_not_implemented;
+        e_status;
 
 } // s_create()
 
@@ -135,11 +156,10 @@ enum appl_status
     enum appl_status
         e_status;
 
-    appl_unused(
-        p_descriptor);
-
     e_status =
-        appl_status_not_implemented;
+        m_queue_impl.f_init(
+            m_context,
+            p_descriptor);
 
     return
         e_status;
@@ -156,7 +176,7 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_status_not_implemented;
+        m_queue_impl.f_cleanup();
 
     return
         e_status;

@@ -123,6 +123,8 @@ Description:
 
 #include <appl_mutex_handle.h>
 
+#include <appl_queue_handle.h>
+
 #endif /* #if defined(APPL_CONFIG_WITH_THREAD) */
 
 #if defined(APPL_CONFIG_WITH_SOCKET)

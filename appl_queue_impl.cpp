@@ -196,6 +196,8 @@ enum appl_status
 
             m_count ++;
 
+            m_event->v_signal();
+
             e_status =
                 appl_status_ok;
         }
@@ -267,6 +269,8 @@ enum appl_status
 
             m_count --;
 
+            m_event->v_signal();
+
             *(
                 r_node) =
                 p_node;
@@ -299,8 +303,28 @@ enum appl_status
 enum appl_status
     appl_queue_impl::f_interrupt(void)
 {
+    enum appl_status
+        e_status;
+
+    if (
+        appl_status_ok
+        == m_lock->v_lock())
+    {
+        m_event->v_signal();
+
+        e_status =
+            appl_status_ok;
+
+        m_lock->v_unlock();
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
     return
-        appl_status_not_implemented;
+        e_status;
 
 } // f_interrupt()
 
