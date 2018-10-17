@@ -12,6 +12,9 @@
 #define INC_APPL_HASH_HANDLE_H
 
 /* Predefine */
+struct appl_context;
+
+/* Predefine */
 struct appl_object;
 
 /* Predefine */
@@ -66,17 +69,15 @@ extern "C" {
 
 enum appl_status
 appl_hash_create(
-    struct appl_object * const
+    struct appl_context * const
         p_context,
     struct appl_hash_descriptor const * const
         p_descriptor,
     struct appl_hash * * const
         r_instance);
 
-enum appl_status
-appl_hash_destroy(
-    struct appl_object * const
-        p_context,
+struct appl_object *
+appl_hash_parent(
     struct appl_hash * const
         p_hash);
 
