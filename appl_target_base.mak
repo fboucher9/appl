@@ -51,6 +51,7 @@ appl_base-deps := \
     appl_file_service.cpp \
     appl_file_std_mgr.cpp \
     appl_file_std_node.cpp \
+    appl_hash_handle.cpp \
     appl_heap.cpp \
     appl_heap_dbg.cpp \
     appl_heap_handle.cpp \
