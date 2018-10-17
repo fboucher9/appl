@@ -4,25 +4,21 @@
 
 */
 
-#include <pthread.h>
-
 #if defined APPL_OS_LINUX
+
+#include <pthread.h>
 
 #include <signal.h>
 
-#endif /* #if defined APPL_OS_LINUX */
-
-#if defined APPL_OS_WINDOWS
+#else /* #if defined APPL_OS_Xx */
 
 #include <windows.h>
 
-#endif /* #if defined APPL_OS_WINDOWS */
+#endif /* #if defined APPL_OS_Xx */
 
 #include <appl_status.h>
 
 #include <appl_types.h>
-
-#include <appl_buf.h>
 
 #include <appl_object.h>
 
@@ -36,25 +32,11 @@
 
 #include <appl_thread_node.h>
 
-#include <appl_mutex_impl.h>
-
-#include <appl_event_impl.h>
-
 #include <appl_thread_impl.h>
 
 #include <appl_thread_std_node.h>
 
-#if defined APPL_DEBUG
-
-#include <appl_debug.h>
-
-#include <appl_context.h>
-
-#endif /* #if defined APPL_DEBUG */
-
 #include <appl_unused.h>
-
-#include <appl_convert.h>
 
 //
 //
@@ -176,11 +158,9 @@ enum appl_status
     enum appl_status
         e_status;
 
-    appl_unused(
-        p_thread_property);
-
     e_status =
-        appl_status_ok;
+        m_thread_impl.f_init(
+            p_thread_property);
 
     return
         e_status;
@@ -197,11 +177,40 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_status_ok;
+        m_thread_impl.f_cleanup();
 
     return
         e_status;
 
 } // v_cleanup()
+
+enum appl_status
+    appl_thread_std_node_create(
+        struct appl_context * const
+            p_context,
+        struct appl_thread_property const * const
+            p_thread_property,
+        struct appl_thread * * const
+            r_thread);
+
+/*
+
+*/
+enum appl_status
+    appl_thread_std_node_create(
+        struct appl_context * const
+            p_context,
+        struct appl_thread_property const * const
+            p_thread_property,
+        struct appl_thread * * const
+            r_thread)
+{
+    return
+        appl_thread_std_node::create_instance(
+            p_context,
+            p_thread_property,
+            r_thread);
+
+} /* appl_thread_std_node_create() */
 
 /* end-of-file: appl_thread_std_node.cpp */

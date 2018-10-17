@@ -42,6 +42,45 @@ appl_thread_impl::~appl_thread_impl()
 {
 }
 
+//
+//
+//
+enum appl_status
+    appl_thread_impl::f_init(
+        struct appl_thread_property const * const
+            p_thread_property)
+{
+    enum appl_status
+        e_status;
+
+    appl_unused(
+        p_thread_property);
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // f_init()
+
+//
+//
+//
+enum appl_status
+    appl_thread_impl::f_cleanup(void)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // f_cleanup()
+
 union appl_thread_impl_callback_ptr
 {
     void *

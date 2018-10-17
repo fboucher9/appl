@@ -4,35 +4,15 @@
 
 */
 
-#include <pthread.h>
-
-#if defined APPL_OS_WINDOWS
-
-#include <windows.h>
-
-#endif /* #if defined APPL_OS_WINDOWS */
-
 #include <appl_status.h>
 
 #include <appl_types.h>
 
 #include <appl_object.h>
 
-#include <appl_thread_descriptor.h>
-
 #include <appl_thread_mgr.h>
 
 #include <appl_thread_std_mgr.h>
-
-#include <appl_thread_node.h>
-
-#include <appl_mutex_impl.h>
-
-#include <appl_event_impl.h>
-
-#include <appl_thread_impl.h>
-
-#include <appl_thread_std_node.h>
 
 enum appl_status
     appl_thread_std_mgr::create_instance(
@@ -89,6 +69,15 @@ void
 } // placement_new()
 
 enum appl_status
+    appl_thread_std_node_create(
+        struct appl_context * const
+            p_context,
+        struct appl_thread_property const * const
+            p_thread_property,
+        struct appl_thread * * const
+            r_thread);
+
+enum appl_status
     appl_thread_std_mgr::v_create(
         struct appl_context * const
             p_context,
@@ -101,7 +90,7 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_thread_std_node::create_instance(
+        appl_thread_std_node_create(
             p_context,
             p_thread_property,
             r_thread);

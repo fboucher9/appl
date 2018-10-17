@@ -39,6 +39,14 @@ class appl_thread_impl
         ~appl_thread_impl();
 
         enum appl_status
+            f_init(
+                struct appl_thread_property const * const
+                    p_thread_property);
+
+        enum appl_status
+            f_cleanup(void);
+
+        enum appl_status
             f_start(
                 struct appl_thread_descriptor const * const
                     p_descriptor);

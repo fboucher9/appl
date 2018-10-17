@@ -291,8 +291,8 @@ appl_hash_lookup(
             p_iterator
             != &(p_item->o_list)))
     {
-        char const
-            b_compare_result =
+        int const
+            i_compare_result =
             (*p_hash->m_descriptor.p_compare)(
                 p_hash->m_descriptor.p_context,
                 p_key,
@@ -300,7 +300,8 @@ appl_hash_lookup(
                 p_iterator);
 
         if (
-            b_compare_result)
+            0
+            == i_compare_result)
         {
             p_list =
                 p_iterator;

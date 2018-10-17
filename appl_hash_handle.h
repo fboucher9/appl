@@ -22,7 +22,7 @@ struct appl_hash;
 */
 struct appl_hash_descriptor
 {
-    char
+    int
         (* p_compare)(
             void * const
                 p_context,
