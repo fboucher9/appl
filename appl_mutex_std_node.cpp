@@ -219,4 +219,33 @@ enum appl_status
 
 } // v_unlock()
 
+enum appl_status
+appl_mutex_std_node_create(
+    struct appl_context * const
+        p_context,
+    struct appl_mutex_descriptor const * const
+        p_mutex_descriptor,
+    struct appl_mutex * * const
+        r_mutex);
+
+//
+//
+//
+enum appl_status
+appl_mutex_std_node_create(
+    struct appl_context * const
+        p_context,
+    struct appl_mutex_descriptor const * const
+        p_mutex_descriptor,
+    struct appl_mutex * * const
+        r_mutex)
+{
+    return
+        appl_mutex_std_node::create_instance(
+            p_context,
+            p_mutex_descriptor,
+            r_mutex);
+
+} // appl_mutex_std_node_create()
+
 /* end-of-file: appl_mutex_std_node.cpp */

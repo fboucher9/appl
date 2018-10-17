@@ -79,8 +79,6 @@ enum appl_status
 
 enum appl_status
     appl_thread_std_mgr::v_create(
-        struct appl_context * const
-            p_context,
         struct appl_thread_property const * const
             p_thread_property,
         struct appl_thread * * const
@@ -91,7 +89,7 @@ enum appl_status
 
     e_status =
         appl_thread_std_node_create(
-            p_context,
+            m_context,
             p_thread_property,
             r_thread);
 

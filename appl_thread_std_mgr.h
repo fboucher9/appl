@@ -59,8 +59,6 @@ class appl_thread_std_mgr :
         virtual
         enum appl_status
             v_create(
-                struct appl_context * const
-                    p_context,
                 struct appl_thread_property const * const
                     p_thread_property,
                 struct appl_thread * * const

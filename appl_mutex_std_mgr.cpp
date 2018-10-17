@@ -4,16 +4,6 @@
 
 */
 
-#if defined APPL_OS_LINUX
-
-#include <pthread.h>
-
-#else /* #if defined APPL_OS_LINUX */
-
-#include <windows.h>
-
-#endif /* #if defined APPL_OS_LINUX */
-
 #include <appl_status.h>
 
 #include <appl_types.h>
@@ -23,12 +13,6 @@
 #include <appl_mutex_mgr.h>
 
 #include <appl_mutex_std_mgr.h>
-
-#include <appl_mutex_node.h>
-
-#include <appl_mutex_impl.h>
-
-#include <appl_mutex_std_node.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -101,6 +85,15 @@ void
 
 } // placement_new()
 
+enum appl_status
+appl_mutex_std_node_create(
+    struct appl_context * const
+        p_context,
+    struct appl_mutex_descriptor const * const
+        p_mutex_descriptor,
+    struct appl_mutex * * const
+        r_mutex);
+
 //
 //
 //
@@ -115,7 +108,7 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_mutex_std_node::create_instance(
+        appl_mutex_std_node_create(
             m_context,
             p_mutex_descriptor,
             r_mutex);

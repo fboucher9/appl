@@ -4,16 +4,6 @@
 
 */
 
-#if defined APPL_OS_LINUX
-
-#include <pthread.h>
-
-#else /* #if defined APPL_OS_LINUX */
-
-#include <windows.h>
-
-#endif /* #if defined APPL_OS_LINUX */
-
 #include <appl_status.h>
 
 #include <appl_types.h>
@@ -23,12 +13,6 @@
 #include <appl_event_mgr.h>
 
 #include <appl_event_std_mgr.h>
-
-#include <appl_event_node.h>
-
-#include <appl_event_impl.h>
-
-#include <appl_event_std_node.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -101,6 +85,15 @@ void
 
 } // s_new()
 
+enum appl_status
+    appl_event_std_node_create(
+        struct appl_context * const
+            p_context,
+        struct appl_event_descriptor const * const
+            p_event_descriptor,
+        struct appl_event * * const
+            r_event);
+
 //
 //
 //
@@ -115,7 +108,7 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_event_std_node::s_create(
+        appl_event_std_node_create(
             m_context,
             p_event_descriptor,
             r_event);

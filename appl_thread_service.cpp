@@ -55,7 +55,6 @@ appl_thread_service::s_create(
 
     e_status =
         p_thread_mgr->v_create(
-            p_context,
             p_thread_property,
             &(
                 p_thread_node));

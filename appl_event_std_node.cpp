@@ -236,4 +236,33 @@ enum appl_status
 
 } // v_wait()
 
+enum appl_status
+    appl_event_std_node_create(
+        struct appl_context * const
+            p_context,
+        struct appl_event_descriptor const * const
+            p_event_descriptor,
+        struct appl_event * * const
+            r_event);
+
+//
+//
+//
+enum appl_status
+    appl_event_std_node_create(
+        struct appl_context * const
+            p_context,
+        struct appl_event_descriptor const * const
+            p_event_descriptor,
+        struct appl_event * * const
+            r_event)
+{
+    return
+        appl_event_std_node::s_create(
+            p_context,
+            p_event_descriptor,
+            r_event);
+
+} // appl_event_std_node_create()
+
 /* end-of-file: appl_event_std_node.cpp */
