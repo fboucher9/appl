@@ -24,7 +24,7 @@
 //
 enum appl_status
     appl_event_std_mgr::s_create(
-        struct appl_context * const
+        struct appl_object * const
             p_context,
         class appl_event_mgr * * const
             r_event_mgr)
@@ -36,10 +36,7 @@ enum appl_status
         p_event_std_mgr;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_event_std_mgr::s_new),
+        p_context->alloc_object(
             &(
                 p_event_std_mgr));
 
@@ -87,7 +84,7 @@ void
 
 enum appl_status
     appl_event_std_node_create(
-        struct appl_context * const
+        struct appl_object * const
             p_context,
         struct appl_event_descriptor const * const
             p_event_descriptor,
@@ -109,7 +106,7 @@ enum appl_status
 
     e_status =
         appl_event_std_node_create(
-            m_context,
+            this,
             p_event_descriptor,
             r_event);
 

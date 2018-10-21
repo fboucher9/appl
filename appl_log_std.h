@@ -21,7 +21,7 @@
 #error include appl_log_impl.h before
 #endif /* #if ! defined INC_APPL_LOG_IMPL_H */
 
-struct appl_context;
+struct appl_object;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -33,12 +33,13 @@ struct appl_context;
 //
 class appl_log_std : public appl_log
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_context * const
+                struct appl_object * const
                     p_context,
                 class appl_log_std * * const
                     r_instance);
@@ -55,18 +56,18 @@ class appl_log_std : public appl_log
         class appl_log_impl
             m_log_impl;
 
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
-
         appl_log_std(
             class appl_log_std const & r);
 
         class appl_log_std &
             operator =(
                 class appl_log_std const & r);
+
+        static
+        void
+            s_new(
+                void * const
+                    p_placement);
 
         virtual
         enum appl_status

@@ -45,17 +45,20 @@ struct appl_property_std;
 //
 struct appl_property_std : public appl_property
 {
+    friend struct appl_object;
+
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_context * const
+                struct appl_object * const
                     p_context,
                 unsigned int const
                     i_id,
                 struct appl_property * * const
                     r_property);
+
     protected:
 
         appl_property_std();
@@ -64,7 +67,7 @@ struct appl_property_std : public appl_property
         ~appl_property_std();
 
         enum appl_status
-            init(
+            f_init(
                 struct appl_property_std_descriptor const * const
                     p_property_std_descriptor);
 

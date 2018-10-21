@@ -38,14 +38,15 @@ class appl_mutex_std_node;
 //
 class appl_mutex_std_node : public appl_mutex
 {
+    friend struct appl_object;
     friend class appl_event_std_node;
 
     public:
 
         static
         enum appl_status
-            create_instance(
-                struct appl_context * const
+            s_create(
+                struct appl_object * const
                     p_context,
                 struct appl_mutex_descriptor const * const
                     p_mutex_descriptor,
@@ -85,12 +86,12 @@ class appl_mutex_std_node : public appl_mutex
 
         static
         void
-            placement_new(
+            s_new(
                 void * const
                     p_placement);
 
         enum appl_status
-            init(void);
+            f_init(void);
 
         virtual
         enum appl_status

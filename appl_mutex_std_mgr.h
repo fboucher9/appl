@@ -21,7 +21,7 @@
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
-struct appl_context;
+struct appl_object;
 
 class appl_mutex_std_mgr;
 
@@ -30,12 +30,13 @@ class appl_mutex_std_mgr;
 //
 class appl_mutex_std_mgr : public appl_mutex_mgr
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
-            create_instance(
-                struct appl_context * const
+            s_create(
+                struct appl_object * const
                     p_context,
                 class appl_mutex_mgr * * const
                     r_mutex_mgr);
@@ -58,7 +59,7 @@ class appl_mutex_std_mgr : public appl_mutex_mgr
 
         static
         void
-            placement_new(
+            s_new(
                 void * const
                     p_placement);
 

@@ -228,7 +228,7 @@ appl_context_std::init_debug(void)
 #if defined APPL_OS_LINUX
 
     e_status =
-        appl_debug_std::create_instance(
+        appl_debug_std::s_create(
             m_context,
             &(
                 m_debug));
@@ -353,7 +353,7 @@ appl_context_std::init_thread_mgr(void)
         e_status;
 
     e_status =
-        appl_thread_std_mgr::create_instance(
+        appl_thread_std_mgr::s_create(
             m_context,
             &(
                 m_thread_mgr));
@@ -400,7 +400,7 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_mutex_std_mgr::create_instance(
+        appl_mutex_std_mgr::s_create(
             m_context,
             &(
                 m_mutex_mgr));
@@ -446,7 +446,7 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_file_std_mgr::create_instance(
+        appl_file_std_mgr::s_create(
             m_context,
             &(
                 m_file_mgr));
@@ -538,7 +538,7 @@ enum appl_status
 #if defined APPL_OS_LINUX
 
     e_status =
-        appl_clock_std::create_instance(
+        appl_clock_std::s_create(
             m_context,
             &(
                 m_clock));

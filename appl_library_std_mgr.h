@@ -16,7 +16,7 @@
 #error include appl_library_mgr.h before appl_library_std_mgr.h
 #endif /* #if ! defined INC_APPL_LIBRARY_MGR_H */
 
-struct appl_context;
+struct appl_object;
 
 struct appl_library_descriptor;
 
@@ -39,12 +39,13 @@ class appl_library_std_mgr;
 //
 class appl_library_std_mgr : public appl_library_mgr
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_context * const
+                struct appl_object * const
                     p_context,
                 class appl_library_mgr * * const
                     r_library_mgr);

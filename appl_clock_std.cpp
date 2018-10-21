@@ -26,8 +26,8 @@
 //
 //
 enum appl_status
-    appl_clock_std::create_instance(
-        struct appl_context * const
+    appl_clock_std::s_create(
+        struct appl_object * const
             p_context,
         class appl_clock * * const
             r_clock)
@@ -39,10 +39,7 @@ enum appl_status
         p_clock_std;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_clock_std::placement_new),
+        p_context->alloc_object(
             &(
                 p_clock_std));
 
@@ -79,14 +76,14 @@ appl_clock_std::~appl_clock_std()
 //
 //
 void
-    appl_clock_std::placement_new(
+    appl_clock_std::s_new(
         void * const
             p_placement)
 {
     new (p_placement)
         class appl_clock_std;
 
-} // placement_new()
+} // s_new()
 
 //
 //

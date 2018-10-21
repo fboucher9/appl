@@ -39,7 +39,7 @@
 //
 enum appl_status
 appl_env_std::s_create(
-    struct appl_context * const
+    struct appl_object * const
         p_context,
     class appl_env * * const
         r_env)
@@ -51,10 +51,7 @@ appl_env_std::s_create(
         p_env_std;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_env_std::s_new),
+        p_context->alloc_object(
             &(
                 p_env_std));
 

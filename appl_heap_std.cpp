@@ -62,14 +62,9 @@ enum appl_status
             0;
 
         e_status =
-            appl_object::s_init<appl_heap_std>(
+            appl_object::s_init(
                 p_context,
                 p_placement,
-                i_placement_len,
-                (&
-                    appl_heap_std::placement_new),
-                (&
-                    appl_heap_std::init_dummy),
                 &(
                     p_heap_std));
 
@@ -117,14 +112,25 @@ appl_heap_std::~appl_heap_std()
 //
 //
 void
-    appl_heap_std::placement_new(
+    appl_heap_std::s_new(
         void * const
             p_placement)
 {
     new (p_placement)
         class appl_heap_std;
 
-} // placement_new()
+} // s_new()
+
+//
+//
+//
+enum appl_status
+    appl_heap_std::f_init(void)
+{
+    return
+        appl_status_ok;
+
+} // f_init()
 
 //
 //

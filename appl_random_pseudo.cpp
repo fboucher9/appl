@@ -21,7 +21,7 @@
 //
 enum appl_status
 appl_random_pseudo::s_create(
-    struct appl_context * const
+    struct appl_object * const
         p_context,
     unsigned long int const
         i_seed,
@@ -35,12 +35,7 @@ appl_random_pseudo::s_create(
         p_random_pseudo;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_random_pseudo::s_new),
-            (&
-                appl_random_pseudo::init),
+        p_context->alloc_object(
             &(
                 i_seed),
             &(
@@ -93,7 +88,7 @@ appl_random_pseudo::s_new(
 //
 //
 enum appl_status
-appl_random_pseudo::init(
+appl_random_pseudo::f_init(
     unsigned long int const * const
         p_seed)
 {
@@ -104,7 +99,7 @@ appl_random_pseudo::init(
     return
         appl_status_ok;
 
-} // init()
+} // f_init()
 
 //
 //

@@ -27,28 +27,19 @@ struct appl_context;
 
 class appl_file_std_node;
 
-struct appl_file_std_node_descriptor
-{
-    struct appl_pool *
-        p_pool;
-
-    struct appl_file_descriptor const *
-        p_file_descriptor;
-
-}; /* struct appl_file_std_node_descriptor */
+struct appl_file_std_node_descriptor;
 
 //
 //
 //
 class appl_file_std_node : public appl_file
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
-            create_instance(
-                struct appl_context * const
-                    p_context,
+            s_create(
                 struct appl_pool * const
                     p_pool,
                 struct appl_file_descriptor const * const
@@ -92,12 +83,12 @@ class appl_file_std_node : public appl_file
 
         static
         void
-            placement_new(
+            s_new(
                 void * const
                     p_placement);
 
         enum appl_status
-            init(
+            f_init(
                 struct appl_file_std_node_descriptor const * const
                     p_file_descriptor);
 

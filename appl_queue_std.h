@@ -22,7 +22,7 @@
 #endif /* #if ! defined INC_APPL_QUEUE_IMPL_H */
 
 /* Predefine */
-struct appl_context;
+struct appl_object;
 
 /* Predefine */
 struct appl_queue_descriptor;
@@ -40,12 +40,13 @@ struct appl_queue;
 //
 class appl_queue_std : public appl_queue
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_context * const
+                struct appl_object * const
                     p_context,
                 struct appl_queue_descriptor const * const
                     p_descriptor,
@@ -69,11 +70,11 @@ class appl_queue_std : public appl_queue
     private:
 
         appl_queue_std(
-            struct appl_queue_std const & r);
+            class appl_queue_std const & r);
 
-        struct appl_queue_std &
+        class appl_queue_std &
             operator =(
-                struct appl_queue_std const & r);
+                class appl_queue_std const & r);
 
         virtual
         enum appl_status

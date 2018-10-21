@@ -56,17 +56,22 @@ class appl_event_impl
             pthread_cond_t
                 m_private;
 
+            appl_ull_t
+                m_padding[
+                    (sizeof(pthread_cond_t) + sizeof(appl_ull_t) - 1u)
+                    / sizeof(appl_ull_t)];
+
 #else /* #if defined APPL_OS_Xx */
 
             CONDITION_VARIABLE
                 m_private;
 
-#endif /* #if defined APPL_OS_Xx */
-
             appl_ull_t
                 m_padding[
-                    (sizeof(m_private) + sizeof(appl_ull_t) - 1u)
+                    (sizeof(CONDITION_VARIABLE) + sizeof(appl_ull_t) - 1u)
                     / sizeof(appl_ull_t)];
+
+#endif /* #if defined APPL_OS_Xx */
 
         } m_storage;
 

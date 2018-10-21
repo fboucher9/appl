@@ -864,7 +864,7 @@ appl_tree_detach(
                             p_new_top);
                 }
 
-                if (0) /* swap method */
+                if ((0)) /* swap method */
                 {
                     /*
                     .       |

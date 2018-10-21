@@ -25,12 +25,13 @@ class appl_debug_std;
 //
 class appl_debug_std : public appl_debug
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
-            create_instance(
-                struct appl_context * const
+            s_create(
+                struct appl_object * const
                     p_context,
                 class appl_debug * * const
                     r_debug);
@@ -41,6 +42,12 @@ class appl_debug_std : public appl_debug
 
         virtual
         ~appl_debug_std();
+
+        static
+        void
+            s_new(
+                void * const
+                    p_placement);
 
         virtual
         enum appl_status
@@ -55,12 +62,6 @@ class appl_debug_std : public appl_debug
                     p_msg_max);
 
     private:
-
-        static
-        void
-            placement_new(
-                void * const
-                    p_placement);
 
         appl_debug_std(
             class appl_debug_std const & r);

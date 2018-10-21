@@ -33,10 +33,16 @@ class appl_random_std_crypto : public appl_random
         static
         enum appl_status
         s_create(
-            struct appl_context * const
+            struct appl_object * const
                 p_context,
             struct appl_random * * const
                 r_random);
+
+        static
+        void
+            s_new(
+                void * const
+                    p_placement);
 
     protected:
 
@@ -53,12 +59,6 @@ class appl_random_std_crypto : public appl_random
         class appl_random_std_crypto &
             operator =(
                 class appl_random_std_crypto const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         virtual
         enum appl_status

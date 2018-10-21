@@ -25,7 +25,7 @@
 //
 enum appl_status
     appl_library_std_mgr::s_create(
-        struct appl_context * const
+        struct appl_object * const
             p_context,
         class appl_library_mgr * * const
             r_library_mgr)
@@ -37,10 +37,7 @@ enum appl_status
         p_library_std_mgr;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_library_std_mgr::s_new),
+        p_context->alloc_object(
             &(
                 p_library_std_mgr));
 
@@ -98,7 +95,7 @@ enum appl_status
 {
     return
         appl_library_std_node::s_create(
-            m_context,
+            this,
             p_library_descriptor,
             r_library);
 

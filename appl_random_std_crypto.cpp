@@ -25,7 +25,7 @@
 //
 enum appl_status
 appl_random_std_crypto::s_create(
-    struct appl_context * const
+    struct appl_object * const
         p_context,
     struct appl_random * * const
         r_random)
@@ -37,10 +37,7 @@ appl_random_std_crypto::s_create(
         p_random_std_crypto;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_random_std_crypto::s_new),
+        p_context->alloc_object(
             &(
                 p_random_std_crypto));
 

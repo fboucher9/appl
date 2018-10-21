@@ -104,11 +104,6 @@ enum appl_status
             appl_object::s_init(
                 p_dummy_context,
                 p_placement,
-                i_placement_len,
-                (&
-                    appl_heap_dbg::placement_new),
-                (&
-                    appl_heap_dbg::init),
                 &(
                     o_descriptor),
                 &(
@@ -158,14 +153,14 @@ appl_heap_dbg::~appl_heap_dbg()
 //
 //
 void
-    appl_heap_dbg::placement_new(
+    appl_heap_dbg::s_new(
         void * const
             p_placement)
 {
     new (p_placement)
         class appl_heap_dbg;
 
-} // placement_new()
+} // s_new()
 
 static unsigned char const g_appl_heap_dbg_header_magic = (0xA1u);
 
@@ -231,7 +226,7 @@ union appl_heap_dbg_footer_ptr
 //
 //
 enum appl_status
-    appl_heap_dbg::init(
+    appl_heap_dbg::f_init(
         struct appl_heap_dbg_descriptor const * const
             p_descriptor)
 {
@@ -257,7 +252,7 @@ enum appl_status
     return
         e_status;
 
-} // init()
+} // f_init()
 
 //
 //

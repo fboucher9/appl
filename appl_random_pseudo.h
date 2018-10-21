@@ -28,12 +28,13 @@ class appl_random_pseudo;
 //
 class appl_random_pseudo : public appl_random
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
         s_create(
-            struct appl_context * const
+            struct appl_object * const
                 p_context,
             unsigned long int const
                 i_seed,
@@ -69,7 +70,7 @@ class appl_random_pseudo : public appl_random
                     p_placement);
 
         enum appl_status
-            init(
+            f_init(
                 unsigned long int const * const
                     p_seed);
 

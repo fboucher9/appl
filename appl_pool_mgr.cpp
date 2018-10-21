@@ -30,6 +30,8 @@
 
 #include <appl_pool_std.h>
 
+#include <appl_context.h>
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -49,10 +51,7 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_pool_mgr::s_new),
+        p_context->alloc_object(
             r_instance);
 
     return

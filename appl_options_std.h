@@ -33,12 +33,13 @@ struct appl_options_std_descriptor
 //
 class appl_options_std : public appl_options
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
         s_create(
-            struct appl_context * const
+            struct appl_object * const
                 p_context,
             struct appl_options_std_descriptor const * const
                 p_options_std_descriptor,
@@ -66,12 +67,12 @@ class appl_options_std : public appl_options
 
         static
         void
-            placement_new(
+            s_new(
                 void * const
                     p_placement);
 
         enum appl_status
-            init(
+            f_init(
                 struct appl_options_std_descriptor const * const
                     p_options_std_descriptor);
 

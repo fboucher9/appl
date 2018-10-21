@@ -28,6 +28,8 @@ class appl_heap_std;
 //
 class appl_heap_std : public appl_heap
 {
+    friend struct appl_object;
+
     public:
 
         static
@@ -54,9 +56,12 @@ class appl_heap_std : public appl_heap
 
         static
         void
-            placement_new(
+            s_new(
                 void * const
                     p_placement);
+
+        enum appl_status
+            f_init(void);
 
         virtual
         enum appl_status

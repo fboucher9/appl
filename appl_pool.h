@@ -45,7 +45,7 @@ struct appl_pool : public appl_object
 
         template <typename T_instance>
         enum appl_status
-            alloc_object(
+            alloc_struct(
                 T_instance * * const
                     r_object)
         {
@@ -53,6 +53,89 @@ struct appl_pool : public appl_object
                 v_alloc(
                     reinterpret_cast<void * *>(
                         r_object));
+
+        } // alloc_struct()
+
+        template <typename T_instance>
+        enum appl_status
+            alloc_object(
+                T_instance * * const
+                    r_object)
+        {
+            enum appl_status
+                e_status;
+
+            void *
+                p_placement;
+
+            e_status =
+                v_alloc(
+                    &(
+                        p_placement));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    init_object(
+                        p_placement,
+                        r_object);
+
+                if (
+                    appl_status_ok
+                    != e_status)
+                {
+                    v_free(
+                        p_placement);
+                }
+            }
+
+            return
+                e_status;
+
+        } // alloc_object()
+
+        template <typename T_instance, typename T_descriptor>
+        enum appl_status
+            alloc_object(
+                T_descriptor const * const
+                    p_descriptor,
+                T_instance * * const
+                    r_object)
+        {
+            enum appl_status
+                e_status;
+
+            void *
+                p_placement;
+
+            e_status =
+                v_alloc(
+                    &(
+                        p_placement));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    init_object(
+                        p_placement,
+                        p_descriptor,
+                        r_object);
+
+                if (
+                    appl_status_ok
+                    != e_status)
+                {
+                    v_free(
+                        p_placement);
+                }
+            }
+
+            return
+                e_status;
 
         } // alloc_object()
 
@@ -64,7 +147,7 @@ struct appl_pool : public appl_object
 
         template <typename T_instance>
         enum appl_status
-            free_object(
+            free_struct(
                 T_instance * const
                     p_object)
         {
@@ -72,6 +155,34 @@ struct appl_pool : public appl_object
                 v_free(
                     static_cast<void *>(
                         p_object));
+
+        } // free_struct()
+
+
+        template <typename T_instance>
+        enum appl_status
+            free_object(
+                T_instance * const
+                    p_object)
+        {
+            enum appl_status
+                e_status;
+
+            void * const
+                p_placement =
+                p_object;
+
+            delete
+                p_object;
+
+            v_free(
+                p_placement);
+
+            e_status =
+                appl_status_fail;
+
+            return
+                e_status;
 
         } // free_object()
 
@@ -85,12 +196,12 @@ struct appl_pool : public appl_object
     private:
 
         appl_pool(
-            class appl_pool const & r);
+            struct appl_pool const & r);
 
-        class appl_pool &
+        struct appl_pool &
             operator =(
-                class appl_pool const & r);
+                struct appl_pool const & r);
 
-}; // class appl_pool
+}; // struct appl_pool
 
 /* end-of-file: appl_pool.h */

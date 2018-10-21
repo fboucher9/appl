@@ -14,6 +14,8 @@
 
 #include <appl_mutex_std_mgr.h>
 
+#include <appl_context.h>
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -23,8 +25,8 @@
 //
 //
 enum appl_status
-    appl_mutex_std_mgr::create_instance(
-        struct appl_context * const
+    appl_mutex_std_mgr::s_create(
+        struct appl_object * const
             p_context,
         class appl_mutex_mgr * * const
             r_mutex_mgr)
@@ -36,10 +38,7 @@ enum appl_status
         p_mutex_std_mgr;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_mutex_std_mgr::placement_new),
+        p_context->alloc_object(
             &(
                 p_mutex_std_mgr));
 
@@ -55,7 +54,7 @@ enum appl_status
     return
         e_status;
 
-} // create_instance()
+} // s_create()
 
 //
 //
@@ -76,18 +75,18 @@ appl_mutex_std_mgr::~appl_mutex_std_mgr()
 //
 //
 void
-    appl_mutex_std_mgr::placement_new(
+    appl_mutex_std_mgr::s_new(
         void * const
             p_placement)
 {
     new (p_placement)
         class appl_mutex_std_mgr;
 
-} // placement_new()
+} // s_new()
 
 enum appl_status
 appl_mutex_std_node_create(
-    struct appl_context * const
+    struct appl_object * const
         p_context,
     struct appl_mutex_descriptor const * const
         p_mutex_descriptor,

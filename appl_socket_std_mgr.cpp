@@ -45,7 +45,7 @@
 //
 enum appl_status
     appl_socket_std_mgr::s_create(
-        struct appl_context * const
+        struct appl_object * const
             p_context,
         class appl_socket_mgr * * const
             r_socket_mgr)
@@ -57,10 +57,7 @@ enum appl_status
         p_socket_std_mgr;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_socket_std_mgr::s_new),
+        p_context->alloc_object(
             &(
                 p_socket_std_mgr));
 
@@ -121,7 +118,7 @@ enum appl_status
 
     e_status =
         appl_address_std_node::s_create(
-            m_context,
+            this,
             p_property,
             r_address);
 
@@ -145,7 +142,7 @@ enum appl_status
 
     e_status =
         appl_socket_std_node::s_create(
-            m_context,
+            this,
             p_socket_descriptor,
             r_socket);
 
@@ -185,8 +182,9 @@ enum appl_status
     unsigned long int const
         i_count =
         appl_convert::to_ulong(
-            p_poll_descriptor_max
-            - p_poll_descriptor_min);
+            appl_convert::to_unsigned(
+                p_poll_descriptor_max
+                - p_poll_descriptor_min));
 
     struct pollfd *
         p_pollfd_array;

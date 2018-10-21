@@ -82,8 +82,8 @@ class appl_convert
                 i_value)
         {
             return
-                (
-                    i_value & 0x7F);
+                static_cast<signed char>(
+                    i_value);
 
         } // to_char()
 
@@ -96,8 +96,8 @@ class appl_convert
                 i_value)
         {
             return
-                (
-                    i_value & 0x7FFF);
+                static_cast<signed short int>(
+                    i_value);
         } // to_short()
 
         template <typename T>
@@ -109,8 +109,8 @@ class appl_convert
                 i_value)
         {
             return
-                (
-                    i_value & ((~0u) >> 1));
+                static_cast<signed int>(
+                    i_value);
         } // to_int()
 
         template <typename T>
@@ -122,8 +122,8 @@ class appl_convert
                 i_value)
         {
             return
-                (
-                    i_value & ((~0ul) >> 1));
+                static_cast<signed long int>(
+                    i_value);
         } // to_long()
 
         static

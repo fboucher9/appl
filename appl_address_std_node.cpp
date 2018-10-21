@@ -58,7 +58,7 @@ Description:
 //
 enum appl_status
     appl_address_std_node::s_create(
-        struct appl_context * const
+        struct appl_object * const
             p_context,
         struct appl_address_property const * const
             p_property,
@@ -72,12 +72,7 @@ enum appl_status
         p_address_std_node;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_address_std_node::s_new),
-            (&
-                appl_address_std_node::init),
+        p_context->alloc_object(
             p_property,
             &(
                 p_address_std_node));
@@ -129,7 +124,7 @@ void
 //
 //
 enum appl_status
-    appl_address_std_node::init(
+    appl_address_std_node::f_init(
         struct appl_address_property const * const
             p_property)
 {
@@ -223,7 +218,7 @@ enum appl_status
     return
         e_status;
 
-} // init()
+} // f_init()
 
 //
 //

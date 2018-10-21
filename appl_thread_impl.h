@@ -66,15 +66,22 @@ class appl_thread_impl
 #if defined APPL_OS_LINUX
             pthread_t
                 m_thread;
-#else /* #if defined APPL_OS_Xx */
-            HANDLE
-                m_thread;
-#endif /* #if defined APPL_OS_Xx */
 
             appl_ull_t
                 m_padding[
-                    (sizeof(m_thread) + sizeof(appl_ull_t) - 1u)
+                    (sizeof(pthread_t) + sizeof(appl_ull_t) - 1u)
                     / sizeof(appl_ull_t)];
+
+#else /* #if defined APPL_OS_Xx */
+            HANDLE
+                m_thread;
+
+            appl_ull_t
+                m_padding[
+                    (sizeof(HANDLE) + sizeof(appl_ull_t) - 1u)
+                    / sizeof(appl_ull_t)];
+
+#endif /* #if defined APPL_OS_Xx */
 
         } m_storage;
 

@@ -32,6 +32,8 @@
 
 #include <appl_convert.h>
 
+#include <appl_context.h>
+
 #define APPL_ADDRESS_PROPERTY_GUID (0xe0bfd095ul)
 
 enum appl_address_property_id
@@ -53,12 +55,13 @@ enum appl_address_property_id
 //
 struct appl_address_property : public appl_property_std
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
         s_create(
-            struct appl_context * const
+            struct appl_object * const
                 p_context,
             struct appl_address_property * * const
                 r_address_property);
@@ -71,7 +74,7 @@ struct appl_address_property : public appl_property_std
         ~appl_address_property();
 
         enum appl_status
-            init(void);
+            f_init(void);
 
         virtual
         enum appl_status
@@ -99,18 +102,13 @@ struct appl_address_property : public appl_property_std
 //
 enum appl_status
 appl_address_property::s_create(
-    struct appl_context * const
+    struct appl_object * const
         p_context,
     struct appl_address_property * * const
         r_address_property)
 {
     return
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_address_property::s_new),
-            (&
-                appl_address_property::init),
+        p_context->alloc_object(
             r_address_property);
 
 } // s_create()
@@ -134,7 +132,7 @@ appl_address_property::~appl_address_property()
 //
 //
 enum appl_status
-    appl_address_property::init(void)
+    appl_address_property::f_init(void)
 {
     enum appl_status
         e_status;
@@ -146,7 +144,7 @@ enum appl_status
         appl_address_property_id_max;
 
     e_status =
-        appl_property_std::init(
+        appl_property_std::f_init(
             &(
                 o_property_std_descriptor));
 
@@ -163,7 +161,7 @@ enum appl_status
     return
         e_status;
 
-} // init()
+} // f_init()
 
 //
 //

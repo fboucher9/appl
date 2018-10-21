@@ -28,12 +28,13 @@ class appl_event_std_mgr;
 //
 class appl_event_std_mgr : public appl_event_mgr
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_context * const
+                struct appl_object * const
                     p_context,
                 class appl_event_mgr * * const
                     r_event_mgr);

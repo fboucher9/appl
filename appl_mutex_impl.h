@@ -54,17 +54,22 @@ class appl_mutex_impl
             pthread_mutex_t
                 m_private;
 
+            appl_ull_t
+                m_padding[
+                    (sizeof(pthread_mutex_t) + sizeof(appl_ull_t) - 1u)
+                    / sizeof(appl_ull_t)];
+
 #else /* #if defined APPL_OS_Xx */
 
             CRITICAL_SECTION
                 m_private;
 
-#endif /* #if defined APPL_OS_Xx */
-
             appl_ull_t
                 m_padding[
-                    (sizeof(m_private) + sizeof(appl_ull_t) - 1u)
+                    (sizeof(CRITICAL_SECTION) + sizeof(appl_ull_t) - 1u)
                     / sizeof(appl_ull_t)];
+
+#endif /* #if defined APPL_OS_Xx */
 
         } m_storage;
 

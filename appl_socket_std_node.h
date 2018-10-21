@@ -16,7 +16,7 @@
 #error include appl_socket_node.h before
 #endif /* #if ! defined INC_APPL_SOCKET_NODE_H */
 
-struct appl_context;
+struct appl_object;
 
 struct appl_socket_property;
 
@@ -36,14 +36,15 @@ class appl_socket_std_node;
 //
 class appl_socket_std_node : public appl_socket
 {
-    public:
+    friend struct appl_object;
+    friend class appl_socket_std_mgr;
 
-        friend class appl_socket_std_mgr;
+    public:
 
         static
         enum appl_status
             s_create(
-                struct appl_context * const
+                struct appl_object * const
                     p_context,
                 struct appl_socket_property const * const
                     p_socket_descriptor,
@@ -79,14 +80,14 @@ class appl_socket_std_node : public appl_socket
                     p_placement);
 
         enum appl_status
-        init(
-            struct appl_socket_property const * const
-                p_socket_descriptor);
+            f_init(
+                struct appl_socket_property const * const
+                    p_socket_descriptor);
 
         enum appl_status
-        init_fd(
-            int const * const
-                p_socket_descriptor);
+            f_init(
+                int const * const
+                    p_socket_descriptor);
 
         enum appl_status
         init_socket(

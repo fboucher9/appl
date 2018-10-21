@@ -34,12 +34,13 @@ class appl_event_std_node;
 //
 class appl_event_std_node : public appl_event
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_context * const
+                struct appl_object * const
                     p_context,
                 struct appl_event_descriptor const * const
                     p_event_descriptor,
@@ -78,7 +79,7 @@ class appl_event_std_node : public appl_event
                     p_placement);
 
         enum appl_status
-            init(void);
+            f_init(void);
 
         virtual
         enum appl_status

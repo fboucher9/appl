@@ -203,12 +203,13 @@ class appl_chunk_std;
 //
 class appl_chunk_std : public appl_chunk
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
         s_create(
-            struct appl_context * const
+            struct appl_object * const
                 p_context,
             struct appl_chunk * * const
                 r_chunk);
@@ -292,7 +293,7 @@ class appl_chunk_std : public appl_chunk
 //
 enum appl_status
 appl_chunk_std::s_create(
-    struct appl_context * const
+    struct appl_object * const
         p_context,
     struct appl_chunk * * const
         r_chunk)
@@ -304,12 +305,7 @@ appl_chunk_std::s_create(
         p_chunk_std;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_chunk_std::s_new),
-            (&
-                appl_chunk_std::init),
+        p_context->alloc_object(
             &(
                 p_chunk_std));
 

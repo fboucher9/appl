@@ -61,7 +61,7 @@ union appl_pool_node_ptr
 //
 enum appl_status
     appl_pool_std::s_create(
-        struct appl_context * const
+        struct appl_object * const
             p_context,
         appl_size_t const
             i_buf_len,
@@ -75,12 +75,7 @@ enum appl_status
         i_buf_len;
 
     return
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_pool_std::s_new),
-            (&
-                appl_pool_std::init),
+        p_context->alloc_object(
             &(
                 o_pool_std_descriptor),
             r_instance);
@@ -124,7 +119,7 @@ void
 //
 //
 enum appl_status
-    appl_pool_std::init(
+    appl_pool_std::f_init(
         struct appl_pool_std_descriptor const * const
             p_descriptor)
 {
@@ -152,7 +147,7 @@ enum appl_status
     return
         e_status;
 
-} // init()
+} // f_init()
 
 //
 //

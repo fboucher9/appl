@@ -44,7 +44,7 @@ struct appl_property_node
 //
 enum appl_status
     appl_property_std::s_create(
-        struct appl_context * const
+        struct appl_object * const
             p_context,
         unsigned int const
             i_count,
@@ -64,14 +64,7 @@ enum appl_status
         p_property_std;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            sizeof(
-                struct appl_property_std),
-            (&
-                appl_property_std::s_new),
-            (&
-                appl_property_std::init),
+        p_context->alloc_object(
             &(
                 o_property_std_descriptor),
             &(
@@ -210,7 +203,7 @@ void
 //
 //
 enum appl_status
-    appl_property_std::init(
+    appl_property_std::f_init(
         struct appl_property_std_descriptor const * const
             p_property_std_descriptor)
 {
@@ -261,7 +254,7 @@ enum appl_status
     return
         e_status;
 
-} // init()
+} // f_init()
 
 //
 //

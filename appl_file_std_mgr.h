@@ -11,25 +11,33 @@
 
 #define INC_APPL_FILE_STD_MGR_H
 
+/* Header file dependency */
+#if ! defined INC_APPL_FILE_MGR_H
+#error include appl_file_mgr.h before
+#endif /* #if ! defined INC_APPL_FILE_MGR_H */
+
+/* Predefine */
+struct appl_pool;
+
+/* Assert compiler */
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
 
 class appl_file_std_mgr;
 
-struct appl_pool;
-
 //
 //
 //
 class appl_file_std_mgr : public appl_file_mgr
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
-            create_instance(
-                struct appl_context * const
+            s_create(
+                struct appl_object * const
                     p_context,
                 class appl_file_mgr * * const
                     r_file_mgr);
@@ -58,7 +66,7 @@ class appl_file_std_mgr : public appl_file_mgr
 
         static
         void
-            placement_new(
+            s_new(
                 void * const
                     p_placement);
 

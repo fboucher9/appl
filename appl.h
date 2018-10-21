@@ -59,6 +59,8 @@ Description:
 
 #define APPL_CONFIG_WITH_LOG
 
+#define APPL_CONFIG_WITH_HASH
+
 #include <appl_status.h>
 
 #include <appl_buf.h>
@@ -170,6 +172,12 @@ Description:
 #include <appl_log_handle.h>
 
 #endif /*#if defined APPL_CONFIG_WITH_LOG */
+
+#if defined APPL_CONFIG_WITH_HASH
+
+#include <appl_hash_handle.h>
+
+#endif /* #if defined APPL_CONFIG_WITH_HASH */
 
 #if defined(APPL_CONFIG_WITH_MAIN)
 

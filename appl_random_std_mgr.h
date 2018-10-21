@@ -16,7 +16,7 @@
 #error include appl_random_mgr.h before appl_random_std_mgr.h
 #endif /* #if ! defined INC_APPL_RANDOM_MGR_H */
 
-struct appl_context;
+struct appl_object;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -30,12 +30,13 @@ class appl_random_std_mgr;
 //
 class appl_random_std_mgr : public appl_random_mgr
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
         s_create(
-            struct appl_context * const
+            struct appl_object * const
                 p_context,
             class appl_random_mgr * * const
                 r_random_mgr);

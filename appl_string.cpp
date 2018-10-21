@@ -31,7 +31,7 @@ struct appl_string_descriptor
 //
 enum appl_status
     appl_string::s_create(
-        struct appl_context * const
+        struct appl_object * const
             p_context,
         unsigned long int const
             i_alloc_len,
@@ -49,14 +49,14 @@ enum appl_status
 
     e_status =
         appl_object::s_create(
-            p_context,
+            p_context->get_context(),
             sizeof(
                 struct appl_string)
             + i_alloc_len,
             (&
                 appl_string::s_new),
             (&
-                appl_string::init),
+                appl_string::f_init),
             &(
                 o_string_descriptor),
             r_string);
@@ -148,7 +148,7 @@ void
 //
 //
 enum appl_status
-    appl_string::init(
+    appl_string::f_init(
         struct appl_string_descriptor const * const
             p_string_descriptor)
 {
@@ -162,7 +162,7 @@ enum appl_status
     return
         appl_status_ok;
 
-} // init()
+} // f_init()
 
 //
 //

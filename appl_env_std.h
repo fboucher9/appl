@@ -33,12 +33,13 @@ class appl_env_std;
 //
 class appl_env_std : public appl_env
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
         s_create(
-            struct appl_context * const
+            struct appl_object * const
                 p_context,
             class appl_env * * const
                 r_env);

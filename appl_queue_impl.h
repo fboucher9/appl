@@ -112,11 +112,11 @@ class appl_queue_impl
         // --
 
         appl_queue_impl(
-            struct appl_queue_impl const & r);
+            class appl_queue_impl const & r);
 
-        struct appl_queue_impl &
+        class appl_queue_impl &
             operator =(
-                struct appl_queue_impl const & r);
+                class appl_queue_impl const & r);
 
 }; // class appl_queue_impl
 

@@ -25,7 +25,7 @@
 //
 enum appl_status
     appl_log_std::s_create(
-        struct appl_context * const
+        struct appl_object * const
             p_context,
         class appl_log_std * * const
             r_instance)
@@ -34,10 +34,7 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_log_std::s_new),
+        p_context->alloc_object(
             r_instance);
 
     return

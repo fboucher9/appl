@@ -258,6 +258,8 @@ struct appl_thread_cache : public appl_thread
 //
 class appl_thread_cache_node : public appl_node
 {
+    friend struct appl_object;
+
     public:
 
         //
@@ -266,7 +268,7 @@ class appl_thread_cache_node : public appl_node
         static
         enum appl_status
             s_create_instance(
-                struct appl_context * const
+                struct appl_object * const
                     p_context,
                 class appl_thread_cache_mgr * const
                     p_thread_cache_mgr,
@@ -288,12 +290,7 @@ class appl_thread_cache_node : public appl_node
                 p_property;
 
             e_status =
-                appl_object::s_create(
-                    p_context,
-                    (&
-                        appl_thread_cache_node::s_new),
-                    (&
-                         appl_thread_cache_node::f_init),
+                p_context->alloc_object(
                     &(
                         o_descriptor),
                     r_instance);
@@ -330,9 +327,7 @@ class appl_thread_cache_node : public appl_node
         //
         //
         virtual
-        ~appl_thread_cache_node()
-        {
-        }
+        ~appl_thread_cache_node();
 
     private:
 
@@ -383,17 +378,22 @@ class appl_thread_cache_node : public appl_node
 
 }; // class appl_thread_cache_node
 
+appl_thread_cache_node::~appl_thread_cache_node()
+{
+}
+
 //
 //
 //
 class appl_thread_cache_mgr : public appl_object
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_context * const
+                struct appl_object * const
                     p_context,
                 class appl_thread_cache_mgr * * const
                     r_instance)
@@ -402,12 +402,7 @@ class appl_thread_cache_mgr : public appl_object
                 e_status;
 
             e_status =
-                appl_object::s_create(
-                    p_context,
-                    (&
-                        appl_thread_cache_mgr::s_new),
-                    (&
-                        appl_thread_cache_mgr::f_init),
+                p_context->alloc_object(
                     r_instance);
 
             return
@@ -513,9 +508,7 @@ class appl_thread_cache_mgr : public appl_object
         //
         //
         virtual
-        ~appl_thread_cache_mgr()
-        {
-        }
+        ~appl_thread_cache_mgr();
 
     private:
 
@@ -594,6 +587,10 @@ class appl_thread_cache_mgr : public appl_object
         } // v_cleanup()
 
 }; // class appl_thread_cache_mgr
+
+appl_thread_cache_mgr::~appl_thread_cache_mgr()
+{
+}
 
 //
 //

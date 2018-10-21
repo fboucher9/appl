@@ -21,7 +21,7 @@
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
-struct appl_context;
+struct appl_object;
 
 struct appl_property;
 
@@ -36,6 +36,7 @@ class appl_socket_w32_node;
 //
 class appl_address_std_node : public appl_address
 {
+    friend struct appl_object;
     friend class appl_socket_std_node;
     friend class appl_socket_w32_node;
 
@@ -44,7 +45,7 @@ class appl_address_std_node : public appl_address
         static
         enum appl_status
             s_create(
-                struct appl_context * const
+                struct appl_object * const
                     p_context,
                 struct appl_address_property const * const
                     p_property,
@@ -141,7 +142,7 @@ class appl_address_std_node : public appl_address
                     p_placement);
 
         enum appl_status
-            init(
+            f_init(
                 struct appl_address_property const * const
                     p_property);
 

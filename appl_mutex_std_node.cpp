@@ -37,8 +37,8 @@
 //
 //
 enum appl_status
-    appl_mutex_std_node::create_instance(
-        struct appl_context * const
+    appl_mutex_std_node::s_create(
+        struct appl_object * const
             p_context,
         struct appl_mutex_descriptor const * const
             p_mutex_descriptor,
@@ -55,12 +55,7 @@ enum appl_status
         p_mutex_std_node;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_mutex_std_node::placement_new),
-            (&
-                appl_mutex_std_node::init),
+        p_context->alloc_object(
             &(
                 p_mutex_std_node));
 
@@ -76,7 +71,7 @@ enum appl_status
     return
         e_status;
 
-} // create_instance()
+} // s_create()
 
 //
 //
@@ -125,20 +120,20 @@ appl_mutex_std_node::convert_handle(
 //
 //
 void
-    appl_mutex_std_node::placement_new(
+    appl_mutex_std_node::s_new(
         void * const
             p_placement)
 {
     new (p_placement)
         class appl_mutex_std_node;
 
-} // placement_new()
+} // s_new()
 
 //
 //
 //
 enum appl_status
-    appl_mutex_std_node::init(void)
+    appl_mutex_std_node::f_init(void)
 {
     enum appl_status
         e_status;
@@ -157,7 +152,7 @@ enum appl_status
     return
         e_status;
 
-} // init()
+} // f_init()
 
 //
 //
@@ -221,7 +216,7 @@ enum appl_status
 
 enum appl_status
 appl_mutex_std_node_create(
-    struct appl_context * const
+    struct appl_object * const
         p_context,
     struct appl_mutex_descriptor const * const
         p_mutex_descriptor,
@@ -233,7 +228,7 @@ appl_mutex_std_node_create(
 //
 enum appl_status
 appl_mutex_std_node_create(
-    struct appl_context * const
+    struct appl_object * const
         p_context,
     struct appl_mutex_descriptor const * const
         p_mutex_descriptor,
@@ -241,7 +236,7 @@ appl_mutex_std_node_create(
         r_mutex)
 {
     return
-        appl_mutex_std_node::create_instance(
+        appl_mutex_std_node::s_create(
             p_context,
             p_mutex_descriptor,
             r_mutex);

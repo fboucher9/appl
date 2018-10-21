@@ -130,12 +130,12 @@ appl_object::operator delete (
 //
 //
 enum appl_status
-    appl_object::init_dummy(void)
+    appl_object::f_init(void)
 {
     return
         appl_status_ok;
 
-} // init_dummy()
+} // f_init()
 
 //
 //

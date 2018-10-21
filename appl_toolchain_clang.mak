@@ -21,6 +21,7 @@ appl-clang-common-flags = \
     -g \
     -O0 \
     -Weverything \
+    -Wno-unused-template \
     -D_DEFAULT_SOURCE \
     -DAPPL_OS_LINUX \
     -DAPPL_BUILD_EXE \

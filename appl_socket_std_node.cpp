@@ -56,7 +56,7 @@
 //
 enum appl_status
     appl_socket_std_node::s_create(
-        struct appl_context * const
+        struct appl_object * const
             p_context,
         struct appl_socket_property const * const
             p_socket_descriptor,
@@ -70,12 +70,7 @@ enum appl_status
         p_socket_std_node;
 
     e_status =
-        appl_object::s_create (
-            p_context,
-            (&
-                appl_socket_std_node::s_new),
-            (&
-                appl_socket_std_node::init),
+        p_context->alloc_object(
             p_socket_descriptor,
             &(
                 p_socket_std_node));
@@ -127,7 +122,7 @@ void
 //
 //
 enum appl_status
-appl_socket_std_node::init(
+appl_socket_std_node::f_init(
     struct appl_socket_property const * const
         p_socket_descriptor)
 {
@@ -215,13 +210,13 @@ appl_socket_std_node::init(
     return
         e_status;
 
-} // init()
+} // f_init()
 
 //
 //
 //
 enum appl_status
-appl_socket_std_node::init_fd(
+appl_socket_std_node::f_init(
     int const * const
         p_socket_descriptor)
 {
@@ -238,7 +233,7 @@ appl_socket_std_node::init_fd(
     return
         e_status;
 
-} // init_fd()
+} // f_init()
 
 //
 //
@@ -842,12 +837,7 @@ appl_socket_std_node::v_accept(
                     p_socket_std_node;
 
                 e_status =
-                    appl_object::s_create(
-                        m_context,
-                        (&
-                            appl_socket_std_node::s_new),
-                        (&
-                            appl_socket_std_node::init_fd),
+                    alloc_object(
                         &(
                             i_accept_result),
                         &(

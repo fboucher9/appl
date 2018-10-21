@@ -17,7 +17,7 @@
 #endif /* #if ! defined INC_APPL_OBJECT_H */
 
 /* Predefine */
-struct appl_context;
+struct appl_object;
 
 /* Predefine */
 struct appl_string;
@@ -37,7 +37,7 @@ struct appl_string : public appl_object
         static
         enum appl_status
             s_create(
-                struct appl_context * const
+                struct appl_object * const
                     p_context,
                 unsigned long int const
                     i_alloc_len,
@@ -87,7 +87,7 @@ struct appl_string : public appl_object
                     p_placement);
 
         enum appl_status
-            init(
+            f_init(
                 struct appl_string_descriptor const * const
                     p_string_descriptor);
 

@@ -29,7 +29,7 @@
 //
 enum appl_status
 appl_random_std_mgr::s_create(
-    struct appl_context * const
+    struct appl_object * const
         p_context,
     class appl_random_mgr * * const
         r_random_mgr)
@@ -41,12 +41,7 @@ appl_random_std_mgr::s_create(
         p_random_std_mgr;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_random_std_mgr::s_new),
-            (&
-                appl_random_std_mgr::init),
+        p_context->alloc_object(
             &(
                 p_random_std_mgr));
 
@@ -122,7 +117,7 @@ appl_random_std_mgr::v_create_node(
     {
         e_status =
             appl_random_std_crypto::s_create(
-                m_context,
+                this,
                 r_node);
     }
     else

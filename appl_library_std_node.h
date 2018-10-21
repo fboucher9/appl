@@ -16,7 +16,7 @@
 #error include appl_library_node.h before appl_library_std_node.h
 #endif /* #if ! defined INC_APPL_LIBRARY_NODE_H */
 
-struct appl_context;
+struct appl_object;
 
 struct appl_library_descriptor;
 
@@ -39,12 +39,13 @@ class appl_library_std_node;
 //
 class appl_library_std_node : public appl_library
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_context * const
+                struct appl_object * const
                     p_context,
                 struct appl_library_descriptor const * const
                     p_library_descriptor,
@@ -59,7 +60,7 @@ class appl_library_std_node : public appl_library
         ~appl_library_std_node();
 
         enum appl_status
-            init(
+            f_init(
                 struct appl_library_descriptor const * const
                     p_library_descriptor);
 

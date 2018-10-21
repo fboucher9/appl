@@ -29,7 +29,7 @@
 //
 enum appl_status
 appl_options_std::s_create(
-    struct appl_context * const
+    struct appl_object * const
         p_context,
     struct appl_options_std_descriptor const * const
         p_options_std_descriptor,
@@ -43,12 +43,7 @@ appl_options_std::s_create(
         p_options_std;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_options_std::placement_new),
-            (&
-                appl_options_std::init),
+        p_context->alloc_object(
             p_options_std_descriptor,
             &(
                 p_options_std));
@@ -87,20 +82,20 @@ appl_options_std::~appl_options_std()
 //
 //
 void
-    appl_options_std::placement_new(
+    appl_options_std::s_new(
         void * const
             p_placement)
 {
     new (p_placement)
         class appl_options_std;
 
-} // placement_new()
+} // s_new()
 
 //
 //
 //
 enum appl_status
-appl_options_std::init(
+appl_options_std::f_init(
     struct appl_options_std_descriptor const * const
         p_options_std_descriptor)
 {
@@ -117,7 +112,7 @@ appl_options_std::init(
     return
         e_status;
 
-} // init()
+} // f_init()
 
 //
 //

@@ -33,10 +33,16 @@ class appl_socket_std_mgr : public appl_socket_mgr
         static
         enum appl_status
             s_create(
-                struct appl_context * const
+                struct appl_object * const
                     p_context,
                 class appl_socket_mgr * * const
                     r_socket_mgr);
+
+        static
+        void
+            s_new(
+                void * const
+                    p_placement);
 
     protected:
 
@@ -53,12 +59,6 @@ class appl_socket_std_mgr : public appl_socket_mgr
         class appl_socket_std_mgr &
             operator =(
                 class appl_socket_std_mgr const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         virtual
         enum appl_status

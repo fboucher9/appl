@@ -30,8 +30,8 @@
 //
 //
 enum appl_status
-    appl_file_std_mgr::create_instance(
-        struct appl_context * const
+    appl_file_std_mgr::s_create(
+        struct appl_object * const
             p_context,
         class appl_file_mgr * * const
             r_file_mgr)
@@ -43,12 +43,7 @@ enum appl_status
         p_file_std_mgr;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_file_std_mgr::placement_new),
-            (&
-                appl_file_std_mgr::f_init),
+        p_context->alloc_object(
             &(
                 p_file_std_mgr));
 
@@ -86,14 +81,14 @@ appl_file_std_mgr::~appl_file_std_mgr()
 //
 //
 void
-    appl_file_std_mgr::placement_new(
+    appl_file_std_mgr::s_new(
         void * const
             p_placement)
 {
     new (p_placement)
         class appl_file_std_mgr;
 
-} // placement_new()
+} // s_new()
 
 //
 //
@@ -164,8 +159,7 @@ enum appl_status
 
     // Use a pool to allocate memory for a node
     e_status =
-        appl_file_std_node::create_instance(
-            m_context,
+        appl_file_std_node::s_create(
             m_pool,
             p_file_descriptor,
             r_file);

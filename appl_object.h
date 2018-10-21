@@ -31,63 +31,26 @@ struct appl_object
     public:
 
         template <typename T_instance>
-        static
         enum appl_status
-            s_create(
-                struct appl_context * const
-                    p_context,
-                void (* const p_new)(
-                    void * const
-                        p_placement),
+            alloc_object(
                 T_instance * * const
                     r_object)
         {
             return
                 appl_object::s_create<T_instance>(
-                    p_context,
+                    m_context,
                     sizeof(T_instance),
-                    p_new,
                     (&
-                        T_instance::init_dummy),
-                    r_object);
-
-        } // s_create()
-
-        template <typename T_instance>
-        static
-        enum appl_status
-            s_create(
-                struct appl_context * const
-                    p_context,
-                void (* const p_new)(
-                    void * const
-                        p_placement),
-                enum appl_status (T_instance::* const p_init)(void),
-                T_instance * * const
-                    r_object)
-        {
-            return
-                appl_object::s_create<T_instance>(
-                    p_context,
-                    sizeof(T_instance),
-                    p_new,
-                    p_init,
+                        T_instance::s_new),
+                    (&
+                        T_instance::f_init),
                     r_object);
 
         } // s_create()
 
         template <typename T_instance, typename T_descriptor>
-        static
         enum appl_status
-            s_create(
-                struct appl_context * const
-                    p_context,
-                void (* const p_new)(
-                    void * const
-                        p_placement),
-                enum appl_status (T_instance::* const p_init)(
-                    T_descriptor const * const
-                        p_descriptor),
+            alloc_object(
                 T_descriptor const * const
                     p_descriptor,
                 T_instance * * const
@@ -95,14 +58,61 @@ struct appl_object
         {
             return
                 appl_object::s_create<T_instance, T_descriptor>(
-                    p_context,
+                    m_context,
                     sizeof(T_instance),
-                    p_new,
-                    p_init,
+                    (&
+                        T_instance::s_new),
+                    (&
+                        T_instance::f_init),
                     p_descriptor,
                     r_object);
 
-        } // s_create()
+        } // alloc_object()
+
+        template <typename T_instance>
+        enum appl_status
+            init_object(
+                void * const
+                    p_placement,
+                T_instance * * const
+                    r_object)
+        {
+            return
+                appl_object::s_init<T_instance>(
+                    m_context,
+                    p_placement,
+                    sizeof(T_instance),
+                    (&
+                        T_instance::s_new),
+                    (&
+                        T_instance::f_init),
+                    r_object);
+
+        } // init_object()
+
+        template <typename T_instance, typename T_descriptor>
+        enum appl_status
+            init_object(
+                void * const
+                    p_placement,
+                T_descriptor const * const
+                    p_descriptor,
+                T_instance * * const
+                    r_object)
+        {
+            return
+                appl_object::s_init<T_instance, T_descriptor>(
+                    m_context,
+                    p_placement,
+                    sizeof(T_instance),
+                    (&
+                        T_instance::s_new),
+                    (&
+                        T_instance::f_init),
+                    p_descriptor,
+                    r_object);
+
+        } // init_object()
 
         template <typename T_instance, typename T_descriptor>
         static
@@ -231,6 +241,33 @@ struct appl_object
                     p_context,
                 void * const
                     p_placement,
+                T_descriptor const * const
+                    p_descriptor,
+                T_instance * * const
+                    r_object)
+        {
+            return
+                appl_object::s_init<T_instance, T_descriptor>(
+                    p_context,
+                    p_placement,
+                    sizeof(T_instance),
+                    (&
+                        T_instance::s_new),
+                    (&
+                        T_instance::f_init),
+                    p_descriptor,
+                    r_object);
+
+        } // s_init()
+
+        template <typename T_instance, typename T_descriptor>
+        static
+        enum appl_status
+            s_init(
+                struct appl_context * const
+                    p_context,
+                void * const
+                    p_placement,
                 appl_size_t const
                     i_placement_length,
                 void (* const p_new)(
@@ -294,6 +331,27 @@ struct appl_object
                 e_status;
 
         } // s_init()
+
+        template <typename T_instance>
+        static
+        enum appl_status
+            s_init(
+                struct appl_context * const
+                    p_context,
+                void * const
+                    p_placement,
+                T_instance * * const
+                    r_object)
+        {
+            return
+                appl_object::s_init<T_instance>(
+                    p_context,
+                    p_placement,
+                    sizeof(T_instance),
+                    (& T_instance::s_new),
+                    (& T_instance::f_init),
+                    r_object);
+        }
 
         template <typename T_instance>
         static
@@ -368,6 +426,9 @@ struct appl_object
         struct appl_context *
             get_context(void) const;
 
+        enum appl_status
+            f_init(void);
+
     protected:
 
         struct appl_context *
@@ -377,9 +438,6 @@ struct appl_object
 
         virtual
         ~appl_object();
-
-        enum appl_status
-            init_dummy(void);
 
         virtual
         enum appl_status

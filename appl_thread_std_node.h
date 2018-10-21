@@ -90,18 +90,24 @@ class appl_thread_sync
 }; // class appl_thread_sync
 #endif
 
+/* Predefine */
+struct appl_thread_std_node_descriptor;
+
 //
 //
 //
 class appl_thread_std_node : public appl_thread
 {
+    friend struct appl_object;
+    friend struct appl_pool;
+
     public:
 
         static
         enum appl_status
-            create_instance(
-                struct appl_context * const
-                    p_context,
+            s_create(
+                struct appl_pool * const
+                    p_pool,
                 struct appl_thread_property const * const
                     p_thread_property,
                 struct appl_thread * * const
@@ -133,6 +139,14 @@ class appl_thread_std_node : public appl_thread
 
         // --
 
+        struct appl_pool *
+            m_pool;
+
+        void *
+            pv_padding[1u];
+
+        // --
+
         appl_thread_std_node(
             class appl_thread_std_node const & r);
 
@@ -142,14 +156,14 @@ class appl_thread_std_node : public appl_thread
 
         static
         void
-            placement_new(
+            s_new(
                 void * const
                     p_placement);
 
         enum appl_status
-            init(
-                struct appl_thread_property const * const
-                    p_thread_property);
+            f_init(
+                struct appl_thread_std_node_descriptor const * const
+                    p_descriptor);
 
         virtual
         enum appl_status

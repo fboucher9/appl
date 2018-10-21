@@ -27,7 +27,7 @@
 //
 enum appl_status
     appl_queue_std::s_create(
-        struct appl_context * const
+        struct appl_object * const
             p_context,
         struct appl_queue_descriptor const * const
             p_descriptor,
@@ -41,12 +41,7 @@ enum appl_status
         p_queue_std;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_queue_std::s_new),
-            (&
-                appl_queue_std::f_init),
+        p_context->alloc_object(
             p_descriptor,
             &(
                 p_queue_std));

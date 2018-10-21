@@ -31,7 +31,7 @@
 //
 enum appl_status
     appl_library_std_node::s_create(
-        struct appl_context * const
+        struct appl_object * const
             p_context,
         struct appl_library_descriptor const * const
             p_library_descriptor,
@@ -45,12 +45,7 @@ enum appl_status
         p_library_std_node;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_library_std_node::s_new),
-            (&
-                appl_library_std_node::init),
+        p_context->alloc_object(
             p_library_descriptor,
             &(
                 p_library_std_node));
@@ -89,7 +84,7 @@ appl_library_std_node::~appl_library_std_node()
 //
 //
 enum appl_status
-    appl_library_std_node::init(
+    appl_library_std_node::f_init(
         struct appl_library_descriptor const * const
             p_library_descriptor)
 {
@@ -141,7 +136,7 @@ enum appl_status
     return
         e_status;
 
-} // init()
+} // f_init()
 
 //
 //

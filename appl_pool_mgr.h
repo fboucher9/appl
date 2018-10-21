@@ -30,6 +30,7 @@ class appl_pool_mgr;
 //
 class appl_pool_mgr : public appl_object
 {
+    friend struct appl_object;
     public:
 
         static
@@ -57,18 +58,18 @@ class appl_pool_mgr : public appl_object
 
     private:
 
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
-
         appl_pool_mgr(
             class appl_pool_mgr const & r);
 
         class appl_pool_mgr &
             operator =(
                 class appl_pool_mgr const & r);
+
+        static
+        void
+            s_new(
+                void * const
+                    p_placement);
 
 }; // class appl_pool_mgr
 

@@ -37,12 +37,13 @@ struct appl_pool_std_descriptor;
 //
 class appl_pool_std : public appl_pool
 {
+    friend struct appl_object;
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_context * const
+                struct appl_object * const
                     p_context,
                 appl_size_t const
                     i_buf_len,
@@ -88,7 +89,7 @@ class appl_pool_std : public appl_pool
                     p_placement);
 
         enum appl_status
-            init(
+            f_init(
                 struct appl_pool_std_descriptor const * const
                     p_descriptor);
 

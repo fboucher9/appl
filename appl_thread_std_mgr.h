@@ -10,6 +10,9 @@
 
 #define INC_APPL_THREAD_STD_MGR_H
 
+/* Predefine */
+struct appl_pool;
+
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -28,11 +31,20 @@ class appl_thread_std_mgr :
 
         static
         enum appl_status
-            create_instance(
-                struct appl_context * const
+            s_create(
+                struct appl_object * const
                     p_context,
                 class appl_thread_mgr * * const
                     r_thread_mgr);
+
+        static
+        void
+            s_new(
+                void * const
+                    p_placement);
+
+        enum appl_status
+            f_init(void);
 
     protected:
 
@@ -43,6 +55,24 @@ class appl_thread_std_mgr :
 
     private:
 
+        // --
+
+        struct appl_pool *
+            m_pool;
+
+        void *
+            pv_padding[1u];
+
+        // --
+
+        bool
+            m_pool_created;
+
+        unsigned char
+            uc_padding[7u];
+
+        // --
+
         appl_thread_std_mgr(
             class appl_thread_std_mgr const & r);
 
@@ -50,11 +80,9 @@ class appl_thread_std_mgr :
             operator =(
                 class appl_thread_std_mgr const & r);
 
-        static
-        void
-            placement_new(
-                void * const
-                    p_placement);
+        virtual
+        enum appl_status
+            v_cleanup(void);
 
         virtual
         enum appl_status

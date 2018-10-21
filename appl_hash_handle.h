@@ -101,6 +101,19 @@ appl_hash_lookup(
     unsigned long int const
         i_key_len);
 
+void
+appl_hash_iterate(
+    struct appl_hash * const
+        p_hash,
+    void (
+        * p_callback)(
+        void * const
+            p_context,
+        struct appl_list * const
+            p_list),
+    void * const
+        p_context);
+
 #if defined __cplusplus
 } /* extern "C" */
 #endif /* #if defined __cplusplus */
