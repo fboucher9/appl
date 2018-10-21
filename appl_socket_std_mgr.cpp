@@ -18,6 +18,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_socket_mgr.h>
 
 #include <appl_socket_std_mgr.h>
@@ -45,8 +47,8 @@
 //
 enum appl_status
     appl_socket_std_mgr::s_create(
-        struct appl_object * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         class appl_socket_mgr * * const
             r_socket_mgr)
 {
@@ -57,7 +59,7 @@ enum appl_status
         p_socket_std_mgr;
 
     e_status =
-        p_context->alloc_object(
+        p_heap->alloc_object(
             &(
                 p_socket_std_mgr));
 
@@ -118,7 +120,7 @@ enum appl_status
 
     e_status =
         appl_address_std_node::s_create(
-            this,
+            m_context->m_heap,
             p_property,
             r_address);
 
@@ -142,7 +144,7 @@ enum appl_status
 
     e_status =
         appl_socket_std_node::s_create(
-            this,
+            m_context->m_heap,
             p_socket_descriptor,
             r_socket);
 
@@ -190,7 +192,7 @@ enum appl_status
         p_pollfd_array;
 
     e_status =
-        m_context->m_heap->alloc_object_array(
+        m_context->m_heap->alloc_structure_array(
             i_count,
             &(
                 p_pollfd_array));
@@ -352,7 +354,7 @@ enum appl_status
                 appl_status_fail;
         }
 
-        m_context->m_heap->free_object_array(
+        m_context->m_heap->free_structure_array(
             i_count,
             p_pollfd_array);
     }

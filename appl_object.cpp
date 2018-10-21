@@ -10,55 +10,22 @@
 
 #include <appl_object.h>
 
-#include <appl_context.h>
-
-#include <appl_heap.h>
-
 #include <appl_unused.h>
 
 //
 //
 //
 enum appl_status
-    appl_object::destroy(void)
+    appl_object::v_destroy(void)
 {
-    struct appl_context * const
-        p_context =
-        m_context;
-
     enum appl_status const
         e_status =
         v_cleanup();
 
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        class appl_heap * const
-            p_heap =
-            p_context->m_heap;
-
-        void * const
-            p_placement =
-            this;
-
-        appl_size_t const
-            i_placement_length =
-            m_placement_length;
-
-        delete
-            this;
-
-        /* Free memory */
-        p_heap->v_free(
-            i_placement_length,
-            p_placement);
-    }
-
     return
         e_status;
 
-} // destroy()
+} // v_destroy()
 
 //
 //
@@ -165,38 +132,14 @@ struct appl_context *
 //
 //
 //
-enum appl_status
-    appl_object::alloc_placement(
-        struct appl_context * const
-            p_context,
-        appl_size_t const
-            i_placement_length,
-        void * * const
-            r_placement)
-{
-    return
-        p_context->m_heap->v_alloc(
-            i_placement_length,
-            r_placement);
-
-} // alloc_placement()
-
-//
-//
-//
 void
-    appl_object::free_placement(
+    appl_object::set_context(
         struct appl_context * const
-            p_context,
-        appl_size_t const
-            i_placement_length,
-        void * const
-            p_placement)
+            p_context)
 {
-    p_context->m_heap->v_free(
-        i_placement_length,
-        p_placement);
+    m_context =
+        p_context;
 
-} // free_placement()
+} // set_context()
 
 /* end-of-file: appl_object.cpp */

@@ -16,6 +16,8 @@ Comments:
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_pool_object.h>
 
 #include <appl_thread_cache.h>
@@ -35,6 +37,8 @@ Comments:
 #include <appl_mutex_handle.h>
 
 #include <appl_thread_descriptor.h>
+
+#include <appl_heap.h>
 
 struct appl_thread_property;
 
@@ -270,8 +274,8 @@ class appl_thread_cache_node : public appl_node
         static
         enum appl_status
             s_create_instance(
-                struct appl_object * const
-                    p_context,
+                struct appl_heap * const
+                    p_heap,
                 class appl_thread_cache_mgr * const
                     p_thread_cache_mgr,
                 struct appl_thread_property const * const
@@ -292,7 +296,7 @@ class appl_thread_cache_node : public appl_node
                 p_property;
 
             e_status =
-                p_context->alloc_object(
+                p_heap->alloc_object(
                     &(
                         o_descriptor),
                     r_instance);
@@ -387,7 +391,7 @@ appl_thread_cache_node::~appl_thread_cache_node()
 //
 //
 //
-class appl_thread_cache_mgr : public appl_object
+class appl_thread_cache_mgr : public appl_heap_object
 {
     friend struct appl_object;
     public:
@@ -395,8 +399,8 @@ class appl_thread_cache_mgr : public appl_object
         static
         enum appl_status
             s_create(
-                struct appl_object * const
-                    p_context,
+                struct appl_heap * const
+                    p_heap,
                 class appl_thread_cache_mgr * * const
                     r_instance)
         {
@@ -404,7 +408,7 @@ class appl_thread_cache_mgr : public appl_object
                 e_status;
 
             e_status =
-                p_context->alloc_object(
+                p_heap->alloc_object(
                     r_instance);
 
             return
@@ -448,7 +452,7 @@ class appl_thread_cache_mgr : public appl_object
             {
                 e_status =
                     appl_thread_cache_node::s_create_instance(
-                        m_context,
+                        m_context->m_heap,
                         this,
                         p_property,
                         &(
@@ -499,7 +503,7 @@ class appl_thread_cache_mgr : public appl_object
         //
         //
         appl_thread_cache_mgr() :
-            appl_object(),
+            appl_heap_object(),
             m_lock(),
             m_unused_nodes(),
             m_active_nodes()
@@ -733,8 +737,8 @@ struct appl_thread *
 extern
 enum appl_status
 appl_thread_cache_mgr_create(
-    struct appl_context * const
-        p_context,
+    struct appl_heap * const
+        p_heap,
     class appl_thread_cache_mgr * * const
         r_instance);
 
@@ -749,8 +753,8 @@ appl_thread_cache_mgr_destroy(
 //
 enum appl_status
 appl_thread_cache_mgr_create(
-    struct appl_context * const
-        p_context,
+    struct appl_heap * const
+        p_heap,
     class appl_thread_cache_mgr * * const
         r_instance)
 {
@@ -759,7 +763,7 @@ appl_thread_cache_mgr_create(
 
     e_status =
         appl_thread_cache_mgr::s_create(
-            p_context,
+            p_heap,
             r_instance);
 
     return
@@ -775,7 +779,7 @@ appl_thread_cache_mgr_destroy(
     class appl_thread_cache_mgr * const
         p_thread_cache_mgr)
 {
-    p_thread_cache_mgr->destroy();
+    p_thread_cache_mgr->v_destroy();
 
 } // appl_thread_cache_mgr_destroy()
 

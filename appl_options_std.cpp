@@ -10,6 +10,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_options.h>
 
 #include <appl_options_std.h>
@@ -29,8 +31,8 @@
 //
 enum appl_status
 appl_options_std::s_create(
-    struct appl_object * const
-        p_context,
+    struct appl_heap * const
+        p_heap,
     struct appl_options_std_descriptor const * const
         p_options_std_descriptor,
     class appl_options * * const
@@ -43,7 +45,7 @@ appl_options_std::s_create(
         p_options_std;
 
     e_status =
-        p_context->alloc_object(
+        p_heap->alloc_object(
             p_options_std_descriptor,
             &(
                 p_options_std));

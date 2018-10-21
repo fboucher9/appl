@@ -16,6 +16,8 @@
 
 #include <appl_object.h>
 
+#include <appl_pool_object.h>
+
 #include <appl_file_node.h>
 
 /*

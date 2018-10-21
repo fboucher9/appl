@@ -30,7 +30,7 @@ class appl_random_mgr;
 //
 //
 //
-class appl_random_mgr : public appl_object
+class appl_random_mgr : public appl_heap_object
 {
     public:
 

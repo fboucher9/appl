@@ -37,8 +37,8 @@ class appl_file_std_mgr : public appl_file_mgr
         static
         enum appl_status
             s_create(
-                struct appl_object * const
-                    p_context,
+                struct appl_heap * const
+                    p_heap,
                 class appl_file_mgr * * const
                     r_file_mgr);
 

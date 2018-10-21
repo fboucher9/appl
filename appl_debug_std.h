@@ -31,8 +31,8 @@ class appl_debug_std : public appl_debug
         static
         enum appl_status
             s_create(
-                struct appl_object * const
-                    p_context,
+                struct appl_heap * const
+                    p_heap,
                 class appl_debug * * const
                     r_debug);
 

@@ -33,7 +33,7 @@ struct appl_pool;
 //      -   No array, allocate single instances.
 //      -   No realloc, may not change size of instances.
 //
-struct appl_pool : public appl_object
+struct appl_pool : public appl_heap_object
 {
     public:
 

@@ -24,6 +24,10 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
+#include <appl_pool_object.h>
+
 #include <appl_file_node.h>
 
 #include <appl_file_std_node.h>

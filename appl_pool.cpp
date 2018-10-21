@@ -5,6 +5,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_pool.h>
 
 #include <appl_unused.h>
@@ -57,7 +59,7 @@ enum appl_status
 //
 //
 appl_pool::appl_pool() :
-    appl_object()
+    appl_heap_object()
 {
 }
 

@@ -14,6 +14,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_list.h>
 
 #include <appl_node.h>
@@ -108,7 +110,7 @@ enum appl_status
     }
 
     // allocate an array
-    class appl_heap * const
+    struct appl_heap * const
         p_heap =
         m_context->m_heap;
 
@@ -233,7 +235,7 @@ void
     p_mutex->v_unlock();
 
     // free the tables
-    class appl_heap * const
+    struct appl_heap * const
         p_heap =
         m_context->m_heap;
 

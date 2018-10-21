@@ -21,12 +21,12 @@
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
 
-class appl_heap;
+struct appl_heap;
 
 //
 //
 //
-class appl_heap : public appl_object
+struct appl_heap : public appl_object
 {
     public:
 
@@ -40,7 +40,7 @@ class appl_heap : public appl_object
 
         template <typename T_instance>
         enum appl_status
-            alloc_object(
+            alloc_structure(
                 T_instance * * const
                     r_object)
         {
@@ -55,7 +55,7 @@ class appl_heap : public appl_object
 
         template <typename T_instance>
         enum appl_status
-            alloc_object_array(
+            alloc_structure_array(
                 unsigned long int
                     i_count,
                 T_instance * * const
@@ -81,7 +81,7 @@ class appl_heap : public appl_object
 
         template <typename T_instance>
         enum appl_status
-            free_object_array(
+            free_structure_array(
                 unsigned long int
                     i_count,
                 T_instance * const
@@ -95,6 +95,197 @@ class appl_heap : public appl_object
                     p_object_array);
         }
 
+        template <typename T_instance>
+        enum appl_status
+            alloc_object(
+                T_instance * * const
+                    r_object)
+        {
+            enum appl_status
+                e_status;
+
+            void *
+                p_placement;
+
+            appl_size_t const
+                i_placement_length =
+                sizeof(T_instance);
+
+            e_status =
+                v_alloc(
+                    i_placement_length,
+                    &(
+                        p_placement));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_object::s_init<T_instance>(
+                        m_context,
+                        p_placement,
+                        r_object);
+
+                if (
+                    appl_status_ok
+                    != e_status)
+                {
+                    v_free(
+                        i_placement_length,
+                        p_placement);
+                }
+            }
+
+            return
+                e_status;
+
+        } // alloc_object()
+
+        template <typename T_instance, typename T_descriptor>
+        enum appl_status
+            alloc_object(
+                T_descriptor const * const
+                    p_descriptor,
+                T_instance * * const
+                    r_object)
+        {
+            enum appl_status
+                e_status;
+
+            void *
+                p_placement;
+
+            appl_size_t const
+                i_placement_length =
+                sizeof(T_instance);
+
+            e_status =
+                v_alloc(
+                    i_placement_length,
+                    &(
+                        p_placement));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_object::s_init<T_instance, T_descriptor>(
+                        m_context,
+                        p_placement,
+                        p_descriptor,
+                        r_object);
+
+                if (
+                    appl_status_ok
+                    != e_status)
+                {
+                    v_free(
+                        i_placement_length,
+                        p_placement);
+                }
+            }
+
+            return
+                e_status;
+
+        } // alloc_object()
+
+        template <typename T_instance, typename T_descriptor>
+        enum appl_status
+            alloc_object(
+                appl_size_t const
+                    i_placement_length,
+                T_descriptor const * const
+                    p_descriptor,
+                T_instance * * const
+                    r_object)
+        {
+            enum appl_status
+                e_status;
+
+            void *
+                p_placement;
+
+            e_status =
+                v_alloc(
+                    i_placement_length,
+                    &(
+                        p_placement));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_object::s_init<T_instance, T_descriptor>(
+                        m_context,
+                        p_placement,
+                        p_descriptor,
+                        r_object);
+
+                if (
+                    appl_status_ok
+                    != e_status)
+                {
+                    v_free(
+                        i_placement_length,
+                        p_placement);
+                }
+            }
+
+            return
+                e_status;
+
+        } // s_create()
+
+        template <typename T_instance>
+        enum appl_status
+            alloc_object(
+                appl_size_t const
+                    i_placement_length,
+                T_instance * * const
+                    r_object)
+        {
+            enum appl_status
+                e_status;
+
+            void *
+                p_placement;
+
+            e_status =
+                v_alloc(
+                    i_placement_length,
+                    &(
+                        p_placement));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_object::s_init<T_instance>(
+                        m_context,
+                        p_placement,
+                        i_placement_length,
+                        r_object);
+
+                if (
+                    appl_status_ok
+                    != e_status)
+                {
+                    v_free(
+                        i_placement_length,
+                        p_placement);
+                }
+            }
+
+            return
+                e_status;
+
+        } // s_create()
+
     protected:
 
         appl_heap();
@@ -105,12 +296,12 @@ class appl_heap : public appl_object
     private:
 
         appl_heap(
-            class appl_heap const & r);
+            struct appl_heap const & r);
 
-        class appl_heap &
+        struct appl_heap &
             operator =(
-                class appl_heap const & r);
+                struct appl_heap const & r);
 
-}; // class appl_heap
+}; // struct appl_heap
 
 /* end-of-file: appl_heap.h */

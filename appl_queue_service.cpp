@@ -14,6 +14,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_list.h>
 
 #include <appl_queue.h>
@@ -29,8 +31,8 @@
 //
 enum appl_status
     appl_queue_service::s_create(
-        struct appl_context * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         struct appl_queue_descriptor const * const
             p_descriptor,
         struct appl_queue * * const
@@ -38,7 +40,7 @@ enum appl_status
 {
     return
         appl_queue_std::s_create(
-            p_context,
+            p_heap,
             p_descriptor,
             r_instance);
 

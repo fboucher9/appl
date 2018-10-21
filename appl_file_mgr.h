@@ -12,9 +12,9 @@
 #define INC_APPL_FILE_MGR_H
 
 /* Header file dependencies */
-#if !defined(INC_APPL_OBJECT_H)
-#error include appl_object.h before
-#endif /* #if !defined(INC_APPL_OBJECT_H) */
+#if !defined(INC_APPL_HEAP_OBJECT_H)
+#error include appl_heap_object.h before
+#endif /* #if !defined(INC_APPL_HEAP_OBJECT_H) */
 
 struct appl_file_descriptor;
 
@@ -29,7 +29,7 @@ class appl_file_mgr;
 //
 //
 //
-class appl_file_mgr : public appl_object
+class appl_file_mgr : public appl_heap_object
 {
     public:
 

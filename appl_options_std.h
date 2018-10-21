@@ -39,8 +39,8 @@ class appl_options_std : public appl_options
         static
         enum appl_status
         s_create(
-            struct appl_object * const
-                p_context,
+            struct appl_heap * const
+                p_heap,
             struct appl_options_std_descriptor const * const
                 p_options_std_descriptor,
             class appl_options * * const

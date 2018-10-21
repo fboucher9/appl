@@ -45,8 +45,8 @@ class appl_library_std_mgr : public appl_library_mgr
         static
         enum appl_status
             s_create(
-                struct appl_object * const
-                    p_context,
+                struct appl_heap * const
+                    p_heap,
                 class appl_library_mgr * * const
                     r_library_mgr);
 

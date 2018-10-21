@@ -16,9 +16,13 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_string.h>
 
 #include <appl_buf.h>
+
+#include <appl_context.h>
 
 /*
 

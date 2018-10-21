@@ -10,6 +10,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_list.h>
 
 #include <appl_node.h>
@@ -48,7 +50,7 @@ void
 //
 //
 appl_node::appl_node() :
-    appl_object(),
+    appl_heap_object(),
     p_next(),
     p_prev()
 {

@@ -24,6 +24,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_object_handle.h>
 
 #include <appl_socket_descriptor.h>
@@ -46,6 +48,10 @@
 
 #include <appl_convert.h>
 
+#include <appl_heap.h>
+
+#include <appl_context.h>
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -56,8 +62,8 @@
 //
 enum appl_status
     appl_socket_std_node::s_create(
-        struct appl_object * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         struct appl_socket_property const * const
             p_socket_descriptor,
         struct appl_socket * * const
@@ -70,7 +76,7 @@ enum appl_status
         p_socket_std_node;
 
     e_status =
-        p_context->alloc_object(
+        p_heap->alloc_object(
             p_socket_descriptor,
             &(
                 p_socket_std_node));
@@ -837,7 +843,7 @@ appl_socket_std_node::v_accept(
                     p_socket_std_node;
 
                 e_status =
-                    alloc_object(
+                    m_context->m_heap->alloc_object(
                         &(
                             i_accept_result),
                         &(

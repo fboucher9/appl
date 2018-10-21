@@ -10,6 +10,12 @@
 
 #include <appl_queue_service.h>
 
+#include <appl_types.h>
+
+#include <appl_object.h>
+
+#include <appl_context.h>
+
 /*
 
 */
@@ -24,7 +30,7 @@ enum appl_status
 {
     return
         appl_queue_service::s_create(
-            p_context,
+            p_context->m_heap,
             p_descriptor,
             r_instance);
 

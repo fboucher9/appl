@@ -36,8 +36,8 @@ class appl_random_std_mgr : public appl_random_mgr
         static
         enum appl_status
         s_create(
-            struct appl_object * const
-                p_context,
+            struct appl_heap * const
+                p_heap,
             class appl_random_mgr * * const
                 r_random_mgr);
 

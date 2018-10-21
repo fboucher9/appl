@@ -10,6 +10,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_random_mgr.h>
 
 #include <appl_random.h>
@@ -19,6 +21,8 @@
 #include <appl_random_handle.h>
 
 #include <appl_unused.h>
+
+#include <appl_context.h>
 
 //
 //
@@ -39,7 +43,7 @@ appl_random_mgr::v_create_node(
     {
         e_status =
             appl_random_pseudo::s_create(
-                this,
+                m_context->m_heap,
                 p_descriptor->i_seed,
                 r_node);
     }
@@ -58,7 +62,7 @@ appl_random_mgr::v_create_node(
 //
 //
 appl_random_mgr::appl_random_mgr() :
-    appl_object()
+    appl_heap_object()
 {
 }
 

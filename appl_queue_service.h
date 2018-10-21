@@ -46,8 +46,8 @@ class appl_queue_service
         static
         enum appl_status
             s_create(
-                struct appl_context * const
-                    p_context,
+                struct appl_heap * const
+                    p_heap,
                 struct appl_queue_descriptor const * const
                     p_descriptor,
                 struct appl_queue * * const

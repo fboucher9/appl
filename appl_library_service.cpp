@@ -20,6 +20,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_context.h>
 
 #include <appl_unused.h>
@@ -79,7 +81,7 @@ enum appl_status
 
     e_status =
         appl_library_std_mgr::s_create(
-            p_context,
+            p_context->m_heap,
             r_library_mgr);
 
 #elif defined APPL_OS_WINDOWS
@@ -110,7 +112,7 @@ enum appl_status
             p_library_mgr)
 {
     return
-        p_library_mgr->destroy();
+        p_library_mgr->v_destroy();
 
 } // appl_library_mgr_destroy()
 
@@ -142,7 +144,7 @@ enum appl_status
             p_library)
 {
     return
-        p_library->destroy();
+        p_library->v_destroy();
 
 } // s_destroy()
 

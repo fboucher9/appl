@@ -76,7 +76,7 @@ struct appl_refcount;
 //
 //
 //
-struct appl_refcount : public appl_object
+struct appl_refcount : public appl_heap_object
 {
     public:
 

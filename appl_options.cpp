@@ -10,6 +10,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_options.h>
 
 #include <appl_unused.h>
@@ -52,7 +54,7 @@ enum appl_status
 //
 //
 appl_options::appl_options() :
-    appl_object()
+    appl_heap_object()
 {
 }
 

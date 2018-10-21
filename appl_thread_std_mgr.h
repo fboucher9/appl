@@ -32,8 +32,8 @@ class appl_thread_std_mgr :
         static
         enum appl_status
             s_create(
-                struct appl_object * const
-                    p_context,
+                struct appl_heap * const
+                    p_heap,
                 class appl_thread_mgr * * const
                     r_thread_mgr);
 

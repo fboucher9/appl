@@ -16,6 +16,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_property.h>
 
 #include <appl_property_std.h>
@@ -27,8 +29,8 @@
 //
 enum appl_status
 appl_property_service::s_create(
-    struct appl_context * const
-        p_context,
+    struct appl_heap * const
+        p_heap,
     unsigned int const
         i_count,
     struct appl_property * * const
@@ -42,7 +44,7 @@ appl_property_service::s_create(
 
     e_status =
         appl_property_std::s_create(
-            p_context,
+            p_heap,
             i_count,
             &(
                 p_property));

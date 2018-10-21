@@ -20,6 +20,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_pool_mgr.h>
 
 #include <appl_pool.h>
@@ -32,6 +34,8 @@
 
 #include <appl_context.h>
 
+#include <appl_heap.h>
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -42,8 +46,8 @@
 //
 enum appl_status
     appl_pool_mgr::s_create(
-        struct appl_context * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         class appl_pool_mgr * * const
             r_instance)
 {
@@ -51,7 +55,7 @@ enum appl_status
         e_status;
 
     e_status =
-        p_context->alloc_object(
+        p_heap->alloc_object(
             r_instance);
 
     return
@@ -77,7 +81,7 @@ enum appl_status
 
     e_status =
         appl_pool_std::s_create(
-            m_context,
+            m_context->m_heap,
             i_buf_len,
             &(
                 p_pool_std));

@@ -12,6 +12,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_buf.h>
 
 #include <appl_string.h>
@@ -40,7 +42,7 @@ appl_string_service::s_create(
 
     return
         appl_string::s_create(
-            p_context,
+            p_context->m_heap,
             i_alloc_len,
             r_string);
 

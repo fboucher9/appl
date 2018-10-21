@@ -34,8 +34,8 @@ class appl_random_pseudo : public appl_random
         static
         enum appl_status
         s_create(
-            struct appl_object * const
-                p_context,
+            struct appl_heap * const
+                p_heap,
             unsigned long int const
                 i_seed,
             struct appl_random * * const

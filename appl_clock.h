@@ -12,9 +12,9 @@
 #define INC_APPL_CLOCK_H
 
 /* Header file dependency */
-#if ! defined INC_APPL_OBJECT_H
-#error include appl_object.h before
-#endif /* #if ! defined INC_APPL_OBJECT_H */
+#if ! defined INC_APPL_HEAP_OBJECT_H
+#error include appl_heap_object.h before
+#endif /* #if ! defined INC_APPL_HEAP_OBJECT_H */
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -26,7 +26,7 @@ class appl_clock;
 //
 //
 //
-class appl_clock : public appl_object
+class appl_clock : public appl_heap_object
 {
     public:
 

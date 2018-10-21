@@ -17,8 +17,8 @@
 #endif /* #if ! defined INC_APPL_PROPERTY_TYPES_H */
 
 /* Header file dependency */
-#if ! defined INC_APPL_OBJECT_H
-#error include appl_object.h before
+#if ! defined INC_APPL_HEAP_OBJECT_H
+#error include appl_heap_object.h before
 #endif /* #if ! defined INC_APPL_OBJECT_H */
 
 union appl_property_value;
@@ -33,7 +33,7 @@ struct appl_property;
 //
 //
 //
-struct appl_property : public appl_object
+struct appl_property : public appl_heap_object
 {
     public:
 

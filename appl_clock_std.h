@@ -41,8 +41,8 @@ class appl_clock_std : public appl_clock
         static
         enum appl_status
             s_create(
-                struct appl_object * const
-                    p_context,
+                struct appl_heap * const
+                    p_heap,
                 class appl_clock * * const
                     r_clock);
 

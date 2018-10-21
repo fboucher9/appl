@@ -26,7 +26,7 @@ struct appl_library;
 //
 //
 //
-struct appl_library : public appl_object
+struct appl_library : public appl_heap_object
 {
     public:
 

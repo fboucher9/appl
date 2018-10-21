@@ -10,6 +10,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_pool_object.h>
 
 #include <appl_pool.h>
@@ -18,10 +20,18 @@
 //
 //
 enum appl_status
-    appl_pool_object::destroy(void)
+    appl_pool_object::v_destroy(void)
 {
     enum appl_status
         e_status;
+
+    struct appl_pool * const
+        p_pool =
+        m_pool;
+
+    void * const
+        p_placement =
+        this;
 
     e_status =
         v_cleanup();
@@ -30,14 +40,6 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
-        struct appl_pool * const
-            p_pool =
-            m_pool;
-
-        void * const
-            p_placement =
-            this;
-
         delete
             this;
 
@@ -48,7 +50,7 @@ enum appl_status
     return
         e_status;
 
-} // destroy()
+} // v_destroy()
 
 //
 //

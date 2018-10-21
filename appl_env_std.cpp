@@ -16,6 +16,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_env.h>
 
 #include <appl_env_std.h>
@@ -39,8 +41,8 @@
 //
 enum appl_status
 appl_env_std::s_create(
-    struct appl_object * const
-        p_context,
+    struct appl_heap * const
+        p_heap,
     class appl_env * * const
         r_env)
 {
@@ -51,7 +53,7 @@ appl_env_std::s_create(
         p_env_std;
 
     e_status =
-        p_context->alloc_object(
+        p_heap->alloc_object(
             &(
                 p_env_std));
 
@@ -99,7 +101,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_heap *
+    struct appl_heap *
         p_heap;
 
     p_heap =
@@ -115,7 +117,7 @@ enum appl_status
         p_name0;
 
     e_status =
-        p_heap->alloc_object_array(
+        p_heap->alloc_structure_array(
             i_name_len + 1ul,
             &(
                 p_name0));
@@ -215,7 +217,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_heap * const
+    struct appl_heap * const
         p_heap =
         m_context->m_heap;
 
@@ -229,7 +231,7 @@ enum appl_status
         p_name0;
 
     e_status =
-        p_heap->alloc_object_array(
+        p_heap->alloc_structure_array(
             i_name_len + 1,
             &(
                 p_name0));
@@ -256,7 +258,7 @@ enum appl_status
             p_value0;
 
         e_status =
-            p_heap->alloc_object_array(
+            p_heap->alloc_structure_array(
                 i_value_len + 1,
                 &(
                     p_value0));

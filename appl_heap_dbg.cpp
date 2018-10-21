@@ -49,7 +49,7 @@
 //
 struct appl_heap_dbg_descriptor
 {
-    class appl_heap *
+    struct appl_heap *
         p_parent;
 
 }; // struct appl_heap_dbg_descriptor
@@ -59,9 +59,9 @@ struct appl_heap_dbg_descriptor
 //
 enum appl_status
     appl_heap_dbg::create_instance(
-        class appl_heap * const
+        struct appl_heap * const
             p_parent,
-        class appl_heap * * const
+        struct appl_heap * * const
             r_heap)
 {
     enum appl_status
@@ -233,7 +233,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_heap * const
+    struct appl_heap * const
         p_parent =
         p_descriptor->p_parent;
 
@@ -325,7 +325,7 @@ enum appl_status
         printf("*** no memory leaks ***\n");
     }
 
-    class appl_heap * const
+    struct appl_heap * const
         p_parent =
         m_parent;
 

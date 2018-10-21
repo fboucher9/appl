@@ -33,8 +33,8 @@ class appl_random_std_crypto : public appl_random
         static
         enum appl_status
         s_create(
-            struct appl_object * const
-                p_context,
+            struct appl_heap * const
+                p_heap,
             struct appl_random * * const
                 r_random);
 

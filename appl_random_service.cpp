@@ -12,6 +12,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_random.h>
 
 #include <appl_random_mgr.h>

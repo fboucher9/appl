@@ -137,7 +137,7 @@ class appl_context_std : public appl_context
 
         enum appl_status
             init_heap(
-                class appl_heap * const
+                struct appl_heap * const
                     p_heap);
 
         void

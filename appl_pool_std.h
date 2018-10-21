@@ -43,8 +43,8 @@ class appl_pool_std : public appl_pool
         static
         enum appl_status
             s_create(
-                struct appl_object * const
-                    p_context,
+                struct appl_heap * const
+                    p_heap,
                 appl_size_t const
                     i_buf_len,
                 class appl_pool_std * * const

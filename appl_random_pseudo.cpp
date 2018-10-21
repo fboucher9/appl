@@ -10,19 +10,23 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_random.h>
 
 #include <appl_random_pseudo.h>
 
 #include <appl_unused.h>
 
+#include <appl_heap.h>
+
 //
 //
 //
 enum appl_status
 appl_random_pseudo::s_create(
-    struct appl_object * const
-        p_context,
+    struct appl_heap * const
+        p_heap,
     unsigned long int const
         i_seed,
     struct appl_random * * const
@@ -35,7 +39,7 @@ appl_random_pseudo::s_create(
         p_random_pseudo;
 
     e_status =
-        p_context->alloc_object(
+        p_heap->alloc_object(
             &(
                 i_seed),
             &(

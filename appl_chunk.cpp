@@ -20,6 +20,8 @@ Description:
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_heap.h>
 
 #include <appl_context.h>
@@ -80,7 +82,7 @@ union appl_chunk_node_cptr
 //  Description:
 //      Interface for serial buffer of unknown length.
 //
-struct appl_chunk : public appl_object
+struct appl_chunk : public appl_heap_object
 {
     public:
 
@@ -182,7 +184,7 @@ appl_chunk::v_read(
 //
 //
 appl_chunk::appl_chunk() :
-    appl_object()
+    appl_heap_object()
 {
 }
 
@@ -209,8 +211,8 @@ class appl_chunk_std : public appl_chunk
         static
         enum appl_status
         s_create(
-            struct appl_object * const
-                p_context,
+            struct appl_heap * const
+                p_heap,
             struct appl_chunk * * const
                 r_chunk);
 
@@ -248,7 +250,7 @@ class appl_chunk_std : public appl_chunk
                     p_placement);
 
         enum appl_status
-            init(void);
+            f_init(void);
 
         virtual
         enum appl_status
@@ -293,8 +295,8 @@ class appl_chunk_std : public appl_chunk
 //
 enum appl_status
 appl_chunk_std::s_create(
-    struct appl_object * const
-        p_context,
+    struct appl_heap * const
+        p_heap,
     struct appl_chunk * * const
         r_chunk)
 {
@@ -305,7 +307,7 @@ appl_chunk_std::s_create(
         p_chunk_std;
 
     e_status =
-        p_context->alloc_object(
+        p_heap->alloc_object(
             &(
                 p_chunk_std));
 
@@ -357,7 +359,7 @@ void
 //
 //
 enum appl_status
-appl_chunk_std::init(void)
+appl_chunk_std::f_init(void)
 {
     enum appl_status
         e_status;
@@ -428,7 +430,7 @@ appl_chunk_std::f_append_node(
         p_chunk_node;
 
     e_status =
-        m_context->m_heap->alloc_object(
+        m_context->m_heap->alloc_structure(
             &(
                 p_chunk_node));
 
@@ -734,7 +736,7 @@ appl_chunk_service::s_create(
 {
     return
         appl_chunk_std::s_create(
-            p_context,
+            p_context->m_heap,
             r_chunk);
 
 } // s_create()
@@ -748,7 +750,7 @@ appl_chunk_service::s_destroy(
         p_chunk)
 {
     return
-        p_chunk->destroy();
+        p_chunk->v_destroy();
 
 } // s_destroy()
 

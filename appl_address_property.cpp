@@ -18,6 +18,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_property_types.h>
 
 #include <appl_property.h>
@@ -33,6 +35,8 @@
 #include <appl_convert.h>
 
 #include <appl_context.h>
+
+#include <appl_heap.h>
 
 #define APPL_ADDRESS_PROPERTY_GUID (0xe0bfd095ul)
 
@@ -61,7 +65,7 @@ struct appl_address_property : public appl_property_std
         static
         enum appl_status
         s_create(
-            struct appl_object * const
+            struct appl_context * const
                 p_context,
             struct appl_address_property * * const
                 r_address_property);
@@ -102,13 +106,13 @@ struct appl_address_property : public appl_property_std
 //
 enum appl_status
 appl_address_property::s_create(
-    struct appl_object * const
+    struct appl_context * const
         p_context,
     struct appl_address_property * * const
         r_address_property)
 {
     return
-        p_context->alloc_object(
+        p_context->m_heap->alloc_object(
             r_address_property);
 
 } // s_create()

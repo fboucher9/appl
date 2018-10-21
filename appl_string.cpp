@@ -12,9 +12,13 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_buf.h>
 
 #include <appl_string.h>
+
+#include <appl_heap.h>
 
 struct appl_string_descriptor
 {
@@ -31,8 +35,8 @@ struct appl_string_descriptor
 //
 enum appl_status
     appl_string::s_create(
-        struct appl_object * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         unsigned long int const
             i_alloc_len,
         struct appl_string * * const
@@ -48,15 +52,10 @@ enum appl_status
         i_alloc_len;
 
     e_status =
-        appl_object::s_create(
-            p_context->get_context(),
+        p_heap->alloc_object(
             sizeof(
                 struct appl_string)
             + i_alloc_len,
-            (&
-                appl_string::s_new),
-            (&
-                appl_string::f_init),
             &(
                 o_string_descriptor),
             r_string);
@@ -118,7 +117,7 @@ enum appl_status
 //
 //
 appl_string::appl_string() :
-    appl_object(),
+    appl_heap_object(),
     m_buf_min(),
     m_buf_max()
 {

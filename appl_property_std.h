@@ -52,8 +52,8 @@ struct appl_property_std : public appl_property
         static
         enum appl_status
             s_create(
-                struct appl_object * const
-                    p_context,
+                struct appl_heap * const
+                    p_heap,
                 unsigned int const
                     i_id,
                 struct appl_property * * const

@@ -10,6 +10,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_random.h>
 
 #include <appl_unused.h>
@@ -37,7 +39,7 @@ appl_random::v_pick(
 //
 //
 appl_random::appl_random() :
-    appl_object()
+    appl_heap_object()
 {
 }
 

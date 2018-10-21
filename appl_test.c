@@ -2514,7 +2514,7 @@ appl_main(
     }
 #endif /* #if defined APPL_DEBUG */
 
-    if ((0))
+    if ((1))
     {
         /* test read */
         if (1)
@@ -2657,13 +2657,13 @@ appl_main(
             p_context);
     }
 
-    if ((0))
+    if ((1))
     {
         appl_test_file_stdin(
             p_context);
     }
 
-    if ((0))
+    if ((1))
     {
         struct appl_test_socket_descriptor
             o_test_socket_descriptor;
@@ -2691,13 +2691,13 @@ appl_main(
             p_context);
     }
 
-    if ((0))
+    if ((1))
     {
         appl_test_library(
             p_context);
     }
 
-    if ((0))
+    if ((1))
     {
         appl_test_random(
             p_context);
@@ -2709,7 +2709,7 @@ appl_main(
             p_context);
     }
 
-    if ((0))
+    if ((1))
     {
         static unsigned char const s_msg[] =
         {

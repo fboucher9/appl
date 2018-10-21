@@ -15,6 +15,8 @@ Description:
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_address_node.h>
 
 #include <appl_unused.h>
@@ -74,7 +76,7 @@ enum appl_status
 //      Initialize to default values.
 //
 appl_address::appl_address() :
-    appl_object()
+    appl_heap_object()
 {
 }
 

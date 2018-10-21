@@ -46,8 +46,8 @@ class appl_queue_std : public appl_queue
         static
         enum appl_status
             s_create(
-                struct appl_object * const
-                    p_context,
+                struct appl_heap * const
+                    p_heap,
                 struct appl_queue_descriptor const * const
                     p_descriptor,
                 struct appl_queue * * const

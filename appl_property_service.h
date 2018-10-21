@@ -32,8 +32,8 @@ class appl_property_service
         static
         enum appl_status
         s_create(
-            struct appl_context * const
-                p_context,
+            struct appl_heap * const
+                p_heap,
             unsigned int const
                 i_count,
             struct appl_property * * const

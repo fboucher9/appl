@@ -40,8 +40,9 @@ class appl_pool_object : public appl_object
 {
     public:
 
+        virtual
         enum appl_status
-            destroy(void);
+            v_destroy(void);
 
         struct appl_pool *
             get_pool(void) const;

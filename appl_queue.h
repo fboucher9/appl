@@ -12,9 +12,9 @@
 #define INC_APPL_QUEUE_H
 
 /* Header file dependency */
-#if ! defined INC_APPL_OBJECT_H
-#error include appl_object.h before
-#endif /* #if ! defined INC_APPL_OBJECT_H */
+#if ! defined INC_APPL_HEAP_OBJECT_H
+#error include appl_heap_object.h before
+#endif /* #if ! defined INC_APPL_HEAP_OBJECT_H */
 
 /* ... */
 
@@ -32,7 +32,7 @@ struct appl_list;
 //
 //
 //
-struct appl_queue : public appl_object
+struct appl_queue : public appl_heap_object
 {
     public:
 

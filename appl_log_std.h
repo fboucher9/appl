@@ -39,8 +39,8 @@ class appl_log_std : public appl_log
         static
         enum appl_status
             s_create(
-                struct appl_object * const
-                    p_context,
+                struct appl_heap * const
+                    p_heap,
                 class appl_log_std * * const
                     r_instance);
 

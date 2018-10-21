@@ -4,12 +4,19 @@
 
 */
 
+/* Reverse include guard */
 #if defined(INC_APPL_OPTIONS_H)
 #error include appl_options.h once
 #endif /* #if defined(INC_APPL_OPTIONS_H) */
 
 #define INC_APPL_OPTIONS_H
 
+/* Header file dependency */
+#if ! defined INC_APPL_HEAP_OBJECT_H
+#error include appl_heap_object.h before
+#endif /* #if ! defined INC_APPL_HEAP_OBJECT_H */
+
+/* Assert compiler */
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -19,7 +26,7 @@ class appl_options;
 //
 //
 //
-class appl_options : public appl_object
+class appl_options : public appl_heap_object
 {
     public:
 

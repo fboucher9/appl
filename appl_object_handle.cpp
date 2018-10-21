@@ -21,7 +21,7 @@ appl_object_destroy(
         p_object)
 {
     return
-        p_object->destroy();
+        p_object->v_destroy();
 
 } /* appl_object_destroy() */
 

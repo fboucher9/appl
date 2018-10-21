@@ -14,6 +14,8 @@
 
 #include <appl_unused.h>
 
+#include <appl_context.h>
+
 //
 //
 //

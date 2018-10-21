@@ -10,6 +10,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_thread_mgr.h>
 
 #include <appl_unused.h>
@@ -33,7 +35,7 @@ enum appl_status
 }
 
 appl_thread_mgr::appl_thread_mgr() :
-    appl_object()
+    appl_heap_object()
 {
 }
 

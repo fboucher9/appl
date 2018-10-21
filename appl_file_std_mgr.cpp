@@ -10,6 +10,10 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
+#include <appl_pool_object.h>
+
 #include <appl_file_mgr.h>
 
 #include <appl_file_std_mgr.h>
@@ -22,6 +26,8 @@
 
 #include <appl_pool_handle.h>
 
+#include <appl_heap.h>
+
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -31,8 +37,8 @@
 //
 enum appl_status
     appl_file_std_mgr::s_create(
-        struct appl_object * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         class appl_file_mgr * * const
             r_file_mgr)
 {
@@ -43,7 +49,7 @@ enum appl_status
         p_file_std_mgr;
 
     e_status =
-        p_context->alloc_object(
+        p_heap->alloc_object(
             &(
                 p_file_std_mgr));
 

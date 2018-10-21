@@ -10,9 +10,15 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_event_mgr.h>
 
 #include <appl_event_std_mgr.h>
+
+#include <appl_heap.h>
+
+#include <appl_context.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -24,8 +30,8 @@
 //
 enum appl_status
     appl_event_std_mgr::s_create(
-        struct appl_object * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         class appl_event_mgr * * const
             r_event_mgr)
 {
@@ -36,7 +42,7 @@ enum appl_status
         p_event_std_mgr;
 
     e_status =
-        p_context->alloc_object(
+        p_heap->alloc_object(
             &(
                 p_event_std_mgr));
 
@@ -84,8 +90,8 @@ void
 
 enum appl_status
     appl_event_std_node_create(
-        struct appl_object * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         struct appl_event_descriptor const * const
             p_event_descriptor,
         struct appl_event * * const
@@ -106,7 +112,7 @@ enum appl_status
 
     e_status =
         appl_event_std_node_create(
-            this,
+            m_context->m_heap,
             p_event_descriptor,
             r_event);
 

@@ -20,6 +20,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_event_node.h>
 
 #include <appl_event_impl.h>
@@ -36,6 +38,8 @@
 
 #include <appl_convert.h>
 
+#include <appl_heap.h>
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -46,8 +50,8 @@
 //
 enum appl_status
     appl_event_std_node::s_create(
-        struct appl_object * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         struct appl_event_descriptor const * const
             p_event_descriptor,
         struct appl_event * * const
@@ -63,7 +67,7 @@ enum appl_status
         p_event_std_node;
 
     e_status =
-        p_context->alloc_object(
+        p_heap->alloc_object(
             &(
                 p_event_std_node));
 
@@ -233,8 +237,8 @@ enum appl_status
 
 enum appl_status
     appl_event_std_node_create(
-        struct appl_object * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         struct appl_event_descriptor const * const
             p_event_descriptor,
         struct appl_event * * const
@@ -245,8 +249,8 @@ enum appl_status
 //
 enum appl_status
     appl_event_std_node_create(
-        struct appl_object * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         struct appl_event_descriptor const * const
             p_event_descriptor,
         struct appl_event * * const
@@ -254,7 +258,7 @@ enum appl_status
 {
     return
         appl_event_std_node::s_create(
-            p_context,
+            p_heap,
             p_event_descriptor,
             r_event);
 

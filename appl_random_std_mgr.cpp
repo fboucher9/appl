@@ -12,6 +12,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_random_mgr.h>
 
 #include <appl_random_std_mgr.h>
@@ -24,13 +26,17 @@
 
 #include <appl_unused.h>
 
+#include <appl_context.h>
+
+#include <appl_heap.h>
+
 //
 //
 //
 enum appl_status
 appl_random_std_mgr::s_create(
-    struct appl_object * const
-        p_context,
+    struct appl_heap * const
+        p_heap,
     class appl_random_mgr * * const
         r_random_mgr)
 {
@@ -41,7 +47,7 @@ appl_random_std_mgr::s_create(
         p_random_std_mgr;
 
     e_status =
-        p_context->alloc_object(
+        p_heap->alloc_object(
             &(
                 p_random_std_mgr));
 
@@ -117,7 +123,7 @@ appl_random_std_mgr::v_create_node(
     {
         e_status =
             appl_random_std_crypto::s_create(
-                this,
+                m_context->m_heap,
                 r_node);
     }
     else

@@ -14,6 +14,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_property.h>
 
 #include <appl_unused.h>
@@ -181,7 +183,7 @@ enum appl_status
 //
 //
 appl_property::appl_property() :
-    appl_object()
+    appl_heap_object()
 {
 }
 

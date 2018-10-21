@@ -36,8 +36,8 @@ class appl_mutex_std_mgr : public appl_mutex_mgr
         static
         enum appl_status
             s_create(
-                struct appl_object * const
-                    p_context,
+                struct appl_heap * const
+                    p_heap,
                 class appl_mutex_mgr * * const
                     r_mutex_mgr);
 

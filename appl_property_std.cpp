@@ -14,6 +14,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_property.h>
 
 #include <appl_property_std.h>
@@ -44,8 +46,8 @@ struct appl_property_node
 //
 enum appl_status
     appl_property_std::s_create(
-        struct appl_object * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         unsigned int const
             i_count,
         struct appl_property * * const
@@ -64,7 +66,7 @@ enum appl_status
         p_property_std;
 
     e_status =
-        p_context->alloc_object(
+        p_heap->alloc_object(
             &(
                 o_property_std_descriptor),
             &(
@@ -217,7 +219,7 @@ enum appl_status
         m_count)
     {
         e_status =
-            m_context->m_heap->alloc_object_array(
+            m_context->m_heap->alloc_structure_array(
                 m_count,
                 &(
                     a_nodes));

@@ -30,7 +30,7 @@ class appl_library_mgr;
 //
 //
 //
-class appl_library_mgr : public appl_object
+class appl_library_mgr : public appl_heap_object
 {
     public:
 

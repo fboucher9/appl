@@ -20,6 +20,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_list.h>
 
 #include <appl_pool.h>
@@ -61,8 +63,8 @@ union appl_pool_node_ptr
 //
 enum appl_status
     appl_pool_std::s_create(
-        struct appl_object * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         appl_size_t const
             i_buf_len,
         class appl_pool_std * * const
@@ -75,7 +77,7 @@ enum appl_status
         i_buf_len;
 
     return
-        p_context->alloc_object(
+        p_heap->alloc_object(
             &(
                 o_pool_std_descriptor),
             r_instance);

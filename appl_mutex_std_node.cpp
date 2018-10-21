@@ -20,6 +20,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_mutex_node.h>
 
 #include <appl_mutex_impl.h>
@@ -27,6 +29,8 @@
 #include <appl_mutex_std_node.h>
 
 #include <appl_unused.h>
+
+#include <appl_heap.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -38,8 +42,8 @@
 //
 enum appl_status
     appl_mutex_std_node::s_create(
-        struct appl_object * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         struct appl_mutex_descriptor const * const
             p_mutex_descriptor,
         struct appl_mutex * * const
@@ -55,7 +59,7 @@ enum appl_status
         p_mutex_std_node;
 
     e_status =
-        p_context->alloc_object(
+        p_heap->alloc_object(
             &(
                 p_mutex_std_node));
 
@@ -216,8 +220,8 @@ enum appl_status
 
 enum appl_status
 appl_mutex_std_node_create(
-    struct appl_object * const
-        p_context,
+    struct appl_heap * const
+        p_heap,
     struct appl_mutex_descriptor const * const
         p_mutex_descriptor,
     struct appl_mutex * * const
@@ -228,8 +232,8 @@ appl_mutex_std_node_create(
 //
 enum appl_status
 appl_mutex_std_node_create(
-    struct appl_object * const
-        p_context,
+    struct appl_heap * const
+        p_heap,
     struct appl_mutex_descriptor const * const
         p_mutex_descriptor,
     struct appl_mutex * * const
@@ -237,7 +241,7 @@ appl_mutex_std_node_create(
 {
     return
         appl_mutex_std_node::s_create(
-            p_context,
+            p_heap,
             p_mutex_descriptor,
             r_mutex);
 

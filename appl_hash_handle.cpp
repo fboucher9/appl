@@ -12,6 +12,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_list.h>
 
 #include <appl_convert.h>
@@ -36,7 +38,7 @@ struct appl_hash_table
 //  Description:
 //      Instance of appl_hash object.
 //
-struct appl_hash : public appl_object
+struct appl_hash : public appl_heap_object
 {
     public:
 
@@ -61,7 +63,7 @@ struct appl_hash : public appl_object
                 e_status;
 
             e_status =
-                m_context->m_heap->alloc_object_array(
+                m_context->m_heap->alloc_structure_array(
                     p_descriptor->i_max_index,
                     &(
                         m_table));
@@ -100,7 +102,7 @@ struct appl_hash : public appl_object
                     appl_status_ok
                     != e_status)
                 {
-                    m_context->m_heap->free_object_array(
+                    m_context->m_heap->free_structure_array(
                         p_descriptor->i_max_index,
                         m_table);
                 }
@@ -263,7 +265,7 @@ struct appl_hash : public appl_object
     protected:
 
         appl_hash() :
-            appl_object(),
+            appl_heap_object(),
             m_descriptor(),
             m_table()
         {
@@ -296,7 +298,7 @@ struct appl_hash : public appl_object
             enum appl_status
                 e_status;
 
-            m_context->m_heap->free_object_array(
+            m_context->m_heap->free_structure_array(
                 m_descriptor.i_max_index,
                 m_table);
 
@@ -331,15 +333,15 @@ class appl_hash_service
         static
         enum appl_status
         s_create(
-            struct appl_context * const
-                p_context,
+            struct appl_heap * const
+                p_heap,
             struct appl_hash_descriptor const * const
                 p_descriptor,
             struct appl_hash * * const
                 r_instance)
         {
             return
-                p_context->alloc_object(
+                p_heap->alloc_object(
                     p_descriptor,
                     r_instance);
         }
@@ -423,7 +425,7 @@ appl_hash_create(
 {
     return
         appl_hash_service::s_create(
-            p_context,
+            p_context->m_heap,
             p_descriptor,
             r_instance);
 

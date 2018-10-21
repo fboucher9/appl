@@ -34,8 +34,8 @@ class appl_event_std_mgr : public appl_event_mgr
         static
         enum appl_status
             s_create(
-                struct appl_object * const
-                    p_context,
+                struct appl_heap * const
+                    p_heap,
                 class appl_event_mgr * * const
                     r_event_mgr);
 

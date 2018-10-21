@@ -28,6 +28,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_context.h>
 
 #include <appl_context_std.h>
@@ -167,7 +169,7 @@ struct appl_context_init_descriptor
     struct appl_context_descriptor const *
         p_context_descriptor;
 
-    class appl_heap *
+    struct appl_heap *
         p_heap;
 
 }; /* struct appl_context_init_descriptor */
@@ -177,7 +179,7 @@ struct appl_context_init_descriptor
 //
 enum appl_status
     appl_context_std::init_heap(
-        class appl_heap * const
+        struct appl_heap * const
             p_heap)
 {
     enum appl_status
@@ -185,6 +187,9 @@ enum appl_status
 
     m_heap =
         p_heap;
+
+    m_heap->set_context(
+        this);
 
     b_init_heap =
         true;
@@ -229,7 +234,7 @@ appl_context_std::init_debug(void)
 
     e_status =
         appl_debug_std::s_create(
-            m_context,
+            m_heap,
             &(
                 m_debug));
 
@@ -271,7 +276,7 @@ appl_context_std::cleanup_debug(void)
 {
     if (b_init_debug)
     {
-        m_debug->destroy();
+        m_debug->v_destroy();
 
         m_debug =
             0;
@@ -305,7 +310,7 @@ appl_context_std::init_options(
 
     e_status =
         appl_options_std::s_create(
-            m_context,
+            m_heap,
             &(
                 o_options_std_descriptor),
             &(
@@ -332,7 +337,7 @@ appl_context_std::cleanup_options(void)
 {
     if (b_init_options)
     {
-        m_options->destroy();
+        m_options->v_destroy();
 
         m_options =
             0;
@@ -354,7 +359,7 @@ appl_context_std::init_thread_mgr(void)
 
     e_status =
         appl_thread_std_mgr::s_create(
-            m_context,
+            m_heap,
             &(
                 m_thread_mgr));
 
@@ -379,7 +384,7 @@ appl_context_std::cleanup_thread_mgr(void)
 {
     if (b_init_thread_mgr)
     {
-        m_thread_mgr->destroy();
+        m_thread_mgr->v_destroy();
 
         m_thread_mgr =
             0;
@@ -401,7 +406,7 @@ enum appl_status
 
     e_status =
         appl_mutex_std_mgr::s_create(
-            m_context,
+            m_heap,
             &(
                 m_mutex_mgr));
 
@@ -426,7 +431,7 @@ void
 {
     if (b_init_mutex_mgr)
     {
-        m_mutex_mgr->destroy();
+        m_mutex_mgr->v_destroy();
 
         m_mutex_mgr =
             0;
@@ -447,7 +452,7 @@ enum appl_status
 
     e_status =
         appl_file_std_mgr::s_create(
-            m_context,
+            m_heap,
             &(
                 m_file_mgr));
 
@@ -472,7 +477,7 @@ void
     if (
         b_init_file_mgr)
     {
-        m_file_mgr->destroy();
+        m_file_mgr->v_destroy();
 
         m_file_mgr =
             0;
@@ -516,7 +521,7 @@ void
     if (
         b_init_poll_mgr)
     {
-        m_poll_mgr->destroy();
+        m_poll_mgr->v_destroy();
 
         m_poll_mgr =
             0;
@@ -539,7 +544,7 @@ enum appl_status
 
     e_status =
         appl_clock_std::s_create(
-            m_context,
+            m_heap,
             &(
                 m_clock));
 
@@ -580,7 +585,7 @@ void
     if (
         b_init_clock)
     {
-        m_clock->destroy();
+        m_clock->v_destroy();
 
         m_clock =
             0;
@@ -605,7 +610,7 @@ enum appl_status
     {
         e_status =
             appl_event_std_mgr::s_create(
-                m_context,
+                m_heap,
                 &(
                     m_event_mgr));
 
@@ -637,7 +642,7 @@ void
     if (
         b_init_event_mgr)
     {
-        m_event_mgr->destroy();
+        m_event_mgr->v_destroy();
 
         m_event_mgr =
             0;
@@ -663,7 +668,7 @@ enum appl_status
 
         e_status =
             appl_socket_std_mgr::s_create(
-                m_context,
+                m_heap,
                 &(
                     m_socket_mgr));
 
@@ -710,7 +715,7 @@ void
     if (
         b_init_socket_mgr)
     {
-        m_socket_mgr->destroy();
+        m_socket_mgr->v_destroy();
 
         m_socket_mgr =
             0;
@@ -736,7 +741,7 @@ enum appl_status
 #if defined APPL_OS_LINUX
         e_status =
             appl_env_std::s_create(
-                m_context,
+                m_heap,
                 &(
                     m_env));
 #elif defined APPL_OS_WINDOWS
@@ -778,7 +783,7 @@ void
     if (
         b_init_env)
     {
-        m_env->destroy();
+        m_env->v_destroy();
 
         m_env =
             0;
@@ -860,7 +865,7 @@ enum appl_status
 #if defined APPL_OS_LINUX
         e_status =
             appl_random_std_mgr::s_create(
-                m_context,
+                m_heap,
                 &(
                     m_random_mgr));
 #elif defined APPL_OS_WINDOWS
@@ -902,7 +907,7 @@ void
     if (
         b_init_random_mgr)
     {
-        m_random_mgr->destroy();
+        m_random_mgr->v_destroy();
 
         m_random_mgr =
             0;
@@ -929,7 +934,7 @@ enum appl_status
 
         e_status =
             appl_log_std::s_create(
-                m_context,
+                m_heap,
                 &(
                     p_log_std));
 
@@ -964,7 +969,7 @@ void
     if (
         b_init_log)
     {
-        m_log->destroy();
+        m_log->v_destroy();
 
         m_log =
             0;
@@ -988,7 +993,7 @@ enum appl_status
     {
         e_status =
             appl_pool_mgr::s_create(
-                m_context,
+                m_heap,
                 &(
                     m_pool_mgr));
 
@@ -1020,7 +1025,7 @@ void
     if (
         b_init_pool_mgr)
     {
-        m_pool_mgr->destroy();
+        m_pool_mgr->v_destroy();
 
         m_pool_mgr =
             0;
@@ -1033,8 +1038,8 @@ void
 extern
 enum appl_status
 appl_thread_cache_mgr_create(
-    struct appl_context * const
-        p_context,
+    struct appl_heap * const
+        p_heap,
     class appl_thread_cache_mgr * * const
         r_instance);
 
@@ -1053,7 +1058,7 @@ enum appl_status
     {
         e_status =
             appl_thread_cache_mgr_create(
-                m_context,
+                m_heap,
                 &(
                     m_thread_cache_mgr));
 
@@ -1110,7 +1115,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_heap *
+    struct appl_heap *
         p_heap;
 
     e_status =
@@ -1202,7 +1207,7 @@ enum appl_status
         if (
             appl_status_ok != e_status)
         {
-            p_heap->destroy();
+            p_heap->v_destroy();
         }
     }
 
@@ -1429,7 +1434,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_heap * const
+    struct appl_heap * const
         p_heap =
         m_heap;
 
@@ -1475,7 +1480,7 @@ enum appl_status
             *this),
         p_placement);
 
-    p_heap->destroy();
+    p_heap->v_destroy();
 
     e_status =
         appl_status_fail;

@@ -14,6 +14,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_queue.h>
 
 #include <appl_unused.h>
@@ -95,7 +97,7 @@ enum appl_status
 //
 //
 appl_queue::appl_queue() :
-    appl_object()
+    appl_heap_object()
 {
 }
 

@@ -10,6 +10,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_event_mgr.h>
 
 #include <appl_unused.h>
@@ -43,7 +45,7 @@ enum appl_status
 //
 //
 appl_event_mgr::appl_event_mgr() :
-    appl_object()
+    appl_heap_object()
 {
 }
 

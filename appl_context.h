@@ -26,7 +26,7 @@ struct appl_context;
 
 struct appl_context;
 
-class appl_heap;
+struct appl_heap;
 
 #if defined APPL_DEBUG
 class appl_debug;
@@ -67,7 +67,7 @@ struct appl_context : public appl_object
 {
     public:
 
-        class appl_heap *
+        struct appl_heap *
             m_heap;
 
         class appl_options *

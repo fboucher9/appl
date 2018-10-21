@@ -10,6 +10,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_thread_mgr.h>
 
 #include <appl_thread_std_mgr.h>
@@ -20,13 +22,15 @@
 
 #include <appl_pool_mgr.h>
 
+#include <appl_heap.h>
+
 //
 //
 //
 enum appl_status
     appl_thread_std_mgr::s_create(
-        struct appl_object * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         class appl_thread_mgr * * const
             r_thread_mgr)
 {
@@ -37,7 +41,7 @@ enum appl_status
         p_thread_std_mgr;
 
     e_status =
-        p_context->alloc_object(
+        p_heap->alloc_object(
             &(
                 p_thread_std_mgr));
 
@@ -132,7 +136,7 @@ enum appl_status
     if (
         m_pool_created)
     {
-        m_pool->destroy();
+        m_pool->v_destroy();
 
         m_pool =
             0;

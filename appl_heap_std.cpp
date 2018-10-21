@@ -31,7 +31,7 @@
 //
 enum appl_status
     appl_heap_std::create_instance(
-        class appl_heap * * const
+        struct appl_heap * * const
             r_heap)
 {
     enum appl_status

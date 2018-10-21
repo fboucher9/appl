@@ -24,7 +24,7 @@
 //
 //
 //
-struct appl_random : public appl_object
+struct appl_random : public appl_heap_object
 {
     public:
 

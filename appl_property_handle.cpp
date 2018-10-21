@@ -16,9 +16,13 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_property_types.h>
 
 #include <appl_property.h>
+
+#include <appl_context.h>
 
 /*
 
@@ -34,7 +38,7 @@ appl_property_create(
 {
     return
         appl_property_service::s_create(
-            p_context,
+            p_context->m_heap,
             i_count,
             r_property);
 
