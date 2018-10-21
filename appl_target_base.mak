@@ -96,6 +96,7 @@ appl_base-deps := \
     appl_pool_mgr.cpp \
     appl_pool_handle.cpp \
     appl_pool_service.cpp \
+    appl_pool_object.cpp \
     appl_property.cpp \
     appl_property_handle.cpp \
     appl_property_service.cpp \

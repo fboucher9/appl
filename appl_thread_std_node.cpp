@@ -22,6 +22,8 @@
 
 #include <appl_object.h>
 
+#include <appl_pool_object.h>
+
 #include <appl_thread_descriptor.h>
 
 #include <appl_object_handle.h>
@@ -45,8 +47,8 @@
 */
 struct appl_thread_std_node_descriptor
 {
-    struct appl_pool *
-        p_pool;
+    struct appl_pool_object_descriptor
+        o_pool_object_descriptor;
 
     struct appl_thread_property const *
         p_thread_property;
@@ -71,7 +73,7 @@ enum appl_status
     struct appl_thread_std_node_descriptor
         o_thread_std_node_descriptor;
 
-    o_thread_std_node_descriptor.p_pool =
+    o_thread_std_node_descriptor.o_pool_object_descriptor.p_pool =
         p_pool;
 
     o_thread_std_node_descriptor.p_thread_property =
@@ -106,8 +108,7 @@ enum appl_status
 //
 appl_thread_std_node::appl_thread_std_node() :
     appl_thread(),
-    m_thread_impl(),
-    m_pool()
+    m_thread_impl()
 {
 }
 
@@ -179,12 +180,19 @@ enum appl_status
     enum appl_status
         e_status;
 
-    m_pool =
-        p_descriptor->p_pool;
-
     e_status =
-        m_thread_impl.f_init(
-            p_descriptor->p_thread_property);
+        appl_pool_object::f_init(
+            &(
+                p_descriptor->o_pool_object_descriptor));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            m_thread_impl.f_init(
+                p_descriptor->p_thread_property);
+    }
 
     return
         e_status;
@@ -202,19 +210,6 @@ enum appl_status
 
     e_status =
         m_thread_impl.f_cleanup();
-
-    if (
-        m_pool)
-    {
-        e_status =
-            m_pool->free_object(
-                this);
-    }
-    else
-    {
-        e_status =
-            appl_status_ok;
-    }
 
     return
         e_status;

@@ -16,6 +16,8 @@ Comments:
 
 #include <appl_object.h>
 
+#include <appl_pool_object.h>
+
 #include <appl_thread_cache.h>
 
 #include <appl_node.h>

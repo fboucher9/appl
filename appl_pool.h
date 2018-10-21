@@ -145,47 +145,6 @@ struct appl_pool : public appl_object
                 void * const
                     p_buf);
 
-        template <typename T_instance>
-        enum appl_status
-            free_struct(
-                T_instance * const
-                    p_object)
-        {
-            return
-                v_free(
-                    static_cast<void *>(
-                        p_object));
-
-        } // free_struct()
-
-
-        template <typename T_instance>
-        enum appl_status
-            free_object(
-                T_instance * const
-                    p_object)
-        {
-            enum appl_status
-                e_status;
-
-            void * const
-                p_placement =
-                p_object;
-
-            delete
-                p_object;
-
-            v_free(
-                p_placement);
-
-            e_status =
-                appl_status_fail;
-
-            return
-                e_status;
-
-        } // free_object()
-
     protected:
 
         appl_pool();

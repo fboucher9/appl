@@ -46,7 +46,7 @@ struct appl_object
                         T_instance::f_init),
                     r_object);
 
-        } // s_create()
+        } // alloc_object()
 
         template <typename T_instance, typename T_descriptor>
         enum appl_status
@@ -351,7 +351,8 @@ struct appl_object
                     (& T_instance::s_new),
                     (& T_instance::f_init),
                     r_object);
-        }
+
+        } // s_init()
 
         template <typename T_instance>
         static
@@ -426,13 +427,16 @@ struct appl_object
         struct appl_context *
             get_context(void) const;
 
-        enum appl_status
-            f_init(void);
-
     protected:
+
+        // --
+
+        // vtable[1u];
 
         struct appl_context *
             m_context;
+
+        // --
 
         appl_object();
 
@@ -470,6 +474,9 @@ struct appl_object
                 p_buf,
             void * const
                 p_placement);
+
+        enum appl_status
+            f_init(void);
 
     private:
 

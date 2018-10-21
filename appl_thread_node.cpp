@@ -10,6 +10,8 @@
 
 #include <appl_object.h>
 
+#include <appl_pool_object.h>
+
 #include <appl_thread_node.h>
 
 #include <appl_unused.h>
@@ -47,7 +49,7 @@ enum appl_status
 //
 //
 appl_thread::appl_thread() :
-    appl_object()
+    appl_pool_object()
 {
 }
 

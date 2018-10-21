@@ -31,7 +31,7 @@ struct appl_context;
 //
 //
 //
-struct appl_thread : public appl_object
+struct appl_thread : public appl_pool_object
 {
     public:
 
