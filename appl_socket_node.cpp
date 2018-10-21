@@ -10,6 +10,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_socket_descriptor.h>
 
 #include <appl_socket_node.h>
@@ -148,7 +150,7 @@ appl_socket::v_wait(
 //
 //
 appl_socket::appl_socket() :
-    appl_object()
+    appl_heap_object()
 {
 }
 

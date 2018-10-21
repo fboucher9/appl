@@ -12,6 +12,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_random_mgr.h>
 
 #include <appl_random_w32_mgr.h>
@@ -22,13 +24,17 @@
 
 #include <appl_random_w32_crypto.h>
 
+#include <appl_heap.h>
+
+#include <appl_context.h>
+
 //
 //
 //
 enum appl_status
 appl_random_w32_mgr::s_create(
-    struct appl_context * const
-        p_context,
+    struct appl_heap * const
+        p_heap,
     class appl_random_mgr * * const
         r_random_mgr)
 {
@@ -39,12 +45,7 @@ appl_random_w32_mgr::s_create(
         p_random_w32_mgr;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_random_w32_mgr::s_new),
-            (&
-                appl_random_w32_mgr::init),
+        p_heap->alloc_object(
             &(
                 p_random_w32_mgr));
 
@@ -94,12 +95,12 @@ void
 //
 //
 enum appl_status
-    appl_random_w32_mgr::init(void)
+    appl_random_w32_mgr::f_init(void)
 {
     return
         appl_status_ok;
 
-} // init()
+} // f_init()
 
 //
 //
@@ -120,7 +121,7 @@ appl_random_w32_mgr::v_create_node(
     {
         e_status =
             appl_random_w32_crypto::s_create(
-                m_context,
+                m_context->m_heap,
                 r_node);
     }
     else

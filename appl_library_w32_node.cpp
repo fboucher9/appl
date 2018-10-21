@@ -14,6 +14,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_library_node.h>
 
 #include <appl_library_w32_node.h>
@@ -24,13 +26,15 @@
 
 #include <appl_convert.h>
 
+#include <appl_heap.h>
+
 //
 //
 //
 enum appl_status
     appl_library_w32_node::s_create(
-        struct appl_context * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         struct appl_library_descriptor const * const
             p_library_descriptor,
         struct appl_library * * const
@@ -43,12 +47,7 @@ enum appl_status
         p_library_w32_node;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_library_w32_node::s_new),
-            (&
-                appl_library_w32_node::init),
+        p_heap->alloc_object(
             p_library_descriptor,
             &(
                 p_library_w32_node));
@@ -87,7 +86,7 @@ appl_library_w32_node::~appl_library_w32_node()
 //
 //
 enum appl_status
-    appl_library_w32_node::init(
+    appl_library_w32_node::f_init(
         struct appl_library_descriptor const * const
             p_library_descriptor)
 {
@@ -132,7 +131,7 @@ enum appl_status
     return
         e_status;
 
-} // init()
+} // f_init()
 
 //
 //

@@ -88,7 +88,7 @@ enum appl_status
 
     e_status =
         appl_library_w32_mgr::s_create(
-            p_context,
+            p_context->m_heap,
             r_library_mgr);
 
 #else /* #if definde APPL_OS_Xx */

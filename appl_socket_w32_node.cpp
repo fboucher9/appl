@@ -14,6 +14,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_socket_descriptor.h>
 
 #include <appl_socket_node.h>
@@ -34,6 +36,10 @@
 
 #include <appl_convert.h>
 
+#include <appl_heap.h>
+
+#include <appl_context.h>
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -44,8 +50,8 @@
 //
 enum appl_status
     appl_socket_w32_node::s_create(
-        struct appl_context * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         struct appl_socket_property const * const
             p_socket_descriptor,
         struct appl_socket * * const
@@ -58,12 +64,7 @@ enum appl_status
         p_socket_w32_node;
 
     e_status =
-        appl_object::s_create (
-            p_context,
-            (&
-                appl_socket_w32_node::s_new),
-            (&
-                appl_socket_w32_node::init),
+        p_heap->alloc_object(
             p_socket_descriptor,
             &(
                 p_socket_w32_node));
@@ -115,7 +116,7 @@ void
 //
 //
 enum appl_status
-appl_socket_w32_node::init(
+appl_socket_w32_node::f_init(
     struct appl_socket_property const * const
         p_socket_descriptor)
 {
@@ -217,13 +218,13 @@ appl_socket_w32_node::init(
     return
         e_status;
 
-} // init()
+} // f_init()
 
 //
 //
 //
 enum appl_status
-appl_socket_w32_node::init_fd(
+appl_socket_w32_node::f_init(
     SOCKET const * const
         p_init_descriptor)
 {
@@ -233,7 +234,7 @@ appl_socket_w32_node::init_fd(
     return
         appl_status_ok;
 
-} // init_fd()
+} // f_init()
 
 //
 //
@@ -640,12 +641,7 @@ appl_socket_w32_node::v_accept(
                     p_socket_w32_node;
 
                 e_status =
-                    appl_object::s_create(
-                        m_context,
-                        (&
-                            appl_socket_w32_node::s_new),
-                        (&
-                            appl_socket_w32_node::init_fd),
+                    m_context->m_heap->alloc_object(
                         &(
                             i_accept_result),
                         &(

@@ -14,6 +14,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_socket_mgr.h>
 
 #include <appl_socket_w32_mgr.h>
@@ -30,13 +32,17 @@
 
 #include <appl_unused.h>
 
+#include <appl_heap.h>
+
+#include <appl_context.h>
+
 //
 //
 //
 enum appl_status
     appl_socket_w32_mgr::s_create(
-        struct appl_context * const
-            p_context,
+        struct appl_heap * const
+            p_heap,
         class appl_socket_mgr * * const
             r_socket_mgr)
 {
@@ -47,12 +53,7 @@ enum appl_status
         p_socket_w32_mgr;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_socket_w32_mgr::s_new),
-            (&
-                appl_socket_w32_mgr::init),
+        p_heap->alloc_object(
             &(
                 p_socket_w32_mgr));
 
@@ -102,7 +103,7 @@ void
 //
 //
 enum appl_status
-    appl_socket_w32_mgr::init(void)
+    appl_socket_w32_mgr::f_init(void)
 {
     enum appl_status
         e_status;
@@ -167,7 +168,7 @@ enum appl_status
     return
         e_status;
 
-} // init()
+} // f_init()
 
 //
 //
@@ -203,7 +204,7 @@ enum appl_status
 
     e_status =
         appl_address_std_node::s_create(
-            m_context,
+            m_context->m_heap,
             p_property,
             r_address);
 
@@ -227,7 +228,7 @@ enum appl_status
 
     e_status =
         appl_socket_w32_node::s_create(
-            m_context,
+            m_context->m_heap,
             p_socket_descriptor,
             r_socket);
 

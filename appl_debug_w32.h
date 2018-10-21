@@ -37,13 +37,15 @@ class appl_debug_w32;
 //
 class appl_debug_w32 : public appl_debug
 {
+    friend struct appl_object;
+
     public:
 
         static
         enum appl_status
-            create_instance(
-                struct appl_context * const
-                    p_context,
+            s_create(
+                struct appl_heap * const
+                    p_heap,
                 class appl_debug * * const
                     r_debug);
 
@@ -70,7 +72,7 @@ class appl_debug_w32 : public appl_debug
 
         static
         void
-            placement_new(
+            s_new(
                 void * const
                     p_placement);
 

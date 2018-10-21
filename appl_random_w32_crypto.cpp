@@ -16,6 +16,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_random.h>
 
 #include <appl_random_w32_crypto.h>
@@ -24,13 +26,15 @@
 
 #include <appl_convert.h>
 
+#include <appl_heap.h>
+
 //
 //
 //
 enum appl_status
 appl_random_w32_crypto::s_create(
-    struct appl_context * const
-        p_context,
+    struct appl_heap * const
+        p_heap,
     struct appl_random * * const
         r_random)
 {
@@ -41,10 +45,7 @@ appl_random_w32_crypto::s_create(
         p_random_w32_crypto;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_random_w32_crypto::s_new),
+        p_heap->alloc_object(
             &(
                 p_random_w32_crypto));
 

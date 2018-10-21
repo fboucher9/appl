@@ -35,13 +35,15 @@ class appl_clock_w32;
 //
 class appl_clock_w32 : public appl_clock
 {
+    friend struct appl_object;
+
     public:
 
         static
         enum appl_status
-            create_instance(
-                struct appl_context * const
-                    p_context,
+            s_create(
+                struct appl_heap * const
+                    p_heap,
                 class appl_clock * * const
                     r_clock);
 
@@ -63,12 +65,12 @@ class appl_clock_w32 : public appl_clock
 
         static
         void
-            placement_new(
+            s_new(
                 void * const
                     p_placement);
 
         enum appl_status
-            init(void);
+            f_init(void);
 
         virtual
         enum appl_status

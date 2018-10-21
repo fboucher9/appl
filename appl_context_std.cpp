@@ -241,8 +241,8 @@ appl_context_std::init_debug(void)
 #elif defined APPL_OS_WINDOWS
 
     e_status =
-        appl_debug_w32::create_instance(
-            m_context,
+        appl_debug_w32::s_create(
+            m_heap,
             &(
                 m_debug));
 
@@ -551,8 +551,8 @@ enum appl_status
 #elif defined APPL_OS_WINDOWS
 
     e_status =
-        appl_clock_w32::create_instance(
-            m_context,
+        appl_clock_w32::s_create(
+            m_heap,
             &(
                 m_clock));
 
@@ -676,7 +676,7 @@ enum appl_status
 
         e_status =
             appl_socket_w32_mgr::s_create(
-                m_context,
+                m_heap,
                 &(
                     m_socket_mgr));
 
@@ -747,7 +747,7 @@ enum appl_status
 #elif defined APPL_OS_WINDOWS
         e_status =
             appl_env_w32::s_create(
-                m_context,
+                m_heap,
                 &(
                     m_env));
 #else /* #if defined APPL_OS_Xx */
@@ -871,7 +871,7 @@ enum appl_status
 #elif defined APPL_OS_WINDOWS
         e_status =
             appl_random_w32_mgr::s_create(
-                m_context,
+                m_heap,
                 &(
                     m_random_mgr));
 #else /* #if defined APPL_OS_LINUX */

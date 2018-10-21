@@ -33,13 +33,15 @@ class appl_env_w32;
 //
 class appl_env_w32 : public appl_env
 {
+    friend struct appl_object;
+
     public:
 
         static
         enum appl_status
         s_create(
-            struct appl_context * const
-                p_context,
+            struct appl_heap * const
+                p_heap,
             class appl_env * * const
                 r_env);
 

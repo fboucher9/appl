@@ -14,6 +14,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_env.h>
 
 #include <appl_env_w32.h>
@@ -39,8 +41,8 @@
 //
 enum appl_status
 appl_env_w32::s_create(
-    struct appl_context * const
-        p_context,
+    struct appl_heap * const
+        p_heap,
     class appl_env * * const
         r_env)
 {
@@ -51,10 +53,7 @@ appl_env_w32::s_create(
         p_env_w32;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_env_w32::s_new),
+        p_heap->alloc_object(
             &(
                 p_env_w32));
 
@@ -140,7 +139,7 @@ enum appl_status
                 p_value0;
 
             e_status =
-                p_heap->alloc_object_array(
+                p_heap->alloc_structure_array(
                     dwResult + 1,
                     &(
                         p_value0));

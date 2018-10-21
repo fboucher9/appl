@@ -28,13 +28,15 @@ class appl_socket_w32_mgr;
 //
 class appl_socket_w32_mgr : public appl_socket_mgr
 {
+    friend struct appl_object;
+
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_context * const
-                    p_context,
+                struct appl_heap * const
+                    p_heap,
                 class appl_socket_mgr * * const
                     r_socket_mgr);
 
@@ -61,7 +63,7 @@ class appl_socket_w32_mgr : public appl_socket_mgr
                     p_placement);
 
         enum appl_status
-            init(void);
+            f_init(void);
 
         virtual
         enum appl_status

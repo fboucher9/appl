@@ -14,6 +14,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_clock.h>
 
 #include <appl_clock_w32.h>
@@ -22,13 +24,15 @@
 
 #include <appl_convert.h>
 
+#include <appl_heap.h>
+
 //
 //
 //
 enum appl_status
-    appl_clock_w32::create_instance(
-        struct appl_context * const
-            p_context,
+    appl_clock_w32::s_create(
+        struct appl_heap * const
+            p_heap,
         class appl_clock * * const
             r_clock)
 {
@@ -39,12 +43,7 @@ enum appl_status
         p_clock_w32;
 
     e_status =
-        appl_object::s_create(
-            p_context,
-            (&
-                appl_clock_w32::placement_new),
-            (&
-                appl_clock_w32::init),
+        p_heap->alloc_object(
             &(
                 p_clock_w32));
 
@@ -60,7 +59,7 @@ enum appl_status
     return
         e_status;
 
-} // create_instance()
+} // s_create()
 
 //
 //
@@ -81,20 +80,20 @@ appl_clock_w32::~appl_clock_w32()
 //
 //
 void
-    appl_clock_w32::placement_new(
+    appl_clock_w32::s_new(
         void * const
             p_placement)
 {
     new (p_placement)
         class appl_clock_w32;
 
-} // placement_new()
+} // s_new()
 
 //
 //
 //
 enum appl_status
-    appl_clock_w32::init(void)
+    appl_clock_w32::f_init(void)
 {
     enum appl_status
         e_status;
@@ -128,7 +127,7 @@ enum appl_status
     return
         e_status;
 
-} // init()
+} // f_init()
 
 //
 //
