@@ -47,9 +47,9 @@ class appl_heap_dbg : public appl_heap
         static
         enum appl_status
             create_instance(
-                class appl_heap * const
+                struct appl_heap * const
                     p_parent,
-                class appl_heap * * const
+                struct appl_heap * * const
                     r_heap);
 
     protected:
@@ -59,7 +59,7 @@ class appl_heap_dbg : public appl_heap
         virtual
         ~appl_heap_dbg();
 
-        class appl_heap *
+        struct appl_heap *
             m_parent;
 
         struct appl_list

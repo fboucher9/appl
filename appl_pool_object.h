@@ -67,7 +67,7 @@ class appl_pool_object : public appl_object
             m_pool;
 
         void *
-            z_padding[1u];
+            z2_padding[1u];
 
         // --
 
