@@ -46,8 +46,8 @@ class appl_mutex_std_node : public appl_mutex
         static
         enum appl_status
             s_create(
-                struct appl_heap * const
-                    p_heap,
+                struct appl_pool * const
+                    p_pool,
                 struct appl_mutex_descriptor const * const
                     p_mutex_descriptor,
                 struct appl_mutex * * const

@@ -32,6 +32,8 @@
 
 #include <appl_heap.h>
 
+#include <appl_pool.h>
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -42,8 +44,8 @@
 //
 enum appl_status
     appl_mutex_std_node::s_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_pool * const
+            p_pool,
         struct appl_mutex_descriptor const * const
             p_mutex_descriptor,
         struct appl_mutex * * const
@@ -59,7 +61,7 @@ enum appl_status
         p_mutex_std_node;
 
     e_status =
-        p_heap->alloc_object(
+        p_pool->alloc_object(
             &(
                 p_mutex_std_node));
 
@@ -220,8 +222,8 @@ enum appl_status
 
 enum appl_status
 appl_mutex_std_node_create(
-    struct appl_heap * const
-        p_heap,
+    struct appl_pool * const
+        p_pool,
     struct appl_mutex_descriptor const * const
         p_mutex_descriptor,
     struct appl_mutex * * const
@@ -232,8 +234,8 @@ appl_mutex_std_node_create(
 //
 enum appl_status
 appl_mutex_std_node_create(
-    struct appl_heap * const
-        p_heap,
+    struct appl_pool * const
+        p_pool,
     struct appl_mutex_descriptor const * const
         p_mutex_descriptor,
     struct appl_mutex * * const
@@ -241,10 +243,25 @@ appl_mutex_std_node_create(
 {
     return
         appl_mutex_std_node::s_create(
-            p_heap,
+            p_pool,
             p_mutex_descriptor,
             r_mutex);
 
 } // appl_mutex_std_node_create()
+
+appl_size_t
+appl_mutex_std_node_sizeof(void);
+
+/*
+
+*/
+appl_size_t
+appl_mutex_std_node_sizeof(void)
+{
+    return
+        sizeof(
+            class appl_mutex_std_node);
+
+} /* sizeof() */
 
 /* end-of-file: appl_mutex_std_node.cpp */

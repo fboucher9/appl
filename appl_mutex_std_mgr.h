@@ -50,6 +50,24 @@ class appl_mutex_std_mgr : public appl_mutex_mgr
 
     private:
 
+        // --
+
+        struct appl_pool *
+            m_pool;
+
+        void *
+            pv_padding[1u];
+
+        // --
+
+        bool
+            m_pool_created;
+
+        unsigned char
+            uc_padding[7u];
+
+        // --
+
         appl_mutex_std_mgr(
             class appl_mutex_std_mgr const & r);
 
@@ -62,6 +80,13 @@ class appl_mutex_std_mgr : public appl_mutex_mgr
             s_new(
                 void * const
                     p_placement);
+
+        enum appl_status
+            f_init(void);
+
+        virtual
+        enum appl_status
+            v_cleanup(void);
 
         virtual
         enum appl_status
