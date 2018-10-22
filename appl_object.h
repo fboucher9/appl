@@ -51,6 +51,29 @@ struct appl_object
 
         } // init_object()
 
+        template <typename T_instance>
+        enum appl_status
+            init_object(
+                void * const
+                    p_placement,
+                appl_size_t const
+                    i_placement_length,
+                T_instance * * const
+                    r_object)
+        {
+            return
+                appl_object::s_init<T_instance>(
+                    m_context,
+                    p_placement,
+                    i_placement_length,
+                    (&
+                        T_instance::s_new),
+                    (&
+                        T_instance::f_init),
+                    r_object);
+
+        } // init_object()
+
         template <typename T_instance, typename T_descriptor>
         enum appl_status
             init_object(
@@ -76,13 +99,12 @@ struct appl_object
         } // init_object()
 
         template <typename T_instance, typename T_descriptor>
-        static
         enum appl_status
-            s_init(
-                struct appl_context * const
-                    p_context,
+            init_object(
                 void * const
                     p_placement,
+                appl_size_t const
+                    i_placement_length,
                 T_descriptor const * const
                     p_descriptor,
                 T_instance * * const
@@ -90,15 +112,82 @@ struct appl_object
         {
             return
                 appl_object::s_init<T_instance, T_descriptor>(
-                    p_context,
+                    m_context,
                     p_placement,
-                    sizeof(T_instance),
+                    i_placement_length,
                     (&
                         T_instance::s_new),
                     (&
                         T_instance::f_init),
                     p_descriptor,
                     r_object);
+
+        } // init_object()
+
+        template <typename T_instance>
+        static
+        enum appl_status
+            s_init(
+                struct appl_context * const
+                    p_context,
+                void * const
+                    p_placement,
+                appl_size_t const
+                    i_placement_length,
+                void (* const p_new)(
+                    void * const
+                        p_placement),
+                enum appl_status (T_instance::* const p_init)(void),
+                T_instance * * const
+                    r_object)
+        {
+            enum appl_status
+                e_status;
+
+            (*p_new)(
+                p_placement);
+
+            union object_ptr
+            {
+                void *
+                    p_placement;
+
+                struct appl_object *
+                    p_object;
+
+                T_instance *
+                    p_instance;
+
+            } o_object_ptr;
+
+            o_object_ptr.p_placement =
+                p_placement;
+
+            o_object_ptr.p_object->m_context =
+                p_context;
+
+            o_object_ptr.p_object->m_placement_length =
+                i_placement_length;
+
+            e_status =
+                ((o_object_ptr.p_instance)->*(p_init))();
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                *(
+                    r_object) =
+                    o_object_ptr.p_instance;
+            }
+            else
+            {
+                delete
+                    o_object_ptr.p_object;
+            }
+
+            return
+                e_status;
 
         } // s_init()
 
@@ -154,95 +243,6 @@ struct appl_object
             e_status =
                 ((o_object_ptr.p_instance)->*(p_init))(
                     p_descriptor);
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                *(
-                    r_object) =
-                    o_object_ptr.p_instance;
-            }
-            else
-            {
-                delete
-                    o_object_ptr.p_object;
-            }
-
-            return
-                e_status;
-
-        } // s_init()
-
-        template <typename T_instance>
-        static
-        enum appl_status
-            s_init(
-                struct appl_context * const
-                    p_context,
-                void * const
-                    p_placement,
-                T_instance * * const
-                    r_object)
-        {
-            return
-                appl_object::s_init<T_instance>(
-                    p_context,
-                    p_placement,
-                    sizeof(T_instance),
-                    (& T_instance::s_new),
-                    (& T_instance::f_init),
-                    r_object);
-
-        } // s_init()
-
-        template <typename T_instance>
-        static
-        enum appl_status
-            s_init(
-                struct appl_context * const
-                    p_context,
-                void * const
-                    p_placement,
-                appl_size_t const
-                    i_placement_length,
-                void (* const p_new)(
-                    void * const
-                        p_placement),
-                enum appl_status (T_instance::* const p_init)(void),
-                T_instance * * const
-                    r_object)
-        {
-            enum appl_status
-                e_status;
-
-            (*p_new)(
-                p_placement);
-
-            union object_ptr
-            {
-                void *
-                    p_placement;
-
-                struct appl_object *
-                    p_object;
-
-                T_instance *
-                    p_instance;
-
-            } o_object_ptr;
-
-            o_object_ptr.p_placement =
-                p_placement;
-
-            o_object_ptr.p_object->m_context =
-                p_context;
-
-            o_object_ptr.p_object->m_placement_length =
-                i_placement_length;
-
-            e_status =
-                ((o_object_ptr.p_instance)->*(p_init))();
 
             if (
                 appl_status_ok

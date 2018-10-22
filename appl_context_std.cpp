@@ -1148,59 +1148,22 @@ enum appl_status
             o_init_descriptor.p_heap =
                 p_heap;
 
-            void *
-                p_placement;
-
-            appl_size_t const
-                i_placement_len =
-                sizeof(
-                    class appl_context_std);
+            class appl_context_std *
+                p_context_std;
 
             e_status =
-                p_heap->v_alloc(
-                    i_placement_len,
+                p_heap->alloc_object(
                     &(
-                        p_placement));
+                        o_init_descriptor),
+                    &(
+                        p_context_std));
 
             if (
                 appl_status_ok == e_status)
             {
-                class appl_context_std *
+                *(
+                    r_context) =
                     p_context_std;
-
-                struct appl_context * const
-                    p_dummy_context =
-                    0;
-
-                e_status =
-                    appl_object::s_init(
-                        p_dummy_context,
-                        p_placement,
-                        i_placement_len,
-                        (&
-                            appl_context_std::placement_new),
-                        (&
-                            appl_context_std::init),
-                        &(
-                            o_init_descriptor),
-                        &(
-                            p_context_std));
-
-                if (
-                    appl_status_ok == e_status)
-                {
-                    *(
-                        r_context) =
-                        p_context_std;
-                }
-
-                if (
-                    appl_status_ok != e_status)
-                {
-                    p_heap->v_free(
-                        i_placement_len,
-                        p_placement);
-                }
             }
         }
 
@@ -1251,7 +1214,7 @@ appl_context_std::~appl_context_std()
 //
 //
 void
-    appl_context_std::placement_new(
+    appl_context_std::s_new(
         void * const
             p_placement)
 {
@@ -1259,7 +1222,7 @@ void
         p_placement)
         class appl_context_std;
 
-} // placement_new()
+} // s_new()
 
 struct appl_context_std::init_cleanup_item
 const
@@ -1319,7 +1282,7 @@ appl_context_std::g_init_cleanup_items[] =
 //
 //
 enum appl_status
-    appl_context_std::init(
+    appl_context_std::f_init(
         struct appl_context_init_descriptor const * const
             p_context_init_descriptor)
 {
@@ -1423,7 +1386,7 @@ enum appl_status
     return
         e_status;
 
-} // init()
+} // f_init()
 
 //
 //

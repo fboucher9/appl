@@ -67,62 +67,29 @@ enum appl_status
     enum appl_status
         e_status;
 
-    void *
-        p_placement;
+    class appl_heap_dbg *
+        p_heap_dbg;
 
-    appl_size_t
-        i_placement_len;
+    struct appl_heap_dbg_descriptor
+        o_descriptor;
 
-    i_placement_len =
-        sizeof(
-            class appl_heap_dbg);
+    o_descriptor.p_parent =
+        p_parent;
 
     e_status =
-        p_parent->v_alloc(
-            i_placement_len,
+        p_parent->alloc_object(
             &(
-                p_placement));
+                o_descriptor),
+            &(
+                p_heap_dbg));
 
     if (
         appl_status_ok
         == e_status)
     {
-        class appl_heap_dbg *
+        *(
+            r_heap) =
             p_heap_dbg;
-
-        struct appl_heap_dbg_descriptor
-            o_descriptor;
-
-        o_descriptor.p_parent =
-            p_parent;
-
-        struct appl_context *
-            p_dummy_context =
-            0;
-
-        e_status =
-            appl_object::s_init(
-                p_dummy_context,
-                p_placement,
-                &(
-                    o_descriptor),
-                &(
-                    p_heap_dbg));
-
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            *(
-                r_heap) =
-                p_heap_dbg;
-        }
-        else
-        {
-            p_parent->v_free(
-                i_placement_len,
-                p_placement);
-        }
     }
 
     return

@@ -122,8 +122,7 @@ struct appl_heap : public appl_object
                 == e_status)
             {
                 e_status =
-                    appl_object::s_init<T_instance>(
-                        m_context,
+                    init_object(
                         p_placement,
                         r_object);
 
@@ -171,8 +170,7 @@ struct appl_heap : public appl_object
                 == e_status)
             {
                 e_status =
-                    appl_object::s_init<T_instance, T_descriptor>(
-                        m_context,
+                    init_object(
                         p_placement,
                         p_descriptor,
                         r_object);
@@ -219,8 +217,7 @@ struct appl_heap : public appl_object
                 == e_status)
             {
                 e_status =
-                    appl_object::s_init<T_instance, T_descriptor>(
-                        m_context,
+                    init_object(
                         p_placement,
                         p_descriptor,
                         r_object);
@@ -265,10 +262,8 @@ struct appl_heap : public appl_object
                 == e_status)
             {
                 e_status =
-                    appl_object::s_init<T_instance>(
-                        m_context,
+                    init_object(
                         p_placement,
-                        i_placement_length,
                         r_object);
 
                 if (

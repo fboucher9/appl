@@ -65,6 +65,11 @@ enum appl_status
             appl_object::s_init(
                 p_context,
                 p_placement,
+                i_placement_len,
+                (&
+                    appl_heap_std::s_new),
+                (&
+                    appl_heap_std::f_init),
                 &(
                     p_heap_std));
 

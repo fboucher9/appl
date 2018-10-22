@@ -27,6 +27,8 @@ class appl_context_std;
 //
 class appl_context_std : public appl_context
 {
+    friend struct appl_object;
+
     public:
 
         static
@@ -45,7 +47,7 @@ class appl_context_std : public appl_context
         ~appl_context_std();
 
         enum appl_status
-            init(
+            f_init(
                 struct appl_context_init_descriptor const * const
                     p_context_descriptor);
 
@@ -131,7 +133,7 @@ class appl_context_std : public appl_context
 
         static
         void
-            placement_new(
+            s_new(
                 void * const
                     p_placement);
 
