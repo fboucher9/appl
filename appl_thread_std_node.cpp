@@ -44,19 +44,6 @@
 
 #include <appl_unused.h>
 
-/*
-
-*/
-struct appl_thread_std_node_descriptor
-{
-    struct appl_pool_object_descriptor
-        o_pool_object_descriptor;
-
-    struct appl_thread_property const *
-        p_thread_property;
-
-}; /* struct appl_thread_std_node_descriptor */
-
 //
 //
 //
@@ -72,22 +59,12 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_thread_std_node_descriptor
-        o_thread_std_node_descriptor;
-
-    o_thread_std_node_descriptor.o_pool_object_descriptor.p_pool =
-        p_pool;
-
-    o_thread_std_node_descriptor.p_thread_property =
-        p_thread_property;
-
     class appl_thread_std_node *
         p_thread_std_node;
 
     e_status =
         p_pool->alloc_object(
-            &(
-                o_thread_std_node_descriptor),
+            p_thread_property,
             &(
                 p_thread_std_node));
 
@@ -176,25 +153,15 @@ void
 //
 enum appl_status
     appl_thread_std_node::f_init(
-        struct appl_thread_std_node_descriptor const * const
-            p_descriptor)
+        struct appl_thread_property const * const
+            p_thread_property)
 {
     enum appl_status
         e_status;
 
     e_status =
-        appl_pool_object::f_init(
-            &(
-                p_descriptor->o_pool_object_descriptor));
-
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        e_status =
-            m_thread_impl.f_init(
-                p_descriptor->p_thread_property);
-    }
+        m_thread_impl.f_init(
+            p_thread_property);
 
     return
         e_status;

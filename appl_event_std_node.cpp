@@ -22,6 +22,8 @@
 
 #include <appl_heap_object.h>
 
+#include <appl_pool_object.h>
+
 #include <appl_event_node.h>
 
 #include <appl_event_impl.h>
@@ -38,7 +40,7 @@
 
 #include <appl_convert.h>
 
-#include <appl_heap.h>
+#include <appl_pool.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -50,8 +52,8 @@
 //
 enum appl_status
     appl_event_std_node::s_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_pool * const
+            p_pool,
         struct appl_event_descriptor const * const
             p_event_descriptor,
         struct appl_event * * const
@@ -60,14 +62,12 @@ enum appl_status
     enum appl_status
         e_status;
 
-    appl_unused(
-        p_event_descriptor);
-
     class appl_event_std_node *
         p_event_std_node;
 
     e_status =
-        p_heap->alloc_object(
+        p_pool->alloc_object(
+            p_event_descriptor,
             &(
                 p_event_std_node));
 
@@ -119,10 +119,15 @@ void
 //
 //
 enum appl_status
-    appl_event_std_node::f_init(void)
+    appl_event_std_node::f_init(
+        struct appl_event_descriptor const * const
+            p_event_descriptor)
 {
     enum appl_status
         e_status;
+
+    appl_unused(
+        p_event_descriptor);
 
     e_status =
         m_event_impl.init();
@@ -237,8 +242,8 @@ enum appl_status
 
 enum appl_status
     appl_event_std_node_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_pool * const
+            p_pool,
         struct appl_event_descriptor const * const
             p_event_descriptor,
         struct appl_event * * const
@@ -249,8 +254,8 @@ enum appl_status
 //
 enum appl_status
     appl_event_std_node_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_pool * const
+            p_pool,
         struct appl_event_descriptor const * const
             p_event_descriptor,
         struct appl_event * * const
@@ -258,10 +263,25 @@ enum appl_status
 {
     return
         appl_event_std_node::s_create(
-            p_heap,
+            p_pool,
             p_event_descriptor,
             r_event);
 
 } // appl_event_std_node_create()
+
+appl_size_t
+appl_event_std_node_sizeof(void);
+
+//
+//
+//
+appl_size_t
+appl_event_std_node_sizeof(void)
+{
+    return
+        sizeof(
+            class appl_event_std_node);
+
+} // appl_event_std_node_sizeof()
 
 /* end-of-file: appl_event_std_node.cpp */

@@ -66,24 +66,15 @@ struct appl_pool *
 //
 //
 //
-enum appl_status
-    appl_pool_object::f_init(
-        struct appl_pool_object_descriptor const * const
-            p_pool_object_descriptor)
+void
+    appl_pool_object::set_pool(
+        struct appl_pool * const
+            p_pool)
 {
-    enum appl_status
-        e_status;
-
     m_pool =
-        p_pool_object_descriptor->p_pool;
+        p_pool;
 
-    e_status =
-        appl_status_ok;
-
-    return
-        e_status;
-
-} // f_init()
+} // set_pool()
 
 //
 //

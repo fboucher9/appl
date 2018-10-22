@@ -15,13 +15,6 @@
 /* Predefine */
 struct appl_pool;
 
-struct appl_pool_object_descriptor
-{
-    struct appl_pool *
-        p_pool;
-
-}; /* struct appl_pool_object_descriptor */
-
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use C++ compiler
@@ -47,17 +40,17 @@ class appl_pool_object : public appl_object
         struct appl_pool *
             get_pool(void) const;
 
+        void
+            set_pool(
+                struct appl_pool * const
+                    p_pool);
+
     protected:
 
         appl_pool_object();
 
         virtual
         ~appl_pool_object();
-
-        enum appl_status
-            f_init(
-                struct appl_pool_object_descriptor const * const
-                    p_pool_object_descriptor);
 
     private:
 

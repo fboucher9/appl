@@ -65,29 +65,55 @@ struct appl_pool : public appl_heap_object
             enum appl_status
                 e_status;
 
-            void *
-                p_placement;
+            union object_ptr
+            {
+                void *
+                    p_placement;
+
+                struct appl_pool_object *
+                    p_object;
+
+                T_instance *
+                    p_instance;
+
+            } o_object_ptr;
 
             e_status =
                 v_alloc(
                     &(
-                        p_placement));
+                        o_object_ptr.p_placement));
 
             if (
                 appl_status_ok
                 == e_status)
             {
+                T_instance::s_new(
+                    o_object_ptr.p_placement);
+
+                o_object_ptr.p_object->set_context(
+                    m_context);
+
+                o_object_ptr.p_object->m_pool =
+                    this;
+
                 e_status =
-                    init_object(
-                        p_placement,
-                        r_object);
+                    o_object_ptr.p_instance->f_init();
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    *(
+                        r_object) =
+                        o_object_ptr.p_instance;
+                }
 
                 if (
                     appl_status_ok
                     != e_status)
                 {
                     v_free(
-                        p_placement);
+                        o_object_ptr.p_placement);
                 }
             }
 
@@ -107,30 +133,56 @@ struct appl_pool : public appl_heap_object
             enum appl_status
                 e_status;
 
-            void *
-                p_placement;
+            union object_ptr
+            {
+                void *
+                    p_placement;
+
+                struct appl_pool_object *
+                    p_object;
+
+                T_instance *
+                    p_instance;
+
+            } o_object_ptr;
 
             e_status =
                 v_alloc(
                     &(
-                        p_placement));
+                        o_object_ptr.p_placement));
 
             if (
                 appl_status_ok
                 == e_status)
             {
+                T_instance::s_new(
+                    o_object_ptr.p_placement);
+
+                o_object_ptr.p_object->set_context(
+                    m_context);
+
+                o_object_ptr.p_object->set_pool(
+                    this);
+
                 e_status =
-                    init_object(
-                        p_placement,
-                        p_descriptor,
-                        r_object);
+                    o_object_ptr.p_instance->f_init(
+                        p_descriptor);
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    *(
+                        r_object) =
+                        o_object_ptr.p_instance;
+                }
 
                 if (
                     appl_status_ok
                     != e_status)
                 {
                     v_free(
-                        p_placement);
+                        o_object_ptr.p_placement);
                 }
             }
 

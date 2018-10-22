@@ -33,17 +33,15 @@ struct appl_thread_property;
 #error include appl_thread_impl.h before
 #endif /* #if ! defined INC_APPL_THREAD_IMPL_H */
 
-class appl_thread_std_node;
-
 /* Predefine */
-struct appl_thread_std_node_descriptor;
+class appl_thread_std_node;
 
 //
 //
 //
 class appl_thread_std_node : public appl_thread
 {
-    friend struct appl_object;
+    friend struct appl_pool;
 
     public:
 
@@ -98,8 +96,8 @@ class appl_thread_std_node : public appl_thread
 
         enum appl_status
             f_init(
-                struct appl_thread_std_node_descriptor const * const
-                    p_descriptor);
+                struct appl_thread_property const * const
+                    p_thread_property);
 
         virtual
         enum appl_status

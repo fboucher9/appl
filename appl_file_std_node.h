@@ -34,7 +34,7 @@ struct appl_file_std_node_descriptor;
 //
 class appl_file_std_node : public appl_file
 {
-    friend struct appl_object;
+    friend struct appl_pool;
     public:
 
         static

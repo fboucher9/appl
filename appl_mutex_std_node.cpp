@@ -22,6 +22,8 @@
 
 #include <appl_heap_object.h>
 
+#include <appl_pool_object.h>
+
 #include <appl_mutex_node.h>
 
 #include <appl_mutex_impl.h>
@@ -29,8 +31,6 @@
 #include <appl_mutex_std_node.h>
 
 #include <appl_unused.h>
-
-#include <appl_heap.h>
 
 #include <appl_pool.h>
 
@@ -54,14 +54,12 @@ enum appl_status
     enum appl_status
         e_status;
 
-    appl_unused(
-        p_mutex_descriptor);
-
     class appl_mutex_std_node *
         p_mutex_std_node;
 
     e_status =
         p_pool->alloc_object(
+            p_mutex_descriptor,
             &(
                 p_mutex_std_node));
 
@@ -139,10 +137,15 @@ void
 //
 //
 enum appl_status
-    appl_mutex_std_node::f_init(void)
+    appl_mutex_std_node::f_init(
+        struct appl_mutex_descriptor const * const
+            p_mutex_descriptor)
 {
     enum appl_status
         e_status;
+
+    appl_unused(
+        p_mutex_descriptor);
 
     e_status =
         m_mutex_impl.init();

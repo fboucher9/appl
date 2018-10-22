@@ -38,7 +38,8 @@ class appl_mutex_std_node;
 //
 class appl_mutex_std_node : public appl_mutex
 {
-    friend struct appl_object;
+    friend struct appl_pool;
+
     friend class appl_event_std_node;
 
     public:
@@ -91,7 +92,9 @@ class appl_mutex_std_node : public appl_mutex
                     p_placement);
 
         enum appl_status
-            f_init(void);
+            f_init(
+                struct appl_mutex_descriptor const * const
+                    p_mutex_descriptor);
 
         virtual
         enum appl_status

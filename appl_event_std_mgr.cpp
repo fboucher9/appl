@@ -20,6 +20,10 @@
 
 #include <appl_context.h>
 
+#include <appl_pool_mgr.h>
+
+#include <appl_pool.h>
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -64,7 +68,9 @@ enum appl_status
 //
 //
 appl_event_std_mgr::appl_event_std_mgr() :
-    appl_event_mgr()
+    appl_event_mgr(),
+    m_pool(),
+    m_pool_created()
 {
 }
 
@@ -88,14 +94,78 @@ void
 
 } // s_new()
 
+appl_size_t
+appl_event_std_node_sizeof(void);
+
 enum appl_status
     appl_event_std_node_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_pool * const
+            p_pool,
         struct appl_event_descriptor const * const
             p_event_descriptor,
         struct appl_event * * const
             r_event);
+
+//
+//
+//
+enum appl_status
+    appl_event_std_mgr::f_init(void)
+{
+    enum appl_status
+        e_status;
+
+    appl_size_t const
+        i_node_len =
+        appl_event_std_node_sizeof();
+
+    e_status =
+        m_context->m_pool_mgr->v_create_node(
+            i_node_len,
+            &(
+                m_pool));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        m_pool_created =
+            true;
+    }
+
+    return
+        e_status;
+
+} // f_init()
+
+//
+//
+//
+enum appl_status
+    appl_event_std_mgr::v_cleanup(void)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        m_pool_created)
+    {
+        m_pool->v_destroy();
+
+        m_pool =
+            0;
+
+        m_pool_created =
+            false;
+    }
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // v_cleanup()
 
 //
 //
@@ -112,7 +182,7 @@ enum appl_status
 
     e_status =
         appl_event_std_node_create(
-            m_context->m_heap,
+            m_pool,
             p_event_descriptor,
             r_event);
 
