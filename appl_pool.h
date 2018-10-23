@@ -49,10 +49,35 @@ struct appl_pool : public appl_heap_object
                 T_instance * * const
                     r_object)
         {
-            return
+            enum appl_status
+                e_status;
+
+            union object_ptr
+            {
+                void *
+                    p_placement;
+
+                T_instance *
+                    p_instance;
+
+            } o_object_ptr;
+
+            e_status =
                 v_alloc(
-                    reinterpret_cast<void * *>(
-                        r_object));
+                    &(
+                        o_object_ptr.p_placement));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                *(
+                    r_object) =
+                    o_object_ptr.p_instance;
+            }
+
+            return
+                e_status;
 
         } // alloc_struct()
 
