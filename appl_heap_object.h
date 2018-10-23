@@ -33,6 +33,9 @@ class appl_heap_object : public appl_object
         enum appl_status
             v_destroy(void);
 
+        appl_size_t
+            get_placement_length(void) const;
+
         void
             set_placement_length(
                 appl_size_t const

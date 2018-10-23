@@ -34,7 +34,7 @@ class appl_heap_std : public appl_heap
 
         static
         enum appl_status
-            create_instance(
+            s_create(
                 struct appl_heap * * const
                     r_heap);
 

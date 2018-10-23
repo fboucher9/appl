@@ -32,7 +32,7 @@
 //
 //
 enum appl_status
-    appl_heap_std::create_instance(
+    appl_heap_std::s_create(
         struct appl_heap * * const
             r_heap)
 {
@@ -56,19 +56,28 @@ enum appl_status
     if (
         p_placement)
     {
-        class appl_heap_std *
-            p_heap_std;
+        union object_ptr
+        {
+            void *
+                p_placement;
 
-        struct appl_context * const
-            p_context =
-            0;
+            struct appl_object *
+                p_object;
+
+            class appl_heap_std *
+                p_heap_std;
+
+        } o_object_ptr;
+
+        new (
+            p_placement)
+            class appl_heap_std;
+
+        o_object_ptr.p_placement =
+            p_placement;
 
         e_status =
-            appl_object::s_init(
-                p_context,
-                p_placement,
-                &(
-                    p_heap_std));
+            o_object_ptr.p_heap_std->f_init();
 
         if (
             appl_status_ok
@@ -76,10 +85,13 @@ enum appl_status
         {
             *(
                 r_heap) =
-                p_heap_std;
+                o_object_ptr.p_heap_std;
         }
         else
         {
+            delete
+                o_object_ptr.p_heap_std;
+
             ::free(
                 p_placement);
         }
@@ -93,7 +105,7 @@ enum appl_status
     return
         e_status;
 
-} // create_instance()
+} // s_create()
 
 //
 //

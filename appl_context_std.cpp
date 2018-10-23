@@ -1119,7 +1119,7 @@ enum appl_status
         p_heap;
 
     e_status =
-        appl_heap_std::create_instance(
+        appl_heap_std::s_create(
             &(
                 p_heap));
 
