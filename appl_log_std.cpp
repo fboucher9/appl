@@ -65,20 +65,6 @@ appl_log_std::~appl_log_std()
 //
 //
 //
-void
-    appl_log_std::s_new(
-        void * const
-            p_placement)
-{
-    new (
-        p_placement)
-        class appl_log_std;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_log_std::v_print(
         enum appl_log_level const

@@ -40,7 +40,7 @@ struct appl_queue;
 //
 class appl_queue_std : public appl_queue
 {
-    friend struct appl_object;
+    friend struct appl_heap;
     public:
 
         static
@@ -99,12 +99,6 @@ class appl_queue_std : public appl_queue
         virtual
         enum appl_status
             v_interrupt(void);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         enum appl_status
             f_init(

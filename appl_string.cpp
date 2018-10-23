@@ -20,6 +20,8 @@
 
 #include <appl_heap.h>
 
+#include <appl_context.h>
+
 struct appl_string_descriptor
 {
     unsigned long int
@@ -53,9 +55,6 @@ enum appl_status
 
     e_status =
         p_heap->alloc_object(
-            sizeof(
-                struct appl_string)
-            + i_alloc_len,
             &(
                 o_string_descriptor),
             r_string);
@@ -133,33 +132,36 @@ appl_string::~appl_string()
 //
 //
 //
-void
-    appl_string::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        struct appl_string;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_string::f_init(
         struct appl_string_descriptor const * const
             p_string_descriptor)
 {
-    m_buf_min =
-        reinterpret_cast<unsigned char *>(
-            this + 1);
+    enum appl_status
+        e_status;
 
-    m_buf_max =
-        m_buf_min + p_string_descriptor->i_alloc_len;
+    union appl_ptr
+        o_buf_ptr;
+
+    e_status =
+        m_context->m_heap->v_alloc(
+            p_string_descriptor->i_alloc_len,
+            &(
+                o_buf_ptr.p_void));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        m_buf_min =
+            o_buf_ptr.p_uchar;
+
+        m_buf_max =
+            o_buf_ptr.p_uchar + p_string_descriptor->i_alloc_len;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 } // f_init()
 
@@ -169,8 +171,26 @@ enum appl_status
 enum appl_status
     appl_string::v_cleanup(void)
 {
-    return
+    enum appl_status
+        e_status;
+
+    union appl_ptr
+        o_buf_ptr;
+
+    o_buf_ptr.p_uchar =
+        m_buf_min;
+
+    m_context->m_heap->v_free(
+        appl_buf_len(
+            m_buf_min,
+            m_buf_max),
+        o_buf_ptr.p_void);
+
+    e_status =
         appl_status_ok;
+
+    return
+        e_status;
 
 } // v_cleanup()
 

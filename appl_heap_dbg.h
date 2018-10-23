@@ -40,7 +40,7 @@ class appl_heap_dbg;
 //
 class appl_heap_dbg : public appl_heap
 {
-    friend struct appl_object;
+    friend struct appl_heap;
 
     public:
 
@@ -82,12 +82,6 @@ class appl_heap_dbg : public appl_heap
         class appl_heap_dbg &
             operator =(
                 class appl_heap_dbg const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         enum appl_status
             f_init(

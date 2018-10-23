@@ -79,19 +79,6 @@ appl_clock_w32::~appl_clock_w32()
 //
 //
 //
-void
-    appl_clock_w32::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_clock_w32;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_clock_w32::f_init(void)
 {

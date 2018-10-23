@@ -28,7 +28,7 @@ class appl_event_std_mgr;
 //
 class appl_event_std_mgr : public appl_event_mgr
 {
-    friend struct appl_object;
+    friend struct appl_heap;
     public:
 
         static
@@ -72,12 +72,6 @@ class appl_event_std_mgr : public appl_event_mgr
         class appl_event_std_mgr &
             operator =(
                 class appl_event_std_mgr const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         enum appl_status
             f_init(void);

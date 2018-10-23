@@ -86,19 +86,6 @@ appl_file_std_mgr::~appl_file_std_mgr()
 //
 //
 //
-void
-    appl_file_std_mgr::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_file_std_mgr;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_file_std_mgr::f_init(void)
 {

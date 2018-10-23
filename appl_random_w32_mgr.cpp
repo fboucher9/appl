@@ -81,19 +81,6 @@ appl_random_w32_mgr::~appl_random_w32_mgr()
 //
 //
 //
-void
-    appl_random_w32_mgr::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_random_w32_mgr;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_random_w32_mgr::f_init(void)
 {

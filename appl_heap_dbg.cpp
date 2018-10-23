@@ -34,6 +34,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_heap.h>
 
 #include <appl_list.h>
@@ -115,19 +117,6 @@ appl_heap_dbg::appl_heap_dbg() :
 appl_heap_dbg::~appl_heap_dbg()
 {
 }
-
-//
-//
-//
-void
-    appl_heap_dbg::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_heap_dbg;
-
-} // s_new()
 
 static unsigned char const g_appl_heap_dbg_header_magic = (0xA1u);
 

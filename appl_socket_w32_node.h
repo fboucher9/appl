@@ -34,7 +34,7 @@ class appl_socket_w32_node;
 //
 class appl_socket_w32_node : public appl_socket
 {
-    friend struct appl_object;
+    friend struct appl_heap;
 
     public:
 
@@ -69,12 +69,6 @@ class appl_socket_w32_node : public appl_socket
         class appl_socket_w32_node &
             operator =(
                 class appl_socket_w32_node const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         enum appl_status
         f_init(

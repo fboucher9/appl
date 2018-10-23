@@ -79,19 +79,6 @@ appl_debug_std::~appl_debug_std()
 //
 //
 //
-void
-    appl_debug_std::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_debug_std;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_debug_std::v_break(void)
 {

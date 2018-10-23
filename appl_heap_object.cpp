@@ -63,8 +63,22 @@ enum appl_status
 //
 //
 //
+void
+    appl_heap_object::set_placement_length(
+        appl_size_t const
+            i_placement_length)
+{
+    m_placement_length =
+        i_placement_length;
+
+} // set_placement_length()
+
+//
+//
+//
 appl_heap_object::appl_heap_object() :
-    appl_object()
+    appl_object(),
+    m_placement_length()
 {
 }
 

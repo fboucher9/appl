@@ -35,7 +35,7 @@ class appl_clock_std;
 //
 class appl_clock_std : public appl_clock
 {
-    friend struct appl_object;
+    friend struct appl_heap;
     public:
 
         static
@@ -61,12 +61,6 @@ class appl_clock_std : public appl_clock
         class appl_clock_std &
             operator =(
                 class appl_clock_std const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         virtual
         enum appl_status

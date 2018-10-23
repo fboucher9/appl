@@ -114,19 +114,6 @@ appl_socket_std_node::~appl_socket_std_node()
 //
 //
 //
-void
-    appl_socket_std_node::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_socket_std_node;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
 appl_socket_std_node::f_init(
     struct appl_socket_property const * const

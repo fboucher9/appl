@@ -33,7 +33,7 @@ class appl_env_std;
 //
 class appl_env_std : public appl_env
 {
-    friend struct appl_object;
+    friend struct appl_heap;
     public:
 
         static
@@ -81,12 +81,6 @@ class appl_env_std : public appl_env
         class appl_env_std &
             operator =(
                 class appl_env_std const & r);
-
-        static
-        void
-        s_new(
-            void * const
-                p_placement);
 
 }; // class appl_env_std
 

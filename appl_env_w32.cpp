@@ -302,19 +302,6 @@ enum appl_status
 
 } // v_set()
 
-//
-//
-//
-void
-appl_env_w32::s_new(
-    void * const
-        p_placement)
-{
-    new (p_placement)
-        class appl_env_w32;
-
-} // s_new()
-
 #endif /* #if defined APPL_OS_WINDOWS */
 
 /* end-of-file: appl_env_w32.cpp */

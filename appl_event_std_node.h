@@ -72,12 +72,6 @@ class appl_event_std_node : public appl_event
             operator =(
                 class appl_event_std_node const & r);
 
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
-
         enum appl_status
             f_init(
                 struct appl_event_descriptor const * const

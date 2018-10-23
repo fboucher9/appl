@@ -30,7 +30,7 @@ class appl_random_w32_mgr;
 //
 class appl_random_w32_mgr : public appl_random_mgr
 {
-    friend struct appl_object;
+    friend struct appl_heap;
 
     public:
 
@@ -57,12 +57,6 @@ class appl_random_w32_mgr : public appl_random_mgr
         class appl_random_w32_mgr &
             operator =(
                 class appl_random_w32_mgr const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         enum appl_status
             f_init(void);

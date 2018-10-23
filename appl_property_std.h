@@ -45,7 +45,7 @@ struct appl_property_std;
 //
 struct appl_property_std : public appl_property
 {
-    friend struct appl_object;
+    friend struct appl_heap;
 
     public:
 
@@ -98,12 +98,6 @@ struct appl_property_std : public appl_property
         struct appl_property_std &
             operator =(
                 struct appl_property_std const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         virtual
         enum appl_status

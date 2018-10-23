@@ -27,6 +27,8 @@ struct appl_pool;
 class appl_thread_std_mgr :
     public appl_thread_mgr
 {
+    friend struct appl_heap;
+
     public:
 
         static
@@ -36,12 +38,6 @@ class appl_thread_std_mgr :
                     p_heap,
                 class appl_thread_mgr * * const
                     r_thread_mgr);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         enum appl_status
             f_init(void);

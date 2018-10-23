@@ -18,6 +18,8 @@
 
 #include <appl_object.h>
 
+#include <appl_heap_object.h>
+
 #include <appl_heap.h>
 
 #include <appl_list.h>
@@ -65,11 +67,6 @@ enum appl_status
             appl_object::s_init(
                 p_context,
                 p_placement,
-                i_placement_len,
-                (&
-                    appl_heap_std::s_new),
-                (&
-                    appl_heap_std::f_init),
                 &(
                     p_heap_std));
 
@@ -112,19 +109,6 @@ appl_heap_std::appl_heap_std() :
 appl_heap_std::~appl_heap_std()
 {
 }
-
-//
-//
-//
-void
-    appl_heap_std::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_heap_std;
-
-} // s_new()
 
 //
 //

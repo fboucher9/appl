@@ -309,19 +309,6 @@ enum appl_status
 
 } // v_set()
 
-//
-//
-//
-void
-appl_env_std::s_new(
-    void * const
-        p_placement)
-{
-    new (p_placement)
-        class appl_env_std;
-
-} // s_new()
-
 #endif /* #if defined APPL_OS_LINUX */
 
 /* end-of-file: appl_env_std.cpp */

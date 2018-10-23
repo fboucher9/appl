@@ -77,19 +77,6 @@ appl_debug_w32::~appl_debug_w32()
 //
 //
 //
-void
-    appl_debug_w32::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_debug_w32;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_debug_w32::v_break(void)
 {

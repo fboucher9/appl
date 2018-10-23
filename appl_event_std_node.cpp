@@ -105,19 +105,6 @@ appl_event_std_node::~appl_event_std_node()
 //
 //
 //
-void
-    appl_event_std_node::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_event_std_node;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_event_std_node::f_init(
         struct appl_event_descriptor const * const

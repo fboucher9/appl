@@ -28,7 +28,7 @@ class appl_random_w32_crypto;
 //
 class appl_random_w32_crypto : public appl_random
 {
-    friend struct appl_object;
+    friend struct appl_heap;
 
     public:
 
@@ -55,12 +55,6 @@ class appl_random_w32_crypto : public appl_random
         class appl_random_w32_crypto &
             operator =(
                 class appl_random_w32_crypto const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         virtual
         enum appl_status

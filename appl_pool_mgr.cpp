@@ -114,18 +114,4 @@ appl_pool_mgr::~appl_pool_mgr()
 {
 }
 
-//
-//
-//
-void
-    appl_pool_mgr::s_new(
-        void * const
-            p_placement)
-{
-    new (
-        p_placement)
-        class appl_pool_mgr;
-
-} // s_new()
-
 /* end-of-file: appl_pool_mgr.cpp */

@@ -39,7 +39,7 @@ class appl_library_std_mgr;
 //
 class appl_library_std_mgr : public appl_library_mgr
 {
-    friend struct appl_object;
+    friend struct appl_heap;
     public:
 
         static
@@ -65,12 +65,6 @@ class appl_library_std_mgr : public appl_library_mgr
         class appl_library_std_mgr &
             operator =(
                 class appl_library_std_mgr const & r);
-
-        static
-            void
-            s_new(
-                void * const
-                    p_placement);
 
         virtual
         enum appl_status

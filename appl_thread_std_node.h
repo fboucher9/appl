@@ -88,12 +88,6 @@ class appl_thread_std_node : public appl_thread
             operator =(
                 class appl_thread_std_node const & r);
 
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
-
         enum appl_status
             f_init(
                 struct appl_thread_property const * const

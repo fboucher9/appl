@@ -95,19 +95,6 @@ appl_socket_std_mgr::~appl_socket_std_mgr()
 //
 //
 //
-void
-    appl_socket_std_mgr::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_socket_std_mgr;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_socket_std_mgr::v_create_address(
         struct appl_address_property const * const

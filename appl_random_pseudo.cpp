@@ -78,19 +78,6 @@ appl_random_pseudo::~appl_random_pseudo()
 //
 //
 //
-void
-appl_random_pseudo::s_new(
-    void * const
-        p_placement)
-{
-    new (p_placement)
-        class appl_random_pseudo;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
 appl_random_pseudo::f_init(
     unsigned long int const * const

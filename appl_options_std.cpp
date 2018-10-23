@@ -83,19 +83,6 @@ appl_options_std::~appl_options_std()
 //
 //
 //
-void
-    appl_options_std::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_options_std;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
 appl_options_std::f_init(
     struct appl_options_std_descriptor const * const

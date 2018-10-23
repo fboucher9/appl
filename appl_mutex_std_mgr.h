@@ -30,7 +30,7 @@ class appl_mutex_std_mgr;
 //
 class appl_mutex_std_mgr : public appl_mutex_mgr
 {
-    friend struct appl_object;
+    friend struct appl_heap;
     public:
 
         static
@@ -74,12 +74,6 @@ class appl_mutex_std_mgr : public appl_mutex_mgr
         class appl_mutex_std_mgr &
             operator =(
                 class appl_mutex_std_mgr const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         enum appl_status
             f_init(void);

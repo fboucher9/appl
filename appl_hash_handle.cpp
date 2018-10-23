@@ -40,19 +40,9 @@ struct appl_hash_table
 //
 struct appl_hash : public appl_heap_object
 {
+    friend struct appl_heap;
+
     public:
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement)
-        {
-            new (
-                p_placement)
-                struct appl_hash;
-
-        } // s_new()
 
         enum appl_status
             f_init(

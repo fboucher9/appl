@@ -123,19 +123,6 @@ appl_mutex_std_node::convert_handle(
 //
 //
 //
-void
-    appl_mutex_std_node::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_mutex_std_node;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_mutex_std_node::f_init(
         struct appl_mutex_descriptor const * const

@@ -134,19 +134,6 @@ enum appl_status
 //
 //
 //
-void
-    appl_queue_std::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_queue_std;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_queue_std::f_init(
         struct appl_queue_descriptor const * const

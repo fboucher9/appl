@@ -33,6 +33,11 @@ class appl_heap_object : public appl_object
         enum appl_status
             v_destroy(void);
 
+        void
+            set_placement_length(
+                appl_size_t const
+                    i_placement_length);
+
     protected:
 
         appl_heap_object();
@@ -41,6 +46,16 @@ class appl_heap_object : public appl_object
         ~appl_heap_object();
 
     private:
+
+        // --
+
+        appl_size_t
+            m_placement_length;
+
+        appl_size_t
+            z_padding[1u];
+
+        // --
 
         appl_heap_object(
             class appl_heap_object const & r);

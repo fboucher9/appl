@@ -30,7 +30,7 @@ class appl_random_std_mgr;
 //
 class appl_random_std_mgr : public appl_random_mgr
 {
-    friend struct appl_object;
+    friend struct appl_heap;
     public:
 
         static
@@ -57,14 +57,8 @@ class appl_random_std_mgr : public appl_random_mgr
             operator =(
                 class appl_random_std_mgr const & r);
 
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
-
         enum appl_status
-            init(void);
+            f_init(void);
 
         virtual
         enum appl_status

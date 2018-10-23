@@ -145,19 +145,6 @@ enum appl_status
 //
 //
 //
-void
-appl_library_std_node::s_new(
-    void * const
-        p_placement)
-{
-    new (p_placement)
-        class appl_library_std_node;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_library_std_node::v_cleanup(void)
 {

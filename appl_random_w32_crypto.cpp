@@ -81,19 +81,6 @@ appl_random_w32_crypto::~appl_random_w32_crypto()
 //
 //
 //
-void
-    appl_random_w32_crypto::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_random_w32_crypto;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
 appl_random_w32_crypto::v_pick(
     unsigned long int const

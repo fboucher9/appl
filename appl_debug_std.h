@@ -25,7 +25,7 @@ class appl_debug_std;
 //
 class appl_debug_std : public appl_debug
 {
-    friend struct appl_object;
+    friend struct appl_heap;
     public:
 
         static
@@ -42,12 +42,6 @@ class appl_debug_std : public appl_debug
 
         virtual
         ~appl_debug_std();
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         virtual
         enum appl_status

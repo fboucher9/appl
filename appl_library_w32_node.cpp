@@ -133,19 +133,6 @@ enum appl_status
 
 } // f_init()
 
-//
-//
-//
-void
-appl_library_w32_node::s_new(
-    void * const
-        p_placement)
-{
-    new (p_placement)
-        class appl_library_w32_node;
-
-} // s_new()
-
 enum appl_status
     appl_library_w32_node::v_query(
         unsigned char const * const

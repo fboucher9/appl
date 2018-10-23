@@ -32,7 +32,7 @@ struct appl_string;
 //
 struct appl_string : public appl_heap_object
 {
-    friend struct appl_object;
+    friend struct appl_heap;
 
     public:
 
@@ -81,12 +81,6 @@ struct appl_string : public appl_heap_object
         struct appl_string &
             operator =(
                 struct appl_string const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         enum appl_status
             f_init(

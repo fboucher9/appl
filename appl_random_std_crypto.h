@@ -28,6 +28,8 @@ class appl_random_std_crypto;
 //
 class appl_random_std_crypto : public appl_random
 {
+    friend struct appl_heap;
+
     public:
 
         static
@@ -37,12 +39,6 @@ class appl_random_std_crypto : public appl_random
                 p_heap,
             struct appl_random * * const
                 r_random);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
     protected:
 

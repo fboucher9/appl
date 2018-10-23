@@ -87,8 +87,9 @@ struct appl_pool : public appl_heap_object
                 appl_status_ok
                 == e_status)
             {
-                T_instance::s_new(
-                    o_object_ptr.p_placement);
+                new (
+                    o_object_ptr.p_placement)
+                    T_instance;
 
                 o_object_ptr.p_object->set_context(
                     m_context);
@@ -112,6 +113,9 @@ struct appl_pool : public appl_heap_object
                     appl_status_ok
                     != e_status)
                 {
+                    delete
+                        o_object_ptr.p_instance;
+
                     v_free(
                         o_object_ptr.p_placement);
                 }
@@ -155,8 +159,9 @@ struct appl_pool : public appl_heap_object
                 appl_status_ok
                 == e_status)
             {
-                T_instance::s_new(
-                    o_object_ptr.p_placement);
+                new (
+                    o_object_ptr.p_placement)
+                    T_instance;
 
                 o_object_ptr.p_object->set_context(
                     m_context);
@@ -181,6 +186,9 @@ struct appl_pool : public appl_heap_object
                     appl_status_ok
                     != e_status)
                 {
+                    delete
+                        o_object_ptr.p_instance;
+
                     v_free(
                         o_object_ptr.p_placement);
                 }

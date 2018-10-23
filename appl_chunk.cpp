@@ -205,7 +205,7 @@ class appl_chunk_std;
 //
 class appl_chunk_std : public appl_chunk
 {
-    friend struct appl_object;
+    friend struct appl_heap;
     public:
 
         static
@@ -242,12 +242,6 @@ class appl_chunk_std : public appl_chunk
         class appl_chunk_std &
             operator =(
                 class appl_chunk_std const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         enum appl_status
             f_init(void);
@@ -341,19 +335,6 @@ appl_chunk_std::appl_chunk_std() :
 appl_chunk_std::~appl_chunk_std()
 {
 }
-
-//
-//
-//
-void
-    appl_chunk_std::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_chunk_std;
-
-} // s_new()
 
 //
 //

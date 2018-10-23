@@ -138,19 +138,6 @@ enum appl_status
 //
 //
 //
-void
-    appl_thread_std_node::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_thread_std_node;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_thread_std_node::f_init(
         struct appl_thread_property const * const

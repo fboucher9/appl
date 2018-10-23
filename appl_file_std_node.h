@@ -81,12 +81,6 @@ class appl_file_std_node : public appl_file
             operator =(
                 class appl_file_std_node const & r);
 
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
-
         enum appl_status
             f_init(
                 struct appl_file_std_node_descriptor const * const

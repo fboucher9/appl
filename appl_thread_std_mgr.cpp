@@ -76,19 +76,6 @@ appl_thread_std_mgr::~appl_thread_std_mgr()
 {
 }
 
-//
-//
-//
-void
-    appl_thread_std_mgr::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_thread_std_mgr;
-
-} // s_new()
-
 appl_size_t
 appl_thread_std_node_sizeof(void);
 

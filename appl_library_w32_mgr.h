@@ -34,7 +34,7 @@ class appl_library_w32_mgr;
 //
 class appl_library_w32_mgr : public appl_library_mgr
 {
-    friend struct appl_object;
+    friend struct appl_heap;
 
     public:
 
@@ -70,15 +70,6 @@ class appl_library_w32_mgr : public appl_library_mgr
         class appl_library_w32_mgr &
             operator =(
                 class appl_library_w32_mgr const & r);
-
-        //
-        //
-        //
-        static
-            void
-            s_new(
-                void * const
-                    p_placement);
 
         //
         //

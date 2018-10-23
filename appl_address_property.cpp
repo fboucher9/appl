@@ -59,7 +59,7 @@ enum appl_address_property_id
 //
 struct appl_address_property : public appl_property_std
 {
-    friend struct appl_object;
+    friend struct appl_heap;
     public:
 
         static
@@ -92,12 +92,6 @@ struct appl_address_property : public appl_property_std
         struct appl_address_property &
             operator =(
                 struct appl_address_property const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
 }; // struct appl_address_property
 
@@ -179,19 +173,6 @@ enum appl_status
         appl_status_ok;
 
 }
-
-//
-//
-//
-void
-    appl_address_property::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        struct appl_address_property;
-
-} // s_new()
 
 /*
 

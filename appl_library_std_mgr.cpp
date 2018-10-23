@@ -79,19 +79,6 @@ appl_library_std_mgr::~appl_library_std_mgr()
 //
 //
 //
-void
-    appl_library_std_mgr::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_library_std_mgr;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_library_std_mgr::v_create_node(
         struct appl_library_descriptor const * const

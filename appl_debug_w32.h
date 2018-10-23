@@ -37,7 +37,7 @@ class appl_debug_w32;
 //
 class appl_debug_w32 : public appl_debug
 {
-    friend struct appl_object;
+    friend struct appl_heap;
 
     public:
 
@@ -69,12 +69,6 @@ class appl_debug_w32 : public appl_debug
                     p_msg_max);
 
     private:
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         appl_debug_w32(
             class appl_debug_w32 const & r);

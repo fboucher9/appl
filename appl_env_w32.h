@@ -33,7 +33,7 @@ class appl_env_w32;
 //
 class appl_env_w32 : public appl_env
 {
-    friend struct appl_object;
+    friend struct appl_heap;
 
     public:
 
@@ -82,12 +82,6 @@ class appl_env_w32 : public appl_env
         class appl_env_w32 &
             operator =(
                 class appl_env_w32 const & r);
-
-        static
-        void
-        s_new(
-            void * const
-                p_placement);
 
 }; // class appl_env_w32
 

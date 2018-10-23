@@ -26,7 +26,7 @@ struct appl_heap;
 //
 //
 //
-struct appl_heap : public appl_object
+struct appl_heap : public appl_heap_object
 {
     public:
 
@@ -45,11 +45,9 @@ struct appl_heap : public appl_object
                     r_object)
         {
             return
-                v_alloc(
-                    sizeof(
-                        T_instance),
-                    reinterpret_cast<void * *>(
-                        r_object));
+                alloc_structure_array(
+                    1,
+                    r_object);
 
         } // alloc_object()
 
@@ -61,13 +59,38 @@ struct appl_heap : public appl_object
                 T_instance * * const
                     r_object_array)
         {
-            return
+            enum appl_status
+                e_status;
+
+            union object_ptr
+            {
+                void *
+                    p_placement;
+
+                T_instance *
+                    p_instance;
+
+            } o_object_ptr;
+
+            e_status =
                 v_alloc(
                     sizeof(
                         T_instance)
                     * i_count,
-                    reinterpret_cast<void * *>(
-                        r_object_array));
+                    &(
+                        o_object_ptr.p_placement));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                *(
+                    r_object_array) =
+                    o_object_ptr.p_instance;
+            }
+
+            return
+                e_status;
 
         } // alloc_object_array()
 
@@ -81,19 +104,51 @@ struct appl_heap : public appl_object
 
         template <typename T_instance>
         enum appl_status
+            free_structure(
+                T_instance * const
+                    p_object)
+        {
+            return
+                free_structure_array(
+                    1,
+                    p_object);
+        }
+
+        template <typename T_instance>
+        enum appl_status
             free_structure_array(
                 unsigned long int
                     i_count,
                 T_instance * const
                     p_object_array)
         {
-            return
+            enum appl_status
+                e_status;
+
+            union object_ptr
+            {
+                void *
+                    p_placement;
+
+                T_instance *
+                    p_instance;
+
+            } o_object_ptr;
+
+            o_object_ptr.p_instance =
+                p_object_array;
+
+            e_status =
                 v_free(
                     sizeof(
                         T_instance)
                     * i_count,
-                    p_object_array);
-        }
+                    o_object_ptr.p_placement);
+
+            return
+                e_status;
+
+        } // free_structure_array()
 
         template <typename T_instance>
         enum appl_status
@@ -101,43 +156,10 @@ struct appl_heap : public appl_object
                 T_instance * * const
                     r_object)
         {
-            enum appl_status
-                e_status;
-
-            void *
-                p_placement;
-
-            appl_size_t const
-                i_placement_length =
-                sizeof(T_instance);
-
-            e_status =
-                v_alloc(
-                    i_placement_length,
-                    &(
-                        p_placement));
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                e_status =
-                    init_object(
-                        p_placement,
-                        r_object);
-
-                if (
-                    appl_status_ok
-                    != e_status)
-                {
-                    v_free(
-                        i_placement_length,
-                        p_placement);
-                }
-            }
-
             return
-                e_status;
+                alloc_object(
+                    sizeof(T_instance),
+                    r_object);
 
         } // alloc_object()
 
@@ -149,44 +171,11 @@ struct appl_heap : public appl_object
                 T_instance * * const
                     r_object)
         {
-            enum appl_status
-                e_status;
-
-            void *
-                p_placement;
-
-            appl_size_t const
-                i_placement_length =
-                sizeof(T_instance);
-
-            e_status =
-                v_alloc(
-                    i_placement_length,
-                    &(
-                        p_placement));
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                e_status =
-                    init_object(
-                        p_placement,
-                        p_descriptor,
-                        r_object);
-
-                if (
-                    appl_status_ok
-                    != e_status)
-                {
-                    v_free(
-                        i_placement_length,
-                        p_placement);
-                }
-            }
-
             return
-                e_status;
+                alloc_object(
+                    sizeof(T_instance),
+                    p_descriptor,
+                    r_object);
 
         } // alloc_object()
 
@@ -216,16 +205,52 @@ struct appl_heap : public appl_object
                 appl_status_ok
                 == e_status)
             {
+                new (
+                    p_placement)
+                    T_instance;
+
+                union object_ptr
+                {
+                    void *
+                        p_placement;
+
+                    struct appl_heap_object *
+                        p_object;
+
+                    T_instance *
+                        p_instance;
+
+                } o_object_ptr;
+
+                o_object_ptr.p_placement =
+                    p_placement;
+
+                o_object_ptr.p_object->set_context(
+                    m_context);
+
+                o_object_ptr.p_object->set_placement_length(
+                    i_placement_length);
+
                 e_status =
-                    init_object(
-                        p_placement,
-                        p_descriptor,
-                        r_object);
+                    o_object_ptr.p_instance->f_init(
+                        p_descriptor);
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    *(
+                        r_object) =
+                        o_object_ptr.p_instance;
+                }
 
                 if (
                     appl_status_ok
                     != e_status)
                 {
+                    delete
+                        o_object_ptr.p_instance;
+
                     v_free(
                         i_placement_length,
                         p_placement);
@@ -261,15 +286,51 @@ struct appl_heap : public appl_object
                 appl_status_ok
                 == e_status)
             {
+                new (
+                    p_placement)
+                    T_instance;
+
+                union object_ptr
+                {
+                    void *
+                        p_placement;
+
+                    struct appl_heap_object *
+                        p_object;
+
+                    T_instance *
+                        p_instance;
+
+                } o_object_ptr;
+
+                o_object_ptr.p_placement =
+                    p_placement;
+
+                o_object_ptr.p_object->set_context(
+                    m_context);
+
+                o_object_ptr.p_object->set_placement_length(
+                    i_placement_length);
+
                 e_status =
-                    init_object(
-                        p_placement,
-                        r_object);
+                    o_object_ptr.p_instance->f_init();
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    *(
+                        r_object) =
+                        o_object_ptr.p_instance;
+                }
 
                 if (
                     appl_status_ok
                     != e_status)
                 {
+                    delete
+                        o_object_ptr.p_instance;
+
                     v_free(
                         i_placement_length,
                         p_placement);

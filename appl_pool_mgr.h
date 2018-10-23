@@ -30,7 +30,7 @@ class appl_pool_mgr;
 //
 class appl_pool_mgr : public appl_heap_object
 {
-    friend struct appl_object;
+    friend struct appl_heap;
     public:
 
         static
@@ -64,12 +64,6 @@ class appl_pool_mgr : public appl_heap_object
         class appl_pool_mgr &
             operator =(
                 class appl_pool_mgr const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
 }; // class appl_pool_mgr
 

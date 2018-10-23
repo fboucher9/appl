@@ -1210,20 +1210,6 @@ appl_context_std::~appl_context_std()
 {
 }
 
-//
-//
-//
-void
-    appl_context_std::s_new(
-        void * const
-            p_placement)
-{
-    new (
-        p_placement)
-        class appl_context_std;
-
-} // s_new()
-
 struct appl_context_std::init_cleanup_item
 const
 appl_context_std::g_init_cleanup_items[] =

@@ -54,12 +54,6 @@ class appl_heap_std : public appl_heap
             operator =(
                 class appl_heap_std const & r);
 
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
-
         enum appl_status
             f_init(void);
 

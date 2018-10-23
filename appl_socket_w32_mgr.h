@@ -28,7 +28,7 @@ class appl_socket_w32_mgr;
 //
 class appl_socket_w32_mgr : public appl_socket_mgr
 {
-    friend struct appl_object;
+    friend struct appl_heap;
 
     public:
 
@@ -55,12 +55,6 @@ class appl_socket_w32_mgr : public appl_socket_mgr
         class appl_socket_w32_mgr &
             operator =(
                 class appl_socket_w32_mgr const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         enum appl_status
             f_init(void);

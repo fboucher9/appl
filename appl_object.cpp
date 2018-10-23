@@ -31,8 +31,7 @@ enum appl_status
 //
 //
 appl_object::appl_object() :
-    m_context(),
-    m_placement_length()
+    m_context()
 {
 }
 

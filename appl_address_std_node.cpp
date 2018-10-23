@@ -116,19 +116,6 @@ appl_address_std_node::~appl_address_std_node()
 //
 //
 //
-void
-    appl_address_std_node::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_address_std_node;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_address_std_node::f_init(
         struct appl_address_property const * const

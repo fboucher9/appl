@@ -83,26 +83,13 @@ appl_random_std_mgr::~appl_random_std_mgr()
 //
 //
 //
-void
-    appl_random_std_mgr::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_random_std_mgr;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
-    appl_random_std_mgr::init(void)
+    appl_random_std_mgr::f_init(void)
 {
     return
         appl_status_ok;
 
-} // init()
+} // f_init()
 
 //
 //

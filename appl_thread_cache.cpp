@@ -209,17 +209,6 @@ struct appl_thread_cache : public appl_thread
         struct appl_thread_descriptor
             m_descriptor;
 
-        static
-        void
-            s_new(
-                void * const
-                    p_placement)
-        {
-            new (p_placement)
-                struct appl_thread_cache;
-
-        } // s_new()
-
         void
             f_task(void);
 
@@ -264,7 +253,7 @@ struct appl_thread_cache : public appl_thread
 //
 class appl_thread_cache_node : public appl_node
 {
-    friend struct appl_object;
+    friend struct appl_heap;
 
     public:
 
@@ -343,20 +332,6 @@ class appl_thread_cache_node : public appl_node
         //
         //
         //
-        static
-        void
-            s_new(
-                void * const
-                    p_placement)
-        {
-            new (p_placement)
-                class appl_thread_cache_node;
-
-        } // s_new
-
-        //
-        //
-        //
         enum appl_status
             f_init(
                 struct appl_thread_cache_descriptor const * const
@@ -393,7 +368,7 @@ appl_thread_cache_node::~appl_thread_cache_node()
 //
 class appl_thread_cache_mgr : public appl_heap_object
 {
-    friend struct appl_object;
+    friend struct appl_heap;
     public:
 
         static
@@ -526,21 +501,6 @@ class appl_thread_cache_mgr : public appl_heap_object
 
         class appl_node
             m_active_nodes;
-
-        //
-        //
-        //
-        static
-        void
-            s_new(
-                void * const
-                    p_placement)
-        {
-            new (
-                p_placement)
-                class appl_thread_cache_mgr;
-
-        } // s_new()
 
         appl_thread_cache_mgr(
             class appl_thread_cache_mgr const & r);

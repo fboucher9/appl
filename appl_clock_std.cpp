@@ -79,19 +79,6 @@ appl_clock_std::~appl_clock_std()
 //
 //
 //
-void
-    appl_clock_std::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_clock_std;
-
-} // s_new()
-
-//
-//
-//
 static
 unsigned long int
 appl_math_muldiv(

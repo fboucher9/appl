@@ -34,7 +34,7 @@ class appl_library_w32_node;
 //
 class appl_library_w32_node : public appl_library
 {
-    friend struct appl_object;
+    friend struct appl_heap;
 
     public:
 
@@ -83,15 +83,6 @@ class appl_library_w32_node : public appl_library
         class appl_library_w32_node &
             operator =(
                 class appl_library_w32_node const & r);
-
-        //
-        //
-        //
-        static
-        void
-        s_new(
-            void * const
-                p_placement);
 
         virtual
         enum appl_status

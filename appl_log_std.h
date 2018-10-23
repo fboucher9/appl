@@ -33,7 +33,7 @@ struct appl_object;
 //
 class appl_log_std : public appl_log
 {
-    friend struct appl_object;
+    friend struct appl_heap;
     public:
 
         static
@@ -62,12 +62,6 @@ class appl_log_std : public appl_log
         class appl_log_std &
             operator =(
                 class appl_log_std const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         virtual
         enum appl_status

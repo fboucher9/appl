@@ -27,7 +27,7 @@ class appl_context_std;
 //
 class appl_context_std : public appl_context
 {
-    friend struct appl_object;
+    friend struct appl_heap;
 
     public:
 
@@ -130,12 +130,6 @@ class appl_context_std : public appl_context
         class appl_context_std &
             operator =(
                 class appl_context_std const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         enum appl_status
             init_heap(

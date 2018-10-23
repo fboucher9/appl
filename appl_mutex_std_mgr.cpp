@@ -81,19 +81,6 @@ appl_mutex_std_mgr::~appl_mutex_std_mgr()
 {
 }
 
-//
-//
-//
-void
-    appl_mutex_std_mgr::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_mutex_std_mgr;
-
-} // s_new()
-
 appl_size_t
 appl_mutex_std_node_sizeof(void);
 

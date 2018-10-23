@@ -106,20 +106,6 @@ appl_pool_std::~appl_pool_std()
 //
 //
 //
-void
-    appl_pool_std::s_new(
-        void * const
-            p_placement)
-{
-    new (
-        p_placement)
-        class appl_pool_std;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_pool_std::f_init(
         struct appl_pool_std_descriptor const * const

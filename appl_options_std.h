@@ -33,7 +33,7 @@ struct appl_options_std_descriptor
 //
 class appl_options_std : public appl_options
 {
-    friend struct appl_object;
+    friend struct appl_heap;
     public:
 
         static
@@ -64,12 +64,6 @@ class appl_options_std : public appl_options
         class appl_options_std &
             operator =(
                 class appl_options_std const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         enum appl_status
             f_init(

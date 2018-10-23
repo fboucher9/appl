@@ -85,12 +85,6 @@ class appl_mutex_std_node : public appl_mutex
             struct appl_mutex * const
                 p_mutex);
 
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
-
         enum appl_status
             f_init(
                 struct appl_mutex_descriptor const * const

@@ -121,19 +121,6 @@ appl_file_std_node::~appl_file_std_node()
 //
 //
 //
-void
-    appl_file_std_node::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_file_std_node;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_file_std_node::f_init(
         struct appl_file_std_node_descriptor const * const

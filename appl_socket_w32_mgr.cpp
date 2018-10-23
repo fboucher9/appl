@@ -89,19 +89,6 @@ appl_socket_w32_mgr::~appl_socket_w32_mgr()
 //
 //
 //
-void
-    appl_socket_w32_mgr::s_new(
-        void * const
-            p_placement)
-{
-    new (p_placement)
-        class appl_socket_w32_mgr;
-
-} // s_new()
-
-//
-//
-//
 enum appl_status
     appl_socket_w32_mgr::f_init(void)
 {

@@ -28,6 +28,8 @@ class appl_socket_std_mgr;
 //
 class appl_socket_std_mgr : public appl_socket_mgr
 {
+    friend struct appl_heap;
+
     public:
 
         static
@@ -37,12 +39,6 @@ class appl_socket_std_mgr : public appl_socket_mgr
                     p_heap,
                 class appl_socket_mgr * * const
                     r_socket_mgr);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
     protected:
 

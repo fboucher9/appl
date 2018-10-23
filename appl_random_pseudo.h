@@ -28,7 +28,7 @@ class appl_random_pseudo;
 //
 class appl_random_pseudo : public appl_random
 {
-    friend struct appl_object;
+    friend struct appl_heap;
     public:
 
         static
@@ -62,12 +62,6 @@ class appl_random_pseudo : public appl_random
         class appl_random_pseudo &
             operator =(
                 class appl_random_pseudo const & r);
-
-        static
-        void
-            s_new(
-                void * const
-                    p_placement);
 
         enum appl_status
             f_init(
