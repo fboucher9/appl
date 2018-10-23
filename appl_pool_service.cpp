@@ -14,6 +14,8 @@
 
 #include <appl_heap_object.h>
 
+#include <appl_allocator.h>
+
 #include <appl_pool.h>
 
 #include <appl_pool_mgr.h>
@@ -77,6 +79,7 @@ enum appl_status
 {
     return
         p_pool->v_alloc(
+            0,
             r_buffer);
 
 } // s_alloc()
@@ -93,6 +96,7 @@ enum appl_status
 {
     return
         p_pool->v_free(
+            0,
             p_buffer);
 
 } // s_free()

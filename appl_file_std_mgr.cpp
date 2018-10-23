@@ -26,6 +26,8 @@
 
 #include <appl_pool_handle.h>
 
+#include <appl_allocator.h>
+
 #include <appl_heap.h>
 
 #if !defined(__cplusplus)

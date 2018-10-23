@@ -32,6 +32,8 @@
 
 #include <appl_unused.h>
 
+#include <appl_allocator.h>
+
 #include <appl_pool.h>
 
 /* Assert compiler */

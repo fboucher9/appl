@@ -94,12 +94,16 @@ class appl_pool_std : public appl_pool
         virtual
         enum appl_status
             v_alloc(
+                appl_size_t const
+                    i_buf_len,
                 void * * const
                     r_buf);
 
         virtual
         enum appl_status
             v_free(
+                appl_size_t const
+                    i_buf_len,
                 void * const
                     p_buf);
 

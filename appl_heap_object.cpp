@@ -14,8 +14,11 @@
 
 #include <appl_context.h>
 
+#include <appl_allocator.h>
+
 #include <appl_heap.h>
 
+#if 0
 //
 //
 //
@@ -59,37 +62,13 @@ enum appl_status
         e_status;
 
 } // v_destroy()
-
-//
-//
-//
-appl_size_t
-    appl_heap_object::get_placement_length(void) const
-{
-    return
-        m_placement_length;
-
-} // get_placement_length()
-
-//
-//
-//
-void
-    appl_heap_object::set_placement_length(
-        appl_size_t const
-            i_placement_length)
-{
-    m_placement_length =
-        i_placement_length;
-
-} // set_placement_length()
+#endif
 
 //
 //
 //
 appl_heap_object::appl_heap_object() :
-    appl_object(),
-    m_placement_length()
+    appl_object()
 {
 }
 

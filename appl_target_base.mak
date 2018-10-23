@@ -18,6 +18,7 @@ appl_base-deps := \
     appl_address_property.cpp \
     appl_address_service.cpp \
     appl_address_std_node.cpp \
+    appl_allocator.cpp \
     appl_buf.cpp \
     appl_buf0.cpp \
     appl_chunk.cpp \

@@ -24,6 +24,8 @@
 
 #include <appl_list.h>
 
+#include <appl_allocator.h>
+
 #include <appl_pool.h>
 
 #include <appl_mutex_impl.h>
@@ -179,11 +181,16 @@ enum appl_status
 //
 enum appl_status
     appl_pool_std::v_alloc(
+        appl_size_t const
+            i_buf_len,
         void * * const
             r_buf)
 {
     enum appl_status
         e_status;
+
+    appl_unused(
+        i_buf_len);
 
     if (
         appl_status_ok
@@ -282,11 +289,16 @@ enum appl_status
 //
 enum appl_status
     appl_pool_std::v_free(
+        appl_size_t const
+            i_buf_len,
         void * const
             p_buf)
 {
     enum appl_status
         e_status;
+
+    appl_unused(
+        i_buf_len);
 
     if (
         appl_status_ok

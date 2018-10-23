@@ -18,6 +18,8 @@
 
 #include <appl_context.h>
 
+#include <appl_allocator.h>
+
 #include <appl_pool.h>
 
 #include <appl_pool_mgr.h>

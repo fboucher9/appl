@@ -18,6 +18,8 @@
 
 #include <appl_unused.h>
 
+#include <appl_allocator.h>
+
 #include <appl_heap.h>
 
 //

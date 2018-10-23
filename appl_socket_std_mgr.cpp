@@ -38,6 +38,8 @@
 
 #include <appl_poll_descriptor.h>
 
+#include <appl_allocator.h>
+
 #include <appl_heap.h>
 
 #include <appl_context.h>

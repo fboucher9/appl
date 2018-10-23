@@ -61,11 +61,7 @@ class appl_file_std_node : public appl_file
 
     private:
 
-        struct appl_pool *
-            m_pool;
-
-        void *
-            pv_padding[1u];
+        // --
 
         int
             m_fd;
@@ -73,11 +69,15 @@ class appl_file_std_node : public appl_file
         unsigned int
             ui_padding[3u];
 
+        // --
+
         bool
             m_close;
 
         unsigned char
             uc_padding[7u];
+
+        // --
 
         appl_file_std_node(
             class appl_file_std_node const & r);

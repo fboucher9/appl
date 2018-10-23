@@ -40,13 +40,12 @@
 
 #include <appl_convert.h>
 
+#include <appl_allocator.h>
+
 #include <appl_pool.h>
 
 struct appl_file_std_node_descriptor
 {
-    struct appl_pool *
-        p_pool;
-
     struct appl_file_descriptor const *
         p_file_descriptor;
 
@@ -69,9 +68,6 @@ enum appl_status
 
     struct appl_file_std_node_descriptor
         o_file_std_node_descriptor;
-
-    o_file_std_node_descriptor.p_pool =
-        p_pool;
 
     o_file_std_node_descriptor.p_file_descriptor =
         p_file_descriptor;
@@ -105,7 +101,6 @@ enum appl_status
 //
 appl_file_std_node::appl_file_std_node() :
     appl_file(),
-    m_pool(),
     m_fd(),
     m_close(false)
 {
@@ -128,9 +123,6 @@ enum appl_status
 {
     enum appl_status
         e_status;
-
-    m_pool =
-        p_file_std_node_descriptor->p_pool;
 
     struct appl_file_descriptor const * const
         p_file_descriptor =
@@ -300,31 +292,8 @@ enum appl_status
     }
 
     // Free ourselves using mgr pool...
-    if (
-        m_pool)
-    {
-        struct appl_pool * const
-            p_pool =
-            m_pool;
-
-        void * const
-            p_placement =
-            this;
-
-        delete
-            this;
-
-        p_pool->v_free(
-            p_placement);
-
-        e_status =
-            appl_status_fail;
-    }
-    else
-    {
-        e_status =
-            appl_status_ok;
-    }
+    e_status =
+        appl_status_ok;
 
     return
         e_status;

@@ -4,9 +4,10 @@
 
 */
 
-#if defined(INC_APPL_OBJECT_H)
+/* Reverse include guard */
+#if defined INC_APPL_OBJECT_H
 #error include appl_object.h once
-#endif /* #if defined(INC_APPL_OBJECT_H) */
+#endif /* #if defined INC_APPL_OBJECT_H */
 
 #define INC_APPL_OBJECT_H
 
@@ -15,13 +16,19 @@
 #error include appl_types.h before
 #endif /* #if !defined(INC_APPL_TYPES_H) */
 
+/* Predefine */
 struct appl_context;
 
+/* Predefine */
 struct appl_object;
 
-#if !defined(__cplusplus)
+/* Assert compiler */
+#if ! defined __cplusplus
 #error use c++ compiler
-#endif /* #if !defined(__cplusplus) */
+#endif /* #if ! defined __cplusplus */
+
+// Predefine
+class appl_allocator;
 
 //
 //
@@ -42,6 +49,22 @@ struct appl_object
                 struct appl_context * const
                     p_context);
 
+        class appl_allocator *
+            get_allocator(void) const;
+
+        void
+            set_allocator(
+                class appl_allocator * const
+                    p_allocator);
+
+        appl_size_t
+            get_placement_length(void) const;
+
+        void
+            set_placement_length(
+                appl_size_t const
+                    i_placement_length);
+
         enum appl_status
             f_init(void);
 
@@ -53,6 +76,14 @@ struct appl_object
 
         struct appl_context *
             m_context;
+
+        // --
+
+        class appl_allocator *
+            m_allocator;
+
+        appl_size_t
+            m_placement_length;
 
         // --
 

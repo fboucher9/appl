@@ -13,30 +13,28 @@
 
 /* Header file dependency */
 #if ! defined INC_APPL_OBJECT_H
-#error include appl_object.h before appl_heap.h
+#error include appl_object.h before
 #endif /* #if ! defined INC_APPL_OBJECT_H */
+
+/* Header file dependency */
+#if ! defined INC_APPL_ALLOCATOR_H
+#error include appl_allocator.h before
+#endif /* #if ! defined INC_APPL_ALLOCATOR_H */
 
 /* Assert compiler */
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
 
+// Predefine
 struct appl_heap;
 
 //
 //
 //
-struct appl_heap : public appl_heap_object
+struct appl_heap : public appl_allocator
 {
     public:
-
-        virtual
-        enum appl_status
-            v_alloc(
-                appl_size_t const
-                    i_buf_len,
-                void * * const
-                    r_buf);
 
         template <typename T_instance>
         enum appl_status
@@ -93,14 +91,6 @@ struct appl_heap : public appl_heap_object
                 e_status;
 
         } // alloc_object_array()
-
-        virtual
-        enum appl_status
-            v_free(
-                appl_size_t const
-                    i_buf_len,
-                void * const
-                    p_buf);
 
         template <typename T_instance>
         enum appl_status
@@ -214,7 +204,7 @@ struct appl_heap : public appl_heap_object
                     void *
                         p_placement;
 
-                    class appl_heap_object *
+                    struct appl_object *
                         p_object;
 
                     T_instance *
@@ -227,6 +217,9 @@ struct appl_heap : public appl_heap_object
 
                 o_object_ptr.p_object->set_context(
                     m_context);
+
+                o_object_ptr.p_object->set_allocator(
+                    this);
 
                 o_object_ptr.p_object->set_placement_length(
                     i_placement_length);
@@ -308,6 +301,9 @@ struct appl_heap : public appl_heap_object
 
                 o_object_ptr.p_object->set_context(
                     m_context);
+
+                o_object_ptr.p_object->set_allocator(
+                    this);
 
                 o_object_ptr.p_object->set_placement_length(
                     i_placement_length);

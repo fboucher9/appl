@@ -12,15 +12,45 @@
 
 #include <appl_unused.h>
 
+#include <appl_allocator.h>
+
 //
 //
 //
 enum appl_status
     appl_object::v_destroy(void)
 {
+    class appl_allocator * const
+        p_allocator =
+        m_allocator;
+
+    appl_size_t const
+        i_placement_length =
+        m_placement_length;
+
+    void * const
+        p_placement =
+        this;
+
     enum appl_status const
         e_status =
         v_cleanup();
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        delete
+            this;
+
+        if (
+            p_allocator)
+        {
+            p_allocator->v_free(
+                i_placement_length,
+                p_placement);
+        }
+    }
 
     return
         e_status;
@@ -31,7 +61,9 @@ enum appl_status
 //
 //
 appl_object::appl_object() :
-    m_context()
+    m_context(),
+    m_allocator(),
+    m_placement_length()
 {
 }
 
@@ -140,5 +172,53 @@ void
         p_context;
 
 } // set_context()
+
+//
+//
+//
+class appl_allocator *
+    appl_object::get_allocator(void) const
+{
+    return
+        m_allocator;
+
+} // get_allocator()
+
+//
+//
+//
+void
+    appl_object::set_allocator(
+        class appl_allocator * const
+            p_allocator)
+{
+    m_allocator =
+        p_allocator;
+
+} // set_allocator()
+
+//
+//
+//
+appl_size_t
+    appl_object::get_placement_length(void) const
+{
+    return
+        m_placement_length;
+
+} // get_placement_length()
+
+//
+//
+//
+void
+    appl_object::set_placement_length(
+        appl_size_t const
+            i_placement_length)
+{
+    m_placement_length =
+        i_placement_length;
+
+} // set_placement_length()
 
 /* end-of-file: appl_object.cpp */

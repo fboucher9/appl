@@ -38,6 +38,8 @@ Comments:
 
 #include <appl_thread_descriptor.h>
 
+#include <appl_allocator.h>
+
 #include <appl_heap.h>
 
 struct appl_thread_property;

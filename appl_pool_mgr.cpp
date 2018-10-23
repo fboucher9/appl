@@ -24,6 +24,8 @@
 
 #include <appl_pool_mgr.h>
 
+#include <appl_allocator.h>
+
 #include <appl_pool.h>
 
 #include <appl_list.h>

@@ -33,18 +33,6 @@ class appl_pool_object : public appl_object
 {
     public:
 
-        virtual
-        enum appl_status
-            v_destroy(void);
-
-        struct appl_pool *
-            get_pool(void) const;
-
-        void
-            set_pool(
-                struct appl_pool * const
-                    p_pool);
-
     protected:
 
         appl_pool_object();
@@ -53,16 +41,6 @@ class appl_pool_object : public appl_object
         ~appl_pool_object();
 
     private:
-
-        // --
-
-        struct appl_pool *
-            m_pool;
-
-        void *
-            z2_padding[1u];
-
-        // --
 
         appl_pool_object(
             class appl_pool_object const & r);

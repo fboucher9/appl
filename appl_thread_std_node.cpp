@@ -40,6 +40,8 @@
 
 #include <appl_thread_std_node.h>
 
+#include <appl_allocator.h>
+
 #include <appl_pool.h>
 
 #include <appl_unused.h>

@@ -12,6 +12,8 @@
 
 #include <appl_heap_object.h>
 
+#include <appl_allocator.h>
+
 #include <appl_heap.h>
 
 #include <appl_unused.h>
@@ -21,46 +23,8 @@
 //
 //
 //
-enum appl_status
-    appl_heap::v_alloc(
-        appl_size_t const
-            i_buf_len,
-        void * * const
-            r_buf)
-{
-    appl_unused(
-        i_buf_len,
-        r_buf);
-
-    return
-        appl_status_not_implemented;
-
-} // v_alloc()
-
-//
-//
-//
-enum appl_status
-    appl_heap::v_free(
-        appl_size_t const
-            i_buf_len,
-        void * const
-            p_buf)
-{
-    appl_unused(
-        i_buf_len,
-        p_buf);
-
-    return
-        appl_status_not_implemented;
-
-} // v_free()
-
-//
-//
-//
 appl_heap::appl_heap() :
-    appl_heap_object()
+    appl_allocator()
 {
 }
 

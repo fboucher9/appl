@@ -24,6 +24,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_allocator.h>
+
 #include <appl_heap.h>
 
 //

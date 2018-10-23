@@ -14,8 +14,11 @@
 
 #include <appl_pool_object.h>
 
+#include <appl_allocator.h>
+
 #include <appl_pool.h>
 
+#if 0
 //
 //
 //
@@ -51,37 +54,13 @@ enum appl_status
         e_status;
 
 } // v_destroy()
-
-//
-//
-//
-struct appl_pool *
-    appl_pool_object::get_pool(void) const
-{
-    return
-        m_pool;
-
-} // get_pool()
-
-//
-//
-//
-void
-    appl_pool_object::set_pool(
-        struct appl_pool * const
-            p_pool)
-{
-    m_pool =
-        p_pool;
-
-} // set_pool()
+#endif
 
 //
 //
 //
 appl_pool_object::appl_pool_object() :
-    appl_object(),
-    m_pool()
+    appl_object()
 {
 }
 

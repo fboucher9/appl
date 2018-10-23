@@ -24,6 +24,8 @@
 
 #include <appl_context.h>
 
+#include <appl_allocator.h>
+
 #include <appl_heap.h>
 
 //

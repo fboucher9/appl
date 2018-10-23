@@ -20,6 +20,8 @@
 
 #include <appl_context.h>
 
+#include <appl_allocator.h>
+
 #include <appl_heap.h>
 
 #include <appl_buf0.h>

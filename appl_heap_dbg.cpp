@@ -36,6 +36,8 @@
 
 #include <appl_heap_object.h>
 
+#include <appl_allocator.h>
+
 #include <appl_heap.h>
 
 #include <appl_list.h>
