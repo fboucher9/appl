@@ -33,7 +33,7 @@ struct appl_options_std_descriptor
 //
 class appl_options_std : public appl_options
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
     public:
 
         static
@@ -46,12 +46,17 @@ class appl_options_std : public appl_options
             class appl_options * * const
                 r_options_std);
 
-    protected:
-
         appl_options_std();
 
         virtual
         ~appl_options_std();
+
+        enum appl_status
+            f_init(
+                struct appl_options_std_descriptor const * const
+                    p_options_std_descriptor);
+
+    protected:
 
     private:
 
@@ -64,11 +69,6 @@ class appl_options_std : public appl_options
         class appl_options_std &
             operator =(
                 class appl_options_std const & r);
-
-        enum appl_status
-            f_init(
-                struct appl_options_std_descriptor const * const
-                    p_options_std_descriptor);
 
         virtual
         enum appl_status

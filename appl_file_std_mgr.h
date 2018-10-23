@@ -31,7 +31,7 @@ class appl_file_std_mgr;
 //
 class appl_file_std_mgr : public appl_file_mgr
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
     public:
 
         static
@@ -42,12 +42,15 @@ class appl_file_std_mgr : public appl_file_mgr
                 class appl_file_mgr * * const
                     r_file_mgr);
 
-    protected:
-
         appl_file_std_mgr();
 
         virtual
         ~appl_file_std_mgr();
+
+        enum appl_status
+            f_init(void);
+
+    protected:
 
     private:
 
@@ -63,9 +66,6 @@ class appl_file_std_mgr : public appl_file_mgr
         class appl_file_std_mgr &
             operator =(
                 class appl_file_std_mgr const & r);
-
-        enum appl_status
-            f_init(void);
 
         virtual
         enum appl_status

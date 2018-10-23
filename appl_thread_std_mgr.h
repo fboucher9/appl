@@ -27,7 +27,7 @@ struct appl_pool;
 class appl_thread_std_mgr :
     public appl_thread_mgr
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
 
     public:
 
@@ -42,12 +42,12 @@ class appl_thread_std_mgr :
         enum appl_status
             f_init(void);
 
-    protected:
-
         appl_thread_std_mgr();
 
         virtual
         ~appl_thread_std_mgr();
+
+    protected:
 
     private:
 

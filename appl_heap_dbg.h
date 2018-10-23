@@ -40,7 +40,7 @@ class appl_heap_dbg;
 //
 class appl_heap_dbg : public appl_heap
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
 
     public:
 
@@ -52,12 +52,17 @@ class appl_heap_dbg : public appl_heap
                 struct appl_heap * * const
                     r_heap);
 
-    protected:
-
         appl_heap_dbg();
 
         virtual
         ~appl_heap_dbg();
+
+        enum appl_status
+            f_init(
+                struct appl_heap_dbg_descriptor const * const
+                    p_descriptor);
+
+    protected:
 
         struct appl_heap *
             m_parent;
@@ -82,11 +87,6 @@ class appl_heap_dbg : public appl_heap
         class appl_heap_dbg &
             operator =(
                 class appl_heap_dbg const & r);
-
-        enum appl_status
-            f_init(
-                struct appl_heap_dbg_descriptor const * const
-                    p_descriptor);
 
         virtual
         enum appl_status

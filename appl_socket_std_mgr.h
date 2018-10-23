@@ -28,7 +28,7 @@ class appl_socket_std_mgr;
 //
 class appl_socket_std_mgr : public appl_socket_mgr
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
 
     public:
 
@@ -40,12 +40,12 @@ class appl_socket_std_mgr : public appl_socket_mgr
                 class appl_socket_mgr * * const
                     r_socket_mgr);
 
-    protected:
-
         appl_socket_std_mgr();
 
         virtual
         ~appl_socket_std_mgr();
+
+    protected:
 
     private:
 

@@ -205,7 +205,7 @@ class appl_chunk_std;
 //
 class appl_chunk_std : public appl_chunk
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
     public:
 
         static
@@ -216,12 +216,15 @@ class appl_chunk_std : public appl_chunk
             struct appl_chunk * * const
                 r_chunk);
 
-    protected:
-
         appl_chunk_std();
 
         virtual
         ~appl_chunk_std();
+
+        enum appl_status
+            f_init(void);
+
+    protected:
 
     private:
 
@@ -242,9 +245,6 @@ class appl_chunk_std : public appl_chunk
         class appl_chunk_std &
             operator =(
                 class appl_chunk_std const & r);
-
-        enum appl_status
-            f_init(void);
 
         virtual
         enum appl_status

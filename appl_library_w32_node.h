@@ -34,7 +34,7 @@ class appl_library_w32_node;
 //
 class appl_library_w32_node : public appl_library
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
 
     public:
 
@@ -50,8 +50,6 @@ class appl_library_w32_node : public appl_library
                     p_library_descriptor,
                 struct appl_library * * const
                     r_library);
-
-    protected:
 
         //
         //
@@ -71,6 +69,8 @@ class appl_library_w32_node : public appl_library
             f_init(
                 struct appl_library_descriptor const * const
                     p_library_descriptor);
+
+    protected:
 
     private:
 

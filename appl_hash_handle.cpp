@@ -40,7 +40,7 @@ struct appl_hash_table
 //
 struct appl_hash : public appl_heap_object
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
 
     public:
 
@@ -252,8 +252,6 @@ struct appl_hash : public appl_heap_object
 
         } // f_iterate()
 
-    protected:
-
         appl_hash() :
             appl_heap_object(),
             m_descriptor(),
@@ -263,6 +261,8 @@ struct appl_hash : public appl_heap_object
 
         virtual
         ~appl_hash();
+
+    protected:
 
     private:
 

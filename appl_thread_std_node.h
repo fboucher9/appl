@@ -41,7 +41,7 @@ class appl_thread_std_node;
 //
 class appl_thread_std_node : public appl_thread
 {
-    friend struct appl_pool;
+    // friend struct appl_pool;
 
     public:
 
@@ -55,12 +55,17 @@ class appl_thread_std_node : public appl_thread
                 struct appl_thread * * const
                     r_thread);
 
-    protected:
-
         appl_thread_std_node();
 
         virtual
         ~appl_thread_std_node();
+
+        enum appl_status
+            f_init(
+                struct appl_thread_property const * const
+                    p_thread_property);
+
+    protected:
 
         virtual
         enum appl_status
@@ -87,11 +92,6 @@ class appl_thread_std_node : public appl_thread
         class appl_thread_std_node &
             operator =(
                 class appl_thread_std_node const & r);
-
-        enum appl_status
-            f_init(
-                struct appl_thread_property const * const
-                    p_thread_property);
 
         virtual
         enum appl_status

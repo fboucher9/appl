@@ -42,6 +42,9 @@ struct appl_object
                 struct appl_context * const
                     p_context);
 
+        enum appl_status
+            f_init(void);
+
     protected:
 
         // --
@@ -89,9 +92,6 @@ struct appl_object
                 p_buf,
             void * const
                 p_placement);
-
-        enum appl_status
-            f_init(void);
 
     private:
 

@@ -28,7 +28,7 @@ class appl_random_w32_crypto;
 //
 class appl_random_w32_crypto : public appl_random
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
 
     public:
 
@@ -40,12 +40,12 @@ class appl_random_w32_crypto : public appl_random
             struct appl_random * * const
                 r_random);
 
-    protected:
-
         appl_random_w32_crypto();
 
         virtual
         ~appl_random_w32_crypto();
+
+    protected:
 
     private:
 

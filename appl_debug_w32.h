@@ -37,7 +37,7 @@ class appl_debug_w32;
 //
 class appl_debug_w32 : public appl_debug
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
 
     public:
 
@@ -49,12 +49,12 @@ class appl_debug_w32 : public appl_debug
                 class appl_debug * * const
                     r_debug);
 
-    protected:
-
         appl_debug_w32();
 
         virtual
         ~appl_debug_w32();
+
+    protected:
 
         virtual
         enum appl_status

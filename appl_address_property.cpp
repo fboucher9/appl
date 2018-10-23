@@ -59,7 +59,7 @@ enum appl_address_property_id
 //
 struct appl_address_property : public appl_property_std
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
     public:
 
         static
@@ -70,8 +70,6 @@ struct appl_address_property : public appl_property_std
             struct appl_address_property * * const
                 r_address_property);
 
-    protected:
-
         appl_address_property();
 
         virtual
@@ -79,6 +77,8 @@ struct appl_address_property : public appl_property_std
 
         enum appl_status
             f_init(void);
+
+    protected:
 
         virtual
         enum appl_status

@@ -36,7 +36,7 @@ class appl_socket_std_node;
 //
 class appl_socket_std_node : public appl_socket
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
     friend class appl_socket_std_mgr;
 
     public:
@@ -51,12 +51,22 @@ class appl_socket_std_node : public appl_socket
                 struct appl_socket * * const
                     r_socket);
 
-    protected:
-
         appl_socket_std_node();
 
         virtual
         ~appl_socket_std_node();
+
+        enum appl_status
+            f_init(
+                struct appl_socket_property const * const
+                    p_socket_descriptor);
+
+        enum appl_status
+            f_init(
+                int const * const
+                    p_socket_descriptor);
+
+    protected:
 
     private:
 
@@ -72,16 +82,6 @@ class appl_socket_std_node : public appl_socket
         class appl_socket_std_node &
             operator =(
                 class appl_socket_std_node const & r);
-
-        enum appl_status
-            f_init(
-                struct appl_socket_property const * const
-                    p_socket_descriptor);
-
-        enum appl_status
-            f_init(
-                int const * const
-                    p_socket_descriptor);
 
         enum appl_status
         init_socket(

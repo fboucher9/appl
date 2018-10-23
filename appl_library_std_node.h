@@ -39,7 +39,7 @@ class appl_library_std_node;
 //
 class appl_library_std_node : public appl_library
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
     public:
 
         static
@@ -52,8 +52,6 @@ class appl_library_std_node : public appl_library
                 struct appl_library * * const
                     r_library);
 
-    protected:
-
         appl_library_std_node();
 
         virtual
@@ -63,6 +61,8 @@ class appl_library_std_node : public appl_library
             f_init(
                 struct appl_library_descriptor const * const
                     p_library_descriptor);
+
+    protected:
 
     private:
 

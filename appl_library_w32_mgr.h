@@ -34,7 +34,7 @@ class appl_library_w32_mgr;
 //
 class appl_library_w32_mgr : public appl_library_mgr
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
 
     public:
 
@@ -49,8 +49,6 @@ class appl_library_w32_mgr : public appl_library_mgr
                 struct appl_library_mgr * * const
                     r_library_mgr);
 
-    protected:
-
         //
         //
         //
@@ -61,6 +59,8 @@ class appl_library_w32_mgr : public appl_library_mgr
         //
         virtual
         ~appl_library_w32_mgr();
+
+    protected:
 
     private:
 

@@ -253,7 +253,7 @@ struct appl_thread_cache : public appl_thread
 //
 class appl_thread_cache_node : public appl_node
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
 
     public:
 
@@ -307,8 +307,6 @@ class appl_thread_cache_node : public appl_node
 
         } // f_get()
 
-    protected:
-
         //
         //
         //
@@ -323,11 +321,6 @@ class appl_thread_cache_node : public appl_node
         //
         virtual
         ~appl_thread_cache_node();
-
-    private:
-
-        struct appl_thread_cache
-            m_thread_cache;
 
         //
         //
@@ -350,6 +343,13 @@ class appl_thread_cache_node : public appl_node
 
         } // init()
 
+    protected:
+
+    private:
+
+        struct appl_thread_cache
+            m_thread_cache;
+
         appl_thread_cache_node(
             class appl_thread_cache_node const & r);
 
@@ -368,7 +368,7 @@ appl_thread_cache_node::~appl_thread_cache_node()
 //
 class appl_thread_cache_mgr : public appl_heap_object
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
     public:
 
         static
@@ -472,8 +472,6 @@ class appl_thread_cache_mgr : public appl_heap_object
 
         } // f_retire()
 
-    protected:
-
         //
         //
         //
@@ -490,24 +488,6 @@ class appl_thread_cache_mgr : public appl_heap_object
         //
         virtual
         ~appl_thread_cache_mgr();
-
-    private:
-
-        struct appl_mutex *
-            m_lock;
-
-        class appl_node
-            m_unused_nodes;
-
-        class appl_node
-            m_active_nodes;
-
-        appl_thread_cache_mgr(
-            class appl_thread_cache_mgr const & r);
-
-        class appl_thread_cache_mgr &
-            operator =(
-                class appl_thread_cache_mgr const & r);
 
         //
         //
@@ -535,6 +515,26 @@ class appl_thread_cache_mgr : public appl_heap_object
                 e_status;
 
         }
+
+    protected:
+
+    private:
+
+        struct appl_mutex *
+            m_lock;
+
+        class appl_node
+            m_unused_nodes;
+
+        class appl_node
+            m_active_nodes;
+
+        appl_thread_cache_mgr(
+            class appl_thread_cache_mgr const & r);
+
+        class appl_thread_cache_mgr &
+            operator =(
+                class appl_thread_cache_mgr const & r);
 
         //
         //

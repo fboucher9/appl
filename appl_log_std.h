@@ -33,7 +33,7 @@ struct appl_object;
 //
 class appl_log_std : public appl_log
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
     public:
 
         static
@@ -44,12 +44,12 @@ class appl_log_std : public appl_log
                 class appl_log_std * * const
                     r_instance);
 
-    protected:
-
         appl_log_std();
 
         virtual
         ~appl_log_std();
+
+    protected:
 
     private:
 

@@ -45,7 +45,7 @@ struct appl_property_std;
 //
 struct appl_property_std : public appl_property
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
 
     public:
 
@@ -59,8 +59,6 @@ struct appl_property_std : public appl_property
                 struct appl_property * * const
                     r_property);
 
-    protected:
-
         appl_property_std();
 
         virtual
@@ -70,6 +68,8 @@ struct appl_property_std : public appl_property
             f_init(
                 struct appl_property_std_descriptor const * const
                     p_property_std_descriptor);
+
+    protected:
 
         virtual
         enum appl_status

@@ -40,7 +40,7 @@ struct appl_queue;
 //
 class appl_queue_std : public appl_queue
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
     public:
 
         static
@@ -53,6 +53,16 @@ class appl_queue_std : public appl_queue
                 struct appl_queue * * const
                     r_queue);
 
+        appl_queue_std();
+
+        virtual
+        ~appl_queue_std();
+
+        enum appl_status
+            f_init(
+                struct appl_queue_descriptor const * const
+                    p_descriptor);
+
     protected:
 
         // --
@@ -61,11 +71,6 @@ class appl_queue_std : public appl_queue
             m_queue_impl;
 
         // --
-
-        appl_queue_std();
-
-        virtual
-        ~appl_queue_std();
 
     private:
 
@@ -99,11 +104,6 @@ class appl_queue_std : public appl_queue
         virtual
         enum appl_status
             v_interrupt(void);
-
-        enum appl_status
-            f_init(
-                struct appl_queue_descriptor const * const
-                    p_descriptor);
 
         virtual
         enum appl_status

@@ -35,7 +35,7 @@ class appl_clock_std;
 //
 class appl_clock_std : public appl_clock
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
 
     public:
 
@@ -47,12 +47,12 @@ class appl_clock_std : public appl_clock
                 class appl_clock * * const
                     r_clock);
 
-    protected:
-
         appl_clock_std();
 
         virtual
         ~appl_clock_std();
+
+    protected:
 
     private:
 

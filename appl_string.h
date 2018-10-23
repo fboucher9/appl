@@ -32,7 +32,7 @@ struct appl_string;
 //
 struct appl_string : public appl_heap_object
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
 
     public:
 
@@ -60,6 +60,16 @@ struct appl_string : public appl_heap_object
                 unsigned char * * const
                     r_buf_max) const;
 
+        appl_string();
+
+        virtual
+        ~appl_string();
+
+        enum appl_status
+            f_init(
+                struct appl_string_descriptor const * const
+                    p_string_descriptor);
+
     protected:
 
     private:
@@ -70,22 +80,12 @@ struct appl_string : public appl_heap_object
         unsigned char *
             m_buf_max;
 
-        appl_string();
-
-        virtual
-        ~appl_string();
-
         appl_string(
             struct appl_string const & r);
 
         struct appl_string &
             operator =(
                 struct appl_string const & r);
-
-        enum appl_status
-            f_init(
-                struct appl_string_descriptor const * const
-                    p_string_descriptor);
 
         virtual
         enum appl_status

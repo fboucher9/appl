@@ -95,7 +95,7 @@ struct appl_pool : public appl_heap_object
                 void *
                     p_placement;
 
-                struct appl_pool_object *
+                class appl_pool_object *
                     p_object;
 
                 T_instance *
@@ -167,7 +167,7 @@ struct appl_pool : public appl_heap_object
                 void *
                     p_placement;
 
-                struct appl_pool_object *
+                class appl_pool_object *
                     p_object;
 
                 T_instance *

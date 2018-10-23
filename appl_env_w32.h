@@ -33,7 +33,7 @@ class appl_env_w32;
 //
 class appl_env_w32 : public appl_env
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
 
     public:
 
@@ -45,12 +45,12 @@ class appl_env_w32 : public appl_env
             class appl_env * * const
                 r_env);
 
-    protected:
-
         appl_env_w32();
 
         virtual
         ~appl_env_w32();
+
+    protected:
 
         virtual
         enum appl_status

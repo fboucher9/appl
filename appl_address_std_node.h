@@ -36,7 +36,7 @@ class appl_socket_w32_node;
 //
 class appl_address_std_node : public appl_address
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
     friend class appl_socket_std_node;
     friend class appl_socket_w32_node;
 
@@ -52,12 +52,17 @@ class appl_address_std_node : public appl_address
                 struct appl_address * * const
                     r_address);
 
-    protected:
-
         appl_address_std_node();
 
         virtual
         ~appl_address_std_node();
+
+        enum appl_status
+            f_init(
+                struct appl_address_property const * const
+                    p_property);
+
+    protected:
 
     private:
 
@@ -134,11 +139,6 @@ class appl_address_std_node : public appl_address
                 o_address_std_node_ptr.p_address_std_node;
 
         } // convert_handle()
-
-        enum appl_status
-            f_init(
-                struct appl_address_property const * const
-                    p_property);
 
         virtual
         enum appl_status

@@ -27,7 +27,7 @@ class appl_context_std;
 //
 class appl_context_std : public appl_context
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
 
     public:
 
@@ -39,8 +39,6 @@ class appl_context_std : public appl_context
                 struct appl_context * * const
                     r_context);
 
-    protected:
-
         appl_context_std();
 
         virtual
@@ -50,6 +48,8 @@ class appl_context_std : public appl_context
             f_init(
                 struct appl_context_init_descriptor const * const
                     p_context_descriptor);
+
+    protected:
 
         virtual
         enum appl_status

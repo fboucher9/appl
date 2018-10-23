@@ -35,7 +35,7 @@ class appl_clock_w32;
 //
 class appl_clock_w32 : public appl_clock
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
 
     public:
 
@@ -47,12 +47,15 @@ class appl_clock_w32 : public appl_clock
                 class appl_clock * * const
                     r_clock);
 
-    protected:
-
         appl_clock_w32();
 
         virtual
         ~appl_clock_w32();
+
+        enum appl_status
+            f_init(void);
+
+    protected:
 
     private:
 
@@ -62,9 +65,6 @@ class appl_clock_w32 : public appl_clock
         class appl_clock_w32 &
             operator =(
                 class appl_clock_w32 const & r);
-
-        enum appl_status
-            f_init(void);
 
         virtual
         enum appl_status

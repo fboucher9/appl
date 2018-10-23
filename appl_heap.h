@@ -214,7 +214,7 @@ struct appl_heap : public appl_heap_object
                     void *
                         p_placement;
 
-                    struct appl_heap_object *
+                    class appl_heap_object *
                         p_object;
 
                     T_instance *
@@ -295,7 +295,7 @@ struct appl_heap : public appl_heap_object
                     void *
                         p_placement;
 
-                    struct appl_heap_object *
+                    class appl_heap_object *
                         p_object;
 
                     T_instance *

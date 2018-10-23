@@ -37,7 +37,7 @@ struct appl_pool_std_descriptor;
 //
 class appl_pool_std : public appl_pool
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
     public:
 
         static
@@ -50,12 +50,17 @@ class appl_pool_std : public appl_pool
                 class appl_pool_std * * const
                     r_instance);
 
-    protected:
-
         appl_pool_std();
 
         virtual
         ~appl_pool_std();
+
+        enum appl_status
+            f_init(
+                struct appl_pool_std_descriptor const * const
+                    p_descriptor);
+
+    protected:
 
     private:
 
@@ -81,11 +86,6 @@ class appl_pool_std : public appl_pool
         class appl_pool_std &
             operator =(
                 class appl_pool_std const & r);
-
-        enum appl_status
-            f_init(
-                struct appl_pool_std_descriptor const * const
-                    p_descriptor);
 
         virtual
         enum appl_status

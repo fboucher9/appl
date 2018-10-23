@@ -28,7 +28,7 @@ class appl_heap_std;
 //
 class appl_heap_std : public appl_heap
 {
-    friend struct appl_object;
+    // friend struct appl_object;
 
     public:
 
@@ -38,12 +38,15 @@ class appl_heap_std : public appl_heap
                 struct appl_heap * * const
                     r_heap);
 
-    protected:
-
         appl_heap_std();
 
         virtual
         ~appl_heap_std();
+
+        enum appl_status
+            f_init(void);
+
+    protected:
 
     private:
 
@@ -53,9 +56,6 @@ class appl_heap_std : public appl_heap
         class appl_heap_std &
             operator =(
                 class appl_heap_std const & r);
-
-        enum appl_status
-            f_init(void);
 
         virtual
         enum appl_status

@@ -34,7 +34,7 @@ struct appl_file_std_node_descriptor;
 //
 class appl_file_std_node : public appl_file
 {
-    friend struct appl_pool;
+    // friend struct appl_pool;
     public:
 
         static
@@ -47,12 +47,17 @@ class appl_file_std_node : public appl_file
                 struct appl_file * * const
                     r_file_node);
 
-    protected:
-
         appl_file_std_node();
 
         virtual
         ~appl_file_std_node();
+
+        enum appl_status
+            f_init(
+                struct appl_file_std_node_descriptor const * const
+                    p_file_descriptor);
+
+    protected:
 
     private:
 
@@ -80,11 +85,6 @@ class appl_file_std_node : public appl_file
         class appl_file_std_node &
             operator =(
                 class appl_file_std_node const & r);
-
-        enum appl_status
-            f_init(
-                struct appl_file_std_node_descriptor const * const
-                    p_file_descriptor);
 
         virtual
         enum appl_status

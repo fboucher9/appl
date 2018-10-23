@@ -34,7 +34,7 @@ class appl_event_std_node;
 //
 class appl_event_std_node : public appl_event
 {
-    friend struct appl_pool;
+    // friend struct appl_pool;
     public:
 
         static
@@ -47,12 +47,17 @@ class appl_event_std_node : public appl_event
                 struct appl_event * * const
                     r_event);
 
-    protected:
-
         appl_event_std_node();
 
         virtual
         ~appl_event_std_node();
+
+        enum appl_status
+            f_init(
+                struct appl_event_descriptor const * const
+                    p_event_descriptor);
+
+    protected:
 
     private:
 
@@ -71,11 +76,6 @@ class appl_event_std_node : public appl_event
         class appl_event_std_node &
             operator =(
                 class appl_event_std_node const & r);
-
-        enum appl_status
-            f_init(
-                struct appl_event_descriptor const * const
-                    p_event_descriptor);
 
         virtual
         enum appl_status

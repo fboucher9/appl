@@ -28,7 +28,7 @@ class appl_random_pseudo;
 //
 class appl_random_pseudo : public appl_random
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
     public:
 
         static
@@ -41,12 +41,17 @@ class appl_random_pseudo : public appl_random
             struct appl_random * * const
                 r_random);
 
-    protected:
-
         appl_random_pseudo();
 
         virtual
         ~appl_random_pseudo();
+
+        enum appl_status
+            f_init(
+                unsigned long int const * const
+                    p_seed);
+
+    protected:
 
     private:
 
@@ -62,11 +67,6 @@ class appl_random_pseudo : public appl_random
         class appl_random_pseudo &
             operator =(
                 class appl_random_pseudo const & r);
-
-        enum appl_status
-            f_init(
-                unsigned long int const * const
-                    p_seed);
 
         virtual
         enum appl_status

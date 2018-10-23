@@ -25,7 +25,7 @@ class appl_debug_std;
 //
 class appl_debug_std : public appl_debug
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
     public:
 
         static
@@ -36,12 +36,12 @@ class appl_debug_std : public appl_debug
                 class appl_debug * * const
                     r_debug);
 
-    protected:
-
         appl_debug_std();
 
         virtual
         ~appl_debug_std();
+
+    protected:
 
         virtual
         enum appl_status

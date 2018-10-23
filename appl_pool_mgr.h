@@ -30,7 +30,7 @@ class appl_pool_mgr;
 //
 class appl_pool_mgr : public appl_heap_object
 {
-    friend struct appl_heap;
+    // friend struct appl_heap;
     public:
 
         static
@@ -49,12 +49,12 @@ class appl_pool_mgr : public appl_heap_object
                 struct appl_pool * * const
                     r_pool_node);
 
-    protected:
-
         appl_pool_mgr();
 
         virtual
         ~appl_pool_mgr();
+
+    protected:
 
     private:
 
