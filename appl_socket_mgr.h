@@ -27,7 +27,7 @@ class appl_socket_mgr;
 //
 //
 //
-class appl_socket_mgr : public appl_heap_object
+class appl_socket_mgr : public appl_object
 {
     public:
 

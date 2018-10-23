@@ -12,8 +12,6 @@
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
 #include <appl_log.h>
 
 #include <appl_log_impl.h>

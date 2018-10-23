@@ -39,7 +39,7 @@ struct appl_socket;
 //
 //
 //
-struct appl_socket : public appl_heap_object
+struct appl_socket : public appl_object
 {
     public:
 

@@ -27,7 +27,7 @@ class appl_debug;
 //
 //
 //
-class appl_debug : public appl_heap_object
+class appl_debug : public appl_object
 {
     public:
 

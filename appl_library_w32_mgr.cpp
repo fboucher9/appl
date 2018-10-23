@@ -14,8 +14,6 @@
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
 #include <appl_library_handle.h>
 
 #include <appl_library_node.h>

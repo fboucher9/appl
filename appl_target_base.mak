@@ -59,7 +59,6 @@ appl_base-deps := \
     appl_heap_service.cpp \
     appl_heap_std.cpp \
     appl_heap_impl.cpp \
-    appl_heap_object.cpp \
     appl_library_handle.cpp \
     appl_library_service.cpp \
     appl_library_mgr.cpp \
@@ -98,7 +97,6 @@ appl_base-deps := \
     appl_pool_mgr.cpp \
     appl_pool_handle.cpp \
     appl_pool_service.cpp \
-    appl_pool_object.cpp \
     appl_property.cpp \
     appl_property_handle.cpp \
     appl_property_service.cpp \

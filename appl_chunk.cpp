@@ -20,8 +20,6 @@ Description:
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
 #include <appl_allocator.h>
 
 #include <appl_heap.h>
@@ -84,7 +82,7 @@ union appl_chunk_node_cptr
 //  Description:
 //      Interface for serial buffer of unknown length.
 //
-struct appl_chunk : public appl_heap_object
+struct appl_chunk : public appl_object
 {
     public:
 
@@ -186,7 +184,7 @@ appl_chunk::v_read(
 //
 //
 appl_chunk::appl_chunk() :
-    appl_heap_object()
+    appl_object()
 {
 }
 

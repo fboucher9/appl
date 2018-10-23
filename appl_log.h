@@ -29,7 +29,7 @@
 //
 //
 //
-struct appl_log : public appl_heap_object
+struct appl_log : public appl_object
 {
     public:
 

@@ -12,8 +12,6 @@
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
 #include <appl_list.h>
 
 #include <appl_convert.h>
@@ -40,10 +38,8 @@ struct appl_hash_table
 //  Description:
 //      Instance of appl_hash object.
 //
-struct appl_hash : public appl_heap_object
+struct appl_hash : public appl_object
 {
-    // friend struct appl_heap;
-
     public:
 
         enum appl_status
@@ -255,7 +251,7 @@ struct appl_hash : public appl_heap_object
         } // f_iterate()
 
         appl_hash() :
-            appl_heap_object(),
+            appl_object(),
             m_descriptor(),
             m_table()
         {

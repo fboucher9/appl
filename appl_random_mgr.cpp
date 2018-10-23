@@ -10,8 +10,6 @@
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
 #include <appl_random_mgr.h>
 
 #include <appl_random.h>
@@ -62,7 +60,7 @@ appl_random_mgr::v_create_node(
 //
 //
 appl_random_mgr::appl_random_mgr() :
-    appl_heap_object()
+    appl_object()
 {
 }
 

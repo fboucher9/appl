@@ -10,8 +10,6 @@
 
 #include <appl_object.h>
 
-#include <appl_pool_object.h>
-
 #include <appl_event_node.h>
 
 #include <appl_unused.h>
@@ -65,7 +63,7 @@ enum appl_status
 //
 //
 appl_event::appl_event() :
-    appl_pool_object()
+    appl_object()
 {
 }
 

@@ -16,8 +16,6 @@ Description:
 
 #include <appl_object.h>
 
-#include <appl_pool_object.h>
-
 #include <appl_file_node.h>
 
 #include <appl_unused.h>
@@ -82,7 +80,7 @@ enum appl_status
 //
 //
 appl_file::appl_file() :
-    appl_pool_object()
+    appl_object()
 {
 }
 

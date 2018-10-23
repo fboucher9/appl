@@ -16,8 +16,6 @@
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
 #include <appl_debug.h>
 
 #include <appl_debug_std.h>

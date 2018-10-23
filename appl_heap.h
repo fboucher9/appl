@@ -288,7 +288,7 @@ struct appl_heap : public appl_allocator
                     void *
                         p_placement;
 
-                    class appl_heap_object *
+                    struct appl_object *
                         p_object;
 
                     T_instance *

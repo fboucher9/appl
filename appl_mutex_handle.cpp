@@ -16,8 +16,6 @@
 
 #include <appl_object.h>
 
-#include <appl_pool_object.h>
-
 #include <appl_mutex_node.h>
 
 /* Assert compiler */

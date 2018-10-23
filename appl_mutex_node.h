@@ -12,9 +12,9 @@
 #define INC_APPL_MUTEX_NODE_H
 
 /* Header file dependency */
-#if ! defined INC_APPL_POOL_OBJECT_H
-#error include appl_pool_object.h before
-#endif /* #if ! defined INC_APPL_POOL_OBJECT_H */
+#if ! defined INC_APPL_OBJECT_H
+#error include appl_object.h before
+#endif /* #if ! defined INC_APPL_OBJECT_H */
 
 struct appl_mutex;
 
@@ -26,7 +26,7 @@ struct appl_mutex;
 //
 //
 //
-struct appl_mutex : public appl_pool_object
+struct appl_mutex : public appl_object
 {
     public:
 

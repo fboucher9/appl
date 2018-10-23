@@ -30,7 +30,7 @@ struct appl_string;
 //
 //
 //
-struct appl_string : public appl_heap_object
+struct appl_string : public appl_object
 {
     // friend struct appl_heap;
 

@@ -24,8 +24,6 @@
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
 #include <appl_object_handle.h>
 
 #include <appl_socket_descriptor.h>

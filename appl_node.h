@@ -26,7 +26,7 @@ class appl_node;
 //
 //
 //
-class appl_node : public appl_heap_object
+class appl_node : public appl_object
 {
     public:
 

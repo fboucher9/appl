@@ -35,8 +35,6 @@ class appl_clock_std;
 //
 class appl_clock_std : public appl_clock
 {
-    // friend struct appl_heap;
-
     public:
 
         static

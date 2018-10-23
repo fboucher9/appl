@@ -10,8 +10,6 @@
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
 #include <appl_thread_mgr.h>
 
 #include <appl_thread_std_mgr.h>

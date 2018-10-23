@@ -10,8 +10,6 @@
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
 #include <appl_library_node.h>
 
 #include <appl_unused.h>
@@ -40,7 +38,7 @@ enum appl_status
 //
 //
 appl_library::appl_library() :
-    appl_heap_object()
+    appl_object()
 {
 }
 

@@ -28,7 +28,7 @@ class appl_pool_mgr;
 //
 //
 //
-class appl_pool_mgr : public appl_heap_object
+class appl_pool_mgr : public appl_object
 {
     // friend struct appl_heap;
     public:

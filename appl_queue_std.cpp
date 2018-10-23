@@ -12,8 +12,6 @@
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
 #include <appl_list.h>
 
 #include <appl_queue.h>

@@ -10,8 +10,6 @@
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
 #include <appl_clock.h>
 
 #include <appl_unused.h>
@@ -70,7 +68,7 @@ enum appl_status
 //
 //
 appl_clock::appl_clock() :
-    appl_heap_object()
+    appl_object()
 {
 }
 

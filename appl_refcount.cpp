@@ -10,8 +10,6 @@
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
 #include <appl_refcount.h>
 
 //
@@ -29,7 +27,7 @@ enum appl_status
 //
 //
 appl_refcount::appl_refcount() :
-    appl_heap_object()
+    appl_object()
 {
 }
 

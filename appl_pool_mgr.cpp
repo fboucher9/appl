@@ -20,8 +20,6 @@
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
 #include <appl_pool_mgr.h>
 
 #include <appl_allocator.h>

@@ -12,9 +12,9 @@
 #define INC_APPL_MUTEX_MGR_H
 
 /* Header file dependency */
-#if ! defined INC_APPL_HEAP_OBJECT_H
-#error include appl_heap_object.h before
-#endif /* #if ! defined INC_APPL_HEAP_OBJECT_H */
+#if ! defined INC_APPL_OBJECT_H
+#error include appl_object.h before
+#endif /* #if ! defined INC_APPL_OBJECT_H */
 
 struct appl_mutex_descriptor;
 
@@ -30,7 +30,7 @@ class appl_mutex_mgr;
 //
 //
 //
-class appl_mutex_mgr : public appl_heap_object
+class appl_mutex_mgr : public appl_object
 {
     public:
 

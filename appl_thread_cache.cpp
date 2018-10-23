@@ -16,10 +16,6 @@ Comments:
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
-#include <appl_pool_object.h>
-
 #include <appl_thread_cache.h>
 
 #include <appl_node.h>
@@ -368,7 +364,7 @@ appl_thread_cache_node::~appl_thread_cache_node()
 //
 //
 //
-class appl_thread_cache_mgr : public appl_heap_object
+class appl_thread_cache_mgr : public appl_object
 {
     // friend struct appl_heap;
     public:
@@ -478,7 +474,7 @@ class appl_thread_cache_mgr : public appl_heap_object
         //
         //
         appl_thread_cache_mgr() :
-            appl_heap_object(),
+            appl_object(),
             m_lock(),
             m_unused_nodes(),
             m_active_nodes()

@@ -12,9 +12,9 @@
 #define INC_APPL_ENV_H
 
 /* Header file dependency */
-#if ! defined INC_APPL_HEAP_OBJECT_H
-#error include appl_heap_object.h before appl_env.h
-#endif /* #if ! defined INC_APPL_HEAP_OBJECT_H */
+#if ! defined INC_APPL_OBJECT_H
+#error include appl_object.h before appl_env.h
+#endif /* #if ! defined INC_APPL_OBJECT_H */
 
 struct appl_string;
 
@@ -28,7 +28,7 @@ class appl_env;
 //
 //
 //
-class appl_env : public appl_heap_object
+class appl_env : public appl_object
 {
     public:
 

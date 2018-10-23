@@ -10,8 +10,6 @@
 
 #include <appl_object.h>
 
-#include <appl_pool_object.h>
-
 #include <appl_mutex_node.h>
 
 //
@@ -52,7 +50,7 @@ enum appl_status
 //
 //
 appl_mutex::appl_mutex() :
-    appl_pool_object()
+    appl_object()
 {
 }
 

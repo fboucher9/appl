@@ -27,7 +27,7 @@ class appl_event_mgr;
 //
 //
 //
-class appl_event_mgr : public appl_heap_object
+class appl_event_mgr : public appl_object
 {
     public:
 

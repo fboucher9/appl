@@ -18,8 +18,6 @@
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
 #include <appl_socket_mgr.h>
 
 #include <appl_socket_std_mgr.h>

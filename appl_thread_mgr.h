@@ -31,7 +31,7 @@ struct appl_thread_property;
 //
 //
 //
-class appl_thread_mgr : public appl_heap_object
+class appl_thread_mgr : public appl_object
 {
     public:
 

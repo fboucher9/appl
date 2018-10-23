@@ -12,9 +12,9 @@
 #define INC_APPL_EVENT_NODE_H
 
 /* Header file dependency */
-#if ! defined INC_APPL_POOL_OBJECT_H
-#error include appl_pool_object.h before
-#endif /* #if ! defined INC_APPL_POOL_OBJECT_H */
+#if ! defined INC_APPL_OBJECT_H
+#error include appl_object.h before
+#endif /* #if ! defined INC_APPL_OBJECT_H */
 
 struct appl_event;
 
@@ -26,7 +26,7 @@ struct appl_event;
 //
 //
 //
-struct appl_event : public appl_pool_object
+struct appl_event : public appl_object
 {
     public:
 

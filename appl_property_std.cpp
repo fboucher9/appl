@@ -14,8 +14,6 @@
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
 #include <appl_property.h>
 
 #include <appl_property_std.h>

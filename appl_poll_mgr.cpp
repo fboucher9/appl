@@ -14,10 +14,6 @@
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
-#include <appl_pool_object.h>
-
 #include <appl_list.h>
 
 #include <appl_node.h>

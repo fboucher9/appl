@@ -12,8 +12,6 @@
 
 #include <appl_object.h>
 
-#include <appl_heap_object.h>
-
 #include <appl_buf.h>
 
 #include <appl_string.h>
@@ -118,7 +116,7 @@ enum appl_status
 //
 //
 appl_string::appl_string() :
-    appl_heap_object(),
+    appl_object(),
     m_buf_min(),
     m_buf_max()
 {
