@@ -2,6 +2,13 @@
 
 /*
 
+Module: appl_event_handle.h
+
+Description:
+
+    Public C-style interface for event object.  Event object is used for
+    multi-threaded applications, with concept equivalent to pthread_cond.
+
 */
 
 /* Reverse include guard */
@@ -11,12 +18,24 @@
 
 #define INC_APPL_EVENT_HANDLE_H
 
+/* Predefine */
 struct appl_object;
 
+/* Predefine */
 struct appl_mutex;
 
+/* Predefine */
 struct appl_event;
 
+/*
+
+Structure: appl_event_descriptor
+
+Description:
+
+    Descriptor used for creation of event handle.
+
+*/
 struct appl_event_descriptor
 {
     void *
@@ -28,6 +47,7 @@ struct appl_event_descriptor
 extern "C" {
 #endif /* #if defined(__cplusplus) */
 
+/* Create an event */
 enum appl_status
 appl_event_create(
     struct appl_context * const
@@ -37,21 +57,25 @@ appl_event_create(
     struct appl_event * * const
         r_event);
 
+/* Obtain pointer to parent object handle */
 struct appl_object *
 appl_event_parent(
     struct appl_event * const
         p_event);
 
+/* Obtain constant pointer to parent object handle */
 struct appl_object const *
 appl_event_const_parent(
     struct appl_event const * const
         p_event);
 
+/* Signal event */
 enum appl_status
 appl_event_signal(
     struct appl_event * const
         p_event);
 
+/* Wait for event to be signaled */
 enum appl_status
 appl_event_wait(
     struct appl_event * const

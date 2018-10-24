@@ -52,6 +52,32 @@ appl_event_service::s_create(
 //
 //
 //
+struct appl_object *
+appl_event_service::s_parent(
+    struct appl_event * const
+        p_event)
+{
+    return
+        p_event;
+
+} // s_parent()
+
+//
+//
+//
+struct appl_object const *
+appl_event_service::s_const_parent(
+    struct appl_event const * const
+        p_event)
+{
+    return
+        p_event;
+
+} // s_const_parent()
+
+//
+//
+//
 enum appl_status
 appl_event_service::s_signal(
     struct appl_event * const

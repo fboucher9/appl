@@ -11,12 +11,16 @@
 
 #define INC_APPL_EVENT_SERVICE_H
 
+/* Predefine */
 struct appl_context;
 
+/* Predefine */
 struct appl_mutex;
 
+/* Predefine */
 struct appl_event;
 
+/* Predefine */
 struct appl_event_descriptor;
 
 /* Assert compiler */
@@ -24,6 +28,7 @@ struct appl_event_descriptor;
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
+// Predefine
 class appl_event_service;
 
 //
@@ -42,6 +47,18 @@ class appl_event_service
                 p_event_descriptor,
             struct appl_event * * const
                 r_event);
+
+        static
+        struct appl_object *
+        s_parent(
+            struct appl_event * const
+                p_event);
+
+        static
+        struct appl_object const *
+        s_const_parent(
+            struct appl_event const * const
+                p_event);
 
         static
         enum appl_status
