@@ -6,10 +6,6 @@
 
 #include <appl_status.h>
 
-#include <appl_types.h>
-
-#include <appl_object_handle.h>
-
 #include <appl_pool_handle.h>
 
 #include <appl_pool_service.h>
@@ -37,7 +33,7 @@ enum appl_status
 /*
 
 */
-struct appl_object *
+struct appl_allocator *
     appl_pool_parent(
         struct appl_pool * const
             p_pool)
@@ -51,7 +47,7 @@ struct appl_object *
 /*
 
 */
-struct appl_object const *
+struct appl_allocator const *
     appl_pool_const_parent(
         struct appl_pool const * const
             p_pool)

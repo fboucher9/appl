@@ -13,7 +13,7 @@
 
 struct appl_context;
 
-struct appl_object;
+struct appl_allocator;
 
 struct appl_pool;
 
@@ -30,12 +30,12 @@ enum appl_status
         struct appl_pool * * const
             r_pool);
 
-struct appl_object *
+struct appl_allocator *
     appl_pool_parent(
         struct appl_pool * const
             p_pool);
 
-struct appl_object const *
+struct appl_allocator const *
     appl_pool_const_parent(
         struct appl_pool const * const
             p_pool);

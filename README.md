@@ -43,8 +43,8 @@ enum appl_status appl_main(struct appl_context * p_context)
 {
 #if defined APPL_DEBUG
     appl_debug_print0(
-        (unsigned char const *)(
-            "appl_main..."));
+        appl_context_parent(p_context),
+        (unsigned char const *)("appl_main...\n"));
 #endif /* #if defined APPL_DEBUG */
     return appl_status_ok;
 }

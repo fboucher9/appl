@@ -42,7 +42,7 @@ enum appl_status
 //
 //
 //
-struct appl_object *
+struct appl_allocator *
     appl_pool_service::s_parent(
         struct appl_pool * const
             p_pool)
@@ -55,7 +55,7 @@ struct appl_object *
 //
 //
 //
-struct appl_object const *
+struct appl_allocator const *
     appl_pool_service::s_const_parent(
         struct appl_pool const * const
             p_pool)

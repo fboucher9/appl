@@ -17,6 +17,8 @@
 
 #include <appl_hash_test.h>
 
+#include <appl_pool_test.h>
+
 static
 void
 appl_print(
@@ -2736,6 +2738,43 @@ appl_main(
     {
         appl_hash_test(
             p_context);
+    }
+
+    if (1)
+    {
+        char
+            b_result;
+
+        b_result =
+            appl_pool_test_1(
+                p_context);
+
+        appl_print0(
+            "appl_pool_test_1 : ");
+
+        appl_print0(
+            b_result
+            ? "pass."
+            : "FAIL!");
+
+        appl_print0(
+            "\n");
+
+        b_result =
+            appl_pool_test_2(
+                p_context);
+
+        appl_print0(
+            "appl_pool_test_2 : ");
+
+        appl_print0(
+            b_result
+            ? "pass."
+            : "FAIL!");
+
+        appl_print0(
+            "\n");
+
     }
 
     e_status =

@@ -35,7 +35,11 @@ Description:
 
 #define APPL_CONFIG_WITH_DEBUG
 
+#define APPL_CONFIG_WITH_ALLOCATOR
+
 #define APPL_CONFIG_WITH_HEAP
+
+#define APPL_CONFIG_WITH_POOL
 
 #define APPL_CONFIG_WITH_FILE
 
@@ -85,11 +89,23 @@ Description:
 
 #endif /* #if defined(APPL_CONFIG_WITH_DEBUG) */
 
+#if defined APPL_CONFIG_WITH_ALLOCATOR
+
+#include <appl_allocator_handle.h>
+
+#endif /* #if defined APPL_CONFIG_WITH_ALLOCATOR */
+
 #if defined(APPL_CONFIG_WITH_HEAP)
 
 #include <appl_heap_handle.h>
 
 #endif /* #if defined(APPL_CONFIG_WITH_HEAP) */
+
+#if defined APPL_CONFIG_WITH_POOL
+
+#include <appl_pool_handle.h>
+
+#endif /* #if defined APPL_CONFIG_WITH_POOL */
 
 #if defined APPL_CONFIG_WITH_STRING
 
