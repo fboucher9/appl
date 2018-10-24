@@ -57,15 +57,13 @@ Description:
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
-
 //
 //
 //
 enum appl_status
     appl_address_std_node::s_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_allocator * const
+            p_allocator,
         struct appl_address_property const * const
             p_property,
         struct appl_address * * const
@@ -78,7 +76,7 @@ enum appl_status
         p_address_std_node;
 
     e_status =
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             p_property,
             &(
                 p_address_std_node));

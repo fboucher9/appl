@@ -16,7 +16,7 @@
 #error include appl_random_mgr.h before appl_random_w32_mgr.h
 #endif /* #if ! defined INC_APPL_RANDOM_MGR_H */
 
-struct appl_heap;
+struct appl_allocator;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -30,15 +30,13 @@ class appl_random_w32_mgr;
 //
 class appl_random_w32_mgr : public appl_random_mgr
 {
-    // friend struct appl_heap;
-
     public:
 
         static
         enum appl_status
         s_create(
-            struct appl_heap * const
-                p_heap,
+            struct appl_allocator * const
+                p_allocator,
             class appl_random_mgr * * const
                 r_random_mgr);
 

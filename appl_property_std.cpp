@@ -46,8 +46,8 @@ struct appl_property_node
 //
 enum appl_status
     appl_property_std::s_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_allocator * const
+            p_allocator,
         unsigned int const
             i_count,
         struct appl_property * * const
@@ -66,7 +66,7 @@ enum appl_status
         p_property_std;
 
     e_status =
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             &(
                 o_property_std_descriptor),
             &(

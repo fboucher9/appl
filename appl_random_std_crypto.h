@@ -28,15 +28,13 @@ class appl_random_std_crypto;
 //
 class appl_random_std_crypto : public appl_random
 {
-    // friend struct appl_heap;
-
     public:
 
         static
         enum appl_status
         s_create(
-            struct appl_heap * const
-                p_heap,
+            struct appl_allocator * const
+                p_allocator,
             struct appl_random * * const
                 r_random);
 

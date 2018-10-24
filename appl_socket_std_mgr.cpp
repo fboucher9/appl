@@ -47,8 +47,8 @@
 //
 enum appl_status
     appl_socket_std_mgr::s_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_allocator * const
+            p_allocator,
         class appl_socket_mgr * * const
             r_socket_mgr)
 {
@@ -59,7 +59,7 @@ enum appl_status
         p_socket_std_mgr;
 
     e_status =
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             &(
                 p_socket_std_mgr));
 
@@ -107,7 +107,7 @@ enum appl_status
 
     e_status =
         appl_address_std_node::s_create(
-            m_context->m_heap,
+            m_context->m_allocator,
             p_property,
             r_address);
 
@@ -131,7 +131,7 @@ enum appl_status
 
     e_status =
         appl_socket_std_node::s_create(
-            m_context->m_heap,
+            m_context->m_allocator,
             p_socket_descriptor,
             r_socket);
 

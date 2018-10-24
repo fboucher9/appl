@@ -33,14 +33,13 @@ class appl_env_std;
 //
 class appl_env_std : public appl_env
 {
-    // friend struct appl_heap;
     public:
 
         static
         enum appl_status
         s_create(
-            struct appl_heap * const
-                p_heap,
+            struct appl_allocator * const
+                p_allocator,
             class appl_env * * const
                 r_env);
 

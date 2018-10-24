@@ -37,14 +37,13 @@ struct appl_pool_std_descriptor;
 //
 class appl_pool_std : public appl_pool
 {
-    // friend struct appl_heap;
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_heap * const
-                    p_heap,
+                struct appl_allocator * const
+                    p_allocator,
                 appl_size_t const
                     i_buf_len,
                 class appl_pool_std * * const

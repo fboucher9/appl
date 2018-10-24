@@ -18,9 +18,9 @@
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
-
 #include <appl_context.h>
+
+#include <appl_heap.h>
 
 struct appl_string_descriptor
 {
@@ -37,8 +37,8 @@ struct appl_string_descriptor
 //
 enum appl_status
     appl_string::s_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_allocator * const
+            p_allocator,
         unsigned long int const
             i_alloc_len,
         struct appl_string * * const
@@ -54,7 +54,7 @@ enum appl_status
         i_alloc_len;
 
     e_status =
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             &(
                 o_string_descriptor),
             r_string);

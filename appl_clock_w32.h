@@ -35,15 +35,13 @@ class appl_clock_w32;
 //
 class appl_clock_w32 : public appl_clock
 {
-    // friend struct appl_heap;
-
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_heap * const
-                    p_heap,
+                struct appl_allocator * const
+                    p_allocator,
                 class appl_clock * * const
                     r_clock);
 

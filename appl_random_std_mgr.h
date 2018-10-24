@@ -30,14 +30,13 @@ class appl_random_std_mgr;
 //
 class appl_random_std_mgr : public appl_random_mgr
 {
-    // friend struct appl_heap;
     public:
 
         static
         enum appl_status
         s_create(
-            struct appl_heap * const
-                p_heap,
+            struct appl_allocator * const
+                p_allocator,
             class appl_random_mgr * * const
                 r_random_mgr);
 

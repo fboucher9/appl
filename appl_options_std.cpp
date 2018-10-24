@@ -20,8 +20,6 @@
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
-
 #include <appl_buf0.h>
 
 #include <appl_convert.h>
@@ -31,8 +29,8 @@
 //
 enum appl_status
 appl_options_std::s_create(
-    struct appl_heap * const
-        p_heap,
+    struct appl_allocator * const
+        p_allocator,
     struct appl_options_std_descriptor const * const
         p_options_std_descriptor,
     class appl_options * * const
@@ -45,7 +43,7 @@ appl_options_std::s_create(
         p_options_std;
 
     e_status =
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             p_options_std_descriptor,
             &(
                 p_options_std));

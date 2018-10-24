@@ -28,15 +28,13 @@
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
-
 //
 //
 //
 enum appl_status
 appl_random_std_mgr::s_create(
-    struct appl_heap * const
-        p_heap,
+    struct appl_allocator * const
+        p_allocator,
     class appl_random_mgr * * const
         r_random_mgr)
 {
@@ -47,7 +45,7 @@ appl_random_std_mgr::s_create(
         p_random_std_mgr;
 
     e_status =
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             &(
                 p_random_std_mgr));
 
@@ -110,7 +108,7 @@ appl_random_std_mgr::v_create_node(
     {
         e_status =
             appl_random_std_crypto::s_create(
-                m_context->m_heap,
+                m_context->m_allocator,
                 r_node);
     }
     else

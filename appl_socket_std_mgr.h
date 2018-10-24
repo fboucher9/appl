@@ -28,15 +28,13 @@ class appl_socket_std_mgr;
 //
 class appl_socket_std_mgr : public appl_socket_mgr
 {
-    // friend struct appl_heap;
-
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_heap * const
-                    p_heap,
+                struct appl_allocator * const
+                    p_allocator,
                 class appl_socket_mgr * * const
                     r_socket_mgr);
 

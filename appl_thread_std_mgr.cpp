@@ -22,15 +22,13 @@
 
 #include <appl_pool_mgr.h>
 
-#include <appl_heap.h>
-
 //
 //
 //
 enum appl_status
     appl_thread_std_mgr::s_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_allocator * const
+            p_allocator,
         class appl_thread_mgr * * const
             r_thread_mgr)
 {
@@ -41,7 +39,7 @@ enum appl_status
         p_thread_std_mgr;
 
     e_status =
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             &(
                 p_thread_std_mgr));
 
@@ -142,8 +140,8 @@ enum appl_status
 
 enum appl_status
     appl_thread_std_node_create(
-        struct appl_pool * const
-            p_pool,
+        struct appl_allocator * const
+            p_allocator,
         struct appl_thread_property const * const
             p_thread_property,
         struct appl_thread * * const

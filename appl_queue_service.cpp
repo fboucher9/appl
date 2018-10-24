@@ -29,8 +29,8 @@
 //
 enum appl_status
     appl_queue_service::s_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_allocator * const
+            p_allocator,
         struct appl_queue_descriptor const * const
             p_descriptor,
         struct appl_queue * * const
@@ -38,7 +38,7 @@ enum appl_status
 {
     return
         appl_queue_std::s_create(
-            p_heap,
+            p_allocator,
             p_descriptor,
             r_instance);
 

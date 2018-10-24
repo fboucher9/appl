@@ -16,8 +16,6 @@
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
-
 #include <appl_context.h>
 
 #include <appl_pool_mgr.h>
@@ -34,8 +32,8 @@
 //
 enum appl_status
     appl_event_std_mgr::s_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_allocator * const
+            p_allocator,
         class appl_event_mgr * * const
             r_event_mgr)
 {
@@ -46,7 +44,7 @@ enum appl_status
         p_event_std_mgr;
 
     e_status =
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             &(
                 p_event_std_mgr));
 
@@ -86,8 +84,8 @@ appl_event_std_node_sizeof(void);
 
 enum appl_status
     appl_event_std_node_create(
-        struct appl_pool * const
-            p_pool,
+        struct appl_allocator * const
+            p_allocator,
         struct appl_event_descriptor const * const
             p_event_descriptor,
         struct appl_event * * const

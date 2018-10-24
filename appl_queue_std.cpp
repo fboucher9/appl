@@ -24,15 +24,13 @@
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
-
 //
 //
 //
 enum appl_status
     appl_queue_std::s_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_allocator * const
+            p_allocator,
         struct appl_queue_descriptor const * const
             p_descriptor,
         struct appl_queue * * const
@@ -45,7 +43,7 @@ enum appl_status
         p_queue_std;
 
     e_status =
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             p_descriptor,
             &(
                 p_queue_std));

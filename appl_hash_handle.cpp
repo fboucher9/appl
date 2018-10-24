@@ -18,9 +18,9 @@
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
-
 #include <appl_context.h>
+
+#include <appl_heap.h>
 
 /*
 
@@ -321,15 +321,15 @@ class appl_hash_service
         static
         enum appl_status
         s_create(
-            struct appl_heap * const
-                p_heap,
+            struct appl_allocator * const
+                p_allocator,
             struct appl_hash_descriptor const * const
                 p_descriptor,
             struct appl_hash * * const
                 r_instance)
         {
             return
-                p_heap->alloc_object(
+                p_allocator->alloc_object(
                     p_descriptor,
                     r_instance);
         }
@@ -413,7 +413,7 @@ appl_hash_create(
 {
     return
         appl_hash_service::s_create(
-            p_context->m_heap,
+            p_context->m_allocator,
             p_descriptor,
             r_instance);
 

@@ -32,15 +32,13 @@ struct appl_string;
 //
 struct appl_string : public appl_object
 {
-    // friend struct appl_heap;
-
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_heap * const
-                    p_heap,
+                struct appl_allocator * const
+                    p_allocator,
                 unsigned long int const
                     i_alloc_len,
                 struct appl_string * * const

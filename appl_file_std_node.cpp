@@ -38,8 +38,6 @@
 
 #include <appl_allocator.h>
 
-#include <appl_pool.h>
-
 struct appl_file_std_node_descriptor
 {
     struct appl_file_descriptor const *
@@ -52,8 +50,8 @@ struct appl_file_std_node_descriptor
 //
 enum appl_status
     appl_file_std_node::s_create(
-        struct appl_pool * const
-            p_pool,
+        struct appl_allocator * const
+            p_allocator,
         struct appl_file_descriptor const * const
             p_file_descriptor,
         struct appl_file * * const
@@ -72,7 +70,7 @@ enum appl_status
         p_file_std_node;
 
     e_status =
-        p_pool->alloc_object(
+        p_allocator->alloc_object(
             &(
                 o_file_std_node_descriptor),
             &(

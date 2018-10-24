@@ -27,8 +27,6 @@ class appl_context_std;
 //
 class appl_context_std : public appl_context
 {
-    // friend struct appl_heap;
-
     public:
 
         static

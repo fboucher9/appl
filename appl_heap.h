@@ -47,7 +47,7 @@ struct appl_heap : public appl_allocator
                     1,
                     r_object);
 
-        } // alloc_object()
+        } // alloc_structure()
 
         template <typename T_instance>
         enum appl_status
@@ -90,7 +90,7 @@ struct appl_heap : public appl_allocator
             return
                 e_status;
 
-        } // alloc_object_array()
+        } // alloc_structure_array()
 
         template <typename T_instance>
         enum appl_status

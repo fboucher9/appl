@@ -19,6 +19,7 @@
 //
 appl_context::appl_context() :
     appl_object(),
+    m_allocator(),
     m_heap(),
     m_options(),
     m_thread_mgr(),

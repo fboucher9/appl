@@ -40,14 +40,13 @@ struct appl_queue;
 //
 class appl_queue_std : public appl_queue
 {
-    // friend struct appl_heap;
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_heap * const
-                    p_heap,
+                struct appl_allocator * const
+                    p_allocator,
                 struct appl_queue_descriptor const * const
                     p_descriptor,
                 struct appl_queue * * const

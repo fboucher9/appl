@@ -33,14 +33,13 @@ struct appl_object;
 //
 class appl_log_std : public appl_log
 {
-    // friend struct appl_heap;
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_heap * const
-                    p_heap,
+                struct appl_allocator * const
+                    p_allocator,
                 class appl_log_std * * const
                     r_instance);
 

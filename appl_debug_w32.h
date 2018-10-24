@@ -37,15 +37,13 @@ class appl_debug_w32;
 //
 class appl_debug_w32 : public appl_debug
 {
-    // friend struct appl_heap;
-
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_heap * const
-                    p_heap,
+                struct appl_allocator * const
+                    p_allocator,
                 class appl_debug * * const
                     r_debug);
 

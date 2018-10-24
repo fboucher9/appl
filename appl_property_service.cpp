@@ -27,8 +27,8 @@
 //
 enum appl_status
 appl_property_service::s_create(
-    struct appl_heap * const
-        p_heap,
+    struct appl_allocator * const
+        p_allocator,
     unsigned int const
         i_count,
     struct appl_property * * const
@@ -42,7 +42,7 @@ appl_property_service::s_create(
 
     e_status =
         appl_property_std::s_create(
-            p_heap,
+            p_allocator,
             i_count,
             &(
                 p_property));

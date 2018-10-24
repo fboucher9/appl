@@ -24,15 +24,13 @@
 
 #include <appl_convert.h>
 
-#include <appl_heap.h>
-
 //
 //
 //
 enum appl_status
     appl_library_w32_node::s_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_allocator * const
+            p_allocator,
         struct appl_library_descriptor const * const
             p_library_descriptor,
         struct appl_library * * const
@@ -45,7 +43,7 @@ enum appl_status
         p_library_w32_node;
 
     e_status =
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             p_library_descriptor,
             &(
                 p_library_w32_node));

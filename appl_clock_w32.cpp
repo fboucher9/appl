@@ -22,15 +22,13 @@
 
 #include <appl_convert.h>
 
-#include <appl_heap.h>
-
 //
 //
 //
 enum appl_status
     appl_clock_w32::s_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_allocator * const
+            p_allocator,
         class appl_clock * * const
             r_clock)
 {
@@ -41,7 +39,7 @@ enum appl_status
         p_clock_w32;
 
     e_status =
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             &(
                 p_clock_w32));
 

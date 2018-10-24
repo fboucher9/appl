@@ -36,8 +36,6 @@ Comments:
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
-
 struct appl_thread_property;
 
 class appl_thread_cache_mgr;
@@ -251,8 +249,6 @@ struct appl_thread_cache : public appl_thread
 //
 class appl_thread_cache_node : public appl_node
 {
-    // friend struct appl_heap;
-
     public:
 
         //
@@ -261,8 +257,8 @@ class appl_thread_cache_node : public appl_node
         static
         enum appl_status
             s_create_instance(
-                struct appl_heap * const
-                    p_heap,
+                struct appl_allocator * const
+                    p_allocator,
                 class appl_thread_cache_mgr * const
                     p_thread_cache_mgr,
                 struct appl_thread_property const * const
@@ -283,7 +279,7 @@ class appl_thread_cache_node : public appl_node
                 p_property;
 
             e_status =
-                p_heap->alloc_object(
+                p_allocator->alloc_object(
                     &(
                         o_descriptor),
                     r_instance);
@@ -366,14 +362,13 @@ appl_thread_cache_node::~appl_thread_cache_node()
 //
 class appl_thread_cache_mgr : public appl_object
 {
-    // friend struct appl_heap;
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_heap * const
-                    p_heap,
+                struct appl_allocator * const
+                    p_allocator,
                 class appl_thread_cache_mgr * * const
                     r_instance)
         {
@@ -381,7 +376,7 @@ class appl_thread_cache_mgr : public appl_object
                 e_status;
 
             e_status =
-                p_heap->alloc_object(
+                p_allocator->alloc_object(
                     r_instance);
 
             return
@@ -425,7 +420,7 @@ class appl_thread_cache_mgr : public appl_object
             {
                 e_status =
                     appl_thread_cache_node::s_create_instance(
-                        m_context->m_heap,
+                        m_context->m_allocator,
                         this,
                         p_property,
                         &(
@@ -695,8 +690,8 @@ struct appl_thread *
 extern
 enum appl_status
 appl_thread_cache_mgr_create(
-    struct appl_heap * const
-        p_heap,
+    struct appl_allocator * const
+        p_allocator,
     class appl_thread_cache_mgr * * const
         r_instance);
 
@@ -711,8 +706,8 @@ appl_thread_cache_mgr_destroy(
 //
 enum appl_status
 appl_thread_cache_mgr_create(
-    struct appl_heap * const
-        p_heap,
+    struct appl_allocator * const
+        p_allocator,
     class appl_thread_cache_mgr * * const
         r_instance)
 {
@@ -721,7 +716,7 @@ appl_thread_cache_mgr_create(
 
     e_status =
         appl_thread_cache_mgr::s_create(
-            p_heap,
+            p_allocator,
             r_instance);
 
     return

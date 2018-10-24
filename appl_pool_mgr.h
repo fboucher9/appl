@@ -30,14 +30,13 @@ class appl_pool_mgr;
 //
 class appl_pool_mgr : public appl_object
 {
-    // friend struct appl_heap;
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_heap * const
-                    p_heap,
+                struct appl_allocator * const
+                    p_allocator,
                 class appl_pool_mgr * * const
                     r_instance);
 

@@ -191,6 +191,9 @@ enum appl_status
     m_heap->set_context(
         this);
 
+    m_allocator =
+        m_heap;
+
     b_init_heap =
         true;
 
@@ -1038,8 +1041,8 @@ void
 extern
 enum appl_status
 appl_thread_cache_mgr_create(
-    struct appl_heap * const
-        p_heap,
+    struct appl_allocator * const
+        p_allocator,
     class appl_thread_cache_mgr * * const
         r_instance);
 
@@ -1058,7 +1061,7 @@ enum appl_status
     {
         e_status =
             appl_thread_cache_mgr_create(
-                m_heap,
+                m_allocator,
                 &(
                     m_thread_cache_mgr));
 

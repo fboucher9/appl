@@ -33,14 +33,13 @@ struct appl_options_std_descriptor
 //
 class appl_options_std : public appl_options
 {
-    // friend struct appl_heap;
     public:
 
         static
         enum appl_status
         s_create(
-            struct appl_heap * const
-                p_heap,
+            struct appl_allocator * const
+                p_allocator,
             struct appl_options_std_descriptor const * const
                 p_options_std_descriptor,
             class appl_options * * const

@@ -28,7 +28,7 @@ struct appl_object;
 #endif /* #if ! defined __cplusplus */
 
 // Predefine
-class appl_allocator;
+struct appl_allocator;
 
 //
 //
@@ -49,12 +49,12 @@ struct appl_object
                 struct appl_context * const
                     p_context);
 
-        class appl_allocator *
+        struct appl_allocator *
             get_allocator(void) const;
 
         void
             set_allocator(
-                class appl_allocator * const
+                struct appl_allocator * const
                     p_allocator);
 
         appl_size_t
@@ -79,7 +79,7 @@ struct appl_object
 
         // --
 
-        class appl_allocator *
+        struct appl_allocator *
             m_allocator;
 
         appl_size_t

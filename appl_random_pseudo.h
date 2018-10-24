@@ -28,14 +28,13 @@ class appl_random_pseudo;
 //
 class appl_random_pseudo : public appl_random
 {
-    // friend struct appl_heap;
     public:
 
         static
         enum appl_status
         s_create(
-            struct appl_heap * const
-                p_heap,
+            struct appl_allocator * const
+                p_allocator,
             unsigned long int const
                 i_seed,
             struct appl_random * * const

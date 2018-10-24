@@ -34,8 +34,6 @@ class appl_library_w32_mgr;
 //
 class appl_library_w32_mgr : public appl_library_mgr
 {
-    // friend struct appl_heap;
-
     public:
 
         //
@@ -44,8 +42,8 @@ class appl_library_w32_mgr : public appl_library_mgr
         static
         enum appl_status
             s_create(
-                struct appl_heap * const
-                    p_heap,
+                struct appl_allocator * const
+                    p_allocator,
                 struct appl_library_mgr * * const
                     r_library_mgr);
 

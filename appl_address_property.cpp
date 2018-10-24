@@ -36,8 +36,6 @@
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
-
 #define APPL_ADDRESS_PROPERTY_GUID (0xe0bfd095ul)
 
 enum appl_address_property_id
@@ -59,7 +57,6 @@ enum appl_address_property_id
 //
 struct appl_address_property : public appl_property_std
 {
-    // friend struct appl_heap;
     public:
 
         static
@@ -106,7 +103,7 @@ appl_address_property::s_create(
         r_address_property)
 {
     return
-        p_context->m_heap->alloc_object(
+        p_context->m_allocator->alloc_object(
             r_address_property);
 
 } // s_create()

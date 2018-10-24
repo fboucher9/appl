@@ -18,15 +18,13 @@
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
-
 //
 //
 //
 enum appl_status
 appl_random_pseudo::s_create(
-    struct appl_heap * const
-        p_heap,
+    struct appl_allocator * const
+        p_allocator,
     unsigned long int const
         i_seed,
     struct appl_random * * const
@@ -39,7 +37,7 @@ appl_random_pseudo::s_create(
         p_random_pseudo;
 
     e_status =
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             &(
                 i_seed),
             &(

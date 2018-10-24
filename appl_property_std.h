@@ -45,15 +45,13 @@ struct appl_property_std;
 //
 struct appl_property_std : public appl_property
 {
-    // friend struct appl_heap;
-
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_heap * const
-                    p_heap,
+                struct appl_allocator * const
+                    p_allocator,
                 unsigned int const
                     i_id,
                 struct appl_property * * const

@@ -20,15 +20,13 @@
 
 #include <appl_buf.h>
 
-#include <appl_heap.h>
-
 //
 //
 //
 enum appl_status
     appl_debug_w32::s_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_allocator * const
+            p_allocator,
         class appl_debug * * const
             r_debug)
 {
@@ -39,7 +37,7 @@ enum appl_status
         p_debug_w32;
 
     e_status =
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             &(
                 p_debug_w32));
 

@@ -22,15 +22,13 @@
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
-
 //
 //
 //
 enum appl_status
     appl_log_std::s_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_allocator * const
+            p_allocator,
         class appl_log_std * * const
             r_instance)
 {
@@ -38,7 +36,7 @@ enum appl_status
         e_status;
 
     e_status =
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             r_instance);
 
     return

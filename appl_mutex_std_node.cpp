@@ -30,8 +30,6 @@
 
 #include <appl_allocator.h>
 
-#include <appl_pool.h>
-
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -42,8 +40,8 @@
 //
 enum appl_status
     appl_mutex_std_node::s_create(
-        struct appl_pool * const
-            p_pool,
+        struct appl_allocator * const
+            p_allocator,
         struct appl_mutex_descriptor const * const
             p_mutex_descriptor,
         struct appl_mutex * * const
@@ -56,7 +54,7 @@ enum appl_status
         p_mutex_std_node;
 
     e_status =
-        p_pool->alloc_object(
+        p_allocator->alloc_object(
             p_mutex_descriptor,
             &(
                 p_mutex_std_node));
@@ -210,8 +208,8 @@ enum appl_status
 
 enum appl_status
 appl_mutex_std_node_create(
-    struct appl_pool * const
-        p_pool,
+    struct appl_allocator * const
+        p_allocator,
     struct appl_mutex_descriptor const * const
         p_mutex_descriptor,
     struct appl_mutex * * const
@@ -222,8 +220,8 @@ appl_mutex_std_node_create(
 //
 enum appl_status
 appl_mutex_std_node_create(
-    struct appl_pool * const
-        p_pool,
+    struct appl_allocator * const
+        p_allocator,
     struct appl_mutex_descriptor const * const
         p_mutex_descriptor,
     struct appl_mutex * * const
@@ -231,7 +229,7 @@ appl_mutex_std_node_create(
 {
     return
         appl_mutex_std_node::s_create(
-            p_pool,
+            p_allocator,
             p_mutex_descriptor,
             r_mutex);
 

@@ -16,7 +16,7 @@
 #error include appl_library_node.h before appl_library_w32_node.h
 #endif /* #if ! defined INC_APPL_LIBRARY_NODE_H */
 
-struct appl_heap;
+struct appl_allocator;
 
 struct appl_library_descriptor;
 
@@ -34,8 +34,6 @@ class appl_library_w32_node;
 //
 class appl_library_w32_node : public appl_library
 {
-    // friend struct appl_heap;
-
     public:
 
         //
@@ -44,8 +42,8 @@ class appl_library_w32_node : public appl_library
         static
         enum appl_status
             s_create(
-                struct appl_heap * const
-                    p_heap,
+                struct appl_allocator * const
+                    p_allocator,
                 struct appl_library_descriptor const * const
                     p_library_descriptor,
                 struct appl_library * * const

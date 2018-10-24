@@ -11,7 +11,7 @@
 #define INC_APPL_THREAD_STD_MGR_H
 
 /* Predefine */
-struct appl_pool;
+struct appl_allocator;
 
 #if !defined(__cplusplus)
 #error use c++ compiler
@@ -27,15 +27,13 @@ struct appl_pool;
 class appl_thread_std_mgr :
     public appl_thread_mgr
 {
-    // friend struct appl_heap;
-
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_heap * const
-                    p_heap,
+                struct appl_allocator * const
+                    p_allocator,
                 class appl_thread_mgr * * const
                     r_thread_mgr);
 

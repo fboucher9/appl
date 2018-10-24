@@ -40,8 +40,6 @@ class appl_heap_dbg;
 //
 class appl_heap_dbg : public appl_heap
 {
-    // friend struct appl_heap;
-
     public:
 
         static

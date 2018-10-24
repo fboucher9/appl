@@ -63,8 +63,8 @@ union appl_pool_node_ptr
 //
 enum appl_status
     appl_pool_std::s_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_allocator * const
+            p_allocator,
         appl_size_t const
             i_buf_len,
         class appl_pool_std * * const
@@ -77,7 +77,7 @@ enum appl_status
         i_buf_len;
 
     return
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             &(
                 o_pool_std_descriptor),
             r_instance);

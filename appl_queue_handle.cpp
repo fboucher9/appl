@@ -30,7 +30,7 @@ enum appl_status
 {
     return
         appl_queue_service::s_create(
-            p_context->m_heap,
+            p_context->m_allocator,
             p_descriptor,
             r_instance);
 

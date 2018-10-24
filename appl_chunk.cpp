@@ -205,14 +205,13 @@ class appl_chunk_std;
 //
 class appl_chunk_std : public appl_chunk
 {
-    // friend struct appl_heap;
     public:
 
         static
         enum appl_status
         s_create(
-            struct appl_heap * const
-                p_heap,
+            struct appl_allocator * const
+                p_allocator,
             struct appl_chunk * * const
                 r_chunk);
 
@@ -289,8 +288,8 @@ class appl_chunk_std : public appl_chunk
 //
 enum appl_status
 appl_chunk_std::s_create(
-    struct appl_heap * const
-        p_heap,
+    struct appl_allocator * const
+        p_allocator,
     struct appl_chunk * * const
         r_chunk)
 {
@@ -301,7 +300,7 @@ appl_chunk_std::s_create(
         p_chunk_std;
 
     e_status =
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             &(
                 p_chunk_std));
 
@@ -383,8 +382,7 @@ appl_chunk_std::v_cleanup(void)
             o_chunk_node_ptr.p_chunk_node,
             o_chunk_node_ptr.p_chunk_node);
 
-        m_context->m_heap->v_free(
-            sizeof(*(o_chunk_node_ptr.p_chunk_node)),
+        m_context->m_heap->free_structure(
             o_chunk_node_ptr.p_chunk_node);
     }
 

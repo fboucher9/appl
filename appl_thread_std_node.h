@@ -41,15 +41,13 @@ class appl_thread_std_node;
 //
 class appl_thread_std_node : public appl_thread
 {
-    // friend struct appl_pool;
-
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_pool * const
-                    p_pool,
+                struct appl_allocator * const
+                    p_allocator,
                 struct appl_thread_property const * const
                     p_thread_property,
                 struct appl_thread * * const

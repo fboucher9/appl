@@ -38,8 +38,6 @@
 
 #include <appl_allocator.h>
 
-#include <appl_pool.h>
-
 #include <appl_unused.h>
 
 //
@@ -47,8 +45,8 @@
 //
 enum appl_status
     appl_thread_std_node::s_create(
-        struct appl_pool * const
-            p_pool,
+        struct appl_allocator * const
+            p_allocator,
         struct appl_thread_property const * const
             p_thread_property,
         struct appl_thread * * const
@@ -61,7 +59,7 @@ enum appl_status
         p_thread_std_node;
 
     e_status =
-        p_pool->alloc_object(
+        p_allocator->alloc_object(
             p_thread_property,
             &(
                 p_thread_std_node));
@@ -187,8 +185,8 @@ appl_size_t
 
 enum appl_status
     appl_thread_std_node_create(
-        struct appl_pool * const
-            p_pool,
+        struct appl_allocator * const
+            p_allocator,
         struct appl_thread_property const * const
             p_thread_property,
         struct appl_thread * * const
@@ -199,8 +197,8 @@ enum appl_status
 */
 enum appl_status
     appl_thread_std_node_create(
-        struct appl_pool * const
-            p_pool,
+        struct appl_allocator * const
+            p_allocator,
         struct appl_thread_property const * const
             p_thread_property,
         struct appl_thread * * const
@@ -208,7 +206,7 @@ enum appl_status
 {
     return
         appl_thread_std_node::s_create(
-            p_pool,
+            p_allocator,
             p_thread_property,
             r_thread);
 

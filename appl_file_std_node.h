@@ -34,14 +34,13 @@ struct appl_file_std_node_descriptor;
 //
 class appl_file_std_node : public appl_file
 {
-    // friend struct appl_pool;
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_pool * const
-                    p_pool,
+                struct appl_allocator * const
+                    p_allocator,
                 struct appl_file_descriptor const * const
                     p_file_descriptor,
                 struct appl_file * * const

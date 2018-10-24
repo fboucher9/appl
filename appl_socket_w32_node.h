@@ -16,7 +16,7 @@
 #error include appl_socket_node.h before
 #endif /* #if ! defined INC_APPL_SOCKET_NODE_H */
 
-struct appl_heap;
+struct appl_allocator;
 
 struct appl_socket_property;
 
@@ -34,15 +34,13 @@ class appl_socket_w32_node;
 //
 class appl_socket_w32_node : public appl_socket
 {
-    // friend struct appl_heap;
-
     public:
 
         static
         enum appl_status
             s_create(
-                struct appl_heap * const
-                    p_heap,
+                struct appl_allocator * const
+                    p_allocator,
                 struct appl_socket_property const * const
                     p_socket_descriptor,
                 struct appl_socket * * const

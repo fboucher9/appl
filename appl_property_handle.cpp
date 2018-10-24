@@ -36,7 +36,7 @@ appl_property_create(
 {
     return
         appl_property_service::s_create(
-            p_context->m_heap,
+            p_context->m_allocator,
             i_count,
             r_property);
 

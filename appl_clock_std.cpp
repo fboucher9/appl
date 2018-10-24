@@ -24,15 +24,13 @@
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
-
 //
 //
 //
 enum appl_status
     appl_clock_std::s_create(
-        struct appl_heap * const
-            p_heap,
+        struct appl_allocator * const
+            p_allocator,
         class appl_clock * * const
             r_clock)
 {
@@ -43,7 +41,7 @@ enum appl_status
         p_clock_std;
 
     e_status =
-        p_heap->alloc_object(
+        p_allocator->alloc_object(
             &(
                 p_clock_std));
 
