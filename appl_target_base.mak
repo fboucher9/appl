@@ -19,6 +19,8 @@ appl_base-deps := \
     appl_address_service.cpp \
     appl_address_std_node.cpp \
     appl_allocator.cpp \
+    appl_allocator_handle.cpp \
+    appl_allocator_service.cpp \
     appl_buf.cpp \
     appl_buf0.cpp \
     appl_chunk.cpp \
@@ -30,6 +32,7 @@ appl_base-deps := \
     appl_context.cpp \
     appl_context_handle.cpp \
     appl_context_std.cpp \
+    appl_crc16.cpp \
     appl_debug.cpp \
     appl_debug_handle.cpp \
     appl_debug_std.cpp \
