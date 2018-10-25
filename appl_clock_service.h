@@ -16,7 +16,7 @@
 #error include appl_status.h before
 #endif /* #if ! defined INC_APPL_STATUS_H */
 
-struct appl_object;
+struct appl_context;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -35,8 +35,8 @@ class appl_clock_service
         static
         enum appl_status
         s_read(
-            struct appl_object const * const
-                p_object,
+            struct appl_context const * const
+                p_context,
             unsigned long int const
                 i_time_freq,
             unsigned long int * const
@@ -45,8 +45,8 @@ class appl_clock_service
         static
         enum appl_status
         s_delay(
-            struct appl_object const * const
-                p_object,
+            struct appl_context const * const
+                p_context,
             unsigned long int const
                 i_time_freq,
             unsigned long int const

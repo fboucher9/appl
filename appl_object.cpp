@@ -20,13 +20,13 @@
 enum appl_status
     appl_object::v_destroy(void)
 {
-    class appl_allocator * const
+    struct appl_allocator * const
         p_allocator =
-        m_allocator;
+        m_destroyer;
 
     appl_size_t const
         i_placement_length =
-        m_placement_length;
+        m_destroyer_length;
 
     void * const
         p_placement =
@@ -62,8 +62,8 @@ enum appl_status
 //
 appl_object::appl_object() :
     m_context(),
-    m_allocator(),
-    m_placement_length()
+    m_destroyer(),
+    m_destroyer_length()
 {
 }
 
@@ -176,11 +176,11 @@ void
 //
 //
 //
-class appl_allocator *
+struct appl_allocator *
     appl_object::get_allocator(void) const
 {
     return
-        m_allocator;
+        m_destroyer;
 
 } // get_allocator()
 
@@ -189,10 +189,10 @@ class appl_allocator *
 //
 void
     appl_object::set_allocator(
-        class appl_allocator * const
+        struct appl_allocator * const
             p_allocator)
 {
-    m_allocator =
+    m_destroyer =
         p_allocator;
 
 } // set_allocator()
@@ -204,7 +204,7 @@ appl_size_t
     appl_object::get_placement_length(void) const
 {
     return
-        m_placement_length;
+        m_destroyer_length;
 
 } // get_placement_length()
 
@@ -216,7 +216,7 @@ void
         appl_size_t const
             i_placement_length)
 {
-    m_placement_length =
+    m_destroyer_length =
         i_placement_length;
 
 } // set_placement_length()

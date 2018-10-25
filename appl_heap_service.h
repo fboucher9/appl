@@ -11,7 +11,7 @@
 
 #define INC_APPL_HEAP_SERVICE_H
 
-struct appl_object;
+struct appl_context;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -30,8 +30,8 @@ class appl_heap_service
         static
         enum appl_status
             s_alloc(
-                struct appl_object const * const
-                    p_object,
+                struct appl_context const * const
+                    p_context,
                 unsigned long int const
                     i_length,
                 void * * const
@@ -40,8 +40,8 @@ class appl_heap_service
         static
         enum appl_status
             s_free(
-                struct appl_object const * const
-                    p_object,
+                struct appl_context const * const
+                    p_context,
                 unsigned long int const
                     i_length,
                 void * const

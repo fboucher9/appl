@@ -95,22 +95,19 @@ appl_test_sleep_msec(
         i_time_after;
 
     appl_clock_read(
-        appl_context_parent(
-            p_context),
+        p_context,
         1000ul,
         &(
             i_time_before));
 
     e_status =
         appl_clock_delay(
-            appl_context_parent(
-                p_context),
+            p_context,
             1000ul,
             i_msec_count);
 
     appl_clock_read(
-        appl_context_parent(
-            p_context),
+        p_context,
         1000ul,
         &(
             i_time_after));
@@ -160,8 +157,7 @@ appl_test_memory_leak(
 
     e_status =
         appl_heap_alloc(
-            appl_context_parent(
-                p_context),
+            p_context,
             123u,
             &(
                 p_buf));
@@ -487,8 +483,7 @@ appl_test_line_create(
 
                 e_status =
                     appl_heap_alloc(
-                        appl_context_parent(
-                            p_context),
+                        p_context,
                         i_line_length,
                         &(
                             o_line_ptr.p_void));
@@ -520,8 +515,7 @@ appl_test_line_create(
                         != e_status)
                     {
                         appl_heap_free(
-                            appl_context_parent(
-                                p_context),
+                            p_context,
                             i_line_length,
                             o_line_ptr.p_void);
                     }
@@ -555,8 +549,7 @@ appl_test_line_destroy(
             - p_line_buf->o_min.pc_uchar);
 
     appl_heap_free(
-        appl_context_parent(
-            p_context),
+        p_context,
         i_length,
         p_line_buf->o_min.p_void);
 
@@ -1083,8 +1076,7 @@ appl_test_socket_connection_thread_handler(
             p_test_socket_connection_context->p_remote_socket));
 
     appl_heap_free(
-        appl_context_parent(
-            p_test_socket_connection_context->p_context),
+        p_test_socket_connection_context->p_context,
         (unsigned long int)(
             sizeof(
                 *p_test_socket_connection_context)),
@@ -1136,8 +1128,7 @@ appl_test_socket_process_client(
 
     e_status =
         appl_heap_alloc(
-            appl_context_parent(
-                p_context),
+            p_context,
             (unsigned long int)(
                 sizeof(
                     struct appl_test_socket_connection_context)),
@@ -1241,8 +1232,7 @@ appl_test_socket_process_client(
                     p_test_socket_connection_context->p_remote_socket));
 
             appl_heap_free(
-                appl_context_parent(
-                    p_context),
+                p_context,
                 (unsigned long int)(
                     sizeof(
                         struct appl_test_socket_connection_context)),
@@ -2141,8 +2131,7 @@ appl_test_tree_node_create(
 
     e_status =
         appl_heap_alloc(
-            appl_context_parent(
-                p_context),
+            p_context,
             (unsigned long int)(
                 sizeof(
                     struct appl_test_tree_node)),
@@ -2277,8 +2266,7 @@ appl_test_tree_free(
                 p_tree_node->p_child_right);
 
         appl_heap_free(
-            appl_context_parent(
-                p_context),
+            p_context,
             (unsigned long int)(
                 sizeof(
                     struct appl_test_tree_node)),

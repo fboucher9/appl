@@ -157,7 +157,7 @@ enum appl_status
 
         e_status =
             appl_buf0_create(
-                this,
+                m_context,
                 p_file_descriptor->p_name_min,
                 p_file_descriptor->p_name_max,
                 &(
@@ -248,7 +248,7 @@ enum appl_status
             }
 
             appl_buf0_destroy(
-                this,
+                m_context,
                 a_pathname);
         }
     }

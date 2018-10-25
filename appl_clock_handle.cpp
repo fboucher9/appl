@@ -15,8 +15,8 @@
 */
 enum appl_status
 appl_clock_read(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned long int const
         i_time_freq,
     unsigned long int * const
@@ -27,7 +27,7 @@ appl_clock_read(
 
     e_status =
         appl_clock_service::s_read(
-            p_object,
+            p_context,
             i_time_freq,
             p_time_count);
 
@@ -41,8 +41,8 @@ appl_clock_read(
 */
 enum appl_status
 appl_clock_delay(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned long int const
         i_time_freq,
     unsigned long int const
@@ -53,7 +53,7 @@ appl_clock_delay(
 
     e_status =
         appl_clock_service::s_delay(
-            p_object,
+            p_context,
             i_time_freq,
             i_time_count);
 

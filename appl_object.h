@@ -79,14 +79,6 @@ struct appl_object
 
         // --
 
-        struct appl_allocator *
-            m_allocator;
-
-        appl_size_t
-            m_placement_length;
-
-        // --
-
         appl_object();
 
         virtual
@@ -125,6 +117,16 @@ struct appl_object
                 p_placement);
 
     private:
+
+        // --
+
+        struct appl_allocator *
+            m_destroyer;
+
+        appl_size_t
+            m_destroyer_length;
+
+        // --
 
         appl_object(
             struct appl_object const & r);

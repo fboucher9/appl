@@ -20,6 +20,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_allocator.h>
+
 //
 //
 //

@@ -53,11 +53,15 @@ class appl_file_std_mgr : public appl_file_mgr
 
     private:
 
+        // --
+
         struct appl_pool *
             m_pool;
 
         void *
             pv_padding[1u];
+
+        // --
 
         appl_file_std_mgr(
             class appl_file_std_mgr const & r);

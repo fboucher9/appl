@@ -18,13 +18,13 @@
 
 #include <appl_file_std_node.h>
 
-#include <appl_object_handle.h>
-
-#include <appl_pool_handle.h>
-
 #include <appl_allocator.h>
 
 #include <appl_pool.h>
+
+#include <appl_pool_mgr.h>
+
+#include <appl_context.h>
 
 #if !defined(__cplusplus)
 #error use c++ compiler
@@ -96,8 +96,7 @@ enum appl_status
             class appl_file_std_node);
 
     e_status =
-        appl_pool_create(
-            m_context,
+        m_context->m_pool_mgr->v_create_node(
             i_length,
             &(
                 m_pool));
@@ -119,9 +118,7 @@ enum appl_status
     if (
         m_pool)
     {
-        appl_object_destroy(
-            appl_pool_parent(
-                m_pool));
+        m_pool->v_destroy();
 
         m_pool =
             0;

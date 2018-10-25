@@ -15,8 +15,8 @@
 */
 enum appl_status
 appl_heap_alloc(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned long int const
         i_length,
     void * * const
@@ -27,7 +27,7 @@ appl_heap_alloc(
 
     e_status =
         appl_heap_service::s_alloc(
-            p_object,
+            p_context,
             i_length,
             r_buf);
 
@@ -41,8 +41,8 @@ appl_heap_alloc(
 */
 enum appl_status
 appl_heap_free(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned long int const
         i_length,
     void * const
@@ -53,7 +53,7 @@ appl_heap_free(
 
     e_status =
         appl_heap_service::s_free(
-            p_object,
+            p_context,
             i_length,
             p_buf);
 

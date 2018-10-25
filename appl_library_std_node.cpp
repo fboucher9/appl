@@ -98,7 +98,7 @@ enum appl_status
 
     e_status =
         appl_buf0_create(
-            this,
+            m_context,
             p_library_descriptor->p_name_min,
             p_library_descriptor->p_name_max,
             &(
@@ -131,7 +131,7 @@ enum appl_status
         }
 
         appl_buf0_destroy(
-            this,
+            m_context,
             p_name0);
     }
 
@@ -187,7 +187,7 @@ enum appl_status
 
     e_status =
         appl_buf0_create(
-            this,
+            m_context,
             p_symbol_name_min,
             p_symbol_name_max,
             &(
@@ -220,7 +220,7 @@ enum appl_status
         }
 
         appl_buf0_destroy(
-            this,
+            m_context,
             p_name0);
     }
 

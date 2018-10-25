@@ -9,7 +9,7 @@
 #error include appl_heap_handle.h once
 #endif /* #if defined(INC_APPL_HEAP_HANDLE_H) */
 
-struct appl_object;
+struct appl_context;
 
 #if defined(__cplusplus)
 extern "C" {
@@ -17,8 +17,8 @@ extern "C" {
 
 enum appl_status
 appl_heap_alloc(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned long int const
         i_length,
     void * * const
@@ -26,8 +26,8 @@ appl_heap_alloc(
 
 enum appl_status
 appl_heap_free(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned long int const
         i_length,
     void * const

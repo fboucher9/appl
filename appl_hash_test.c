@@ -134,8 +134,7 @@ appl_hash_test_create_node(
 
     e_status =
         appl_heap_alloc(
-            appl_context_parent(
-                p_context),
+            p_context,
             i_placement_length,
             &(
                 p_placement));
@@ -206,8 +205,7 @@ appl_hash_test_destroy_node(
             p_node->o_list));
 
     appl_heap_free(
-        appl_context_parent(
-            p_context),
+        p_context,
         i_placement_length,
         p_placement);
 

@@ -36,6 +36,8 @@
 
 #include <appl_context.h>
 
+#include <appl_allocator.h>
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -624,7 +626,7 @@ appl_socket_w32_node::v_accept(
                     p_socket_w32_node;
 
                 e_status =
-                    m_allocator->alloc_object(
+                    m_context->m_allocator->alloc_object(
                         &(
                             i_accept_result),
                         &(

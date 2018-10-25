@@ -21,8 +21,8 @@
 */
 enum appl_status
 appl_buf0_create(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
@@ -44,7 +44,7 @@ appl_buf0_create(
 
     e_status =
         appl_heap_alloc(
-            p_object,
+            p_context,
             i_buf_len + 1,
             &(
                 o_buf0_allocation.p_void));
@@ -77,8 +77,8 @@ appl_buf0_create(
 */
 enum appl_status
 appl_buf0_destroy(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned char * const
         p_buf0)
 {
@@ -91,7 +91,7 @@ appl_buf0_destroy(
 
     return
         appl_heap_free(
-            p_object,
+            p_context,
             i_buf_len + 1,
             p_buf0);
 

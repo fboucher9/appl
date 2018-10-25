@@ -11,7 +11,7 @@
 
 #define INC_APPL_BUF0_H
 
-struct appl_object;
+struct appl_context;
 
 #if defined __cplusplus
 extern "C" {
@@ -19,8 +19,8 @@ extern "C" {
 
 enum appl_status
 appl_buf0_create(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
@@ -30,8 +30,8 @@ appl_buf0_create(
 
 enum appl_status
 appl_buf0_destroy(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned char * const
         p_buf0);
 
