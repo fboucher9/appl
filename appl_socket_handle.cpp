@@ -6,8 +6,6 @@
 
 #include <appl_status.h>
 
-#include <appl_object_handle.h>
-
 #include <appl_socket_descriptor.h>
 
 #include <appl_socket_handle.h>

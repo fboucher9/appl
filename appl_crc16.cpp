@@ -74,12 +74,12 @@ appl_crc16(
         p_buf_iterator != p_buf_end)
     {
         i_crc16 =
-            (unsigned short int)(
+            static_cast<unsigned short int>(
                 (
-                    ((unsigned int)(i_crc16) << 8u)
+                    (static_cast<unsigned int>(i_crc16) << 8u)
                     ^ a_crc16_table[
                         (
-                            ((unsigned int)(i_crc16) >> 8u)
+                            (static_cast<unsigned int>(i_crc16) >> 8u)
                             ^ (*p_buf_iterator))
                         & 0xFFu])
                 & 0xFFFFu);

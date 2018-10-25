@@ -24,13 +24,15 @@ Comments:
 
 #include <appl_unused.h>
 
-#include <appl_object_handle.h>
-
-#include <appl_thread_handle.h>
-
 #include <appl_thread_node.h>
 
+#include <appl_thread_mgr.h>
+
 #include <appl_mutex_handle.h>
+
+#include <appl_mutex_node.h>
+
+#include <appl_mutex_mgr.h>
 
 #include <appl_thread_descriptor.h>
 
@@ -110,8 +112,7 @@ struct appl_thread_cache : public appl_thread
                 p_thread_cache_node;
 
             e_status =
-                appl_thread_create(
-                    this,
+                m_context->m_thread_mgr->v_create(
                     p_descriptor->p_property,
                     &(
                         m_thread_handle));
@@ -400,8 +401,7 @@ class appl_thread_cache_mgr : public appl_object
             appl_unused(
                 p_property);
 
-            appl_mutex_lock(
-                m_lock);
+            m_lock->v_lock();
 
             if (m_unused_nodes.p_next != &m_unused_nodes)
             {
@@ -441,8 +441,7 @@ class appl_thread_cache_mgr : public appl_object
                     p_thread_cache_node->f_get();
             }
 
-            appl_mutex_unlock(
-                m_lock);
+            m_lock->v_unlock();
 
             return
                 e_status;
@@ -494,8 +493,7 @@ class appl_thread_cache_mgr : public appl_object
             struct appl_mutex_descriptor
                 o_mutex_descriptor;
 
-            appl_mutex_create(
-                m_context,
+            m_context->m_mutex_mgr->v_create(
                 &(
                     o_mutex_descriptor),
                 &(
@@ -536,9 +534,7 @@ class appl_thread_cache_mgr : public appl_object
         enum appl_status
             v_cleanup(void)
         {
-            appl_object_destroy(
-                appl_mutex_parent(
-                    m_lock));
+            m_lock->v_destroy();
 
             return
                 appl_status_ok;

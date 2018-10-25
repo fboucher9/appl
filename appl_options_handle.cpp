@@ -6,8 +6,6 @@
 
 #include <appl_status.h>
 
-#include <appl_object_handle.h>
-
 #include <appl_options_handle.h>
 
 #include <appl_options_service.h>

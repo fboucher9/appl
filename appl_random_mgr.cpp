@@ -24,8 +24,6 @@
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
-
 //
 //
 //
@@ -45,7 +43,7 @@ appl_random_mgr::v_create_node(
     {
         e_status =
             appl_random_pseudo::s_create(
-                m_context->m_heap,
+                m_context->m_allocator,
                 p_descriptor->i_seed,
                 r_node);
     }

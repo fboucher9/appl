@@ -24,18 +24,7 @@
 
 #include <appl_heap.h>
 
-struct appl_property_node
-{
-    unsigned int
-        i_id;
-
-    enum appl_property_type
-        e_type;
-
-    union appl_property_value
-        o_value;
-
-}; /* struct appl_property_node */
+#include <appl_convert.h>
 
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -104,10 +93,11 @@ enum appl_status
     if (
         i_id < m_count)
     {
-        a_nodes[i_id].e_type =
-            e_type;
+        a_types[i_id] =
+            appl_convert::to_uchar(
+                e_type);
 
-        a_nodes[i_id].o_value =
+        a_values[i_id] =
             *(
                 p_value);
 
@@ -144,11 +134,11 @@ enum appl_status
         i_id < m_count)
     {
         if (
-            e_type == a_nodes[i_id].e_type)
+            e_type == a_types[i_id])
         {
             *(
                 p_value) =
-                a_nodes[i_id].o_value;
+                a_values[i_id];
 
             e_status =
                 appl_status_ok;
@@ -175,9 +165,11 @@ enum appl_status
 //
 appl_property_std::appl_property_std() :
     appl_property(),
-    a_nodes(),
+    a_values(),
+    a_types(),
     m_count(),
-    b_nodes_allocated()
+    b_values_allocated(),
+    b_types_allocated()
 {
 }
 
@@ -209,29 +201,67 @@ enum appl_status
             m_context->m_heap->alloc_structure_array(
                 m_count,
                 &(
-                    a_nodes));
+                    a_values));
 
         if (
             appl_status_ok
             == e_status)
         {
-            unsigned int
-                i;
+            b_values_allocated =
+                true;
 
-            for (
-                i = 0u;
-                i < m_count;
-                i ++)
+            e_status =
+                m_context->m_heap->alloc_structure_array(
+                    m_count,
+                    &(
+                        a_types));
+
+            if (
+                appl_status_ok
+                == e_status)
             {
-                a_nodes[i].e_type =
-                    appl_property_type_default;
+                b_types_allocated =
+                    true;
 
-                a_nodes[i].o_value.p_value =
-                    0;
+                unsigned int
+                    i;
+
+                for (
+                    i = 0u;
+                    i < m_count;
+                    i ++)
+                {
+                    a_types[i] =
+                        appl_property_type_default;
+
+                    a_values[i].p_value =
+                        0;
+                }
+
+                if (
+                    appl_status_ok
+                    != e_status)
+                {
+                    m_context->m_heap->free_structure_array(
+                        m_count,
+                        a_types);
+
+                    b_types_allocated =
+                        false;
+                }
             }
 
-            b_nodes_allocated =
-                true;
+            if (
+                appl_status_ok
+                != e_status)
+            {
+                m_context->m_heap->free_structure_array(
+                    m_count,
+                    a_values);
+
+                b_values_allocated =
+                    false;
+            }
         }
     }
     else
@@ -255,22 +285,30 @@ enum appl_status
         e_status;
 
     if (
-        b_nodes_allocated)
+        b_types_allocated)
     {
-        appl_size_t
-            i_placement_length;
+        m_context->m_heap->free_structure_array(
+            m_count,
+            a_types);
 
-        i_placement_length =
-            m_count * sizeof(a_nodes[0u]);
-
-        m_context->m_heap->v_free(
-            i_placement_length,
-            a_nodes);
-
-        a_nodes =
+        a_types =
             0;
 
-        b_nodes_allocated =
+        b_types_allocated =
+            false;
+    }
+
+    if (
+        b_values_allocated)
+    {
+        m_context->m_heap->free_structure_array(
+            m_count,
+            a_values);
+
+        a_values =
+            0;
+
+        b_values_allocated =
             false;
     }
 

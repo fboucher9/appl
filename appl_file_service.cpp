@@ -55,6 +55,32 @@ enum appl_status
 //
 //
 //
+struct appl_object *
+appl_file_service::s_parent(
+    struct appl_file * const
+        p_file)
+{
+    return
+        p_file;
+
+} // s_parent()
+
+//
+//
+//
+struct appl_object const *
+appl_file_service::s_const_parent(
+    struct appl_file const * const
+        p_file)
+{
+    return
+        p_file;
+
+} // s_const_parent()
+
+//
+//
+//
 enum appl_status
     appl_file_service::s_read(
         struct appl_file * const

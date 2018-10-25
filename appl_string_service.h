@@ -40,6 +40,18 @@ class appl_string_service
                 r_string);
 
         static
+        struct appl_object *
+        s_parent(
+            struct appl_string * const
+                p_string);
+
+        static
+        struct appl_object const *
+        s_const_parent(
+            struct appl_string const * const
+                p_string);
+
+        static
         enum appl_status
         s_length(
             struct appl_string const * const

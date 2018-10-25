@@ -6,17 +6,9 @@
 
 #include <appl_status.h>
 
-#include <appl_object_handle.h>
-
 #include <appl_context_handle.h>
 
-#include <appl_types.h>
-
-#include <appl_object.h>
-
-#include <appl_context.h>
-
-#include <appl_context_std.h>
+#include <appl_context_service.h>
 
 /*
 
@@ -28,48 +20,38 @@ appl_context_create(
     struct appl_context * * const
         r_context)
 {
-    enum appl_status
-        e_status;
-
-    struct appl_context *
-        p_context;
-
-    e_status =
-        appl_context_std::create_instance(
-            p_context_descriptor,
-            &(
-                p_context));
-
-    if (
-        appl_status_ok == e_status)
-    {
-        *(
-            r_context) =
-            p_context;
-    }
-
     return
-        e_status;
+        appl_context_service::s_create(
+            p_context_descriptor,
+            r_context);
 
 } /* appl_context_create() */
 
+/*
+
+*/
 struct appl_object *
 appl_context_parent(
     struct appl_context * const
         p_context)
 {
     return
-        p_context;
+        appl_context_service::s_parent(
+            p_context);
 
 } /* parent() */
 
+/*
+
+*/
 struct appl_object const *
 appl_context_const_parent(
     struct appl_context const * const
         p_context)
 {
     return
-        p_context;
+        appl_context_service::s_const_parent(
+            p_context);
 
 } /* const_parent() */
 

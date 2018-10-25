@@ -8,8 +8,6 @@
 
 #include <appl_address_property.h>
 
-#include <appl_object_handle.h>
-
 #include <appl_property_handle.h>
 
 #include <appl_buf.h>
@@ -197,8 +195,7 @@ appl_address_property_destroy(
         p_address_property)
 {
     return
-        appl_object_destroy(
-            p_address_property);
+        p_address_property->v_destroy();
 
 } /* destroy() */
 

@@ -28,8 +28,6 @@
 
 #include <appl_object_handle.h>
 
-#include <appl_context_handle.h>
-
 #include <appl_string_handle.h>
 
 #include <appl_convert.h>
@@ -168,15 +166,14 @@ enum appl_status
                     r_string) =
                     p_string;
 
-#if 0
                 if (
                     appl_status_ok
                     != e_status)
                 {
                     appl_object_destroy(
-                        p_string);
+                        appl_string_parent(
+                            p_string));
                 }
-#endif
             }
         }
         else

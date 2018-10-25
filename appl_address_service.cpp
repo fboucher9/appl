@@ -91,6 +91,32 @@ appl_address_service::s_create(
 //
 //
 //
+struct appl_object *
+appl_address_service::s_parent(
+    struct appl_address * const
+        p_address)
+{
+    return
+        p_address;
+
+} // s_parent()
+
+//
+//
+//
+struct appl_object const *
+appl_address_service::s_const_parent(
+    struct appl_address const * const
+        p_address)
+{
+    return
+        p_address;
+
+} // s_const_parent()
+
+//
+//
+//
 enum appl_status
 appl_address_service::s_get_name_len(
     struct appl_address const * const

@@ -18,8 +18,6 @@
 
 #include <appl_status.h>
 
-#include <appl_object_handle.h>
-
 #include <appl_context_handle.h>
 
 #include <appl_buf.h>
@@ -547,7 +545,7 @@ enum appl_status
 
     e_status =
         appl_clock_std::s_create(
-            m_heap,
+            m_allocator,
             &(
                 m_clock));
 
@@ -555,7 +553,7 @@ enum appl_status
 
     e_status =
         appl_clock_w32::s_create(
-            m_heap,
+            m_allocator,
             &(
                 m_clock));
 
@@ -613,7 +611,7 @@ enum appl_status
     {
         e_status =
             appl_event_std_mgr::s_create(
-                m_heap,
+                m_allocator,
                 &(
                     m_event_mgr));
 
@@ -671,7 +669,7 @@ enum appl_status
 
         e_status =
             appl_socket_std_mgr::s_create(
-                m_heap,
+                m_allocator,
                 &(
                     m_socket_mgr));
 
@@ -679,7 +677,7 @@ enum appl_status
 
         e_status =
             appl_socket_w32_mgr::s_create(
-                m_heap,
+                m_allocator,
                 &(
                     m_socket_mgr));
 
@@ -744,13 +742,13 @@ enum appl_status
 #if defined APPL_OS_LINUX
         e_status =
             appl_env_std::s_create(
-                m_heap,
+                m_allocator,
                 &(
                     m_env));
 #elif defined APPL_OS_WINDOWS
         e_status =
             appl_env_w32::s_create(
-                m_heap,
+                m_allocator,
                 &(
                     m_env));
 #else /* #if defined APPL_OS_Xx */
@@ -868,13 +866,13 @@ enum appl_status
 #if defined APPL_OS_LINUX
         e_status =
             appl_random_std_mgr::s_create(
-                m_heap,
+                m_allocator,
                 &(
                     m_random_mgr));
 #elif defined APPL_OS_WINDOWS
         e_status =
             appl_random_w32_mgr::s_create(
-                m_heap,
+                m_allocator,
                 &(
                     m_random_mgr));
 #else /* #if defined APPL_OS_LINUX */
@@ -937,7 +935,7 @@ enum appl_status
 
         e_status =
             appl_log_std::s_create(
-                m_heap,
+                m_allocator,
                 &(
                     p_log_std));
 
@@ -996,7 +994,7 @@ enum appl_status
     {
         e_status =
             appl_pool_mgr::s_create(
-                m_heap,
+                m_allocator,
                 &(
                     m_pool_mgr));
 

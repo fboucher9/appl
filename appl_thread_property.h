@@ -11,11 +11,6 @@
 
 #define INC_APPL_THREAD_PROPERTY_H
 
-/* Header file dependency */
-#if ! defined INC_APPL_PROPERTY_HANDLE_H
-#error include appl_property_handle.h before appl_thread_property.h
-#endif /* #if ! defined INC_APPL_PROPERTY_HANDLE_H */
-
 struct appl_context;
 
 struct appl_property;

@@ -8,8 +8,6 @@
 
 #include <appl_socket_descriptor.h>
 
-#include <appl_object_handle.h>
-
 #include <appl_property_handle.h>
 
 #include <appl_types.h>
@@ -161,8 +159,7 @@ appl_socket_property_destroy(
         p_socket_property)
 {
     return
-        appl_object_destroy(
-            p_socket_property);
+        p_socket_property->v_destroy();
 
 } /* destroy() */
 

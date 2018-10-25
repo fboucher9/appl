@@ -10,8 +10,6 @@
 
 #include <appl_env_service.h>
 
-#include <appl_object_handle.h>
-
 #include <appl_string_handle.h>
 
 /*

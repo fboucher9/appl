@@ -11,11 +11,6 @@
 
 #define INC_APPL_POLL_HANDLE_H
 
-/* Header file dependency */
-#if ! defined INC_APPL_OBJECT_HANDLE_H
-#error include appl_object_handle.h before
-#endif /* #if ! defined INC_APPL_OBJECT_HANDLE_H */
-
 struct appl_poll_descriptor;
 
 struct appl_poll;

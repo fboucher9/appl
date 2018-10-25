@@ -6,17 +6,9 @@
 
 #include <appl_status.h>
 
-#include <appl_object_handle.h>
-
 #include <appl_file_handle.h>
 
 #include <appl_file_service.h>
-
-#include <appl_types.h>
-
-#include <appl_object.h>
-
-#include <appl_file_node.h>
 
 /*
 
@@ -44,7 +36,8 @@ appl_file_parent(
         p_file)
 {
     return
-        p_file;
+        appl_file_service::s_parent(
+            p_file);
 
 }
 
@@ -54,7 +47,8 @@ appl_file_const_parent(
         p_file)
 {
     return
-        p_file;
+        appl_file_service::s_const_parent(
+            p_file);
 
 }
 

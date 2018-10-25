@@ -34,8 +34,6 @@
 
 #include <appl_context.h>
 
-#include <appl_heap.h>
-
 struct appl_pool_std_descriptor
 {
     appl_size_t
@@ -159,7 +157,7 @@ enum appl_status
             p_node,
             p_node);
 
-        m_context->m_heap->v_free(
+        m_context->m_allocator->v_free(
             m_buf_len,
             p_node);
     }
@@ -241,7 +239,7 @@ enum appl_status
         {
             // allocate new item
             e_status =
-                m_context->m_heap->v_alloc(
+                m_context->m_allocator->v_alloc(
                     m_buf_len,
                     &(
                         p_buf));

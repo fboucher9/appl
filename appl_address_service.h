@@ -55,6 +55,18 @@ class appl_address_service
             struct appl_address * * const
                 r_address);
 
+        static
+        struct appl_object *
+        s_parent(
+            struct appl_address * const
+                p_address);
+
+        static
+        struct appl_object const *
+        s_const_parent(
+            struct appl_address const * const
+                p_address);
+
         // Get length of address
         static
         enum appl_status

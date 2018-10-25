@@ -8,9 +8,7 @@
 
 #include <appl_object_handle.h>
 
-#include <appl_types.h>
-
-#include <appl_object.h>
+#include <appl_object_service.h>
 
 /*
 
@@ -21,7 +19,8 @@ appl_object_destroy(
         p_object)
 {
     return
-        p_object->v_destroy();
+        appl_object_service::s_destroy(
+            p_object);
 
 } /* appl_object_destroy() */
 
@@ -34,7 +33,8 @@ appl_object_get_context(
         p_object)
 {
     return
-        p_object->get_context();
+        appl_object_service::s_get_context(
+            p_object);
 
 } /* appl_object_get_context() */
 

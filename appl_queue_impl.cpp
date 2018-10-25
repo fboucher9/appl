@@ -6,8 +6,6 @@
 
 #include <appl_status.h>
 
-#include <appl_object_handle.h>
-
 #include <appl_queue_handle.h>
 
 #include <appl_mutex_handle.h>
@@ -106,9 +104,7 @@ enum appl_status
                 appl_status_ok
                 != e_status)
             {
-                appl_object_destroy(
-                    appl_event_parent(
-                        m_event));
+                m_event->v_destroy();
             }
         }
 
@@ -116,9 +112,7 @@ enum appl_status
             appl_status_ok
             != e_status)
         {
-            appl_object_destroy(
-                appl_mutex_parent(
-                    m_lock));
+            m_lock->v_destroy();
         }
     }
 
@@ -138,13 +132,9 @@ enum appl_status
 
     // Free all nodes?
 
-    appl_object_destroy(
-        appl_event_parent(
-            m_event));
+    m_event->v_destroy();
 
-    appl_object_destroy(
-        appl_mutex_parent(
-            m_lock));
+    m_lock->v_destroy();
 
     e_status =
         appl_status_ok;

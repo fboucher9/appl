@@ -46,6 +46,18 @@ class appl_file_service
                     r_file);
 
         static
+        struct appl_object *
+        s_parent(
+            struct appl_file * const
+                p_file);
+
+        static
+        struct appl_object const *
+        s_const_parent(
+            struct appl_file const * const
+                p_file);
+
+        static
         enum appl_status
             s_read(
                 struct appl_file * const

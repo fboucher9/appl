@@ -53,7 +53,7 @@ struct appl_property_std : public appl_property
                 struct appl_allocator * const
                     p_allocator,
                 unsigned int const
-                    i_id,
+                    i_count,
                 struct appl_property * * const
                     r_property);
 
@@ -75,8 +75,15 @@ struct appl_property_std : public appl_property
 
     private:
 
-        struct appl_property_node *
-            a_nodes;
+        // --
+
+        union appl_property_value *
+            a_values;
+
+        unsigned char *
+            a_types;
+
+        // --
 
         unsigned int
             m_count;
@@ -84,11 +91,18 @@ struct appl_property_std : public appl_property
         unsigned int
             ui_padding[3u];
 
-        bool
-            b_nodes_allocated;
+        // --
 
         bool
-            ab_padding[7u];
+            b_values_allocated;
+
+        bool
+            b_types_allocated;
+
+        bool
+            ab_padding[6u];
+
+        // --
 
         appl_property_std(
             struct appl_property_std const & r);

@@ -26,8 +26,6 @@
 
 #include <appl_object_handle.h>
 
-#include <appl_context_handle.h>
-
 #include <appl_string_handle.h>
 
 #include <appl_buf.h>

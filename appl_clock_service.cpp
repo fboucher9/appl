@@ -16,8 +16,6 @@
 
 #include <appl_context.h>
 
-#include <appl_object_handle.h>
-
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler

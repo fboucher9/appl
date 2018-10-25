@@ -26,8 +26,6 @@
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
-
 #include <appl_buf.h>
 
 #include <appl_buf0.h>
@@ -81,14 +79,14 @@ enum appl_status
 
     e_status =
         appl_library_std_mgr::s_create(
-            p_context->m_heap,
+            p_context->m_allocator,
             r_library_mgr);
 
 #elif defined APPL_OS_WINDOWS
 
     e_status =
         appl_library_w32_mgr::s_create(
-            p_context->m_heap,
+            p_context->m_allocator,
             r_library_mgr);
 
 #else /* #if definde APPL_OS_Xx */

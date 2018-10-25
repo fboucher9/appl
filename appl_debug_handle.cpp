@@ -18,8 +18,6 @@
 
 #include <appl_debug.h>
 
-#include <appl_object_handle.h>
-
 #include <appl_buf.h>
 
 #include <appl_buf0.h>
@@ -118,8 +116,7 @@ appl_debug_break(
 
     struct appl_context * const
         p_context =
-        appl_object_get_context(
-            p_object);
+        p_object->get_context();
 
     e_status =
         appl_debug_service::s_break(
@@ -147,8 +144,7 @@ appl_debug_print(
 
     struct appl_context * const
         p_context =
-        appl_object_get_context(
-            p_object);
+        p_object->get_context();
 
     e_status =
         appl_debug_service::s_print(

@@ -6,21 +6,13 @@
 
 #include <appl_status.h>
 
-#include <appl_object_handle.h>
-
 #include <appl_string_handle.h>
 
 #include <appl_string_service.h>
 
-#include <appl_types.h>
-
-#include <appl_object.h>
-
-#include <appl_string.h>
+#include <appl_object_service.h>
 
 #include <appl_buf.h>
-
-#include <appl_context.h>
 
 /*
 
@@ -126,8 +118,9 @@ appl_string_create_dup_buffer_n(
         }
         else
         {
-            appl_object_destroy(
-                p_string);
+            appl_object_service::s_destroy(
+                appl_string_service::s_parent(
+                    p_string));
         }
     }
 
@@ -166,7 +159,8 @@ appl_string_create_dup_object(
     {
         e_status =
             appl_string_create_dup_buffer(
-                p_ref_string,
+                appl_string_service::s_const_parent(
+                    p_ref_string),
                 p_buf_min,
                 p_buf_max,
                 r_string);
@@ -209,7 +203,8 @@ appl_string_create_dup_object_n(
     {
         e_status =
             appl_string_create_dup_buffer_n(
-                p_ref_string,
+                appl_string_service::s_const_parent(
+                    p_ref_string),
                 p_buf_min,
                 p_buf_max,
                 i_count,
@@ -227,7 +222,8 @@ appl_string_parent(
         p_string)
 {
     return
-        p_string;
+        appl_string_service::s_parent(
+            p_string);
 
 }
 
@@ -237,7 +233,8 @@ appl_string_const_parent(
         p_string)
 {
     return
-        p_string;
+        appl_string_service::s_const_parent(
+            p_string);
 
 }
 

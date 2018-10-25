@@ -16,15 +16,9 @@
 
 #include <appl_string.h>
 
-#include <appl_object_handle.h>
-
-#include <appl_string_handle.h>
-
 #include <appl_context.h>
 
 #include <appl_allocator.h>
-
-#include <appl_heap.h>
 
 //
 //
@@ -44,11 +38,37 @@ appl_string_service::s_create(
 
     return
         appl_string::s_create(
-            p_context->m_heap,
+            p_context->m_allocator,
             i_alloc_len,
             r_string);
 
 } // s_create()
+
+//
+//
+//
+struct appl_object *
+appl_string_service::s_parent(
+    struct appl_string * const
+        p_string)
+{
+    return
+        p_string;
+
+} // s_parent()
+
+//
+//
+//
+struct appl_object const *
+appl_string_service::s_const_parent(
+    struct appl_string const * const
+        p_string)
+{
+    return
+        p_string;
+
+} // s_const_parent()
 
 //
 //

@@ -16,8 +16,6 @@
 
 #include <appl_context.h>
 
-#include <appl_object_handle.h>
-
 //
 //
 //
@@ -37,8 +35,7 @@ appl_env_service::s_get(
 
     struct appl_context * const
         p_context =
-        appl_object_get_context(
-            p_object);
+        p_object->get_context();
 
     class appl_env * const
         p_env =
@@ -76,8 +73,7 @@ appl_env_service::s_set(
 
     struct appl_context * const
         p_context =
-        appl_object_get_context(
-            p_object);
+        p_object->get_context();
 
     class appl_env * const
         p_env =

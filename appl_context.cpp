@@ -12,8 +12,6 @@
 
 #include <appl_context.h>
 
-#include <appl_object_handle.h>
-
 //
 //
 //
@@ -58,8 +56,7 @@ appl_context::from_object_handle(
         p_object)
 {
     return
-        appl_object_get_context(
-            p_object);
+        p_object->get_context();
 
 } // from_object_handle()
 

@@ -6,8 +6,6 @@
 
 #include <appl_status.h>
 
-#include <appl_object_handle.h>
-
 #include <appl_mutex_handle.h>
 
 #include <appl_mutex_service.h>

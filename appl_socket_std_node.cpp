@@ -24,8 +24,6 @@
 
 #include <appl_object.h>
 
-#include <appl_object_handle.h>
-
 #include <appl_socket_descriptor.h>
 
 #include <appl_socket_node.h>
@@ -857,9 +855,7 @@ appl_socket_std_node::v_accept(
                 appl_status_ok
                 != e_status)
             {
-                appl_object_destroy(
-                    appl_address_parent(
-                        p_address));
+                p_address->v_destroy();
             }
         }
 

@@ -6,17 +6,9 @@
 
 #include <appl_status.h>
 
-#include <appl_object_handle.h>
-
 #include <appl_address_handle.h>
 
 #include <appl_address_service.h>
-
-#include <appl_types.h>
-
-#include <appl_object.h>
-
-#include <appl_address_node.h>
 
 /*
 
@@ -44,7 +36,8 @@ appl_address_parent(
         p_address)
 {
     return
-        p_address;
+        appl_address_service::s_parent(
+            p_address);
 
 }
 
@@ -54,7 +47,8 @@ appl_address_const_parent(
         p_address)
 {
     return
-        p_address;
+        appl_address_service::s_const_parent(
+            p_address);
 
 }
 

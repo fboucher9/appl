@@ -31,6 +31,7 @@ appl_base-deps := \
     appl_clock_w32.cpp \
     appl_context.cpp \
     appl_context_handle.cpp \
+    appl_context_service.cpp \
     appl_context_std.cpp \
     appl_crc16.cpp \
     appl_debug.cpp \
@@ -87,6 +88,7 @@ appl_base-deps := \
     appl_node_iterator.cpp \
     appl_object.cpp \
     appl_object_handle.cpp \
+    appl_object_service.cpp \
     appl_options.cpp \
     appl_options_std.cpp \
     appl_options_handle.cpp \
