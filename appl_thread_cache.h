@@ -15,6 +15,8 @@ struct appl_context;
 
 struct appl_thread_property;
 
+struct appl_thread_descriptor;
+
 struct appl_thread_cache;
 
 struct appl_thread;
@@ -29,6 +31,8 @@ enum appl_status
             p_context,
         struct appl_thread_property const * const
             p_property,
+        struct appl_thread_descriptor const * const
+            p_descriptor,
         struct appl_thread_cache * * const
             r_thread_cache);
 

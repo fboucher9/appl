@@ -37,12 +37,6 @@ struct appl_thread : public appl_object
 
         virtual
         enum appl_status
-            v_start(
-                struct appl_thread_descriptor const * const
-                    p_thread_descriptor);
-
-        virtual
-        enum appl_status
             v_interrupt(void);
 
     protected:

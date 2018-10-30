@@ -36,6 +36,8 @@ appl_thread_service::s_create(
         p_object,
     struct appl_thread_property const * const
         p_thread_property,
+    struct appl_thread_descriptor const * const
+        p_thread_descriptor,
     struct appl_thread * * const
         r_thread)
 {
@@ -56,6 +58,7 @@ appl_thread_service::s_create(
     e_status =
         p_thread_mgr->v_create(
             p_thread_property,
+            p_thread_descriptor,
             &(
                 p_thread_node));
 
@@ -97,28 +100,6 @@ appl_thread_service::s_convert(
         p_thread;
 
 }
-
-//
-//
-//
-enum appl_status
-appl_thread_service::s_start(
-    struct appl_thread * const
-        p_thread,
-    struct appl_thread_descriptor const * const
-        p_thread_descriptor)
-{
-    enum appl_status
-        e_status;
-
-    e_status =
-        p_thread->v_start(
-            p_thread_descriptor);
-
-    return
-        e_status;
-
-} // s_start()
 
 //
 //

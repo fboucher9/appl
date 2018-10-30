@@ -19,6 +19,8 @@ appl_thread_create(
         p_object,
     struct appl_thread_property const * const
         p_thread_property,
+    struct appl_thread_descriptor const * const
+        p_thread_descriptor,
     struct appl_thread * * const
         r_thread)
 {
@@ -26,6 +28,7 @@ appl_thread_create(
         appl_thread_service::s_create(
             p_object,
             p_thread_property,
+            p_thread_descriptor,
             r_thread);
 
 } /* appl_thread_create() */
@@ -51,23 +54,6 @@ appl_thread_const_parent(
             p_thread);
 
 } /* const_parent() */
-
-/*
-
-*/
-enum appl_status
-appl_thread_start(
-    struct appl_thread * const
-        p_thread,
-    struct appl_thread_descriptor const * const
-        p_thread_descriptor)
-{
-    return
-        appl_thread_service::s_start(
-            p_thread,
-            p_thread_descriptor);
-
-} /* appl_thread_start() */
 
 /*
 

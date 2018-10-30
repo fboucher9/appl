@@ -22,11 +22,14 @@ enum appl_status
     appl_thread_mgr::v_create(
         struct appl_thread_property const * const
             p_thread_property,
+        struct appl_thread_descriptor const * const
+            p_thread_descriptor,
         struct appl_thread * * const
             r_thread)
 {
     appl_unused(
         p_thread_property,
+        p_thread_descriptor,
         r_thread);
     return
         appl_status_fail;

@@ -28,6 +28,9 @@ struct appl_thread_property;
 #error include appl_thread_node.h before
 #endif /* #if !defined(INC_APPL_THREAD_NODE_H) */
 
+/* Predefine */
+struct appl_thread_std_node_descriptor;
+
 /* Header file dependency */
 #if ! defined INC_APPL_THREAD_IMPL_H
 #error include appl_thread_impl.h before
@@ -50,6 +53,8 @@ class appl_thread_std_node : public appl_thread
                     p_allocator,
                 struct appl_thread_property const * const
                     p_thread_property,
+                struct appl_thread_descriptor const * const
+                    p_thread_descriptor,
                 struct appl_thread * * const
                     r_thread);
 
@@ -60,16 +65,10 @@ class appl_thread_std_node : public appl_thread
 
         enum appl_status
             f_init(
-                struct appl_thread_property const * const
-                    p_thread_property);
+                struct appl_thread_std_node_descriptor const * const
+                    p_thread_std_node_descriptor);
 
     protected:
-
-        virtual
-        enum appl_status
-            v_start(
-                struct appl_thread_descriptor const * const
-                    p_thread_descriptor);
 
         virtual
         enum appl_status

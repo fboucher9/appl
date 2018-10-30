@@ -40,6 +40,8 @@ class appl_thread_service
                 p_object,
             struct appl_thread_property const * const
                 p_thread_property,
+            struct appl_thread_descriptor const * const
+                p_thread_descriptor,
             struct appl_thread * * const
                 r_thread);
 
@@ -54,14 +56,6 @@ class appl_thread_service
         s_convert(
             struct appl_thread const * const
                 p_thread);
-
-        static
-        enum appl_status
-        s_start(
-            struct appl_thread * const
-                p_thread,
-            struct appl_thread_descriptor const * const
-                p_thread_descriptor);
 
         static
         enum appl_status

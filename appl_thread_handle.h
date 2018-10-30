@@ -31,6 +31,8 @@ appl_thread_create(
         p_object,
     struct appl_thread_property const * const
         p_thread_property,
+    struct appl_thread_descriptor const * const
+        p_thread_descriptor,
     struct appl_thread * * const
         r_thread);
 
@@ -43,27 +45,6 @@ struct appl_object const *
 appl_thread_const_parent(
     struct appl_thread const * const
         p_thread);
-
-enum appl_status
-appl_thread_start(
-    struct appl_thread * const
-        p_thread,
-    struct appl_thread_descriptor const * const
-        p_thread_descriptor);
-
-enum appl_status
-appl_thread_detach(
-    struct appl_thread * const
-        p_thread);
-
-enum appl_status
-appl_thread_stop(
-    struct appl_thread * const
-        p_thread,
-    unsigned long int const
-        i_wait_freq,
-    unsigned long int const
-        i_wait_count);
 
 enum appl_status
 appl_thread_interrupt(

@@ -83,6 +83,8 @@ class appl_thread_std_mgr :
             v_create(
                 struct appl_thread_property const * const
                     p_thread_property,
+                struct appl_thread_descriptor const * const
+                    p_thread_descriptor,
                 struct appl_thread * * const
                     r_thread);
 

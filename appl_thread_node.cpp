@@ -23,20 +23,6 @@
 //
 //
 enum appl_status
-    appl_thread::v_start(
-        struct appl_thread_descriptor const * const
-            p_thread_descriptor)
-{
-    appl_unused(
-        p_thread_descriptor);
-    return
-        appl_status_fail;
-} // v_start()
-
-//
-//
-//
-enum appl_status
     appl_thread::v_interrupt(void)
 {
     return

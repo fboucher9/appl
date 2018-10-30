@@ -48,7 +48,9 @@ appl_thread_impl::~appl_thread_impl()
 enum appl_status
     appl_thread_impl::f_init(
         struct appl_thread_property const * const
-            p_thread_property)
+            p_thread_property,
+        struct appl_thread_descriptor const * const
+            p_thread_descriptor)
 {
     enum appl_status
         e_status;
@@ -56,55 +58,9 @@ enum appl_status
     appl_unused(
         p_thread_property);
 
-    e_status =
-        appl_status_ok;
-
-    return
-        e_status;
-
-} // f_init()
-
-//
-//
-//
-enum appl_status
-    appl_thread_impl::f_cleanup(void)
-{
-    enum appl_status
-        e_status;
-
-    e_status =
-        appl_status_ok;
-
-    return
-        e_status;
-
-} // f_cleanup()
-
-union appl_thread_impl_callback_ptr
-{
-    void *
-        p_thread_context;
-
-    class appl_thread_impl *
-        p_thread_impl;
-
-};
-
-//
-//
-//
-enum appl_status
-    appl_thread_impl::f_start(
-        struct appl_thread_descriptor const * const
-            p_descriptor)
-{
-    enum appl_status
-        e_status;
-
     m_descriptor =
         *(
-            p_descriptor);
+            p_thread_descriptor);
 
 #if defined APPL_OS_LINUX
     int
@@ -193,10 +149,40 @@ enum appl_status
 
 #endif /* #if defined APPL_OS_Xx */
 
+    e_status =
+        appl_status_ok;
+
     return
         e_status;
 
-} // f_start()
+} // f_init()
+
+//
+//
+//
+enum appl_status
+    appl_thread_impl::f_cleanup(void)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // f_cleanup()
+
+union appl_thread_impl_callback_ptr
+{
+    void *
+        p_thread_context;
+
+    class appl_thread_impl *
+        p_thread_impl;
+
+};
 
 #if defined APPL_OS_LINUX
 

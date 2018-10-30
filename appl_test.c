@@ -19,6 +19,11 @@
 
 #include <appl_pool_test.h>
 
+void
+appl_thread_cache_test(
+    struct appl_context * const
+        p_context);
+
 static
 void
 appl_print(
@@ -764,6 +769,9 @@ static void appl_test_thread(
     struct appl_test_thread_context
         o_test_thread_context;
 
+    struct appl_thread_descriptor
+        o_thread_descriptor;
+
     o_queue_descriptor.i_max_count =
         1;
 
@@ -792,11 +800,21 @@ static void appl_test_thread(
         &(
             p_property));
 
+    o_thread_descriptor.p_entry =
+        &(
+            appl_test_thread_entry);
+
+    o_thread_descriptor.p_context =
+        &(
+            o_test_thread_context);
+
     e_status =
         appl_thread_create(
             appl_context_parent(
                 p_context),
             p_property,
+            &(
+                o_thread_descriptor),
             &(
                 p_thread));
 
@@ -804,79 +822,57 @@ static void appl_test_thread(
         appl_status_ok
         == e_status)
     {
-        struct appl_thread_descriptor
-            o_thread_descriptor;
+        char
+            b_continue;
 
-        o_thread_descriptor.p_entry =
-            &(
-                appl_test_thread_entry);
+        appl_test_sleep_msec(
+            p_context,
+            200ul);
 
-        o_thread_descriptor.p_context =
-            &(
-                o_test_thread_context);
+        b_continue =
+            1;
 
-        e_status =
-            appl_thread_start(
-                p_thread,
-                &(
-                    o_thread_descriptor));
-
-        if (
-            appl_status_ok
-            == e_status)
+        while (
+            b_continue)
         {
-            char
-                b_continue;
+            struct appl_list *
+                p_dummy_result;
 
-            appl_test_sleep_msec(
-                p_context,
-                200ul);
-
-            b_continue =
+            /* Use interrupt to stop the sleep */
+            o_test_thread_context.b_kill =
                 1;
 
-            while (
-                b_continue)
-            {
-                struct appl_list *
-                    p_dummy_result;
+            appl_print0("interrupt thread\n");
 
-                /* Use interrupt to stop the sleep */
-                o_test_thread_context.b_kill =
-                    1;
+            e_status =
+                appl_thread_interrupt(
+                    p_thread);
 
-                appl_print0("interrupt thread\n");
-
-                e_status =
-                    appl_thread_interrupt(
-                        p_thread);
-
-                e_status =
-                    appl_queue_pop(
-                        p_queue,
-                        &(
-                            p_dummy_result),
-                        1000ul,
-                        1000ul);
-
-                if (
-                    appl_status_ok
-                    == e_status)
-                {
-                    b_continue =
-                        0;
-                }
-                else
-                {
-                    appl_print0("queue pop timeout\n");
-                }
-            }
+            e_status =
+                appl_queue_pop(
+                    p_queue,
+                    &(
+                        p_dummy_result),
+                    1000ul,
+                    1000ul);
 
             if (
                 appl_status_ok
                 == e_status)
             {
+                b_continue =
+                    0;
             }
+            else
+            {
+                appl_print0("queue pop timeout\n");
+            }
+        }
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
         }
 
         appl_object_destroy(
@@ -1169,11 +1165,23 @@ appl_test_socket_process_client(
             appl_status_ok
             == e_status)
         {
+            struct appl_thread_descriptor
+                o_thread_descriptor;
+
+            o_thread_descriptor.p_entry =
+                &(
+                    appl_test_socket_connection_thread_entry);
+
+            o_thread_descriptor.p_context =
+                p_test_socket_connection_context;
+
             e_status =
                 appl_thread_create(
                     appl_context_parent(
                         p_context),
                     p_thread_property,
+                    &(
+                        o_thread_descriptor),
                     &(
                         p_test_socket_connection_context->p_thread));
 
@@ -1181,29 +1189,8 @@ appl_test_socket_process_client(
                 appl_status_ok
                 == e_status)
             {
-                struct appl_thread_descriptor
-                    o_thread_descriptor;
-
-                o_thread_descriptor.p_entry =
-                    &(
-                        appl_test_socket_connection_thread_entry);
-
-                o_thread_descriptor.p_context =
-                    p_test_socket_connection_context;
-
-                e_status =
-                    appl_thread_start(
-                        p_test_socket_connection_context->p_thread,
-                        &(
-                            o_thread_descriptor));
-
-                if (
-                    appl_status_ok
-                    == e_status)
-                {
-                    b_free_connection_context =
-                        0;
-                }
+                b_free_connection_context =
+                    0;
 
                 if (
                     b_free_connection_context)
@@ -2763,6 +2750,12 @@ appl_main(
         appl_print0(
             "\n");
 
+    }
+
+    if (1)
+    {
+        appl_thread_cache_test(
+            p_context);
     }
 
     e_status =

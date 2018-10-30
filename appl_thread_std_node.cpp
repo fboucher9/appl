@@ -36,6 +36,19 @@
 
 #include <appl_unused.h>
 
+/*
+
+*/
+struct appl_thread_std_node_descriptor
+{
+    struct appl_thread_property const *
+        p_thread_property;
+
+    struct appl_thread_descriptor const *
+        p_thread_descriptor;
+
+}; /* struct appl_thread_std_node_descriptor */
+
 //
 //
 //
@@ -45,6 +58,8 @@ enum appl_status
             p_allocator,
         struct appl_thread_property const * const
             p_thread_property,
+        struct appl_thread_descriptor const * const
+            p_thread_descriptor,
         struct appl_thread * * const
             r_thread)
 {
@@ -54,9 +69,19 @@ enum appl_status
     class appl_thread_std_node *
         p_thread_std_node;
 
+    struct appl_thread_std_node_descriptor
+        o_thread_std_node_descriptor;
+
+    o_thread_std_node_descriptor.p_thread_property =
+        p_thread_property;
+
+    o_thread_std_node_descriptor.p_thread_descriptor =
+        p_thread_descriptor;
+
     e_status =
         p_allocator->alloc_object(
-            p_thread_property,
+            &(
+                o_thread_std_node_descriptor),
             &(
                 p_thread_std_node));
 
@@ -94,26 +119,6 @@ appl_thread_std_node::~appl_thread_std_node()
 //
 //
 enum appl_status
-appl_thread_std_node::v_start(
-    struct appl_thread_descriptor const * const
-        p_thread_descriptor)
-{
-    enum appl_status
-        e_status;
-
-    e_status =
-        m_thread_impl.f_start(
-            p_thread_descriptor);
-
-    return
-        e_status;
-
-} // v_start()
-
-//
-//
-//
-enum appl_status
     appl_thread_std_node::v_interrupt(void)
 {
     enum appl_status
@@ -132,15 +137,16 @@ enum appl_status
 //
 enum appl_status
     appl_thread_std_node::f_init(
-        struct appl_thread_property const * const
-            p_thread_property)
+        struct appl_thread_std_node_descriptor const * const
+            p_thread_std_node_property)
 {
     enum appl_status
         e_status;
 
     e_status =
         m_thread_impl.f_init(
-            p_thread_property);
+            p_thread_std_node_property->p_thread_property,
+            p_thread_std_node_property->p_thread_descriptor);
 
     return
         e_status;
@@ -185,6 +191,8 @@ enum appl_status
             p_allocator,
         struct appl_thread_property const * const
             p_thread_property,
+        struct appl_thread_descriptor const * const
+            p_thread_descriptor,
         struct appl_thread * * const
             r_thread);
 
@@ -197,6 +205,8 @@ enum appl_status
             p_allocator,
         struct appl_thread_property const * const
             p_thread_property,
+        struct appl_thread_descriptor const * const
+            p_thread_descriptor,
         struct appl_thread * * const
             r_thread)
 {
@@ -204,6 +214,7 @@ enum appl_status
         appl_thread_std_node::s_create(
             p_allocator,
             p_thread_property,
+            p_thread_descriptor,
             r_thread);
 
 } /* appl_thread_std_node_create() */

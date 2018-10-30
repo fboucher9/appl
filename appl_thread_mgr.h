@@ -40,6 +40,8 @@ class appl_thread_mgr : public appl_object
             v_create(
                 struct appl_thread_property const * const
                     p_thread_property,
+                struct appl_thread_descriptor const * const
+                    p_thread_descriptor,
                 struct appl_thread * * const
                     r_thread);
 
