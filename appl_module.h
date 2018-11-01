@@ -103,11 +103,17 @@ struct appl_file_source_module : public appl_module
 
     private:
 
+        // --
+
         struct appl_file_source_module_descriptor
             m_file_source_descriptor;
 
+        // --
+
         unsigned char
             m_chunk[256u];
+
+        // --
 
         appl_file_source_module(
             struct appl_file_source_module const & r);
@@ -170,6 +176,31 @@ struct appl_hex_convert_module : public appl_module
 
     private:
 
+        // --
+
+        struct appl_hex_convert_module_descriptor
+            m_hex_convert_descriptor;
+
+        // --
+
+        unsigned long int
+            m_offset;
+
+        unsigned long int
+            m_count;
+
+        // --
+
+        unsigned char
+            m_columns[16u];
+
+        // --
+
+        unsigned char
+            m_line_buffer[80u];
+
+        // --
+
         appl_hex_convert_module(
             struct appl_hex_convert_module const & r);
 
@@ -192,6 +223,9 @@ struct appl_hex_convert_module : public appl_module
             v_pull(
                 struct appl_packet * * const
                     r_packet);
+
+        enum appl_status
+            f_flush(void);
 
 }; // struct appl_hex_convert_module
 
@@ -231,8 +265,12 @@ struct appl_file_sink_module : public appl_module
 
     private:
 
+        // --
+
         struct appl_file_sink_module_descriptor
             m_file_sink_descriptor;
+
+        // --
 
         appl_file_sink_module(
             struct appl_file_sink_module const & r);
@@ -295,8 +333,12 @@ struct appl_custom_module : public appl_module
 
     private:
 
+        // --
+
         struct appl_custom_module_descriptor
             m_custom_module_descriptor;
+
+        // --
 
         appl_custom_module(
             struct appl_custom_module const & r);

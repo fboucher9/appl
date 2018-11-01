@@ -725,6 +725,10 @@ appl_buf_print_number(
     {
         i_width = (i_width - i_count - b_sign);
     }
+    else
+    {
+        i_width = 0;
+    }
 
     /* space padding for right align */
     {

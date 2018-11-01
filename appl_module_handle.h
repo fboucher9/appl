@@ -26,6 +26,8 @@ struct appl_packet;
 
 #define APPL_PACKET_TYPE_TEXT (2ul)
 
+#define APPL_PACKET_TYPE_FLUSH (3ul)
+
 /*
 
 */
@@ -124,8 +126,27 @@ appl_file_source_module_step(
 
 struct appl_hex_convert_module;
 
+/*
+
+*/
 struct appl_hex_convert_module_descriptor
 {
+    struct appl_module *
+        p_sink;
+
+    void *
+        pv_padding[1u];
+
+    /* -- */
+
+    unsigned long int
+        i_offset;
+
+    unsigned long int
+        ul_padding[1u];
+
+    /* -- */
+
     unsigned short int
         i_columns;
 

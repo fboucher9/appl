@@ -117,41 +117,75 @@ appl_module_test_1(
                 appl_status_ok
                 == e_status)
             {
-                struct appl_file_source_module *
-                    p_file_source_module;
+                struct appl_hex_convert_module *
+                    p_hex_convert_module;
 
-                struct appl_file_source_module_descriptor
-                    o_file_source_module_descriptor;
+                struct appl_hex_convert_module_descriptor
+                    o_hex_convert_module_descriptor;
 
-                o_file_source_module_descriptor.p_sink =
+                o_hex_convert_module_descriptor.p_sink =
                     appl_file_sink_module_parent(
                         p_file_sink_module);
 
-                o_file_source_module_descriptor.p_file =
-                    p_source_file;
+                o_hex_convert_module_descriptor.i_offset =
+                    0xDEADB000ul;
 
-                /* Create source module */
+                o_hex_convert_module_descriptor.i_columns =
+                    8u;
+
                 e_status =
-                    appl_file_source_module_create(
+                    appl_hex_convert_module_create(
                         p_context,
                         &(
-                            o_file_source_module_descriptor),
+                            o_hex_convert_module_descriptor),
                         &(
-                            p_file_source_module));
+                            p_hex_convert_module));
 
                 if (
                     appl_status_ok
                     == e_status)
                 {
-                    /* Send a packet to the module */
+                    struct appl_file_source_module *
+                        p_file_source_module;
+
+                    struct appl_file_source_module_descriptor
+                        o_file_source_module_descriptor;
+
+                    o_file_source_module_descriptor.p_sink =
+                        appl_hex_convert_module_parent(
+                            p_hex_convert_module);
+
+                    o_file_source_module_descriptor.p_file =
+                        p_source_file;
+
+                    /* Create source module */
                     e_status =
-                        appl_file_source_module_step(
-                            p_file_source_module);
+                        appl_file_source_module_create(
+                            p_context,
+                            &(
+                                o_file_source_module_descriptor),
+                            &(
+                                p_file_source_module));
+
+                    if (
+                        appl_status_ok
+                        == e_status)
+                    {
+                        /* Send a packet to the module */
+                        e_status =
+                            appl_file_source_module_step(
+                                p_file_source_module);
+
+                        appl_object_destroy(
+                            appl_module_parent(
+                                appl_file_source_module_parent(
+                                    p_file_source_module)));
+                    }
 
                     appl_object_destroy(
                         appl_module_parent(
-                            appl_file_source_module_parent(
-                                p_file_source_module)));
+                            appl_hex_convert_module_parent(
+                                p_hex_convert_module)));
                 }
 
                 appl_object_destroy(
