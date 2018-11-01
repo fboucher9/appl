@@ -231,6 +231,9 @@ struct appl_file_sink_module : public appl_module
 
     private:
 
+        struct appl_file_sink_module_descriptor
+            m_file_sink_descriptor;
+
         appl_file_sink_module(
             struct appl_file_sink_module const & r);
 

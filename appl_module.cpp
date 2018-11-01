@@ -265,7 +265,8 @@ enum appl_status
 //
 //
 appl_file_sink_module::appl_file_sink_module() :
-    appl_module()
+    appl_module(),
+    m_file_sink_descriptor()
 {
 }
 
@@ -284,11 +285,13 @@ enum appl_status
         struct appl_file_sink_module_descriptor const * const
             p_file_sink_module_descriptor)
 {
-    appl_unused(
-        p_file_sink_module_descriptor);
+    m_file_sink_descriptor =
+        *(
+            p_file_sink_module_descriptor);
 
     return
-        appl_status_fail;
+        appl_status_ok;
+
 }
 
 //
@@ -309,9 +312,58 @@ enum appl_status
         struct appl_packet * const
             p_packet)
 {
+    enum appl_status
+        e_status;
+
+    unsigned long int
+        i_count;
+
+    unsigned char *
+        p_buf_iterator;
+
+    p_buf_iterator =
+        p_packet->p_buf_min;
+
+    e_status =
+        appl_status_ok;
+
+    while (
+        (
+            appl_status_ok
+            == e_status)
+        && (
+            p_buf_iterator
+            < p_packet->p_buf_max))
+    {
+        // Write buffer to file
+        e_status =
+            m_file_sink_descriptor.p_file->v_write(
+                p_packet->p_buf_min,
+                p_packet->p_buf_max,
+                &(
+                    i_count));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            if (
+                i_count)
+            {
+                p_buf_iterator +=
+                    i_count;
+            }
+            else
+            {
+                e_status =
+                    appl_status_fail;
+            }
+        }
+    }
+
     return
-        appl_module::v_push(
-            p_packet);
+        e_status;
+
 }
 
 //
