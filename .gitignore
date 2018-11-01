@@ -53,3 +53,7 @@ dkms.conf
 
 # Exuberant ctags
 tags
+
+# Project specific
+input.bin
+output.bin
