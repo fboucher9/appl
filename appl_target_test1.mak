@@ -22,6 +22,7 @@ test_appl-deps = \
     appl_hash_test.c \
     appl_pool_test.c \
     appl_thread_cache_test.c \
+    appl_module_test.c \
     $(appl_base-deps)
 
 # List of libraries required to link test application

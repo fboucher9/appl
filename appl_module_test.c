@@ -1,0 +1,178 @@
+/* See LICENSE for license details */
+
+/*
+
+*/
+
+#include <appl.h>
+
+#include <appl_module_test.h>
+
+/*
+
+*/
+enum appl_status
+appl_module_test_1(
+    struct appl_context * const
+        p_context)
+{
+    static unsigned char const g_source_file_name[] =
+    {
+        /* input.bin */
+        'i', 'n', 'p', 'u', 't', '.', 'b', 'i', 'n'
+    };
+
+    static unsigned char const g_sink_file_name[] =
+    {
+        /* output.bin */
+        'o', 'u', 't', 'p', 'u', 't', '.', 'b', 'i', 'n'
+    };
+
+    enum appl_status
+        e_status;
+
+    struct appl_file *
+        p_sink_file;
+
+    struct appl_file_descriptor
+        o_source_file_descriptor;
+
+    struct appl_file_descriptor
+        o_sink_file_descriptor;
+
+    /* Create a file copy pipeline */
+    /* Use push method */
+    /* Create sink first */
+    /* Create source last */
+
+    o_source_file_descriptor.p_name_min =
+        g_source_file_name;
+
+    o_source_file_descriptor.p_name_max =
+        g_source_file_name + (sizeof g_source_file_name);
+
+    o_source_file_descriptor.e_type =
+        appl_file_type_disk;
+
+    o_source_file_descriptor.e_mode =
+        appl_file_mode_read;
+
+    o_sink_file_descriptor.p_name_min =
+        g_sink_file_name;
+
+    o_sink_file_descriptor.p_name_max =
+        g_sink_file_name + (sizeof g_sink_file_name);
+
+    o_sink_file_descriptor.e_type =
+        appl_file_type_disk;
+
+    o_sink_file_descriptor.e_mode =
+        appl_file_mode_write;
+
+    e_status =
+        appl_file_create(
+            p_context,
+            &(
+                o_sink_file_descriptor),
+            &(
+                p_sink_file));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        struct appl_file *
+            p_source_file;
+
+        e_status =
+            appl_file_create(
+                p_context,
+                &(
+                    o_source_file_descriptor),
+                &(
+                    p_source_file));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            struct appl_file_sink_module *
+                p_file_sink_module;
+
+            struct appl_file_sink_module_descriptor
+                o_file_sink_module_descriptor;
+
+            o_file_sink_module_descriptor.p_file =
+                p_sink_file;
+
+            e_status =
+                appl_file_sink_module_create(
+                    p_context,
+                    &(
+                        o_file_sink_module_descriptor),
+                    &(
+                        p_file_sink_module));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                struct appl_file_source_module *
+                    p_file_source_module;
+
+                struct appl_file_source_module_descriptor
+                    o_file_source_module_descriptor;
+
+                o_file_source_module_descriptor.p_sink =
+                    appl_file_sink_module_parent(
+                        p_file_sink_module);
+
+                o_file_source_module_descriptor.p_file =
+                    p_source_file;
+
+                /* Create source module */
+                e_status =
+                    appl_file_source_module_create(
+                        p_context,
+                        &(
+                            o_file_source_module_descriptor),
+                        &(
+                            p_file_source_module));
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    /* Send a packet to the module */
+                    e_status =
+                        appl_file_source_module_step(
+                            p_file_source_module);
+
+                    appl_object_destroy(
+                        appl_module_parent(
+                            appl_file_source_module_parent(
+                                p_file_source_module)));
+                }
+
+                appl_object_destroy(
+                    appl_module_parent(
+                        appl_file_sink_module_parent(
+                            p_file_sink_module)));
+            }
+
+            appl_object_destroy(
+                appl_file_parent(
+                    p_source_file));
+        }
+
+        appl_object_destroy(
+            appl_file_parent(
+                p_sink_file));
+    }
+
+    return
+        e_status;
+
+} /* appl_module_test_1() */
+
+/* end-of-file: appl_module_test.c */

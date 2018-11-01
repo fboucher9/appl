@@ -19,6 +19,8 @@
 
 #include <appl_pool_test.h>
 
+#include <appl_module_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2434,6 +2436,13 @@ appl_main(
     if (1)
     {
         appl_test_thread(
+            p_context);
+    }
+
+    /* Test module */
+    if (1)
+    {
+        appl_module_test_1(
             p_context);
     }
 
