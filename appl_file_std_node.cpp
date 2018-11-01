@@ -187,25 +187,25 @@ enum appl_status
                 appl_file_mode_read == p_file_descriptor->e_mode)
             {
                 i_flags =
-                    0;
+                    O_RDONLY;
             }
             else if (
                 appl_file_mode_write == p_file_descriptor->e_mode)
             {
                 i_flags =
-                    O_CREAT | O_TRUNC;
+                    O_CREAT | O_TRUNC | O_WRONLY;
             }
             else if (
                 appl_file_mode_modify == p_file_descriptor->e_mode)
             {
                 i_flags =
-                    O_CREAT;
+                    O_CREAT | O_RDWR;
             }
             else if (
                 appl_file_mode_append == p_file_descriptor->e_mode)
             {
                 i_flags =
-                    O_APPEND;
+                    O_APPEND | O_WRONLY;
             }
             else
             {
