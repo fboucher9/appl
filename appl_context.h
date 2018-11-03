@@ -62,6 +62,8 @@ struct appl_log;
 
 class appl_pool_mgr;
 
+class appl_timer_mgr;
+
 //
 //
 //
@@ -130,6 +132,14 @@ struct appl_context : public appl_object
 
         class appl_pool_mgr *
             m_pool_mgr;
+
+        /* -- */
+
+        class appl_timer_mgr *
+            m_timer_mgr;
+
+        void *
+            pv_padding[1u];
 
         /* -- */
 

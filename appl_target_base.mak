@@ -145,7 +145,13 @@ appl_base-deps := \
     appl_thread_property.cpp \
     appl_thread_service.cpp \
     appl_thread_std_mgr.cpp \
-    appl_thread_std_node.cpp
+    appl_thread_std_node.cpp \
+    appl_timer_handle.cpp \
+    appl_timer_service.cpp \
+    appl_timer_mgr.cpp \
+    appl_timer.cpp \
+    appl_timer_std_mgr.cpp \
+    appl_timer_std_node.cpp
 
 endif # ifndef appl_target_base.mak-included
 
