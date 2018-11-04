@@ -33,7 +33,7 @@ struct appl_timer;
 struct appl_timer_descriptor
 {
     appl_ull_t
-        i_abstime_nsec;
+        i_abstime_usec;
 
     /* -- */
 

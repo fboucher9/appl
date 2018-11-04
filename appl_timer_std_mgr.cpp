@@ -16,6 +16,8 @@
 
 #include <appl_timer.h>
 
+#include <appl_list.h>
+
 #include <appl_timer_std_node.h>
 
 #include <appl_allocator.h>

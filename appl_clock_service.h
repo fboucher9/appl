@@ -39,7 +39,7 @@ class appl_clock_service
                 p_context,
             unsigned long int const
                 i_time_freq,
-            unsigned long int * const
+            appl_ull_t * const
                 p_time_count);
 
         static
@@ -49,7 +49,7 @@ class appl_clock_service
                 p_context,
             unsigned long int const
                 i_time_freq,
-            unsigned long int const
+            appl_ull_t const
                 i_time_count);
 
 }; // class appl_clock_service

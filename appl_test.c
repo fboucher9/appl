@@ -95,10 +95,10 @@ appl_test_sleep_msec(
     enum appl_status
         e_status;
 
-    unsigned long int
+    appl_ull_t
         i_time_before;
 
-    unsigned long int
+    appl_ull_t
         i_time_after;
 
     appl_clock_read(

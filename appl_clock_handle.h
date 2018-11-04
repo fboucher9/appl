@@ -28,7 +28,7 @@ appl_clock_read(
         p_context,
     unsigned long int const
         i_time_freq,
-    unsigned long int * const
+    appl_ull_t * const
         p_time_count);
 
 enum appl_status
@@ -37,7 +37,7 @@ appl_clock_delay(
         p_context,
     unsigned long int const
         i_time_freq,
-    unsigned long int const
+    appl_ull_t const
         i_time_count);
 
 #if defined(__cplusplus)

@@ -51,6 +51,27 @@ class appl_timer_std_node : public appl_timer
 
     private:
 
+        struct appl_list
+            m_used_list;
+
+        struct appl_list
+            m_free_list;
+
+        struct appl_thread *
+            m_thread;
+
+        struct appl_mutex *
+            m_lock;
+
+        struct appl_event *
+            m_event;
+
+        signed long int volatile
+            m_thread_kill;
+
+        signed long int volatile
+            m_thread_killed;
+
         appl_timer_std_node(
             class appl_timer_std_node const & r);
 
@@ -60,9 +81,25 @@ class appl_timer_std_node : public appl_timer
 
         virtual
         enum appl_status
+            v_cleanup(void);
+
+        virtual
+        enum appl_status
             v_schedule(
                 struct appl_timer_descriptor const * const
                     p_timer_descriptor);
+
+        static
+        void
+            s_worker(
+                void * const
+                    p_thread_context);
+
+        void
+            f_worker(void);
+
+        appl_ull_t
+            f_read_clock(void);
 
 }; // class appl_timer_std_node
 

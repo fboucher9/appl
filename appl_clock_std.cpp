@@ -78,9 +78,9 @@ appl_clock_std::~appl_clock_std()
 //
 //
 static
-unsigned long int
+appl_ull_t
 appl_math_muldiv(
-    unsigned long int const
+    appl_ull_t const
         i_value,
     unsigned long int const
         i_mul,
@@ -107,7 +107,7 @@ enum appl_status
 appl_clock_std::v_read(
     unsigned long int const
         i_time_freq,
-    unsigned long int * const
+    appl_ull_t * const
         p_time_count)
 {
     enum appl_status
@@ -128,7 +128,7 @@ appl_clock_std::v_read(
     if (
         0 == i_clock_result)
     {
-        unsigned long int
+        appl_ull_t
             i_time_count;
 
         unsigned long int const
@@ -177,19 +177,17 @@ enum appl_status
 appl_clock_std::v_delay(
     unsigned long int const
         i_time_freq,
-    unsigned long int const
+    appl_ull_t const
         i_time_count)
 {
     enum appl_status
         e_status;
 
-    unsigned long int
-        ul_time_usec;
-
     if (
         i_time_freq)
     {
-        ul_time_usec =
+        appl_ull_t const
+            ul_time_usec =
             appl_math_muldiv(
                 i_time_count,
                 1000000ul,

@@ -67,6 +67,8 @@ Description:
 
 #define APPL_CONFIG_WITH_MODULE
 
+#define APPL_CONFIG_WITH_TIMER
+
 #include <appl_status.h>
 
 #include <appl_buf.h>
@@ -202,6 +204,12 @@ Description:
 #include <appl_module_handle.h>
 
 #endif /* #if defined APPL_CONFIG_WITH_MODULE */
+
+#if defined APPL_CONFIG_WITH_TIMER
+
+#include <appl_timer_handle.h>
+
+#endif /* #if defined APPL_CONFIG_WITH_TIMER */
 
 #if defined(APPL_CONFIG_WITH_MAIN)
 
