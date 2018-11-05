@@ -146,6 +146,10 @@
 
 #include <appl_thread_cache.h>
 
+#include <appl_timer_mgr.h>
+
+#include <appl_timer_std_mgr.h>
+
 #include <appl_convert.h>
 
 extern
@@ -1107,6 +1111,63 @@ void
 //
 //
 enum appl_status
+    appl_context_std::init_timer_mgr(void)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_timer_mgr)
+    {
+        e_status =
+            appl_status_fail;
+    }
+    else
+    {
+        e_status =
+            appl_timer_std_mgr::s_create(
+                m_allocator,
+                &(
+                    m_timer_mgr));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            b_init_timer_mgr =
+                true;
+        }
+    }
+
+    return
+        e_status;
+
+} // init_timer_mgr()
+
+//
+//
+//
+void
+    appl_context_std::cleanup_timer_mgr(void)
+{
+    if (
+        b_init_timer_mgr)
+    {
+        m_timer_mgr->v_destroy();
+
+        m_timer_mgr =
+            0;
+
+        b_init_timer_mgr =
+            false;
+    }
+
+} // cleanup_timer_mgr()
+
+//
+//
+//
+enum appl_status
     appl_context_std::create_instance(
         struct appl_context_descriptor const * const
             p_context_descriptor,
@@ -1200,7 +1261,8 @@ appl_context_std::appl_context_std() :
     b_init_random_mgr(),
     b_init_log(),
     b_init_pool_mgr(),
-    b_init_thread_cache_mgr()
+    b_init_thread_cache_mgr(),
+    b_init_timer_mgr()
 {
 }
 
@@ -1262,6 +1324,10 @@ appl_context_std::g_init_cleanup_items[] =
     {
         & appl_context_std::init_thread_cache_mgr,
         & appl_context_std::cleanup_thread_cache_mgr
+    },
+    {
+        & appl_context_std::init_timer_mgr,
+        & appl_context_std::cleanup_timer_mgr
     }
 };
 

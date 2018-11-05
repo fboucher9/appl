@@ -284,6 +284,49 @@ enum appl_status
 
     m_lock->v_destroy();
 
+    // Release all active nodes
+    {
+        while (
+            m_used_list.o_next.p_node
+            != &(m_used_list))
+        {
+            struct appl_list * const
+                p_node =
+                m_used_list.o_next.p_node;
+
+            appl_list_join(
+                p_node,
+                p_node);
+
+            appl_list_join(
+                p_node,
+                &(
+                    m_free_list));
+        }
+    }
+
+    // Free all unused nodes
+    {
+        while (
+            m_free_list.o_next.p_node
+            != &(m_free_list))
+        {
+            union appl_timer_std_event_ptr
+                o_timer_std_event_ptr;
+
+            o_timer_std_event_ptr.p_list =
+                m_free_list.o_next.p_node;
+
+            // Detach from list
+            appl_list_join(
+                o_timer_std_event_ptr.p_list,
+                o_timer_std_event_ptr.p_list);
+
+            m_context->m_heap->free_structure(
+                o_timer_std_event_ptr.p_timer_std_event);
+        }
+    }
+
     return
         appl_status_ok;
 

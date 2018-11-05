@@ -122,6 +122,12 @@ class appl_context_std : public appl_context
 
         /* -- */
 
+        bool
+            b_init_timer_mgr;
+
+        unsigned char
+            uc_padding[7u];
+
         appl_context_std(
             class appl_context_std const & r);
 
@@ -228,6 +234,12 @@ class appl_context_std : public appl_context
 
         void
             cleanup_thread_cache_mgr(void);
+
+        enum appl_status
+            init_timer_mgr(void);
+
+        void
+            cleanup_timer_mgr(void);
 
 }; // class appl_context_std
 

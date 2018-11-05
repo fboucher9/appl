@@ -80,6 +80,8 @@ appl_timer_test_1(
                     (void *)(
                         g_event_A);
 
+                printf("schedule [A]\n");
+
                 e_status =
                     appl_timer_schedule(
                         p_timer,
@@ -88,10 +90,14 @@ appl_timer_test_1(
             }
 
             /* Wait for events to occur */
+            printf("waiting ...\n");
+
             appl_clock_delay(
                 p_context,
                 1000ul,
                 2000ul);
+
+            printf("... done\n");
         }
 
         appl_object_destroy(
