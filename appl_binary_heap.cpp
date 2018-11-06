@@ -2,6 +2,31 @@
 
 /*
 
+Module: appl_binary_heap.cpp
+
+Description:
+
+    Binary heap algorithm.
+
+Comments:
+
+    -   Experiment using a level table to help with resize of
+        table.  Instead of doing realloc of table, add an extra
+        level.  Define maximum number of levels.
+
+        struct level
+        {
+            void * *
+                m_table;
+
+            unsigned long int
+                m_count;
+
+            unsigned long int
+                m_count_max;
+
+        } m_levels[32u];
+
 */
 
 #include <appl_status.h>
@@ -87,6 +112,13 @@ struct appl_binary_heap : public appl_object
         enum appl_status
             v_cleanup(void);
 
+        int
+            f_compare(
+                void const * const
+                    p_data_1,
+                void const * const
+                    p_data_2);
+
 }; // struct appl_binary_heap
 
 //
@@ -134,6 +166,10 @@ enum appl_status
 
         m_count_max =
             p_binary_heap_descriptor->i_initial_max;
+
+        m_descriptor =
+            *(
+                p_binary_heap_descriptor);
     }
 
     return
@@ -215,6 +251,10 @@ enum appl_status
                 m_table,
                 m_count_max * sizeof(void *));
 
+            m_context->m_heap->free_structure_array(
+                m_count_max,
+                m_table);
+
             m_count_max =
                 i_new_count_max;
 
@@ -237,10 +277,9 @@ enum appl_status
 
         while (
             (i_pos > 1)
-            && ((m_descriptor.p_compare)(
-                    m_descriptor.p_compare_context,
+            && f_compare(
                     p_data,
-                    m_table[i_pos / 2]) < 0))
+                    m_table[i_pos / 2]) < 0)
         {
             m_table[i_pos] =
                 m_table[i_pos / 2];
@@ -279,52 +318,71 @@ enum appl_status
 
         m_count --;
 
-        void *
-            p_tmp;
-
         unsigned long int
             i_iterator;
 
         i_iterator =
             1u;
 
-        p_tmp = m_table[i_iterator];
+        void *
+            p_tmp;
 
-        while (2*i_iterator <= m_count)
+        p_tmp =
+            m_table[i_iterator];
+
+        bool
+            b_continue;
+
+        b_continue =
+            true;
+
+        while (
+            b_continue)
         {
             unsigned long int
                 i_child;
 
             i_child =
-                2*i_iterator;
+                i_iterator * 2;
 
-            if (i_child != m_count)
+            if (
+                i_child <= m_count)
             {
-                if ((*(m_descriptor.p_compare))(
-                        m_descriptor.p_compare_context,
-                        m_table[i_child],
-                        m_table[i_child + 1]))
+                if (i_child < m_count)
                 {
-                    i_child ++;
+                    if (f_compare(
+                            m_table[i_child],
+                            m_table[i_child + 1]) > 0)
+                    {
+                        i_child ++;
+                    }
                 }
-            }
 
-            if ((*(m_descriptor.p_compare))(
-                    m_descriptor.p_compare_context,
-                    p_tmp,
-                    m_table[i_child]) > 0)
-            {
-                m_table[i_iterator] = m_table[i_child];
+                if (f_compare(
+                        p_tmp,
+                        m_table[i_child]) > 0)
+                {
+                    m_table[i_iterator] =
+                        m_table[i_child];
+                }
+                else
+                {
+                    b_continue =
+                        false;
+                }
+
+                i_iterator =
+                    i_child;
             }
             else
             {
-                break;
+                b_continue =
+                    false;
             }
-
-            i_iterator = i_child;
         }
 
-        m_table[i_iterator] = p_tmp;
+        m_table[i_iterator] =
+            p_tmp;
 
         e_status =
             appl_status_ok;
@@ -339,6 +397,24 @@ enum appl_status
         e_status;
 
 } // v_remove()
+
+//
+//
+//
+int
+    appl_binary_heap::f_compare(
+        void const * const
+            p_data_1,
+        void const * const
+            p_data_2)
+{
+    return
+        (*(m_descriptor.p_compare))(
+            m_descriptor.p_compare_context,
+            p_data_1,
+            p_data_2);
+
+} // f_compare()
 
 //
 //

@@ -24,6 +24,7 @@ test_appl-deps = \
     appl_thread_cache_test.c \
     appl_module_test.c \
     appl_timer_test.c \
+    appl_binary_heap_test.c \
     $(appl_base-deps)
 
 # List of libraries required to link test application

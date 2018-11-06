@@ -23,6 +23,8 @@
 
 #include <appl_timer_test.h>
 
+#include <appl_binary_heap_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2772,6 +2774,12 @@ appl_main(
     if (1)
     {
         appl_timer_test_1(
+            p_context);
+    }
+
+    if (1)
+    {
+        appl_binary_heap_test_1(
             p_context);
     }
 
