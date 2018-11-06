@@ -2,6 +2,12 @@
 
 /*
 
+Module: appl_timer_handle.h
+
+Description:
+
+    Scheduling of application callbacks at specified time.
+
 */
 
 /* Reverse include guard */
@@ -29,6 +35,12 @@ struct appl_timer;
 
 /*
 
+Structure: appl_timer_descriptor
+
+Description:
+
+    Description of a single timer event.
+
 */
 struct appl_timer_descriptor
 {
@@ -50,6 +62,7 @@ struct appl_timer_descriptor
 extern "C" {
 #endif /* #if defined __cplusplus */
 
+/* Create an instance of a timer, to be used as a manager of events */
 enum appl_status
 appl_timer_create(
     struct appl_context * const
@@ -57,11 +70,13 @@ appl_timer_create(
     struct appl_timer * * const
         r_timer);
 
+/* Get pointer to object */
 struct appl_object *
 appl_timer_parent(
     struct appl_timer * const
         p_timer);
 
+/* Schedule an event */
 enum appl_status
 appl_timer_schedule(
     struct appl_timer * const
