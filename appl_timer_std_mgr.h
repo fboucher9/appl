@@ -34,7 +34,7 @@ class appl_timer_std_mgr : public appl_timer_mgr
             s_create(
                 struct appl_allocator * const
                     p_allocator,
-                struct appl_timer_mgr * * const
+                class appl_timer_mgr * * const
                     r_timer_mgr);
 
         appl_timer_std_mgr();
