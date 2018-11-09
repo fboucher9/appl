@@ -73,7 +73,7 @@ class appl_clock_w32 : public appl_clock
             v_read(
                 unsigned long int const
                     i_time_freq,
-                unsigned long int * const
+                appl_ull_t * const
                     p_time_count);
 
         virtual
@@ -81,7 +81,7 @@ class appl_clock_w32 : public appl_clock
             v_delay(
                 unsigned long int const
                     i_time_freq,
-                unsigned long int const
+                appl_ull_t const
                     i_time_count);
 
 }; // class appl_clock_w32

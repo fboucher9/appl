@@ -160,21 +160,17 @@ enum appl_status
 static
 unsigned long int
 appl_math_muldiv(
-    unsigned long int const
+    appl_ull_t const
         i_value,
     unsigned long int const
         i_mul,
     unsigned long int const
         i_div)
 {
-    appl_ull_t const
-        ll_value =
-            i_value;
-
     return
         appl_convert::to_ulong(
             (
-                ll_value
+                i_value
                 * i_mul)
             / i_div);
 
@@ -187,7 +183,7 @@ enum appl_status
 appl_clock_w32::v_read(
     unsigned long int const
         i_time_freq,
-    unsigned long int * const
+    appl_ull_t * const
         p_time_count)
 {
     enum appl_status
@@ -262,7 +258,7 @@ enum appl_status
 appl_clock_w32::v_delay(
     unsigned long int const
         i_time_freq,
-    unsigned long int const
+    appl_ull_t const
         i_time_count)
 {
     enum appl_status
