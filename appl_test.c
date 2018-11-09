@@ -700,7 +700,9 @@ appl_test_print_number(
 
 static void appl_test_options(
     struct appl_context * const
-        p_context)
+        p_context,
+    struct appl_options const * const
+        p_options)
 {
     enum appl_status
         e_status;
@@ -711,10 +713,12 @@ static void appl_test_options(
     unsigned long int
         argi;
 
+    (void)(
+        p_context);
+
     e_status =
         appl_options_count(
-            appl_context_parent(
-                p_context),
+            p_options,
             &(
                 argc));
 
@@ -731,8 +735,7 @@ static void appl_test_options(
 
         e_status =
             appl_options_get(
-                appl_context_parent(
-                    p_context),
+                p_options,
                 argi,
                 &(
                     p_buf_min),
@@ -909,6 +912,8 @@ void
 appl_test_socket_fill_descriptor(
     struct appl_context * const
         p_context,
+    struct appl_options const * const
+        p_options,
     struct appl_test_socket_descriptor * const
         p_descriptor)
 {
@@ -918,13 +923,15 @@ appl_test_socket_fill_descriptor(
     unsigned long int
         argc;
 
+    (void)(
+        p_context);
+
     p_descriptor->b_server =
         0;
 
     e_status =
         appl_options_count(
-            appl_context_parent(
-                p_context),
+            p_options,
             &(
                 argc));
 
@@ -943,8 +950,7 @@ appl_test_socket_fill_descriptor(
 
             e_status =
                 appl_options_get(
-                    appl_context_parent(
-                        p_context),
+                    p_options,
                     1u,
                     &(
                         p_arg_min),
@@ -2417,7 +2423,9 @@ appl_test_thread_cache(
 enum appl_status
 appl_main(
     struct appl_context * const
-        p_context)
+        p_context,
+    struct appl_options const * const
+        p_options)
 {
     enum appl_status
         e_status;
@@ -2426,7 +2434,8 @@ appl_main(
     if (1)
     {
         appl_test_options(
-            p_context);
+            p_context,
+            p_options);
     }
 
     /* Test memory leak */
@@ -2660,6 +2669,7 @@ appl_main(
 
         appl_test_socket_fill_descriptor(
             p_context,
+            p_options,
             &(
                 o_test_socket_descriptor));
 

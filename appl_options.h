@@ -21,12 +21,12 @@
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
 
-class appl_options;
+struct appl_options;
 
 //
 //
 //
-class appl_options : public appl_object
+struct appl_options : public appl_object
 {
     public:
 
@@ -46,6 +46,22 @@ class appl_options : public appl_object
                 unsigned char const * * const
                     r_buf_max) const;
 
+        virtual
+        enum appl_status
+            v_write(
+                unsigned char const * const
+                    p_buf_min,
+                unsigned char const * const
+                    p_buf_max);
+
+        virtual
+        enum appl_status
+            v_append_argument(
+                unsigned char const * const
+                    p_buf_min,
+                unsigned char const * const
+                    p_buf_max);
+
     protected:
 
         appl_options();
@@ -56,12 +72,12 @@ class appl_options : public appl_object
     private:
 
         appl_options(
-            class appl_options const & r);
+            struct appl_options const & r);
 
-        class appl_options &
+        struct appl_options &
             operator =(
-                class appl_options const & r);
+                struct appl_options const & r);
 
-}; // class appl_options
+}; // struct appl_options
 
 /* end-of-file: appl_options.h */

@@ -16,41 +16,74 @@
 
 #include <appl_context.h>
 
+#include <appl_options_std.h>
+
 //
 //
 //
-static
-class appl_options *
-get_options_from_object(
-    struct appl_object const * const
-        p_object)
-{
+enum appl_status
+appl_options_service::s_create(
     struct appl_context * const
-        p_context =
-        p_object->get_context();
+        p_context,
+    struct appl_options * * const
+        r_instance)
+{
+    struct appl_options_std_descriptor
+        o_options_std_descriptor;
+
+    o_options_std_descriptor.p_arg_min =
+        0;
+
+    o_options_std_descriptor.p_arg_max =
+        0;
 
     return
-        p_context->m_options;
+        appl_options_std::s_create(
+            p_context->m_allocator,
+            &(
+                o_options_std_descriptor),
+            r_instance);
 
-} // get_options_from_object
+} // s_create()
+
+//
+//
+//
+struct appl_object *
+appl_options_service::s_parent(
+    struct appl_options * const
+        p_options)
+{
+    return
+        p_options;
+
+} // s_parent()
+
+//
+//
+//
+struct appl_object const *
+appl_options_service::s_const_parent(
+    struct appl_options const * const
+        p_options)
+{
+    return
+        p_options;
+
+} // s_const_parent()
 
 //
 //
 //
 enum appl_status
 appl_options_service::s_count(
-    struct appl_object const * const
-        p_object,
+    struct appl_options const * const
+        p_options,
     unsigned long int * const
         r_count)
 {
     enum appl_status
         e_status;
-
-    class appl_options * const
-        p_options =
-        get_options_from_object(
-            p_object);
 
     e_status =
         p_options->v_count(
@@ -66,8 +99,8 @@ appl_options_service::s_count(
 //
 enum appl_status
 appl_options_service::s_get(
-    struct appl_object const * const
-        p_object,
+    struct appl_options const * const
+        p_options,
     unsigned long int const
         i_index,
     unsigned char const * * const
@@ -77,11 +110,6 @@ appl_options_service::s_get(
 {
     enum appl_status
         e_status;
-
-    class appl_options * const
-        p_options =
-        get_options_from_object(
-            p_object);
 
     e_status =
         p_options->v_get(
@@ -93,5 +121,43 @@ appl_options_service::s_get(
         e_status;
 
 } // s_get()
+
+//
+//
+//
+enum appl_status
+appl_options_service::s_write(
+    struct appl_options * const
+        p_options,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max)
+{
+    return
+        p_options->v_write(
+            p_buf_min,
+            p_buf_max);
+
+} // s_write()
+
+//
+//
+//
+enum appl_status
+appl_options_service::s_append_argument(
+    struct appl_options * const
+        p_options,
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max)
+{
+    return
+        p_options->v_append_argument(
+            p_buf_min,
+            p_buf_max);
+
+} // s_append_argument()
 
 /* end-of-file: appl_options_service.cpp */

@@ -51,6 +51,44 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_options::v_write(
+        unsigned char const * const
+            p_buf_min,
+        unsigned char const * const
+            p_buf_max)
+{
+    appl_unused(
+        p_buf_min,
+        p_buf_max);
+
+    return
+        appl_status_not_implemented;
+
+} // v_write()
+
+//
+//
+//
+enum appl_status
+    appl_options::v_append_argument(
+        unsigned char const * const
+            p_buf_min,
+        unsigned char const * const
+            p_buf_max)
+{
+    appl_unused(
+        p_buf_min,
+        p_buf_max);
+
+    return
+        appl_status_not_implemented;
+
+} // v_append_argument()
+
+//
+//
+//
 appl_options::appl_options() :
     appl_object()
 {

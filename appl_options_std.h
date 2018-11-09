@@ -14,7 +14,7 @@
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
 
-class appl_options;
+struct appl_options;
 
 class appl_options_std;
 
@@ -42,7 +42,7 @@ class appl_options_std : public appl_options
                 p_allocator,
             struct appl_options_std_descriptor const * const
                 p_options_std_descriptor,
-            class appl_options * * const
+            struct appl_options * * const
                 r_options_std);
 
         appl_options_std();

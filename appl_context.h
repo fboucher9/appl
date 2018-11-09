@@ -34,7 +34,7 @@ struct appl_heap;
 class appl_debug;
 #endif /* #if defined APPL_DEBUG */
 
-class appl_options;
+struct appl_options;
 
 class appl_thread_mgr;
 
@@ -79,7 +79,7 @@ struct appl_context : public appl_object
 
         /* -- */
 
-        class appl_options *
+        struct appl_options *
             m_options;
 
         class appl_thread_mgr *

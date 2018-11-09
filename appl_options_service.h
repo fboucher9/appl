@@ -29,23 +29,63 @@ class appl_options_service
 
         static
         enum appl_status
+        s_create(
+            struct appl_context * const
+                p_context,
+            struct appl_options * * const
+                r_instance);
+
+        static
+        struct appl_object *
+        s_parent(
+            struct appl_options * const
+                p_options);
+
+        static
+        struct appl_object const *
+        s_const_parent(
+            struct appl_options const * const
+                p_options);
+
+        static
+        enum appl_status
         s_count(
-            struct appl_object const * const
-                p_object,
+            struct appl_options const * const
+                p_options,
             unsigned long int * const
                 r_count);
 
         static
         enum appl_status
         s_get(
-            struct appl_object const * const
-                p_object,
+            struct appl_options const * const
+                p_options,
             unsigned long int const
                 i_index,
             unsigned char const * * const
                 r_buf_min,
             unsigned char const * * const
                 r_buf_max);
+
+        static
+        enum appl_status
+        s_write(
+            struct appl_options * const
+                p_options,
+            unsigned char const * const
+                p_buf_min,
+            unsigned char const * const
+                p_buf_max);
+
+        static
+        enum appl_status
+        s_append_argument(
+            struct appl_options * const
+                p_options,
+            unsigned char const * const
+                p_buf_min,
+            unsigned char const * const
+                p_buf_max);
 
 }; // appl_options_service
 

@@ -69,7 +69,8 @@ main(
         /* Dispatch */
         e_status =
             appl_main(
-                p_context);
+                p_context,
+                p_context->m_options);
 
         if (
             appl_status_ok

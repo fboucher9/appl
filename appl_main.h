@@ -18,6 +18,8 @@
 
 struct appl_context;
 
+struct appl_options;
+
 #if defined(__cplusplus)
 extern "C" {
 #endif /* #if defined(__cplusplus) */
@@ -26,7 +28,9 @@ extern "C" {
 enum appl_status
 appl_main(
     struct appl_context * const
-        p_context);
+        p_context,
+    struct appl_options const * const
+        p_options);
 
 #if defined(__cplusplus)
 } /* extern "C" */
