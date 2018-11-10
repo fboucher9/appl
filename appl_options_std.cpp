@@ -12,6 +12,8 @@
 
 #include <appl_options.h>
 
+#include <appl_list.h>
+
 #include <appl_options_std.h>
 
 #include <appl_string.h>
@@ -24,6 +26,38 @@
 
 #include <appl_convert.h>
 
+#include <appl_unused.h>
+
+#include <appl_heap.h>
+
+#include <appl_buf.h>
+
+/*
+
+*/
+struct appl_options_std_node
+{
+    struct appl_list
+        o_list;
+
+    unsigned char *
+        p_buf_min;
+
+    unsigned char *
+        p_buf_max;
+
+}; /* struct appl_options_std_node */
+
+union appl_options_std_node_ptr
+{
+    struct appl_list *
+        p_list;
+
+    struct appl_options_std_node *
+        p_options_std_node;
+
+}; /* union appl_options_std_node_ptr */
+
 //
 //
 //
@@ -31,8 +65,6 @@ enum appl_status
 appl_options_std::s_create(
     struct appl_allocator * const
         p_allocator,
-    struct appl_options_std_descriptor const * const
-        p_options_std_descriptor,
     class appl_options * * const
         r_options)
 {
@@ -44,7 +76,6 @@ appl_options_std::s_create(
 
     e_status =
         p_allocator->alloc_object(
-            p_options_std_descriptor,
             &(
                 p_options_std));
 
@@ -67,7 +98,8 @@ appl_options_std::s_create(
 //
 appl_options_std::appl_options_std() :
     appl_options(),
-    m_descriptor()
+    m_list(),
+    m_count()
 {
 }
 
@@ -82,16 +114,14 @@ appl_options_std::~appl_options_std()
 //
 //
 enum appl_status
-appl_options_std::f_init(
-    struct appl_options_std_descriptor const * const
-        p_options_std_descriptor)
+appl_options_std::f_init(void)
 {
     enum appl_status
         e_status;
 
-    m_descriptor =
-        *(
-            p_options_std_descriptor);
+    appl_list_init(
+        &(
+            m_list));
 
     e_status =
         appl_status_ok;
@@ -109,6 +139,36 @@ appl_options_std::v_cleanup(void)
 {
     enum appl_status
         e_status;
+
+    // free list of nodes
+    {
+        while (
+            m_list.o_next.p_node != &(m_list))
+        {
+            union appl_options_std_node_ptr
+                o_options_std_node_ptr;
+
+            o_options_std_node_ptr.p_list =
+                m_list.o_next.p_node;
+
+            appl_list_join(
+                o_options_std_node_ptr.p_list,
+                o_options_std_node_ptr.p_list);
+
+            unsigned long int const
+                i_buf_len =
+                appl_buf_len(
+                    o_options_std_node_ptr.p_options_std_node->p_buf_min,
+                    o_options_std_node_ptr.p_options_std_node->p_buf_max);
+
+            m_context->m_heap->free_structure_array(
+                i_buf_len,
+                o_options_std_node_ptr.p_options_std_node->p_buf_min);
+
+            m_context->m_heap->free_structure(
+                o_options_std_node_ptr.p_options_std_node);
+        }
+    }
 
     e_status =
         appl_status_ok;
@@ -129,16 +189,9 @@ appl_options_std::v_count(
     enum appl_status
         e_status;
 
-    unsigned long int const
-        i_count =
-        appl_convert::to_ulong(
-            appl_convert::to_unsigned(
-                m_descriptor.p_arg_max
-                - m_descriptor.p_arg_min));
-
     *(
         r_count) =
-        i_count;
+        m_count;
 
     e_status =
         appl_status_ok;
@@ -163,24 +216,37 @@ appl_options_std::v_get(
     enum appl_status
         e_status;
 
-    if (
-        (m_descriptor.p_arg_min + i_index) < m_descriptor.p_arg_max)
+    unsigned long int
+        i_position;
+
+    i_position =
+        0u;
+
+    union appl_options_std_node_ptr
+        o_options_std_node_ptr;
+
+    o_options_std_node_ptr.p_list =
+        m_list.o_next.p_node;
+
+    while (
+        i_position < i_index)
     {
-        unsigned char const *
-            p_arg0;
+        o_options_std_node_ptr.p_list =
+            o_options_std_node_ptr.p_list->o_next.p_node;
 
-        p_arg0 =
-            m_descriptor.p_arg_min[i_index];
+        i_position ++;
+    }
 
+    if (
+        o_options_std_node_ptr.p_list != &(m_list))
+    {
         *(
             r_buf_min) =
-            p_arg0;
+            o_options_std_node_ptr.p_options_std_node->p_buf_min;
 
         *(
             r_buf_max) =
-            p_arg0
-            + appl_buf0_len(
-                p_arg0);
+            o_options_std_node_ptr.p_options_std_node->p_buf_max;
 
         e_status =
             appl_status_ok;
@@ -195,5 +261,94 @@ appl_options_std::v_get(
         e_status;
 
 } // v_get()
+
+//
+//
+//
+enum appl_status
+    appl_options_std::v_write(
+        unsigned char const * const
+            p_buf_min,
+        unsigned char const * const
+            p_buf_max)
+{
+    appl_unused(
+        p_buf_min,
+        p_buf_max);
+
+    return
+        appl_status_not_implemented;
+
+} // v_write()
+
+//
+//
+//
+enum appl_status
+    appl_options_std::v_append_argument(
+        unsigned char const * const
+            p_buf_min,
+        unsigned char const * const
+            p_buf_max)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_options_std_node *
+        p_options_std_node;
+
+    e_status =
+        m_context->m_heap->alloc_structure(
+            &(
+                p_options_std_node));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        appl_list_init(
+            &(
+                p_options_std_node->o_list));
+
+        unsigned long int const
+            i_buf_len =
+            appl_buf_len(
+                p_buf_min,
+                p_buf_max);
+
+        e_status =
+            m_context->m_heap->alloc_structure_array(
+                i_buf_len,
+                &(
+                    p_options_std_node->p_buf_min));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            p_options_std_node->p_buf_max =
+                p_options_std_node->p_buf_min
+                + i_buf_len;
+
+            appl_buf_copy(
+                p_options_std_node->p_buf_min,
+                p_options_std_node->p_buf_max,
+                p_buf_min,
+                p_buf_max);
+
+            appl_list_join(
+                &(
+                    p_options_std_node->o_list),
+                &(
+                    m_list));
+
+            m_count ++;
+        }
+    }
+
+    return
+        e_status;
+
+} // v_append_argument()
 
 /* end-of-file: appl_options_std.cpp */

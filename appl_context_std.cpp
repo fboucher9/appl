@@ -22,6 +22,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_buf0.h>
+
 #include <appl_types.h>
 
 #include <appl_object.h>
@@ -304,20 +306,9 @@ appl_context_std::init_options(
     enum appl_status
         e_status;
 
-    struct appl_options_std_descriptor
-        o_options_std_descriptor;
-
-    o_options_std_descriptor.p_arg_min =
-        p_context_descriptor->p_arg_min;
-
-    o_options_std_descriptor.p_arg_max =
-        p_context_descriptor->p_arg_max;
-
     e_status =
         appl_options_std::s_create(
             m_heap,
-            &(
-                o_options_std_descriptor),
             &(
                 m_options));
 
@@ -325,6 +316,45 @@ appl_context_std::init_options(
         appl_status_ok
         == e_status)
     {
+        // append some arguments
+        unsigned char const * const *
+            p_arg_it;
+
+        p_arg_it =
+            p_context_descriptor->p_arg_min;
+
+        while (
+            (
+                appl_status_ok
+                == e_status)
+            && (
+                p_arg_it
+                != p_context_descriptor->p_arg_max))
+        {
+            unsigned char const * const
+                p_arg =
+                *(
+                    p_arg_it);
+
+            // find length of arg
+            unsigned long int const
+                i_arg_len =
+                appl_buf0_len(
+                    p_arg);
+
+            e_status =
+                m_options->v_append_argument(
+                    p_arg,
+                    p_arg + i_arg_len);
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                p_arg_it ++;
+            }
+        }
+
         b_init_options =
             true;
     }

@@ -18,16 +18,6 @@ struct appl_options;
 
 class appl_options_std;
 
-struct appl_options_std_descriptor
-{
-    unsigned char const * const *
-        p_arg_min;
-
-    unsigned char const * const *
-        p_arg_max;
-
-}; /* struct appl_options_std_descriptor */
-
 //
 //
 //
@@ -40,8 +30,6 @@ class appl_options_std : public appl_options
         s_create(
             struct appl_allocator * const
                 p_allocator,
-            struct appl_options_std_descriptor const * const
-                p_options_std_descriptor,
             struct appl_options * * const
                 r_options_std);
 
@@ -51,16 +39,25 @@ class appl_options_std : public appl_options
         ~appl_options_std();
 
         enum appl_status
-            f_init(
-                struct appl_options_std_descriptor const * const
-                    p_options_std_descriptor);
+            f_init(void);
 
     protected:
 
     private:
 
-        struct appl_options_std_descriptor
-            m_descriptor;
+        // list of words
+        struct appl_list
+            m_list;
+
+        // --
+
+        unsigned long int
+            m_count;
+
+        unsigned long int
+            ul_padding[1u];
+
+        // --
 
         appl_options_std(
             class appl_options_std const & r);
@@ -88,6 +85,22 @@ class appl_options_std : public appl_options
                     r_buf_min,
                 unsigned char const * * const
                     r_buf_max) const;
+
+        virtual
+        enum appl_status
+            v_write(
+                unsigned char const * const
+                    p_buf_min,
+                unsigned char const * const
+                    p_buf_max);
+
+        virtual
+        enum appl_status
+            v_append_argument(
+                unsigned char const * const
+                    p_buf_min,
+                unsigned char const * const
+                    p_buf_max);
 
 }; // class appl_options_std
 

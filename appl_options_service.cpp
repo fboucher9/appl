@@ -16,6 +16,8 @@
 
 #include <appl_context.h>
 
+#include <appl_list.h>
+
 #include <appl_options_std.h>
 
 //
@@ -28,20 +30,9 @@ appl_options_service::s_create(
     struct appl_options * * const
         r_instance)
 {
-    struct appl_options_std_descriptor
-        o_options_std_descriptor;
-
-    o_options_std_descriptor.p_arg_min =
-        0;
-
-    o_options_std_descriptor.p_arg_max =
-        0;
-
     return
         appl_options_std::s_create(
             p_context->m_allocator,
-            &(
-                o_options_std_descriptor),
             r_instance);
 
 } // s_create()
