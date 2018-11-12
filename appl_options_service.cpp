@@ -123,12 +123,18 @@ appl_options_service::s_write(
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
-        p_buf_max)
+        p_buf_max,
+    unsigned long int * const
+        p_count,
+    char * const
+        p_ready)
 {
     return
         p_options->v_write(
             p_buf_min,
-            p_buf_max);
+            p_buf_max,
+            p_count,
+            p_ready);
 
 } // s_write()
 

@@ -32,6 +32,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_chunk.h>
+
 /*
 
 */
@@ -99,7 +101,9 @@ appl_options_std::s_create(
 appl_options_std::appl_options_std() :
     appl_options(),
     m_list(),
-    m_count()
+    m_chunk(),
+    m_count(),
+    m_state()
 {
 }
 
@@ -266,18 +270,326 @@ appl_options_std::v_get(
 //
 //
 enum appl_status
+    appl_options_std::f_flush_word(void)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_status_ok;
+
+    if (
+        m_chunk)
+    {
+        unsigned long int
+            i_length;
+
+        e_status =
+            appl_chunk_length(
+                m_chunk,
+                &(
+                    i_length));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            unsigned char *
+                p_buf;
+
+            e_status =
+                m_context->m_heap->alloc_structure_array(
+                    i_length,
+                    &(
+                        p_buf));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_chunk_read(
+                        m_chunk,
+                        p_buf,
+                        p_buf + i_length);
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    e_status =
+                        v_append_argument(
+                            p_buf,
+                            p_buf + i_length);
+                }
+
+                m_context->m_heap->free_structure_array(
+                    i_length,
+                    p_buf);
+            }
+        }
+
+        appl_chunk_destroy(
+            m_chunk);
+
+        m_chunk =
+            0;
+    }
+
+    return
+        e_status;
+
+} // f_flush_word()
+
+//
+//
+//
+enum appl_status
+    appl_options_std::f_append_char(
+        unsigned char const
+            i_char)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        m_chunk)
+    {
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_chunk_create(
+                m_context,
+                &(
+                    m_chunk));
+    }
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_chunk_write(
+                m_chunk,
+                &(
+                    i_char),
+                &(
+                    i_char) + 1u);
+    }
+
+    return
+        e_status;
+
+} // f_append_char()
+
+//
+//
+//
+enum appl_status
+    appl_options_std::f_process_char(
+        unsigned char const
+            i_char,
+        char * const
+            p_ready)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_status_ok;
+
+    char
+        b_ready;
+
+    b_ready =
+        0;
+
+    if (
+        0 == m_state)
+    {
+        if (
+            '\n' == i_char)
+        {
+            e_status =
+                f_flush_word();
+
+            m_state =
+                0;
+
+            b_ready =
+                1;
+        }
+        else if (
+            (
+                ' ' == i_char)
+            || (
+                '\t' == i_char)
+            || (
+                '\r' == i_char))
+        {
+            e_status =
+                f_flush_word();
+
+            m_state =
+                0;
+        }
+        else
+        {
+            e_status =
+                f_append_char(
+                    i_char);
+
+            m_state =
+                1;
+        }
+    }
+    else if (
+        1 == m_state)
+    {
+        if (
+            '\n' == i_char)
+        {
+            e_status =
+                f_flush_word();
+
+            m_state =
+                0;
+
+            b_ready =
+                1;
+        }
+        else if (
+            (
+                ' ' == i_char)
+            || (
+                '\t' == i_char)
+            || (
+                '\r' == i_char))
+        {
+            e_status =
+                f_flush_word();
+
+            m_state =
+                0;
+        }
+        else
+        {
+            e_status =
+                f_append_char(
+                    i_char);
+
+            m_state =
+                1;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            p_ready) =
+            b_ready;
+    }
+
+    return
+        e_status;
+
+} // f_process_char()
+
+//
+//
+//
+enum appl_status
     appl_options_std::v_write(
         unsigned char const * const
             p_buf_min,
         unsigned char const * const
-            p_buf_max)
+            p_buf_max,
+        unsigned long int * const
+            p_count,
+        char * const
+            p_ready)
 {
-    appl_unused(
-        p_buf_min,
-        p_buf_max);
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_status_ok;
+
+    unsigned long int
+        i_count;
+
+    i_count =
+        0ul;
+
+    char
+        b_ready;
+
+    b_ready =
+        0;
+
+    unsigned char const *
+        p_buf_it;
+
+    p_buf_it =
+        p_buf_min;
+
+    while (
+        (
+            appl_status_ok
+            == e_status)
+        && (
+            p_buf_it
+            != p_buf_max)
+        && (
+            !(
+                b_ready)))
+    {
+        unsigned char const
+            i_char =
+            *(
+                p_buf_it);
+
+        e_status =
+            f_process_char(
+                i_char,
+                &(
+                    b_ready));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            i_count ++;
+
+            p_buf_it ++;
+        }
+    }
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        *(
+            p_count) =
+            i_count;
+
+        *(
+            p_ready) =
+            b_ready;
+    }
 
     return
-        appl_status_not_implemented;
+        e_status;
 
 } // v_write()
 

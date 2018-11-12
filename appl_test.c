@@ -25,6 +25,8 @@
 
 #include <appl_binary_heap_test.h>
 
+#include <appl_options_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -696,64 +698,6 @@ appl_test_print_number(
     appl_print0("msg = [");
     appl_print_number(i_value, i_flags, i_width);
     appl_print0("]\n");
-}
-
-static void appl_test_options(
-    struct appl_context * const
-        p_context,
-    struct appl_options const * const
-        p_options)
-{
-    enum appl_status
-        e_status;
-
-    unsigned long int
-        argc;
-
-    unsigned long int
-        argi;
-
-    (void)(
-        p_context);
-
-    e_status =
-        appl_options_count(
-            p_options,
-            &(
-                argc));
-
-    argi = 0;
-
-    while (
-        argi < argc)
-    {
-        unsigned char const *
-            p_buf_min;
-
-        unsigned char const *
-            p_buf_max;
-
-        e_status =
-            appl_options_get(
-                p_options,
-                argi,
-                &(
-                    p_buf_min),
-                &(
-                    p_buf_max));
-
-        if (
-            appl_status_ok == e_status)
-        {
-            appl_print0("[");
-            appl_print_number((signed long int)(argi), 0, 0);
-            appl_print0("] [");
-            appl_print(p_buf_min, p_buf_max);
-            appl_print0("]\n");
-        }
-
-        argi ++;
-    }
 }
 
 static void appl_test_thread(
@@ -2433,9 +2377,12 @@ appl_main(
     /* Print the argument list */
     if (1)
     {
-        appl_test_options(
+        appl_options_test_1(
             p_context,
             p_options);
+
+        appl_options_test_2(
+            p_context);
     }
 
     /* Test memory leak */

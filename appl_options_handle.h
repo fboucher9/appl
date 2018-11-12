@@ -67,7 +67,11 @@ appl_options_write(
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
-        p_buf_max);
+        p_buf_max,
+    unsigned long int * const
+        p_count,
+    char * const
+        p_ready);
 
 enum appl_status
 appl_options_append_argument(

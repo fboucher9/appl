@@ -51,11 +51,24 @@ class appl_options_std : public appl_options
 
         // --
 
+        struct appl_chunk *
+            m_chunk;
+
+        // --
+
         unsigned long int
             m_count;
 
         unsigned long int
             ul_padding[1u];
+
+        // --
+
+        unsigned char
+            m_state;
+
+        unsigned char
+            uc_padding[7u];
 
         // --
 
@@ -86,13 +99,32 @@ class appl_options_std : public appl_options
                 unsigned char const * * const
                     r_buf_max) const;
 
+        enum appl_status
+            f_flush_word(void);
+
+        enum appl_status
+            f_append_char(
+                unsigned char const
+                    i_char);
+
+        enum appl_status
+            f_process_char(
+                unsigned char const
+                    i_char,
+                char * const
+                    p_ready);
+
         virtual
         enum appl_status
             v_write(
                 unsigned char const * const
                     p_buf_min,
                 unsigned char const * const
-                    p_buf_max);
+                    p_buf_max,
+                unsigned long int * const
+                    p_count,
+                char * const
+                    p_ready);
 
         virtual
         enum appl_status

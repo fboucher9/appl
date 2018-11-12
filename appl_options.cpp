@@ -56,11 +56,17 @@ enum appl_status
         unsigned char const * const
             p_buf_min,
         unsigned char const * const
-            p_buf_max)
+            p_buf_max,
+        unsigned long int * const
+            p_count,
+        char * const
+            p_ready)
 {
     appl_unused(
         p_buf_min,
-        p_buf_max);
+        p_buf_max,
+        p_count,
+        p_ready);
 
     return
         appl_status_not_implemented;
