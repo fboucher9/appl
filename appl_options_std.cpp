@@ -174,6 +174,17 @@ appl_options_std::v_cleanup(void)
         }
     }
 
+    // Free the chunk
+    if (
+        m_chunk)
+    {
+        appl_chunk_destroy(
+            m_chunk);
+
+        m_chunk =
+            0;
+    }
+
     e_status =
         appl_status_ok;
 
@@ -408,7 +419,7 @@ enum appl_status
         0;
 
     if (
-        0 == m_state)
+        appl_options_std_state_space == m_state)
     {
         if (
             '\n' == i_char)
@@ -417,7 +428,7 @@ enum appl_status
                 f_flush_word();
 
             m_state =
-                0;
+                appl_options_std_state_space;
 
             b_ready =
                 1;
@@ -434,7 +445,21 @@ enum appl_status
                 f_flush_word();
 
             m_state =
-                0;
+                appl_options_std_state_space;
+        }
+        else if (
+            (
+                '\'' == i_char))
+        {
+            m_state =
+                appl_options_std_state_quote;
+        }
+        else if (
+            (
+                '\\' == i_char))
+        {
+            m_state =
+                appl_options_std_state_escape;
         }
         else
         {
@@ -443,11 +468,11 @@ enum appl_status
                     i_char);
 
             m_state =
-                1;
+                appl_options_std_state_word;
         }
     }
     else if (
-        1 == m_state)
+        appl_options_std_state_word == m_state)
     {
         if (
             '\n' == i_char)
@@ -456,7 +481,7 @@ enum appl_status
                 f_flush_word();
 
             m_state =
-                0;
+                appl_options_std_state_space;
 
             b_ready =
                 1;
@@ -473,7 +498,21 @@ enum appl_status
                 f_flush_word();
 
             m_state =
-                0;
+                appl_options_std_state_space;
+        }
+        else if (
+            (
+                '\'' == i_char))
+        {
+            m_state =
+                appl_options_std_state_quote;
+        }
+        else if (
+            (
+                '\\' == i_char))
+        {
+            m_state =
+                appl_options_std_state_escape;
         }
         else
         {
@@ -482,8 +521,38 @@ enum appl_status
                     i_char);
 
             m_state =
-                1;
+                appl_options_std_state_word;
         }
+    }
+    else if (
+        appl_options_std_state_quote == m_state)
+    {
+        if (
+            (
+                '\'' == i_char))
+        {
+            m_state =
+                appl_options_std_state_word;
+        }
+        else
+        {
+            e_status =
+                f_append_char(
+                    i_char);
+
+            m_state =
+                appl_options_std_state_quote;
+        }
+    }
+    else if (
+        appl_options_std_state_escape == m_state)
+    {
+        e_status =
+            f_append_char(
+                i_char);
+
+        m_state =
+            appl_options_std_state_word;
     }
     else
     {

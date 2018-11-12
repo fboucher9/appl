@@ -2380,7 +2380,10 @@ appl_main(
         appl_options_test_1(
             p_context,
             p_options);
+    }
 
+    if (1)
+    {
         appl_options_test_2(
             p_context);
     }

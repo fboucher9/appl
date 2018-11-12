@@ -18,6 +18,18 @@ struct appl_options;
 
 class appl_options_std;
 
+enum appl_options_std_state
+{
+    appl_options_std_state_space = 0,
+
+    appl_options_std_state_word = 1,
+
+    appl_options_std_state_escape = 2,
+
+    appl_options_std_state_quote = 3
+
+}; // enum appl_options_std_state
+
 //
 //
 //
@@ -54,6 +66,9 @@ class appl_options_std : public appl_options
         struct appl_chunk *
             m_chunk;
 
+        void *
+            pv_padding[1u];
+
         // --
 
         unsigned long int
@@ -64,11 +79,11 @@ class appl_options_std : public appl_options
 
         // --
 
-        unsigned char
+        enum appl_options_std_state
             m_state;
 
-        unsigned char
-            uc_padding[7u];
+        unsigned int
+            uc_padding[3u];
 
         // --
 
