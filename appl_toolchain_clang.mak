@@ -25,6 +25,7 @@ appl-clang-common-flags = \
     -D_DEFAULT_SOURCE \
     -DAPPL_OS_LINUX \
     -DAPPL_BUILD_EXE \
+    -DAPPL_HAVE_XLIB \
     -I$(APPL_SRC).
 
 appl-clang-common-cflags = \

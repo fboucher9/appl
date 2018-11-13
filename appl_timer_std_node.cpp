@@ -370,6 +370,8 @@ enum appl_status
             &(
                 p_timer_std_event->o_list));
 
+        e_status =
+            appl_status_ok;
     }
     else
     {

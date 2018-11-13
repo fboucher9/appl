@@ -21,6 +21,7 @@ appl-toolchain-gnu-common-flags = \
     -g \
     -DAPPL_OS_LINUX \
     -D_DEFAULT_SOURCE \
+    -DAPPL_HAVE_XLIB \
     -I$(APPL_SRC). \
     -pedantic \
     -Wall \

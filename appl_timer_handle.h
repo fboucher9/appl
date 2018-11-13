@@ -8,6 +8,28 @@ Description:
 
     Scheduling of application callbacks at specified time.
 
+Example:
+
+    Schedule a timer event in 2 seconds from now:
+
+        static void in2secs_event(void* p_context)
+        {
+            ...
+        }
+
+        void in2secs(
+            struct appl_context * p_context,
+            struct appl_timer * p_timer)
+        {
+            appl_ull_t i_now_usec;
+            struct appl_timer_descriptor o_descriptor;
+            appl_clock_read(p_context, 1000000ul, &i_now_usec);
+            o_descriptor.i_abstime_usec = i_now_usec + 2000000ul;
+            o_descriptor.p_timer_callback = &in2secs_event;
+            o_descriptor.p_timer_context = p_context;
+            appl_timer_schedule(p_timer, &o_descriptor);
+        }
+
 */
 
 /* Reverse include guard */

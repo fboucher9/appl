@@ -67,7 +67,7 @@ enum appl_status
 appl_options_std::s_create(
     struct appl_allocator * const
         p_allocator,
-    class appl_options * * const
+    struct appl_options * * const
         r_options)
 {
     enum appl_status
