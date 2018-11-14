@@ -50,6 +50,8 @@ Comments:
 #include <appl_debug_handle.h>
 #endif /* #if defined APPL_DEBUG */
 
+#include <appl_buf.h>
+
 struct appl_thread_property;
 
 class appl_thread_cache_mgr;
@@ -185,11 +187,26 @@ struct appl_thread_cache : public appl_thread
             struct appl_thread_descriptor
                 o_thread_descriptor;
 
-            o_thread_descriptor.p_entry =
+            union appl_ptr
+                o_thread_descriptor_ptr;
+
+            o_thread_descriptor_ptr.p_void =
+                &(
+                    o_thread_descriptor);
+
+            appl_buf_fill(
+                o_thread_descriptor_ptr.p_uchar,
+                o_thread_descriptor_ptr.p_uchar + sizeof(o_thread_descriptor),
+                0);
+
+            o_thread_descriptor.b_callback =
+                1;
+
+            o_thread_descriptor.o_callback.p_entry =
                 &(
                     appl_thread_cache::s_task);
 
-            o_thread_descriptor.p_context =
+            o_thread_descriptor.o_callback.p_context =
                 o_thread_cache_ptr.p_thread_context;
 
             e_status =
@@ -302,10 +319,13 @@ struct appl_thread_cache : public appl_thread
                 appl_status_ok
                 == e_status)
             {
-                o_thread_cache_task_ptr.p_thread_cache_task->o_thread_descriptor.p_entry =
+                o_thread_cache_task_ptr.p_thread_cache_task->o_thread_descriptor.b_callback =
                     0;
 
-                o_thread_cache_task_ptr.p_thread_cache_task->o_thread_descriptor.p_context =
+                o_thread_cache_task_ptr.p_thread_cache_task->o_thread_descriptor.o_callback.p_entry =
+                    0;
+
+                o_thread_cache_task_ptr.p_thread_cache_task->o_thread_descriptor.o_callback.p_context =
                     0;
 
                 o_thread_cache_task_ptr.p_thread_cache_task->b_kill =
@@ -1069,8 +1089,8 @@ void
                 }
 #endif /* #if defined APPL_DEBUG */
 
-                (*(o_thread_cache_task_ptr.p_thread_cache_task->o_thread_descriptor.p_entry))(
-                    o_thread_cache_task_ptr.p_thread_cache_task->o_thread_descriptor.p_context);
+                (*(o_thread_cache_task_ptr.p_thread_cache_task->o_thread_descriptor.o_callback.p_entry))(
+                    o_thread_cache_task_ptr.p_thread_cache_task->o_thread_descriptor.o_callback.p_context);
 
 #if defined APPL_DEBUG
                 {

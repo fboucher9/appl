@@ -56,6 +56,8 @@
 
 #include <appl_unused.h>
 
+#include <appl_buf.h>
+
 //
 //
 //
@@ -183,11 +185,26 @@ enum appl_status
                 struct appl_thread_descriptor
                     o_thread_descriptor;
 
-                o_thread_descriptor.p_entry =
+                union appl_ptr
+                    o_ptr;
+
+                o_ptr.p_void =
+                    &(
+                        o_thread_descriptor);
+
+                appl_buf_fill(
+                    o_ptr.p_uchar,
+                    o_ptr.p_uchar + sizeof(o_thread_descriptor),
+                    0);
+
+                o_thread_descriptor.b_callback =
+                    1;
+
+                o_thread_descriptor.o_callback.p_entry =
                     (&
                         appl_timer_std_node::s_worker);
 
-                o_thread_descriptor.p_context =
+                o_thread_descriptor.o_callback.p_context =
                     this;
 
                 e_status =

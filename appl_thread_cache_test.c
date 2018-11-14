@@ -69,17 +69,32 @@ appl_thread_cache_test(
     static struct test_thread_cache_data
         o_test_data;
 
+    union appl_ptr
+        o_ptr;
+
     o_test_data.p_context =
         p_context;
 
     o_test_data.p_thread_cache =
         0;
 
-    o_thread_descriptor.p_entry =
+    o_ptr.p_void =
+        &(
+            o_thread_descriptor);
+
+    appl_buf_fill(
+        o_ptr.p_uchar,
+        o_ptr.p_uchar + sizeof(o_thread_descriptor),
+        0);
+
+    o_thread_descriptor.b_callback =
+        1;
+
+    o_thread_descriptor.o_callback.p_entry =
         &(
             test_thread_cache_entry);
 
-    o_thread_descriptor.p_context =
+    o_thread_descriptor.o_callback.p_context =
         &(
             o_test_data);
 

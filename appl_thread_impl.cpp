@@ -335,8 +335,8 @@ void *
         0
         == i_detach_result)
     {
-        (*(m_descriptor.p_entry))(
-            m_descriptor.p_context);
+        (*(m_descriptor.o_callback.p_entry))(
+            m_descriptor.o_callback.p_context);
     }
     else
     {

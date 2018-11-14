@@ -285,38 +285,38 @@ appl_buf_write_tail_repeat(
 } /* appl_buf_write_tail_repeat() */
 #endif
 
-#if 0
 /*
 
 */
-enum appl_status
+unsigned char *
 appl_buf_fill(
-    struct appl_buf * const
-        p_buf,
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_max,
     unsigned char const
         c_value)
 {
-    enum appl_status
-        e_status;
+    unsigned char *
+        p_buf_it;
+
+    p_buf_it =
+        p_buf_min;
 
     while (
-        p_buf->o_min.p_uchar < p_buf->o_max.p_uchar)
+        p_buf_it < p_buf_max)
     {
         *(
-            p_buf->o_min.p_uchar) =
+            p_buf_it) =
             c_value;
 
-        p_buf->o_min.p_uchar ++;
+        p_buf_it ++;
     }
 
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        p_buf_it;
 
 } /* appl_buf_fill() */
-#endif
 
 /*
 

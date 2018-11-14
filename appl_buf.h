@@ -161,7 +161,6 @@ appl_buf_write_tail_array(
         p_ref_max);
 #endif
 
-#if 0
 /* buf fill */
 unsigned char *
 appl_buf_fill(
@@ -171,7 +170,6 @@ appl_buf_fill(
         p_buf_max,
     unsigned char const
         c_value);
-#endif
 
 /* buf copy */
 unsigned char *
