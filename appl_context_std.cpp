@@ -152,6 +152,18 @@
 
 #include <appl_timer_std_mgr.h>
 
+#if defined APPL_HAVE_XLIB
+
+#include <X11/Xlib.h>
+
+#include <appl_xlib.h>
+
+#include <appl_xlib_intf.h>
+
+#include <appl_xlib_std.h>
+
+#endif /* #if defined APPL_HAVE_XLIB */
+
 #include <appl_convert.h>
 
 extern
@@ -1197,6 +1209,66 @@ void
 //
 //
 //
+#if defined APPL_HAVE_XLIB
+enum appl_status
+    appl_context_std::init_xlib(void)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_xlib)
+    {
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_xlib_std::s_create(
+                m_allocator,
+                &(
+                    m_xlib));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            b_init_xlib =
+                true;
+        }
+    }
+
+    return
+        e_status;
+
+} // init_xlib()
+#endif /* #if defined APPL_HAVE_XLIB */
+
+//
+//
+//
+#if defined APPL_HAVE_XLIB
+void
+    appl_context_std::cleanup_xlib(void)
+{
+    if (
+        b_init_xlib)
+    {
+        m_xlib->v_destroy();
+
+        m_xlib =
+            0;
+
+        b_init_xlib =
+            false;
+    }
+} // cleanup_xlib()
+#endif /* #if defined APPL_HAVE_XLIB */
+
+//
+//
+//
 enum appl_status
     appl_context_std::create_instance(
         struct appl_context_descriptor const * const
@@ -1275,24 +1347,27 @@ enum appl_status
 //
 //
 appl_context_std::appl_context_std() :
-    appl_context(),
-    b_init_heap(),
-    b_init_debug(),
-    b_init_options(),
-    b_init_thread_mgr(),
-    b_init_mutex_mgr(),
-    b_init_file_mgr(),
-    b_init_poll_mgr(),
-    b_init_clock(),
-    b_init_event_mgr(),
-    b_init_socket_mgr(),
-    b_init_env(),
-    b_init_library_mgr(),
-    b_init_random_mgr(),
-    b_init_log(),
-    b_init_pool_mgr(),
-    b_init_thread_cache_mgr(),
-    b_init_timer_mgr()
+    appl_context()
+    , b_init_heap()
+    , b_init_debug()
+    , b_init_options()
+    , b_init_thread_mgr()
+    , b_init_mutex_mgr()
+    , b_init_file_mgr()
+    , b_init_poll_mgr()
+    , b_init_clock()
+    , b_init_event_mgr()
+    , b_init_socket_mgr()
+    , b_init_env()
+    , b_init_library_mgr()
+    , b_init_random_mgr()
+    , b_init_log()
+    , b_init_pool_mgr()
+    , b_init_thread_cache_mgr()
+    , b_init_timer_mgr()
+#if defined APPL_HAVE_XLIB
+    , b_init_xlib()
+#endif /* #if defined APPL_HAVE_XLIB */
 {
 }
 
@@ -1358,6 +1433,10 @@ appl_context_std::g_init_cleanup_items[] =
     {
         & appl_context_std::init_timer_mgr,
         & appl_context_std::cleanup_timer_mgr
+    },
+    {
+        & appl_context_std::init_xlib,
+        & appl_context_std::cleanup_xlib
     }
 };
 

@@ -64,6 +64,8 @@ class appl_pool_mgr;
 
 class appl_timer_mgr;
 
+struct appl_xlib;
+
 //
 //
 //
@@ -138,8 +140,8 @@ struct appl_context : public appl_object
         class appl_timer_mgr *
             m_timer_mgr;
 
-        void *
-            pv_padding[1u];
+        struct appl_xlib *
+            m_xlib;
 
         /* -- */
 

@@ -125,8 +125,16 @@ class appl_context_std : public appl_context
         bool
             b_init_timer_mgr;
 
+#if defined APPL_HAVE_XLIB
+        bool
+            b_init_xlib;
+#else /* #if defined APPL_HAVE_XLIB */
         unsigned char
-            uc_padding[7u];
+            z_init_xlib[1u];
+#endif /* #if defined APPL_HAVE_XLIB */
+
+        unsigned char
+            uc_padding[6u];
 
         appl_context_std(
             class appl_context_std const & r);
@@ -240,6 +248,14 @@ class appl_context_std : public appl_context
 
         void
             cleanup_timer_mgr(void);
+
+#if defined APPL_HAVE_XLIB
+        enum appl_status
+            init_xlib(void);
+
+        void
+            cleanup_xlib(void);
+#endif /* #if defined APPL_HAVE_XLIB */
 
 }; // class appl_context_std
 

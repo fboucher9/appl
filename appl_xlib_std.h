@@ -63,7 +63,7 @@ class appl_xlib_std : public appl_xlib
                 p_display);
 
         virtual
-        Screen *
+        int
         v_default_screen(
             Display * const
                 p_display);

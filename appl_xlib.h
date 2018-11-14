@@ -45,7 +45,7 @@ struct appl_xlib : public appl_object
                 p_display);
 
         virtual
-        Screen *
+        int
         v_default_screen(
             Display * const
                 p_display);

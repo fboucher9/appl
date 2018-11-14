@@ -34,6 +34,7 @@ appl_context::appl_context()
     , m_log()
     , m_pool_mgr()
     , m_timer_mgr()
+    , m_xlib()
 #if defined APPL_DEBUG
     , m_debug()
 #endif /* #if defined APPL_DEBUG */

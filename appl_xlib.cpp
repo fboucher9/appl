@@ -64,7 +64,7 @@ appl_xlib::v_close_display(
 //
 //
 //
-Screen *
+int
 appl_xlib::v_default_screen(
     Display * const
         p_display)

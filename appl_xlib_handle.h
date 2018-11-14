@@ -56,7 +56,7 @@ appl_xlib_close_display(
         p_display);
 
 /* Wrapper for XDefaultScreen */
-Screen *
+int
 appl_xlib_default_screen(
     struct appl_xlib * const
         p_xlib,

@@ -154,7 +154,9 @@ appl_base-deps := \
     appl_timer_std_mgr.cpp \
     appl_timer_std_node.cpp \
     appl_xlib.cpp \
-    appl_xlib_std.cpp
+    appl_xlib_std.cpp \
+    appl_xlib_handle.cpp \
+    appl_xlib_service.cpp
 
 endif # ifndef appl_target_base.mak-included
 

@@ -2,6 +2,12 @@
 
 /*
 
+Module: appl_xlib_std.cpp
+
+Description:
+
+    Standard or POSIX implementation of appl_xlib interface.
+
 */
 
 #if defined APPL_HAVE_XLIB
@@ -23,6 +29,14 @@
 #include <appl_allocator.h>
 
 #include <appl_unused.h>
+
+#include <appl_library_handle.h>
+
+#include <appl_library_node.h>
+
+#include <appl_mutex_handle.h>
+
+#include <appl_mutex_node.h>
 
 //
 //
@@ -84,8 +98,82 @@ appl_xlib_std::~appl_xlib_std()
 enum appl_status
     appl_xlib_std::f_init(void)
 {
+    enum appl_status
+        e_status;
+
+    struct appl_library_descriptor
+        o_xlib_library_descriptor;
+
+    static unsigned char const g_xlib_name[] =
+    {
+        'X',
+        '1',
+        '1'
+    };
+
+    o_xlib_library_descriptor.p_name_min =
+        g_xlib_name;
+
+    o_xlib_library_descriptor.p_name_max =
+        g_xlib_name + sizeof(g_xlib_name);
+
+    struct appl_library *
+        p_library;
+
+    e_status =
+        appl_library_create(
+            m_context,
+            &(
+                o_xlib_library_descriptor),
+            &(
+                p_library));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        struct appl_mutex_descriptor
+            o_mutex_descriptor;
+
+        struct appl_mutex *
+            p_mutex;
+
+        e_status =
+            appl_mutex_create(
+                m_context,
+                &(
+                    o_mutex_descriptor),
+                &(
+                    p_mutex));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            m_xlib_handle =
+                p_library;
+
+            m_lock =
+                p_mutex;
+
+            if (
+                appl_status_ok
+                != e_status)
+            {
+                p_mutex->v_destroy();
+            }
+        }
+
+        if (
+            appl_status_ok
+            != e_status)
+        {
+            p_library->v_destroy();
+        }
+    }
+
     return
-        appl_status_ok;
+        e_status;
 
 } // f_init()
 
@@ -95,8 +183,28 @@ enum appl_status
 enum appl_status
     appl_xlib_std::v_add_ref(void)
 {
+    enum appl_status
+        e_status;
+
+    e_status =
+        m_lock->v_lock();
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        if (1 == m_ref_count)
+        {
+            // Do init of library...
+        }
+
+        m_ref_count ++;
+
+        m_lock->v_unlock();
+    }
+
     return
-        appl_status_not_implemented;
+        e_status;
 
 } // v_add_ref()
 
@@ -135,7 +243,7 @@ appl_xlib_std::v_close_display(
 //
 //
 //
-Screen *
+int
 appl_xlib_std::v_default_screen(
     Display * const
         p_display)
