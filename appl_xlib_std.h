@@ -71,12 +71,16 @@ class appl_xlib_std : public appl_xlib
         virtual
         int
         v_display_width(
+            Display * const
+                p_display,
             int const
                 i_screen_number);
 
         virtual
         int
         v_display_height(
+            Display * const
+                p_display,
             int const
                 i_screen_number);
 
@@ -107,6 +111,17 @@ class appl_xlib_std : public appl_xlib
 
         // --
 
+        bool
+            m_xlib_handle_initialized;
+
+        bool
+            m_lock_initialized;
+
+        unsigned char
+            uc_padding[6u];
+
+        // --
+
         appl_xlib_std(
             class appl_xlib_std const & r);
 
@@ -117,6 +132,30 @@ class appl_xlib_std : public appl_xlib
         virtual
         enum appl_status
             v_cleanup(void);
+
+        enum appl_status
+            f_init_library(void);
+
+        void
+            f_cleanup_library(void);
+
+        enum appl_status
+            f_init_open_display_function(void);
+
+        enum appl_status
+            f_init_close_display_function(void);
+
+        enum appl_status
+            f_init_default_screen_function(void);
+
+        enum appl_status
+            f_init_display_width_function(void);
+
+        enum appl_status
+            f_init_display_height_function(void);
+
+        enum appl_status
+            f_init_functions(void);
 
 }; // class appl_xlib_std
 

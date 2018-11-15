@@ -211,6 +211,12 @@ Description:
 
 #endif /* #if defined APPL_CONFIG_WITH_TIMER */
 
+#if defined APPL_CONFIG_WITH_XLIB
+
+#include <appl_xlib_handle.h>
+
+#endif /* #if defined APPL_CONFIG_WITH_XLIB */
+
 #if defined(APPL_CONFIG_WITH_MAIN)
 
 #include <appl_options_handle.h>

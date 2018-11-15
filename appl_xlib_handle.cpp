@@ -103,12 +103,15 @@ int
 appl_xlib_display_width(
     struct appl_xlib * const
         p_xlib,
+    Display * const
+        p_display,
     int const
         i_screen_number)
 {
     return
         appl_xlib_service::s_display_width(
             p_xlib,
+            p_display,
             i_screen_number);
 
 } /* _display_width() */
@@ -120,12 +123,15 @@ int
 appl_xlib_display_height(
     struct appl_xlib * const
         p_xlib,
+    Display * const
+        p_display,
     int const
         i_screen_number)
 {
     return
         appl_xlib_service::s_display_height(
             p_xlib,
+            p_display,
             i_screen_number);
 
 } /* _display_height() */

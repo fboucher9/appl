@@ -27,6 +27,10 @@ struct appl_context;
 /* Predefine */
 struct appl_xlib;
 
+#if defined __cplusplus
+extern "C" {
+#endif /* #if defined __cplusplus */
+
 enum appl_status
 appl_xlib_create(
     struct appl_context * const
@@ -68,6 +72,8 @@ int
 appl_xlib_display_width(
     struct appl_xlib * const
         p_xlib,
+    Display * const
+        p_display,
     int const
         i_screen_number);
 
@@ -76,7 +82,13 @@ int
 appl_xlib_display_height(
     struct appl_xlib * const
         p_xlib,
+    Display * const
+        p_display,
     int const
         i_screen_number);
+
+#if defined __cplusplus
+} /* extern "C" */
+#endif /* #if defined __cplusplus */
 
 /* end-of-file: appl_xlib.h */

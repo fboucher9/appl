@@ -53,12 +53,16 @@ struct appl_xlib : public appl_object
         virtual
         int
         v_display_width(
+            Display * const
+                p_display,
             int const
                 i_screen_number);
 
         virtual
         int
         v_display_height(
+            Display * const
+                p_display,
             int const
                 i_screen_number);
 

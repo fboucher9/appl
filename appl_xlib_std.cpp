@@ -38,6 +38,10 @@ Description:
 
 #include <appl_mutex_node.h>
 
+#if defined APPL_DEBUG
+#include <appl_debug_handle.h>
+#endif /* #if defined APPL_DEBUG */
+
 //
 //
 //
@@ -81,7 +85,9 @@ appl_xlib_std::appl_xlib_std() :
     m_xlib_handle(),
     m_lock(),
     m_ref_count(1),
-    m_xlib_intf()
+    m_xlib_intf(),
+    m_xlib_handle_initialized(),
+    m_lock_initialized()
 {
 }
 
@@ -96,37 +102,411 @@ appl_xlib_std::~appl_xlib_std()
 //
 //
 enum appl_status
+    appl_xlib_std::f_init_library(void)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        !m_xlib_handle_initialized)
+    {
+        struct appl_library_descriptor
+            o_xlib_library_descriptor;
+
+        static unsigned char const g_xlib_name[] =
+        {
+            'l',
+            'i',
+            'b',
+            'X',
+            '1',
+            '1',
+            '.',
+            's',
+            'o',
+            '.',
+            '6'
+        };
+
+        o_xlib_library_descriptor.p_name_min =
+            g_xlib_name;
+
+        o_xlib_library_descriptor.p_name_max =
+            g_xlib_name + sizeof(g_xlib_name);
+
+        struct appl_library *
+            p_library;
+
+        e_status =
+            appl_library_create(
+                m_context,
+                &(
+                    o_xlib_library_descriptor),
+                &(
+                    p_library));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            m_xlib_handle =
+                p_library;
+
+            m_xlib_handle_initialized =
+                true;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // f_init_library()
+
+//
+//
+//
+void
+    appl_xlib_std::f_cleanup_library(void)
+{
+    if (
+        m_xlib_handle_initialized)
+    {
+        m_xlib_handle->v_destroy();
+
+        m_xlib_handle =
+            0;
+
+        m_xlib_handle_initialized =
+            false;
+    }
+} // f_cleanup_library()
+
+//
+//
+//
+enum appl_status
+    appl_xlib_std::f_init_open_display_function(void)
+{
+    enum appl_status
+        e_status;
+
+    /* XOpenDisplay */
+    static unsigned char const g_open_display_name[] =
+    {
+        'X',
+        'O',
+        'p',
+        'e',
+        'n',
+        'D',
+        'i',
+        's',
+        'p',
+        'l',
+        'a',
+        'y'
+    };
+
+    e_status =
+        m_xlib_handle->v_query(
+            g_open_display_name,
+            g_open_display_name + sizeof(g_open_display_name),
+            &(
+                m_xlib_intf.o_open_display.p_symbol));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+    }
+#if defined APPL_DEBUG
+    else
+    {
+        static unsigned char const g_msg0[] = "failed dlsym of XOpenDisplay\n";
+        appl_debug_print0(this, g_msg0);
+    }
+#endif /* #if defined APPL_DEBUG */
+
+    return
+        e_status;
+
+} // f_init_open_display_function()
+
+//
+//
+//
+enum appl_status
+    appl_xlib_std::f_init_close_display_function(void)
+{
+    enum appl_status
+        e_status;
+
+    /* XCloseDisplay */
+    static unsigned char const g_close_display_name[] =
+    {
+        'X',
+        'C',
+        'l',
+        'o',
+        's',
+        'e',
+        'D',
+        'i',
+        's',
+        'p',
+        'l',
+        'a',
+        'y'
+    };
+
+    e_status =
+        m_xlib_handle->v_query(
+            g_close_display_name,
+            g_close_display_name + sizeof(g_close_display_name),
+            &(
+                m_xlib_intf.o_close_display.p_symbol));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+    }
+#if defined APPL_DEBUG
+    else
+    {
+        static unsigned char const g_msg0[] = "failed dlsym of XCloseDisplay\n";
+        appl_debug_print0(this, g_msg0);
+    }
+#endif /* #if defined APPL_DEBUG */
+
+    return
+        e_status;
+
+} // f_init_close_display_function()
+
+//
+//
+//
+enum appl_status
+    appl_xlib_std::f_init_default_screen_function(void)
+{
+    enum appl_status
+        e_status;
+
+    /* XDefaultScreen */
+    static unsigned char const g_default_screen_name[] =
+    {
+        'X',
+        'D',
+        'e',
+        'f',
+        'a',
+        'u',
+        'l',
+        't',
+        'S',
+        'c',
+        'r',
+        'e',
+        'e',
+        'n'
+    };
+
+    e_status =
+        m_xlib_handle->v_query(
+            g_default_screen_name,
+            g_default_screen_name + sizeof(g_default_screen_name),
+            &(
+                m_xlib_intf.o_default_screen.p_symbol));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+    }
+#if defined APPL_DEBUG
+    else
+    {
+        static unsigned char const g_msg0[] = "failed dlsym of XDefaultScreen\n";
+        appl_debug_print0(this, g_msg0);
+    }
+#endif /* #if defined APPL_DEBUG */
+
+    return
+        e_status;
+
+} // f_init_default_screen_function()
+
+//
+//
+//
+enum appl_status
+    appl_xlib_std::f_init_display_width_function(void)
+{
+    enum appl_status
+        e_status;
+
+    /* XDisplayWidth */
+    static unsigned char const g_display_width_name[] =
+    {
+        'X',
+        'D',
+        'i',
+        's',
+        'p',
+        'l',
+        'a',
+        'y',
+        'W',
+        'i',
+        'd',
+        't',
+        'h'
+    };
+
+    e_status =
+        m_xlib_handle->v_query(
+            g_display_width_name,
+            g_display_width_name + sizeof(g_display_width_name),
+            &(
+                m_xlib_intf.o_display_width.p_symbol));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+    }
+#if defined APPL_DEBUG
+    else
+    {
+        static unsigned char const g_msg0[] = "failed dlsym of XDisplayWidth\n";
+        appl_debug_print0(this, g_msg0);
+    }
+#endif /* #if defined APPL_DEBUG */
+
+    return
+        e_status;
+
+} // f_init_display_width_function()
+
+//
+//
+//
+enum appl_status
+    appl_xlib_std::f_init_display_height_function(void)
+{
+    enum appl_status
+        e_status;
+
+    /* XDisplayHeight */
+    static unsigned char const g_display_height_name[] =
+    {
+        'X',
+        'D',
+        'i',
+        's',
+        'p',
+        'l',
+        'a',
+        'y',
+        'H',
+        'e',
+        'i',
+        'g',
+        'h',
+        't'
+    };
+
+    e_status =
+        m_xlib_handle->v_query(
+            g_display_height_name,
+            g_display_height_name + sizeof(g_display_height_name),
+            &(
+                m_xlib_intf.o_display_height.p_symbol));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+    }
+#if defined APPL_DEBUG
+    else
+    {
+        static unsigned char const g_msg0[] = "failed dlsym of XDisplayHeight\n";
+        appl_debug_print0(this, g_msg0);
+    }
+#endif /* #if defined APPL_DEBUG */
+
+    return
+        e_status;
+
+} // f_init_display_height_function()
+
+//
+//
+//
+enum appl_status
+    appl_xlib_std::f_init_functions(void)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        f_init_open_display_function();
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            f_init_close_display_function();
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            e_status =
+                f_init_default_screen_function();
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    f_init_display_width_function();
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    e_status =
+                        f_init_display_height_function();
+                }
+            }
+        }
+    }
+
+    return
+        e_status;
+
+} // f_init_functions()
+
+//
+//
+//
+enum appl_status
     appl_xlib_std::f_init(void)
 {
     enum appl_status
         e_status;
 
-    struct appl_library_descriptor
-        o_xlib_library_descriptor;
-
-    static unsigned char const g_xlib_name[] =
-    {
-        'X',
-        '1',
-        '1'
-    };
-
-    o_xlib_library_descriptor.p_name_min =
-        g_xlib_name;
-
-    o_xlib_library_descriptor.p_name_max =
-        g_xlib_name + sizeof(g_xlib_name);
-
-    struct appl_library *
-        p_library;
-
     e_status =
-        appl_library_create(
-            m_context,
-            &(
-                o_xlib_library_descriptor),
-            &(
-                p_library));
+        f_init_library();
 
     if (
         appl_status_ok
@@ -150,27 +530,47 @@ enum appl_status
             appl_status_ok
             == e_status)
         {
-            m_xlib_handle =
-                p_library;
-
             m_lock =
                 p_mutex;
+
+            m_lock_initialized =
+                true;
+
+            e_status =
+                f_init_functions();
 
             if (
                 appl_status_ok
                 != e_status)
             {
-                p_mutex->v_destroy();
+                m_lock->v_destroy();
+
+                m_lock_initialized =
+                    false;
             }
         }
+#if defined APPL_DEBUG
+        else
+        {
+            static unsigned char const g_msg0[] = "failed to create mutex for xlib\n";
+            appl_debug_print0(this, g_msg0);
+        }
+#endif /* #if defined APPL_DEBUG */
 
         if (
             appl_status_ok
             != e_status)
         {
-            p_library->v_destroy();
+            f_cleanup_library();
         }
     }
+#if defined APPL_DEBUG
+    else
+    {
+        static unsigned char const g_msg0[] = "failed dlopen of xlib\n";
+        appl_debug_print0(this, g_msg0);
+    }
+#endif /* #if defined APPL_DEBUG */
 
     return
         e_status;
@@ -216,11 +616,9 @@ appl_xlib_std::v_open_display(
     char const * const
         p_display_name0)
 {
-    appl_unused(
-        p_display_name0);
-
     return
-        0;
+        (*(m_xlib_intf.o_open_display.p_function))(
+            p_display_name0);
 
 } // v_open_display()
 
@@ -232,11 +630,9 @@ appl_xlib_std::v_close_display(
     Display * const
         p_display)
 {
-    appl_unused(
-        p_display);
-
     return
-        -1;
+        (*(m_xlib_intf.o_close_display.p_function))(
+            p_display);
 
 } // v_close_display()
 
@@ -248,11 +644,9 @@ appl_xlib_std::v_default_screen(
     Display * const
         p_display)
 {
-    appl_unused(
-        p_display);
-
     return
-        0;
+        (*(m_xlib_intf.o_default_screen.p_function))(
+            p_display);
 
 } // v_default_screen()
 
@@ -261,14 +655,15 @@ appl_xlib_std::v_default_screen(
 //
 int
 appl_xlib_std::v_display_width(
+    Display * const
+        p_display,
     int const
         i_screen_number)
 {
-    appl_unused(
-        i_screen_number);
-
     return
-        -1;
+        (*(m_xlib_intf.o_display_width.p_function))(
+            p_display,
+            i_screen_number);
 
 } // v_display_width()
 
@@ -277,14 +672,15 @@ appl_xlib_std::v_display_width(
 //
 int
 appl_xlib_std::v_display_height(
+    Display * const
+        p_display,
     int const
         i_screen_number)
 {
-    appl_unused(
-        i_screen_number);
-
     return
-        -1;
+        (*(m_xlib_intf.o_display_height.p_function))(
+            p_display,
+            i_screen_number);
 
 } // v_display_height()
 
@@ -309,6 +705,18 @@ enum appl_status
         0 >= i_ref_count)
     {
         // Do cleanup
+        f_cleanup_library();
+
+        if (m_lock_initialized)
+        {
+            m_lock->v_destroy();
+
+            m_lock =
+                0;
+
+            m_lock_initialized =
+                false;
+        }
 
         e_status =
             appl_status_ok;

@@ -82,10 +82,13 @@ appl_xlib::v_default_screen(
 //
 int
 appl_xlib::v_display_width(
+    Display * const
+        p_display,
     int const
         i_screen_number)
 {
     appl_unused(
+        p_display,
         i_screen_number);
 
     return
@@ -98,10 +101,13 @@ appl_xlib::v_display_width(
 //
 int
 appl_xlib::v_display_height(
+    Display * const
+        p_display,
     int const
         i_screen_number)
 {
     appl_unused(
+        p_display,
         i_screen_number);
 
     return

@@ -27,6 +27,8 @@
 
 #include <appl_options_test.h>
 
+#include <appl_xlib_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2398,6 +2400,13 @@ appl_main(
     if (1)
     {
         appl_options_test_2(
+            p_context);
+    }
+
+    /* Test X11/Xlib */
+    if (1)
+    {
+        appl_xlib_test_1(
             p_context);
     }
 

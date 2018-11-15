@@ -36,10 +36,8 @@ struct appl_xlib_intf
         void *
             p_symbol;
 
-        Screen *
+        int
             (* p_function)(
-                struct appl_xlib * const
-                    p_xlib,
                 Display * const
                     p_display);
 
@@ -52,8 +50,8 @@ struct appl_xlib_intf
 
         int
             (* p_function)(
-                struct appl_xlib * const
-                    p_xlib,
+                Display * const
+                    p_display,
                 int const
                     i_screen_number);
 
@@ -68,8 +66,8 @@ struct appl_xlib_intf
 
         int
             (* p_function)(
-                struct appl_xlib * const
-                    p_xlib,
+                Display * const
+                    p_display,
                 int const
                     i_screen_number);
 

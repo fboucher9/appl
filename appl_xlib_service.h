@@ -66,6 +66,8 @@ class appl_xlib_service
         s_display_width(
             struct appl_xlib * const
                 p_xlib,
+            Display * const
+                p_display,
             int const
                 i_screen_number);
 
@@ -74,6 +76,8 @@ class appl_xlib_service
         s_display_height(
             struct appl_xlib * const
                 p_xlib,
+            Display * const
+                p_display,
             int const
                 i_screen_number);
 
