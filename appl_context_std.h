@@ -10,8 +10,6 @@
 
 #define INC_APPL_CONTEXT_STD_H
 
-struct appl_context_descriptor;
-
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -32,8 +30,6 @@ class appl_context_std : public appl_context
         static
         enum appl_status
             create_instance(
-                struct appl_context_descriptor const * const
-                    p_context_descriptor,
                 struct appl_context * * const
                     r_context);
 
@@ -77,9 +73,6 @@ class appl_context_std : public appl_context
             b_init_debug;
 
         bool
-            b_init_options;
-
-        bool
             b_init_thread_mgr;
 
         bool
@@ -94,10 +87,10 @@ class appl_context_std : public appl_context
         bool
             b_init_clock;
 
-        /* -- */
-
         bool
             b_init_event_mgr;
+
+        /* -- */
 
         bool
             b_init_socket_mgr;
@@ -120,10 +113,10 @@ class appl_context_std : public appl_context
         bool
             b_init_thread_cache_mgr;
 
-        /* -- */
-
         bool
             b_init_timer_mgr;
+
+        /* -- */
 
 #if defined APPL_HAVE_XLIB
         bool
@@ -134,7 +127,7 @@ class appl_context_std : public appl_context
 #endif /* #if defined APPL_HAVE_XLIB */
 
         unsigned char
-            uc_padding[6u];
+            uc_padding[7u];
 
         appl_context_std(
             class appl_context_std const & r);

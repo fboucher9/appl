@@ -15,14 +15,11 @@
 */
 enum appl_status
 appl_context_create(
-    struct appl_context_descriptor const * const
-        p_context_descriptor,
     struct appl_context * * const
         r_context)
 {
     return
         appl_context_service::s_create(
-            p_context_descriptor,
             r_context);
 
 } /* appl_context_create() */

@@ -64,10 +64,6 @@
 
 #endif /* #if defined APPL_DEBUG */
 
-#include <appl_options.h>
-
-#include <appl_options_std.h>
-
 #include <appl_thread_mgr.h>
 
 #include <appl_thread_std_mgr.h>
@@ -182,9 +178,6 @@ enum appl_status
 
 struct appl_context_init_descriptor
 {
-    struct appl_context_descriptor const *
-        p_context_descriptor;
-
     struct appl_heap *
         p_heap;
 
@@ -306,94 +299,6 @@ appl_context_std::cleanup_debug(void)
 
 } // cleanup_debug()
 #endif /* #if defined APPL_DEBUG */
-
-//
-//
-//
-enum appl_status
-appl_context_std::init_options(
-    struct appl_context_descriptor const * const
-        p_context_descriptor)
-{
-    enum appl_status
-        e_status;
-
-    e_status =
-        appl_options_std::s_create(
-            m_heap,
-            &(
-                m_options));
-
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        // append some arguments
-        unsigned char const * const *
-            p_arg_it;
-
-        p_arg_it =
-            p_context_descriptor->p_arg_min;
-
-        while (
-            (
-                appl_status_ok
-                == e_status)
-            && (
-                p_arg_it
-                != p_context_descriptor->p_arg_max))
-        {
-            unsigned char const * const
-                p_arg =
-                *(
-                    p_arg_it);
-
-            // find length of arg
-            unsigned long int const
-                i_arg_len =
-                appl_buf0_len(
-                    p_arg);
-
-            e_status =
-                m_options->v_append_argument(
-                    p_arg,
-                    p_arg + i_arg_len);
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                p_arg_it ++;
-            }
-        }
-
-        b_init_options =
-            true;
-    }
-
-    return
-        e_status;
-
-} // init_options()
-
-//
-//
-//
-void
-appl_context_std::cleanup_options(void)
-{
-    if (b_init_options)
-    {
-        m_options->v_destroy();
-
-        m_options =
-            0;
-
-        b_init_options =
-            false;
-    }
-
-} // cleanup_options()
 
 //
 //
@@ -1271,8 +1176,6 @@ void
 //
 enum appl_status
     appl_context_std::create_instance(
-        struct appl_context_descriptor const * const
-            p_context_descriptor,
         struct appl_context * * const
             r_context)
 {
@@ -1305,9 +1208,6 @@ enum appl_status
         {
             struct appl_context_init_descriptor
                 o_init_descriptor;
-
-            o_init_descriptor.p_context_descriptor =
-                p_context_descriptor;
 
             o_init_descriptor.p_heap =
                 p_heap;
@@ -1350,7 +1250,6 @@ appl_context_std::appl_context_std() :
     appl_context()
     , b_init_heap()
     , b_init_debug()
-    , b_init_options()
     , b_init_thread_mgr()
     , b_init_mutex_mgr()
     , b_init_file_mgr()
@@ -1471,13 +1370,6 @@ enum appl_status
             appl_status_ok
             == e_status)
         {
-            e_status =
-                init_options(
-                    p_context_init_descriptor->p_context_descriptor);
-
-            if (
-                appl_status_ok
-                == e_status)
             {
                 unsigned int
                     i_item_iterator;
@@ -1520,12 +1412,6 @@ enum appl_status
                             ((this)->*(p_item->p_cleanup))();
                         }
                     }
-                }
-
-                if (
-                    appl_status_ok != e_status)
-                {
-                    cleanup_options();
                 }
             }
 
@@ -1584,8 +1470,6 @@ enum appl_status
 
         ((this)->*(p_item->p_cleanup))();
     }
-
-    cleanup_options();
 
 #if defined APPL_DEBUG
     cleanup_debug();

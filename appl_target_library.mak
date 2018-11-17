@@ -16,7 +16,9 @@ target-list += appl_library
 
 appl_library-name = appl
 
-appl_library-type = lib
+appl_library-type = dll
+
+appl_library-exports = appl.exports
 
 appl_library-deps = \
     $(appl_base-deps)

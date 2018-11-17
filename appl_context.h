@@ -81,8 +81,8 @@ struct appl_context : public appl_object
 
         /* -- */
 
-        struct appl_options *
-            m_options;
+        void *
+            z_options[1u];
 
         class appl_thread_mgr *
             m_thread_mgr;

@@ -12,16 +12,6 @@
 
 struct appl_context_handle;
 
-struct appl_context_descriptor
-{
-    unsigned char const * const *
-        p_arg_min;
-
-    unsigned char const * const *
-        p_arg_max;
-
-}; /* struct appl_context_descriptor */
-
 struct appl_context;
 
 #if defined(__cplusplus)
@@ -30,8 +20,6 @@ extern "C" {
 
 enum appl_status
 appl_context_create(
-    struct appl_context_descriptor const * const
-        p_client_descriptor,
     struct appl_context * * const
         r_context);
 

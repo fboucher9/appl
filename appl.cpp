@@ -12,17 +12,11 @@ Description:
 
 #if ! defined APPL_BUILD_DLL
 
-#include <appl.h>
+#include <appl_status.h>
 
-#include <appl_object.h>
+#include <appl_main_std.h>
 
-#include <appl_context.h>
-
-#include <appl_options.h>
-
-#include <appl_allocator.h>
-
-#include <appl_heap.h>
+#include <appl_main.h>
 
 #include <appl_convert.h>
 
@@ -37,57 +31,35 @@ main(
     int
         i_exit_code;
 
-    struct appl_context *
-        p_context;
-
     enum appl_status
         e_status;
 
-    struct appl_context_descriptor
-        o_context_descriptor;
+    unsigned char * const *
+        p_arg_min;
 
-    o_context_descriptor.p_arg_min =
+    unsigned char * const *
+        p_arg_max;
+
+    p_arg_min =
         appl_convert::to_uchar_ptr_table(
             argv);
 
-    o_context_descriptor.p_arg_max =
-        appl_convert::to_uchar_ptr_table(
-            argv + argc);
+    p_arg_max =
+        p_arg_min + argc;
 
-    /* Create context */
     e_status =
-        appl_context_create(
+        appl_main_std(
+            p_arg_min,
+            p_arg_max,
             &(
-                o_context_descriptor),
-            &(
-                p_context));
+                appl_main));
 
     if (
         appl_status_ok
         == e_status)
     {
-        /* Dispatch */
-        e_status =
-            appl_main(
-                p_context,
-                p_context->m_options);
-
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            i_exit_code =
-                0;
-        }
-        else
-        {
-            i_exit_code =
-                1;
-        }
-
-        appl_object_destroy(
-            appl_context_parent(
-                p_context));
+        i_exit_code =
+            0;
     }
     else
     {

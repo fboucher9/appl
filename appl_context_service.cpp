@@ -21,8 +21,6 @@
 //
 enum appl_status
 appl_context_service::s_create(
-    struct appl_context_descriptor const * const
-        p_context_descriptor,
     struct appl_context * * const
         r_context)
 {
@@ -34,7 +32,6 @@ appl_context_service::s_create(
 
     e_status =
         appl_context_std::create_instance(
-            p_context_descriptor,
             &(
                 p_context));
 

@@ -12,9 +12,6 @@
 #define INC_APPL_CONTEXT_SERVICE_H
 
 /* Predefine */
-struct appl_context_descriptor;
-
-/* Predefine */
 struct appl_context;
 
 /* Predefine */
@@ -30,8 +27,6 @@ class appl_context_service
         static
         enum appl_status
         s_create(
-            struct appl_context_descriptor const * const
-                p_client_descriptor,
             struct appl_context * * const
                 r_context);
 

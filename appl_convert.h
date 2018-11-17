@@ -492,6 +492,34 @@ class appl_convert
 
         } // to_uchar_ptr_table()
 
+        //
+        //
+        //
+        static
+        inline
+        unsigned char const * const *
+        to_uchar_ptr_table(
+            char const * const * const
+                argv)
+        {
+            union uchar_ptr_table
+            {
+                char const * const *
+                    p_char_table;
+
+                unsigned char const * const *
+                    p_uchar_table;
+
+            } o_storage;
+
+            o_storage.p_char_table =
+                argv;
+
+            return
+                o_storage.p_uchar_table;
+
+        } // to_uchar_ptr_table()
+
 }; // appl_convert
 
 /* end-of-file: appl_convert.h */
