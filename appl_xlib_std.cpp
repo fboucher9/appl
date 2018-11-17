@@ -228,7 +228,7 @@ enum appl_status
     else
     {
         static unsigned char const g_msg0[] = "failed dlsym of XOpenDisplay\n";
-        appl_debug_print0(this, g_msg0);
+        appl_debug_print0(m_context, g_msg0);
     }
 #endif /* #if defined APPL_DEBUG */
 
@@ -280,7 +280,7 @@ enum appl_status
     else
     {
         static unsigned char const g_msg0[] = "failed dlsym of XCloseDisplay\n";
-        appl_debug_print0(this, g_msg0);
+        appl_debug_print0(m_context, g_msg0);
     }
 #endif /* #if defined APPL_DEBUG */
 
@@ -333,7 +333,7 @@ enum appl_status
     else
     {
         static unsigned char const g_msg0[] = "failed dlsym of XDefaultScreen\n";
-        appl_debug_print0(this, g_msg0);
+        appl_debug_print0(m_context, g_msg0);
     }
 #endif /* #if defined APPL_DEBUG */
 
@@ -385,7 +385,7 @@ enum appl_status
     else
     {
         static unsigned char const g_msg0[] = "failed dlsym of XDisplayWidth\n";
-        appl_debug_print0(this, g_msg0);
+        appl_debug_print0(m_context, g_msg0);
     }
 #endif /* #if defined APPL_DEBUG */
 
@@ -438,7 +438,7 @@ enum appl_status
     else
     {
         static unsigned char const g_msg0[] = "failed dlsym of XDisplayHeight\n";
-        appl_debug_print0(this, g_msg0);
+        appl_debug_print0(m_context, g_msg0);
     }
 #endif /* #if defined APPL_DEBUG */
 
@@ -553,7 +553,7 @@ enum appl_status
         else
         {
             static unsigned char const g_msg0[] = "failed to create mutex for xlib\n";
-            appl_debug_print0(this, g_msg0);
+            appl_debug_print0(m_context, g_msg0);
         }
 #endif /* #if defined APPL_DEBUG */
 
@@ -568,7 +568,7 @@ enum appl_status
     else
     {
         static unsigned char const g_msg0[] = "failed dlopen of xlib\n";
-        appl_debug_print0(this, g_msg0);
+        appl_debug_print0(m_context, g_msg0);
     }
 #endif /* #if defined APPL_DEBUG */
 

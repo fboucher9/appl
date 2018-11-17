@@ -68,6 +68,19 @@ class appl_library_std_node : public appl_library
         void *
             m_library_handle;
 
+        void *
+            pv_padding[1u];
+
+        // --
+
+        bool
+            b_library_handle_initialized;
+
+        unsigned char
+            uc_padding[7u];
+
+        // --
+
         appl_library_std_node(
             class appl_library_std_node const & r);
 

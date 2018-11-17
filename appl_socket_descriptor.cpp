@@ -10,6 +10,8 @@
 
 #include <appl_property_handle.h>
 
+#include <appl_object_handle.h>
+
 #include <appl_types.h>
 
 #include <appl_object.h>
@@ -222,7 +224,9 @@ appl_socket_property_assert_guid(
     {
         /* break to debugger ... */
         appl_debug_break(
-            p_socket_property);
+            appl_object_get_context(
+                appl_socket_property_const_parent(
+                    p_socket_property)));
     }
 } /* assert_guid() */
 #endif /* #if defined APPL_DEBUG */

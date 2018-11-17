@@ -71,7 +71,8 @@ enum appl_status
 //
 appl_library_std_node::appl_library_std_node() :
     appl_library(),
-    m_library_handle()
+    m_library_handle(),
+    b_library_handle_initialized()
 {
 }
 
@@ -123,6 +124,9 @@ enum appl_status
         {
             m_library_handle =
                 p_dlopen_result;
+
+            b_library_handle_initialized =
+                true;
         }
         else
         {
@@ -150,13 +154,16 @@ enum appl_status
         e_status;
 
     if (
-        m_library_handle)
+        b_library_handle_initialized)
     {
         dlclose(
             m_library_handle);
 
         m_library_handle =
             0;
+
+        b_library_handle_initialized =
+            false;
     }
 
     e_status =

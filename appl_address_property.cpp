@@ -16,6 +16,8 @@
 
 #include <appl_object.h>
 
+#include <appl_object_handle.h>
+
 #include <appl_property_types.h>
 
 #include <appl_property.h>
@@ -260,7 +262,9 @@ appl_address_property_assert_guid(
     else
     {
         appl_debug_print0(
-            p_address_property,
+            appl_object_get_context(
+                appl_address_property_const_parent(
+                    p_address_property)),
             appl_convert::to_uchar_ptr(
                 "invalid guid for appl_address_property object\n"));
     }
