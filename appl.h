@@ -223,6 +223,8 @@ Description:
 
 #include <appl_main.h>
 
+#include <appl_main_std.h>
+
 #endif /* #if defined(APPL_CONFIG_WITH_MAIN) */
 
 /* end-of-file: appl.h */

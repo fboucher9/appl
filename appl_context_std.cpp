@@ -1332,11 +1332,13 @@ appl_context_std::g_init_cleanup_items[] =
     {
         & appl_context_std::init_timer_mgr,
         & appl_context_std::cleanup_timer_mgr
-    },
-    {
+    }
+#if defined APPL_HAVE_XLIB
+    , {
         & appl_context_std::init_xlib,
         & appl_context_std::cleanup_xlib
     }
+#endif /* #if defined APPL_HAVE_XLIB */
 };
 
 //
