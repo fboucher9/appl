@@ -8,11 +8,11 @@
 
 #include <appl_buf0.h>
 
+#include <appl_types.h>
+
 #include <appl_heap_handle.h>
 
 #include <appl_buf.h>
-
-#include <appl_types.h>
 
 #include <appl_convert.h>
 

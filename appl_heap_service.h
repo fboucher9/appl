@@ -11,6 +11,12 @@
 
 #define INC_APPL_HEAP_SERVICE_H
 
+/* Header file dependency */
+#if ! defined INC_APPL_TYPES_H
+#error include appl_types.h before
+#endif /* #if ! defined INC_APPL_TYPES_H */
+
+/* Predefine */
 struct appl_context;
 
 /* Assert compiler */
@@ -18,6 +24,7 @@ struct appl_context;
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
+// Predefine
 class appl_heap_service;
 
 //
@@ -32,7 +39,7 @@ class appl_heap_service
             s_alloc(
                 struct appl_context const * const
                     p_context,
-                unsigned long int const
+                appl_size_t const
                     i_length,
                 void * * const
                     r_buf);
@@ -42,7 +49,7 @@ class appl_heap_service
             s_free(
                 struct appl_context const * const
                     p_context,
-                unsigned long int const
+                appl_size_t const
                     i_length,
                 void * const
                     p_buf);

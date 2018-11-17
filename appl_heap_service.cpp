@@ -6,9 +6,9 @@
 
 #include <appl_status.h>
 
-#include <appl_heap_service.h>
-
 #include <appl_types.h>
+
+#include <appl_heap_service.h>
 
 #include <appl_object.h>
 
@@ -36,7 +36,7 @@ enum appl_status
     appl_heap_service::s_alloc(
         struct appl_context const * const
             p_context,
-        unsigned long int const
+        appl_size_t const
             i_length,
         void * * const
             r_buf)
@@ -61,7 +61,7 @@ enum appl_status
     appl_heap_service::s_free(
         struct appl_context const * const
             p_context,
-        unsigned long int const
+        appl_size_t const
             i_length,
         void * const
             p_buf)
