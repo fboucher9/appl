@@ -78,7 +78,8 @@ appl_base-deps := \
     appl_log.cpp \
     appl_log_std.cpp \
     appl_log_impl.cpp \
-    appl_main_std.cpp \
+    appl_main.cpp \
+    appl_main_service.cpp \
     appl_module_handle.cpp \
     appl_module_service.cpp \
     appl_module.cpp \

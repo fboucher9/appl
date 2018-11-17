@@ -1023,17 +1023,13 @@ void
     b_continue =
         true;
 
-    struct appl_context * const
-        p_context =
-        m_context;
-
 #if defined APPL_DEBUG
     {
         static unsigned char const s_msg[] =
             "appl_thread_cache::f_task enter {...\n";
 
         appl_debug_print0(
-            p_context,
+            m_context,
             s_msg);
     }
 #endif /* #if defined APPL_DEBUG */
@@ -1068,7 +1064,7 @@ void
                         "appl_thread_cache::f_task kill detected\n";
 
                     appl_debug_print0(
-                        p_context,
+                        m_context,
                         s_msg);
                 }
 #endif /* #if defined APPL_DEBUG */
@@ -1084,7 +1080,7 @@ void
                         "appl_thread_cache::f_task before cb\n";
 
                     appl_debug_print0(
-                        p_context,
+                        m_context,
                         s_msg);
                 }
 #endif /* #if defined APPL_DEBUG */
@@ -1098,7 +1094,7 @@ void
                         "appl_thread_cache::f_task after cb\n";
 
                     appl_debug_print0(
-                        p_context,
+                        m_context,
                         s_msg);
                 }
 #endif /* #if defined APPL_DEBUG */
@@ -1124,7 +1120,7 @@ void
             "appl_thread_cache::f_task leave ...}\n";
 
         appl_debug_print0(
-            p_context,
+            m_context,
             s_msg);
     }
 #endif /* #if defined APPL_DEBUG */

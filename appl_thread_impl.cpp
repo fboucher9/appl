@@ -412,8 +412,8 @@ CALLBACK
 DWORD
     appl_thread_impl::thread_windows_handler(void)
 {
-    (*(m_descriptor.p_entry))(
-        m_descriptor.p_context);
+    (*(m_descriptor.o_callback.p_entry))(
+        m_descriptor.o_callback.p_context);
 
     DWORD const
         u_exit_code =

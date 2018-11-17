@@ -4,6 +4,8 @@
 
 */
 
+#if defined APPL_HAVE_XLIB
+
 #include <stdio.h>
 
 #include <X11/Xlib.h>
@@ -94,5 +96,11 @@ appl_xlib_test_1(
         e_status;
 
 } /* appl_xlib_test_1() */
+
+#else /* #if defined APPL_HAVE_XLIB */
+
+typedef void appl_dummy;
+
+#endif /* #if defined APPL_HAVE_XLIB */
 
 /* end-of-file: appl_xlib_test.c */

@@ -24,13 +24,18 @@ struct appl_options;
 extern "C" {
 #endif /* #if defined(__cplusplus) */
 
-/* extern */
-enum appl_status
-appl_main(
-    struct appl_context * const
-        p_context,
-    struct appl_options const * const
-        p_options);
+int
+    appl_main(
+        int const
+            i_arg_count,
+        char * * const
+            p_arg_vector,
+        enum appl_status (*
+            p_main_callback)(
+            struct appl_context * const
+                p_context,
+            struct appl_options const * const
+                p_options));
 
 #if defined(__cplusplus)
 } /* extern "C" */

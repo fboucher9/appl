@@ -20,6 +20,8 @@ appl_library-type = dll
 
 appl_library-exports = appl.exports
 
+appl_library-libs = pthread dl rt winsock2
+
 appl_library-deps = \
     $(appl_base-deps)
 

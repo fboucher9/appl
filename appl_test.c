@@ -2379,8 +2379,9 @@ appl_test_thread_cache(
 
 } /* appl_test_thread_cache() */
 
+static
 enum appl_status
-appl_main(
+appl_test_main(
     struct appl_context * const
         p_context,
     struct appl_options const * const
@@ -2403,12 +2404,14 @@ appl_main(
             p_context);
     }
 
+#if defined APPL_HAVE_XLIB
     /* Test X11/Xlib */
     if (1)
     {
         appl_xlib_test_1(
             p_context);
     }
+#endif /* #if defined APPL_HAVE_XLIB */
 
     /* Test memory leak */
     if (1)
@@ -2766,6 +2769,19 @@ appl_main(
     return
         e_status;
 
+}
+
+int
+main(
+    int argc,
+    char** argv)
+{
+    return
+        appl_main(
+            argc,
+            argv,
+            &(
+                appl_test_main));
 }
 
 #else /* #if defined APPL_BUILD_EXE */
