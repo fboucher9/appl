@@ -10,7 +10,7 @@
 
 #include <appl_object.h>
 
-#include <appl_socket_mgr.h>
+#include <socket/appl_socket_mgr.h>
 
 #include <appl_unused.h>
 

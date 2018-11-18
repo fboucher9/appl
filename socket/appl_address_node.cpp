@@ -15,7 +15,7 @@ Description:
 
 #include <appl_object.h>
 
-#include <appl_address_node.h>
+#include <socket/appl_address_node.h>
 
 #include <appl_unused.h>
 

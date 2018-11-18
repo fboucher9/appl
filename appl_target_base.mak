@@ -14,11 +14,11 @@ appl_base-deps := \
     appl.cpp \
     appl_tree.cpp \
     appl_binary_heap.cpp \
-    appl_address_handle.cpp \
-    appl_address_node.cpp \
-    appl_address_property.cpp \
-    appl_address_service.cpp \
-    appl_address_std_node.cpp \
+    socket/appl_address_handle.cpp \
+    socket/appl_address_node.cpp \
+    socket/appl_address_property.cpp \
+    socket/appl_address_service.cpp \
+    socket/appl_address_std_node.cpp \
     appl_allocator.cpp \
     appl_allocator_handle.cpp \
     appl_allocator_service.cpp \
@@ -128,15 +128,15 @@ appl_base-deps := \
     random/appl_random_w32_crypto.cpp \
     appl_refcount.cpp \
     appl_refcount_handle.cpp \
-    appl_socket_descriptor.cpp \
-    appl_socket_handle.cpp \
-    appl_socket_mgr.cpp \
-    appl_socket_node.cpp \
-    appl_socket_service.cpp \
-    appl_socket_std_mgr.cpp \
-    appl_socket_std_node.cpp \
-    appl_socket_w32_mgr.cpp \
-    appl_socket_w32_node.cpp \
+    socket/appl_socket_descriptor.cpp \
+    socket/appl_socket_handle.cpp \
+    socket/appl_socket_mgr.cpp \
+    socket/appl_socket_node.cpp \
+    socket/appl_socket_service.cpp \
+    socket/appl_socket_std_mgr.cpp \
+    socket/appl_socket_std_node.cpp \
+    socket/appl_socket_w32_mgr.cpp \
+    socket/appl_socket_w32_node.cpp \
     appl_string.cpp \
     appl_string_handle.cpp \
     appl_string_service.cpp \

@@ -12,7 +12,7 @@
 
 #include <appl_socket_descriptor.h>
 
-#include <appl_socket_node.h>
+#include <socket/appl_socket_node.h>
 
 #include <appl_unused.h>
 

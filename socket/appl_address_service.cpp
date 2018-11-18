@@ -11,17 +11,17 @@ Description:
 
 #include <appl_status.h>
 
-#include <appl_address_service.h>
+#include <socket/appl_address_service.h>
 
 #include <appl_types.h>
 
 #include <appl_object.h>
 
-#include <appl_socket_mgr.h>
+#include <socket/appl_socket_mgr.h>
 
 #include <appl_context.h>
 
-#include <appl_address_node.h>
+#include <socket/appl_address_node.h>
 
 #include <appl_property_types.h>
 

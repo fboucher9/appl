@@ -18,19 +18,19 @@
 
 #include <appl_object.h>
 
-#include <appl_socket_mgr.h>
+#include <socket/appl_socket_mgr.h>
 
-#include <appl_socket_std_mgr.h>
+#include <socket/appl_socket_std_mgr.h>
 
 #include <appl_socket_descriptor.h>
 
-#include <appl_socket_node.h>
+#include <socket/appl_socket_node.h>
 
-#include <appl_socket_std_node.h>
+#include <socket/appl_socket_std_node.h>
 
-#include <appl_address_node.h>
+#include <socket/appl_address_node.h>
 
-#include <appl_address_std_node.h>
+#include <socket/appl_address_std_node.h>
 
 #include <appl_convert.h>
 

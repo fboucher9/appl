@@ -96,15 +96,15 @@
 
 #include <event/appl_event_std_mgr.h>
 
-#include <appl_socket_mgr.h>
+#include <socket/appl_socket_mgr.h>
 
 #if defined APPL_OS_LINUX
 
-#include <appl_socket_std_mgr.h>
+#include <socket/appl_socket_std_mgr.h>
 
 #elif defined APPL_OS_WINDOWS
 
-#include <appl_socket_w32_mgr.h>
+#include <socket/appl_socket_w32_mgr.h>
 
 #endif /* #if defined APPL_OS_Xx */
 

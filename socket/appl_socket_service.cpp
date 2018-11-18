@@ -8,21 +8,46 @@
 
 #include <appl_socket_descriptor.h>
 
-#include <appl_socket_handle.h>
-
-#include <appl_socket_service.h>
+#include <socket/appl_socket_service.h>
 
 #include <appl_types.h>
 
 #include <appl_object.h>
 
-#include <appl_socket_node.h>
+#include <socket/appl_socket_mgr.h>
 
-/*
+#include <appl_context.h>
 
-*/
+#include <socket/appl_socket_node.h>
+
+#include <socket/appl_address_node.h>
+
+/* Assert compiler */
+#if ! defined __cplusplus
+#error use c++ compiler
+#endif /* #if ! defined __cplusplus */
+
+//
+//  Function: s_create
+//
+//  Description:
+//      Create an instance of a socket node.
+//
+//  Parameters:
+//      p_context
+//          (input) Library context handle
+//
+//      p_socket_descriptor
+//          (input) Pointer to socket descriptor structure
+//
+//      r_socket
+//          (output) Pointer to returned socket handle
+//
+// Returns:
+//      appl_status_ok on success.
+//
 enum appl_status
-appl_socket_create(
+appl_socket_service::s_create(
     struct appl_context * const
         p_context,
     struct appl_socket_property const * const
@@ -33,48 +58,35 @@ appl_socket_create(
     enum appl_status
         e_status;
 
+    // Dispatch to socket manager
     e_status =
-        appl_socket_service::s_create(
-            p_context,
+        p_context->m_socket_mgr->v_create_socket(
             p_socket_descriptor,
             r_socket);
 
     return
         e_status;
 
-} /* appl_socket_create() */
+} // s_create()
 
-/*
-
-*/
-struct appl_object *
-appl_socket_parent(
-    struct appl_socket * const
-        p_socket)
-{
-    return
-        p_socket;
-
-} /* parent() */
-
-/*
-
-*/
-struct appl_object const *
-appl_socket_const_parent(
-    struct appl_socket const * const
-        p_socket)
-{
-    return
-        p_socket;
-
-} /* const_parent() */
-
-/*
-
-*/
+//
+//  Function: s_accept()
+//
+//  Description:
+//      Accept a connection from remote machine.
+//
+//  Parameters:
+//      p_socket
+//          (input) Socket handle of listen socket.
+//
+//      r_socket
+//          (output) Socket handle of connected remote machine.
+//
+//      r_address
+//          (output) Address of remote machine.
+//
 enum appl_status
-appl_socket_accept(
+appl_socket_service::s_accept(
     struct appl_socket * const
         p_socket,
     struct appl_socket * * const
@@ -82,19 +94,35 @@ appl_socket_accept(
     struct appl_address * * const
         r_address)
 {
-    return
-        appl_socket_service::s_accept(
-            p_socket,
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_socket->v_accept(
             r_socket,
             r_address);
 
-} /* accept() */
+    return
+        e_status;
 
-/*
+} // s_accept()
 
-*/
+//
+//  Function: s_send()
+//
+//  Description:
+//      Send a packet to connected address.
+//
+//  Parameters:
+//      p_socket
+//          (input) Socket handle
+//
+//      p_buf
+//          (modified) Buffer to send.  Pointers will be updated to reflect
+//          actual number of bytes sent.
+//
 enum appl_status
-appl_socket_send(
+appl_socket_service::s_send(
     struct appl_socket * const
         p_socket,
     unsigned char const * const
@@ -107,9 +135,9 @@ appl_socket_send(
     enum appl_status
         e_status;
 
+    // Dispatch to socket node
     e_status =
-        appl_socket_service::s_send(
-            p_socket,
+        p_socket->v_send(
             p_buf_min,
             p_buf_max,
             r_count);
@@ -117,13 +145,13 @@ appl_socket_send(
     return
         e_status;
 
-} /* appl_socket_send() */
+} // s_send()
 
-/*
-
-*/
+//
+//
+//
 enum appl_status
-appl_socket_recv(
+appl_socket_service::s_recv(
     struct appl_socket * const
         p_socket,
     unsigned char * const
@@ -136,9 +164,9 @@ appl_socket_recv(
     enum appl_status
         e_status;
 
+    // Dispatch to socket node
     e_status =
-        appl_socket_service::s_recv(
-            p_socket,
+        p_socket->v_recv(
             p_buf_min,
             p_buf_max,
             r_count);
@@ -146,13 +174,13 @@ appl_socket_recv(
     return
         e_status;
 
-} /* appl_socket_recv() */
+} // s_recv()
 
-/*
-
-*/
+//
+//
+//
 enum appl_status
-appl_socket_sendto(
+appl_socket_service::s_sendto(
     struct appl_socket * const
         p_socket,
     unsigned char const * const
@@ -167,9 +195,9 @@ appl_socket_sendto(
     enum appl_status
         e_status;
 
+    // Dispatch to socket node
     e_status =
-        appl_socket_service::s_sendto(
-            p_socket,
+        p_socket->v_sendto(
             p_buf_min,
             p_buf_max,
             r_count,
@@ -178,13 +206,13 @@ appl_socket_sendto(
     return
         e_status;
 
-} /* appl_socket_sendto() */
+} // s_sendto()
 
-/*
-
-*/
+//
+//
+//
 enum appl_status
-appl_socket_recvfrom(
+appl_socket_service::s_recvfrom(
     struct appl_socket * const
         p_socket,
     unsigned char * const
@@ -199,9 +227,9 @@ appl_socket_recvfrom(
     enum appl_status
         e_status;
 
+    // Dispatch to socket node
     e_status =
-        appl_socket_service::s_recvfrom(
-            p_socket,
+        p_socket->v_recvfrom(
             p_buf_min,
             p_buf_max,
             r_count,
@@ -210,13 +238,13 @@ appl_socket_recvfrom(
     return
         e_status;
 
-} /* appl_socket_recvfrom() */
+} // s_recvfrom()
 
-/*
-
-*/
+//
+//
+//
 enum appl_status
-appl_socket_wait(
+appl_socket_service::s_wait(
     struct appl_socket * const
         p_socket,
     enum appl_socket_wait_type const
@@ -229,9 +257,9 @@ appl_socket_wait(
     enum appl_status
         e_status;
 
+    // Dispatch to socket node
     e_status =
-        appl_socket_service::s_wait(
-            p_socket,
+        p_socket->v_wait(
             e_wait_type,
             i_wait_freq,
             i_wait_count);
@@ -239,10 +267,13 @@ appl_socket_wait(
     return
         e_status;
 
-} /* appl_socket_wait() */
+} // s_wait()
 
+//
+//
+//
 enum appl_status
-appl_socket_poll(
+appl_socket_service::s_poll(
     struct appl_context * const
         p_context,
     struct appl_poll_descriptor const * const
@@ -257,9 +288,12 @@ appl_socket_poll(
     enum appl_status
         e_status;
 
+    class appl_socket_mgr * const
+        p_socket_mgr =
+        p_context->m_socket_mgr;
+
     e_status =
-        appl_socket_service::s_poll(
-            p_context,
+        p_socket_mgr->v_poll(
             p_poll_descriptor_min,
             p_poll_descriptor_max,
             i_wait_freq,
@@ -268,6 +302,6 @@ appl_socket_poll(
     return
         e_status;
 
-} /* appl_socket_poll() */
+} // s_poll()
 
-/* end-of-file: appl_socket_handle.cpp */
+/* end-of-file: appl_socket_service.cpp */
