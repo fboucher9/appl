@@ -21,6 +21,7 @@ appl-toolchain-mingw-common-flags = \
     -D_DEFAULT_SOURCE \
     -DAPPL_OS_WINDOWS \
     -I$(APPL_SRC). \
+    -I$(APPL_SRC)include \
     -pedantic \
     -Wall \
     -Wextra \

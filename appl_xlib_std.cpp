@@ -32,7 +32,7 @@ Description:
 
 #include <appl_library_handle.h>
 
-#include <appl_library_node.h>
+#include <library/appl_library_node.h>
 
 #include <appl_mutex_handle.h>
 

@@ -64,9 +64,9 @@
 
 #endif /* #if defined APPL_DEBUG */
 
-#include <appl_thread_mgr.h>
+#include <thread/appl_thread_mgr.h>
 
-#include <appl_thread_std_mgr.h>
+#include <thread/appl_thread_std_mgr.h>
 
 #include <appl_file_mgr.h>
 
@@ -80,15 +80,15 @@
 
 #include <appl_poll_mgr.h>
 
-#include <appl_clock.h>
+#include <clock/appl_clock.h>
 
 #if defined APPL_OS_LINUX
 
-#include <appl_clock_std.h>
+#include <clock/appl_clock_std.h>
 
 #elif defined APPL_OS_WINDOWS
 
-#include <appl_clock_w32.h>
+#include <clock/appl_clock_w32.h>
 
 #endif /* #if defined APPL_OS_Xx */
 
@@ -108,27 +108,27 @@
 
 #endif /* #if defined APPL_OS_Xx */
 
-#include <appl_env.h>
+#include <env/appl_env.h>
 
 #if defined APPL_OS_LINUX
 
-#include <appl_env_std.h>
+#include <env/appl_env_std.h>
 
 #elif defined APPL_OS_WINDOWS
 
-#include <appl_env_w32.h>
+#include <env/appl_env_w32.h>
 
 #endif /* #if defined APPL_OS_Xx */
 
-#include <appl_random_mgr.h>
+#include <random/appl_random_mgr.h>
 
 #if defined APPL_OS_LINUX
 
-#include <appl_random_std_mgr.h>
+#include <random/appl_random_std_mgr.h>
 
 #elif defined APPL_OS_WINDOWS
 
-#include <appl_random_w32_mgr.h>
+#include <random/appl_random_w32_mgr.h>
 
 #endif
 

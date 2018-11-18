@@ -25,11 +25,11 @@ appl_base-deps := \
     appl_buf.cpp \
     appl_buf0.cpp \
     appl_chunk.cpp \
-    appl_clock.cpp \
-    appl_clock_handle.cpp \
-    appl_clock_service.cpp \
-    appl_clock_std.cpp \
-    appl_clock_w32.cpp \
+    clock/appl_clock.cpp \
+    clock/appl_clock_handle.cpp \
+    clock/appl_clock_service.cpp \
+    clock/appl_clock_std.cpp \
+    clock/appl_clock_w32.cpp \
     appl_context.cpp \
     appl_context_handle.cpp \
     appl_context_service.cpp \
@@ -39,11 +39,11 @@ appl_base-deps := \
     appl_debug_handle.cpp \
     appl_debug_std.cpp \
     appl_debug_w32.cpp \
-    appl_env.cpp \
-    appl_env_handle.cpp \
-    appl_env_service.cpp \
-    appl_env_std.cpp \
-    appl_env_w32.cpp \
+    env/appl_env.cpp \
+    env/appl_env_handle.cpp \
+    env/appl_env_service.cpp \
+    env/appl_env_std.cpp \
+    env/appl_env_w32.cpp \
     appl_event_handle.cpp \
     appl_event_mgr.cpp \
     appl_event_node.cpp \
@@ -64,14 +64,14 @@ appl_base-deps := \
     appl_heap_service.cpp \
     appl_heap_std.cpp \
     appl_heap_impl.cpp \
-    appl_library_handle.cpp \
-    appl_library_service.cpp \
-    appl_library_mgr.cpp \
-    appl_library_node.cpp \
-    appl_library_w32_mgr.cpp \
-    appl_library_w32_node.cpp \
-    appl_library_std_mgr.cpp \
-    appl_library_std_node.cpp \
+    library/appl_library_handle.cpp \
+    library/appl_library_service.cpp \
+    library/appl_library_mgr.cpp \
+    library/appl_library_node.cpp \
+    library/appl_library_w32_mgr.cpp \
+    library/appl_library_w32_node.cpp \
+    library/appl_library_std_mgr.cpp \
+    library/appl_library_std_node.cpp \
     appl_list.cpp \
     appl_log_handle.cpp \
     appl_log_service.cpp \
@@ -112,20 +112,20 @@ appl_base-deps := \
     appl_property_handle.cpp \
     appl_property_service.cpp \
     appl_property_std.cpp \
-    appl_queue.cpp \
-    appl_queue_handle.cpp \
-    appl_queue_impl.cpp \
-    appl_queue_service.cpp \
-    appl_queue_std.cpp \
-    appl_random_handle.cpp \
-    appl_random_service.cpp \
-    appl_random_mgr.cpp \
-    appl_random.cpp \
-    appl_random_std_mgr.cpp \
-    appl_random_w32_mgr.cpp \
-    appl_random_pseudo.cpp \
-    appl_random_std_crypto.cpp \
-    appl_random_w32_crypto.cpp \
+    queue/appl_queue.cpp \
+    queue/appl_queue_handle.cpp \
+    queue/appl_queue_impl.cpp \
+    queue/appl_queue_service.cpp \
+    queue/appl_queue_std.cpp \
+    random/appl_random_handle.cpp \
+    random/appl_random_service.cpp \
+    random/appl_random_mgr.cpp \
+    random/appl_random.cpp \
+    random/appl_random_std_mgr.cpp \
+    random/appl_random_w32_mgr.cpp \
+    random/appl_random_pseudo.cpp \
+    random/appl_random_std_crypto.cpp \
+    random/appl_random_w32_crypto.cpp \
     appl_refcount.cpp \
     appl_refcount_handle.cpp \
     appl_socket_descriptor.cpp \
@@ -140,15 +140,15 @@ appl_base-deps := \
     appl_string.cpp \
     appl_string_handle.cpp \
     appl_string_service.cpp \
-    appl_thread_impl.cpp \
-    appl_thread_cache.cpp \
-    appl_thread_handle.cpp \
-    appl_thread_mgr.cpp \
-    appl_thread_node.cpp \
-    appl_thread_property.cpp \
-    appl_thread_service.cpp \
-    appl_thread_std_mgr.cpp \
-    appl_thread_std_node.cpp \
+    thread/appl_thread_impl.cpp \
+    thread/appl_thread_cache.cpp \
+    thread/appl_thread_handle.cpp \
+    thread/appl_thread_mgr.cpp \
+    thread/appl_thread_node.cpp \
+    thread/appl_thread_property.cpp \
+    thread/appl_thread_service.cpp \
+    thread/appl_thread_std_mgr.cpp \
+    thread/appl_thread_std_node.cpp \
     appl_timer_handle.cpp \
     appl_timer_service.cpp \
     appl_timer_mgr.cpp \

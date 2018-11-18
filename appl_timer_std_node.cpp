@@ -30,9 +30,9 @@
 
 #include <appl_thread_property.h>
 
-#include <appl_thread_node.h>
+#include <thread/appl_thread_node.h>
 
-#include <appl_thread_mgr.h>
+#include <thread/appl_thread_mgr.h>
 
 #include <appl_event_handle.h>
 
@@ -50,7 +50,7 @@
 
 #include <appl_heap.h>
 
-#include <appl_clock.h>
+#include <clock/appl_clock.h>
 
 #include <appl_convert.h>
 

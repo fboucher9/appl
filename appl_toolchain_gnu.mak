@@ -23,6 +23,7 @@ appl-toolchain-gnu-common-flags = \
     -D_DEFAULT_SOURCE \
     -DAPPL_HAVE_XLIB \
     -I$(APPL_SRC). \
+    -I$(APPL_SRC)include \
     -pedantic \
     -Wall \
     -Wextra \
@@ -174,12 +175,12 @@ define appl-toolchain-gnu-debug-exe-linker
 endef
 
 define appl-toolchain-gnu-debug-exe-c-compiler
-	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-debug-exe-cflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-debug-exe-cflags) $(call appl-expand-incs, $(4)) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(appl-toolchain-gnu-cc) @$(strip $(1)).cmd
 endef
 
 define appl-toolchain-gnu-debug-exe-cxx-compiler
-	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-debug-exe-cxxflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-debug-exe-cxxflags) $(call appl-expand-incs, $(4)) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(appl-toolchain-gnu-cxx) @$(strip $(1)).cmd
 endef
 
@@ -207,12 +208,12 @@ define appl-toolchain-gnu-debug-dll-linker
 endef
 
 define appl-toolchain-gnu-debug-dll-c-compiler
-	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-debug-dll-cflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-debug-dll-cflags) $(call appl-expand-incs, $(4)) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(appl-toolchain-gnu-cc) @$(strip $(1)).cmd
 endef
 
 define appl-toolchain-gnu-debug-dll-cxx-compiler
-	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-debug-dll-cxxflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-debug-dll-cxxflags) $(call appl-expand-incs, $(4)) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(appl-toolchain-gnu-cxx) @$(strip $(1)).cmd
 endef
 
@@ -239,12 +240,12 @@ define appl-toolchain-gnu-debug-lib-linker
 endef
 
 define appl-toolchain-gnu-debug-lib-c-compiler
-	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-debug-lib-c-flags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-debug-lib-c-flags) $(call appl-expand-incs, $(4)) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(appl-toolchain-gnu-cc) @$(strip $(1)).cmd
 endef
 
 define appl-toolchain-gnu-debug-lib-cxx-compiler
-	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-debug-lib-cxx-flags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-debug-lib-cxx-flags) $(call appl-expand-incs, $(4)) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(appl-toolchain-gnu-cxx) @$(strip $(1)).cmd
 endef
 
@@ -272,12 +273,12 @@ define appl-toolchain-gnu-release-exe-linker
 endef
 
 define appl-toolchain-gnu-release-exe-c-compiler
-	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-release-exe-cflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-release-exe-cflags) $(call appl-expand-incs, $(4)) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(appl-toolchain-gnu-cc) @$(strip $(1)).cmd
 endef
 
 define appl-toolchain-gnu-release-exe-cxx-compiler
-	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-release-exe-cxxflags) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
+	$(APPL_VERBOSE)echo -c -o $(1) $(appl-toolchain-gnu-release-exe-cxxflags) $(call appl-expand-incs, $(4)) $(3) -MT $(1) -MMD -MP -MF $(1).d $(2) > $(1).cmd
 	$(APPL_VERBOSE)$(appl-toolchain-gnu-cxx) @$(strip $(1)).cmd
 endef
 

@@ -26,7 +26,8 @@ appl-clang-common-flags = \
     -DAPPL_OS_LINUX \
     -DAPPL_BUILD_EXE \
     -DAPPL_HAVE_XLIB \
-    -I$(APPL_SRC).
+    -I$(APPL_SRC). \
+    -I$(APPL_SRC)include
 
 appl-clang-common-cflags = \
     -std=c89
