@@ -27,8 +27,8 @@ struct appl_string_descriptor
     unsigned long int
         i_alloc_len;
 
-    unsigned long int
-        ul_padding[1u];
+#define PADDING (APPL_SIZEOF_LONG)
+#include <appl_padding.h>
 
 }; /* struct appl_string_descriptor */
 

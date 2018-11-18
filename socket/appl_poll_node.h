@@ -56,17 +56,18 @@ struct appl_poll : public appl_node
         virtual
         ~appl_poll();
 
-        class appl_poll_mgr *
-            m_poll_mgr;
+        // --
 
         struct appl_poll_descriptor
             m_descriptor;
 
+        // --
+
+        class appl_poll_mgr *
+            m_poll_mgr;
+
         int
             m_fd;
-
-        unsigned int
-            ui_padding[3u];
 
         bool
             m_busy;
@@ -74,8 +75,10 @@ struct appl_poll : public appl_node
         bool
             m_avail;
 
-        unsigned char
-            uc_padding[6u];
+#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_INT + 2)
+#include <appl_padding.h>
+
+        // --
 
     private:
 

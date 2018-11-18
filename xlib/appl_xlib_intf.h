@@ -73,8 +73,8 @@ struct appl_xlib_intf
 
     } o_display_height;
 
-    void *
-        pv_padding[1u];
+#define PADDING (APPL_SIZEOF_PTR)
+#include <appl_padding.h>
 
 }; /* struct appl_xlib_intf */
 

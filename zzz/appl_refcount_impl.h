@@ -33,16 +33,11 @@ class appl_refcount_impl
         struct appl_mutex *
             m_mutex;
 
-        void *
-            pv_padding[1u];
-
-        // --
-
         signed long int
             m_count;
 
-        unsigned long int
-            ul_padding[1u];
+#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG)
+#include <appl_padding.h>
 
     private:
 

@@ -59,11 +59,15 @@ class appl_event_std_node : public appl_event
         class appl_event_impl
             m_event_impl;
 
+        // --
+
         bool
             m_event_impl_initialized;
 
-        unsigned char
-            m_uc_padding[7u];
+#define PADDING (1)
+#include <appl_padding.h>
+
+        // --
 
         appl_event_std_node(
             class appl_event_std_node const & r);

@@ -99,18 +99,13 @@ class appl_xlib_std : public appl_xlib
 
         // --
 
-        signed long int
-            m_ref_count;
-
-        unsigned long int
-            ul_padding[1u];
-
-        // --
-
         struct appl_xlib_intf
             m_xlib_intf;
 
         // --
+
+        signed long int
+            m_ref_count;
 
         bool
             m_xlib_handle_initialized;
@@ -118,8 +113,8 @@ class appl_xlib_std : public appl_xlib
         bool
             m_lock_initialized;
 
-        unsigned char
-            uc_padding[6u];
+#define PADDING (APPL_SIZEOF_LONG + 2)
+#include <appl_padding.h>
 
         // --
 

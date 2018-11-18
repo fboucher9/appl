@@ -62,20 +62,26 @@ class appl_poll_mgr : public appl_object
         virtual
         ~appl_poll_mgr();
 
+        // --
+
         struct appl_thread *
             p_thread;
 
         struct appl_mutex *
             p_mutex;
 
+        // --
+
         class appl_node
             o_nodes;
+
+        // --
 
         signed long int volatile
             m_kill;
 
-        unsigned long int
-            ul_padding[1u];
+#define PADDING (APPL_SIZEOF_LONG)
+#include <appl_padding.h>
 
     private:
 

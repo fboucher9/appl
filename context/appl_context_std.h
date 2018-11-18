@@ -129,8 +129,8 @@ class appl_context_std : public appl_context
             z_init_xlib[1u];
 #endif /* #if defined APPL_HAVE_XLIB */
 
-        unsigned char
-            uc_padding[7u];
+#define PADDING (1)
+#include <appl_padding.h>
 
         appl_context_std(
             class appl_context_std const & r);

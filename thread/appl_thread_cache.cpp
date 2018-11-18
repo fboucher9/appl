@@ -92,8 +92,8 @@ struct appl_thread_cache_task
     bool
         b_kill;
 
-    unsigned char
-        uc_padding[7u];
+#define PADDING (1)
+#include <appl_padding.h>
 
 }; /* struct appl_thread_cache_task */
 
@@ -420,8 +420,8 @@ struct appl_thread_cache : public appl_thread
         struct appl_queue *
             m_queue_free;
 
-        void *
-            pv_padding[1u];
+#define PADDING (APPL_SIZEOF_PTR)
+#include <appl_padding.h>
 
         // --
 

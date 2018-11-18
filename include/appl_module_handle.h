@@ -10,6 +10,7 @@ enum guard_appl_module_handle_h
     inc_appl_module_handle_h =
         /* Header file dependencies */
         inc_appl_status_h
+        + inc_appl_types_h
 };
 
 /* Predefine */
@@ -45,8 +46,8 @@ struct appl_packet
     unsigned long int
         e_type;
 
-    unsigned long int
-        ul_padding[1u];
+#define PADDING (APPL_SIZEOF_LONG)
+#include <appl_padding.h>
 
     /* -- */
 
@@ -135,24 +136,14 @@ struct appl_hex_convert_module_descriptor
     struct appl_module *
         p_sink;
 
-    void *
-        pv_padding[1u];
-
-    /* -- */
-
     unsigned long int
         i_offset;
-
-    unsigned long int
-        ul_padding[1u];
-
-    /* -- */
 
     unsigned short int
         i_columns;
 
-    unsigned short int
-        us_padding[3u];
+#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG + 2)
+#include <appl_padding.h>
 
 }; /* struct appl_hex_convert_module_descriptor */
 
@@ -179,8 +170,8 @@ struct appl_file_sink_module_descriptor
     struct appl_file *
         p_file;
 
-    void *
-        pv_padding[1u];
+#define PADDING (APPL_SIZEOF_PTR)
+#include <appl_padding.h>
 
 }; /* struct appl_file_sink_module_descriptor */
 
@@ -226,8 +217,8 @@ struct appl_custom_module_descriptor
     void *
         p_custom_context;
 
-    void *
-        pv_padding[1u];
+#define PADDING (APPL_SIZEOF_PTR)
+#include <appl_padding.h>
 
 }; /* struct appl_custom_module_descriptor */
 

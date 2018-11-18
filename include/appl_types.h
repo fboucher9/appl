@@ -13,6 +13,24 @@ enum guard_appl_types_h
         1
 };
 
+#if defined __SIZEOF_INT__
+#define APPL_SIZEOF_INT __SIZEOF_INT__
+#else
+#define APPL_SIZEOF_INT 4
+#endif
+
+#if defined __SIZEOF_LONG__
+#define APPL_SIZEOF_LONG __SIZEOF_LONG__
+#else
+#define APPL_SIZEOF_LONG 4
+#endif
+
+#if defined __SIZEOF_POINTER__
+#define APPL_SIZEOF_PTR __SIZEOF_POINTER__
+#else
+#define APPL_SIZEOF_PTR 8
+#endif
+
 #if defined __GNUC__
 #pragma GCC diagnostic ignored "-Wlong-long"
 #endif /* #if defined __GNUC__ */

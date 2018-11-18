@@ -58,8 +58,8 @@ class appl_file_std_mgr : public appl_file_mgr
         struct appl_pool *
             m_pool;
 
-        void *
-            pv_padding[1u];
+#define PADDING (APPL_SIZEOF_PTR)
+#include <appl_padding.h>
 
         // --
 

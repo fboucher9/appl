@@ -10,6 +10,7 @@ enum guard_appl_binary_heap_h
     inc_appl_binary_heap_h =
         /* Header file dependencies */
         inc_appl_status_h
+        + inc_appl_types_h
 };
 
 /* Predefine */
@@ -43,8 +44,8 @@ struct appl_binary_heap_descriptor
     unsigned long int
         i_initial_max;
 
-    unsigned long int
-        ul_padding[1u];
+#define PADDING (APPL_SIZEOF_LONG)
+#include <appl_padding.h>
 
 }; /* struct appl_binary_heap_descriptor */
 

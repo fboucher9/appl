@@ -22,8 +22,8 @@ struct appl_send_socket_descriptor
     struct appl_socket *
         p_socket;
 
-    void *
-        pv_padding[1u];
+#define PADDING (APPL_SIZEOF_PTR)
+#include <appl_padding.h>
 
 }; /* struc appl_send_socket_descriptor */
 
@@ -32,8 +32,8 @@ struct appl_send_address_descriptor
     struct appl_address *
         p_address;
 
-    void *
-        pv_padding[1u];
+#define PADDING (APPL_SIZEOF_PTR)
+#include <appl_padding.h>
 
 }; /* struct appl_send_address_descriptor */
 
@@ -63,8 +63,8 @@ struct appl_send_packet
     unsigned long int
         i_duration_usec;
 
-    unsigned long int
-        ul_padding[1u];
+#define PADDING (APPL_SIZEOF_LONG)
+#include <appl_padding.h>
 
 }; /* struct appl_send_packet */
 

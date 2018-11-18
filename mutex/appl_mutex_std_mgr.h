@@ -53,16 +53,11 @@ class appl_mutex_std_mgr : public appl_mutex_mgr
         struct appl_pool *
             m_pool;
 
-        void *
-            pv_padding[1u];
-
-        // --
-
         bool
             m_pool_created;
 
-        unsigned char
-            uc_padding[7u];
+#define PADDING (APPL_SIZEOF_PTR + 1)
+#include <appl_padding.h>
 
         // --
 

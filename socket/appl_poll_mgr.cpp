@@ -65,8 +65,8 @@ struct appl_poll_table
     unsigned int
         i_count;
 
-    unsigned int
-        ui_padding[3u];
+#define PADDING (APPL_SIZEOF_INT)
+#include <appl_padding.h>
 
 }; // struct appl_poll_table
 

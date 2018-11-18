@@ -96,8 +96,8 @@ class appl_queue_impl
         unsigned long int
             m_count;
 
-        unsigned long int
-            ul_padding[1u];
+#define PADDING (APPL_SIZEOF_LONG)
+#include <appl_padding.h>
 
         // --
 

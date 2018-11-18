@@ -6,11 +6,11 @@
 
 #include <appl_status.h>
 
+#include <appl_types.h>
+
 #include <appl_module_handle.h>
 
 #include <module/appl_module_service.h>
-
-#include <appl_types.h>
 
 #include <object/appl_object.h>
 

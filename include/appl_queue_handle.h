@@ -10,6 +10,7 @@ enum guard_appl_queue_handle_h
     inc_appl_queue_handle_h =
         /* Header file dependencies */
         inc_appl_status_h
+        + inc_appl_types_h
 };
 
 /* Predefines */
@@ -29,8 +30,8 @@ struct appl_queue_descriptor
     unsigned long int
         i_max_count;
 
-    unsigned long int
-        l_padding[1u];
+#define PADDING (APPL_SIZEOF_LONG)
+#include <appl_padding.h>
 
 }; /* struct appl_queue_descriptor */
 

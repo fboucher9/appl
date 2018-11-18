@@ -27,16 +27,11 @@ struct appl_hash_test_node
     char const *
         p_string;
 
-    void *
-        pv_padding[1u];
-
-    /* -- */
-
     int
         i_string_len;
 
-    unsigned int
-        ui_padding[3u];
+#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_INT)
+#include <appl_padding.h>
 
 }; /* struct appl_hash_test_node */
 

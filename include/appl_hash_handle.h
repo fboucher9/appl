@@ -10,6 +10,7 @@ enum guard_appl_hash_handle_h
     inc_appl_hash_handle_h =
         /* Header file dependencies */
         inc_appl_status_h
+        + inc_appl_types_h
 };
 
 /* Predefine */
@@ -51,16 +52,8 @@ struct appl_hash_descriptor
     void *
         p_context;
 
-    void *
-        pv_padding[1u];
-
-    /* -- */
-
-    unsigned long int
+    appl_size_t
         i_max_index;
-
-    unsigned long int
-        ul_padding[1u];
 
 }; /* struct appl_hash_descriptor */
 

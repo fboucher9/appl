@@ -54,20 +54,26 @@ class appl_heap_dbg : public appl_heap
 
     protected:
 
+        // --
+
         struct appl_heap *
             m_parent;
-
-        struct appl_list
-            m_list;
-
-        class appl_mutex_impl
-            m_lock;
 
         signed long int
             m_alloc_count;
 
-        unsigned long int
-            ul_padding[1u];
+#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG)
+#include <appl_padding.h>
+
+        // --
+
+        struct appl_list
+            m_list;
+
+        // --
+
+        class appl_mutex_impl
+            m_lock;
 
     private:
 

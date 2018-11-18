@@ -84,8 +84,8 @@ appl_xlib_std::appl_xlib_std() :
     appl_xlib(),
     m_xlib_handle(),
     m_lock(),
-    m_ref_count(1),
     m_xlib_intf(),
+    m_ref_count(1),
     m_xlib_handle_initialized(),
     m_lock_initialized()
 {

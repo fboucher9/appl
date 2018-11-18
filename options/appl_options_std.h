@@ -71,24 +71,14 @@ class appl_options_std : public appl_options
         struct appl_chunk *
             m_chunk;
 
-        void *
-            pv_padding[1u];
-
-        // --
-
         unsigned long int
             m_count;
-
-        unsigned long int
-            ul_padding[1u];
-
-        // --
 
         enum appl_options_std_state
             m_state;
 
-        unsigned int
-            uc_padding[3u];
+#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG + APPL_SIZEOF_INT)
+#include <appl_padding.h>
 
         // --
 

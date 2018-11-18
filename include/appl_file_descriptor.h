@@ -60,8 +60,8 @@ struct appl_file_descriptor
     enum appl_file_mode
         e_mode;
 
-    unsigned int
-        ui_padding[2u];
+#define PADDING (APPL_SIZEOF_INT*2)
+#include <appl_padding.h>
 
     /* -- */
 

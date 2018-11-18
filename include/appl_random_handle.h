@@ -38,13 +38,8 @@ struct appl_random_descriptor
     unsigned long int
         i_seed;
 
-    /* -- */
-
-    enum appl_random_type
+    signed long int
         e_type;
-
-    unsigned int
-        ui_padding[1u];
 
 }; /* struct appl_random_descriptor */
 

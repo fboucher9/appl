@@ -105,8 +105,8 @@ bool
 //
 appl_poll::appl_poll() :
     appl_node(),
-    m_poll_mgr(),
     m_descriptor(),
+    m_poll_mgr(),
     m_fd(),
     m_busy(),
     m_avail()

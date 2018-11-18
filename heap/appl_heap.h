@@ -43,7 +43,7 @@ struct appl_heap : public appl_allocator
         template <typename T_instance>
         enum appl_status
             alloc_structure_array(
-                unsigned long int
+                appl_size_t const
                     i_count,
                 T_instance * * const
                     r_object_array)
@@ -98,7 +98,7 @@ struct appl_heap : public appl_allocator
         template <typename T_instance>
         enum appl_status
             free_structure_array(
-                unsigned long int
+                appl_size_t const
                     i_count,
                 T_instance * const
                     p_object_array)

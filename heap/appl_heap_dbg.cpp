@@ -105,9 +105,9 @@ enum appl_status
 appl_heap_dbg::appl_heap_dbg() :
     appl_heap(),
     m_parent(),
+    m_alloc_count(0),
     m_list(),
-    m_lock(),
-    m_alloc_count(0)
+    m_lock()
 {
 }
 

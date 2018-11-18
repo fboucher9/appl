@@ -65,11 +65,13 @@ class appl_mutex_std_node : public appl_mutex
         class appl_mutex_impl
             m_mutex_impl;
 
+        // --
+
         bool
             m_mutex_impl_initialized;
 
-        unsigned char
-            m_uc_padding[7u];
+#define PADDING (1)
+#include <appl_padding.h>
 
         appl_mutex_std_node(
             class appl_mutex_std_node const & r);

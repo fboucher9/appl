@@ -43,8 +43,8 @@ class appl_log_impl
 
     private:
 
-        unsigned long int
-            ul_impl_padding[2u];
+        unsigned char
+            uc_padding[8u];
 
         appl_log_impl(
             class appl_log_impl const & r);

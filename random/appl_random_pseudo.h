@@ -57,8 +57,8 @@ class appl_random_pseudo : public appl_random
         unsigned long int
             m_seed;
 
-        unsigned long int
-            ul_padding[1u];
+#define PADDING (APPL_SIZEOF_LONG)
+#include <appl_padding.h>
 
         appl_random_pseudo(
             class appl_random_pseudo const & r);

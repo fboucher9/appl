@@ -31,9 +31,9 @@ Comments:
 
 #include <appl_status.h>
 
-#include <binary_heap/appl_binary_heap.h>
-
 #include <appl_types.h>
+
+#include <binary_heap/appl_binary_heap.h>
 
 #include <object/appl_object.h>
 
@@ -83,8 +83,8 @@ struct appl_binary_heap : public appl_object
         void * *
             m_table;
 
-        void *
-            pv_padding[1u];
+#define PADDING (APPL_SIZEOF_PTR)
+#include <appl_padding.h>
 
         // --
 

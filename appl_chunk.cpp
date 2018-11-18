@@ -40,8 +40,8 @@ struct appl_chunk_node : public appl_list
     unsigned char
         i_data_len;
 
-    unsigned char
-        uc_padding[7u];
+#define PADDING (1)
+#include <appl_padding.h>
 
     // --
 
@@ -227,6 +227,8 @@ class appl_chunk_std : public appl_chunk
 
     private:
 
+        // --
+
         struct appl_list
             o_nodes;
 
@@ -235,8 +237,10 @@ class appl_chunk_std : public appl_chunk
         unsigned long int
             i_total_len;
 
-        unsigned long int
-            ul_padding[1u];
+#define PADDING (APPL_SIZEOF_LONG)
+#include <appl_padding.h>
+
+        // --
 
         appl_chunk_std(
             class appl_chunk_std const & r);

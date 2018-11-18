@@ -6,9 +6,9 @@
 
 #include <appl_status.h>
 
-#include <appl_queue_handle.h>
-
 #include <appl_types.h>
+
+#include <appl_queue_handle.h>
 
 #include <appl_list.h>
 

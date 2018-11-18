@@ -65,16 +65,11 @@ class appl_file_std_node : public appl_file
         int
             m_fd;
 
-        unsigned int
-            ui_padding[3u];
-
-        // --
-
         bool
             m_close;
 
-        unsigned char
-            uc_padding[7u];
+#define PADDING (APPL_SIZEOF_INT + 1)
+#include <appl_padding.h>
 
         // --
 

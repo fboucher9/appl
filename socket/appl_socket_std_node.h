@@ -68,8 +68,8 @@ class appl_socket_std_node : public appl_socket
         int
             m_fd;
 
-        unsigned int
-            ui_padding[3u];
+#define PADDING (APPL_SIZEOF_INT)
+#include <appl_padding.h>
 
         appl_socket_std_node(
             class appl_socket_std_node const & r);

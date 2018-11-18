@@ -33,8 +33,8 @@ struct appl_editor_node
     unsigned char
         i_data_length;
 
-    unsigned char
-        uc_padding[5u];
+#define PADDING (3)
+#include <appl_padding.h>
 
     /* -- */
 
@@ -61,8 +61,8 @@ struct appl_editor
     unsigned long int
         i_total_unused;
 
-    unsigned long int
-        ul_padding[1u];
+#define PADDING (APPL_SIZEOF_LONG)
+#include <appl_padding.h>
 
 };
 

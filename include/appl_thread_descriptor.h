@@ -8,7 +8,7 @@
 enum guard_appl_thread_descriptor_h
 {
     inc_appl_thread_descriptor_h =
-        1
+        inc_appl_types_h
 };
 
 /*
@@ -64,8 +64,8 @@ struct appl_thread_descriptor
         unsigned long int
             i_stack_size;
 
-        unsigned long int
-            ul_padding[1u];
+#define PADDING (APPL_SIZEOF_LONG)
+#include <appl_padding.h>
 
     } o_stack;
 

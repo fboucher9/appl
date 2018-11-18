@@ -231,8 +231,8 @@ struct appl_test_thread_context
     char volatile
         b_done;
 
-    unsigned char
-        uc_padding[6u];
+#define PADDING (2)
+#include <appl_padding.h>
 
 }; /* struct appl_test_thread_context */
 

@@ -6,9 +6,9 @@
 
 #include <appl_status.h>
 
-#include <appl_hash_handle.h>
-
 #include <appl_types.h>
+
+#include <appl_hash_handle.h>
 
 #include <object/appl_object.h>
 
@@ -110,7 +110,7 @@ struct appl_hash : public appl_object
                 struct appl_list * const
                     p_list)
         {
-            unsigned long int const
+            appl_size_t const
                 i_index =
                 (
                     (*m_descriptor.p_index)(
@@ -143,7 +143,7 @@ struct appl_hash : public appl_object
             p_list =
                 0;
 
-            unsigned long int const
+            appl_size_t const
                 i_index =
                 (
                     (*m_descriptor.p_index)(
@@ -208,7 +208,7 @@ struct appl_hash : public appl_object
                 void * const
                     p_context)
         {
-            unsigned long int
+            appl_size_t
                 i_index;
 
             i_index =
@@ -274,8 +274,8 @@ struct appl_hash : public appl_object
         struct appl_hash_table *
             m_table;
 
-        void *
-            pv_padding[1u];
+#define PADDING (APPL_SIZEOF_PTR)
+#include <appl_padding.h>
 
         // --
 

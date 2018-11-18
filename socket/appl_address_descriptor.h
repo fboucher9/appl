@@ -27,19 +27,14 @@ struct appl_address_descriptor
     unsigned short int
         i_port;
 
-    unsigned short int
-        us_padding[3u];
-
-    /* -- */
-
     unsigned char
         b_name;
 
     unsigned char
         b_port;
 
-    unsigned char
-        uc_padding[6u];
+#define PADDING (4)
+#include <appl_padding.h>
 
 }; /* struct appl_address_descriptor */
 

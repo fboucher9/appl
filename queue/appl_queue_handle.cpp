@@ -6,11 +6,11 @@
 
 #include <appl_status.h>
 
+#include <appl_types.h>
+
 #include <appl_queue_handle.h>
 
 #include <queue/appl_queue_service.h>
-
-#include <appl_types.h>
 
 #include <object/appl_object.h>
 

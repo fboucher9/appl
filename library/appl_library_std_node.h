@@ -61,19 +61,16 @@ class appl_library_std_node : public appl_library
 
     private:
 
+        // --
+
         void *
             m_library_handle;
-
-        void *
-            pv_padding[1u];
-
-        // --
 
         bool
             b_library_handle_initialized;
 
-        unsigned char
-            uc_padding[7u];
+#define PADDING (APPL_SIZEOF_PTR + 1)
+#include <appl_padding.h>
 
         // --
 

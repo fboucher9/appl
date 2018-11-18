@@ -64,8 +64,8 @@ class appl_socket_w32_node : public appl_socket
         SOCKET
             m_fd;
 
-        void *
-            pv_padding[1u];
+#define PADDING (APPL_SIZEOF_PTR)
+#include <appl_padding.h>
 
         appl_socket_w32_node(
             class appl_socket_w32_node const & r);

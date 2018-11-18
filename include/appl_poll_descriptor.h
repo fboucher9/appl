@@ -8,7 +8,7 @@
 enum guard_appl_poll_descriptor_h
 {
     inc_appl_poll_descriptor_h =
-        1
+        inc_appl_types_h
 };
 
 struct appl_socket;
@@ -48,16 +48,11 @@ struct appl_poll_descriptor
     void *
         p_context;
 
-    void *
-        pv_padding[1u];
-
-    /* -- */
-
     signed int
         i_poll_flags;
 
-    unsigned int
-        ui_padding[3u];
+#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_INT)
+#include <appl_padding.h>
 
 }; /* struct appl_poll_descriptor */
 

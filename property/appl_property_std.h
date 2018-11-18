@@ -80,19 +80,14 @@ struct appl_property_std : public appl_property
         unsigned int
             m_count;
 
-        unsigned int
-            ui_padding[3u];
-
-        // --
-
         bool
             b_values_allocated;
 
         bool
             b_types_allocated;
 
-        bool
-            ab_padding[6u];
+#define PADDING (APPL_SIZEOF_INT + 2)
+#include <appl_padding.h>
 
         // --
 
