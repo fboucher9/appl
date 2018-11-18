@@ -36,7 +36,7 @@
 
 #include <appl_poll_descriptor.h>
 
-#include <appl_allocator.h>
+#include <allocator/appl_allocator.h>
 
 #include <heap/appl_heap.h>
 

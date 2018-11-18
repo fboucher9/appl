@@ -13,15 +13,15 @@ appl_target_base.mak-included := 1
 appl_base-deps := \
     appl.cpp \
     appl_tree.cpp \
-    appl_binary_heap.cpp \
+    binary_heap/appl_binary_heap.cpp \
     socket/appl_address_handle.cpp \
     socket/appl_address_node.cpp \
     socket/appl_address_property.cpp \
     socket/appl_address_service.cpp \
     socket/appl_address_std_node.cpp \
-    appl_allocator.cpp \
-    appl_allocator_handle.cpp \
-    appl_allocator_service.cpp \
+    allocator/appl_allocator.cpp \
+    allocator/appl_allocator_handle.cpp \
+    allocator/appl_allocator_service.cpp \
     appl_buf.cpp \
     appl_buf0.cpp \
     appl_chunk.cpp \
@@ -57,7 +57,7 @@ appl_base-deps := \
     file/appl_file_service.cpp \
     file/appl_file_std_mgr.cpp \
     file/appl_file_std_node.cpp \
-    appl_hash_handle.cpp \
+    hash/appl_hash_handle.cpp \
     heap/appl_heap.cpp \
     heap/appl_heap_dbg.cpp \
     heap/appl_heap_handle.cpp \
@@ -80,9 +80,9 @@ appl_base-deps := \
     log/appl_log_impl.cpp \
     appl_main.cpp \
     appl_main_service.cpp \
-    appl_module_handle.cpp \
-    appl_module_service.cpp \
-    appl_module.cpp \
+    module/appl_module_handle.cpp \
+    module/appl_module_service.cpp \
+    module/appl_module.cpp \
     mutex/appl_mutex_handle.cpp \
     mutex/appl_mutex_mgr.cpp \
     mutex/appl_mutex_node.cpp \
@@ -137,9 +137,9 @@ appl_base-deps := \
     socket/appl_socket_std_node.cpp \
     socket/appl_socket_w32_mgr.cpp \
     socket/appl_socket_w32_node.cpp \
-    appl_string.cpp \
-    appl_string_handle.cpp \
-    appl_string_service.cpp \
+    string/appl_string.cpp \
+    string/appl_string_handle.cpp \
+    string/appl_string_service.cpp \
     thread/appl_thread_impl.cpp \
     thread/appl_thread_cache.cpp \
     thread/appl_thread_handle.cpp \

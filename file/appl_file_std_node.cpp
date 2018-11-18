@@ -36,7 +36,7 @@
 
 #include <appl_convert.h>
 
-#include <appl_allocator.h>
+#include <allocator/appl_allocator.h>
 
 struct appl_file_std_node_descriptor
 {

@@ -34,7 +34,7 @@
 
 #include <appl_context.h>
 
-#include <appl_allocator.h>
+#include <allocator/appl_allocator.h>
 
 #define APPL_ADDRESS_PROPERTY_GUID (0xe0bfd095ul)
 

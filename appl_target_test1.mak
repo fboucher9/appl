@@ -19,12 +19,12 @@ test_appl-exports = appl.exports
 
 test_appl-deps = \
     appl_test.c \
-    appl_hash_test.c \
+    hash/appl_hash_test.c \
     pool/appl_pool_test.c \
     thread/appl_thread_cache_test.c \
-    appl_module_test.c \
+    module/appl_module_test.c \
     timer/appl_timer_test.c \
-    appl_binary_heap_test.c \
+    binary_heap/appl_binary_heap_test.c \
     options/appl_options_test.c \
     xlib/appl_xlib_test.c \
     $(appl_base-deps)

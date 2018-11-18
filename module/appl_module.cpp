@@ -12,11 +12,11 @@
 
 #include <appl_object.h>
 
-#include <appl_module.h>
+#include <module/appl_module.h>
 
 #include <appl_unused.h>
 
-#include <appl_allocator.h>
+#include <allocator/appl_allocator.h>
 
 #include <file/appl_file_node.h>
 

@@ -22,7 +22,7 @@
 
 #include <appl_list.h>
 
-#include <appl_allocator.h>
+#include <allocator/appl_allocator.h>
 
 #include <pool/appl_pool.h>
 

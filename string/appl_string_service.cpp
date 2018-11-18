@@ -6,7 +6,7 @@
 
 #include <appl_status.h>
 
-#include <appl_string_service.h>
+#include <string/appl_string_service.h>
 
 #include <appl_types.h>
 
@@ -14,11 +14,11 @@
 
 #include <appl_buf.h>
 
-#include <appl_string.h>
+#include <string/appl_string.h>
 
 #include <appl_context.h>
 
-#include <appl_allocator.h>
+#include <allocator/appl_allocator.h>
 
 //
 //

@@ -31,7 +31,7 @@ Comments:
 
 #include <appl_status.h>
 
-#include <appl_binary_heap.h>
+#include <binary_heap/appl_binary_heap.h>
 
 #include <appl_types.h>
 
@@ -39,7 +39,7 @@ Comments:
 
 #include <appl_context.h>
 
-#include <appl_allocator.h>
+#include <allocator/appl_allocator.h>
 
 #include <heap/appl_heap.h>
 

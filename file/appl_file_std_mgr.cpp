@@ -18,7 +18,7 @@
 
 #include <file/appl_file_std_node.h>
 
-#include <appl_allocator.h>
+#include <allocator/appl_allocator.h>
 
 #include <pool/appl_pool.h>
 

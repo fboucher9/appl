@@ -18,7 +18,7 @@
 
 #include <appl_object.h>
 
-#include <appl_allocator.h>
+#include <allocator/appl_allocator.h>
 
 #include <heap/appl_heap.h>
 

@@ -6,9 +6,9 @@
 
 #include <appl.h>
 
-#include <appl_binary_heap.h>
+#include <binary_heap/appl_binary_heap.h>
 
-#include <appl_binary_heap_test.h>
+#include <binary_heap/appl_binary_heap_test.h>
 
 #include <stdio.h>
 

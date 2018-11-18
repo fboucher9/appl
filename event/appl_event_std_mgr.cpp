@@ -14,7 +14,7 @@
 
 #include <event/appl_event_std_mgr.h>
 
-#include <appl_allocator.h>
+#include <allocator/appl_allocator.h>
 
 #include <appl_context.h>
 

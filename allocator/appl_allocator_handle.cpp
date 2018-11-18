@@ -6,32 +6,29 @@
 
 #include <appl_status.h>
 
-#include <appl_allocator_service.h>
+#include <appl_allocator_handle.h>
 
-#include <appl_types.h>
+#include <allocator/appl_allocator_service.h>
 
-#include <appl_object.h>
+/*
 
-#include <appl_allocator.h>
-
-//
-//
-//
+*/
 struct appl_object *
-    appl_allocator_service::s_parent(
+    appl_allocator_parent(
         struct appl_allocator * const
             p_allocator)
 {
     return
-        p_allocator;
+        appl_allocator_service::s_parent(
+            p_allocator);
 
-} // s_parent()
+} /* parent() */
 
-//
-//
-//
+/*
+
+*/
 enum appl_status
-    appl_allocator_service::s_alloc(
+    appl_allocator_alloc(
         struct appl_allocator * const
             p_allocator,
         unsigned long int const
@@ -40,17 +37,18 @@ enum appl_status
             r_buf)
 {
     return
-        p_allocator->v_alloc(
+        appl_allocator_service::s_alloc(
+            p_allocator,
             i_buf_len,
             r_buf);
 
-} // s_alloc()
+} /* alloc() */
 
-//
-//
-//
+/*
+
+*/
 enum appl_status
-    appl_allocator_service::s_free(
+    appl_allocator_free(
         struct appl_allocator * const
             p_allocator,
         unsigned long int const
@@ -59,10 +57,11 @@ enum appl_status
             p_buf)
 {
     return
-        p_allocator->v_free(
+        appl_allocator_service::s_free(
+            p_allocator,
             i_buf_len,
             p_buf);
 
-} // s_free()
+} /* free() */
 
-/* end-of-file: appl_allocator_service.cpp */
+/* end-of-file: appl_allocator_handle.cpp */

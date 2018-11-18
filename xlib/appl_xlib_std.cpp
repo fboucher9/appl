@@ -26,7 +26,7 @@ Description:
 
 #include <xlib/appl_xlib_std.h>
 
-#include <appl_allocator.h>
+#include <allocator/appl_allocator.h>
 
 #include <appl_unused.h>
 

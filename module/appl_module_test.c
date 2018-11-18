@@ -6,7 +6,7 @@
 
 #include <appl.h>
 
-#include <appl_module_test.h>
+#include <module/appl_module_test.h>
 
 /*
 

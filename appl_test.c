@@ -15,15 +15,15 @@
 
 #include <appl_chunk.h>
 
-#include <appl_hash_test.h>
+#include <hash/appl_hash_test.h>
 
 #include <pool/appl_pool_test.h>
 
-#include <appl_module_test.h>
+#include <module/appl_module_test.h>
 
 #include <timer/appl_timer_test.h>
 
-#include <appl_binary_heap_test.h>
+#include <binary_heap/appl_binary_heap_test.h>
 
 #include <options/appl_options_test.h>
 

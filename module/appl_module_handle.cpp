@@ -1,90 +1,61 @@
-/* See LICENSE for license details */
-
-/*
-
-*/
-
 #include <appl_status.h>
 
 #include <appl_module_handle.h>
 
-#include <appl_module_service.h>
+#include <module/appl_module_service.h>
 
-#include <appl_types.h>
-
-#include <appl_object.h>
-
-#include <appl_module.h>
-
-#include <appl_context.h>
-
-/* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
-
-//
-//
-//
 struct appl_object *
-appl_module_service::s_parent(
+appl_module_parent(
     struct appl_module * const
         p_module)
 {
     return
-        p_module;
+        appl_module_service::s_parent(
+            p_module);
 
 }
 
-//
-//
-//
 struct appl_object const *
-appl_module_service::s_const_parent(
+appl_module_const_parent(
     struct appl_module const * const
         p_module)
 {
     return
-        p_module;
+        appl_module_service::s_const_parent(
+            p_module);
 
 }
 
-//
-//
-//
 enum appl_status
-appl_module_service::s_push(
+appl_module_push(
     struct appl_module * const
         p_module,
     struct appl_packet * const
         p_packet)
 {
     return
-        p_module->v_push(
+        appl_module_service::s_push(
+            p_module,
             p_packet);
 
 }
 
-//
-//
-//
 enum appl_status
-appl_module_service::s_pull(
+appl_module_pull(
     struct appl_module * const
         p_module,
     struct appl_packet * * const
-        r_packet)
+        p_packet)
 {
     return
-        p_module->v_pull(
-            r_packet);
+        appl_module_service::s_pull(
+            p_module,
+            p_packet);
+
 }
 
-//
-//
-//
 enum appl_status
-appl_file_source_module_service::s_create(
+appl_file_source_module_create(
     struct appl_context * const
         p_context,
     struct appl_file_source_module_descriptor const * const
@@ -93,44 +64,37 @@ appl_file_source_module_service::s_create(
         r_instance)
 {
     return
-        appl_file_source_module::s_create(
-            p_context->m_allocator,
+        appl_file_source_module_service::s_create(
+            p_context,
             p_file_source_module_descriptor,
             r_instance);
 
 }
 
-//
-//
-//
 struct appl_module *
-appl_file_source_module_service::s_parent(
+appl_file_source_module_parent(
     struct appl_file_source_module * const
         p_this)
 {
     return
-        p_this;
+        appl_file_source_module_service::s_parent(
+            p_this);
 
 }
 
-//
-//
-//
 enum appl_status
-appl_file_source_module_service::s_step(
+appl_file_source_module_step(
     struct appl_file_source_module * const
         p_this)
 {
     return
-        p_this->f_step();
+        appl_file_source_module_service::s_step(
+            p_this);
 
 }
 
-//
-//
-//
 enum appl_status
-appl_hex_convert_module_service::s_create(
+appl_hex_convert_module_create(
     struct appl_context * const
         p_context,
     struct appl_hex_convert_module_descriptor const * const
@@ -139,30 +103,26 @@ appl_hex_convert_module_service::s_create(
         r_instance)
 {
     return
-        appl_hex_convert_module::s_create(
-            p_context->m_allocator,
+        appl_hex_convert_module_service::s_create(
+            p_context,
             p_hex_convert_module_descriptor,
             r_instance);
+
 }
 
-//
-//
-//
 struct appl_module *
-appl_hex_convert_module_service::s_parent(
+appl_hex_convert_module_parent(
     struct appl_hex_convert_module * const
         p_this)
 {
     return
-        p_this;
+        appl_hex_convert_module_service::s_parent(
+            p_this);
 
 }
 
-//
-//
-//
 enum appl_status
-appl_file_sink_module_service::s_create(
+appl_file_sink_module_create(
     struct appl_context * const
         p_context,
     struct appl_file_sink_module_descriptor const * const
@@ -171,31 +131,26 @@ appl_file_sink_module_service::s_create(
         r_instance)
 {
     return
-        appl_file_sink_module::s_create(
-            p_context->m_allocator,
+        appl_file_sink_module_service::s_create(
+            p_context,
             p_file_sink_module_descriptor,
             r_instance);
 
 }
 
-//
-//
-//
 struct appl_module *
-appl_file_sink_module_service::s_parent(
+appl_file_sink_module_parent(
     struct appl_file_sink_module * const
         p_this)
 {
     return
-        p_this;
+        appl_file_sink_module_service::s_parent(
+            p_this);
 
 }
 
-//
-//
-//
 enum appl_status
-appl_custom_module_service::s_create(
+appl_custom_module_create(
     struct appl_context * const
         p_context,
     struct appl_custom_module_descriptor const * const
@@ -204,54 +159,47 @@ appl_custom_module_service::s_create(
         r_instance)
 {
     return
-        appl_custom_module::s_create(
-            p_context->m_allocator,
+        appl_custom_module_service::s_create(
+            p_context,
             p_custom_module_descriptor,
             r_instance);
 
 }
 
-//
-//
-//
 struct appl_module *
-appl_custom_module_service::s_parent(
+appl_custom_module_parent(
     struct appl_custom_module * const
         p_custom_module)
 {
     return
-        p_custom_module;
+        appl_custom_module_service::s_parent(
+            p_custom_module);
 
 }
 
-//
-//
-//
 enum appl_status
-appl_null_module_service::s_create(
+appl_null_module_create(
     struct appl_context * const
         p_context,
     struct appl_null_module * * const
         r_instance)
 {
     return
-        appl_null_module::s_create(
-            p_context->m_allocator,
+        appl_null_module_service::s_create(
+            p_context,
             r_instance);
 
 }
 
-//
-//
-//
 struct appl_module *
-appl_null_module_service::s_parent(
+appl_null_module_parent(
     struct appl_null_module * const
         p_null_module)
 {
     return
-        p_null_module;
+        appl_null_module_service::s_parent(
+            p_null_module);
 
 }
 
-/* end-of-file: appl_module_service.h */
+/* end-of-file: appl_module_handle.cpp */

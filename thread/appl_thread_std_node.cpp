@@ -32,7 +32,7 @@
 
 #include <thread/appl_thread_std_node.h>
 
-#include <appl_allocator.h>
+#include <allocator/appl_allocator.h>
 
 #include <appl_unused.h>
 

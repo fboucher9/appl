@@ -10,7 +10,7 @@
 
 #include <appl.h>
 
-#include <appl_hash_test.h>
+#include <hash/appl_hash_test.h>
 
 #include <appl_crc16.h>
 

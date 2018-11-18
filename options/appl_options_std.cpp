@@ -16,11 +16,11 @@
 
 #include <options/appl_options_std.h>
 
-#include <appl_string.h>
+#include <string/appl_string.h>
 
 #include <appl_context.h>
 
-#include <appl_allocator.h>
+#include <allocator/appl_allocator.h>
 
 #include <appl_buf0.h>
 
