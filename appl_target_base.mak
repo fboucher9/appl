@@ -126,8 +126,6 @@ appl_base-deps := \
     random/appl_random_pseudo.cpp \
     random/appl_random_std_crypto.cpp \
     random/appl_random_w32_crypto.cpp \
-    appl_refcount.cpp \
-    appl_refcount_handle.cpp \
     socket/appl_socket_descriptor.cpp \
     socket/appl_socket_handle.cpp \
     socket/appl_socket_mgr.cpp \
