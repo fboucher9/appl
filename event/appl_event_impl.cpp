@@ -17,7 +17,7 @@
 
 #endif /* #if defined APPL_OS_Xx */
 
-#include <appl_event_impl.h>
+#include <event/appl_event_impl.h>
 
 #include <mutex/appl_mutex_impl.h>
 

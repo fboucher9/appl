@@ -6,7 +6,7 @@
 
 #include <appl.h>
 
-#include <appl_timer_test.h>
+#include <timer/appl_timer_test.h>
 
 #include <stdio.h>
 

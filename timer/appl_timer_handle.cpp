@@ -10,7 +10,7 @@
 
 #include <appl_timer_handle.h>
 
-#include <appl_timer_service.h>
+#include <timer/appl_timer_service.h>
 
 /*
 

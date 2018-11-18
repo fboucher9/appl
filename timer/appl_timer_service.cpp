@@ -10,13 +10,13 @@
 
 #include <appl_timer_handle.h>
 
-#include <appl_timer_service.h>
+#include <timer/appl_timer_service.h>
 
 #include <appl_object.h>
 
-#include <appl_timer_mgr.h>
+#include <timer/appl_timer_mgr.h>
 
-#include <appl_timer.h>
+#include <timer/appl_timer.h>
 
 #include <appl_context.h>
 

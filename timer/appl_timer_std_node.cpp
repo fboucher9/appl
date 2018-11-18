@@ -10,7 +10,7 @@
 
 #include <appl_object.h>
 
-#include <appl_timer.h>
+#include <timer/appl_timer.h>
 
 #include <appl_list.h>
 
@@ -36,11 +36,11 @@
 
 #include <appl_event_handle.h>
 
-#include <appl_event_node.h>
+#include <event/appl_event_node.h>
 
-#include <appl_event_mgr.h>
+#include <event/appl_event_mgr.h>
 
-#include <appl_timer_std_node.h>
+#include <timer/appl_timer_std_node.h>
 
 #include <appl_timer_handle.h>
 

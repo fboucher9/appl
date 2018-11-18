@@ -92,9 +92,9 @@
 
 #endif /* #if defined APPL_OS_Xx */
 
-#include <appl_event_mgr.h>
+#include <event/appl_event_mgr.h>
 
-#include <appl_event_std_mgr.h>
+#include <event/appl_event_std_mgr.h>
 
 #include <appl_socket_mgr.h>
 
@@ -144,9 +144,9 @@
 
 #include <appl_thread_cache.h>
 
-#include <appl_timer_mgr.h>
+#include <timer/appl_timer_mgr.h>
 
-#include <appl_timer_std_mgr.h>
+#include <timer/appl_timer_std_mgr.h>
 
 #if defined APPL_HAVE_XLIB
 

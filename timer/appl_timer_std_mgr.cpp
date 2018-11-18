@@ -10,15 +10,15 @@
 
 #include <appl_object.h>
 
-#include <appl_timer_mgr.h>
+#include <timer/appl_timer_mgr.h>
 
-#include <appl_timer_std_mgr.h>
+#include <timer/appl_timer_std_mgr.h>
 
-#include <appl_timer.h>
+#include <timer/appl_timer.h>
 
 #include <appl_list.h>
 
-#include <appl_timer_std_node.h>
+#include <timer/appl_timer_std_node.h>
 
 #include <appl_allocator.h>
 

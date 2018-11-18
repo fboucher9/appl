@@ -44,13 +44,13 @@ appl_base-deps := \
     env/appl_env_service.cpp \
     env/appl_env_std.cpp \
     env/appl_env_w32.cpp \
-    appl_event_handle.cpp \
-    appl_event_mgr.cpp \
-    appl_event_node.cpp \
-    appl_event_service.cpp \
-    appl_event_std_mgr.cpp \
-    appl_event_std_node.cpp \
-    appl_event_impl.cpp \
+    event/appl_event_handle.cpp \
+    event/appl_event_mgr.cpp \
+    event/appl_event_node.cpp \
+    event/appl_event_service.cpp \
+    event/appl_event_std_mgr.cpp \
+    event/appl_event_std_node.cpp \
+    event/appl_event_impl.cpp \
     file/appl_file_handle.cpp \
     file/appl_file_mgr.cpp \
     file/appl_file_node.cpp \
@@ -149,12 +149,12 @@ appl_base-deps := \
     thread/appl_thread_service.cpp \
     thread/appl_thread_std_mgr.cpp \
     thread/appl_thread_std_node.cpp \
-    appl_timer_handle.cpp \
-    appl_timer_service.cpp \
-    appl_timer_mgr.cpp \
-    appl_timer.cpp \
-    appl_timer_std_mgr.cpp \
-    appl_timer_std_node.cpp \
+    timer/appl_timer_handle.cpp \
+    timer/appl_timer_service.cpp \
+    timer/appl_timer_mgr.cpp \
+    timer/appl_timer.cpp \
+    timer/appl_timer_std_mgr.cpp \
+    timer/appl_timer_std_node.cpp \
     appl_xlib.cpp \
     appl_xlib_std.cpp \
     appl_xlib_handle.cpp \

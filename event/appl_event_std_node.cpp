@@ -20,11 +20,11 @@
 
 #include <appl_object.h>
 
-#include <appl_event_node.h>
+#include <event/appl_event_node.h>
 
-#include <appl_event_impl.h>
+#include <event/appl_event_impl.h>
 
-#include <appl_event_std_node.h>
+#include <event/appl_event_std_node.h>
 
 #include <mutex/appl_mutex_node.h>
 

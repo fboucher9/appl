@@ -21,7 +21,7 @@
 
 #include <appl_module_test.h>
 
-#include <appl_timer_test.h>
+#include <timer/appl_timer_test.h>
 
 #include <appl_binary_heap_test.h>
 

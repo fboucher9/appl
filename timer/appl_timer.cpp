@@ -10,7 +10,7 @@
 
 #include <appl_object.h>
 
-#include <appl_timer_mgr.h>
+#include <timer/appl_timer.h>
 
 #include <appl_unused.h>
 
@@ -18,22 +18,22 @@
 //
 //
 enum appl_status
-    appl_timer_mgr::v_create(
-        struct appl_timer * * const
-            r_timer)
+    appl_timer::v_schedule(
+        struct appl_timer_descriptor const * const
+            p_timer_descriptor)
 {
     appl_unused(
-        r_timer);
+        p_timer_descriptor);
 
     return
         appl_status_not_implemented;
 
-} // v_create()
+} // v_schedule()
 
 //
 //
 //
-appl_timer_mgr::appl_timer_mgr() :
+appl_timer::appl_timer() :
     appl_object()
 {
 }
@@ -41,8 +41,8 @@ appl_timer_mgr::appl_timer_mgr() :
 //
 //
 //
-appl_timer_mgr::~appl_timer_mgr()
+appl_timer::~appl_timer()
 {
 }
 
-/* end-of-file: appl_timer_mgr.cpp */
+/* end-of-file: appl_timer.cpp */

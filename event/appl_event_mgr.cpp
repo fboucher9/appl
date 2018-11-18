@@ -10,7 +10,7 @@
 
 #include <appl_object.h>
 
-#include <appl_event_mgr.h>
+#include <event/appl_event_mgr.h>
 
 #include <appl_unused.h>
 
