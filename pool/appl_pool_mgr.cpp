@@ -20,17 +20,17 @@
 
 #include <appl_object.h>
 
-#include <appl_pool_mgr.h>
+#include <pool/appl_pool_mgr.h>
 
 #include <appl_allocator.h>
 
-#include <appl_pool.h>
+#include <pool/appl_pool.h>
 
 #include <appl_list.h>
 
 #include <mutex/appl_mutex_impl.h>
 
-#include <appl_pool_std.h>
+#include <pool/appl_pool_std.h>
 
 #include <appl_context.h>
 

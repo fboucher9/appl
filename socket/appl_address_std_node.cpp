@@ -41,9 +41,9 @@ Description:
 
 #include <appl_address_property.h>
 
-#include <appl_property_types.h>
+#include <property/appl_property_types.h>
 
-#include <appl_property.h>
+#include <property/appl_property.h>
 
 #include <appl_convert.h>
 

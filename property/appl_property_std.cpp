@@ -8,21 +8,21 @@
 
 #include <appl_buf.h>
 
-#include <appl_property_types.h>
+#include <property/appl_property_types.h>
 
 #include <appl_types.h>
 
 #include <appl_object.h>
 
-#include <appl_property.h>
+#include <property/appl_property.h>
 
-#include <appl_property_std.h>
+#include <property/appl_property_std.h>
 
 #include <appl_context.h>
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
+#include <heap/appl_heap.h>
 
 #include <appl_convert.h>
 

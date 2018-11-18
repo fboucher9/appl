@@ -35,10 +35,10 @@ appl_base-deps := \
     appl_context_service.cpp \
     appl_context_std.cpp \
     appl_crc16.cpp \
-    appl_debug.cpp \
-    appl_debug_handle.cpp \
-    appl_debug_std.cpp \
-    appl_debug_w32.cpp \
+    debug/appl_debug.cpp \
+    debug/appl_debug_handle.cpp \
+    debug/appl_debug_std.cpp \
+    debug/appl_debug_w32.cpp \
     env/appl_env.cpp \
     env/appl_env_handle.cpp \
     env/appl_env_service.cpp \
@@ -103,15 +103,15 @@ appl_base-deps := \
     socket/appl_poll_mgr.cpp \
     socket/appl_poll_node.cpp \
     socket/appl_poll_service.cpp \
-    appl_pool.cpp \
-    appl_pool_std.cpp \
-    appl_pool_mgr.cpp \
-    appl_pool_handle.cpp \
-    appl_pool_service.cpp \
-    appl_property.cpp \
-    appl_property_handle.cpp \
-    appl_property_service.cpp \
-    appl_property_std.cpp \
+    pool/appl_pool.cpp \
+    pool/appl_pool_std.cpp \
+    pool/appl_pool_mgr.cpp \
+    pool/appl_pool_handle.cpp \
+    pool/appl_pool_service.cpp \
+    property/appl_property.cpp \
+    property/appl_property_handle.cpp \
+    property/appl_property_service.cpp \
+    property/appl_property_std.cpp \
     queue/appl_queue.cpp \
     queue/appl_queue_handle.cpp \
     queue/appl_queue_impl.cpp \

@@ -20,7 +20,7 @@
 
 #include <appl_context.h>
 
-#include <appl_heap.h>
+#include <heap/appl_heap.h>
 
 struct appl_string_descriptor
 {

@@ -24,11 +24,11 @@
 
 #include <appl_allocator.h>
 
-#include <appl_pool.h>
+#include <pool/appl_pool.h>
 
 #include <mutex/appl_mutex_impl.h>
 
-#include <appl_pool_std.h>
+#include <pool/appl_pool_std.h>
 
 #include <appl_unused.h>
 

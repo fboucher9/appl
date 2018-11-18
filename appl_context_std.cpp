@@ -50,15 +50,15 @@
 
 #if defined APPL_DEBUG
 
-#include <appl_debug.h>
+#include <debug/appl_debug.h>
 
 #if defined APPL_OS_LINUX
 
-#include <appl_debug_std.h>
+#include <debug/appl_debug_std.h>
 
 #elif defined APPL_OS_WINDOWS
 
-#include <appl_debug_w32.h>
+#include <debug/appl_debug_w32.h>
 
 #endif /* #if defined APPL_OS_Xx */
 

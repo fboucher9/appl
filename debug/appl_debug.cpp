@@ -12,7 +12,7 @@
 
 #include <appl_object.h>
 
-#include <appl_debug.h>
+#include <debug/appl_debug.h>
 
 #include <appl_unused.h>
 

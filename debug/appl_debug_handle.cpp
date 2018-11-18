@@ -16,7 +16,7 @@
 
 #include <appl_context.h>
 
-#include <appl_debug.h>
+#include <debug/appl_debug.h>
 
 #include <appl_buf.h>
 
