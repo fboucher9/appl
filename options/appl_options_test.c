@@ -111,7 +111,7 @@ appl_options_test_2(
         char
             b_ready;
 
-        static unsigned char a_msg[] = "test '1 2 3' \n";
+        static unsigned char a_msg[] = "test '1 2 3' a\\ b\\ c\n";
 
         e_status =
             appl_options_write(
