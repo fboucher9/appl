@@ -5,11 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_XLIB_H
-#error include appl_xlib.h once
-#endif /* #if defined INC_APPL_XLIB_H */
-
-#define INC_APPL_XLIB_H
+enum guard_appl_xlib_h
+{
+    inc_appl_xlib_h =
+        /* Header file dependency */
+        inc_appl_status_h
+};
 
 /* Assert configuration */
 #if ! defined APPL_HAVE_XLIB

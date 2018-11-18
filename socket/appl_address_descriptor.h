@@ -5,11 +5,11 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_ADDRESS_DESCRIPTOR_H
-#error include appl_address_descriptor.h once
-#endif /* #if defined INC_APPL_ADDRESS_DESCRIPTOR_H */
-
-#define INC_APPL_ADDRESS_DESCRIPTOR_H
+enum guard_appl_address_descriptor_h
+{
+    inc_appl_address_descriptor_h =
+        1
+};
 
 /*
 

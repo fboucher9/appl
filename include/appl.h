@@ -17,6 +17,13 @@ Description:
 
 #define INC_APPL_H
 
+/* C-style include guard */
+enum guard_appl_h
+{
+    inc_appl_h =
+        1
+};
+
 /* Detect compiler */
 
 /* Detect cpu */

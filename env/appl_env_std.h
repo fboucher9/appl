@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_ENV_STD_H
-#error include appl_env_std.h once
-#endif /* #if defined INC_APPL_ENV_STD_H */
-
-#define INC_APPL_ENV_STD_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_ENV_H
-#error include appl_env.h before appl_env_std.h
-#endif /* #if ! defined INC_APPL_ENV_H */
+enum guard_appl_env_std_h
+{
+    inc_appl_env_std_h =
+        /* Header file dependencies */
+        inc_appl_env_h
+};
 
 /* Assert OS */
 #if ! defined APPL_OS_LINUX

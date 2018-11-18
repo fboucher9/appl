@@ -8,11 +8,13 @@ Description:
 
 */
 
-#if defined(INC_APPL_THREAD_NODE_H)
-#error include appl_thread_node.h once
-#endif /* #if defined(INC_APPL_THREAD_NODE_H) */
-
-#define INC_APPL_THREAD_NODE_H
+/* Reverse include guard */
+enum guard_appl_thread_node_h
+{
+    inc_appl_thread_node_h =
+        /* Header file dependencies */
+        inc_appl_object_h
+};
 
 struct appl_thread;
 
@@ -23,10 +25,6 @@ struct appl_context;
 #if !defined(__cplusplus)
 #error use C++ compiler
 #endif /* #if !defined(__cplusplus) */
-
-#if !defined(INC_APPL_OBJECT_H)
-#error include appl_object.h before
-#endif /* #if !defined(INC_APPL_OBJECT_H) */
 
 //
 //

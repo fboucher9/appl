@@ -5,21 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_POOL_STD_H
-#error include appl_pool_std.h once
-#endif /* #if defined INC_APPL_POOL_STD_H */
-
-/* Header file dependencies */
-#if ! defined INC_APPL_POOL_H
-#error include appl_pool.h before
-#endif /* #if ! defined INC_APPL_POOL_H */
-
-/* Reverse include guard */
 enum guard_appl_pool_std_h
 {
     inc_appl_pool_std_h =
         /* Header file dependencies */
-        inc_appl_list_h
+        inc_appl_pool_h
+        + inc_appl_list_h
         + inc_appl_mutex_impl_h
 };
 

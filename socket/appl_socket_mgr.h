@@ -5,11 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_SOCKET_MGR_H
-#error include appl_socket_mgr.h once
-#endif /* #if defined INC_APPL_SOCKET_MGR_H */
-
-#define INC_APPL_SOCKET_MGR_H
+enum guard_appl_socket_mgr_h
+{
+    inc_appl_socket_mgr_h =
+        /* Header file dependencies */
+        inc_appl_object_h
+};
 
 struct appl_address_property;
 

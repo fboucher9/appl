@@ -5,21 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_POOL_H
-#error include appl_pool.h once
-#endif /* #if defined INC_APPL_POOL_H */
-
-#define INC_APPL_POOL_H
-
-/* Header file dependencies */
-#if ! defined INC_APPL_OBJECT_H
-#error include appl_object.h before
-#endif /* #if ! defined INC_APPL_OBJECT_H */
-
-/* Header file dependencies */
-#if ! defined INC_APPL_ALLOCATOR_H
-#error include appl_allocator.h before
-#endif /* #if ! defined INC_APPL_ALLOCATOR_H */
+enum guard_appl_pool_h
+{
+    inc_appl_pool_h =
+        /* Header file dependencies */
+        inc_appl_allocator_h
+};
 
 /* Predefine */
 struct appl_pool;

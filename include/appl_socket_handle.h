@@ -5,16 +5,13 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_SOCKET_HANDLE_H
-#error include appl_socket_handle.h once
-#endif /* #if defined INC_APPL_SOCKET_HANDLE_H */
-
-#define INC_APPL_SOCKET_HANDLE_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_SOCKET_DESCRIPTOR_H
-#error include appl_socket_descriptor.h before
-#endif /* #if ! defined INC_APPL_SOCKET_DESCRIPTOR_H */
+enum guard_appl_socket_handle_h
+{
+    inc_appl_socket_handle_h =
+        /* Header file dependency */
+        inc_appl_socket_descriptor_h
+        + inc_appl_status_h
+};
 
 struct appl_object;
 

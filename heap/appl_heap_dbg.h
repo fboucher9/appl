@@ -5,26 +5,18 @@
 */
 
 /* Reverse include guard */
-#if defined(INC_APPL_HEAP_DBG_H)
-#error include appl_heap_dbg.h once
-#endif /* #if defined(INC_APPL_HEAP_DBG_H) */
-
-#define INC_APPL_HEAP_DBG_H
+enum guard_appl_heap_dbg_h
+{
+    inc_appl_heap_dbg_h =
+        /* Header file dependency */
+        inc_appl_heap_h
+        + inc_appl_list_h
+};
 
 /* Assert configuration */
 #if ! defined APPL_DEBUG
 #error include only from debug build
 #endif /* #if ! defined APPL_DEBUG */
-
-/* Header file dependency */
-#if ! defined INC_APPL_HEAP_H
-#error include appl_heap.h before
-#endif /* #if ! defined INC_APPL_HEAP_H */
-
-/* Header file dependency */
-#if ! defined INC_APPL_LIST_H
-#error include appl_list.h before
-#endif /* #if ! defined INC_APPL_LIST_H */
 
 struct appl_heap_dbg_descriptor;
 

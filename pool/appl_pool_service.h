@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_POOL_SERVICE_H
-#error include appl_pool_service.h once
-#endif /* #if defined INC_APPL_POOL_SERVICE_H */
-
-#define INC_APPL_POOL_SERVICE_H
-
-/* Header file dependencies */
-#if ! defined INC_APPL_STATUS_H
-#error include appl_status.h before
-#endif /* #if ! defined INC_APPL_STATUS_H */
+enum guard_appl_pool_service_h
+{
+    inc_appl_pool_service_h =
+        /* Header file dependencies */
+        inc_appl_status_h
+};
 
 /* Predefine */
 struct appl_context;

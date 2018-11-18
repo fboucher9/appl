@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_EVENT_STD_MGR_H
-#error include appl_event_std_mgr.h once
-#endif /* #if defined INC_APPL_EVENT_STD_MGR_H */
-
-#define INC_APPL_EVENT_STD_MGR_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_EVENT_MGR_H
-#error include appl_event_mgr.h before
-#endif /* #if ! defined INC_APPL_EVENT_MGR_H */
+enum guard_appl_event_std_mgr_h
+{
+    inc_appl_event_std_mgr_h =
+        /* Header file dependencies */
+        inc_appl_event_mgr_h
+};
 
 /* Assert compiler */
 #if ! defined __cplusplus

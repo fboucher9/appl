@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined(INC_APPL_HEAP_STD_H)
-#error include appl_heap_std.h once
-#endif /* #if defined(INC_APPL_HEAP_STD_H) */
-
-#define INC_APPL_HEAP_STD_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_HEAP_H
-#error include appl_heap.h before
-#endif /* #if ! defined INC_APPL_HEAP_H */
+enum guard_appl_heap_std_h
+{
+    inc_appl_heap_std_h =
+        /* Header file dependency */
+        inc_appl_heap_h
+};
 
 /* Assert compiler */
 #if !defined(__cplusplus)

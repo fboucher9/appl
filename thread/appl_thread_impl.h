@@ -11,16 +11,12 @@ Description:
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_THREAD_IMPL_H
-#error include appl_thread_impl.h once
-#endif /* #if defined INC_APPL_THREAD_IMPL_H */
-
-#define INC_APPL_THREAD_IMPL_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_THREAD_DESCRIPTOR_H
-#error include appl_thread_descriptor.h before appl_thread_impl.h
-#endif /* #if ! defined INC_APPL_THREAD_DESCRIPTOR_H */
+enum guard_appl_thread_impl_h
+{
+    inc_appl_thread_impl_h =
+        /* Header file dependencies */
+        inc_appl_thread_descriptor_h
+};
 
 /* Assert compiler */
 #if ! defined __cplusplus

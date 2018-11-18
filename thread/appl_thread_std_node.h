@@ -9,11 +9,13 @@ Description:
 */
 
 /* Reverse include guard */
-#if defined(INC_APPL_THREAD_STD_NODE_H)
-#error include appl_thread_std_node.h once
-#endif /* #if defined(INC_APPL_THREAD_STD_NODE_H) */
-
-#define INC_APPL_THREAD_STD_NODE_H
+enum guard_appl_thread_std_node_h
+{
+    inc_appl_thread_std_node_h =
+        /* Header file dependencies */
+        inc_appl_thread_node_h
+        + inc_appl_thread_impl_h
+};
 
 struct appl_context;
 
@@ -23,18 +25,8 @@ struct appl_thread_property;
 #error use C++ compiler
 #endif /* #if !defined(__cplusplus) */
 
-/* Header file dependency */
-#if !defined(INC_APPL_THREAD_NODE_H)
-#error include appl_thread_node.h before
-#endif /* #if !defined(INC_APPL_THREAD_NODE_H) */
-
 /* Predefine */
 struct appl_thread_std_node_descriptor;
-
-/* Header file dependency */
-#if ! defined INC_APPL_THREAD_IMPL_H
-#error include appl_thread_impl.h before
-#endif /* #if ! defined INC_APPL_THREAD_IMPL_H */
 
 /* Predefine */
 class appl_thread_std_node;

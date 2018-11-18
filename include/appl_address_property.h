@@ -5,11 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_ADDRESS_PROPERTY_H
-#error include appl_address_property.h once
-#endif /* #if defined INC_APPL_ADDRESS_PROPERTY_H */
-
-#define INC_APPL_ADDRESS_PROPERTY_H
+enum guard_appl_address_property_h
+{
+    inc_appl_address_property_h =
+        /* Header file dependencies */
+        inc_appl_status_h
+};
 
 struct appl_address_property;
 

@@ -4,17 +4,13 @@
 
 */
 
-/* Reverse include guard */
-#if defined(INC_APPL_TYPES_H)
-#error include appl_types.h once
-#endif /* #if defined(INC_APPL_TYPES_H) */
-
 #define INC_APPL_TYPES_H
 
-/* C-style include guard */
+/* Reverse include guard */
 enum guard_appl_types_h
 {
-    inc_appl_types_h = 1
+    inc_appl_types_h =
+        1
 };
 
 #if defined __GNUC__

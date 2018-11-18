@@ -5,13 +5,6 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_HEAP_IMPL_H
-#error include appl_heap_impl.h once
-#endif /* #if defined INC_APPL_HEAP_IMPL_H */
-
-#define INC_APPL_HEAP_IMPL_H
-
-/* Reverse include guard */
 enum guard_appl_heap_impl_h
 {
     inc_appl_heap_impl_h =

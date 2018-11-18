@@ -4,11 +4,12 @@
 
 */
 
-#if defined INC_APPL_CONVERT_H
-#error include appl_convert.h once
-#endif /* #if defined INC_APPL_CONVERT_H */
-
-#define INC_APPL_CONVERT_H
+enum guard_appl_convert_h
+{
+    inc_appl_convert_h =
+        /* Header file dependencies */
+        1
+};
 
 #if ! defined __cplusplus
 #error use c++ compiler

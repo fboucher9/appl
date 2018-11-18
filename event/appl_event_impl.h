@@ -5,11 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_EVENT_IMPL_H
-#error include appl_event_impl.h once
-#endif /* #if defined INC_APPL_EVENT_IMPL_H */
-
-#define INC_APPL_EVENT_IMPL_H
+enum guard_appl_event_impl_h
+{
+    inc_appl_event_impl_h =
+        /* Header file dependencies */
+        inc_appl_status_h
+};
 
 class appl_event_impl;
 

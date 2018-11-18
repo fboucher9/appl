@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_SOCKET_W32_MGR_H
-#error include appl_socket_w32_mgr.h once
-#endif /* #if defined INC_APPL_SOCKET_W32_MGR_H */
-
-#define INC_APPL_SOCKET_W32_MGR_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_SOCKET_MGR_H
-#error include appl_socket_mgr.h before
-#endif /* #if ! defined INC_APPL_SOCKET_MGR_H */
+enum guard_appl_socket_w32_mgr_h
+{
+    inc_appl_socket_w32_mgr_h =
+        /* Header file dependency */
+        inc_appl_socket_mgr_h
+};
 
 /* Assert compiler */
 #if ! defined __cplusplus

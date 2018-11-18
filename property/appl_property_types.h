@@ -5,11 +5,11 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_PROPERTY_TYPES_H
-#error include appl_property_types.h once
-#endif /* #if defined INC_APPL_PROPERTY_TYPES_H */
-
-#define INC_APPL_PROPERTY_TYPES_H
+enum guard_appl_property_types_h
+{
+    inc_appl_property_types_h =
+        1
+};
 
 /*
 

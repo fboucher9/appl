@@ -5,16 +5,13 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_POLL_MGR_H
-#error include appl_poll_mgr.h once
-#endif /* #if defined INC_APPL_POLL_MGR_H */
-
-#define INC_APPL_POLL_MGR_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_NODE_H
-#error include appl_node.h before
-#endif /* #if ! defined INC_APPL_NODE_H */
+enum guard_appl_poll_mgr_h
+{
+    inc_appl_poll_mgr_h =
+        /* Header file dependency */
+        inc_appl_node_h
+        + inc_appl_object_h
+};
 
 struct appl_poll_descriptor;
 

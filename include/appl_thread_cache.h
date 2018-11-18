@@ -5,11 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_THREAD_CACHE_H
-#error include appl_thread_cache.h once
-#endif /* #if defined INC_APPL_THREAD_CACHE_H */
-
-#define INC_APPL_THREAD_CACHE_H
+enum guard_appl_thread_cache_h
+{
+    inc_appl_thread_cache_h =
+        /* Header file dependencies */
+        inc_appl_status_h
+};
 
 struct appl_context;
 

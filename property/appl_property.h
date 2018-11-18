@@ -5,21 +5,13 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_PROPERTY_H
-#error include appl_property.h once
-#endif /* #if defined INC_APPL_PROPERTY_H */
-
-#define INC_APPL_PROPERTY_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_PROPERTY_TYPES_H
-#error include appl_property_types.h before
-#endif /* #if ! defined INC_APPL_PROPERTY_TYPES_H */
-
-/* Header file dependency */
-#if ! defined INC_APPL_OBJECT_H
-#error include appl_object.h before
-#endif /* #if ! defined INC_APPL_OBJECT_H */
+enum guard_appl_property_h
+{
+    inc_appl_property_h =
+        /* Header file dependency */
+        inc_appl_property_types_h
+        + inc_appl_object_h
+};
 
 union appl_property_value;
 

@@ -5,11 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_NODE_ITERATOR_H
-#error include appl_node_iterator.h once
-#endif /* #if defined INC_APPL_NODE_ITERATOR_H */
-
-#define INC_APPL_NODE_ITERATOR_H
+enum guard_appl_node_iterator_h
+{
+    inc_appl_node_iterator_h =
+        /* Header file dependencies */
+        1
+};
 
 /* Assert compiler */
 #if ! defined __cplusplus

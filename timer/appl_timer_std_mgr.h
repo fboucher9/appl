@@ -5,11 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_TIMER_STD_MGR_H
-#error include appl_timer_std_mgr.h once
-#endif /* #if defined INC_APPL_TIMER_STD_MGR_H */
-
-#define INC_APPL_TIMER_STD_MGR_H
+enum guard_appl_timer_std_mgr_h
+{
+    inc_appl_timer_std_mgr_h =
+        /* Header file dependency */
+        inc_appl_timer_mgr_h
+};
 
 /* Predefine */
 struct appl_allocator;

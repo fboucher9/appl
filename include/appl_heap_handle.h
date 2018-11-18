@@ -5,14 +5,13 @@
 */
 
 /* Reverse include guard */
-#if defined(INC_APPL_HEAP_HANDLE_H)
-#error include appl_heap_handle.h once
-#endif /* #if defined(INC_APPL_HEAP_HANDLE_H) */
-
-/* Header file dependency */
-#if ! defined INC_APPL_TYPES_H
-#error include appl_types.h before
-#endif /* #if ! defined INC_APPL_TYPES_H */
+enum guard_appl_heap_handle_h
+{
+    inc_appl_heap_handle_h =
+        /* Header file dependency */
+        inc_appl_status_h
+        + inc_appl_types_h
+};
 
 /* Predefine */
 struct appl_context;

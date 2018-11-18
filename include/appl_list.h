@@ -11,13 +11,6 @@ Description:
 */
 
 /* Reverse include guard */
-#if defined(INC_APPL_LIST_H)
-#error include appl_list.h once
-#endif /* #if defined(INC_APPL_LIST_H) */
-
-#define INC_APPL_LIST_H
-
-/* Reverse include guard */
 enum guard_appl_list_h
 {
     inc_appl_list_h =

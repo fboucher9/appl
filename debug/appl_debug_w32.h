@@ -4,16 +4,12 @@
 
 */
 
-#if defined(INC_APPL_DEBUG_W32_H)
-#error include appl_debug_w32.h once
-#endif /* #if defined(INC_APPL_DEBUG_W32_H) */
-
-#define INC_APPL_DEBUG_W32_H
-
-/* Header file dependency */
-#if !defined(INC_APPL_DEBUG_H)
-#error include appl_debug.h once
-#endif /* #if !defined(INC_APPL_DEBUG_H) */
+enum guard_appl_debug_w32_h
+{
+    inc_appl_debug_w32_h =
+        /* Header file dependencies */
+        inc_appl_debug_h
+};
 
 /* Assert configuration */
 #if ! defined APPL_DEBUG

@@ -5,18 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_QUEUE_H
-#error include appl_queue.h once
-#endif /* #if defined INC_APPL_QUEUE_H */
-
-#define INC_APPL_QUEUE_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_OBJECT_H
-#error include appl_object.h before
-#endif /* #if ! defined INC_APPL_OBJECT_H */
-
-/* ... */
+enum guard_appl_queue_h
+{
+    inc_appl_queue_h =
+        /* Header file dependency */
+        inc_appl_object_h
+};
 
 struct appl_context;
 

@@ -5,21 +5,13 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_QUEUE_STD_H
-#error include appl_queue_std.h once
-#endif /* #if defined INC_APPL_QUEUE_STD_H */
-
-#define INC_APPL_QUEUE_STD_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_QUEUE_H
-#error include appl_queue.h before
-#endif /* #if ! defined INC_APPL_QUEUE_H */
-
-/* Header file dependency */
-#if ! defined INC_APPL_QUEUE_IMPL_H
-#error include appl_queue_impl.h before
-#endif /* #if ! defined INC_APPL_QUEUE_IMPL_H */
+enum guard_appl_queue_std_h
+{
+    inc_appl_queue_std_h =
+        /* Header file dependency */
+        inc_appl_queue_h
+        + inc_appl_queue_impl_h
+};
 
 /* Predefine */
 struct appl_object;

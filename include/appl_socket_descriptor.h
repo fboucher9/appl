@@ -5,11 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_SOCKET_DESCRIPTOR_H
-#error include appl_socket_descriptor.h once
-#endif /* #if defined INC_APPL_SOCKET_DESCRIPTOR_H */
-
-#define INC_APPL_SOCKET_DESCRIPTOR_H
+enum guard_appl_socket_descriptor_h
+{
+    inc_appl_socket_descriptor_h =
+        /* Header file dependencies */
+        inc_appl_status_h
+};
 
 /* Predefine */
 struct appl_address;

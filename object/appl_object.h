@@ -5,16 +5,13 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_OBJECT_H
-#error include appl_object.h once
-#endif /* #if defined INC_APPL_OBJECT_H */
-
 #define INC_APPL_OBJECT_H
 
-/* Include guard and header file dependencies */
+/* Reverse include guard */
 enum guard_appl_object_h
 {
     inc_appl_object_h =
+        /* Header file dependency */
         inc_appl_types_h
 };
 

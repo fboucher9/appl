@@ -5,11 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_EVENT_MGR_H
-#error include appl_event_mgr.h once
-#endif /* #if defined INC_APPL_EVENT_MGR_H */
-
-#define INC_APPL_EVENT_MGR_H
+enum guard_appl_event_mgr_h
+{
+    inc_appl_event_mgr_h =
+        /* Header file dependencies */
+        inc_appl_object_h
+};
 
 struct appl_event_descriptor;
 

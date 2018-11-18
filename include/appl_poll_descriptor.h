@@ -4,11 +4,12 @@
 
 */
 
-#if defined(INC_APPL_POLL_DESCRIPTOR_H)
-#error include appl_poll_descriptor.h
-#endif /* #if defined(INC_APPL_POLL_DESCRIPTOR_H) */
-
-#define INC_APPL_POLL_DESCRIPTOR_H
+/* Reverse include guard */
+enum guard_appl_poll_descriptor_h
+{
+    inc_appl_poll_descriptor_h =
+        1
+};
 
 struct appl_socket;
 

@@ -8,15 +8,12 @@
 #error include only from debug build
 #endif /* #if ! defined APPL_DEBUG */
 
-#if defined(INC_APPL_DEBUG_H)
-#error include appl_debug.h once
-#endif /* #if defined(INC_APPL_DEBUG_H) */
-
-#define INC_APPL_DEBUG_H
-
-#if !defined(INC_APPL_OBJECT_H)
-#error include appl_object.h before
-#endif /* #if !defined(INC_APPL_OBJECT_H) */
+enum guard_appl_debug_h
+{
+    inc_appl_debug_h =
+        /* Header file dependencies */
+        inc_appl_object_h
+};
 
 #if !defined(__cplusplus)
 #error use C++ compiler

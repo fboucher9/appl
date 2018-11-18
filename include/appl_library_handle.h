@@ -4,11 +4,13 @@
 
 */
 
-#if defined INC_APPL_LIBRARY_HANDLE_H
-#error include appl_library_handle.h once
-#endif /* #if defined INC_APPL_LIBRARY_HANDLE_H */
-
-#define INC_APPL_LIBRARY_HANDLE_H
+/* Reverse include guard */
+enum guard_appl_library_handle_h
+{
+    inc_appl_library_handle_h =
+        /* Header file dependencies */
+        inc_appl_status_h
+};
 
 struct appl_context;
 

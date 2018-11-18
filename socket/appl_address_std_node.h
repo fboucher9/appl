@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_ADDRESS_STD_NODE_H
-#error include appl_address_std_node.h once
-#endif /* #if defined INC_APPL_ADDRESS_STD_NODE_H */
-
-#define INC_APPL_ADDRESS_STD_NODE_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_ADDRESS_NODE_H
-#error include appl_address_node.h before
-#endif /* #if ! defined INC_APPL_ADDRESS_NODE_H */
+enum guard_appl_address_std_node_h
+{
+    inc_appl_address_std_node_h =
+        /* Header file dependency */
+        inc_appl_address_node_h
+};
 
 /* Assert compiler */
 #if ! defined __cplusplus

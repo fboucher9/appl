@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_EVENT_STD_NODE_H
-#error include appl_event_std_node.h once
-#endif /* #if defined INC_APPL_EVENT_STD_NODE_H */
-
-#define INC_APPL_EVENT_STD_NODE_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_EVENT_NODE_H
-#error include appl_event_node.h before
-#endif /* #if ! defined INC_APPL_EVENT_NODE_H */
+enum guard_appl_event_std_node_h
+{
+    inc_appl_event_std_node_h =
+        /* Header file dependencies */
+        inc_appl_event_node_h
+};
 
 struct appl_event_descriptor;
 

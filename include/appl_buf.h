@@ -5,11 +5,11 @@
 */
 
 /* Reverse include guard */
-#if defined(INC_APPL_BUF_H)
-#error include appl_buf.h once
-#endif /* #if defined(INC_APPL_BUF_H) */
-
-#define INC_APPL_BUF_H
+enum guard_appl_buf_h
+{
+    inc_appl_buf_h =
+        1
+};
 
 /* Predefine appl_buf handle */
 struct appl_buf;

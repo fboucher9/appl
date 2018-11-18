@@ -4,15 +4,12 @@
 
 */
 
-#if defined(INC_APPL_DEBUG_STD_H)
-#error include appl_debug_std.h once
-#endif /* #if defined(INC_APPL_DEBUG_STD_H) */
-
-#define INC_APPL_DEBUG_STD_H
-
-#if !defined(INC_APPL_DEBUG_H)
-#error include appl_debug.h once
-#endif /* #if !defined(INC_APPL_DEBUG_H) */
+enum guard_appl_debug_std_h
+{
+    inc_appl_debug_std_h =
+        /* Header file dependencies */
+        inc_appl_debug_h
+};
 
 #if !defined(__cplusplus)
 #error use C++ compiler

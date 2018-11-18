@@ -5,11 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_BUF0_H
-#error include appl_buf0.h once
-#endif /* #if defined INC_APPL_BUF0_H */
-
-#define INC_APPL_BUF0_H
+enum guard_appl_buf0_h
+{
+    inc_appl_buf0_h =
+        /* Header file dependencies */
+        inc_appl_status_h
+};
 
 struct appl_context;
 

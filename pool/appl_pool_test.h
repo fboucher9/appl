@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_POOL_TEST_H
-#error include appl_pool_test.h once
-#endif /* #if defined INC_APPL_POOL_TEST_H */
-
-#define INC_APPL_POOL_TEST_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_H
-#error include appl.h before
-#endif /* #if ! defined INC_APPL_H */
+enum guard_appl_pool_test_h
+{
+    inc_appl_pool_test_h =
+        /* Header file dependency */
+        inc_appl_h
+};
 
 #if defined __cplusplus
 extern "C" {

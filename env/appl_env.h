@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_ENV_H
-#error include appl_env.h once
-#endif /* #if defined INC_APPL_ENV_H */
-
-#define INC_APPL_ENV_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_OBJECT_H
-#error include appl_object.h before appl_env.h
-#endif /* #if ! defined INC_APPL_OBJECT_H */
+enum guard_appl_env_h
+{
+    inc_appl_env_h =
+        /* Header file dependencies */
+        inc_appl_object_h
+};
 
 struct appl_string;
 
