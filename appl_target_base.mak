@@ -51,12 +51,12 @@ appl_base-deps := \
     appl_event_std_mgr.cpp \
     appl_event_std_node.cpp \
     appl_event_impl.cpp \
-    appl_file_handle.cpp \
-    appl_file_mgr.cpp \
-    appl_file_node.cpp \
-    appl_file_service.cpp \
-    appl_file_std_mgr.cpp \
-    appl_file_std_node.cpp \
+    file/appl_file_handle.cpp \
+    file/appl_file_mgr.cpp \
+    file/appl_file_node.cpp \
+    file/appl_file_service.cpp \
+    file/appl_file_std_mgr.cpp \
+    file/appl_file_std_node.cpp \
     appl_hash_handle.cpp \
     appl_heap.cpp \
     appl_heap_dbg.cpp \
@@ -83,13 +83,13 @@ appl_base-deps := \
     appl_module_handle.cpp \
     appl_module_service.cpp \
     appl_module.cpp \
-    appl_mutex_handle.cpp \
-    appl_mutex_mgr.cpp \
-    appl_mutex_node.cpp \
-    appl_mutex_service.cpp \
-    appl_mutex_std_mgr.cpp \
-    appl_mutex_std_node.cpp \
-    appl_mutex_impl.cpp \
+    mutex/appl_mutex_handle.cpp \
+    mutex/appl_mutex_mgr.cpp \
+    mutex/appl_mutex_node.cpp \
+    mutex/appl_mutex_service.cpp \
+    mutex/appl_mutex_std_mgr.cpp \
+    mutex/appl_mutex_std_node.cpp \
+    mutex/appl_mutex_impl.cpp \
     appl_node.cpp \
     appl_node_iterator.cpp \
     appl_object.cpp \

@@ -16,11 +16,11 @@
 
 #include <appl_object.h>
 
-#include <appl_mutex_node.h>
+#include <mutex/appl_mutex_node.h>
 
 #include <appl_event_node.h>
 
-#include <appl_mutex_mgr.h>
+#include <mutex/appl_mutex_mgr.h>
 
 #include <appl_event_mgr.h>
 

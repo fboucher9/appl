@@ -40,7 +40,7 @@
 
 #include <appl_list.h>
 
-#include <appl_mutex_impl.h>
+#include <mutex/appl_mutex_impl.h>
 
 #include <appl_heap_dbg.h>
 

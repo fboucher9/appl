@@ -14,7 +14,7 @@
 
 #include <appl_types.h>
 
-#include <appl_mutex_impl.h>
+#include <mutex/appl_mutex_impl.h>
 
 #if defined APPL_DEBUG
 #include <appl_debug_handle.h>

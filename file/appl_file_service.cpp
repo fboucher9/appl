@@ -6,7 +6,7 @@
 
 #include <appl_status.h>
 
-#include <appl_file_service.h>
+#include <file/appl_file_service.h>
 
 #include <appl_types.h>
 
@@ -14,9 +14,9 @@
 
 #include <appl_context.h>
 
-#include <appl_file_mgr.h>
+#include <file/appl_file_mgr.h>
 
-#include <appl_file_node.h>
+#include <file/appl_file_node.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus

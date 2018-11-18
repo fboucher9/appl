@@ -6,7 +6,7 @@
 
 #include <appl_status.h>
 
-#include <appl_mutex_service.h>
+#include <mutex/appl_mutex_service.h>
 
 #include <appl_types.h>
 
@@ -14,9 +14,9 @@
 
 #include <appl_context.h>
 
-#include <appl_mutex_mgr.h>
+#include <mutex/appl_mutex_mgr.h>
 
-#include <appl_mutex_node.h>
+#include <mutex/appl_mutex_node.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus

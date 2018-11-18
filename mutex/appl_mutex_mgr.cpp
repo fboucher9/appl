@@ -10,7 +10,7 @@
 
 #include <appl_object.h>
 
-#include <appl_mutex_mgr.h>
+#include <mutex/appl_mutex_mgr.h>
 
 #include <appl_unused.h>
 

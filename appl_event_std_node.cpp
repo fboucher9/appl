@@ -26,11 +26,11 @@
 
 #include <appl_event_std_node.h>
 
-#include <appl_mutex_node.h>
+#include <mutex/appl_mutex_node.h>
 
-#include <appl_mutex_impl.h>
+#include <mutex/appl_mutex_impl.h>
 
-#include <appl_mutex_std_node.h>
+#include <mutex/appl_mutex_std_node.h>
 
 #include <appl_unused.h>
 

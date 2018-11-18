@@ -22,7 +22,7 @@
 
 #include <appl_types.h>
 
-#include <appl_mutex_impl.h>
+#include <mutex/appl_mutex_impl.h>
 
 #include <appl_heap_impl.h>
 

@@ -42,7 +42,7 @@
 
 #include <appl_list.h>
 
-#include <appl_mutex_impl.h>
+#include <mutex/appl_mutex_impl.h>
 
 #include <appl_heap_dbg.h>
 
@@ -68,13 +68,13 @@
 
 #include <thread/appl_thread_std_mgr.h>
 
-#include <appl_file_mgr.h>
+#include <file/appl_file_mgr.h>
 
-#include <appl_file_std_mgr.h>
+#include <file/appl_file_std_mgr.h>
 
-#include <appl_mutex_mgr.h>
+#include <mutex/appl_mutex_mgr.h>
 
-#include <appl_mutex_std_mgr.h>
+#include <mutex/appl_mutex_std_mgr.h>
 
 #include <appl_node.h>
 

@@ -36,7 +36,7 @@ Description:
 
 #include <appl_mutex_handle.h>
 
-#include <appl_mutex_node.h>
+#include <mutex/appl_mutex_node.h>
 
 #if defined APPL_DEBUG
 #include <appl_debug_handle.h>

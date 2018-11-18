@@ -10,13 +10,13 @@
 
 #include <appl_object.h>
 
-#include <appl_file_mgr.h>
+#include <file/appl_file_mgr.h>
 
-#include <appl_file_std_mgr.h>
+#include <file/appl_file_std_mgr.h>
 
-#include <appl_file_node.h>
+#include <file/appl_file_node.h>
 
-#include <appl_file_std_node.h>
+#include <file/appl_file_std_node.h>
 
 #include <appl_allocator.h>
 
