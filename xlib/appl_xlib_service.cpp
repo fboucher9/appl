@@ -14,7 +14,7 @@
 
 #include <xlib/appl_xlib_service.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <xlib/appl_xlib.h>
 

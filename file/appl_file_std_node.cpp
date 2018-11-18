@@ -22,7 +22,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <file/appl_file_node.h>
 

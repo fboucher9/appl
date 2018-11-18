@@ -14,7 +14,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <property/appl_property_types.h>
 

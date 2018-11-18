@@ -18,7 +18,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <pool/appl_pool_mgr.h>
 

@@ -8,7 +8,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <socket/appl_socket_mgr.h>
 

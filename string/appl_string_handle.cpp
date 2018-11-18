@@ -10,7 +10,7 @@
 
 #include <string/appl_string_service.h>
 
-#include <appl_object_service.h>
+#include <object/appl_object_service.h>
 
 #include <appl_buf.h>
 

@@ -78,8 +78,8 @@ appl_base-deps := \
     log/appl_log.cpp \
     log/appl_log_std.cpp \
     log/appl_log_impl.cpp \
-    appl_main.cpp \
-    appl_main_service.cpp \
+    main/appl_main.cpp \
+    main/appl_main_service.cpp \
     module/appl_module_handle.cpp \
     module/appl_module_service.cpp \
     module/appl_module.cpp \
@@ -92,9 +92,9 @@ appl_base-deps := \
     mutex/appl_mutex_impl.cpp \
     appl_node.cpp \
     appl_node_iterator.cpp \
-    appl_object.cpp \
-    appl_object_handle.cpp \
-    appl_object_service.cpp \
+    object/appl_object.cpp \
+    object/appl_object_handle.cpp \
+    object/appl_object_service.cpp \
     options/appl_options.cpp \
     options/appl_options_std.cpp \
     options/appl_options_handle.cpp \

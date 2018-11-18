@@ -10,7 +10,7 @@
 
 #include <clock/appl_clock_service.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <clock/appl_clock.h>
 

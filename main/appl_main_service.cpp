@@ -6,7 +6,7 @@
 
 #include <appl_status.h>
 
-#include <appl_main_service.h>
+#include <main/appl_main_service.h>
 
 #include <appl_context_handle.h>
 
