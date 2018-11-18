@@ -6,15 +6,15 @@
 
 #include <appl_status.h>
 
-#include <appl_context_service.h>
+#include <context/appl_context_service.h>
 
 #include <appl_types.h>
 
 #include <object/appl_object.h>
 
-#include <appl_context.h>
+#include <context/appl_context.h>
 
-#include <appl_context_std.h>
+#include <context/appl_context_std.h>
 
 //
 //

@@ -14,7 +14,7 @@
 
 #include <thread/appl_thread_std_mgr.h>
 
-#include <appl_context.h>
+#include <context/appl_context.h>
 
 #include <allocator/appl_allocator.h>
 

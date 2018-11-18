@@ -8,7 +8,7 @@
 
 #include <appl_context_handle.h>
 
-#include <appl_context_service.h>
+#include <context/appl_context_service.h>
 
 /*
 

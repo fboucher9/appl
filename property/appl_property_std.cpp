@@ -18,7 +18,7 @@
 
 #include <property/appl_property_std.h>
 
-#include <appl_context.h>
+#include <context/appl_context.h>
 
 #include <allocator/appl_allocator.h>
 

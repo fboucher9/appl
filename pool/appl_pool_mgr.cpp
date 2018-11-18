@@ -32,7 +32,7 @@
 
 #include <pool/appl_pool_std.h>
 
-#include <appl_context.h>
+#include <context/appl_context.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus

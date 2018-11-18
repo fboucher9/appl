@@ -16,7 +16,7 @@
 
 #include <socket/appl_socket_mgr.h>
 
-#include <appl_context.h>
+#include <context/appl_context.h>
 
 #include <socket/appl_socket_node.h>
 

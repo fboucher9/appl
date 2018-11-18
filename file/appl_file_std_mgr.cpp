@@ -24,7 +24,7 @@
 
 #include <pool/appl_pool_mgr.h>
 
-#include <appl_context.h>
+#include <context/appl_context.h>
 
 #if !defined(__cplusplus)
 #error use c++ compiler

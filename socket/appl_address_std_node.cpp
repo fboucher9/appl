@@ -49,7 +49,7 @@ Description:
 
 #include <appl_buf0.h>
 
-#include <appl_context.h>
+#include <context/appl_context.h>
 
 #include <allocator/appl_allocator.h>
 

@@ -18,7 +18,7 @@
 
 #include <string/appl_string.h>
 
-#include <appl_context.h>
+#include <context/appl_context.h>
 
 #include <allocator/appl_allocator.h>
 

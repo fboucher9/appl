@@ -16,7 +16,7 @@
 
 #include <module/appl_module.h>
 
-#include <appl_context.h>
+#include <context/appl_context.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus

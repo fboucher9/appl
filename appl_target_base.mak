@@ -30,10 +30,10 @@ appl_base-deps := \
     clock/appl_clock_service.cpp \
     clock/appl_clock_std.cpp \
     clock/appl_clock_w32.cpp \
-    appl_context.cpp \
-    appl_context_handle.cpp \
-    appl_context_service.cpp \
-    appl_context_std.cpp \
+    context/appl_context.cpp \
+    context/appl_context_handle.cpp \
+    context/appl_context_service.cpp \
+    context/appl_context_std.cpp \
     appl_crc16.cpp \
     debug/appl_debug.cpp \
     debug/appl_debug_handle.cpp \

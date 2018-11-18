@@ -18,7 +18,7 @@
 
 #include <env/appl_env_w32.h>
 
-#include <appl_context.h>
+#include <context/appl_context.h>
 
 #include <allocator/appl_allocator.h>
 

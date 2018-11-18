@@ -20,7 +20,7 @@
 
 #include <library/appl_library_std_node.h>
 
-#include <appl_context.h>
+#include <context/appl_context.h>
 
 #include <allocator/appl_allocator.h>
 
