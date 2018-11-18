@@ -5,11 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_MODULE_SERVICE_H
-#error include appl_module_service.h once
-#endif /* #if defined INC_APPL_MODULE_SERVICE_H */
-
-#define INC_APPL_MODULE_SERVICE_H
+enum guard_appl_module_service_h
+{
+    inc_appl_module_service_h =
+        /* Header file dependencies */
+        inc_appl_status_h
+};
 
 /* Predefine */
 struct appl_context;

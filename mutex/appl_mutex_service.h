@@ -5,11 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_MUTEX_SERVICE_H
-#error include appl_mutex_service.h once
-#endif /* #if defined INC_APPL_MUTEX_SERVICE_H */
-
-#define INC_APPL_MUTEX_SERVICE_H
+enum guard_appl_mutex_service_h
+{
+    inc_appl_mutex_service_h =
+        /* Header file dependencies */
+        inc_appl_status_h
+};
 
 struct appl_context;
 

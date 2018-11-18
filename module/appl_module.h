@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_MODULE_H
-#error include appl_module.h once
-#endif /* #if defined INC_APPL_MODULE_H */
-
-#define INC_APPL_MODULE_H
-
-/* Header file dependencies */
-#if ! defined INC_APPL_OBJECT_H
-#error include appl_object.h before
-#endif /* #if ! defined INC_APPL_OBJECT_H */
+enum guard_appl_module_h
+{
+    inc_appl_module_h =
+        /* Header file dependencies */
+        inc_appl_object_h
+};
 
 /* Predefine */
 struct appl_allocator;

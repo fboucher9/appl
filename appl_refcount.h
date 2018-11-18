@@ -31,8 +31,13 @@ Example:
             enum appl_status
                 v_cleanup(void)
             {
-                if (0 == --m_refcount)
+                bool b_destroy;
+                m_mutex->v_lock();
+                b_destroy = (0 == --m_refcount)
+                m_mutex->v_unlock();
+                if (b_destroy)
                 {
+                    f_cleanup();
                     return
                         appl_status_ok;
                 }
@@ -47,23 +52,21 @@ Example:
             enum appl_status
                 v_add(void)
             {
+                m_mutex->v_lock();
                 m_refcount ++;
+                m_mutex->v_unlock();
             }
     };
 
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_REFCOUNT_H
-#error include appl_refcount.h once
-#endif /* #if defined INC_APPL_REFCOUNT_H */
-
-#define INC_APPL_REFCOUNT_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_OBJECT_H
-#error include appl_object.h before appl_refcount.h
-#endif /* #if ! defined INC_APPL_OBJECT_H */
+enum guard_appl_refcount_h
+{
+    inc_appl_refcount_h =
+        /* Header file dependency */
+        inc_appl_object_h
+};
 
 /* Predefine */
 struct appl_refcount;

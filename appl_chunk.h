@@ -64,16 +64,12 @@ Example:
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_CHUNK_H
-#error include appl_chunk.h once
-#endif /* #if defined INC_APPL_CHUNK_H */
-
-#define INC_APPL_CHUNK_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_STATUS_H
-#error include appl_status.h before appl_chunk.h
-#endif /* #if ! defined INC_APPL_STATUS_H */
+enum guard_appl_chunk_h
+{
+    inc_appl_chunk_h =
+        /* Header file dependency */
+        inc_appl_status_h
+};
 
 struct appl_context;
 

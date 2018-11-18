@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_MUTEX_STD_NODE_H
-#error include appl_mutex_std_node.h once
-#endif /* #if defined INC_APPL_MUTEX_STD_NODE_H */
-
-#define INC_APPL_MUTEX_STD_NODE_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_MUTEX_NODE_H
-#error include appl_mutex_node.h before
-#endif /* #if ! defined INC_APPL_MUTEX_NODE_H */
+enum guard_appl_mutex_std_node_h
+{
+    inc_appl_mutex_std_node_h =
+        /* Header file dependency */
+        inc_appl_mutex_node_h
+};
 
 struct appl_mutex_descriptor;
 

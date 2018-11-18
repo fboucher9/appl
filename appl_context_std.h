@@ -4,12 +4,15 @@
 
 */
 
-#if defined(INC_APPL_CONTEXT_STD_H)
-#error include appl_context_std.h once
-#endif /* #if defined(INC_APPL_CONTEXT_STD_H) */
+/* Reverse include guard */
+enum guard_appl_context_std_h
+{
+    inc_appl_context_std_h =
+        /* Header file dependencies */
+        inc_appl_context_h
+};
 
-#define INC_APPL_CONTEXT_STD_H
-
+/* Assert compiler */
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */

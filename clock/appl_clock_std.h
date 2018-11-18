@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_CLOCK_STD_H
-#error include appl_clock_std.h once
-#endif /* #if defined INC_APPL_CLOCK_STD_H */
-
-#define INC_APPL_CLOCK_STD_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_CLOCK_H
-#error include appl_clock.h before
-#endif /* #if ! defined INC_APPL_CLOCK_H */
+enum guard_appl_clock_std_h
+{
+    inc_appl_clock_std_h =
+        /* Header file dependencies */
+        inc_appl_clock_h
+};
 
 /* Assert compiler */
 #if ! defined __cplusplus

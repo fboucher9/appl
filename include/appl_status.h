@@ -4,11 +4,20 @@
 
 */
 
-#if defined(INC_APPL_STATUS_H)
+/* Reverse include guard */
+#if defined INC_APPL_STATUS_H
 #error include appl_status.h once
-#endif /* #if defined(INC_APPL_STATUS_H) */
+#endif /* #if defined INC_APPL_STATUS_H */
 
 #define INC_APPL_STATUS_H
+
+/* C-style include guard */
+enum guard_appl_status_h
+{
+    inc_appl_status_h =
+        /* Header file dependencies */
+        1
+};
 
 /*
 

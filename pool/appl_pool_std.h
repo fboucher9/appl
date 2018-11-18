@@ -14,15 +14,14 @@
 #error include appl_pool.h before
 #endif /* #if ! defined INC_APPL_POOL_H */
 
-/* Header file dependencies */
-#if ! defined INC_APPL_LIST_H
-#error include appl_list.h before
-#endif /* #if ! defined INC_APPL_LIST_H */
-
-/* Header file dependencies */
-#if ! defined INC_APPL_MUTEX_IMPL_H
-#error include appl_mutex_impl.h before
-#endif /* #if ! defined INC_APPL_MUTEX_IMPL_H */
+/* Reverse include guard */
+enum guard_appl_pool_std_h
+{
+    inc_appl_pool_std_h =
+        /* Header file dependencies */
+        inc_appl_list_h
+        + inc_appl_mutex_impl_h
+};
 
 /* Assert compiler */
 #if ! defined __cplusplus

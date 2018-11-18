@@ -17,6 +17,14 @@ Description:
 
 #define INC_APPL_LIST_H
 
+/* Reverse include guard */
+enum guard_appl_list_h
+{
+    inc_appl_list_h =
+        /* Header file dependencies */
+        1 /* None */
+};
+
 struct appl_list;
 
 /* pointer to node */

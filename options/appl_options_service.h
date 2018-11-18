@@ -5,12 +5,14 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_OPTIONS_SERVICE_H
-#error include appl_options_service.h once
-#endif /* #if defined INC_APPL_OPTIONS_SERVICE_H */
+enum guard_appl_options_service_h
+{
+    inc_appl_options_service_h =
+        /* Header file dependencies */
+        inc_appl_status_h
+};
 
-#define INC_APPL_OPTIONS_SERVICE_H
-
+/* Predefine */
 struct appl_object;
 
 /* Assert compiler */

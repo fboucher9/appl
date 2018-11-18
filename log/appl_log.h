@@ -5,21 +5,13 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_LOG_H
-#error include appl_log.h once
-#endif /* #if defined INC_APPL_LOG_H */
-
-#define INC_APPL_LOG_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_LOG_HANDLE_H
-#error include appl_log_handle.h before
-#endif /* #if ! defined INC_APPL_LOG_HANDLE_H */
-
-/* Header file dependency */
-#if ! defined INC_APPL_OBJECT_H
-#error include appl_object.h before
-#endif /* #if ! defined INC_APPL_OBJECT_H */
+enum guard_appl_log_h
+{
+    inc_appl_log_h =
+        /* Header file dependency */
+        inc_appl_log_handle_h
+        + inc_appl_object_h
+};
 
 /* Assert compiler */
 #if ! defined __cplusplus

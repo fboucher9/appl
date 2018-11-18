@@ -235,9 +235,18 @@ enum appl_status
     struct sigaction
         o_old_action;
 
+#if defined __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdisabled-macro-expansion"
+#endif
+
     o_new_action.sa_handler =
         &(
             dummy_urgent_signal_handler);
+
+#if defined __clang__
+#pragma clang diagnostic pop
+#endif
 
     sigemptyset(
         &(

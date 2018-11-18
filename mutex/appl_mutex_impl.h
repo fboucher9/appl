@@ -5,11 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_MUTEX_IMPL_H
-#error include appl_mutex_impl.h once
-#endif /* #if defined INC_APPL_MUTEX_IMPL_H */
-
-#define INC_APPL_MUTEX_IMPL_H
+enum guard_appl_mutex_impl_h
+{
+    inc_appl_mutex_impl_h =
+        /* Header file dependencies */
+        inc_appl_status_h
+};
 
 /* Assert compiler */
 #if ! defined __cplusplus

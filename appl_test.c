@@ -29,6 +29,9 @@
 
 #include <xlib/appl_xlib_test.h>
 
+enum Test1 { Test1 };
+/* enum Test1 { Test1 }; */
+
 void
 appl_thread_cache_test(
     struct appl_context * const

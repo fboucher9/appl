@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_STRING_H
-#error include appl_string.h once
-#endif /* #if defined INC_APPL_STRING_H */
-
-#define INC_APPL_STRING_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_OBJECT_H
-#error include appl_object.h before
-#endif /* #if ! defined INC_APPL_OBJECT_H */
+enum guard_appl_string_h
+{
+    inc_appl_string_h =
+        /* Header file dependency */
+        inc_appl_object_h
+};
 
 /* Predefine */
 struct appl_object;

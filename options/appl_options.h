@@ -5,21 +5,17 @@
 */
 
 /* Reverse include guard */
-#if defined(INC_APPL_OPTIONS_H)
-#error include appl_options.h once
-#endif /* #if defined(INC_APPL_OPTIONS_H) */
-
-#define INC_APPL_OPTIONS_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_OBJECT_H
-#error include appl_object.h before
-#endif /* #if ! defined INC_APPL_OBJECT_H */
+enum guard_appl_options_h
+{
+    inc_appl_options_h =
+        /* Header file dependency */
+        inc_appl_object_h
+};
 
 /* Assert compiler */
-#if !defined(__cplusplus)
+#if ! defined __cplusplus
 #error use c++ compiler
-#endif /* #if !defined(__cplusplus) */
+#endif /* #if ! defined __cplusplus */
 
 struct appl_options;
 

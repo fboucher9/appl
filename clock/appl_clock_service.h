@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_CLOCK_SERVICE_H
-#error include appl_clock_service.h once
-#endif /* #if defined INC_APPL_CLOCK_SERVICE_H */
-
-#define INC_APPL_CLOCK_SERVICE_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_STATUS_H
-#error include appl_status.h before
-#endif /* #if ! defined INC_APPL_STATUS_H */
+enum guard_appl_clock_service_h
+{
+    inc_appl_clock_service_h =
+        /* Header file dependency */
+        inc_appl_status_h
+};
 
 struct appl_context;
 

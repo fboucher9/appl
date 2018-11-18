@@ -5,11 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_BINARY_HEAP_H
-#error include appl_binary_heap.h once
-#endif /* #if defined INC_APPL_BINARY_HEAP_H */
-
-#define INC_APPL_BINARY_HEAP_H
+enum guard_appl_binary_heap_h
+{
+    inc_appl_binary_heap_h =
+        /* Header file dependencies */
+        inc_appl_status_h
+};
 
 /* Predefine */
 struct appl_context;

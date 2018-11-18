@@ -4,18 +4,23 @@
 
 */
 
-#if defined(INC_APPL_OPTIONS_STD_H)
-#error include appl_options_std.h once
-#endif /* #if defined(INC_APPL_OPTIONS_STD_H) */
+/* Reverse include guard */
+enum guard_appl_options_std_h
+{
+    inc_appl_options_std_h =
+        /* Header file dependencies */
+        inc_appl_options_h
+};
 
-#define INC_APPL_OPTIONS_STD_H
-
+/* Assert compiler */
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
 
+/* Predefine */
 struct appl_options;
 
+/* Predefine */
 class appl_options_std;
 
 enum appl_options_std_state
