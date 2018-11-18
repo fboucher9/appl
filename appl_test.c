@@ -25,9 +25,9 @@
 
 #include <appl_binary_heap_test.h>
 
-#include <appl_options_test.h>
+#include <options/appl_options_test.h>
 
-#include <appl_xlib_test.h>
+#include <xlib/appl_xlib_test.h>
 
 void
 appl_thread_cache_test(

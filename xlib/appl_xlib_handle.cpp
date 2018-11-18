@@ -12,7 +12,7 @@
 
 #include <appl_xlib_handle.h>
 
-#include <appl_xlib_service.h>
+#include <xlib/appl_xlib_service.h>
 
 /*
 

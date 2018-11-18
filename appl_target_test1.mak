@@ -25,8 +25,8 @@ test_appl-deps = \
     appl_module_test.c \
     timer/appl_timer_test.c \
     appl_binary_heap_test.c \
-    appl_options_test.c \
-    appl_xlib_test.c \
+    options/appl_options_test.c \
+    xlib/appl_xlib_test.c \
     $(appl_base-deps)
 
 # List of libraries required to link test application

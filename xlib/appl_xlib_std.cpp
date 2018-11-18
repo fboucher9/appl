@@ -20,11 +20,11 @@ Description:
 
 #include <X11/Xlib.h>
 
-#include <appl_xlib.h>
+#include <xlib/appl_xlib.h>
 
-#include <appl_xlib_intf.h>
+#include <xlib/appl_xlib_intf.h>
 
-#include <appl_xlib_std.h>
+#include <xlib/appl_xlib_std.h>
 
 #include <appl_allocator.h>
 

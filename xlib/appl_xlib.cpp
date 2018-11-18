@@ -14,7 +14,7 @@
 
 #include <X11/Xlib.h>
 
-#include <appl_xlib.h>
+#include <xlib/appl_xlib.h>
 
 #include <appl_unused.h>
 

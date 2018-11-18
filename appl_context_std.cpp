@@ -78,7 +78,7 @@
 
 #include <appl_node.h>
 
-#include <appl_poll_mgr.h>
+#include <socket/appl_poll_mgr.h>
 
 #include <clock/appl_clock.h>
 
@@ -152,11 +152,11 @@
 
 #include <X11/Xlib.h>
 
-#include <appl_xlib.h>
+#include <xlib/appl_xlib.h>
 
-#include <appl_xlib_intf.h>
+#include <xlib/appl_xlib_intf.h>
 
-#include <appl_xlib_std.h>
+#include <xlib/appl_xlib_std.h>
 
 #endif /* #if defined APPL_HAVE_XLIB */
 

@@ -6,7 +6,7 @@
 
 #include <appl_status.h>
 
-#include <appl_poll_service.h>
+#include <socket/appl_poll_service.h>
 
 #include <appl_types.h>
 
@@ -18,7 +18,7 @@
 
 #include <appl_node.h>
 
-#include <appl_poll_mgr.h>
+#include <socket/appl_poll_mgr.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus

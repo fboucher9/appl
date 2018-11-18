@@ -14,7 +14,7 @@
 
 #include <appl.h>
 
-#include <appl_xlib_test.h>
+#include <xlib/appl_xlib_test.h>
 
 /*
 

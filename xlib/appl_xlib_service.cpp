@@ -12,11 +12,11 @@
 
 #include <X11/Xlib.h>
 
-#include <appl_xlib_service.h>
+#include <xlib/appl_xlib_service.h>
 
 #include <appl_object.h>
 
-#include <appl_xlib.h>
+#include <xlib/appl_xlib.h>
 
 #include <appl_context.h>
 

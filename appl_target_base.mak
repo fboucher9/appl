@@ -95,14 +95,14 @@ appl_base-deps := \
     appl_object.cpp \
     appl_object_handle.cpp \
     appl_object_service.cpp \
-    appl_options.cpp \
-    appl_options_std.cpp \
-    appl_options_handle.cpp \
-    appl_options_service.cpp \
-    appl_poll_handle.cpp \
-    appl_poll_mgr.cpp \
-    appl_poll_node.cpp \
-    appl_poll_service.cpp \
+    options/appl_options.cpp \
+    options/appl_options_std.cpp \
+    options/appl_options_handle.cpp \
+    options/appl_options_service.cpp \
+    socket/appl_poll_handle.cpp \
+    socket/appl_poll_mgr.cpp \
+    socket/appl_poll_node.cpp \
+    socket/appl_poll_service.cpp \
     appl_pool.cpp \
     appl_pool_std.cpp \
     appl_pool_mgr.cpp \
@@ -155,10 +155,10 @@ appl_base-deps := \
     timer/appl_timer.cpp \
     timer/appl_timer_std_mgr.cpp \
     timer/appl_timer_std_node.cpp \
-    appl_xlib.cpp \
-    appl_xlib_std.cpp \
-    appl_xlib_handle.cpp \
-    appl_xlib_service.cpp
+    xlib/appl_xlib.cpp \
+    xlib/appl_xlib_std.cpp \
+    xlib/appl_xlib_handle.cpp \
+    xlib/appl_xlib_service.cpp
 
 endif # ifndef appl_target_base.mak-included
 

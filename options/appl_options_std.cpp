@@ -10,11 +10,11 @@
 
 #include <appl_object.h>
 
-#include <appl_options.h>
+#include <options/appl_options.h>
 
 #include <appl_list.h>
 
-#include <appl_options_std.h>
+#include <options/appl_options_std.h>
 
 #include <appl_string.h>
 

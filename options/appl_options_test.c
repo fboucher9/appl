@@ -6,7 +6,7 @@
 
 #include <appl.h>
 
-#include <appl_options_test.h>
+#include <options/appl_options_test.h>
 
 #include <stdio.h>
 
