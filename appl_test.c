@@ -170,12 +170,32 @@ appl_test_memory_leak(
     enum appl_status
         e_status;
 
+    struct appl_context *
+        p_context_temp;
+
+    (void)(
+        p_context);
+
     e_status =
-        appl_heap_alloc(
-            p_context,
-            123u,
+        appl_context_create(
             &(
-                p_buf));
+                p_context_temp));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_heap_alloc(
+                p_context_temp,
+                123u,
+                &(
+                    p_buf));
+
+        appl_object_destroy(
+            appl_context_parent(
+                p_context_temp));
+    }
 
     if (
         appl_status_ok
