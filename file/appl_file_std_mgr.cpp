@@ -20,9 +20,9 @@
 
 #include <appl_allocator.h>
 
-#include <appl_pool.h>
+#include <pool/appl_pool.h>
 
-#include <appl_pool_mgr.h>
+#include <pool/appl_pool_mgr.h>
 
 #include <appl_context.h>
 

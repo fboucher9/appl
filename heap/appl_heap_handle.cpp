@@ -10,7 +10,7 @@
 
 #include <appl_heap_handle.h>
 
-#include <appl_heap_service.h>
+#include <heap/appl_heap_service.h>
 
 /*
 

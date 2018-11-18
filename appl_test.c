@@ -17,7 +17,7 @@
 
 #include <appl_hash_test.h>
 
-#include <appl_pool_test.h>
+#include <pool/appl_pool_test.h>
 
 #include <appl_module_test.h>
 

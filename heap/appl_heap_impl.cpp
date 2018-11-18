@@ -24,7 +24,7 @@
 
 #include <mutex/appl_mutex_impl.h>
 
-#include <appl_heap_impl.h>
+#include <heap/appl_heap_impl.h>
 
 #include <appl_unused.h>
 

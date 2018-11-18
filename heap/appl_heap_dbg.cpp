@@ -36,13 +36,13 @@
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
+#include <heap/appl_heap.h>
 
 #include <appl_list.h>
 
 #include <mutex/appl_mutex_impl.h>
 
-#include <appl_heap_dbg.h>
+#include <heap/appl_heap_dbg.h>
 
 #include <appl_convert.h>
 

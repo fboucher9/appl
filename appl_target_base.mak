@@ -58,12 +58,12 @@ appl_base-deps := \
     file/appl_file_std_mgr.cpp \
     file/appl_file_std_node.cpp \
     appl_hash_handle.cpp \
-    appl_heap.cpp \
-    appl_heap_dbg.cpp \
-    appl_heap_handle.cpp \
-    appl_heap_service.cpp \
-    appl_heap_std.cpp \
-    appl_heap_impl.cpp \
+    heap/appl_heap.cpp \
+    heap/appl_heap_dbg.cpp \
+    heap/appl_heap_handle.cpp \
+    heap/appl_heap_service.cpp \
+    heap/appl_heap_std.cpp \
+    heap/appl_heap_impl.cpp \
     library/appl_library_handle.cpp \
     library/appl_library_service.cpp \
     library/appl_library_mgr.cpp \
@@ -73,11 +73,11 @@ appl_base-deps := \
     library/appl_library_std_mgr.cpp \
     library/appl_library_std_node.cpp \
     appl_list.cpp \
-    appl_log_handle.cpp \
-    appl_log_service.cpp \
-    appl_log.cpp \
-    appl_log_std.cpp \
-    appl_log_impl.cpp \
+    log/appl_log_handle.cpp \
+    log/appl_log_service.cpp \
+    log/appl_log.cpp \
+    log/appl_log_std.cpp \
+    log/appl_log_impl.cpp \
     appl_main.cpp \
     appl_main_service.cpp \
     appl_module_handle.cpp \

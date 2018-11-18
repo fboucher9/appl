@@ -28,7 +28,7 @@
 
 #include <appl_unused.h>
 
-#include <appl_heap.h>
+#include <heap/appl_heap.h>
 
 #include <appl_buf.h>
 

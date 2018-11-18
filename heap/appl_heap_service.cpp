@@ -8,7 +8,7 @@
 
 #include <appl_types.h>
 
-#include <appl_heap_service.h>
+#include <heap/appl_heap_service.h>
 
 #include <appl_object.h>
 
@@ -16,7 +16,7 @@
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
+#include <heap/appl_heap.h>
 
 static
 struct appl_heap *

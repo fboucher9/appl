@@ -20,11 +20,11 @@
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
+#include <heap/appl_heap.h>
 
 #include <appl_list.h>
 
-#include <appl_heap_std.h>
+#include <heap/appl_heap_std.h>
 
 #include <appl_unused.h>
 

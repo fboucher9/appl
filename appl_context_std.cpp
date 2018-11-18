@@ -34,9 +34,9 @@
 
 #include <appl_allocator.h>
 
-#include <appl_heap.h>
+#include <heap/appl_heap.h>
 
-#include <appl_heap_std.h>
+#include <heap/appl_heap_std.h>
 
 #if defined APPL_DEBUG
 
@@ -44,7 +44,7 @@
 
 #include <mutex/appl_mutex_impl.h>
 
-#include <appl_heap_dbg.h>
+#include <heap/appl_heap_dbg.h>
 
 #endif /* #if defined APPL_DEBUG */
 
@@ -134,13 +134,13 @@
 
 #include <appl_log_handle.h>
 
-#include <appl_log.h>
+#include <log/appl_log.h>
 
-#include <appl_log_impl.h>
+#include <log/appl_log_impl.h>
 
-#include <appl_log_std.h>
+#include <log/appl_log_std.h>
 
-#include <appl_pool_mgr.h>
+#include <pool/appl_pool_mgr.h>
 
 #include <appl_thread_cache.h>
 

@@ -18,9 +18,9 @@
 
 #include <appl_context.h>
 
-#include <appl_pool_mgr.h>
+#include <pool/appl_pool_mgr.h>
 
-#include <appl_pool.h>
+#include <pool/appl_pool.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
