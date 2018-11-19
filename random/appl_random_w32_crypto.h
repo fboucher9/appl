@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_RANDOM_W32_CRYPTO_H
-#error include appl_random_w32_crypto.h once
-#endif /* #if defined INC_APPL_RANDOM_W32_CRYPTO_H */
-
-#define INC_APPL_RANDOM_W32_CRYPTO_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_RANDOM_H
-#error include appl_random.h before appl_random_w32_crypto.h
-#endif /* #if ! defined INC_APPL_RANDOM_H */
+enum guard_appl_random_w32_crypto_h
+{
+    inc_appl_random_w32_crypto_h =
+        /* Header file dependencies */
+        inc_appl_random_h
+};
 
 /* Assert compiler */
 #if ! defined __cplusplus

@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_RANDOM_H
-#error include appl_random.h once
-#endif /* #if defined INC_APPL_RANDOM_H */
-
-#define INC_APPL_RANDOM_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_OBJECT_H
-#error include appl_object.h before appl_random.h
-#endif /* #if ! defined INC_APPL_OBJECT_H */
+enum guard_appl_random_h
+{
+    inc_appl_random_h =
+        /* Header file dependencies */
+        inc_appl_object_h
+};
 
 /* Assert compiler */
 #if ! defined __cplusplus

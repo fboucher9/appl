@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_RANDOM_STD_MGR_H
-#error include appl_random_std_mgr.h once
-#endif /* #if defined INC_APPL_RANDOM_STD_MGR_H */
-
-#define INC_APPL_RANDOM_STD_MGR_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_RANDOM_MGR_H
-#error include appl_random_mgr.h before appl_random_std_mgr.h
-#endif /* #if ! defined INC_APPL_RANDOM_MGR_H */
+enum guard_appl_random_std_mgr_h
+{
+    inc_appl_random_std_mgr_h =
+        /* Header file dependencies */
+        inc_appl_random_mgr_h
+};
 
 struct appl_object;
 

@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined(INC_APPL_FILE_STD_MGR_H)
-#error include appl_file_std_mgr.h once
-#endif /* #if defined(INC_APPL_FILE_STD_MGR_H) */
-
-#define INC_APPL_FILE_STD_MGR_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_FILE_MGR_H
-#error include appl_file_mgr.h before
-#endif /* #if ! defined INC_APPL_FILE_MGR_H */
+enum guard_appl_file_std_mgr_h
+{
+    inc_appl_file_std_mgr_h =
+        /* Header file dependencies */
+        inc_appl_file_mgr_h
+};
 
 /* Predefine */
 struct appl_pool;

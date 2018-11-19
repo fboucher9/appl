@@ -13,23 +13,91 @@ enum guard_appl_types_h
         1
 };
 
+/*
+
+Macro: APPL_SIZEOF_INT
+
+Description:
+
+    Size in bytes of base type int.
+
+Comments:
+
+    If the automatic detection fails, you may configure the macro value
+    from makefile.
+
+*/
+#if ! defined APPL_SIZEOF_INT
 #if defined __SIZEOF_INT__
+/* For gcc and clang, use builtin macro */
 #define APPL_SIZEOF_INT __SIZEOF_INT__
-#else
+#else /* #if defined __SIZEOF_INT__ */
+/* Default to 64-bit windows */
 #define APPL_SIZEOF_INT 4
-#endif
+#endif /* #if defined __SIZEOF_INT__ */
+#endif /* #if ! defined APPL_SIZEOF_INT */
 
+/* Compile-time verification of macro value */
+typedef char check_appl_sizeof_int_macro [
+    APPL_SIZEOF_INT == sizeof(int) ? 1 : -1 ];
+
+/*
+
+Macro: APPL_SIZEOF_LONG
+
+Description:
+
+    Size in bytes of base type long.
+
+
+Comments:
+
+    If the automatic detection fails, you may configure the macro value
+    from makefile.
+
+*/
+#if ! defined APPL_SIZEOF_LONG
 #if defined __SIZEOF_LONG__
+/* For gcc and clang, use builtin macro */
 #define APPL_SIZEOF_LONG __SIZEOF_LONG__
-#else
+#else /* #if defined __SIZEOF_LONG__ */
+/* Default to 64-bit windows */
 #define APPL_SIZEOF_LONG 4
-#endif
+#endif /* #if defined __SIZEOF_LONG__ */
+#endif /* #if ! defined APPL_SIZEOF_LONG */
 
+/* Compile-time verification of macro value */
+typedef char check_appl_sizeof_long_macro [
+    APPL_SIZEOF_LONG == sizeof(long) ? 1 : -1 ];
+
+/*
+
+Macro: APPL_SIZEOF_PTR
+
+Description:
+
+    Size in bytes of base type pointer.
+
+
+Comments:
+
+    If the automatic detection fails, you may configure the macro value
+    from makefile.
+
+*/
+#if ! defined APPL_SIZEOF_PTR
 #if defined __SIZEOF_POINTER__
+/* For gcc and clang, use builtin macro */
 #define APPL_SIZEOF_PTR __SIZEOF_POINTER__
-#else
+#else /* #if defined __SIZEOF_POINTER__ */
+/* Default to 64-bit windows */
 #define APPL_SIZEOF_PTR 8
-#endif
+#endif /* #if defined __SIZEOF_POINTER__ */
+#endif /* #if ! defined APPL_SIZEOF_PTR */
+
+/* Compile-time verification of macro value */
+typedef char check_appl_sizeof_ptr_macro [
+    APPL_SIZEOF_PTR == sizeof(void*) ? 1 : -1 ];
 
 #if defined __GNUC__
 #pragma GCC diagnostic ignored "-Wlong-long"

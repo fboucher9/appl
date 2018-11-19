@@ -5,16 +5,12 @@
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_FILE_STD_NODE_H
-#error include appl_file_std_node.h once
-#endif /* #if defined INC_APPL_FILE_STD_NODE_H */
-
-#define INC_APPL_FILE_STD_NODE_H
-
-/* Header file dependency */
-#if ! defined INC_APPL_FILE_NODE_H
-#error include appl_file_node.h before
-#endif /* #if ! defined INC_APPL_FILE_NODE_H */
+enum guard_appl_file_std_node_h
+{
+    inc_appl_file_std_node_h =
+        /* Header file dependencies */
+        inc_appl_file_node_h
+};
 
 struct appl_file_descriptor;
 

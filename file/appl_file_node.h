@@ -11,18 +11,15 @@ Description:
 */
 
 /* Reverse include guard */
-#if defined INC_APPL_FILE_NODE_H
-#error include appl_file_node.h once
-#endif /* #if defined INC_APPL_FILE_NODE_H */
+enum guard_appl_file_node_h
+{
+    inc_appl_file_node_h =
+        /* Header file dependencies */
+        inc_appl_object_h
+};
 
-#define INC_APPL_FILE_NODE_H
-
+/* Predefine */
 struct appl_file;
-
-/* Header file dependencies */
-#if ! defined INC_APPL_OBJECT_H
-#error include appl_object.h before
-#endif /* #if ! defined INC_APPL_OBJECT_H */
 
 //
 //
