@@ -129,6 +129,9 @@ appl_main_service::s_main(
         struct appl_options const * const
             p_options))
 {
+    int
+        i_main_result;
+
     enum appl_status
         e_status;
 
@@ -179,8 +182,21 @@ appl_main_service::s_main(
                 p_context));
     }
 
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        i_main_result =
+            0;
+    }
+    else
+    {
+        i_main_result =
+            1;
+    }
+
     return
-        e_status;
+        i_main_result;
 
 } // s_main()
 
