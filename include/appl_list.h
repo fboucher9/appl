@@ -10,6 +10,9 @@ Description:
 
 */
 
+/* Included. */
+#define INC_APPL_LIST_H
+
 /* Reverse include guard */
 enum guard_appl_list_h
 {

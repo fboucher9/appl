@@ -4,16 +4,6 @@
 
 */
 
-#include <appl_status.h>
-
-#include <appl_types.h>
-
-#include <object/appl_object.h>
-
-#include <options/appl_options.h>
-
-#include <appl_list.h>
-
 #include <options/appl_options_std.h>
 
 #include <string/appl_string.h>
@@ -103,7 +93,8 @@ appl_options_std::appl_options_std() :
     m_list(),
     m_chunk(),
     m_count(),
-    m_state()
+    m_state(),
+    m_chunk_created()
 {
 }
 
@@ -128,12 +119,58 @@ appl_options_std::f_init(void)
             m_list));
 
     e_status =
-        appl_status_ok;
+        appl_chunk_create(
+            m_context,
+            &(
+                m_chunk));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        m_chunk_created =
+            true;
+    }
 
     return
         e_status;
 
 } // f_init()
+
+//
+//
+//
+void
+    appl_options_std::f_free_node_list(void)
+{
+    while (
+        m_list.o_next.p_node != &(m_list))
+    {
+        union appl_options_std_node_ptr
+            o_options_std_node_ptr;
+
+        o_options_std_node_ptr.p_list =
+            m_list.o_next.p_node;
+
+        appl_list_join(
+            o_options_std_node_ptr.p_list,
+            o_options_std_node_ptr.p_list);
+
+        unsigned long int const
+            i_buf_len =
+            appl_buf_len(
+                o_options_std_node_ptr.p_options_std_node->p_buf_min,
+                o_options_std_node_ptr.p_options_std_node->p_buf_max);
+
+        m_context->m_heap->free_structure_array(
+            i_buf_len,
+            o_options_std_node_ptr.p_options_std_node->p_buf_min);
+
+        m_context->m_heap->free_structure(
+            o_options_std_node_ptr.p_options_std_node);
+    }
+
+} // f_free_node_list()
 
 //
 //
@@ -145,44 +182,20 @@ appl_options_std::v_cleanup(void)
         e_status;
 
     // free list of nodes
-    {
-        while (
-            m_list.o_next.p_node != &(m_list))
-        {
-            union appl_options_std_node_ptr
-                o_options_std_node_ptr;
-
-            o_options_std_node_ptr.p_list =
-                m_list.o_next.p_node;
-
-            appl_list_join(
-                o_options_std_node_ptr.p_list,
-                o_options_std_node_ptr.p_list);
-
-            unsigned long int const
-                i_buf_len =
-                appl_buf_len(
-                    o_options_std_node_ptr.p_options_std_node->p_buf_min,
-                    o_options_std_node_ptr.p_options_std_node->p_buf_max);
-
-            m_context->m_heap->free_structure_array(
-                i_buf_len,
-                o_options_std_node_ptr.p_options_std_node->p_buf_min);
-
-            m_context->m_heap->free_structure(
-                o_options_std_node_ptr.p_options_std_node);
-        }
-    }
+    f_free_node_list();
 
     // Free the chunk
     if (
-        m_chunk)
+        m_chunk_created)
     {
         appl_chunk_destroy(
             m_chunk);
 
         m_chunk =
             0;
+
+        m_chunk_created =
+            false;
     }
 
     e_status =
@@ -290,7 +303,7 @@ enum appl_status
         appl_status_ok;
 
     if (
-        m_chunk)
+        m_chunk_created)
     {
         unsigned long int
             i_length;
@@ -340,11 +353,8 @@ enum appl_status
             }
         }
 
-        appl_chunk_destroy(
+        appl_chunk_reset(
             m_chunk);
-
-        m_chunk =
-            0;
     }
 
     return
@@ -364,23 +374,7 @@ enum appl_status
         e_status;
 
     if (
-        m_chunk)
-    {
-        e_status =
-            appl_status_ok;
-    }
-    else
-    {
-        e_status =
-            appl_chunk_create(
-                m_context,
-                &(
-                    m_chunk));
-    }
-
-    if (
-        appl_status_ok
-        == e_status)
+        m_chunk_created)
     {
         e_status =
             appl_chunk_write(
@@ -389,6 +383,11 @@ enum appl_status
                     i_char),
                 &(
                     i_char) + 1u);
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
     }
 
     return
@@ -731,5 +730,39 @@ enum appl_status
         e_status;
 
 } // v_append_argument()
+
+//
+//
+//
+enum appl_status
+    appl_options_std::v_reset(void)
+{
+    enum appl_status
+        e_status;
+
+    // free list of nodes
+    f_free_node_list();
+
+    // Free the chunk
+    if (
+        m_chunk_created)
+    {
+        appl_chunk_reset(
+            m_chunk);
+    }
+
+    m_state =
+        appl_options_std_state_space;
+
+    m_count =
+        0ul;
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // v_reset()
 
 /* end-of-file: appl_options_std.cpp */

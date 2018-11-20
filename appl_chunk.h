@@ -63,6 +63,9 @@ Example:
 
 */
 
+/* Included. */
+#define INC_APPL_CHUNK_H
+
 /* Reverse include guard */
 enum guard_appl_chunk_h
 {
@@ -115,6 +118,11 @@ appl_chunk_read(
         p_buf_min,
     unsigned char * const
         p_buf_max);
+
+enum appl_status
+appl_chunk_reset(
+    struct appl_chunk * const
+        p_chunk);
 
 #if defined __cplusplus
 } /* extern "C" */

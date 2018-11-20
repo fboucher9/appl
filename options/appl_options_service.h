@@ -93,6 +93,12 @@ class appl_options_service
             unsigned char const * const
                 p_buf_max);
 
+        static
+        enum appl_status
+        s_reset(
+            struct appl_options * const
+                p_options);
+
 }; // appl_options_service
 
 /* end-of-file: appl_options_service.h */

@@ -4,6 +4,26 @@
 
 */
 
+/* Included. */
+#define INC_APPL_MAIN_SERVICE_H
+
+/* Reverse include guard */
+enum guard_appl_main_service_h
+{
+    inc_appl_main_service_h =
+        /* Header file dependencies */
+        inc_appl_status_h
+};
+
+/* Predefine */
+struct appl_context;
+
+/* Predefine */
+struct appl_options;
+
+//
+//
+//
 class appl_main_service
 {
     public:

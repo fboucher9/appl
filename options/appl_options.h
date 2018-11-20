@@ -4,6 +4,14 @@
 
 */
 
+/* Included. */
+#define INC_APPL_OPTIONS_H
+
+/* Lazy dependencies */
+#if ! defined INC_APPL_OBJECT_H
+#include <object/appl_object.h>
+#endif /* #if ! defined INC_APPL_OBJECT_H */
+
 /* Reverse include guard */
 enum guard_appl_options_h
 {
@@ -61,6 +69,10 @@ struct appl_options : public appl_object
                     p_buf_min,
                 unsigned char const * const
                     p_buf_max);
+
+        virtual
+        enum appl_status
+            v_reset(void);
 
     protected:
 

@@ -83,6 +83,11 @@ appl_options_append_argument(
     unsigned char const * const
         p_buf_max);
 
+enum appl_status
+appl_options_reset(
+    struct appl_options * const
+        p_options);
+
 #if defined __cplusplus
 } /* extern "C" */
 #endif /* #if defined __cplusplus */

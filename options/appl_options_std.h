@@ -4,12 +4,26 @@
 
 */
 
+/* Included. */
+#define INC_APPL_OPTIONS_STD_H
+
+/* Lazy dependencies */
+#if ! defined INC_APPL_OPTIONS_H
+#include <options/appl_options.h>
+#endif /* #if ! defined INC_APPL_OPTIONS_H */
+
+/* Lazy dependencies */
+#if ! defined INC_APPL_LIST_H
+#include <appl_list.h>
+#endif /* #if ! defined INC_APPL_LIST_H */
+
 /* Reverse include guard */
 enum guard_appl_options_std_h
 {
     inc_appl_options_std_h =
         /* Header file dependencies */
         inc_appl_options_h
+        + inc_appl_list_h
 };
 
 /* Assert compiler */
@@ -77,7 +91,10 @@ class appl_options_std : public appl_options
         enum appl_options_std_state
             m_state;
 
-#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG + APPL_SIZEOF_INT)
+        bool
+            m_chunk_created;
+
+#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG + APPL_SIZEOF_INT + 1)
 #include <appl_padding.h>
 
         // --
@@ -88,6 +105,9 @@ class appl_options_std : public appl_options
         class appl_options_std &
             operator =(
                 class appl_options_std const & r);
+
+        void
+            f_free_node_list(void);
 
         virtual
         enum appl_status
@@ -143,6 +163,10 @@ class appl_options_std : public appl_options
                     p_buf_min,
                 unsigned char const * const
                     p_buf_max);
+
+        virtual
+        enum appl_status
+            v_reset(void);
 
 }; // class appl_options_std
 

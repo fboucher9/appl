@@ -4,8 +4,18 @@
 
 */
 
-/* Reverse include guard */
+/* Included. */
 #define INC_APPL_OBJECT_H
+
+/* Lazy dependencies */
+#if ! defined INC_APPL_TYPES_H
+#include <appl_types.h>
+#endif /* #if ! defined INC_APPL_TYPES_H */
+
+/* Lazy dependencies */
+#if ! defined INC_APPL_STATUS_H
+#include <appl_status.h>
+#endif /* #if ! defined INC_APPL_STATUS_H */
 
 /* Reverse include guard */
 enum guard_appl_object_h
@@ -13,6 +23,7 @@ enum guard_appl_object_h
     inc_appl_object_h =
         /* Header file dependency */
         inc_appl_types_h
+        + inc_appl_status_h
 };
 
 /* Predefine */

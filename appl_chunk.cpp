@@ -108,6 +108,10 @@ struct appl_chunk : public appl_object
             unsigned char * const
                 p_buf_max) const;
 
+        virtual
+        enum appl_status
+        v_reset(void);
+
     protected:
 
         appl_chunk();
@@ -179,6 +183,17 @@ appl_chunk::v_read(
         appl_status_not_implemented;
 
 } // v_read()
+
+//
+//
+//
+enum appl_status
+appl_chunk::v_reset(void)
+{
+    return
+        appl_status_not_implemented;
+
+} // v_reset()
 
 //
 //
@@ -275,6 +290,10 @@ class appl_chunk_std : public appl_chunk
                 unsigned char * const
                     p_buf_max) const;
 
+        virtual
+        enum appl_status
+            v_reset(void);
+
         enum appl_status
         f_append_node(
             unsigned char const
@@ -284,6 +303,9 @@ class appl_chunk_std : public appl_chunk
         f_write_char(
             unsigned char const
                 c_value);
+
+        void
+        f_free_node_list(void);
 
 }; // class appl_chunk_std
 
@@ -363,16 +385,9 @@ appl_chunk_std::f_init(void)
 
 } // init()
 
-//
-//
-//
-enum appl_status
-appl_chunk_std::v_cleanup(void)
+void
+appl_chunk_std::f_free_node_list(void)
 {
-    enum appl_status
-        e_status;
-
-    // destroy all nodes
     while (
         o_nodes.o_prev.p_node != &(o_nodes))
     {
@@ -389,6 +404,19 @@ appl_chunk_std::v_cleanup(void)
         m_context->m_heap->free_structure(
             o_chunk_node_ptr.p_chunk_node);
     }
+} // f_free_node_list()
+
+//
+//
+//
+enum appl_status
+appl_chunk_std::v_cleanup(void)
+{
+    enum appl_status
+        e_status;
+
+    // destroy all nodes
+    f_free_node_list();
 
     e_status =
         appl_status_ok;
@@ -659,6 +687,29 @@ appl_chunk_std::v_read(
 //
 //
 //
+enum appl_status
+    appl_chunk_std::v_reset(void)
+{
+    enum appl_status
+        e_status;
+
+    // destroy all nodes
+    f_free_node_list();
+
+    i_total_len =
+        0ul;
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // v_reset()
+
+//
+//
+//
 class appl_chunk_service
 {
     public:
@@ -704,6 +755,12 @@ class appl_chunk_service
                 p_buf_min,
             unsigned char * const
                 p_buf_max);
+
+        static
+        enum appl_status
+        s_reset(
+            struct appl_chunk * const
+                p_chunk);
 
 }; // class appl_chunk_service
 
@@ -790,6 +847,19 @@ appl_chunk_service::s_read(
             p_buf_max);
 
 } // s_read()
+
+//
+//
+//
+enum appl_status
+appl_chunk_service::s_reset(
+    struct appl_chunk * const
+        p_chunk)
+{
+    return
+        p_chunk->v_reset();
+
+} // s_reset()
 
 /*
 
@@ -878,5 +948,19 @@ appl_chunk_read(
             p_buf_max);
 
 } /* appl_chunk_read() */
+
+/*
+
+*/
+enum appl_status
+appl_chunk_reset(
+    struct appl_chunk * const
+        p_chunk)
+{
+    return
+        appl_chunk_service::s_reset(
+            p_chunk);
+
+} /* appl_chunk_reset() */
 
 /* end-of-file: appl_chunk.cpp */

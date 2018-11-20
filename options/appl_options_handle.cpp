@@ -141,4 +141,18 @@ appl_options_append_argument(
 
 } /* append_argument() */
 
+/*
+
+*/
+enum appl_status
+appl_options_reset(
+    struct appl_options * const
+        p_options)
+{
+    return
+        appl_options_service::s_reset(
+            p_options);
+
+} /* reset() */
+
 /* end-of-file: appl_options_handle.cpp */

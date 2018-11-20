@@ -4,6 +4,7 @@
 
 */
 
+/* Included. */
 #define INC_APPL_TYPES_H
 
 /* Reverse include guard */
