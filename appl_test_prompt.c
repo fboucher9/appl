@@ -10,6 +10,120 @@
 
 #include <options/appl_options_test.h>
 
+#include <string.h>
+
+static
+char
+appl_test_prompt_compare(
+    struct appl_options const * const
+        p_options,
+    char const * const
+        p_name)
+{
+    char
+        b_equal;
+
+    unsigned char const *
+        p_buf_min;
+
+    unsigned char const *
+        p_buf_max;
+
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_options_get(
+            p_options,
+            0ul,
+            &(
+                p_buf_min),
+            &(
+                p_buf_max));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        unsigned long int
+            i_buf_len;
+
+        unsigned long int
+            i_name_len;
+
+        i_buf_len =
+            appl_buf_len(
+                p_buf_min,
+                p_buf_max);
+
+        i_name_len =
+            appl_buf0_len(
+                (unsigned char const *)(
+                    p_name));
+
+        if (
+            i_buf_len
+            == i_name_len)
+        {
+            if (
+                0 == memcmp(
+                    p_buf_min,
+                    p_name,
+                    i_name_len))
+            {
+                b_equal =
+                    1;
+            }
+            else
+            {
+                b_equal =
+                    0;
+            }
+        }
+        else
+        {
+            b_equal =
+                0;
+        }
+    }
+    else
+    {
+        b_equal =
+            0;
+    }
+
+    return
+        b_equal;
+
+} /* appl_test_prompt_compare() */
+
+/*
+
+*/
+static
+void
+appl_test_prompt_dispatch(
+    struct appl_context * const
+        p_context,
+    struct appl_options const * const
+        p_options)
+{
+    /* Detect echo */
+
+    if (appl_test_prompt_compare(
+            p_options,
+            "echo"))
+    {
+        appl_options_test_1(
+            p_context,
+            p_options);
+    }
+    else
+    {
+    }
+
+} /* appl_test_prompt_dispatch() */
+
 /*
 
 
@@ -115,7 +229,7 @@ appl_test_prompt(
                         if (
                             b_ready)
                         {
-                            appl_options_test_1(
+                            appl_test_prompt_dispatch(
                                 p_context,
                                 p_options);
 

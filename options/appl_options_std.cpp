@@ -4,6 +4,16 @@
 
 */
 
+#include <appl_status.h>
+
+#include <appl_types.h>
+
+#include <appl_list.h>
+
+#include <object/appl_object.h>
+
+#include <options/appl_options.h>
+
 #include <options/appl_options_std.h>
 
 #include <string/appl_string.h>

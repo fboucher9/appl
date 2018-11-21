@@ -7,16 +7,6 @@
 /* Included. */
 #define INC_APPL_OPTIONS_STD_H
 
-/* Lazy dependencies */
-#if ! defined INC_APPL_OPTIONS_H
-#include <options/appl_options.h>
-#endif /* #if ! defined INC_APPL_OPTIONS_H */
-
-/* Lazy dependencies */
-#if ! defined INC_APPL_LIST_H
-#include <appl_list.h>
-#endif /* #if ! defined INC_APPL_LIST_H */
-
 /* Reverse include guard */
 enum guard_appl_options_std_h
 {
