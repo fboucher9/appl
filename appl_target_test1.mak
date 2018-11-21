@@ -27,6 +27,7 @@ test_appl-deps = \
     binary_heap/appl_binary_heap_test.c \
     options/appl_options_test.c \
     xlib/appl_xlib_test.c \
+    appl_test_prompt.c \
     $(appl_base-deps)
 
 # List of libraries required to link test application

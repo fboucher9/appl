@@ -126,7 +126,7 @@ appl_test_prompt(
                         if (
                             i_write_count)
                         {
-                            i_read_count +=
+                            i_read_offset +=
                                 i_write_count;
                         }
                         else
