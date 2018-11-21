@@ -21,6 +21,9 @@ struct appl_allocator;
 /* Predefine */
 struct appl_pool;
 
+/* Predefine */
+struct appl_pool_descriptor;
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -39,8 +42,8 @@ class appl_pool_service
             s_create(
                 struct appl_context * const
                     p_context,
-                unsigned long int const
-                    i_length,
+                struct appl_pool_descriptor const * const
+                    p_pool_descriptor,
                 struct appl_pool * * const
                     r_pool);
 

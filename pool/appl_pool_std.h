@@ -20,7 +20,7 @@ enum guard_appl_pool_std_h
 #endif /* #if ! defined __cplusplus */
 
 /* Predefine */
-struct appl_pool_std_descriptor;
+struct appl_pool_descriptor;
 
 //
 //
@@ -34,8 +34,8 @@ class appl_pool_std : public appl_pool
             s_create(
                 struct appl_allocator * const
                     p_allocator,
-                appl_size_t const
-                    i_buf_len,
+                struct appl_pool_descriptor const * const
+                    p_pool_descriptor,
                 class appl_pool_std * * const
                     r_instance);
 
@@ -46,7 +46,7 @@ class appl_pool_std : public appl_pool
 
         enum appl_status
             f_init(
-                struct appl_pool_std_descriptor const * const
+                struct appl_pool_descriptor const * const
                     p_descriptor);
 
     protected:

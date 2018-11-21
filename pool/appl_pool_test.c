@@ -27,13 +27,26 @@ appl_pool_test_1(
     struct appl_pool *
         p_pool;
 
+    struct appl_pool_descriptor
+        o_pool_descriptor;
+
     b_result =
         1;
+
+    o_pool_descriptor.i_length =
+        20u;
+
+    o_pool_descriptor.i_count_min =
+        0u;
+
+    o_pool_descriptor.i_count_max =
+        0u;
 
     e_status =
         appl_pool_create(
             p_context,
-            20u,
+            &(
+                o_pool_descriptor),
             &(
                 p_pool));
 
@@ -86,13 +99,26 @@ appl_pool_test_2(
     struct appl_pool *
         p_pool;
 
+    struct appl_pool_descriptor
+        o_pool_descriptor;
+
     b_result =
         1;
+
+    o_pool_descriptor.i_length =
+        20u;
+
+    o_pool_descriptor.i_count_min =
+        0u;
+
+    o_pool_descriptor.i_count_max =
+        0u;
 
     e_status =
         appl_pool_create(
             p_context,
-            20u,
+            &(
+                o_pool_descriptor),
             &(
                 p_pool));
 

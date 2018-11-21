@@ -34,12 +34,7 @@
 
 #include <context/appl_context.h>
 
-struct appl_pool_std_descriptor
-{
-    appl_size_t
-        i_buf_len;
-
-}; /* struct appl_pool_std_descriptor */
+#include <appl_pool_handle.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -63,21 +58,14 @@ enum appl_status
     appl_pool_std::s_create(
         struct appl_allocator * const
             p_allocator,
-        appl_size_t const
-            i_buf_len,
+        struct appl_pool_descriptor const * const
+            p_pool_descriptor,
         class appl_pool_std * * const
             r_instance)
 {
-    struct appl_pool_std_descriptor
-        o_pool_std_descriptor;
-
-    o_pool_std_descriptor.i_buf_len =
-        i_buf_len;
-
     return
         p_allocator->alloc_object(
-            &(
-                o_pool_std_descriptor),
+            p_pool_descriptor,
             r_instance);
 
 } // s_create()
@@ -106,8 +94,8 @@ appl_pool_std::~appl_pool_std()
 //
 enum appl_status
     appl_pool_std::f_init(
-        struct appl_pool_std_descriptor const * const
-            p_descriptor)
+        struct appl_pool_descriptor const * const
+            p_pool_descriptor)
 {
     enum appl_status
         e_status;
@@ -124,7 +112,7 @@ enum appl_status
         == e_status)
     {
         m_buf_len =
-            p_descriptor->i_buf_len;
+            p_pool_descriptor->i_length;
 
         m_available_count =
             0u;

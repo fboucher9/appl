@@ -26,6 +26,8 @@
 
 #include <context/appl_context.h>
 
+#include <appl_pool_handle.h>
+
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -90,14 +92,23 @@ enum appl_status
     enum appl_status
         e_status;
 
-    unsigned long int const
-        i_length =
+    struct appl_pool_descriptor
+        o_pool_descriptor;
+
+    o_pool_descriptor.i_length =
         sizeof(
             class appl_file_std_node);
 
+    o_pool_descriptor.i_count_min =
+        0u;
+
+    o_pool_descriptor.i_count_max =
+        0u;
+
     e_status =
         m_context->m_pool_mgr->v_create_node(
-            i_length,
+            &(
+                o_pool_descriptor),
             &(
                 m_pool));
 

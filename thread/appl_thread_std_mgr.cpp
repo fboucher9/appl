@@ -22,6 +22,8 @@
 
 #include <pool/appl_pool_mgr.h>
 
+#include <appl_pool_handle.h>
+
 //
 //
 //
@@ -86,13 +88,22 @@ enum appl_status
     enum appl_status
         e_status;
 
-    appl_size_t const
-        i_buf_len =
+    struct appl_pool_descriptor
+        o_pool_descriptor;
+
+    o_pool_descriptor.i_length =
         appl_thread_std_node_sizeof();
+
+    o_pool_descriptor.i_count_min =
+        0u;
+
+    o_pool_descriptor.i_count_max =
+        0u;
 
     e_status =
         m_context->m_pool_mgr->v_create_node(
-            i_buf_len,
+            &(
+                o_pool_descriptor),
             &(
                 m_pool));
 

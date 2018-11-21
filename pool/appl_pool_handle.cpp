@@ -6,6 +6,8 @@
 
 #include <appl_status.h>
 
+#include <appl_types.h>
+
 #include <appl_pool_handle.h>
 
 #include <pool/appl_pool_service.h>
@@ -17,15 +19,15 @@ enum appl_status
     appl_pool_create(
         struct appl_context * const
             p_context,
-        unsigned long int const
-            i_length,
+        struct appl_pool_descriptor const * const
+            p_pool_descriptor,
         struct appl_pool * * const
             r_pool)
 {
     return
         appl_pool_service::s_create(
             p_context,
-            i_length,
+            p_pool_descriptor,
             r_pool);
 
 } /* appl_pool_create() */

@@ -66,8 +66,8 @@ enum appl_status
 //
 enum appl_status
     appl_pool_mgr::v_create_node(
-        appl_size_t const
-            i_buf_len,
+        struct appl_pool_descriptor const * const
+            p_pool_descriptor,
         struct appl_pool * * const
             r_pool_node)
 {
@@ -80,7 +80,7 @@ enum appl_status
     e_status =
         appl_pool_std::s_create(
             m_context->m_allocator,
-            i_buf_len,
+            p_pool_descriptor,
             &(
                 p_pool_std));
 

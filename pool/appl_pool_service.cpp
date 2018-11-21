@@ -27,14 +27,14 @@ enum appl_status
     appl_pool_service::s_create(
         struct appl_context * const
             p_context,
-        unsigned long int const
-            i_length,
+        struct appl_pool_descriptor const * const
+            p_pool_descriptor,
         struct appl_pool * * const
             r_pool)
 {
     return
         p_context->m_pool_mgr->v_create_node(
-            i_length,
+            p_pool_descriptor,
             r_pool);
 
 } // s_create()

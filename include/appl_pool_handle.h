@@ -9,14 +9,37 @@ enum guard_appl_pool_handle_h
 {
     inc_appl_pool_handle_h =
         /* Header file dependencies */
-        1
+        inc_appl_status_h
+        + inc_appl_types_h
 };
 
+/* Predefine */
 struct appl_context;
 
+/* Predefine */
 struct appl_allocator;
 
+/* Predefine */
 struct appl_pool;
+
+/* Descriptor */
+struct appl_pool_descriptor
+{
+    appl_size_t
+        i_count_min;
+
+    appl_size_t
+        i_count_max;
+
+    /* -- */
+
+    appl_size_t
+        i_length;
+
+#define PADDING (APPL_SIZEOF_PTR)
+#include <appl_padding.h>
+
+}; /* struct appl_pool_descriptor */
 
 #if defined __cplusplus
 extern "C" {
@@ -26,8 +49,8 @@ enum appl_status
     appl_pool_create(
         struct appl_context * const
             p_context,
-        unsigned long int const
-            i_length,
+        struct appl_pool_descriptor const * const
+            p_pool_descriptor,
         struct appl_pool * * const
             r_pool);
 

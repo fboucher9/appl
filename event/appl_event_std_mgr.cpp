@@ -22,6 +22,8 @@
 
 #include <pool/appl_pool.h>
 
+#include <appl_pool_handle.h>
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -100,13 +102,22 @@ enum appl_status
     enum appl_status
         e_status;
 
-    appl_size_t const
-        i_node_len =
+    struct appl_pool_descriptor
+        o_pool_descriptor;
+
+    o_pool_descriptor.i_length =
         appl_event_std_node_sizeof();
+
+    o_pool_descriptor.i_count_min =
+        0u;
+
+    o_pool_descriptor.i_count_max =
+        0u;
 
     e_status =
         m_context->m_pool_mgr->v_create_node(
-            i_node_len,
+            &(
+                o_pool_descriptor),
             &(
                 m_pool));
 

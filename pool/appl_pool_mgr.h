@@ -14,6 +14,8 @@ enum guard_appl_pool_mgr_h
 
 struct appl_pool;
 
+struct appl_pool_descriptor;
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -39,8 +41,8 @@ class appl_pool_mgr : public appl_object
         virtual
         enum appl_status
             v_create_node(
-                appl_size_t const
-                    i_buf_len,
+                struct appl_pool_descriptor const * const
+                    p_pool_descriptor,
                 struct appl_pool * * const
                     r_pool_node);
 
