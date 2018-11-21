@@ -2412,43 +2412,6 @@ appl_test_main(
     enum appl_status
         e_status;
 
-    /* Prompt */
-    if (1)
-    {
-        struct appl_file *
-            p_file;
-
-        struct appl_file_descriptor
-            o_file_descriptor;
-
-        o_file_descriptor.e_type =
-            appl_file_type_stdin;
-
-        o_file_descriptor.e_mode =
-            appl_file_mode_read;
-
-        e_status =
-            appl_file_create(
-                p_context,
-                &(
-                    o_file_descriptor),
-                &(
-                    p_file));
-
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            appl_test_prompt(
-                p_context,
-                p_file);
-
-            appl_object_destroy(
-                appl_file_parent(
-                    p_file));
-        }
-    }
-
     /* Print the argument list */
     if (1)
     {
@@ -2683,6 +2646,43 @@ appl_test_main(
     {
         appl_test_file_stdout(
             p_context);
+    }
+
+    /* Prompt */
+    if (1)
+    {
+        struct appl_file *
+            p_file;
+
+        struct appl_file_descriptor
+            o_file_descriptor;
+
+        o_file_descriptor.e_type =
+            appl_file_type_stdin;
+
+        o_file_descriptor.e_mode =
+            appl_file_mode_read;
+
+        e_status =
+            appl_file_create(
+                p_context,
+                &(
+                    o_file_descriptor),
+                &(
+                    p_file));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            appl_test_prompt(
+                p_context,
+                p_file);
+
+            appl_object_destroy(
+                appl_file_parent(
+                    p_file));
+        }
     }
 
     if ((1))
