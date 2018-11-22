@@ -28,13 +28,13 @@
 
 #include <mutex/appl_mutex_impl.h>
 
+#include <appl_pool_handle.h>
+
 #include <pool/appl_pool_std.h>
 
 #include <appl_unused.h>
 
 #include <context/appl_context.h>
-
-#include <appl_pool_handle.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -77,8 +77,8 @@ appl_pool_std::appl_pool_std() :
     appl_pool(),
     m_available_items(),
     m_lock(),
-    m_buf_len(),
-    m_available_count()
+    m_descriptor(),
+    m_count_remain()
 {
 }
 
@@ -111,11 +111,66 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
-        m_buf_len =
-            p_pool_descriptor->i_length;
+        m_descriptor =
+            *(
+                p_pool_descriptor);
 
-        m_available_count =
-            0u;
+        m_count_remain =
+            m_descriptor.i_count_max;
+
+        if (
+            0u
+            == m_count_remain)
+        {
+            m_count_remain =
+                0xFFFFFFFFul;
+        }
+
+        // Pre-allocate some available items
+        if (
+            m_descriptor.i_count_min)
+        {
+            unsigned long int
+                i_count;
+
+            i_count =
+                0u;
+
+            while (
+                (
+                    appl_status_ok
+                    == e_status)
+                && (
+                    i_count
+                    < m_descriptor.i_count_min))
+            {
+                union appl_pool_node_ptr
+                    o_node_ptr;
+
+                e_status =
+                    m_context->m_allocator->v_alloc(
+                        m_descriptor.i_length,
+                        &(
+                            o_node_ptr.p_void));
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    m_count_remain --;
+
+                    appl_list_init(
+                        o_node_ptr.p_list);
+
+                    appl_list_join(
+                        o_node_ptr.p_list,
+                        &(
+                            m_available_items));
+
+                    i_count ++;
+                }
+            }
+        }
     }
 
     return
@@ -146,7 +201,7 @@ enum appl_status
             p_node);
 
         m_context->m_allocator->v_free(
-            m_buf_len,
+            m_descriptor.i_length,
             p_node);
     }
 
@@ -225,19 +280,25 @@ enum appl_status
             !(
                 b_found))
         {
-            // allocate new item
-            e_status =
-                m_context->m_allocator->v_alloc(
-                    m_buf_len,
-                    &(
-                        p_buf));
-
             if (
-                appl_status_ok
-                == e_status)
+                m_count_remain)
             {
-                b_found =
-                    true;
+                // allocate new item
+                e_status =
+                    m_context->m_allocator->v_alloc(
+                        m_descriptor.i_length,
+                        &(
+                            p_buf));
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    m_count_remain --;
+
+                    b_found =
+                        true;
+                }
             }
         }
 

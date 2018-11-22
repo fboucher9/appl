@@ -57,17 +57,25 @@ class appl_pool_std : public appl_pool
         struct appl_list
             m_available_items;
 
+        // --
+
         // lock
         class appl_mutex_impl
             m_lock;
 
-        // size in bytes of each item
-        appl_size_t
-            m_buf_len;
+        // --
 
-        // count of available items
-        appl_size_t
-            m_available_count;
+        struct appl_pool_descriptor
+            m_descriptor;
+
+        // --
+
+        // size in bytes of each item
+        unsigned long int
+            m_count_remain;
+
+#define PADDING (APPL_SIZEOF_LONG)
+#include <appl_padding.h>
 
         appl_pool_std(
             class appl_pool_std const & r);

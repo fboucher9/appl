@@ -30,6 +30,8 @@
 
 #include <mutex/appl_mutex_impl.h>
 
+#include <appl_pool_handle.h>
+
 #include <pool/appl_pool_std.h>
 
 #include <context/appl_context.h>
