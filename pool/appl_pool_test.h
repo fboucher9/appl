@@ -26,6 +26,11 @@ appl_pool_test_2(
     struct appl_context * const
         p_context);
 
+char
+appl_pool_test_3(
+    struct appl_context * const
+        p_context);
+
 #if defined __cplusplus
 } /* extern "C" */
 #endif /* #if defined __cplusplus */

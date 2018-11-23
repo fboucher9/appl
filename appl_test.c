@@ -2802,6 +2802,21 @@ appl_test_main(
         appl_print0(
             "\n");
 
+        b_result =
+            appl_pool_test_3(
+                p_context);
+
+        appl_print0(
+            "appl_pool_test_3 : ");
+
+        appl_print0(
+            b_result
+            ? "pass."
+            : "FAIL!");
+
+        appl_print0(
+            "\n");
+
     }
 
     if (1)
