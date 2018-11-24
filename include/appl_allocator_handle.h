@@ -10,6 +10,7 @@ enum guard_appl_allocator_handle_h
     inc_appl_allocator_handle_h =
         /* Header file dependencies */
         inc_appl_status_h
+        + inc_appl_types_h
 };
 
 /* Predefine */
@@ -31,7 +32,7 @@ enum appl_status
     appl_allocator_alloc(
         struct appl_allocator * const
             p_allocator,
-        unsigned long int const
+        appl_size_t const
             i_buf_len,
         void * * const
             r_buf);
@@ -40,13 +41,68 @@ enum appl_status
     appl_allocator_free(
         struct appl_allocator * const
             p_allocator,
-        unsigned long int const
+        appl_size_t const
             i_buf_len,
         void * const
             p_buf);
 
 #if defined __cplusplus
 } /* extern "C" */
+#endif /* #if defined __cplusplus */
+
+/* C++ Wrappers to avoid casts */
+#if defined __cplusplus
+
+//
+//
+//
+template <typename T_instance>
+enum appl_status
+    appl_allocator_alloc_structure(
+        struct appl_allocator * const
+            p_allocator,
+        T_instance * * const
+            r_instance)
+{
+    union appl_allocator_alloc_structure_ptr
+    {
+        void * *
+            r_void;
+
+        T_instance * *
+            r_instance;
+    } o_structure_ptr;
+
+    o_structure_ptr.r_instance =
+        r_instance;
+
+    return
+        appl_allocator_alloc(
+            p_allocator,
+            sizeof(T_instance),
+            o_structure_ptr.r_void);
+
+} // appl_allocator_alloc_structure()
+
+//
+//
+//
+template <typename T_instance>
+enum appl_status
+    appl_allocator_free_structure(
+        struct appl_allocator * const
+            p_allocator,
+        T_instance * const
+            p_instance)
+{
+    return
+        appl_allocator_free(
+            p_allocator,
+            sizeof(T_instance),
+            p_instance);
+
+} // appl_allocator_free_structure()
+
 #endif /* #if defined __cplusplus */
 
 /* end-of-file: appl_allocator_handle.h */

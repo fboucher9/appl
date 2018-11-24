@@ -10,6 +10,7 @@ enum guard_appl_allocator_service_h
     inc_appl_allocator_service_h =
         /* Header file dependency */
         inc_appl_status_h
+        + inc_appl_types_h
 };
 
 /* Predefine */
@@ -44,7 +45,7 @@ class appl_allocator_service
             s_alloc(
                 struct appl_allocator * const
                     p_allocator,
-                unsigned long int const
+                appl_size_t const
                     i_buf_len,
                 void * * const
                     r_buf);
@@ -54,7 +55,7 @@ class appl_allocator_service
             s_free(
                 struct appl_allocator * const
                     p_allocator,
-                unsigned long int const
+                appl_size_t const
                     i_buf_len,
                 void * const
                     p_buf);

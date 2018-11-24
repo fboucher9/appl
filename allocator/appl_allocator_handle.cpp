@@ -6,6 +6,8 @@
 
 #include <appl_status.h>
 
+#include <appl_types.h>
+
 #include <appl_allocator_handle.h>
 
 #include <allocator/appl_allocator_service.h>
@@ -31,7 +33,7 @@ enum appl_status
     appl_allocator_alloc(
         struct appl_allocator * const
             p_allocator,
-        unsigned long int const
+        appl_size_t const
             i_buf_len,
         void * * const
             r_buf)
@@ -51,7 +53,7 @@ enum appl_status
     appl_allocator_free(
         struct appl_allocator * const
             p_allocator,
-        unsigned long int const
+        appl_size_t const
             i_buf_len,
         void * const
             p_buf)
