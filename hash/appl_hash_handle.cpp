@@ -10,7 +10,7 @@
 
 #include <appl_hash_handle.h>
 
-#include <object/appl_object.h>
+#include <appl_object.h>
 
 #include <appl_list.h>
 

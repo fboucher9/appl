@@ -35,7 +35,7 @@ Comments:
 
 #include <binary_heap/appl_binary_heap.h>
 
-#include <object/appl_object.h>
+#include <appl_object.h>
 
 #include <context/appl_context.h>
 

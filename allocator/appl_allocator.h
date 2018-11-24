@@ -55,64 +55,34 @@ struct appl_allocator : public appl_object
             enum appl_status
                 e_status;
 
-            union object_ptr
-            {
-                void *
-                    p_placement;
-
-                struct appl_object *
-                    p_object;
-
-                T_instance *
-                    p_instance;
-
-            } o_object_ptr;
+            void *
+                p_placement;
 
             e_status =
                 v_alloc(
                     sizeof(T_instance),
                     &(
-                        o_object_ptr.p_placement));
+                        p_placement));
 
             if (
                 appl_status_ok
                 == e_status)
             {
-                new (
-                    o_object_ptr.p_placement)
-                    T_instance;
-
-                o_object_ptr.p_object->set_context(
-                    m_context);
-
-                o_object_ptr.p_object->set_allocator(
-                    this);
-
-                o_object_ptr.p_object->set_placement_length(
-                    sizeof(T_instance));
-
                 e_status =
-                    o_object_ptr.p_instance->f_init();
-
-                if (
-                    appl_status_ok
-                    == e_status)
-                {
-                    *(
-                        r_object) =
-                        o_object_ptr.p_instance;
-                }
+                    appl_object::init_object(
+                        m_context,
+                        this,
+                        p_placement,
+                        sizeof(T_instance),
+                        r_object);
 
                 if (
                     appl_status_ok
                     != e_status)
                 {
-                    delete
-                        o_object_ptr.p_instance;
-
                     v_free(
                         sizeof(T_instance),
-                        o_object_ptr.p_placement);
+                        p_placement);
                 }
             }
 
@@ -132,65 +102,35 @@ struct appl_allocator : public appl_object
             enum appl_status
                 e_status;
 
-            union object_ptr
-            {
-                void *
-                    p_placement;
-
-                struct appl_object *
-                    p_object;
-
-                T_instance *
-                    p_instance;
-
-            } o_object_ptr;
+            void *
+                p_placement;
 
             e_status =
                 v_alloc(
                     sizeof(T_instance),
                     &(
-                        o_object_ptr.p_placement));
+                        p_placement));
 
             if (
                 appl_status_ok
                 == e_status)
             {
-                new (
-                    o_object_ptr.p_placement)
-                    T_instance;
-
-                o_object_ptr.p_object->set_context(
-                    m_context);
-
-                o_object_ptr.p_object->set_allocator(
-                    this);
-
-                o_object_ptr.p_object->set_placement_length(
-                    sizeof(T_instance));
-
                 e_status =
-                    o_object_ptr.p_instance->f_init(
-                        p_descriptor);
-
-                if (
-                    appl_status_ok
-                    == e_status)
-                {
-                    *(
-                        r_object) =
-                        o_object_ptr.p_instance;
-                }
+                    appl_object::init_object(
+                        m_context,
+                        this,
+                        p_placement,
+                        sizeof(T_instance),
+                        p_descriptor,
+                        r_object);
 
                 if (
                     appl_status_ok
                     != e_status)
                 {
-                    delete
-                        o_object_ptr.p_instance;
-
                     v_free(
                         sizeof(T_instance),
-                        o_object_ptr.p_placement);
+                        p_placement);
                 }
             }
 

@@ -12,7 +12,7 @@
 
 #include <queue/appl_queue_service.h>
 
-#include <object/appl_object.h>
+#include <appl_object.h>
 
 #include <appl_list.h>
 

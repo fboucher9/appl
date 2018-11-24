@@ -10,7 +10,7 @@
 
 #include <appl_module_handle.h>
 
-#include <object/appl_object.h>
+#include <appl_object.h>
 
 #include <module/appl_module.h>
 

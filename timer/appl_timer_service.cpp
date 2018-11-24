@@ -12,7 +12,7 @@
 
 #include <timer/appl_timer_service.h>
 
-#include <object/appl_object.h>
+#include <appl_object.h>
 
 #include <timer/appl_timer_mgr.h>
 

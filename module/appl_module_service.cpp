@@ -12,7 +12,7 @@
 
 #include <module/appl_module_service.h>
 
-#include <object/appl_object.h>
+#include <appl_object.h>
 
 #include <module/appl_module.h>
 

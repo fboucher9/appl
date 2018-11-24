@@ -10,7 +10,7 @@
 
 #include <appl_list.h>
 
-#include <object/appl_object.h>
+#include <appl_object.h>
 
 #include <options/appl_options.h>
 

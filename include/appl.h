@@ -88,6 +88,10 @@ enum guard_appl_h
 
 #include <appl_object_handle.h>
 
+#if defined __cplusplus
+#include <appl_object.h>
+#endif /* #if defined __cplusplus */
+
 #include <appl_context_handle.h>
 
 #if defined(APPL_CONFIG_WITH_DEBUG)

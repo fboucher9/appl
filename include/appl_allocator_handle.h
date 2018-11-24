@@ -71,6 +71,7 @@ enum appl_status
 
         T_instance * *
             r_instance;
+
     } o_structure_ptr;
 
     o_structure_ptr.r_instance =
@@ -102,6 +103,121 @@ enum appl_status
             p_instance);
 
 } // appl_allocator_free_structure()
+
+#if defined INC_APPL_OBJECT_H
+
+//
+//
+//
+template <typename T_instance>
+enum appl_status
+    appl_allocator_alloc_object(
+        struct appl_context * const
+            p_context,
+        struct appl_allocator * const
+            p_allocator,
+        T_instance * * const
+            r_object)
+{
+    enum appl_status
+        e_status;
+
+    void *
+        p_placement;
+
+    e_status =
+        appl_allocator_alloc(
+            p_allocator,
+            sizeof(T_instance),
+            &(
+                p_placement));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_object::init_object(
+                p_context,
+                p_allocator,
+                p_placement,
+                sizeof(T_instance),
+                r_object);
+
+        if (
+            appl_status_ok
+            != e_status)
+        {
+            appl_allocator_free(
+                p_allocator,
+                sizeof(T_instance),
+                p_placement);
+        }
+    }
+
+    return
+        e_status;
+
+} // appl_allocator_alloc_object()
+
+//
+//
+//
+template <typename T_instance, typename T_descriptor>
+enum appl_status
+    appl_allocator_alloc_object(
+        struct appl_context * const
+            p_context,
+        struct appl_allocator * const
+            p_allocator,
+        T_descriptor const * const
+            p_descriptor,
+        T_instance * * const
+            r_object)
+{
+    enum appl_status
+        e_status;
+
+    void *
+        p_placement;
+
+    e_status =
+        appl_allocator_alloc(
+            p_allocator,
+            sizeof(T_instance),
+            &(
+                p_placement));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_object::init_object(
+                p_context,
+                p_allocator,
+                p_placement,
+                sizeof(T_instance),
+                p_descriptor,
+                r_object);
+
+        if (
+            appl_status_ok
+            != e_status)
+        {
+            appl_allocator_free(
+                p_allocator,
+                sizeof(T_instance),
+                p_placement);
+        }
+    }
+
+    return
+        e_status;
+
+} // appl_allocator_alloc_object()
+
+#endif /* #if defined INC_APPL_OBJECT_H */
 
 #endif /* #if defined __cplusplus */
 

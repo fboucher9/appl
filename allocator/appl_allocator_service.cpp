@@ -10,7 +10,7 @@
 
 #include <allocator/appl_allocator_service.h>
 
-#include <object/appl_object.h>
+#include <appl_object.h>
 
 #include <allocator/appl_allocator.h>
 

@@ -29,7 +29,7 @@ Description:
 
 #include <appl_types.h>
 
-#include <object/appl_object.h>
+#include <appl_object.h>
 
 #include <socket/appl_address_node.h>
 

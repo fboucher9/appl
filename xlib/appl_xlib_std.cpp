@@ -16,7 +16,7 @@ Description:
 
 #include <appl_types.h>
 
-#include <object/appl_object.h>
+#include <appl_object.h>
 
 #include <X11/Xlib.h>
 

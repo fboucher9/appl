@@ -14,7 +14,7 @@
 
 #include <appl_event_handle.h>
 
-#include <object/appl_object.h>
+#include <appl_object.h>
 
 #include <mutex/appl_mutex_node.h>
 
