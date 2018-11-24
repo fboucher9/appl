@@ -39,6 +39,10 @@ appl_base-deps := \
     debug/appl_debug_handle.cpp \
     debug/appl_debug_std.cpp \
     debug/appl_debug_w32.cpp \
+    dict/appl_dict_handle.cpp \
+    dict/appl_dict_service.cpp \
+    dict/appl_dict.cpp \
+    dict/appl_dict_std.cpp \
     env/appl_env.cpp \
     env/appl_env_handle.cpp \
     env/appl_env_service.cpp \

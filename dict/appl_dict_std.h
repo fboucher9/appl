@@ -1,0 +1,86 @@
+/* See LICENSE for license details */
+
+/*
+
+Notes:
+
+    -   Hash table of nodes
+    -   Nodes contain a name and a value
+
+*/
+
+/* Included. */
+#define INC_APPL_DICT_STD_H
+
+/* Reverse include guard */
+enum guard_appl_dict_std_h
+{
+    inc_appl_dict_std_h =
+        /* Header file dependencies */
+        inc_appl_dict_h
+        + inc_appl_list_h
+};
+
+//
+//
+//
+class appl_dict_std : public appl_dict
+{
+    public:
+
+        appl_dict_std();
+
+        virtual
+        ~appl_dict_std();
+
+        enum appl_status
+            f_init(void);
+
+    protected:
+
+    private:
+
+        // --
+
+        struct appl_hash *
+            m_hash;
+
+        void *
+            pv_padding[1u];
+
+        // --
+
+        appl_dict_std(
+            class appl_dict_std const & r);
+
+        class appl_dict_std &
+            operator =(
+                class appl_dict_std const & r);
+
+        virtual
+        enum appl_status
+            v_cleanup(void);
+
+        virtual
+        enum appl_status
+            v_set(
+                unsigned char const * const
+                    p_name_min,
+                unsigned char const * const
+                    p_name_max,
+                void * const
+                    p_value);
+
+        virtual
+        enum appl_status
+            v_get(
+                unsigned char const * const
+                    p_name_min,
+                unsigned char const * const
+                    p_name_max,
+                void * * const
+                    r_value);
+
+}; // class appl_dict_std
+
+/* end-of-file: appl_dict_std.h */
