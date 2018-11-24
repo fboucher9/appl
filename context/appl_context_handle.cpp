@@ -52,4 +52,18 @@ appl_context_const_parent(
 
 } /* const_parent() */
 
+/*
+
+*/
+struct appl_allocator *
+appl_context_get_allocator(
+    struct appl_context const * const
+        p_context)
+{
+    return
+        appl_context_service::s_get_allocator(
+            p_context);
+
+} /* get_allocator() */
+
 /* end-of-file: appl_context_handle.cpp */

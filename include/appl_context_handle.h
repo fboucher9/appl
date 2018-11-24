@@ -35,6 +35,11 @@ appl_context_const_parent(
     struct appl_context const * const
         p_context);
 
+struct appl_allocator *
+appl_context_get_allocator(
+    struct appl_context const * const
+        p_context);
+
 #if defined(__cplusplus)
 } /* extern "C" */
 #endif /* #if defined(__cplusplus) */

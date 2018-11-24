@@ -18,6 +18,9 @@ struct appl_context;
 /* Predefine */
 struct appl_object;
 
+/* Predefine */
+struct appl_allocator;
+
 //
 //
 //
@@ -40,6 +43,12 @@ class appl_context_service
         static
         struct appl_object const *
         s_const_parent(
+            struct appl_context const * const
+                p_context);
+
+        static
+        struct appl_allocator *
+        s_get_allocator(
             struct appl_context const * const
                 p_context);
 
