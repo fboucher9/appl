@@ -12,11 +12,21 @@
 
 #include <hash/appl_hash_service.h>
 
-/*
+#include <appl_object.h>
 
-*/
+#include <appl_list.h>
+
+#include <hash/appl_hash.h>
+
+#include <context/appl_context.h>
+
+#include <allocator/appl_allocator.h>
+
+//
+//
+//
 enum appl_status
-appl_hash_create(
+appl_hash_service::s_create(
     struct appl_context * const
         p_context,
     struct appl_hash_descriptor const * const
@@ -24,33 +34,34 @@ appl_hash_create(
     struct appl_hash * * const
         r_instance)
 {
+    struct appl_allocator * const
+        p_allocator =
+        p_context->m_allocator;
+
     return
-        appl_hash_service::s_create(
-            p_context,
+        p_allocator->alloc_object(
             p_descriptor,
             r_instance);
 
-} /* appl_hash_create() */
+} // s_create()
 
-/*
-
-*/
+//
+//
+//
 struct appl_object *
-appl_hash_parent(
+appl_hash_service::s_parent(
     struct appl_hash * const
         p_hash)
 {
     return
-        appl_hash_service::s_parent(
-            p_hash);
+        p_hash;
+} // s_parent()
 
-} /* appl_hash_destroy() */
-
-/*
-
-*/
+//
+//
+//
 void
-appl_hash_insert(
+appl_hash_service::s_insert(
     struct appl_hash * const
         p_hash,
     void const * const
@@ -60,19 +71,17 @@ appl_hash_insert(
     struct appl_list * const
         p_list)
 {
-    appl_hash_service::s_insert(
-        p_hash,
+    p_hash->f_insert(
         p_key,
         i_key_len,
         p_list);
+} // s_insert()
 
-} /* appl_hash_insert() */
-
-/*
-
-*/
+//
+//
+//
 struct appl_list *
-appl_hash_lookup(
+appl_hash_service::s_lookup(
     struct appl_hash * const
         p_hash,
     void const * const
@@ -81,18 +90,16 @@ appl_hash_lookup(
         i_key_len)
 {
     return
-        appl_hash_service::s_lookup(
-            p_hash,
+        p_hash->f_lookup(
             p_key,
             i_key_len);
+} // s_lookup()
 
-} /* appl_hash_lookup() */
-
-/*
-
-*/
+//
+//
+//
 void
-appl_hash_iterate(
+appl_hash_service::s_iterate(
     struct appl_hash * const
         p_hash,
     void (
@@ -104,11 +111,9 @@ appl_hash_iterate(
     void * const
         p_context)
 {
-    appl_hash_service::s_iterate(
-        p_hash,
+    p_hash->f_iterate(
         p_callback,
         p_context);
+} // s_iterate()
 
-} /* appl_hash_iterate() */
-
-/* end-of-file: appl_hash_handle.cpp */
+/* end-of-file: appl_hash_service.cpp */

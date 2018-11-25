@@ -16,6 +16,8 @@
 
 #include <dict/appl_dict_std.h>
 
+#include <appl_hash_handle.h>
+
 #include <appl_unused.h>
 
 /*
@@ -66,6 +68,8 @@ appl_dict_std::~appl_dict_std()
 enum appl_status
     appl_dict_std::f_init(void)
 {
+    // Create hash table
+
     return
         appl_status_fail;
 
@@ -94,6 +98,8 @@ enum appl_status
         void * const
             p_value)
 {
+    // Calculate hash index using name
+
     appl_unused(
         p_name_min,
         p_name_max,
