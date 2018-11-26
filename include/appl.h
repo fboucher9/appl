@@ -10,6 +10,8 @@ Description:
 
 */
 
+/** @file */
+
 /* Include guard */
 #if defined(INC_APPL_H)
 #error include appl.h once
