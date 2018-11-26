@@ -28,6 +28,10 @@
 
 #include <appl_crc16.h>
 
+#include <appl_string_handle.h>
+
+#include <context/appl_context.h>
+
 /*
 
 */
@@ -38,21 +42,23 @@ struct appl_dict_std_node
 
     /* -- */
 
-    unsigned char *
-        p_name_min;
-
-    unsigned char *
-        p_name_max;
-
-    /* -- */
+    struct appl_string *
+        p_name;
 
     void *
         p_value;
 
-    void *
-        pv_padding[1u];
-
 }; /* struct appl_dict_std_node */
+
+union appl_dict_std_node_ptr
+{
+    struct appl_list *
+        p_list;
+
+    struct appl_dict_std_node *
+        p_dict_std_node;
+
+};
 
 //
 //
@@ -61,7 +67,7 @@ enum appl_status
     appl_dict_std::s_create(
         struct appl_allocator * const
             p_allocator,
-        struct appl_dict_std * * const
+        class appl_dict_std * * const
             r_instance)
 {
     return
@@ -160,15 +166,58 @@ enum appl_status
         void * const
             p_value)
 {
-    // Lookup else insert
+    enum appl_status
+        e_status;
 
-    appl_unused(
-        p_name_min,
-        p_name_max,
-        p_value);
+    union appl_dict_std_node_ptr
+        o_node_ptr;
+
+    // Lookup else insert
+    if (
+        appl_hash_lookup(
+            m_hash,
+            p_name_min,
+            appl_buf_len(
+                p_name_min,
+                p_name_max),
+            &(
+                o_node_ptr.p_list)))
+    {
+        o_node_ptr.p_dict_std_node->p_value =
+            p_value;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        // Reuse an old node
+        // Create a new node
+        e_status =
+            f_alloc_node(
+                p_name_min,
+                p_name_max,
+                p_value,
+                &(
+                    o_node_ptr.p_dict_std_node));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            appl_hash_insert(
+                m_hash,
+                p_name_min,
+                appl_buf_len(
+                    p_name_min,
+                    p_name_max),
+                &(
+                    o_node_ptr.p_dict_std_node->o_list));
+        }
+    }
 
     return
-        appl_status_fail;
+        e_status;
 
 } // v_set()
 
@@ -223,24 +272,36 @@ int
         p_key;
 
     union appl_dict_std_node_ptr
-    {
-        struct appl_list *
-            p_list;
-
-        struct appl_dict_std_node *
-            p_dict_std_node;
-
-    } o_node_ptr;
+        o_node_ptr;
 
     o_node_ptr.p_list =
         p_node;
+
+    struct appl_string *
+        p_name;
+
+    unsigned char *
+        p_name_min;
+
+    unsigned char *
+        p_name_max;
+
+    p_name =
+        o_node_ptr.p_dict_std_node->p_name;
+
+    appl_string_get(
+        p_name,
+        &(
+            p_name_min),
+        &(
+            p_name_max));
 
     i_compare_result =
         appl_buf_compare(
             o_key_ptr.pc_uchar,
             o_key_ptr.pc_uchar + i_key_len,
-            o_node_ptr.p_dict_std_node->p_name_min,
-            o_node_ptr.p_dict_std_node->p_name_max);
+            p_name_min,
+            p_name_max);
 
     return
         i_compare_result;
@@ -274,5 +335,69 @@ unsigned long int
             i_key_len);
 
 } // s_index()
+
+//
+//
+//
+enum appl_status
+    appl_dict_std::f_alloc_node(
+        unsigned char const * const
+            p_name_min,
+        unsigned char const * const
+            p_name_max,
+        void * const
+            p_value,
+        struct appl_dict_std_node * * const
+            r_node)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_dict_std_node *
+        p_dict_std_node;
+
+    e_status =
+        m_context->m_allocator->alloc_structure(
+            &(
+                p_dict_std_node));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        appl_list_init(
+            &(
+                p_dict_std_node->o_list));
+
+        e_status =
+            appl_string_create_dup_buffer(
+                this,
+                p_name_min,
+                p_name_max,
+                &(
+                    p_dict_std_node->p_name));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            p_dict_std_node->p_value =
+                p_value;
+
+            *(
+                r_node) =
+                p_dict_std_node;
+        }
+        else
+        {
+            m_context->m_allocator->free_structure(
+                p_dict_std_node);
+        }
+    }
+
+    return
+        e_status;
+
+} // f_alloc_node()
 
 /* end-of-file: appl_dict_std.cpp */

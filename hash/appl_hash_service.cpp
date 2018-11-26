@@ -80,19 +80,22 @@ appl_hash_service::s_insert(
 //
 //
 //
-struct appl_list *
+bool
 appl_hash_service::s_lookup(
     struct appl_hash * const
         p_hash,
     void const * const
         p_key,
     unsigned long int const
-        i_key_len)
+        i_key_len,
+    struct appl_list * * const
+        r_list)
 {
     return
         p_hash->f_lookup(
             p_key,
-            i_key_len);
+            i_key_len,
+            r_list);
 } // s_lookup()
 
 //

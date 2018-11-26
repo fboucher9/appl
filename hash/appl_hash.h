@@ -53,12 +53,14 @@ struct appl_hash : public appl_object
                 struct appl_list * const
                     p_list);
 
-        struct appl_list *
+        bool
             f_lookup(
                 void const * const
                     p_key,
                 unsigned long int const
-                    i_key_len);
+                    i_key_len,
+                struct appl_list * * const
+                    r_list);
 
         void
             f_iterate(

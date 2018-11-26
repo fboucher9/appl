@@ -33,7 +33,7 @@ class appl_dict_std : public appl_dict
             s_create(
                 struct appl_allocator * const
                     p_allocator,
-                struct appl_dict_std * * const
+                class appl_dict_std * * const
                     r_instance);
 
         appl_dict_std();
@@ -110,6 +110,17 @@ class appl_dict_std : public appl_dict
                     p_key,
                 unsigned long int const
                     i_key_len);
+
+        enum appl_status
+            f_alloc_node(
+                unsigned char const * const
+                    p_name_min,
+                unsigned char const * const
+                    p_name_max,
+                void * const
+                    p_value,
+                struct appl_dict_std_node * * const
+                    r_node);
 
 }; // class appl_dict_std
 

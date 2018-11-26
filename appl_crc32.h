@@ -10,9 +10,8 @@
 /* Reverse include guard */
 enum guard_appl_crc32_h
 {
-    inc_appl_crc32_h =
+    inc_appl_crc32_h = 1
         /* Header file dependencies */
-        1
 };
 
 #if defined __cplusplus

@@ -48,6 +48,77 @@ struct appl_allocator : public appl_object
 
         template <typename T_instance>
         enum appl_status
+            alloc_structure(
+                T_instance * * const
+                    r_instance)
+        {
+            enum appl_status
+                e_status;
+
+            union appl_allocator_ptr
+            {
+                void *
+                    p_placement;
+
+                T_instance *
+                    p_instance;
+
+            } o_allocator_ptr;
+
+            e_status =
+                v_alloc(
+                    sizeof(T_instance),
+                    &(
+                        o_allocator_ptr.p_placement));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                *(
+                    r_instance) =
+                    o_allocator_ptr.p_instance;
+            }
+
+            return
+                e_status;
+
+        } // alloc_structure()
+
+        template <typename T_instance>
+        enum appl_status
+            free_structure(
+                T_instance * const
+                    p_instance)
+        {
+            enum appl_status
+                e_status;
+
+            union appl_allocator_ptr
+            {
+                void *
+                    p_placement;
+
+                T_instance *
+                    p_instance;
+
+            } o_allocator_ptr;
+
+            o_allocator_ptr.p_instance =
+                p_instance;
+
+            e_status =
+                v_free(
+                    sizeof(T_instance),
+                    o_allocator_ptr.p_placement);
+
+            return
+                e_status;
+
+        } // free_structure()
+
+        template <typename T_instance>
+        enum appl_status
             alloc_object(
                 T_instance * * const
                     r_object)

@@ -119,18 +119,20 @@ void
 //
 //
 //
-struct appl_list *
+bool
     appl_hash::f_lookup(
         void const * const
             p_key,
         unsigned long int const
-            i_key_len)
+            i_key_len,
+        struct appl_list * * const
+            r_list)
 {
-    struct appl_list *
-        p_list;
+    bool
+        b_result;
 
-    p_list =
-        0;
+    b_result =
+        false;
 
     appl_size_t const
         i_index =
@@ -154,7 +156,7 @@ struct appl_list *
     while (
         (
             !(
-                p_list))
+                b_result))
         && (
             p_iterator
             != &(p_hash_table->o_list)))
@@ -171,8 +173,12 @@ struct appl_list *
             0
             == i_compare_result)
         {
-            p_list =
+            *(
+                r_list) =
                 p_iterator;
+
+            b_result =
+                true;
         }
         else
         {
@@ -182,7 +188,7 @@ struct appl_list *
     }
 
     return
-        p_list;
+        b_result;
 
 } // f_lookup()
 

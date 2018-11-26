@@ -693,44 +693,53 @@ enum appl_status
     enum appl_status
         e_status;
 
-    signed long int
-        i_ref_count;
-
-    m_ref_count --;
-
-    i_ref_count =
-        m_ref_count;
-
     if (
-        0 >= i_ref_count)
+        m_ref_count)
     {
-        // Do cleanup
-        f_cleanup_library();
+        m_ref_count --;
 
-        if (m_lock_initialized)
+        signed long int
+            i_ref_count;
+
+        i_ref_count =
+            m_ref_count;
+
+        if (
+            0 == i_ref_count)
         {
-            m_lock->v_destroy();
+            // Do cleanup
+            f_cleanup_library();
 
-            m_lock =
-                0;
+            if (m_lock_initialized)
+            {
+                m_lock->v_destroy();
 
-            m_lock_initialized =
-                false;
+                m_lock =
+                    0;
+
+                m_lock_initialized =
+                    false;
+            }
+
+            e_status =
+                appl_status_ok;
         }
+        else
+        {
+            // Release library
+            if (
+                1 == i_ref_count)
+            {
+            }
 
-        e_status =
-            appl_status_ok;
+            // Keep object
+
+            e_status =
+                appl_status_fail;
+        }
     }
     else
     {
-        // Release library
-        if (
-            1 == i_ref_count)
-        {
-        }
-
-        // Keep object
-
         e_status =
             appl_status_fail;
     }
