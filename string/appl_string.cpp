@@ -140,7 +140,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    union appl_ptr
+    union appl_buf_ptr
         o_buf_ptr;
 
     e_status =
@@ -174,7 +174,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    union appl_ptr
+    union appl_buf_ptr
         o_buf_ptr;
 
     o_buf_ptr.p_uchar =

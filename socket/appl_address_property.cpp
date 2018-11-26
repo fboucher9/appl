@@ -356,7 +356,7 @@ appl_address_property_get_name(
         p_address_property);
 #endif /* #if defined APPL_DEBUG */
 
-    union appl_ptr
+    union appl_buf_ptr
         o_name_min;
 
     e_status =
@@ -370,7 +370,7 @@ appl_address_property_get_name(
         appl_status_ok
         == e_status)
     {
-        union appl_ptr
+        union appl_buf_ptr
             o_name_max;
 
         e_status =

@@ -28,6 +28,14 @@ class appl_dict_std : public appl_dict
 {
     public:
 
+        static
+        enum appl_status
+            s_create(
+                struct appl_allocator * const
+                    p_allocator,
+                struct appl_dict_std * * const
+                    r_instance);
+
         appl_dict_std();
 
         virtual
@@ -80,6 +88,28 @@ class appl_dict_std : public appl_dict
                     p_name_max,
                 void * * const
                     r_value);
+
+        static
+        int
+            s_compare(
+                void * const
+                    p_context,
+                void const * const
+                    p_key,
+                unsigned long int const
+                    i_key_len,
+                struct appl_list * const
+                    p_node);
+
+        static
+        unsigned long int
+            s_index(
+                void * const
+                    p_context,
+                void const * const
+                    p_key,
+                unsigned long int const
+                    i_key_len);
 
 }; // class appl_dict_std
 

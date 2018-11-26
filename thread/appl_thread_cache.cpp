@@ -187,7 +187,7 @@ struct appl_thread_cache : public appl_thread
             struct appl_thread_descriptor
                 o_thread_descriptor;
 
-            union appl_ptr
+            union appl_buf_ptr
                 o_thread_descriptor_ptr;
 
             o_thread_descriptor_ptr.p_void =

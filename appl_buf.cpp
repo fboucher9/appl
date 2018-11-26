@@ -367,41 +367,37 @@ appl_buf_copy(
 
 } /* appl_buf_copy() */
 
-#if 0
 /*
 
 */
-enum appl_status
+signed int
 appl_buf_compare(
-    struct appl_buf const * const
-        p_buf_left,
-    struct appl_buf const * const
-        p_buf_right,
-    signed int * const
-        p_result)
+    unsigned char const * const
+        p_left_min,
+    unsigned char const * const
+        p_left_max,
+    unsigned char const * const
+        p_right_min,
+    unsigned char const * const
+        p_right_max)
 {
-    enum appl_status
-        e_status;
-
-    struct appl_buf
-        o_buf_left_it;
-
-    struct appl_buf
-        o_buf_right_it;
-
-    o_buf_left_it =
-        *(
-            p_buf_left);
-
-    o_buf_right_it =
-        *(
-            p_buf_right);
-
     signed int
         i_result;
 
+    unsigned char const *
+        p_left_it;
+
+    unsigned char const *
+        p_right_it;
+
     i_result =
         0;
+
+    p_left_it =
+        p_left_min;
+
+    p_right_it =
+        p_right_min;
 
     while (
         (
@@ -409,11 +405,11 @@ appl_buf_compare(
             == i_result)
         && (
             (
-                o_buf_left_it.o_min.pc_uchar
-                < o_buf_left_it.o_max.pc_uchar)
+                p_left_it
+                < p_left_max)
             || (
-                o_buf_right_it.o_min.pc_uchar
-                < o_buf_right_it.o_max.pc_uchar)))
+                p_right_it
+                < p_right_max)))
     {
         unsigned char
             c_left;
@@ -422,14 +418,14 @@ appl_buf_compare(
             c_right;
 
         if (
-                o_buf_left_it.o_min.pc_uchar
-                < o_buf_left_it.o_max.pc_uchar)
+                p_left_it
+                < p_left_max)
         {
             c_left =
                 *(
-                    o_buf_left_it.o_min.pc_uchar);
+                    p_left_it);
 
-            o_buf_left_it.o_min.pc_uchar ++;
+            p_left_it ++;
         }
         else
         {
@@ -438,14 +434,14 @@ appl_buf_compare(
         }
 
         if (
-            o_buf_right_it.o_min.pc_uchar
-            < o_buf_right_it.o_max.pc_uchar)
+            p_right_it
+            < p_right_max)
         {
             c_right =
                 *(
-                    o_buf_right_it.o_min.pc_uchar);
+                    p_right_it);
 
-            o_buf_right_it.o_min.pc_uchar ++;
+            p_right_it ++;
         }
         else
         {
@@ -463,18 +459,10 @@ appl_buf_compare(
                         c_right)));
     }
 
-    *(
-        p_result) =
+    return
         i_result;
 
-    e_status =
-        appl_status_ok;
-
-    return
-        e_status;
-
 } /* appl_buf_compare() */
-#endif
 
 /*
 

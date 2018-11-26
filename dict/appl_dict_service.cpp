@@ -39,7 +39,8 @@ appl_dict_service::s_create(
         p_dict_std;
 
     e_status =
-        p_context->m_allocator->alloc_object(
+        appl_dict_std::s_create(
+            p_context->m_allocator,
             &(
                 p_dict_std));
 

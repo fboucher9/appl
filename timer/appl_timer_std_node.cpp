@@ -185,7 +185,7 @@ enum appl_status
                 struct appl_thread_descriptor
                     o_thread_descriptor;
 
-                union appl_ptr
+                union appl_buf_ptr
                     o_ptr;
 
                 o_ptr.p_void =

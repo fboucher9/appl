@@ -33,7 +33,7 @@ appl_buf0_create(
     enum appl_status
         e_status;
 
-    union appl_ptr
+    union appl_buf_ptr
         o_buf0_allocation;
 
     unsigned long int const

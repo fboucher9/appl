@@ -15,7 +15,7 @@ enum guard_appl_buf_h
 struct appl_buf;
 
 /* ptr */
-union appl_ptr
+union appl_buf_ptr
 {
     void const *
         pc_void;
@@ -41,15 +41,15 @@ union appl_ptr
     struct appl_buf *
         p_buf;
 
-}; /* union appl_ptr */
+}; /* union appl_buf_ptr */
 
 /* buf */
 struct appl_buf
 {
-    union appl_ptr
+    union appl_buf_ptr
         o_min;
 
-    union appl_ptr
+    union appl_buf_ptr
         o_max;
 
 }; /* struct appl_buf */
@@ -183,15 +183,19 @@ appl_buf_copy(
     unsigned char const * const
         p_src_max);
 
-#if 0
 /* buf compare */
 signed int
 appl_buf_compare(
-    struct appl_buf const * const
-        p_buf_left,
-    struct appl_buf const * const
-        p_buf_right);
+    unsigned char const * const
+        p_left_min,
+    unsigned char const * const
+        p_left_max,
+    unsigned char const * const
+        p_right_min,
+    unsigned char const * const
+        p_right_max);
 
+#if 0
 /* buf compare */
 signed int
 appl_buf_case_compare(

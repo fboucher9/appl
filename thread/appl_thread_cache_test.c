@@ -69,7 +69,7 @@ appl_thread_cache_test(
     static struct test_thread_cache_data
         o_test_data;
 
-    union appl_ptr
+    union appl_buf_ptr
         o_ptr;
 
     o_test_data.p_context =
