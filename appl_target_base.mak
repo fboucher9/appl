@@ -35,6 +35,7 @@ appl_base-deps := \
     context/appl_context_service.cpp \
     context/appl_context_std.cpp \
     appl_crc16.cpp \
+    appl_crc32.cpp \
     debug/appl_debug.cpp \
     debug/appl_debug_handle.cpp \
     debug/appl_debug_std.cpp \
