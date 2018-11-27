@@ -651,6 +651,8 @@ appl_test_file_stdin(
     o_stdin_file_descriptor.e_mode =
         appl_file_mode_read;
 
+    appl_print0("line parser (press ctrl+d to stop)\n");
+
     e_status =
         appl_file_create(
             p_context,
@@ -2662,6 +2664,8 @@ appl_test_main(
 
         o_file_descriptor.e_mode =
             appl_file_mode_read;
+
+        appl_print0("test prompt (press ctrl+d to stop)\n");
 
         e_status =
             appl_file_create(
