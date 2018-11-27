@@ -143,7 +143,8 @@ appl_heap_std::v_cleanup(void)
         p_placement =
         this;
 
-    appl_heap::v_cleanup();
+    delete
+        this;
 
     free(
         p_placement);

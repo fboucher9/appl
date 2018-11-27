@@ -22,6 +22,7 @@ appl_base-deps := \
     allocator/appl_allocator.cpp \
     allocator/appl_allocator_handle.cpp \
     allocator/appl_allocator_service.cpp \
+    allocator/appl_allocator_std.cpp \
     appl_buf.cpp \
     appl_buf0.cpp \
     appl_chunk.cpp \

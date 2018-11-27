@@ -141,9 +141,6 @@ enum appl_status
 enum appl_status
     appl_object::v_cleanup(void)
 {
-    delete
-        this;
-
     return
         appl_status_ok;
 
