@@ -46,7 +46,7 @@ class appl_event_mgr;
 
 class appl_socket_mgr;
 
-class appl_env;
+struct appl_env;
 
 class appl_library_mgr;
 
@@ -109,7 +109,7 @@ struct appl_context : public appl_object
 
         /* -- */
 
-        class appl_env *
+        struct appl_env *
             m_env;
 
         class appl_library_mgr *

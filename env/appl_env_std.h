@@ -22,6 +22,8 @@ enum guard_appl_env_std_h
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
+class appl_refcount;
+
 class appl_env_std;
 
 //
@@ -36,7 +38,7 @@ class appl_env_std : public appl_env
         s_create(
             struct appl_allocator * const
                 p_allocator,
-            class appl_env * * const
+            struct appl_env * * const
                 r_env);
 
         appl_env_std();
@@ -44,7 +46,16 @@ class appl_env_std : public appl_env
         virtual
         ~appl_env_std();
 
+        enum appl_status
+            f_init(void);
+
     protected:
+
+        virtual
+        enum appl_status
+            v_acquire(
+                struct appl_env * * const
+                    r_instance);
 
         virtual
         enum appl_status
@@ -54,7 +65,7 @@ class appl_env_std : public appl_env
                 unsigned char const * const
                     p_name_max,
                 struct appl_string * * const
-                    r_string);
+                    r_string) const;
 
         virtual
         enum appl_status
@@ -70,12 +81,26 @@ class appl_env_std : public appl_env
 
     private:
 
+        // --
+
+        class appl_refcount *
+            m_refcount;
+
+#define PADDING (APPL_SIZEOF_PTR)
+#include <appl_padding.h>
+
+        // --
+
         appl_env_std(
             class appl_env_std const & r);
 
         class appl_env_std &
             operator =(
                 class appl_env_std const & r);
+
+        virtual
+        enum appl_status
+            v_cleanup(void);
 
 }; // class appl_env_std
 

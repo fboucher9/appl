@@ -108,6 +108,7 @@ appl_base-deps := \
     options/appl_options_std.cpp \
     options/appl_options_handle.cpp \
     options/appl_options_service.cpp \
+    appl_refcount.cpp \
     socket/appl_poll_handle.cpp \
     socket/appl_poll_mgr.cpp \
     socket/appl_poll_node.cpp \

@@ -18,13 +18,27 @@
 //
 //
 enum appl_status
+    appl_env::v_acquire(
+        struct appl_env * * const
+            r_instance)
+{
+    appl_unused(
+        r_instance);
+    return
+        appl_status_not_implemented;
+} // v_acquire()
+
+//
+//
+//
+enum appl_status
     appl_env::v_get(
         unsigned char const * const
             p_name_min,
         unsigned char const * const
             p_name_max,
         struct appl_string * * const
-            r_string)
+            r_string) const
 {
     appl_unused(
         p_name_min,

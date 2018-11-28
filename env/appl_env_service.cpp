@@ -20,9 +20,51 @@
 //
 //
 enum appl_status
+appl_env_service::s_acquire(
+    struct appl_context * const
+        p_context,
+    struct appl_env * * const
+        r_instance)
+{
+    return
+        p_context->m_env->v_acquire(
+            r_instance);
+
+} // s_acquire()
+
+//
+//
+//
+struct appl_object *
+appl_env_service::s_parent(
+    struct appl_env * const
+        p_env)
+{
+    return
+        p_env;
+
+} // s_parent()
+
+//
+//
+//
+struct appl_object const *
+appl_env_service::s_const_parent(
+    struct appl_env const * const
+        p_env)
+{
+    return
+        p_env;
+
+} // s_const_parent()
+
+//
+//
+//
+enum appl_status
 appl_env_service::s_get(
-    struct appl_object const * const
-        p_object,
+    struct appl_env const * const
+        p_env,
     unsigned char const * const
         p_name_min,
     unsigned char const * const
@@ -32,14 +74,6 @@ appl_env_service::s_get(
 {
     enum appl_status
         e_status;
-
-    struct appl_context * const
-        p_context =
-        p_object->get_context();
-
-    class appl_env * const
-        p_env =
-        p_context->m_env;
 
     e_status =
         p_env->v_get(
@@ -57,8 +91,8 @@ appl_env_service::s_get(
 //
 enum appl_status
 appl_env_service::s_set(
-    struct appl_object const * const
-        p_object,
+    struct appl_env * const
+        p_env,
     unsigned char const * const
         p_name_min,
     unsigned char const * const
@@ -70,14 +104,6 @@ appl_env_service::s_set(
 {
     enum appl_status
         e_status;
-
-    struct appl_context * const
-        p_context =
-        p_object->get_context();
-
-    class appl_env * const
-        p_env =
-        p_context->m_env;
 
     e_status =
         p_env->v_set(

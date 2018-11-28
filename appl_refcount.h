@@ -63,13 +63,17 @@ Example:
 /* Reverse include guard */
 enum guard_appl_refcount_h
 {
-    inc_appl_refcount_h =
+    inc_appl_refcount_h = 1
         /* Header file dependency */
-        inc_appl_object_h
+        + inc_appl_object_h
+        + inc_appl_types_h
 };
 
 /* Predefine */
-struct appl_refcount;
+struct appl_mutex;
+
+/* Predefine */
+class appl_refcount;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -79,30 +83,52 @@ struct appl_refcount;
 //
 //
 //
-struct appl_refcount : public appl_object
+class appl_refcount : public appl_object
 {
     public:
-
-        virtual
-        enum appl_status
-            v_add(void);
-
-    protected:
 
         appl_refcount();
 
         virtual
         ~appl_refcount();
 
+        enum appl_status
+            f_init(void);
+
+        void
+            f_acquire(void);
+
+        bool
+            f_release(void);
+
+    protected:
+
+        // --
+
+        struct appl_mutex *
+            m_mutex;
+
+        signed long int
+            m_refcount;
+
+#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG)
+#include <appl_padding.h>
+
+        // --
+
     private:
 
         appl_refcount(
-            struct appl_refcount const & r);
+            class appl_refcount const & r);
 
-        struct appl_refcount &
+        class appl_refcount &
             operator =(
-                struct appl_refcount const & r);
+                class appl_refcount const & r);
 
-}; // struct appl_refcount
+        virtual
+        enum appl_status
+            v_cleanup(void);
+
+}; // class appl_refcount
 
 /* end-of-file: appl_refcount.h */

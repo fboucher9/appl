@@ -34,6 +34,8 @@
 
 #include <appl_convert.h>
 
+#include <appl_refcount.h>
+
 //
 //
 //
@@ -41,7 +43,7 @@ enum appl_status
 appl_env_w32::s_create(
     struct appl_allocator * const
         p_allocator,
-    class appl_env * * const
+    struct appl_env * * const
         r_env)
 {
     enum appl_status
@@ -73,7 +75,8 @@ appl_env_w32::s_create(
 //
 //
 appl_env_w32::appl_env_w32() :
-    appl_env()
+    appl_env(),
+    m_refcount()
 {
 }
 
@@ -88,13 +91,38 @@ appl_env_w32::~appl_env_w32()
 //
 //
 enum appl_status
+    appl_env_w32::v_acquire(
+        struct appl_env * * const
+            r_instance)
+{
+    enum appl_status
+        e_status;
+
+    m_refcount->f_acquire();
+
+    *(
+        r_instance) =
+        this;
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // v_acquire()
+
+//
+//
+//
+enum appl_status
     appl_env_w32::v_get(
         unsigned char const * const
             p_name_min,
         unsigned char const * const
             p_name_max,
         struct appl_string * * const
-            r_string)
+            r_string) const
 {
     enum appl_status
         e_status;
@@ -299,6 +327,52 @@ enum appl_status
         e_status;
 
 } // v_set()
+
+//
+//
+//
+enum appl_status
+    appl_env_w32::f_init(void)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        m_context->m_allocator->alloc_object(
+            &(
+                m_refcount));
+
+    return
+        e_status;
+
+} // f_init()
+
+//
+//
+//
+enum appl_status
+    appl_env_w32::v_cleanup(void)
+{
+    enum appl_status
+        e_status;
+
+    if (m_refcount->f_release())
+    {
+        m_refcount->v_destroy();
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // v_cleanup()
 
 #endif /* #if defined APPL_OS_WINDOWS */
 
