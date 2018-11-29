@@ -54,6 +54,18 @@ class appl_mutex_service
                 struct appl_mutex * const
                     p_mutex);
 
+        static
+        enum appl_status
+            s_sync(
+                struct appl_mutex * const
+                    p_mutex,
+                enum appl_status (*
+                    p_sync_callback)(
+                    void * const
+                        p_sync_context),
+                void * const
+                    p_sync_context);
+
 }; // class appl_mutex_service
 
 /* end-of-file: appl_mutex_service.h */

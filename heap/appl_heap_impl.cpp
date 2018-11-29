@@ -250,7 +250,7 @@ enum appl_status
         p_mmap_begin,
         p_mmap_end);
 
-    m_lock.init();
+    m_lock.f_init();
 
     appl_size_t
         i_index;
@@ -290,7 +290,7 @@ enum appl_status
 
     m_primary.f_cleanup();
 
-    m_lock.cleanup();
+    m_lock.f_cleanup();
 
     e_status =
         appl_status_ok;
@@ -395,7 +395,7 @@ enum appl_status
         e_status;
 
     e_status =
-        m_lock.lock();
+        m_lock.f_lock();
 
     if (
         appl_status_ok
@@ -451,7 +451,7 @@ enum appl_status
                 appl_status_fail;
         }
 
-        m_lock.unlock();
+        m_lock.f_unlock();
     }
 
     return
@@ -473,7 +473,7 @@ enum appl_status
         e_status;
 
     e_status =
-        m_lock.lock();
+        m_lock.f_lock();
 
     if (
         appl_status_ok
@@ -512,7 +512,7 @@ enum appl_status
                 appl_status_fail;
         }
 
-        m_lock.unlock();
+        m_lock.f_unlock();
     }
 
     return
@@ -562,7 +562,7 @@ enum appl_status
         e_status;
 
     e_status =
-        m_lock.lock();
+        m_lock.f_lock();
 
     if (
         appl_status_ok
@@ -664,7 +664,7 @@ enum appl_status
                 appl_status_out_of_memory;
         }
 
-        m_lock.unlock();
+        m_lock.f_unlock();
     }
 
     return
@@ -686,7 +686,7 @@ enum appl_status
         e_status;
 
     e_status =
-        m_lock.lock();
+        m_lock.f_lock();
 
     if (
         appl_status_ok
@@ -699,7 +699,7 @@ enum appl_status
         e_status =
             appl_status_not_implemented;
 
-        m_lock.unlock();
+        m_lock.f_unlock();
     }
 
     return

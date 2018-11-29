@@ -107,4 +107,26 @@ appl_mutex_unlock(
 
 } /* appl_mutex_unlock() */
 
+/*
+
+*/
+enum appl_status
+appl_mutex_sync(
+    struct appl_mutex * const
+        p_mutex,
+    enum appl_status (*
+        p_sync_callback)(
+        void * const
+            p_sync_context),
+    void * const
+        p_sync_context)
+{
+    return
+        appl_mutex_service::s_sync(
+            p_mutex,
+            p_sync_callback,
+            p_sync_context);
+
+} /* appl_mutex_sync() */
+
 /* end-of-file: appl_mutex_handle.cpp */

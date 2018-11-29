@@ -20,6 +20,8 @@
 #include <appl_debug_handle.h>
 #endif /* #if defined APPL_DEBUG */
 
+#include <appl_unused.h>
+
 //
 //
 //
@@ -39,7 +41,7 @@ appl_mutex_impl::~appl_mutex_impl()
 //
 //
 enum appl_status
-    appl_mutex_impl::init(void)
+    appl_mutex_impl::f_init(void)
 {
     enum appl_status
         e_status;
@@ -80,13 +82,13 @@ enum appl_status
     return
         e_status;
 
-} // init()
+} // f_init()
 
 //
 //
 //
 enum appl_status
-    appl_mutex_impl::cleanup(void)
+    appl_mutex_impl::f_cleanup(void)
 {
     enum appl_status
         e_status;
@@ -126,13 +128,13 @@ enum appl_status
     return
         e_status;
 
-} // cleanup()
+} // f_cleanup()
 
 //
 //
 //
 enum appl_status
-    appl_mutex_impl::lock(void)
+    appl_mutex_impl::f_lock(void)
 {
     enum appl_status
         e_status;
@@ -172,13 +174,13 @@ enum appl_status
     return
         e_status;
 
-} // lock()
+} // f_lock()
 
 //
 //
 //
 enum appl_status
-    appl_mutex_impl::unlock(void)
+    appl_mutex_impl::f_unlock(void)
 {
     enum appl_status
         e_status;
@@ -218,6 +220,40 @@ enum appl_status
     return
         e_status;
 
-} // unlock()
+} // f_unlock()
+
+//
+//
+//
+enum appl_status
+    appl_mutex_impl::f_sync(
+        enum appl_status (*
+            p_sync_callback)(
+            void * const
+                p_sync_context),
+        void * const
+            p_sync_context)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        f_lock();
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            (*p_sync_callback)(
+                p_sync_context);
+
+        f_unlock();
+    }
+
+    return
+        e_status;
+
+} // f_sync()
 
 /* end-of-file: appl_mutex_impl.cpp */

@@ -98,6 +98,16 @@ class appl_mutex_std_node : public appl_mutex
         enum appl_status
             v_unlock(void);
 
+        virtual
+        enum appl_status
+            v_sync(
+                enum appl_status (*
+                    p_sync_callback)(
+                    void * const
+                        p_sync_context),
+                void * const
+                    p_sync_context);
+
 }; // class appl_mutex_std_node
 
 /* end-of-file: appl_mutex_std_node.h */

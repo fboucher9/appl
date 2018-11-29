@@ -55,6 +55,17 @@ appl_mutex_unlock(
     struct appl_mutex * const
         p_mutex);
 
+enum appl_status
+appl_mutex_sync(
+    struct appl_mutex * const
+        p_mutex,
+    enum appl_status (*
+        p_sync_callback)(
+        void * const
+            p_sync_context),
+    void * const
+        p_sync_context);
+
 #if defined(__cplusplus)
 } /* extern "C" */
 #endif /* #if defined(__cplusplus) */

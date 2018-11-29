@@ -35,16 +35,25 @@ class appl_mutex_impl
         ~appl_mutex_impl();
 
         enum appl_status
-            init(void);
+            f_init(void);
 
         enum appl_status
-            cleanup(void);
+            f_cleanup(void);
 
         enum appl_status
-            lock(void);
+            f_lock(void);
 
         enum appl_status
-            unlock(void);
+            f_unlock(void);
+
+        enum appl_status
+            f_sync(
+                enum appl_status (*
+                    p_sync_callback)(
+                    void * const
+                        p_sync_context),
+                void * const
+                    p_sync_context);
 
     private:
 

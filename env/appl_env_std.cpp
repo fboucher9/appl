@@ -24,8 +24,6 @@
 
 #include <allocator/appl_allocator.h>
 
-#include <heap/appl_heap.h>
-
 #include <appl_object_handle.h>
 
 #include <appl_string_handle.h>
@@ -34,7 +32,9 @@
 
 #include <appl_buf.h>
 
-#include <appl_refcount.h>
+#include <appl_buf0.h>
+
+#include <appl_unused.h>
 
 //
 //
@@ -75,8 +75,7 @@ appl_env_std::s_create(
 //
 //
 appl_env_std::appl_env_std() :
-    appl_env(),
-    m_refcount()
+    appl_env()
 {
 }
 
@@ -97,39 +96,12 @@ enum appl_status
         e_status;
 
     e_status =
-        m_context->m_allocator->alloc_object(
-            &(
-                m_refcount));
-
-    return
-        e_status;
-
-} // f_init()
-
-//
-//
-//
-enum appl_status
-    appl_env_std::v_acquire(
-        struct appl_env * * const
-            r_instance)
-{
-    enum appl_status
-        e_status;
-
-    m_refcount->f_acquire();
-
-    *(
-        r_instance) =
-        this;
-
-    e_status =
         appl_status_ok;
 
     return
         e_status;
 
-} // v_acquire()
+} // f_init()
 
 //
 //
@@ -146,24 +118,14 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_heap *
-        p_heap;
-
-    p_heap =
-        m_context->m_heap;
-
-    unsigned long int const
-        i_name_len =
-        appl_buf_len(
-            p_name_min,
-            p_name_max);
-
-    char *
+    unsigned char *
         p_name0;
 
     e_status =
-        p_heap->alloc_structure_array(
-            i_name_len + 1ul,
+        appl_buf0_create(
+            m_context,
+            p_name_min,
+            p_name_max,
             &(
                 p_name0));
 
@@ -171,18 +133,11 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
-        memcpy(
-            p_name0,
-            p_name_min,
-            i_name_len);
-
-        p_name0[i_name_len] =
-            0;
-
         char const * const
             p_value0 =
             getenv(
-                p_name0);
+                appl_convert::to_char_ptr(
+                    p_name0));
 
         if (
             p_value0)
@@ -229,8 +184,8 @@ enum appl_status
                 appl_status_fail;
         }
 
-        p_heap->v_free(
-            i_name_len + 1ul,
+        appl_buf0_destroy(
+            m_context,
             p_name0);
     }
     else
@@ -243,6 +198,88 @@ enum appl_status
         e_status;
 
 } // v_get()
+
+//
+//
+//
+enum appl_status
+    appl_env_std::v_query(
+        unsigned char const * const
+            p_name_min,
+        unsigned char const * const
+            p_name_max,
+        void (* p_query_callback)(
+            void * const
+                p_query_context,
+            unsigned char const * const
+                p_value_min,
+            unsigned char const * const
+                p_value_max),
+        void * const
+            p_query_context) const
+{
+    enum appl_status
+        e_status;
+
+    unsigned char *
+        p_name0;
+
+    e_status =
+        appl_buf0_create(
+            m_context,
+            p_name_min,
+            p_name_max,
+            &(
+                p_name0));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        char const * const
+            p_value0 =
+            getenv(
+                appl_convert::to_char_ptr(
+                    p_name0));
+
+        if (
+            p_value0)
+        {
+            appl_size_t const
+                i_value_len =
+                strlen(
+                    p_value0);
+
+            (*p_query_callback)(
+                p_query_context,
+                appl_convert::to_uchar_ptr(
+                    p_value0),
+                appl_convert::to_uchar_ptr(
+                    p_value0 + i_value_len));
+
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+
+        appl_buf0_destroy(
+            m_context,
+            p_name0);
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // v_query()
 
 //
 //
@@ -261,22 +298,14 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_heap * const
-        p_heap =
-        m_context->m_heap;
-
-    unsigned long int const
-        i_name_len =
-        appl_buf_len(
-            p_name_min,
-            p_name_max);
-
-    char *
+    unsigned char *
         p_name0;
 
     e_status =
-        p_heap->alloc_structure_array(
-            i_name_len + 1,
+        appl_buf0_create(
+            m_context,
+            p_name_min,
+            p_name_max,
             &(
                 p_name0));
 
@@ -284,26 +313,14 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
-        memcpy(
-            p_name0,
-            p_name_min,
-            i_name_len);
-
-        p_name0[i_name_len] =
-            0;
-
-        unsigned long int const
-            i_value_len =
-            appl_buf_len(
-                p_value_min,
-                p_value_max);
-
-        char *
+        unsigned char *
             p_value0;
 
         e_status =
-            p_heap->alloc_structure_array(
-                i_value_len + 1,
+            appl_buf0_create(
+                m_context,
+                p_value_min,
+                p_value_max,
                 &(
                     p_value0));
 
@@ -311,19 +328,13 @@ enum appl_status
             appl_status_ok
             == e_status)
         {
-            memcpy(
-                p_value0,
-                p_value_min,
-                i_value_len);
-
-            p_value0[i_value_len] =
-                0;
-
             int const
                 i_setenv_result =
                 setenv(
-                    p_name0,
-                    p_value0,
+                    appl_convert::to_char_ptr(
+                        p_name0),
+                    appl_convert::to_char_ptr(
+                        p_value0),
                     1);
 
             if (
@@ -338,13 +349,13 @@ enum appl_status
                     appl_status_fail;
             }
 
-            p_heap->v_free(
-                i_value_len + 1,
+            appl_buf0_destroy(
+                m_context,
                 p_value0);
         }
 
-        p_heap->v_free(
-            i_name_len + 1,
+        appl_buf0_destroy(
+            m_context,
             p_name0);
     }
 
@@ -362,18 +373,8 @@ appl_env_std::v_cleanup(void)
     enum appl_status
         e_status;
 
-    if (m_refcount->f_release())
-    {
-        m_refcount->v_destroy();
-
-        e_status =
-            appl_status_ok;
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
-    }
+    e_status =
+        appl_status_ok;
 
     return
         e_status;

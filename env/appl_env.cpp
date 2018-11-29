@@ -18,20 +18,6 @@
 //
 //
 enum appl_status
-    appl_env::v_acquire(
-        struct appl_env * * const
-            r_instance)
-{
-    appl_unused(
-        r_instance);
-    return
-        appl_status_not_implemented;
-} // v_acquire()
-
-//
-//
-//
-enum appl_status
     appl_env::v_get(
         unsigned char const * const
             p_name_min,
@@ -47,6 +33,34 @@ enum appl_status
     return
         appl_status_not_implemented;
 } // v_get()
+
+//
+//
+//
+enum appl_status
+    appl_env::v_query(
+        unsigned char const * const
+            p_name_min,
+        unsigned char const * const
+            p_name_max,
+        void (* p_query_callback)(
+            void * const
+                p_query_context,
+            unsigned char const * const
+                p_value_min,
+            unsigned char const * const
+                p_value_max),
+        void * const
+            p_query_context) const
+{
+    appl_unused(
+        p_name_min,
+        p_name_max,
+        p_query_callback,
+        p_query_context);
+    return
+        appl_status_not_implemented;
+} // v_query()
 
 //
 //

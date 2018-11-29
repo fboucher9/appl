@@ -22,8 +22,6 @@ enum guard_appl_env_std_h
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
-class appl_refcount;
-
 class appl_env_std;
 
 //
@@ -53,12 +51,6 @@ class appl_env_std : public appl_env
 
         virtual
         enum appl_status
-            v_acquire(
-                struct appl_env * * const
-                    r_instance);
-
-        virtual
-        enum appl_status
             v_get(
                 unsigned char const * const
                     p_name_min,
@@ -66,6 +58,23 @@ class appl_env_std : public appl_env
                     p_name_max,
                 struct appl_string * * const
                     r_string) const;
+
+        virtual
+        enum appl_status
+            v_query(
+                unsigned char const * const
+                    p_name_min,
+                unsigned char const * const
+                    p_name_max,
+                void (* p_query_callback)(
+                    void * const
+                        p_query_context,
+                    unsigned char const * const
+                        p_value_min,
+                    unsigned char const * const
+                        p_value_max),
+                void * const
+                    p_query_context) const;
 
         virtual
         enum appl_status
@@ -80,16 +89,6 @@ class appl_env_std : public appl_env
                     p_value_max);
 
     private:
-
-        // --
-
-        class appl_refcount *
-            m_refcount;
-
-#define PADDING (APPL_SIZEOF_PTR)
-#include <appl_padding.h>
-
-        // --
 
         appl_env_std(
             class appl_env_std const & r);

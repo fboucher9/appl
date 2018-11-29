@@ -86,4 +86,31 @@ enum appl_status
 
 } // s_unlock()
 
+//
+//
+//
+enum appl_status
+    appl_mutex_service::s_sync(
+        struct appl_mutex * const
+            p_mutex,
+        enum appl_status (*
+            p_sync_callback)(
+            void * const
+                p_sync_context),
+        void * const
+            p_sync_context)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_mutex->v_sync(
+            p_sync_callback,
+            p_sync_context);
+
+    return
+        e_status;
+
+} // s_sync()
+
 /* end-of-file: appl_mutex_service.cpp */

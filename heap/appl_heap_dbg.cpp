@@ -200,7 +200,7 @@ enum appl_status
         &(
             m_list));
 
-    m_lock.init();
+    m_lock.f_init();
 
     e_status =
         appl_status_ok;
@@ -348,7 +348,7 @@ enum appl_status
             union appl_heap_dbg_header_ptr
                 o_header_ptr;
 
-            m_lock.lock();
+            m_lock.f_lock();
 
             o_header_ptr.p_void =
                 p_allocation;
@@ -403,7 +403,7 @@ enum appl_status
 
             m_alloc_count ++;
 
-            m_lock.unlock();
+            m_lock.f_unlock();
 
             void * const
                 pv_allocation =
@@ -440,7 +440,7 @@ enum appl_status
         union appl_heap_dbg_header_ptr
             o_header_ptr;
 
-        m_lock.lock();
+        m_lock.f_lock();
 
         o_header_ptr.p_void =
             p_buf;
@@ -517,7 +517,7 @@ enum appl_status
 
         m_alloc_count --;
 
-        m_lock.unlock();
+        m_lock.f_unlock();
 
         e_status =
             appl_status_ok;

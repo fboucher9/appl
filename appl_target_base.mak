@@ -104,6 +104,7 @@ appl_base-deps := \
     object/appl_object.cpp \
     object/appl_object_handle.cpp \
     object/appl_object_service.cpp \
+    appl_once.cpp \
     options/appl_options.cpp \
     options/appl_options_std.cpp \
     options/appl_options_handle.cpp \

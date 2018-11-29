@@ -40,29 +40,9 @@ class appl_env_service
 
         static
         enum appl_status
-        s_acquire(
+        s_get(
             struct appl_context * const
                 p_context,
-            struct appl_env * * const
-                r_instance);
-
-        static
-        struct appl_object *
-        s_parent(
-            struct appl_env * const
-                p_env);
-
-        static
-        struct appl_object const *
-        s_const_parent(
-            struct appl_env const * const
-                p_env);
-
-        static
-        enum appl_status
-        s_get(
-            struct appl_env const * const
-                p_env,
             unsigned char const * const
                 p_name_min,
             unsigned char const * const
@@ -72,9 +52,28 @@ class appl_env_service
 
         static
         enum appl_status
+        s_query(
+            struct appl_context * const
+                p_context,
+            unsigned char const * const
+                p_name_min,
+            unsigned char const * const
+                p_name_max,
+            void (* p_query_callback)(
+                void * const
+                    p_query_context,
+                unsigned char const * const
+                    p_value_min,
+                unsigned char const * const
+                    p_value_max),
+            void * const
+                p_query_context);
+
+        static
+        enum appl_status
         s_set(
-            struct appl_env * const
-                p_env,
+            struct appl_context * const
+                p_context,
             unsigned char const * const
                 p_name_min,
             unsigned char const * const

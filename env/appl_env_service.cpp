@@ -20,51 +20,9 @@
 //
 //
 enum appl_status
-appl_env_service::s_acquire(
+appl_env_service::s_get(
     struct appl_context * const
         p_context,
-    struct appl_env * * const
-        r_instance)
-{
-    return
-        p_context->m_env->v_acquire(
-            r_instance);
-
-} // s_acquire()
-
-//
-//
-//
-struct appl_object *
-appl_env_service::s_parent(
-    struct appl_env * const
-        p_env)
-{
-    return
-        p_env;
-
-} // s_parent()
-
-//
-//
-//
-struct appl_object const *
-appl_env_service::s_const_parent(
-    struct appl_env const * const
-        p_env)
-{
-    return
-        p_env;
-
-} // s_const_parent()
-
-//
-//
-//
-enum appl_status
-appl_env_service::s_get(
-    struct appl_env const * const
-        p_env,
     unsigned char const * const
         p_name_min,
     unsigned char const * const
@@ -76,7 +34,7 @@ appl_env_service::s_get(
         e_status;
 
     e_status =
-        p_env->v_get(
+        p_context->m_env->v_get(
             p_name_min,
             p_name_max,
             r_string);
@@ -90,9 +48,39 @@ appl_env_service::s_get(
 //
 //
 enum appl_status
+appl_env_service::s_query(
+    struct appl_context * const
+        p_context,
+    unsigned char const * const
+        p_name_min,
+    unsigned char const * const
+        p_name_max,
+    void (* p_query_callback)(
+        void * const
+            p_query_context,
+        unsigned char const * const
+            p_value_min,
+        unsigned char const * const
+            p_value_max),
+    void * const
+        p_query_context)
+{
+    return
+        p_context->m_env->v_query(
+            p_name_min,
+            p_name_max,
+            p_query_callback,
+            p_query_context);
+
+} // s_query()
+
+//
+//
+//
+enum appl_status
 appl_env_service::s_set(
-    struct appl_env * const
-        p_env,
+    struct appl_context * const
+        p_context,
     unsigned char const * const
         p_name_min,
     unsigned char const * const
@@ -106,7 +94,7 @@ appl_env_service::s_set(
         e_status;
 
     e_status =
-        p_env->v_set(
+        p_context->m_env->v_set(
             p_name_min,
             p_name_max,
             p_value_min,

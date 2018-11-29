@@ -105,7 +105,7 @@ enum appl_status
             m_available_items));
 
     e_status =
-        m_lock.init();
+        m_lock.f_init();
 
     if (
         appl_status_ok
@@ -205,7 +205,7 @@ enum appl_status
             p_node);
     }
 
-    m_lock.cleanup();
+    m_lock.f_cleanup();
 
     e_status =
         appl_status_ok;
@@ -233,7 +233,7 @@ enum appl_status
 
     if (
         appl_status_ok
-        == m_lock.lock())
+        == m_lock.f_lock())
     {
         void *
             p_buf;
@@ -274,7 +274,7 @@ enum appl_status
                 true;
         }
 
-        m_lock.unlock();
+        m_lock.f_unlock();
 
         if (
             !(
@@ -347,7 +347,7 @@ enum appl_status
 
     if (
         appl_status_ok
-        == m_lock.lock())
+        == m_lock.f_lock())
     {
         union appl_pool_node_ptr
             o_node_ptr;
@@ -366,7 +366,7 @@ enum appl_status
 
         if (
             appl_status_ok
-            == m_lock.unlock())
+            == m_lock.f_unlock())
         {
             e_status =
                 appl_status_ok;

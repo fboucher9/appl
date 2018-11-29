@@ -1724,78 +1724,60 @@ appl_test_env(
     enum appl_status
         e_status;
 
-    struct appl_env *
-        p_env;
-
     e_status =
-        appl_env_acquire(
+        appl_env_get(
             p_context,
+            sc_home_name,
+            sc_home_name + sizeof sc_home_name,
             &(
-                p_env));
+                p_home_value));
 
     if (
         appl_status_ok
         == e_status)
     {
+        unsigned char *
+            p_value_min;
+
+        unsigned char *
+            p_value_max;
+
         e_status =
-            appl_env_get(
-                p_env,
-                sc_home_name,
-                sc_home_name + sizeof sc_home_name,
+            appl_string_get(
+                p_home_value,
                 &(
-                    p_home_value));
+                    p_value_min),
+                &(
+                    p_value_max));
 
         if (
             appl_status_ok
             == e_status)
         {
-            unsigned char *
-                p_value_min;
+            appl_print0(
+                "appl_test_env: home=[");
 
-            unsigned char *
-                p_value_max;
+            appl_print(
+                p_value_min,
+                p_value_max);
 
-            e_status =
-                appl_string_get(
-                    p_home_value,
-                    &(
-                        p_value_min),
-                    &(
-                        p_value_max));
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                appl_print0(
-                    "appl_test_env: home=[");
-
-                appl_print(
-                    p_value_min,
-                    p_value_max);
-
-                appl_print0(
-                    "]\n");
-            }
-            else
-            {
-                appl_print0(
-                    "appl_test_env: failed string read\n");
-            }
-
-            appl_object_destroy(
-                appl_string_parent(
-                    p_home_value));
+            appl_print0(
+                "]\n");
         }
         else
         {
             appl_print0(
-                "appl_test_env: failed env get\n");
+                "appl_test_env: failed string read\n");
         }
 
         appl_object_destroy(
-            appl_env_parent(
-                p_env));
+            appl_string_parent(
+                p_home_value));
+    }
+    else
+    {
+        appl_print0(
+            "appl_test_env: failed env get\n");
     }
 
 } /* appl_test_env() */

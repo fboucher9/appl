@@ -131,7 +131,7 @@ enum appl_status
         p_mutex_descriptor);
 
     e_status =
-        m_mutex_impl.init();
+        m_mutex_impl.f_init();
 
     if (
         appl_status_ok
@@ -158,7 +158,7 @@ enum appl_status
     if (
         m_mutex_impl_initialized)
     {
-        m_mutex_impl.cleanup();
+        m_mutex_impl.f_cleanup();
 
         m_mutex_impl_initialized =
             false;
@@ -182,7 +182,7 @@ enum appl_status
         e_status;
 
     e_status =
-        m_mutex_impl.lock();
+        m_mutex_impl.f_lock();
 
     return
         e_status;
@@ -199,12 +199,37 @@ enum appl_status
         e_status;
 
     e_status =
-        m_mutex_impl.unlock();
+        m_mutex_impl.f_unlock();
 
     return
         e_status;
 
 } // v_unlock()
+
+//
+//
+//
+enum appl_status
+    appl_mutex_std_node::v_sync(
+        enum appl_status (*
+            p_sync_callback)(
+            void * const
+                p_sync_context),
+        void * const
+            p_sync_context)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        m_mutex_impl.f_sync(
+            p_sync_callback,
+            p_sync_context);
+
+    return
+        e_status;
+
+} // v_sync()
 
 enum appl_status
 appl_mutex_std_node_create(
