@@ -14,21 +14,61 @@
 
 #include <appl_unused.h>
 
+#if defined APPL_DEBUG
+#include <appl_debug_handle.h>
+#endif /* #if defined APPL_DEBUG */
+
 //
 //
 //
 enum appl_status
-    appl_timer_mgr::v_create(
+    appl_timer_mgr::v_create_node(
         struct appl_timer * * const
             r_timer)
 {
     appl_unused(
         r_timer);
 
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "timer mgr create node not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_status_not_implemented;
 
-} // v_create()
+} // v_create_node()
+
+//
+//
+//
+enum appl_status
+    appl_timer_mgr::v_destroy_node(
+        struct appl_timer * const
+            p_timer)
+{
+    appl_unused(
+        p_timer);
+
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "timer mgr destroy node not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
+
+    return
+        appl_status_not_implemented;
+
+} // v_destroy_node()
 
 //
 //

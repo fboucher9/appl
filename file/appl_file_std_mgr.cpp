@@ -70,6 +70,22 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_file_std_mgr::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        class appl_file_mgr * const
+            p_file_mgr)
+{
+    return
+        p_file_mgr->v_destroy(
+            p_allocator);
+
+} // s_destroy()
+
+//
+//
+//
 appl_file_std_mgr::appl_file_std_mgr() :
     appl_file_mgr(),
     m_pool()
@@ -120,26 +136,21 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_file_std_mgr::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     if (
         m_pool)
     {
-        m_pool->v_destroy();
+        m_context->m_pool_mgr->v_destroy_node(
+            m_pool);
 
         m_pool =
             0;
     }
 
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        sizeof(class appl_file_std_mgr);
 
 } // v_cleanup()
 
@@ -167,5 +178,26 @@ enum appl_status
         e_status;
 
 } // v_create_node()
+
+//
+//
+//
+enum appl_status
+    appl_file_std_mgr::v_destroy_node(
+        struct appl_file * const
+            p_file)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_file_std_node::s_destroy(
+            m_pool,
+            p_file);
+
+    return
+        e_status;
+
+} // v_destroy_node()
 
 /* end-of-file: appl_file_std_mgr.cpp */

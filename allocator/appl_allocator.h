@@ -142,9 +142,7 @@ struct appl_allocator : public appl_object
                 e_status =
                     appl_object::init_object(
                         m_context,
-                        this,
                         p_placement,
-                        sizeof(T_instance),
                         r_object);
 
                 if (
@@ -189,9 +187,7 @@ struct appl_allocator : public appl_object
                 e_status =
                     appl_object::init_object(
                         m_context,
-                        this,
                         p_placement,
-                        sizeof(T_instance),
                         p_descriptor,
                         r_object);
 

@@ -38,6 +38,14 @@ class appl_pool_mgr : public appl_object
                 class appl_pool_mgr * * const
                     r_instance);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                class appl_pool_mgr * const
+                    p_pool_mgr);
+
         virtual
         enum appl_status
             v_create_node(
@@ -45,6 +53,12 @@ class appl_pool_mgr : public appl_object
                     p_pool_descriptor,
                 struct appl_pool * * const
                     r_pool_node);
+
+        virtual
+        enum appl_status
+            v_destroy_node(
+                struct appl_pool * const
+                    p_pool_node);
 
         appl_pool_mgr();
 
@@ -61,6 +75,10 @@ class appl_pool_mgr : public appl_object
         class appl_pool_mgr &
             operator =(
                 class appl_pool_mgr const & r);
+
+        virtual
+        appl_size_t
+            v_cleanup(void);
 
 }; // class appl_pool_mgr
 

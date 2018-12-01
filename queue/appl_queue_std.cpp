@@ -65,6 +65,22 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_queue_std::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_queue * const
+            p_queue)
+{
+    return
+        p_queue->v_destroy(
+            p_allocator);
+
+} // s_destroy()
+
+//
+//
+//
 appl_queue_std::appl_queue_std() :
     appl_queue(),
     m_queue_impl()
@@ -153,17 +169,14 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_queue_std::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
-    e_status =
-        m_queue_impl.f_cleanup();
+    m_queue_impl.f_cleanup(
+        m_context);
 
     return
-        e_status;
+        sizeof(class appl_queue_std);
 
 } // v_cleanup()
 

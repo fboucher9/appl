@@ -33,6 +33,11 @@ appl_options_create(
     struct appl_options * * const
         r_instance);
 
+enum appl_status
+appl_options_destroy(
+    struct appl_options * const
+        p_instance);
+
 struct appl_object *
 appl_options_parent(
     struct appl_options * const

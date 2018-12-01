@@ -149,12 +149,9 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_mutex_std_node::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     if (
         m_mutex_impl_initialized)
     {
@@ -164,11 +161,8 @@ enum appl_status
             false;
     }
 
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        sizeof(class appl_mutex_std_node);
 
 } // v_cleanup()
 
@@ -274,5 +268,28 @@ appl_mutex_std_node_sizeof(void)
             class appl_mutex_std_node);
 
 } /* sizeof() */
+
+enum appl_status
+appl_mutex_std_node_destroy(
+    struct appl_allocator * const
+        p_allocator,
+    struct appl_mutex * const
+        p_mutex);
+
+//
+//
+//
+enum appl_status
+appl_mutex_std_node_destroy(
+    struct appl_allocator * const
+        p_allocator,
+    struct appl_mutex * const
+        p_mutex)
+{
+    return
+        p_mutex->v_destroy(
+            p_allocator);
+
+} // appl_mutex_std_node_destroy()
 
 /* end-of-file: appl_mutex_std_node.cpp */

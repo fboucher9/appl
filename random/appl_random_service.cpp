@@ -42,6 +42,34 @@ appl_random_service::s_create(
 //
 //
 //
+enum appl_status
+appl_random_service::s_destroy(
+    struct appl_random * const
+        p_random)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_context * const
+        p_context =
+        p_random->get_context();
+
+    class appl_random_mgr * const
+        p_random_mgr =
+        p_context->m_random_mgr;
+
+    e_status =
+        p_random_mgr->v_destroy_node(
+            p_random);
+
+    return
+        e_status;
+
+} // s_destroy()
+
+//
+//
+//
 struct appl_object *
 appl_random_service::s_parent(
     struct appl_random * const

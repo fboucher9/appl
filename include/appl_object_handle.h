@@ -20,11 +20,6 @@ struct appl_object;
 extern "C" {
 #endif /* #if defined(__cplusplus) */
 
-enum appl_status
-appl_object_destroy(
-    struct appl_object * const
-        p_object);
-
 struct appl_context *
 appl_object_get_context(
     struct appl_object const * const

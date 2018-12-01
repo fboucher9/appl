@@ -62,12 +62,22 @@ class appl_library_std_mgr : public appl_library_mgr
                 class appl_library_std_mgr const & r);
 
         virtual
+        appl_size_t
+            v_cleanup(void);
+
+        virtual
         enum appl_status
             v_create_node(
                 struct appl_library_descriptor const * const
                     p_library_descriptor,
                 struct appl_library * * const
                     r_library);
+
+        virtual
+        enum appl_status
+            v_destroy_node(
+                struct appl_library * const
+                    p_library);
 
 }; // class appl_library_std_mgr
 

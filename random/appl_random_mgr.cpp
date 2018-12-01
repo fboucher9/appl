@@ -61,6 +61,20 @@ appl_random_mgr::v_create_node(
 //
 //
 //
+enum appl_status
+appl_random_mgr::v_destroy_node(
+    struct appl_random * const
+        p_node)
+{
+    return
+        p_node->v_destroy(
+            m_context->m_allocator);
+
+} // v_destroy_node()
+
+//
+//
+//
 appl_random_mgr::appl_random_mgr() :
     appl_object()
 {

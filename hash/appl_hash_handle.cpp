@@ -35,6 +35,20 @@ appl_hash_create(
 /*
 
 */
+enum appl_status
+appl_hash_destroy(
+    struct appl_hash * const
+        p_instance)
+{
+    return
+        appl_hash_service::s_destroy(
+            p_instance);
+
+} /* appl_hash_destroy() */
+
+/*
+
+*/
 struct appl_object *
 appl_hash_parent(
     struct appl_hash * const

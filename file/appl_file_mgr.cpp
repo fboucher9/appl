@@ -14,6 +14,10 @@
 
 #include <appl_unused.h>
 
+#if defined APPL_DEBUG
+#include <appl_debug_handle.h>
+#endif /* #if defined APPL_DEBUG */
+
 #if !defined(__cplusplus)
 #error use c++ compiler
 #endif /* #if !defined(__cplusplus) */
@@ -35,6 +39,16 @@ enum appl_status
         p_file_descriptor,
         r_file_node);
 
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "file mgr create node not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
+
     e_status =
         appl_status_not_implemented;
 
@@ -42,6 +56,38 @@ enum appl_status
         e_status;
 
 } // v_create_node()
+
+//
+//
+//
+enum appl_status
+    appl_file_mgr::v_destroy_node(
+        struct appl_file * const
+            p_file_node)
+{
+    enum appl_status
+        e_status;
+
+    appl_unused(
+        p_file_node);
+
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "file mgr destroy node not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
+
+    e_status =
+        appl_status_not_implemented;
+
+    return
+        e_status;
+
+} // v_destroy_node()
 
 //
 //

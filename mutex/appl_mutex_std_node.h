@@ -87,7 +87,7 @@ class appl_mutex_std_node : public appl_mutex
                 p_mutex);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual

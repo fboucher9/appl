@@ -84,6 +84,11 @@ appl_timer_create(
     struct appl_timer * * const
         r_timer);
 
+enum appl_status
+appl_timer_destroy(
+    struct appl_timer * const
+        p_timer);
+
 /* Get pointer to object */
 struct appl_object *
 appl_timer_parent(

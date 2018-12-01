@@ -39,7 +39,6 @@ struct appl_queue_descriptor
 extern "C" {
 #endif /* #if defined __cplusplus */
 
-extern
 enum appl_status
     appl_queue_create(
         struct appl_context * const
@@ -49,13 +48,16 @@ enum appl_status
         struct appl_queue * * const
             r_instance);
 
-extern
+enum appl_status
+    appl_queue_destroy(
+        struct appl_queue * const
+            p_queue);
+
 struct appl_object *
     appl_queue_parent(
         struct appl_queue * const
             p_queue);
 
-extern
 enum appl_status
     appl_queue_push(
         struct appl_queue * const
@@ -67,7 +69,6 @@ enum appl_status
         unsigned long int const
             i_wait_count);
 
-extern
 enum appl_status
     appl_queue_pop(
         struct appl_queue * const
@@ -80,7 +81,6 @@ enum appl_status
             i_wait_count);
 
 /* unblock a thread that is waiting for a push or pop */
-extern
 enum appl_status
     appl_queue_interrupt(
         struct appl_queue * const

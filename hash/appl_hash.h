@@ -98,7 +98,7 @@ struct appl_hash : public appl_object
         // --
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         appl_hash(

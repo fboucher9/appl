@@ -37,6 +37,11 @@ appl_thread_create(
     struct appl_thread * * const
         r_thread);
 
+enum appl_status
+appl_thread_destroy(
+    struct appl_thread * const
+        p_thread);
+
 struct appl_object *
 appl_thread_parent(
     struct appl_thread * const

@@ -42,6 +42,24 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_pool_service::s_destroy(
+        struct appl_pool * const
+            p_pool)
+{
+    struct appl_context * const
+        p_context =
+        p_pool->get_context();
+
+    return
+        p_context->m_pool_mgr->v_destroy_node(
+            p_pool);
+
+} // s_destroy()
+
+//
+//
+//
 struct appl_allocator *
     appl_pool_service::s_parent(
         struct appl_pool * const

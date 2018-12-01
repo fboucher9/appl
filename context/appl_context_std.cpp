@@ -246,7 +246,7 @@ appl_context_std::init_debug(void)
 
     e_status =
         appl_debug_std::s_create(
-            m_heap,
+            m_allocator,
             &(
                 m_debug));
 
@@ -254,7 +254,7 @@ appl_context_std::init_debug(void)
 
     e_status =
         appl_debug_w32::s_create(
-            m_heap,
+            m_allocator,
             &(
                 m_debug));
 
@@ -288,7 +288,19 @@ appl_context_std::cleanup_debug(void)
 {
     if (b_init_debug)
     {
-        m_debug->v_destroy();
+#if defined APPL_OS_LINUX
+
+        appl_debug_std::s_destroy(
+            m_allocator,
+            m_debug);
+
+#else /* #if defined APPL_OS_Xx */
+
+        appl_debug_w32::s_destroy(
+            m_allocator,
+            m_debug);
+
+#endif /* #if defined APPL_OS_Xx */
 
         m_debug =
             0;
@@ -336,7 +348,7 @@ appl_context_std::cleanup_thread_mgr(void)
 {
     if (b_init_thread_mgr)
     {
-        m_thread_mgr->v_destroy();
+        m_thread_mgr->v_destroy(m_heap);
 
         m_thread_mgr =
             0;
@@ -383,7 +395,7 @@ void
 {
     if (b_init_mutex_mgr)
     {
-        m_mutex_mgr->v_destroy();
+        m_mutex_mgr->v_destroy(m_heap);
 
         m_mutex_mgr =
             0;
@@ -429,7 +441,7 @@ void
     if (
         b_init_file_mgr)
     {
-        m_file_mgr->v_destroy();
+        m_file_mgr->v_destroy(m_heap);
 
         m_file_mgr =
             0;
@@ -473,7 +485,7 @@ void
     if (
         b_init_poll_mgr)
     {
-        m_poll_mgr->v_destroy();
+        m_poll_mgr->v_destroy(m_heap);
 
         m_poll_mgr =
             0;
@@ -537,7 +549,21 @@ void
     if (
         b_init_clock)
     {
-        m_clock->v_destroy();
+#if defined APPL_OS_LINUX
+
+        appl_clock_std::s_destroy(
+            m_allocator,
+            m_clock);
+
+#elif defined APPL_OS_WINDOWS
+
+        appl_clock_w32::s_destroy(
+            m_allocator,
+            m_clock);
+
+#else /* #if defined APPL_OS_Xx */
+
+#endif /* #if defined APPL_OS_Xx */
 
         m_clock =
             0;
@@ -594,7 +620,7 @@ void
     if (
         b_init_event_mgr)
     {
-        m_event_mgr->v_destroy();
+        m_event_mgr->v_destroy(m_allocator);
 
         m_event_mgr =
             0;
@@ -667,7 +693,7 @@ void
     if (
         b_init_socket_mgr)
     {
-        m_socket_mgr->v_destroy();
+        m_socket_mgr->v_destroy(m_allocator);
 
         m_socket_mgr =
             0;
@@ -735,7 +761,7 @@ void
     if (
         b_init_env)
     {
-        m_env->v_destroy();
+        m_env->v_destroy(m_allocator);
 
         m_env =
             0;
@@ -859,7 +885,7 @@ void
     if (
         b_init_random_mgr)
     {
-        m_random_mgr->v_destroy();
+        m_random_mgr->v_destroy(m_allocator);
 
         m_random_mgr =
             0;
@@ -921,7 +947,7 @@ void
     if (
         b_init_log)
     {
-        m_log->v_destroy();
+        m_log->v_destroy(m_allocator);
 
         m_log =
             0;
@@ -977,7 +1003,9 @@ void
     if (
         b_init_pool_mgr)
     {
-        m_pool_mgr->v_destroy();
+        appl_pool_mgr::s_destroy(
+            m_allocator,
+            m_pool_mgr);
 
         m_pool_mgr =
             0;
@@ -1029,8 +1057,10 @@ enum appl_status
 } // init_thread_cache_mgr()
 
 extern
-void
+enum appl_status
 appl_thread_cache_mgr_destroy(
+    struct appl_allocator * const
+        p_allocator,
     class appl_thread_cache_mgr * const
         p_thread_cache_mgr);
 
@@ -1044,6 +1074,7 @@ void
         b_init_thread_cache_mgr)
     {
         appl_thread_cache_mgr_destroy(
+            m_allocator,
             m_thread_cache_mgr);
 
         m_thread_cache_mgr =
@@ -1100,7 +1131,7 @@ void
     if (
         b_init_timer_mgr)
     {
-        m_timer_mgr->v_destroy();
+        m_timer_mgr->v_destroy(m_allocator);
 
         m_timer_mgr =
             0;
@@ -1160,7 +1191,7 @@ void
     if (
         b_init_xlib)
     {
-        m_xlib->v_destroy();
+        m_xlib->v_destroy(m_allocator);
 
         m_xlib =
             0;
@@ -1234,7 +1265,7 @@ enum appl_status
         if (
             appl_status_ok != e_status)
         {
-            p_heap->v_destroy();
+            p_heap->v_destroy(0);
         }
     }
 
@@ -1242,6 +1273,16 @@ enum appl_status
         e_status;
 
 } // create_instance()
+
+enum appl_status
+    appl_context_std::s_destroy(
+        struct appl_context * const
+            p_context)
+{
+    return
+        p_context->v_destroy(0);
+
+} // s_destroy()
 
 //
 //
@@ -1441,12 +1482,9 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_context_std::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     struct appl_heap * const
         p_heap =
         m_heap;
@@ -1484,20 +1522,15 @@ enum appl_status
         p_placement =
         this;
 
-    appl_context::v_cleanup();
-
     p_heap->v_free(
         sizeof(
             *this),
         p_placement);
 
-    p_heap->v_destroy();
-
-    e_status =
-        appl_status_fail;
+    p_heap->v_destroy(0);
 
     return
-        e_status;
+        0;
 
 } // v_cleanup()
 

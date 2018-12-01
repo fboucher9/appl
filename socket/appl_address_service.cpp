@@ -91,6 +91,28 @@ appl_address_service::s_create(
 //
 //
 //
+enum appl_status
+appl_address_service::s_destroy(
+    struct appl_address * const
+        p_address)
+{
+    struct appl_context * const
+        p_context =
+        p_address->get_context();
+
+    class appl_socket_mgr * const
+        p_socket_mgr =
+        p_context->m_socket_mgr;
+
+    return
+        p_socket_mgr->v_destroy_address(
+            p_address);
+
+} // s_destroy()
+
+//
+//
+//
 struct appl_object *
 appl_address_service::s_parent(
     struct appl_address * const

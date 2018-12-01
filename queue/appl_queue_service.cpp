@@ -29,8 +29,8 @@
 //
 enum appl_status
     appl_queue_service::s_create(
-        struct appl_allocator * const
-            p_allocator,
+        struct appl_context * const
+            p_context,
         struct appl_queue_descriptor const * const
             p_descriptor,
         struct appl_queue * * const
@@ -38,11 +38,30 @@ enum appl_status
 {
     return
         appl_queue_std::s_create(
-            p_allocator,
+            p_context->m_allocator,
             p_descriptor,
             r_instance);
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+    appl_queue_service::s_destroy(
+        struct appl_queue * const
+            p_queue)
+{
+    struct appl_context * const
+        p_context =
+        p_queue->get_context();
+
+    return
+        appl_queue_std::s_destroy(
+            p_context->m_allocator,
+            p_queue);
+
+} // s_destroy()
 
 //
 //

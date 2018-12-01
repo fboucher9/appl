@@ -47,6 +47,14 @@ class appl_library_std_node : public appl_library
                 struct appl_library * * const
                     r_library);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                struct appl_library * const
+                    p_library);
+
         appl_library_std_node();
 
         virtual
@@ -82,7 +90,7 @@ class appl_library_std_node : public appl_library
                 class appl_library_std_node const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual

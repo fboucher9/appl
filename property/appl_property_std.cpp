@@ -79,6 +79,22 @@ enum appl_status
 //
 //
 enum appl_status
+    appl_property_std::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_property * const
+            p_property)
+{
+    return
+        p_property->v_destroy(
+            p_allocator);
+
+} // s_destroy()
+
+//
+//
+//
+enum appl_status
     appl_property_std::v_set(
         unsigned int const
             i_id,
@@ -278,12 +294,9 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_property_std::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     if (
         b_types_allocated)
     {
@@ -312,11 +325,8 @@ enum appl_status
             false;
     }
 
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        sizeof(struct appl_property_std);
 
 } // v_cleanup()
 

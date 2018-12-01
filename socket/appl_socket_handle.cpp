@@ -47,6 +47,20 @@ appl_socket_create(
 /*
 
 */
+enum appl_status
+appl_socket_destroy(
+    struct appl_socket * const
+        p_socket)
+{
+    return
+        appl_socket_service::s_destroy(
+            p_socket);
+
+} /* _destroy() */
+
+/*
+
+*/
 struct appl_object *
 appl_socket_parent(
     struct appl_socket * const

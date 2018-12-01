@@ -57,6 +57,12 @@ class appl_address_service
                 r_address);
 
         static
+        enum appl_status
+        s_destroy(
+            struct appl_address * const
+                p_address);
+
+        static
         struct appl_object *
         s_parent(
             struct appl_address * const

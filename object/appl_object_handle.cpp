@@ -13,20 +13,6 @@
 /*
 
 */
-enum appl_status
-appl_object_destroy(
-    struct appl_object* const
-        p_object)
-{
-    return
-        appl_object_service::s_destroy(
-            p_object);
-
-} /* appl_object_destroy() */
-
-/*
-
-*/
 struct appl_context *
 appl_object_get_context(
     struct appl_object const * const

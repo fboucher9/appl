@@ -41,6 +41,12 @@ class appl_string_service
                 r_string);
 
         static
+        enum appl_status
+        s_destroy(
+            struct appl_string * const
+                p_string);
+
+        static
         struct appl_object *
         s_parent(
             struct appl_string * const

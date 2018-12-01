@@ -137,9 +137,8 @@ appl_options_test_2(
             }
         }
 
-        appl_object_destroy(
-            appl_options_parent(
-                p_options));
+        appl_options_destroy(
+            p_options);
     }
 
     return

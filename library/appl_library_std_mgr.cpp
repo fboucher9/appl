@@ -79,6 +79,17 @@ appl_library_std_mgr::~appl_library_std_mgr()
 //
 //
 //
+appl_size_t
+    appl_library_std_mgr::v_cleanup(void)
+{
+    return
+        sizeof(class appl_library_std_mgr);
+
+} // v_cleanup()
+
+//
+//
+//
 enum appl_status
     appl_library_std_mgr::v_create_node(
         struct appl_library_descriptor const * const
@@ -93,6 +104,21 @@ enum appl_status
             r_library);
 
 } // v_create_node()
+
+//
+//
+//
+enum appl_status
+    appl_library_std_mgr::v_destroy_node(
+        struct appl_library * const
+            p_library)
+{
+    return
+        appl_library_std_node::s_destroy(
+            m_context->m_allocator,
+            p_library);
+
+} // v_destroy_node()
 
 #endif /* #if defined APPL_OS_LINUX */
 

@@ -39,6 +39,20 @@ appl_random_create(
 /*
 
 */
+enum appl_status
+appl_random_destroy(
+    struct appl_random * const
+        p_random)
+{
+    return
+        appl_random_service::s_destroy(
+            p_random);
+
+} /* destroy() */
+
+/*
+
+*/
 struct appl_object *
 appl_random_parent(
     struct appl_random * const

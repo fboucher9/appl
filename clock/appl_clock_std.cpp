@@ -62,6 +62,22 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_clock_std::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        class appl_clock * const
+            p_clock)
+{
+    return
+        p_clock->v_destroy(
+            p_allocator);
+
+} // s_destroy()
+
+//
+//
+//
 appl_clock_std::appl_clock_std() :
     appl_clock()
 {
@@ -73,6 +89,17 @@ appl_clock_std::appl_clock_std() :
 appl_clock_std::~appl_clock_std()
 {
 }
+
+//
+//
+//
+appl_size_t
+appl_clock_std::v_cleanup(void)
+{
+    return
+        sizeof(class appl_clock_std);
+
+} // v_cleanup()
 
 //
 //

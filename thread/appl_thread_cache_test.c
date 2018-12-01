@@ -42,10 +42,8 @@ test_thread_cache_entry(
         1000ul,
         1000ul);
 
-    appl_object_destroy(
-        appl_thread_parent(
-            appl_thread_cache_parent(
-                p_data->p_thread_cache)));
+    appl_thread_cache_destroy(
+        p_data->p_thread_cache);
 
 } /* test_thread_cache_entry() */
 
@@ -123,10 +121,8 @@ appl_thread_cache_test(
         {
         }
 
-        appl_object_destroy(
-            appl_property_parent(
-                appl_thread_property_parent(
-                    p_thread_property)));
+        appl_thread_property_destroy(
+            p_thread_property);
     }
 
 } /* appl_thread_cache_test() */

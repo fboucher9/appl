@@ -47,6 +47,14 @@ class appl_address_std_node : public appl_address
                 struct appl_address * * const
                     r_address);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                struct appl_address * const
+                    p_address);
+
         appl_address_std_node();
 
         virtual
@@ -56,6 +64,10 @@ class appl_address_std_node : public appl_address
             f_init(
                 struct appl_address_property const * const
                     p_property);
+
+        virtual
+        appl_size_t
+            v_cleanup(void);
 
     protected:
 

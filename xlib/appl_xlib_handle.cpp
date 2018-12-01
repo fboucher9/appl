@@ -34,6 +34,20 @@ appl_xlib_create(
 /*
 
 */
+enum appl_status
+appl_xlib_destroy(
+    struct appl_xlib * const
+        p_xlib)
+{
+    return
+        appl_xlib_service::s_destroy(
+            p_xlib);
+
+} /* _destroy() */
+
+/*
+
+*/
 struct appl_object *
 appl_xlib_parent(
     struct appl_xlib * const

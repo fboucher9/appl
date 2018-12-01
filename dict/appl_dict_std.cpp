@@ -141,16 +141,15 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_dict_std::v_cleanup(void)
 {
     // Destroy hash table
-    appl_object_destroy(
-        appl_hash_parent(
-            m_hash));
+    appl_hash_destroy(
+        m_hash);
 
     return
-        appl_status_ok;
+        sizeof(class appl_dict_std);
 
 } // v_cleanup()
 

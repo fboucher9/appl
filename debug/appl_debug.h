@@ -4,10 +4,15 @@
 
 */
 
+/* Assert configuration */
 #if ! defined APPL_DEBUG
 #error include only from debug build
 #endif /* #if ! defined APPL_DEBUG */
 
+/* Included. */
+#define INC_APPL_DEBUG_H
+
+/* Reverse include guard */
 enum guard_appl_debug_h
 {
     inc_appl_debug_h =
@@ -15,6 +20,7 @@ enum guard_appl_debug_h
         inc_appl_object_h
 };
 
+/* Assert compiler */
 #if !defined(__cplusplus)
 #error use C++ compiler
 #endif /* #if !defined(__cplusplus) */

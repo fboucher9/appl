@@ -27,6 +27,20 @@ appl_context_create(
 /*
 
 */
+enum appl_status
+appl_context_destroy(
+    struct appl_context * const
+        p_context)
+{
+    return
+        appl_context_service::s_destroy(
+            p_context);
+
+} /* appl_context_destroy() */
+
+/*
+
+*/
 struct appl_object *
 appl_context_parent(
     struct appl_context * const

@@ -49,6 +49,14 @@ struct appl_property_std : public appl_property
                 struct appl_property * * const
                     r_property);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                struct appl_property * const
+                    p_property);
+
         appl_property_std();
 
         virtual
@@ -62,7 +70,7 @@ struct appl_property_std : public appl_property
     protected:
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
     private:

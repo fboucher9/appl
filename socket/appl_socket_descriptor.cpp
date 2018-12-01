@@ -161,7 +161,8 @@ appl_socket_property_destroy(
         p_socket_property)
 {
     return
-        p_socket_property->v_destroy();
+        appl_property_destroy(
+            p_socket_property);
 
 } /* destroy() */
 

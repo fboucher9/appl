@@ -42,6 +42,12 @@ class appl_file_service
                     r_file);
 
         static
+        enum appl_status
+            s_destroy(
+                struct appl_file * const
+                    p_file);
+
+        static
         struct appl_object *
         s_parent(
             struct appl_file * const

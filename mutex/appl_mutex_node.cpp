@@ -14,6 +14,10 @@
 
 #include <appl_unused.h>
 
+#if defined APPL_DEBUG
+#include <appl_debug_handle.h>
+#endif /* #if defined APPL_DEBUG */
+
 //
 //
 //
@@ -22,6 +26,16 @@ enum appl_status
 {
     enum appl_status
         e_status;
+
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "mutex lock not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_status_not_implemented;
@@ -39,6 +53,16 @@ enum appl_status
 {
     enum appl_status
         e_status;
+
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "mutex unlock not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_status_not_implemented;
@@ -66,6 +90,16 @@ enum appl_status
     appl_unused(
         p_sync_callback,
         p_sync_context);
+
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "mutex sync not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_status_not_implemented;

@@ -194,9 +194,8 @@ appl_test_memory_leak(
                 &(
                     p_buf));
 
-        appl_object_destroy(
-            appl_context_parent(
-                p_context_temp));
+        appl_context_destroy(
+            p_context_temp);
     }
 
     if (
@@ -386,9 +385,8 @@ appl_test_file_stdout(
                 &(
                     i_count));
 
-        appl_object_destroy(
-            appl_file_parent(
-                p_file));
+        appl_file_destroy(
+            p_file);
     }
 
 }
@@ -704,9 +702,8 @@ appl_test_file_stdin(
             }
         }
 
-        appl_object_destroy(
-            appl_file_parent(
-                p_stdin_file));
+        appl_file_destroy(
+            p_stdin_file);
     }
 
 } /* appl_test_file_stdin() */
@@ -754,122 +751,124 @@ static void appl_test_thread(
     o_queue_descriptor.i_max_count =
         1;
 
-    appl_queue_create(
-        p_context,
-        &(
-            o_queue_descriptor),
-        &(
-            p_queue));
-
-    o_test_thread_context.p_context =
-        p_context;
-
-    o_test_thread_context.p_queue =
-        p_queue;
-
-    appl_list_init(
-        &(
-            o_test_thread_context.o_dummy_result));
-
-    o_test_thread_context.b_kill =
-        0;
-
-    appl_thread_property_create(
-        p_context,
-        &(
-            p_property));
-
-    o_thread_descriptor.b_callback =
-        1;
-
-    o_thread_descriptor.o_callback.p_entry =
-        &(
-            appl_test_thread_entry);
-
-    o_thread_descriptor.o_callback.p_context =
-        &(
-            o_test_thread_context);
-
     e_status =
-        appl_thread_create(
-            appl_context_parent(
-                p_context),
-            p_property,
+        appl_queue_create(
+            p_context,
             &(
-                o_thread_descriptor),
+                o_queue_descriptor),
             &(
-                p_thread));
+                p_queue));
 
     if (
         appl_status_ok
         == e_status)
     {
-        char
-            b_continue;
+        o_test_thread_context.p_context =
+            p_context;
 
-        appl_test_sleep_msec(
+        o_test_thread_context.p_queue =
+            p_queue;
+
+        appl_list_init(
+            &(
+                o_test_thread_context.o_dummy_result));
+
+        o_test_thread_context.b_kill =
+            0;
+
+        appl_thread_property_create(
             p_context,
-            200ul);
+            &(
+                p_property));
 
-        b_continue =
+        o_thread_descriptor.b_callback =
             1;
 
-        while (
-            b_continue)
-        {
-            struct appl_list *
-                p_dummy_result;
+        o_thread_descriptor.o_callback.p_entry =
+            &(
+                appl_test_thread_entry);
 
-            /* Use interrupt to stop the sleep */
-            o_test_thread_context.b_kill =
-                1;
+        o_thread_descriptor.o_callback.p_context =
+            &(
+                o_test_thread_context);
 
-            appl_print0("interrupt thread\n");
-
-            e_status =
-                appl_thread_interrupt(
-                    p_thread);
-
-            e_status =
-                appl_queue_pop(
-                    p_queue,
-                    &(
-                        p_dummy_result),
-                    1000ul,
-                    1000ul);
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                b_continue =
-                    0;
-            }
-            else
-            {
-                appl_print0("queue pop timeout\n");
-            }
-        }
+        e_status =
+            appl_thread_create(
+                appl_context_parent(
+                    p_context),
+                p_property,
+                &(
+                    o_thread_descriptor),
+                &(
+                    p_thread));
 
         if (
             appl_status_ok
             == e_status)
         {
+            char
+                b_continue;
+
+            appl_test_sleep_msec(
+                p_context,
+                200ul);
+
+            b_continue =
+                1;
+
+            while (
+                b_continue)
+            {
+                struct appl_list *
+                    p_dummy_result;
+
+                /* Use interrupt to stop the sleep */
+                o_test_thread_context.b_kill =
+                    1;
+
+                appl_print0("interrupt thread\n");
+
+                e_status =
+                    appl_thread_interrupt(
+                        p_thread);
+
+                e_status =
+                    appl_queue_pop(
+                        p_queue,
+                        &(
+                            p_dummy_result),
+                        1000ul,
+                        1000ul);
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    b_continue =
+                        0;
+                }
+                else
+                {
+                    appl_print0("queue pop timeout\n");
+                }
+            }
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+            }
+
+            appl_thread_destroy(
+                p_thread);
         }
 
-        appl_object_destroy(
-            appl_thread_parent(
-                p_thread));
+        appl_thread_property_destroy(
+            p_property);
+
+        appl_queue_destroy(
+            p_queue);
     }
-
-    appl_object_destroy(
-        appl_property_parent(
-            appl_thread_property_parent(
-                p_property)));
-
-    appl_object_destroy(
-        appl_queue_parent(
-            p_queue));
 
 }
 
@@ -1048,13 +1047,11 @@ appl_test_socket_connection_thread_handler(
     appl_test_socket_handshake(
         p_test_socket_connection_context->p_remote_socket);
 
-    appl_object_destroy(
-        appl_address_parent(
-            p_test_socket_connection_context->p_remote_address));
+    appl_address_destroy(
+        p_test_socket_connection_context->p_remote_address);
 
-    appl_object_destroy(
-        appl_socket_parent(
-            p_test_socket_connection_context->p_remote_socket));
+    appl_socket_destroy(
+        p_test_socket_connection_context->p_remote_socket);
 
     appl_heap_free(
         p_test_socket_connection_context->p_context,
@@ -1190,28 +1187,23 @@ appl_test_socket_process_client(
                 if (
                     b_free_connection_context)
                 {
-                    appl_object_destroy(
-                        appl_thread_parent(
-                            p_test_socket_connection_context->p_thread));
+                    appl_thread_destroy(
+                        p_test_socket_connection_context->p_thread);
                 }
             }
 
-            appl_object_destroy(
-                appl_property_parent(
-                    appl_thread_property_parent(
-                        p_thread_property)));
+            appl_thread_property_destroy(
+                p_thread_property);
         }
 
         if (
             b_free_connection_context)
         {
-            appl_object_destroy(
-                appl_address_parent(
-                    p_test_socket_connection_context->p_remote_address));
+            appl_address_destroy(
+                p_test_socket_connection_context->p_remote_address);
 
-            appl_object_destroy(
-                appl_socket_parent(
-                    p_test_socket_connection_context->p_remote_socket));
+            appl_socket_destroy(
+                p_test_socket_connection_context->p_remote_socket);
 
             appl_heap_free(
                 p_context,
@@ -1535,9 +1527,8 @@ appl_test_socket(
                                     p_socket);
                             }
 
-                            appl_object_destroy(
-                                appl_socket_parent(
-                                    p_socket));
+                            appl_socket_destroy(
+                                p_socket);
                         }
                     }
 
@@ -1548,9 +1539,8 @@ appl_test_socket(
             }
         }
 
-        appl_object_destroy(
-            appl_address_parent(
-                p_address));
+        appl_address_destroy(
+            p_address);
     }
 
 } /* appl_test_socket() */
@@ -1697,9 +1687,8 @@ appl_test_property(
             }
         }
 
-        appl_object_destroy(
-            appl_property_parent(
-                p_property));
+        appl_property_destroy(
+            p_property);
     }
 
 } /* appl_test_property() */
@@ -1770,9 +1759,8 @@ appl_test_env(
                 "appl_test_env: failed string read\n");
         }
 
-        appl_object_destroy(
-            appl_string_parent(
-                p_home_value));
+        appl_string_destroy(
+            p_home_value);
     }
     else
     {
@@ -1853,7 +1841,8 @@ appl_test_library(
                 (signed long int)(appl_ptrdiff_t)(
                     p_value),
                 appl_buf_print_flag_hex
-                | appl_buf_print_flag_zero,
+                | appl_buf_print_flag_zero
+                | appl_buf_print_flag_unsigned,
                 16);
             appl_print0("]\n");
         }
@@ -2055,9 +2044,8 @@ appl_test_random(
                     appl_print0("failed appl_random_pick(2)\n");
                 }
 
-                appl_object_destroy(
-                    appl_random_parent(
-                        p_random2));
+                appl_random_destroy(
+                    p_random2);
             }
             else
             {
@@ -2069,9 +2057,8 @@ appl_test_random(
             appl_print0("failed appl_random_pick(1)\n");
         }
 
-        appl_object_destroy(
-            appl_random_parent(
-                p_random1));
+        appl_random_destroy(
+            p_random1);
     }
     else
     {
@@ -2682,9 +2669,8 @@ appl_test_main(
                 p_context,
                 p_file);
 
-            appl_object_destroy(
-                appl_file_parent(
-                    p_file));
+            appl_file_destroy(
+                p_file);
         }
     }
 

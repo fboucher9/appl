@@ -54,7 +54,7 @@ class appl_heap_std : public appl_heap
                 class appl_heap_std const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual

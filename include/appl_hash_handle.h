@@ -70,6 +70,11 @@ appl_hash_create(
     struct appl_hash * * const
         r_instance);
 
+enum appl_status
+appl_hash_destroy(
+    struct appl_hash * const
+        p_instance);
+
 struct appl_object *
 appl_hash_parent(
     struct appl_hash * const

@@ -128,16 +128,14 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_mutex_std_mgr::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     if (
         m_pool_created)
     {
-        m_pool->v_destroy();
+        m_context->m_pool_mgr->v_destroy_node(
+            m_pool);
 
         m_pool =
             0;
@@ -146,11 +144,8 @@ enum appl_status
             false;
     }
 
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        sizeof(class appl_mutex_std_mgr);
 
 } // v_cleanup()
 
@@ -163,11 +158,18 @@ appl_mutex_std_node_create(
     struct appl_mutex * * const
         r_mutex);
 
+enum appl_status
+appl_mutex_std_node_destroy(
+    struct appl_allocator * const
+        p_allocator,
+    struct appl_mutex * const
+        p_mutex);
+
 //
 //
 //
 enum appl_status
-    appl_mutex_std_mgr::v_create(
+    appl_mutex_std_mgr::v_create_node(
         struct appl_mutex_descriptor const * const
             p_mutex_descriptor,
         struct appl_mutex * * const
@@ -185,6 +187,21 @@ enum appl_status
     return
         e_status;
 
-} // v_create()
+} // v_create_node()
+
+//
+//
+//
+enum appl_status
+    appl_mutex_std_mgr::v_destroy_node(
+        struct appl_mutex * const
+            p_mutex)
+{
+    return
+        appl_mutex_std_node_destroy(
+            m_pool,
+            p_mutex);
+
+} // v_destroy_node()
 
 /* end-of-file: appl_mutex_std_mgr.cpp */

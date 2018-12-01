@@ -93,6 +93,22 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_file_std_node::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_file * const
+            p_file_node)
+{
+    return
+        p_file_node->v_destroy(
+            p_allocator);
+
+} // s_destroy()
+
+//
+//
+//
 appl_file_std_node::appl_file_std_node() :
     appl_file(),
     m_fd(),
@@ -266,12 +282,9 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_file_std_node::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     if (
         m_close)
     {
@@ -286,11 +299,8 @@ enum appl_status
     }
 
     // Free ourselves using mgr pool...
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        sizeof(class appl_file_std_node);
 
 } // v_cleanup()
 

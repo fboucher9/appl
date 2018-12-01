@@ -109,8 +109,13 @@ enum appl_status
         class appl_library_mgr * const
             p_library_mgr)
 {
+    struct appl_context * const
+        p_context =
+        p_library_mgr->get_context();
+
     return
-        p_library_mgr->v_destroy();
+        p_library_mgr->v_destroy(
+            p_context->m_allocator);
 
 } // appl_library_mgr_destroy()
 
@@ -141,8 +146,15 @@ enum appl_status
         struct appl_library * const
             p_library)
 {
+    struct appl_context * const
+        p_context =
+        p_library->get_context();
+
+    p_context->m_library_mgr->v_destroy_node(
+        p_library);
+
     return
-        p_library->v_destroy();
+        appl_status_ok;
 
 } // s_destroy()
 

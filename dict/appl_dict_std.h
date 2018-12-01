@@ -66,7 +66,7 @@ class appl_dict_std : public appl_dict
                 class appl_dict_std const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual

@@ -14,43 +14,45 @@
 
 #include <allocator/appl_allocator.h>
 
+#if defined APPL_DEBUG
+#if defined APPL_OS_LINUX
+#include <unistd.h>
+#include <execinfo.h>
+#endif /* #if defined APPL_OS_LINUX */
+#endif /* #if defined APPL_DEBUG */
+
 //
 //
 //
 enum appl_status
-    appl_object::v_destroy(void)
+    appl_object::v_destroy(
+        struct appl_allocator * const
+            p_allocator)
 {
-    struct appl_allocator * const
-        p_allocator =
-        m_destroyer;
-
-    appl_size_t const
-        i_placement_length =
-        m_destroyer_length;
+    enum appl_status
+        e_status;
 
     void * const
         p_placement =
         this;
 
-    enum appl_status const
-        e_status =
+    appl_size_t const
+        i_placement_length =
         v_cleanup();
 
     if (
-        appl_status_ok
-        == e_status)
+        i_placement_length)
     {
         delete
             this;
 
-        if (
-            p_allocator)
-        {
-            p_allocator->v_free(
-                i_placement_length,
-                p_placement);
-        }
+        p_allocator->v_free(
+            i_placement_length,
+            p_placement);
     }
+
+    e_status =
+        appl_status_ok;
 
     return
         e_status;
@@ -61,9 +63,7 @@ enum appl_status
 //
 //
 appl_object::appl_object() :
-    m_context(),
-    m_destroyer(),
-    m_destroyer_length()
+    m_context()
 {
 }
 
@@ -138,11 +138,24 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_object::v_cleanup(void)
 {
+#if defined APPL_DEBUG
+#if defined APPL_OS_LINUX
+    {
+        static unsigned char const s_msg[] =
+            "object cleanup not implemented\n";
+        write(1, s_msg, sizeof(s_msg) - 1);
+        void * a_stack[8u];
+        backtrace(a_stack, 8);
+        backtrace_symbols_fd(a_stack, 8, 1);
+    }
+#endif /* #if defined APPL_OS_LINUX */
+#endif /* #if defined APPL_DEBUG */
+
     return
-        appl_status_ok;
+        0;
 
 } // v_cleanup()
 
@@ -169,53 +182,5 @@ void
         p_context;
 
 } // set_context()
-
-//
-//
-//
-struct appl_allocator *
-    appl_object::get_allocator(void) const
-{
-    return
-        m_destroyer;
-
-} // get_allocator()
-
-//
-//
-//
-void
-    appl_object::set_allocator(
-        struct appl_allocator * const
-            p_allocator)
-{
-    m_destroyer =
-        p_allocator;
-
-} // set_allocator()
-
-//
-//
-//
-appl_size_t
-    appl_object::get_placement_length(void) const
-{
-    return
-        m_destroyer_length;
-
-} // get_placement_length()
-
-//
-//
-//
-void
-    appl_object::set_placement_length(
-        appl_size_t const
-            i_placement_length)
-{
-    m_destroyer_length =
-        i_placement_length;
-
-} // set_placement_length()
 
 /* end-of-file: appl_object.cpp */

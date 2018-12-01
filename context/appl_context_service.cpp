@@ -51,6 +51,20 @@ appl_context_service::s_create(
 //
 //
 //
+enum appl_status
+appl_context_service::s_destroy(
+    struct appl_context * const
+        p_context)
+{
+    return
+        appl_context_std::s_destroy(
+            p_context);
+
+} // s_destroy()
+
+//
+//
+//
 struct appl_object *
 appl_context_service::s_parent(
     struct appl_context * const

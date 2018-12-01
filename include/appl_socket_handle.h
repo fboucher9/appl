@@ -36,6 +36,11 @@ appl_socket_create(
     struct appl_socket * * const
         r_socket);
 
+enum appl_status
+appl_socket_destroy(
+    struct appl_socket * const
+        p_socket);
+
 struct appl_object *
 appl_socket_parent(
     struct appl_socket * const

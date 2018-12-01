@@ -265,7 +265,7 @@ class appl_chunk_std : public appl_chunk
                 class appl_chunk_std const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual
@@ -409,20 +409,14 @@ appl_chunk_std::f_free_node_list(void)
 //
 //
 //
-enum appl_status
+appl_size_t
 appl_chunk_std::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     // destroy all nodes
     f_free_node_list();
 
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        sizeof(class appl_chunk_std);
 
 } // v_cleanup()
 
@@ -789,8 +783,13 @@ appl_chunk_service::s_destroy(
     struct appl_chunk * const
         p_chunk)
 {
+    struct appl_context * const
+        p_context =
+        p_chunk->get_context();
+
     return
-        p_chunk->v_destroy();
+        p_chunk->v_destroy(
+            p_context->m_heap);
 
 } // s_destroy()
 

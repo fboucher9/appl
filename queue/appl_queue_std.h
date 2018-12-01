@@ -44,6 +44,14 @@ class appl_queue_std : public appl_queue
                 struct appl_queue * * const
                     r_queue);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                struct appl_queue * const
+                    p_queue);
+
         appl_queue_std();
 
         virtual
@@ -97,7 +105,7 @@ class appl_queue_std : public appl_queue
             v_interrupt(void);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
 }; // class appl_queue_std

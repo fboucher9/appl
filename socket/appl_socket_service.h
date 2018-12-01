@@ -46,6 +46,12 @@ class appl_socket_service
 
         static
         enum appl_status
+        s_destroy(
+            struct appl_socket * const
+                p_socket);
+
+        static
+        enum appl_status
         s_accept(
             struct appl_socket * const
                 p_socket,

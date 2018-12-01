@@ -60,6 +60,22 @@ appl_random_std_crypto::s_create(
 //
 //
 //
+enum appl_status
+appl_random_std_crypto::s_destroy(
+    struct appl_allocator * const
+        p_allocator,
+    struct appl_random * const
+        p_random)
+{
+    return
+        p_random->v_destroy(
+            p_allocator);
+
+} // s_destroy()
+
+//
+//
+//
 appl_random_std_crypto::appl_random_std_crypto() :
     appl_random()
 {
@@ -71,6 +87,17 @@ appl_random_std_crypto::appl_random_std_crypto() :
 appl_random_std_crypto::~appl_random_std_crypto()
 {
 }
+
+//
+//
+//
+appl_size_t
+appl_random_std_crypto::v_cleanup(void)
+{
+    return
+        sizeof(class appl_random_std_crypto);
+
+} // v_cleanup()
 
 //
 //

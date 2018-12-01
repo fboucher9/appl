@@ -54,6 +54,11 @@ enum appl_status
         struct appl_pool * * const
             r_pool);
 
+enum appl_status
+    appl_pool_destroy(
+        struct appl_pool * const
+            p_pool);
+
 struct appl_allocator *
     appl_pool_parent(
         struct appl_pool * const

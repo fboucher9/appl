@@ -32,11 +32,17 @@ class appl_mutex_mgr : public appl_object
 
         virtual
         enum appl_status
-            v_create(
+            v_create_node(
                 struct appl_mutex_descriptor const * const
                     p_mutex_descriptor,
                 struct appl_mutex * * const
                     r_mutex);
+
+        virtual
+        enum appl_status
+            v_destroy_node(
+                struct appl_mutex * const
+                    p_mutex);
 
     protected:
 

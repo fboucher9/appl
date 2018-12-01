@@ -85,7 +85,7 @@ class appl_heap_dbg : public appl_heap
                 class appl_heap_dbg const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual

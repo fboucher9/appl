@@ -62,6 +62,22 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_debug_std::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        class appl_debug * const
+            p_debug)
+{
+    return
+        p_debug->v_destroy(
+            p_allocator);
+
+} // s_destroy()
+
+//
+//
+//
 appl_debug_std::appl_debug_std() :
     appl_debug()
 {
@@ -128,6 +144,17 @@ enum appl_status
         e_status;
 
 } // v_print()
+
+//
+//
+//
+appl_size_t
+    appl_debug_std::v_cleanup(void)
+{
+    return
+        sizeof(class appl_debug_std);
+
+} // v_cleanup()
 
 #endif /* #if ( defined APPL_DEBUG ) && ( defined APPL_OS_LINUX ) */
 

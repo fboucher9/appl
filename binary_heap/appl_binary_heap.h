@@ -62,6 +62,11 @@ enum appl_status
         struct appl_binary_heap * * const
             r_instance);
 
+enum appl_status
+    appl_binary_heap_destroy(
+        struct appl_binary_heap * const
+            p_binary_heap);
+
 struct appl_object *
     appl_binary_heap_parent(
         struct appl_binary_heap * const

@@ -121,21 +121,14 @@ bool
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_refcount::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
-    appl_object_destroy(
-        appl_mutex_parent(
-            m_mutex));
-
-    e_status =
-        appl_status_ok;
+    appl_mutex_destroy(
+        m_mutex);
 
     return
-        e_status;
+        sizeof(class appl_refcount);
 
 } // v_cleanup()
 

@@ -176,7 +176,8 @@ void
     if (
         m_xlib_handle_initialized)
     {
-        m_xlib_handle->v_destroy();
+        appl_library_destroy(
+            m_xlib_handle);
 
         m_xlib_handle =
             0;
@@ -543,7 +544,8 @@ enum appl_status
                 appl_status_ok
                 != e_status)
             {
-                m_lock->v_destroy();
+                appl_mutex_destroy(
+                    m_lock);
 
                 m_lock_initialized =
                     false;
@@ -687,11 +689,11 @@ appl_xlib_std::v_display_height(
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_xlib_std::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
+    appl_size_t
+        i_result;
 
     if (
         m_ref_count)
@@ -712,7 +714,8 @@ enum appl_status
 
             if (m_lock_initialized)
             {
-                m_lock->v_destroy();
+                appl_mutex_destroy(
+                    m_lock);
 
                 m_lock =
                     0;
@@ -721,8 +724,8 @@ enum appl_status
                     false;
             }
 
-            e_status =
-                appl_status_ok;
+            i_result =
+                sizeof(class appl_xlib_std);
         }
         else
         {
@@ -734,18 +737,18 @@ enum appl_status
 
             // Keep object
 
-            e_status =
-                appl_status_fail;
+            i_result =
+                0;
         }
     }
     else
     {
-        e_status =
-            appl_status_fail;
+        i_result =
+            0;
     }
 
     return
-        e_status;
+        i_result;
 
 } // v_cleanup()
 

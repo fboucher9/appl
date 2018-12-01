@@ -34,11 +34,25 @@ appl_property_create(
 {
     return
         appl_property_service::s_create(
-            p_context->m_allocator,
+            p_context,
             i_count,
             r_property);
 
 } /* appl_property_create() */
+
+/*
+
+*/
+enum appl_status
+appl_property_destroy(
+    struct appl_property * const
+        p_property)
+{
+    return
+        appl_property_service::s_destroy(
+            p_property);
+
+} /* _destroy() */
 
 struct appl_object *
 appl_property_parent(

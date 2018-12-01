@@ -36,6 +36,12 @@ class appl_context_std : public appl_context
                 struct appl_context * * const
                     r_context);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_context * const
+                    p_context);
+
         appl_context_std();
 
         virtual
@@ -49,7 +55,7 @@ class appl_context_std : public appl_context
     protected:
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
     private:

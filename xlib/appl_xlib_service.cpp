@@ -57,6 +57,24 @@ appl_xlib_service::s_create(
 //
 //
 //
+enum appl_status
+appl_xlib_service::s_destroy(
+    struct appl_xlib * const
+        p_xlib)
+{
+    struct appl_context * const
+        p_context =
+        p_xlib->get_context();
+
+    return
+        p_xlib->v_destroy(
+            p_context->m_allocator);
+
+} // s_destroy()
+
+//
+//
+//
 struct appl_object *
 appl_xlib_service::s_parent(
     struct appl_xlib * const

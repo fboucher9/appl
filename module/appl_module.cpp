@@ -169,11 +169,11 @@ enum appl_status
 
 }
 
-enum appl_status
+appl_size_t
     appl_file_source_module::v_cleanup(void)
 {
     return
-        appl_status_ok;
+        sizeof(struct appl_file_source_module);
 }
 
 enum appl_status
@@ -275,11 +275,11 @@ enum appl_status
 
 } // f_init()
 
-enum appl_status
+appl_size_t
     appl_hex_convert_module::v_cleanup(void)
 {
     return
-        appl_status_ok;
+        sizeof(struct appl_hex_convert_module);
 
 }
 
@@ -619,11 +619,11 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_file_sink_module::v_cleanup(void)
 {
     return
-        appl_status_ok;
+        sizeof(struct appl_file_sink_module);
 }
 
 //
@@ -753,11 +753,11 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_custom_module::v_cleanup(void)
 {
     return
-        appl_status_ok;
+        sizeof(struct appl_custom_module);
 }
 
 //
@@ -832,11 +832,11 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_null_module::v_cleanup(void)
 {
     return
-        appl_status_ok;
+        sizeof(struct appl_null_module);
 }
 
 //

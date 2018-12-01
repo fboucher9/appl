@@ -40,7 +40,7 @@ appl_event_service::s_create(
         p_context->m_event_mgr;
 
     e_status =
-        p_event_mgr->v_create(
+        p_event_mgr->v_create_node(
             p_event_descriptor,
             r_event);
 
@@ -48,6 +48,34 @@ appl_event_service::s_create(
         e_status;
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+appl_event_service::s_destroy(
+    struct appl_event * const
+        p_event)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_context * const
+        p_context =
+        p_event->get_context();
+
+    class appl_event_mgr * const
+        p_event_mgr =
+        p_context->m_event_mgr;
+
+    e_status =
+        p_event_mgr->v_destroy_node(
+            p_event);
+
+    return
+        e_status;
+
+} // s_destroy()
 
 //
 //

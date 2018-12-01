@@ -156,17 +156,13 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_thread_std_node::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
-    e_status =
-        m_thread_impl.f_cleanup();
+    m_thread_impl.f_cleanup();
 
     return
-        e_status;
+        sizeof(class appl_thread_std_node);
 
 } // v_cleanup()
 

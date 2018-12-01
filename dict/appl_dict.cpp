@@ -14,6 +14,10 @@
 
 #include <appl_unused.h>
 
+#if defined APPL_DEBUG
+#include <appl_debug_handle.h>
+#endif /* #if defined APPL_DEBUG */
+
 //
 //
 //
@@ -30,6 +34,16 @@ enum appl_status
         p_name_min,
         p_name_max,
         p_value);
+
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "dict set not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
 
     return
         appl_status_not_implemented;
@@ -52,6 +66,16 @@ enum appl_status
         p_name_min,
         p_name_max,
         r_value);
+
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "dict get not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
 
     return
         appl_status_not_implemented;

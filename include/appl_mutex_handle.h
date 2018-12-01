@@ -35,6 +35,11 @@ appl_mutex_create(
     struct appl_mutex * * const
         r_mutex);
 
+enum appl_status
+appl_mutex_destroy(
+    struct appl_mutex * const
+        p_mutex);
+
 struct appl_object *
 appl_mutex_parent(
     struct appl_mutex * const

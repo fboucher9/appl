@@ -41,6 +41,12 @@ class appl_random_service
                 r_random);
 
         static
+        enum appl_status
+        s_destroy(
+            struct appl_random * const
+                p_random);
+
+        static
         struct appl_object *
         s_parent(
             struct appl_random * const

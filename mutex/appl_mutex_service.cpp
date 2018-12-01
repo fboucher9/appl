@@ -39,7 +39,7 @@ enum appl_status
         e_status;
 
     e_status =
-        p_context->m_mutex_mgr->v_create(
+        p_context->m_mutex_mgr->v_create_node(
             p_mutex_descriptor,
             r_mutex);
 
@@ -47,6 +47,30 @@ enum appl_status
         e_status;
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+    appl_mutex_service::s_destroy(
+        struct appl_mutex * const
+            p_mutex)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_context * const
+        p_context =
+        p_mutex->get_context();
+
+    e_status =
+        p_context->m_mutex_mgr->v_destroy_node(
+            p_mutex);
+
+    return
+        e_status;
+
+} // s_destroy()
 
 //
 //

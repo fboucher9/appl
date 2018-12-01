@@ -34,11 +34,17 @@ class appl_event_mgr : public appl_object
 
         virtual
         enum appl_status
-            v_create(
+            v_create_node(
                 struct appl_event_descriptor const * const
                     p_event_descriptor,
                 struct appl_event * * const
                     r_event);
+
+        virtual
+        enum appl_status
+            v_destroy_node(
+                struct appl_event * const
+                    p_event);
 
     protected:
 

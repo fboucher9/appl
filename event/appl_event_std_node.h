@@ -77,7 +77,7 @@ class appl_event_std_node : public appl_event
                 class appl_event_std_node const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual

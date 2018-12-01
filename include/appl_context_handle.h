@@ -25,6 +25,11 @@ appl_context_create(
     struct appl_context * * const
         r_context);
 
+enum appl_status
+appl_context_destroy(
+    struct appl_context * const
+        p_context);
+
 struct appl_object *
 appl_context_parent(
     struct appl_context * const

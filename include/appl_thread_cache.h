@@ -37,6 +37,11 @@ enum appl_status
         struct appl_thread_cache * * const
             r_thread_cache);
 
+enum appl_status
+    appl_thread_cache_destroy(
+        struct appl_thread_cache * const
+            p_thread_cache);
+
 struct appl_thread *
     appl_thread_cache_parent(
         struct appl_thread_cache * const

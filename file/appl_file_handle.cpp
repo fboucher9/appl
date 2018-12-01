@@ -30,6 +30,20 @@ appl_file_create(
 
 } /* appl_file_create() */
 
+/*
+
+*/
+enum appl_status
+appl_file_destroy(
+    struct appl_file * const
+        p_file)
+{
+    return
+        appl_file_service::s_destroy(
+            p_file);
+
+} /* appl_file_destroy() */
+
 struct appl_object *
 appl_file_parent(
     struct appl_file * const

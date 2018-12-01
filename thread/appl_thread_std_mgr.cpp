@@ -123,16 +123,14 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_thread_std_mgr::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     if (
         m_pool_created)
     {
-        m_pool->v_destroy();
+        m_context->m_pool_mgr->v_destroy_node(
+            m_pool);
 
         m_pool =
             0;
@@ -141,11 +139,8 @@ enum appl_status
             false;
     }
 
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        sizeof(class appl_thread_std_mgr);
 
 } // v_cleanup()
 

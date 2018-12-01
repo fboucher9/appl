@@ -63,6 +63,17 @@ appl_log_std::~appl_log_std()
 //
 //
 //
+appl_size_t
+    appl_log_std::v_cleanup(void)
+{
+    return
+        sizeof(class appl_log_std);
+
+} // v_cleanup()
+
+//
+//
+//
 enum appl_status
     appl_log_std::v_print(
         enum appl_log_level const

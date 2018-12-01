@@ -14,6 +14,10 @@
 
 #include <appl_unused.h>
 
+#if defined APPL_DEBUG
+#include <appl_debug_handle.h>
+#endif /* #if defined APPL_DEBUG */
+
 //
 //
 //
@@ -24,6 +28,17 @@ enum appl_status
 {
     appl_unused(
         r_count);
+
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "options count not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_status_not_implemented;
 } // v_count()
@@ -44,6 +59,17 @@ enum appl_status
         i_index,
         r_buf_min,
         r_buf_max);
+
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "options get not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_status_not_implemented;
 } // v_get()
@@ -68,6 +94,16 @@ enum appl_status
         p_count,
         p_ready);
 
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "options write not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_status_not_implemented;
 
@@ -87,6 +123,16 @@ enum appl_status
         p_buf_min,
         p_buf_max);
 
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "options append argument not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_status_not_implemented;
 
@@ -98,6 +144,16 @@ enum appl_status
 enum appl_status
     appl_options::v_reset(void)
 {
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "options reset not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_status_not_implemented;
 

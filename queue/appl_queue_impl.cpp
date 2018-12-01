@@ -76,7 +76,7 @@ enum appl_status
         o_mutex_descriptor;
 
     e_status =
-        p_context->m_mutex_mgr->v_create(
+        p_context->m_mutex_mgr->v_create_node(
             &(
                 o_mutex_descriptor),
             &(
@@ -90,7 +90,7 @@ enum appl_status
             o_event_descriptor;
 
         e_status =
-            p_context->m_event_mgr->v_create(
+            p_context->m_event_mgr->v_create_node(
                 &(
                     o_event_descriptor),
                 &(
@@ -104,7 +104,8 @@ enum appl_status
                 appl_status_ok
                 != e_status)
             {
-                m_event->v_destroy();
+                p_context->m_event_mgr->v_destroy_node(
+                    m_event);
             }
         }
 
@@ -112,7 +113,8 @@ enum appl_status
             appl_status_ok
             != e_status)
         {
-            m_lock->v_destroy();
+            p_context->m_mutex_mgr->v_destroy_node(
+                m_lock);
         }
     }
 
@@ -125,16 +127,20 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_queue_impl::f_cleanup(void)
+    appl_queue_impl::f_cleanup(
+        struct appl_context * const
+            p_context)
 {
     enum appl_status
         e_status;
 
     // Free all nodes?
 
-    m_event->v_destroy();
+    p_context->m_event_mgr->v_destroy_node(
+        m_event);
 
-    m_lock->v_destroy();
+    p_context->m_mutex_mgr->v_destroy_node(
+        m_lock);
 
     e_status =
         appl_status_ok;

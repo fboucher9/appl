@@ -58,6 +58,11 @@ appl_random_create(
     struct appl_random * * const
         r_random);
 
+enum appl_status
+appl_random_destroy(
+    struct appl_random * const
+        p_random);
+
 struct appl_object *
 appl_random_parent(
     struct appl_random * const

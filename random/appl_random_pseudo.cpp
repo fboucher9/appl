@@ -93,6 +93,17 @@ appl_random_pseudo::f_init(
 //
 //
 //
+appl_size_t
+appl_random_pseudo::v_cleanup(void)
+{
+    return
+        sizeof(class appl_random_pseudo);
+
+} // v_cleanup()
+
+//
+//
+//
 enum appl_status
 appl_random_pseudo::v_pick(
     unsigned long int const

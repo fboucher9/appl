@@ -38,6 +38,12 @@ class appl_library_mgr : public appl_object
                 struct appl_library * * const
                     r_library);
 
+        virtual
+        enum appl_status
+            v_destroy_node(
+                struct appl_library * const
+                    p_library);
+
     protected:
 
         appl_library_mgr();

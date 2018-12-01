@@ -27,8 +27,8 @@
 //
 enum appl_status
 appl_property_service::s_create(
-    struct appl_allocator * const
-        p_allocator,
+    struct appl_context * const
+        p_context,
     unsigned int const
         i_count,
     struct appl_property * * const
@@ -39,6 +39,10 @@ appl_property_service::s_create(
 
     struct appl_property *
         p_property;
+
+    struct appl_allocator * const
+        p_allocator =
+        p_context->m_allocator;
 
     e_status =
         appl_property_std::s_create(
@@ -60,6 +64,29 @@ appl_property_service::s_create(
         e_status;
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+appl_property_service::s_destroy(
+    struct appl_property * const
+        p_property)
+{
+    struct appl_context * const
+        p_context =
+        p_property->get_context();
+
+    struct appl_allocator * const
+        p_allocator =
+        p_context->m_allocator;
+
+    return
+        appl_property_std::s_destroy(
+            p_allocator,
+            p_property);
+
+} // s_destroy()
 
 //
 //

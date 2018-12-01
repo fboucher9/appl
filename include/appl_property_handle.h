@@ -29,6 +29,11 @@ appl_property_create(
     struct appl_property * * const
         r_property);
 
+enum appl_status
+appl_property_destroy(
+    struct appl_property * const
+        p_property);
+
 struct appl_object *
 appl_property_parent(
     struct appl_property * const

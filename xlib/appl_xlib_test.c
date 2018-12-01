@@ -87,9 +87,8 @@ appl_xlib_test_1(
                 p_xlib_display);
         }
 
-        appl_object_destroy(
-            appl_xlib_parent(
-                p_xlib));
+        appl_xlib_destroy(
+            p_xlib);
     }
 
     return

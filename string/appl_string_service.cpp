@@ -47,6 +47,25 @@ appl_string_service::s_create(
 //
 //
 //
+enum appl_status
+appl_string_service::s_destroy(
+    struct appl_string * const
+        p_string)
+{
+    struct appl_context * const
+        p_context =
+        p_string->get_context();
+
+    return
+        appl_string::s_destroy(
+            p_context->m_allocator,
+            p_string);
+
+} // s_destroy()
+
+//
+//
+//
 struct appl_object *
 appl_string_service::s_parent(
     struct appl_string * const

@@ -119,7 +119,7 @@ struct appl_file_source_module : public appl_module
                 struct appl_file_source_module const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual
@@ -205,7 +205,7 @@ struct appl_hex_convert_module : public appl_module
                 struct appl_hex_convert_module const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual
@@ -276,7 +276,7 @@ struct appl_file_sink_module : public appl_module
                 struct appl_file_sink_module const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual
@@ -344,7 +344,7 @@ struct appl_custom_module : public appl_module
                 struct appl_custom_module const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual
@@ -398,7 +398,7 @@ struct appl_null_module : public appl_module
                 struct appl_null_module const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual

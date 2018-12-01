@@ -114,6 +114,11 @@ appl_file_source_module_create(
     struct appl_file_source_module * * const
         r_instance);
 
+enum appl_status
+appl_file_source_module_destroy(
+    struct appl_file_source_module * const
+        p_this);
+
 struct appl_module *
 appl_file_source_module_parent(
     struct appl_file_source_module * const
@@ -156,6 +161,11 @@ appl_hex_convert_module_create(
     struct appl_hex_convert_module * * const
         r_instance);
 
+enum appl_status
+appl_hex_convert_module_destroy(
+    struct appl_hex_convert_module * const
+        p_this);
+
 struct appl_module *
 appl_hex_convert_module_parent(
     struct appl_hex_convert_module * const
@@ -183,6 +193,11 @@ appl_file_sink_module_create(
         p_file_sink_module_descriptor,
     struct appl_file_sink_module * * const
         r_instance);
+
+enum appl_status
+appl_file_sink_module_destroy(
+    struct appl_file_sink_module * const
+        p_this);
 
 struct appl_module *
 appl_file_sink_module_parent(

@@ -31,12 +31,6 @@ class appl_object_service
     public:
 
         static
-        enum appl_status
-        s_destroy(
-            struct appl_object * const
-                p_object);
-
-        static
         struct appl_context *
         s_get_context(
             struct appl_object const * const

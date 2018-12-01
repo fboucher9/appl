@@ -64,6 +64,10 @@ class appl_random_pseudo : public appl_random
                 class appl_random_pseudo const & r);
 
         virtual
+        appl_size_t
+        v_cleanup(void);
+
+        virtual
         enum appl_status
         v_pick(
             unsigned long int const

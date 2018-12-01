@@ -98,6 +98,22 @@ appl_options_std::s_create(
 //
 //
 //
+enum appl_status
+appl_options_std::s_destroy(
+    struct appl_allocator * const
+        p_allocator,
+    struct appl_options * const
+        p_options_std)
+{
+    return
+        p_options_std->v_destroy(
+            p_allocator);
+
+} // s_destroy()
+
+//
+//
+//
 appl_options_std::appl_options_std() :
     appl_options(),
     m_list(),
@@ -185,12 +201,9 @@ void
 //
 //
 //
-enum appl_status
+appl_size_t
 appl_options_std::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     // free list of nodes
     f_free_node_list();
 
@@ -208,11 +221,8 @@ appl_options_std::v_cleanup(void)
             false;
     }
 
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        sizeof(class appl_options_std);
 
 } // v_cleanup()
 

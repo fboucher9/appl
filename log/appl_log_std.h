@@ -55,6 +55,10 @@ class appl_log_std : public appl_log
                 class appl_log_std const & r);
 
         virtual
+        appl_size_t
+            v_cleanup(void);
+
+        virtual
         enum appl_status
             v_print(
                 enum appl_log_level const

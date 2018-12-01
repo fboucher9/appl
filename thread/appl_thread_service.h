@@ -47,6 +47,12 @@ class appl_thread_service
                 r_thread);
 
         static
+        enum appl_status
+        s_destroy(
+            struct appl_thread * const
+                p_thread);
+
+        static
         struct appl_object *
         s_convert(
             struct appl_thread * const

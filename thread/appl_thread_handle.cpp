@@ -33,6 +33,20 @@ appl_thread_create(
 
 } /* appl_thread_create() */
 
+/*
+
+*/
+enum appl_status
+appl_thread_destroy(
+    struct appl_thread * const
+        p_thread)
+{
+    return
+        appl_thread_service::s_destroy(
+            p_thread);
+
+} /* appl_thread_destroy() */
+
 struct appl_object *
 appl_thread_parent(
     struct appl_thread * const

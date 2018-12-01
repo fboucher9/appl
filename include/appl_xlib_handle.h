@@ -39,6 +39,11 @@ appl_xlib_create(
     struct appl_xlib * * const
         r_instance);
 
+enum appl_status
+appl_xlib_destroy(
+    struct appl_xlib * const
+        p_xlib);
+
 struct appl_object *
 appl_xlib_parent(
     struct appl_xlib * const

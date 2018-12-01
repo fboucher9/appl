@@ -35,6 +35,12 @@ class appl_context_service
                 r_context);
 
         static
+        enum appl_status
+        s_destroy(
+            struct appl_context * const
+                p_context);
+
+        static
         struct appl_object *
         s_parent(
             struct appl_context * const

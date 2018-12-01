@@ -96,6 +96,22 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_timer_std_node::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_timer * const
+            p_timer)
+{
+    return
+        p_timer->v_destroy(
+            p_allocator);
+
+} // s_destroy()
+
+//
+//
+//
 appl_timer_std_node::appl_timer_std_node() :
     appl_timer(),
     m_used_list(),
@@ -143,7 +159,7 @@ enum appl_status
         o_mutex_descriptor;
 
     e_status =
-        m_context->m_mutex_mgr->v_create(
+        m_context->m_mutex_mgr->v_create_node(
             &(
                 o_mutex_descriptor),
             &(
@@ -158,7 +174,7 @@ enum appl_status
             o_event_descriptor;
 
         e_status =
-            m_context->m_event_mgr->v_create(
+            m_context->m_event_mgr->v_create_node(
                 &(
                     o_event_descriptor),
                 &(
@@ -208,7 +224,7 @@ enum appl_status
                     this;
 
                 e_status =
-                    m_context->m_thread_mgr->v_create(
+                    m_context->m_thread_mgr->v_create_node(
                         p_thread_property,
                         &(
                             o_thread_descriptor),
@@ -222,15 +238,16 @@ enum appl_status
                     // etc.
                 }
 
-                appl_thread_property_parent(
-                    p_thread_property)->v_destroy();
+                appl_thread_property_destroy(
+                    p_thread_property);
             }
 
             if (
                 appl_status_ok
                 != e_status)
             {
-                m_event->v_destroy();
+                m_context->m_event_mgr->v_destroy_node(
+                    m_event);
             }
         }
 
@@ -238,7 +255,8 @@ enum appl_status
             appl_status_ok
             != e_status)
         {
-            m_lock->v_destroy();
+            m_context->m_mutex_mgr->v_destroy_node(
+                m_lock);
         }
     }
 
@@ -270,7 +288,7 @@ union appl_timer_std_event_ptr
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_timer_std_node::v_cleanup(void)
 {
     while (
@@ -295,11 +313,14 @@ enum appl_status
         }
     }
 
-    m_thread->v_destroy();
+    m_context->m_thread_mgr->v_destroy_node(
+        m_thread);
 
-    m_event->v_destroy();
+    m_context->m_event_mgr->v_destroy_node(
+        m_event);
 
-    m_lock->v_destroy();
+    m_context->m_mutex_mgr->v_destroy_node(
+        m_lock);
 
     // Release all active nodes
     {
@@ -345,7 +366,7 @@ enum appl_status
     }
 
     return
-        appl_status_ok;
+        sizeof(class appl_timer_std_node);
 
 } // v_cleanup()
 

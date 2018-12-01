@@ -50,6 +50,12 @@ class appl_event_service
                 r_event);
 
         static
+        enum appl_status
+        s_destroy(
+            struct appl_event * const
+                p_event);
+
+        static
         struct appl_object *
         s_parent(
             struct appl_event * const

@@ -37,6 +37,14 @@ class appl_file_std_mgr : public appl_file_mgr
                 class appl_file_mgr * * const
                     r_file_mgr);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                class appl_file_mgr * const
+                    p_file_mgr);
+
         appl_file_std_mgr();
 
         virtual
@@ -67,7 +75,7 @@ class appl_file_std_mgr : public appl_file_mgr
                 class appl_file_std_mgr const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual
@@ -77,6 +85,12 @@ class appl_file_std_mgr : public appl_file_mgr
                     p_file_descriptor,
                 struct appl_file * * const
                     r_file);
+
+        virtual
+        enum appl_status
+            v_destroy_node(
+                struct appl_file * const
+                    p_file);
 
 }; // class appl_file_std_mgr
 

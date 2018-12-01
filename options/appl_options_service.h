@@ -38,6 +38,12 @@ class appl_options_service
                 r_instance);
 
         static
+        enum appl_status
+        s_destroy(
+            struct appl_options * const
+                p_options);
+
+        static
         struct appl_object *
         s_parent(
             struct appl_options * const

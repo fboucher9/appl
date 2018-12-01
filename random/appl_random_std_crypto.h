@@ -34,6 +34,14 @@ class appl_random_std_crypto : public appl_random
             struct appl_random * * const
                 r_random);
 
+        static
+        enum appl_status
+        s_destroy(
+            struct appl_allocator * const
+                p_allocator,
+            struct appl_random * const
+                p_random);
+
         appl_random_std_crypto();
 
         virtual
@@ -49,6 +57,10 @@ class appl_random_std_crypto : public appl_random
         class appl_random_std_crypto &
             operator =(
                 class appl_random_std_crypto const & r);
+
+        virtual
+        appl_size_t
+        v_cleanup(void);
 
         virtual
         enum appl_status

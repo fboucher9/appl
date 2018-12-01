@@ -42,6 +42,12 @@ class appl_timer_service
                 r_timer);
 
         static
+        enum appl_status
+        s_destroy(
+            struct appl_timer * const
+                p_timer);
+
+        static
         struct appl_object *
         s_parent(
             struct appl_timer * const

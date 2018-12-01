@@ -94,6 +94,29 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_socket_std_node::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_socket * const
+            p_socket)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_socket->v_destroy(
+            p_allocator);
+
+    return
+        e_status;
+
+} // s_destroy()
+
+
+//
+//
+//
 appl_socket_std_node::appl_socket_std_node() :
     appl_socket(),
     m_fd(-1)
@@ -728,12 +751,9 @@ appl_socket_std_node::init_send_timeout(
 //
 //
 //
-enum appl_status
+appl_size_t
 appl_socket_std_node::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     if (
         -1 != m_fd)
     {
@@ -744,11 +764,8 @@ appl_socket_std_node::v_cleanup(void)
             -1;
     }
 
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        sizeof(class appl_socket_std_node);
 
 } // v_cleanup()
 
@@ -855,7 +872,8 @@ appl_socket_std_node::v_accept(
                 appl_status_ok
                 != e_status)
             {
-                p_address->v_destroy();
+                appl_address_destroy(
+                    p_address);
             }
         }
 

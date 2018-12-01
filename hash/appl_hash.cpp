@@ -268,21 +268,15 @@ appl_hash::~appl_hash()
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_hash::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     m_context->m_heap->free_structure_array(
         m_descriptor.i_max_index,
         m_table);
 
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        sizeof(struct appl_hash);
 
 } // v_cleanup()
 

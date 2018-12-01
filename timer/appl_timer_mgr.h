@@ -24,9 +24,15 @@ class appl_timer_mgr : public appl_object
 
         virtual
         enum appl_status
-            v_create(
+            v_create_node(
                 struct appl_timer * * const
                     r_timer);
+
+        virtual
+        enum appl_status
+            v_destroy_node(
+                struct appl_timer * const
+                    p_timer);
 
     protected:
 

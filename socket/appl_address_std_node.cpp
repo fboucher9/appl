@@ -94,6 +94,28 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_address_std_node::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_address * const
+            p_address)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_address->v_destroy(
+            p_allocator);
+
+    return
+        e_status;
+
+} // s_destroy()
+
+//
+//
+//
 appl_address_std_node::appl_address_std_node() :
     appl_address(),
     m_sockaddr()
@@ -206,6 +228,17 @@ enum appl_status
         e_status;
 
 } // f_init()
+
+//
+//
+//
+appl_size_t
+    appl_address_std_node::v_cleanup(void)
+{
+    return
+        sizeof(class appl_address_std_node);
+
+} // v_cleanup()
 
 //
 //

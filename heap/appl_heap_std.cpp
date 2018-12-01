@@ -136,7 +136,7 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
 appl_heap_std::v_cleanup(void)
 {
     void * const
@@ -150,7 +150,7 @@ appl_heap_std::v_cleanup(void)
         p_placement);
 
     return
-        appl_status_fail;
+        0;
 
 } // v_cleanup()
 

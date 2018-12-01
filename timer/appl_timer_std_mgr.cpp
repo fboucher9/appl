@@ -88,8 +88,18 @@ enum appl_status
 //
 //
 //
+appl_size_t
+    appl_timer_std_mgr::v_cleanup(void)
+{
+    return
+        sizeof(class appl_timer_std_mgr);
+} // v_cleanup()
+
+//
+//
+//
 enum appl_status
-    appl_timer_std_mgr::v_create(
+    appl_timer_std_mgr::v_create_node(
         struct appl_timer * * const
             r_timer)
 {
@@ -98,6 +108,21 @@ enum appl_status
             m_context->m_allocator,
             r_timer);
 
-} // v_create()
+} // v_create_node()
+
+//
+//
+//
+enum appl_status
+    appl_timer_std_mgr::v_destroy_node(
+        struct appl_timer * const
+            p_timer)
+{
+    return
+        appl_timer_std_node::s_destroy(
+            m_context->m_allocator,
+            p_timer);
+
+} // v_destroy_node()
 
 /* end-of-file: appl_timer_std_mgr.cpp */

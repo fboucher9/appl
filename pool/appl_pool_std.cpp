@@ -181,12 +181,9 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_pool_std::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     // assert if allocated items remain
 
     // free all reuseable items
@@ -207,11 +204,8 @@ enum appl_status
 
     m_lock.f_cleanup();
 
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        sizeof(class appl_pool_std);
 
 } // cleanup()
 

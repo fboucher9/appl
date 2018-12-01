@@ -58,10 +58,20 @@ class appl_timer_std_mgr : public appl_timer_mgr
                 class appl_timer_std_mgr const & r);
 
         virtual
+        appl_size_t
+            v_cleanup(void);
+
+        virtual
         enum appl_status
-            v_create(
+            v_create_node(
                 struct appl_timer * * const
                     r_timer);
+
+        virtual
+        enum appl_status
+            v_destroy_node(
+                struct appl_timer * const
+                    p_timer);
 
 }; // class appl_timer_std_mgr
 

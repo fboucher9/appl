@@ -98,7 +98,7 @@ class appl_env_std : public appl_env
                 class appl_env_std const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
 }; // class appl_env_std

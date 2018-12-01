@@ -32,6 +32,14 @@ class appl_debug_std : public appl_debug
                 class appl_debug * * const
                     r_debug);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                class appl_debug * const
+                    p_debug);
+
         appl_debug_std();
 
         virtual
@@ -59,6 +67,10 @@ class appl_debug_std : public appl_debug
         class appl_debug_std &
             operator =(
                 class appl_debug_std const & r);
+
+        virtual
+        appl_size_t
+            v_cleanup(void);
 
 }; // class appl_debug_std
 

@@ -47,6 +47,20 @@ appl_mutex_create(
 
 } /* appl_mutex_create() */
 
+/*
+
+*/
+enum appl_status
+appl_mutex_destroy(
+    struct appl_mutex * const
+        p_mutex)
+{
+    return
+        appl_mutex_service::s_destroy(
+            p_mutex);
+
+} /* appl_mutex_destroy() */
+
 struct appl_object *
 appl_mutex_parent(
     struct appl_mutex * const

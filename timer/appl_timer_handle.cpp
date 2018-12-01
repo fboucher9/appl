@@ -32,6 +32,20 @@ appl_timer_create(
 /*
 
 */
+enum appl_status
+appl_timer_destroy(
+    struct appl_timer * const
+        p_timer)
+{
+    return
+        appl_timer_service::s_destroy(
+            p_timer);
+
+} /* _destroy() */
+
+/*
+
+*/
 struct appl_object *
 appl_timer_parent(
     struct appl_timer * const

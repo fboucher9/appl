@@ -38,6 +38,12 @@ class appl_random_mgr : public appl_object
             struct appl_random * * const
                 r_node);
 
+        virtual
+        enum appl_status
+        v_destroy_node(
+            struct appl_random * const
+                p_node);
+
     protected:
 
         appl_random_mgr();

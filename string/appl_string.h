@@ -40,6 +40,14 @@ struct appl_string : public appl_object
                 struct appl_string * * const
                     r_string);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                struct appl_string * const
+                    p_string);
+
         virtual
         enum appl_status
             v_length(
@@ -82,7 +90,7 @@ struct appl_string : public appl_object
                 struct appl_string const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
 }; // struct appl_string

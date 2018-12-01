@@ -176,32 +176,24 @@ appl_module_test_1(
                             appl_file_source_module_step(
                                 p_file_source_module);
 
-                        appl_object_destroy(
-                            appl_module_parent(
-                                appl_file_source_module_parent(
-                                    p_file_source_module)));
+                        appl_file_source_module_destroy(
+                            p_file_source_module);
                     }
 
-                    appl_object_destroy(
-                        appl_module_parent(
-                            appl_hex_convert_module_parent(
-                                p_hex_convert_module)));
+                    appl_hex_convert_module_destroy(
+                        p_hex_convert_module);
                 }
 
-                appl_object_destroy(
-                    appl_module_parent(
-                        appl_file_sink_module_parent(
-                            p_file_sink_module)));
+                appl_file_sink_module_destroy(
+                    p_file_sink_module);
             }
 
-            appl_object_destroy(
-                appl_file_parent(
-                    p_source_file));
+            appl_file_destroy(
+                p_source_file);
         }
 
-        appl_object_destroy(
-            appl_file_parent(
-                p_sink_file));
+        appl_file_destroy(
+            p_sink_file);
     }
 
     return

@@ -34,13 +34,19 @@ class appl_thread_mgr : public appl_object
 
         virtual
         enum appl_status
-            v_create(
+            v_create_node(
                 struct appl_thread_property const * const
                     p_thread_property,
                 struct appl_thread_descriptor const * const
                     p_thread_descriptor,
                 struct appl_thread * * const
                     r_thread);
+
+        virtual
+        enum appl_status
+            v_destroy_node(
+                struct appl_thread * const
+                    p_thread);
 
     protected:
 

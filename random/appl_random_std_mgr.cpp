@@ -66,6 +66,22 @@ appl_random_std_mgr::s_create(
 //
 //
 //
+enum appl_status
+appl_random_std_mgr::s_destroy(
+    struct appl_allocator * const
+        p_allocator,
+    class appl_random_mgr * const
+        p_random_mgr)
+{
+    return
+        p_random_mgr->v_destroy(
+            p_allocator);
+
+} // s_destroy()
+
+//
+//
+//
 appl_random_std_mgr::appl_random_std_mgr() :
     appl_random_mgr()
 {
@@ -88,6 +104,13 @@ enum appl_status
         appl_status_ok;
 
 } // f_init()
+
+appl_size_t
+appl_random_std_mgr::v_cleanup(void)
+{
+    return
+        sizeof(class appl_random_std_mgr);
+}
 
 //
 //
@@ -123,6 +146,26 @@ appl_random_std_mgr::v_create_node(
         e_status;
 
 } // v_create_node()
+
+//
+//
+//
+enum appl_status
+appl_random_std_mgr::v_destroy_node(
+    struct appl_random * const
+        p_random)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_random->v_destroy(
+            m_context->m_allocator);
+
+    return
+        e_status;
+
+} // v_destroy_node()
 
 #endif /* #if defined APPL_OS_LINUX */
 

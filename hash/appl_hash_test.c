@@ -336,9 +336,8 @@ appl_hash_test(
 
         /* iterate */
 
-        appl_object_destroy(
-            appl_hash_parent(
-                p_hash));
+        appl_hash_destroy(
+            p_hash);
     }
 
 } /* appl_hash_test() */

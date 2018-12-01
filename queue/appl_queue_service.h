@@ -42,12 +42,18 @@ class appl_queue_service
         static
         enum appl_status
             s_create(
-                struct appl_allocator * const
-                    p_allocator,
+                struct appl_context * const
+                    p_context,
                 struct appl_queue_descriptor const * const
                     p_descriptor,
                 struct appl_queue * * const
                     r_instance);
+
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_queue * const
+                    p_queue);
 
         static
         struct appl_object *

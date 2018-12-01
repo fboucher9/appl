@@ -67,6 +67,12 @@ struct appl_address_property : public appl_property_std
             struct appl_address_property * * const
                 r_address_property);
 
+        static
+        enum appl_status
+        s_destroy(
+            struct appl_address_property * const
+                p_address_property);
+
         appl_address_property();
 
         virtual
@@ -78,7 +84,7 @@ struct appl_address_property : public appl_property_std
     protected:
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
     private:
@@ -107,6 +113,24 @@ appl_address_property::s_create(
             r_address_property);
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+appl_address_property::s_destroy(
+    struct appl_address_property * const
+        p_address_property)
+{
+    struct appl_context * const
+        p_context =
+        p_address_property->get_context();
+
+    return
+        p_address_property->v_destroy(
+            p_context->m_allocator);
+
+} // s_destroy()
 
 //
 //
@@ -161,13 +185,11 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_address_property::v_cleanup(void)
 {
-    appl_property_std::v_cleanup();
-
     return
-        appl_status_ok;
+        appl_property_std::v_cleanup();
 
 }
 
@@ -197,7 +219,11 @@ appl_address_property_destroy(
         p_address_property)
 {
     return
-        p_address_property->v_destroy();
+        appl_address_property::s_destroy(
+            p_address_property);
+
+    return
+        appl_status_ok;
 
 } /* destroy() */
 

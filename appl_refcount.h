@@ -126,7 +126,7 @@ class appl_refcount : public appl_object
                 class appl_refcount const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
 }; // class appl_refcount

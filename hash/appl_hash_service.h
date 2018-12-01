@@ -26,6 +26,12 @@ class appl_hash_service
                 r_instance);
 
         static
+        enum appl_status
+        s_destroy(
+            struct appl_hash * const
+                p_hash);
+
+        static
         struct appl_object *
         s_parent(
             struct appl_hash * const

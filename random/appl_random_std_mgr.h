@@ -36,6 +36,14 @@ class appl_random_std_mgr : public appl_random_mgr
             class appl_random_mgr * * const
                 r_random_mgr);
 
+        static
+        enum appl_status
+        s_destroy(
+            struct appl_allocator * const
+                p_allocator,
+            class appl_random_mgr * const
+                p_random_mgr);
+
         appl_random_std_mgr();
 
         virtual
@@ -56,12 +64,22 @@ class appl_random_std_mgr : public appl_random_mgr
                 class appl_random_std_mgr const & r);
 
         virtual
+        appl_size_t
+        v_cleanup(void);
+
+        virtual
         enum appl_status
         v_create_node(
             struct appl_random_descriptor const * const
                 p_descriptor,
             struct appl_random * * const
                 r_node);
+
+        virtual
+        enum appl_status
+        v_destroy_node(
+            struct appl_random * const
+                p_random);
 
 }; // class appl_random_std_mgr
 

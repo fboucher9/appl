@@ -54,6 +54,14 @@ class appl_options_std : public appl_options
             struct appl_options * * const
                 r_options_std);
 
+        static
+        enum appl_status
+        s_destroy(
+            struct appl_allocator * const
+                p_allocator,
+            struct appl_options * const
+                p_options_std);
+
         appl_options_std();
 
         virtual
@@ -100,7 +108,7 @@ class appl_options_std : public appl_options
             f_free_node_list(void);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual

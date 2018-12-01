@@ -213,12 +213,9 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_heap_dbg::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     if (
         0
         != m_alloc_count)
@@ -288,14 +285,12 @@ enum appl_status
     m_parent =
         0;
 
-    e_status =
-        appl_status_fail;
-
     void * const
         p_placement =
         this;
 
-    appl_heap::v_cleanup();
+    delete
+        this;
 
     p_parent->v_free(
         sizeof(
@@ -303,7 +298,7 @@ enum appl_status
         p_placement);
 
     return
-        e_status;
+        0;
 
 } // v_cleanup()
 

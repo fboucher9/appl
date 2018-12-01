@@ -42,11 +42,23 @@ class appl_socket_mgr : public appl_object
 
         virtual
         enum appl_status
+            v_destroy_address(
+                struct appl_address * const
+                    p_address_node);
+
+        virtual
+        enum appl_status
             v_create_socket(
                 struct appl_socket_property const * const
                     p_socket_descriptor,
                 struct appl_socket * * const
                     r_socket_node);
+
+        virtual
+        enum appl_status
+            v_destroy_socket(
+                struct appl_socket * const
+                    p_socket_node);
 
         virtual
         enum appl_status

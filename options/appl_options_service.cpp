@@ -40,6 +40,25 @@ appl_options_service::s_create(
 //
 //
 //
+enum appl_status
+appl_options_service::s_destroy(
+    struct appl_options * const
+        p_options)
+{
+    struct appl_context * const
+        p_context =
+        p_options->get_context();
+
+    return
+        appl_options_std::s_destroy(
+            p_context->m_allocator,
+            p_options);
+
+} // s_destroy()
+
+//
+//
+//
 struct appl_object *
 appl_options_service::s_parent(
     struct appl_options * const

@@ -15,19 +15,6 @@
 //
 //
 //
-enum appl_status
-appl_object_service::s_destroy(
-    struct appl_object * const
-        p_object)
-{
-    return
-        p_object->v_destroy();
-
-} // s_destroy()
-
-//
-//
-//
 struct appl_context *
 appl_object_service::s_get_context(
     struct appl_object const * const

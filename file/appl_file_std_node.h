@@ -42,6 +42,14 @@ class appl_file_std_node : public appl_file
                 struct appl_file * * const
                     r_file_node);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                struct appl_file * const
+                    p_file_node);
+
         appl_file_std_node();
 
         virtual
@@ -77,7 +85,7 @@ class appl_file_std_node : public appl_file
                 class appl_file_std_node const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual

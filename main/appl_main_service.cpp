@@ -102,9 +102,8 @@ init_options(
             appl_status_ok
             != e_status)
         {
-            appl_object_destroy(
-                appl_options_parent(
-                    p_options));
+            appl_options_destroy(
+                p_options);
         }
     }
 
@@ -172,14 +171,12 @@ appl_main_service::s_main(
                     p_context,
                     p_options);
 
-            appl_object_destroy(
-                appl_options_parent(
-                    p_options));
+            appl_options_destroy(
+                p_options);
         }
 
-        appl_object_destroy(
-            appl_context_parent(
-                p_context));
+        appl_context_destroy(
+            p_context);
     }
 
     if (

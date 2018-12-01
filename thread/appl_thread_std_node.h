@@ -83,7 +83,7 @@ class appl_thread_std_node : public appl_thread
                 class appl_thread_std_node const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
 }; // class appl_thread_std_node

@@ -85,7 +85,7 @@ class appl_pool_std : public appl_pool
                 class appl_pool_std const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual

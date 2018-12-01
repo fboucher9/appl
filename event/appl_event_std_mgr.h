@@ -67,7 +67,7 @@ class appl_event_std_mgr : public appl_event_mgr
                 class appl_event_std_mgr const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual

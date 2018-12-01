@@ -68,6 +68,22 @@ enum appl_status
 //
 //
 enum appl_status
+    appl_string::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_string * const
+            p_string)
+{
+    return
+        p_string->v_destroy(
+            p_allocator);
+
+} // s_destroy()
+
+//
+//
+//
+enum appl_status
     appl_string::v_length(
         unsigned long int * const
             r_length) const
@@ -168,12 +184,9 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_string::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     union appl_buf_ptr
         o_buf_ptr;
 
@@ -186,11 +199,8 @@ enum appl_status
             m_buf_max),
         o_buf_ptr.p_void);
 
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        sizeof(struct appl_string);
 
 } // v_cleanup()
 

@@ -109,7 +109,7 @@ struct appl_binary_heap : public appl_object
                 struct appl_binary_heap const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         int
@@ -180,12 +180,9 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_binary_heap::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     if (
         m_table)
     {
@@ -203,11 +200,8 @@ enum appl_status
             0;
     }
 
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        sizeof(struct appl_binary_heap);
 
 } // v_cleanup()
 
@@ -434,6 +428,12 @@ class appl_binary_heap_service
                     r_instance);
 
         static
+        enum appl_status
+            s_destroy(
+                struct appl_binary_heap * const
+                    p_binary_heap);
+
+        static
         struct appl_object *
             s_parent(
                 struct appl_binary_heap * const
@@ -475,6 +475,30 @@ enum appl_status
             r_instance);
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+    appl_binary_heap_service::s_destroy(
+        struct appl_binary_heap * const
+            p_binary_heap)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_context * const
+        p_context =
+        p_binary_heap->get_context();
+
+    e_status =
+        p_binary_heap->v_destroy(
+            p_context->m_allocator);
+
+    return
+        e_status;
+
+} // s_destroy()
 
 //
 //
@@ -541,6 +565,20 @@ enum appl_status
             r_instance);
 
 } /* _create() */
+
+/*
+
+*/
+enum appl_status
+    appl_binary_heap_destroy(
+        struct appl_binary_heap * const
+            p_binary_heap)
+{
+    return
+        appl_binary_heap_service::s_destroy(
+            p_binary_heap);
+
+} /* _destroy() */
 
 /*
 

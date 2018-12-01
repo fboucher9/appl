@@ -67,6 +67,22 @@ enum appl_status
 //
 //
 enum appl_status
+    appl_pool_mgr::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        class appl_pool_mgr * const
+            p_pool_mgr)
+{
+    return
+        p_pool_mgr->v_destroy(
+            p_allocator);
+
+} // s_destroy()
+
+//
+//
+//
+enum appl_status
     appl_pool_mgr::v_create_node(
         struct appl_pool_descriptor const * const
             p_pool_descriptor,
@@ -103,6 +119,21 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_pool_mgr::v_destroy_node(
+        struct appl_pool * const
+            p_pool_node)
+{
+    return
+        p_pool_node->v_destroy(
+            m_context->m_allocator);
+
+} // v_destroy_node()
+
+
+//
+//
+//
 appl_pool_mgr::appl_pool_mgr()
 {
 }
@@ -113,5 +144,16 @@ appl_pool_mgr::appl_pool_mgr()
 appl_pool_mgr::~appl_pool_mgr()
 {
 }
+
+//
+//
+//
+appl_size_t
+    appl_pool_mgr::v_cleanup(void)
+{
+    return
+        sizeof(class appl_pool_mgr);
+
+} // v_cleanup()
 
 /* end-of-file: appl_pool_mgr.cpp */

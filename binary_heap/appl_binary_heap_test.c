@@ -248,9 +248,8 @@ appl_binary_heap_test_1(
             (signed long int)(
                 a_time[3u] - a_time[2u]));
 
-        appl_object_destroy(
-            appl_binary_heap_parent(
-                p_binary_heap));
+        appl_binary_heap_destroy(
+            p_binary_heap);
     }
 
     return

@@ -39,7 +39,9 @@ struct appl_object
 
         virtual
         enum appl_status
-            v_destroy(void);
+            v_destroy(
+                struct appl_allocator * const
+                    p_allocator);
 
         struct appl_context *
             get_context(void) const;
@@ -48,22 +50,6 @@ struct appl_object
             set_context(
                 struct appl_context * const
                     p_context);
-
-        struct appl_allocator *
-            get_allocator(void) const;
-
-        void
-            set_allocator(
-                struct appl_allocator * const
-                    p_allocator);
-
-        appl_size_t
-            get_placement_length(void) const;
-
-        void
-            set_placement_length(
-                appl_size_t const
-                    i_placement_length);
 
         enum appl_status
             f_init(void);
@@ -102,12 +88,8 @@ struct appl_object
             init_object(
                 struct appl_context * const
                     p_context,
-                struct appl_allocator * const
-                    p_allocator,
                 void * const
                     p_placement,
-                appl_size_t const
-                    i_placement_length,
                 T_instance * * const
                     r_object)
         {
@@ -136,12 +118,6 @@ struct appl_object
 
             o_object_ptr.p_object->set_context(
                 p_context);
-
-            o_object_ptr.p_object->set_allocator(
-                p_allocator);
-
-            o_object_ptr.p_object->set_placement_length(
-                i_placement_length);
 
             e_status =
                 o_object_ptr.p_instance->f_init();
@@ -174,12 +150,8 @@ struct appl_object
             init_object(
                 struct appl_context * const
                     p_context,
-                struct appl_allocator * const
-                    p_allocator,
                 void * const
                     p_placement,
-                appl_size_t const
-                    i_placement_length,
                 T_descriptor const * const
                     p_descriptor,
                 T_instance * * const
@@ -210,12 +182,6 @@ struct appl_object
 
             o_object_ptr.p_object->set_context(
                 p_context);
-
-            o_object_ptr.p_object->set_allocator(
-                p_allocator);
-
-            o_object_ptr.p_object->set_placement_length(
-                i_placement_length);
 
             e_status =
                 o_object_ptr.p_instance->f_init(
@@ -260,20 +226,10 @@ struct appl_object
         ~appl_object();
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
     private:
-
-        // --
-
-        struct appl_allocator *
-            m_destroyer;
-
-        appl_size_t
-            m_destroyer_length;
-
-        // --
 
         appl_object(
             struct appl_object const & r);

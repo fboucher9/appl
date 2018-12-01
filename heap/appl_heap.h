@@ -164,9 +164,7 @@ struct appl_heap : public appl_allocator
                 e_status =
                     appl_object::init_object(
                         m_context,
-                        this,
                         p_placement,
-                        i_placement_length,
                         p_descriptor,
                         r_object);
 
@@ -212,9 +210,7 @@ struct appl_heap : public appl_allocator
                 e_status =
                     appl_object::init_object(
                         m_context,
-                        this,
                         p_placement,
-                        i_placement_length,
                         r_object);
 
                 if (

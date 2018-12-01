@@ -210,7 +210,7 @@ struct appl_thread_cache : public appl_thread
                 o_thread_cache_ptr.p_thread_context;
 
             e_status =
-                m_context->m_thread_mgr->v_create(
+                m_context->m_thread_mgr->v_create_node(
                     p_thread_cache_descriptor->p_thread_property,
                     &(
                         o_thread_descriptor),
@@ -268,7 +268,8 @@ struct appl_thread_cache : public appl_thread
                             appl_status_ok
                             != e_status)
                         {
-                            m_queue_free->v_destroy();
+                            appl_queue_destroy(
+                                m_queue_free);
                         }
                     }
 
@@ -276,7 +277,8 @@ struct appl_thread_cache : public appl_thread
                         appl_status_ok
                         != e_status)
                     {
-                        m_queue_used->v_destroy();
+                        appl_queue_destroy(
+                            m_queue_used);
                     }
                 }
 
@@ -284,7 +286,8 @@ struct appl_thread_cache : public appl_thread
                     appl_status_ok
                     != e_status)
                 {
-                    m_thread_handle->v_destroy();
+                    m_context->m_thread_mgr->v_destroy_node(
+                        m_thread_handle);
                 }
             }
 
@@ -463,7 +466,8 @@ struct appl_thread_cache : public appl_thread
             operator =(
                 struct appl_thread_cache const & r);
 
-        enum appl_status
+        virtual
+        appl_size_t
             v_cleanup(void);
 
 
@@ -516,6 +520,23 @@ class appl_thread_cache_node : public appl_node
                 e_status;
 
         } // s_create_instance()
+
+        //
+        //
+        //
+        static
+        enum appl_status
+            s_destroy_instance(
+                struct appl_allocator * const
+                    p_allocator,
+                class appl_thread_cache_node * const
+                    p_thread_cache_node)
+        {
+            return
+                p_thread_cache_node->v_destroy(
+                    p_allocator);
+
+        } // s_destroy_instance()
 
         //
         //
@@ -625,19 +646,13 @@ class appl_thread_cache_node : public appl_node
                 class appl_thread_cache_node const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void)
         {
-            enum appl_status
-                e_status;
-
             m_thread_cache.f_deinit();
 
-            e_status =
-                appl_status_ok;
-
             return
-                e_status;
+                sizeof(class appl_thread_cache_node);
 
         } // v_cleanup()
 
@@ -757,6 +772,20 @@ class appl_thread_cache_mgr : public appl_object
         //
         //
         //
+        enum appl_status
+            f_destroy_node(
+                struct appl_thread_cache * const
+                    p_thread_cache)
+        {
+            // Object will be retired to unused list
+            return
+                p_thread_cache->v_destroy(0);
+
+        } // f_destroy_node()
+
+        //
+        //
+        //
         void
             f_retire(
                 class appl_thread_cache_node * const
@@ -787,7 +816,9 @@ class appl_thread_cache_mgr : public appl_object
         {
             m_lock->v_lock();
 
-            p_thread_cache_node->v_destroy();
+            appl_thread_cache_node::s_destroy_instance(
+                m_context->m_allocator,
+                p_thread_cache_node);
 
             m_lock->v_unlock();
 
@@ -822,7 +853,7 @@ class appl_thread_cache_mgr : public appl_object
             struct appl_mutex_descriptor
                 o_mutex_descriptor;
 
-            m_context->m_mutex_mgr->v_create(
+            m_context->m_mutex_mgr->v_create_node(
                 &(
                     o_mutex_descriptor),
                 &(
@@ -860,7 +891,7 @@ class appl_thread_cache_mgr : public appl_object
         //
         //
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void)
         {
             // Wait for all active threads to complete...
@@ -970,10 +1001,11 @@ class appl_thread_cache_mgr : public appl_object
                 }
             }
 
-            m_lock->v_destroy();
+            m_context->m_mutex_mgr->v_destroy_node(
+                m_lock);
 
             return
-                appl_status_ok;
+                sizeof(class appl_thread_cache_mgr);
 
         } // v_cleanup()
 
@@ -986,12 +1018,9 @@ appl_thread_cache_mgr::~appl_thread_cache_mgr()
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_thread_cache::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     // Keep this object intact!
 
     // Notify cache node of destruction
@@ -1003,11 +1032,8 @@ enum appl_status
     }
 
     // We have handled the destruction
-    e_status =
-        appl_status_fail;
-
     return
-        e_status;
+        0;
 
 } // v_cleanup()
 
@@ -1136,11 +1162,14 @@ appl_thread_cache::f_deinit(void)
     enum appl_status
         e_status;
 
-    m_queue_free->v_destroy();
+    appl_queue_destroy(
+        m_queue_free);
 
-    m_queue_used->v_destroy();
+    appl_queue_destroy(
+        m_queue_used);
 
-    m_thread_handle->v_destroy();
+    m_context->m_thread_mgr->v_destroy_node(
+        m_thread_handle);
 
     e_status =
         appl_status_ok;
@@ -1192,6 +1221,35 @@ class appl_thread_cache_service
         //
         //
         static
+        enum appl_status
+            s_destroy(
+                struct appl_thread_cache * const
+                    p_thread_cache)
+        {
+            enum appl_status
+                e_status;
+
+            struct appl_context * const
+                p_context =
+                p_thread_cache->get_context();
+
+            class appl_thread_cache_mgr * const
+                p_thread_cache_mgr =
+                p_context->m_thread_cache_mgr;
+
+            e_status =
+                p_thread_cache_mgr->f_destroy_node(
+                    p_thread_cache);
+
+            return
+                e_status;
+
+        } // s_destroy()
+
+        //
+        //
+        //
+        static
         struct appl_thread *
             s_parent(
                 struct appl_thread_cache * const
@@ -1230,6 +1288,20 @@ enum appl_status
 /*
 
 */
+enum appl_status
+    appl_thread_cache_destroy(
+        struct appl_thread_cache * const
+            p_thread_cache)
+{
+    return
+        appl_thread_cache_service::s_destroy(
+            p_thread_cache);
+
+} /* destroy() */
+
+/*
+
+*/
 struct appl_thread *
     appl_thread_cache_parent(
         struct appl_thread_cache * const
@@ -1250,8 +1322,10 @@ appl_thread_cache_mgr_create(
         r_instance);
 
 extern
-void
+enum appl_status
 appl_thread_cache_mgr_destroy(
+    struct appl_allocator * const
+        p_allocator,
     class appl_thread_cache_mgr * const
         p_thread_cache_mgr);
 
@@ -1281,12 +1355,16 @@ appl_thread_cache_mgr_create(
 //
 //
 //
-void
+enum appl_status
 appl_thread_cache_mgr_destroy(
+    struct appl_allocator * const
+        p_allocator,
     class appl_thread_cache_mgr * const
         p_thread_cache_mgr)
 {
-    p_thread_cache_mgr->v_destroy();
+    return
+        p_thread_cache_mgr->v_destroy(
+            p_allocator);
 
 } // appl_thread_cache_mgr_destroy()
 

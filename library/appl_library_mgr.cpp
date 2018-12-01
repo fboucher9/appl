@@ -14,6 +14,10 @@
 
 #include <appl_unused.h>
 
+#if defined APPL_DEBUG
+#include <appl_debug_handle.h>
+#endif /* #if defined APPL_DEBUG */
+
 //
 //
 //
@@ -27,9 +31,41 @@ enum appl_status
     appl_unused(
         p_library_descriptor,
         r_library);
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "library mgr create node not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
     return
         appl_status_not_implemented;
 } // v_create_node()
+
+//
+//
+//
+enum appl_status
+    appl_library_mgr::v_destroy_node(
+        struct appl_library * const
+            p_library)
+{
+    appl_unused(
+        p_library);
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "library mgr destroy node not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
+    return
+        appl_status_not_implemented;
+} // v_destroy_node()
 
 //
 //

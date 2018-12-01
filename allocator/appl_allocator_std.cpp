@@ -36,11 +36,11 @@ appl_allocator_std::~appl_allocator_std()
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_allocator_std::v_cleanup(void)
 {
     return
-        appl_status_ok;
+        sizeof(class appl_allocator_std);
 
 } // v_cleanup()
 

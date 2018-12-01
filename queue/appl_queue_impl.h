@@ -46,7 +46,9 @@ class appl_queue_impl
                     p_descriptor);
 
         enum appl_status
-            f_cleanup(void);
+            f_cleanup(
+                struct appl_context * const
+                    p_context);
 
         enum appl_status
             f_push(

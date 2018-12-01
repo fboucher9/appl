@@ -100,6 +100,21 @@ appl_file_source_module_service::s_create(
 
 }
 
+enum appl_status
+appl_file_source_module_service::s_destroy(
+    struct appl_file_source_module * const
+        p_this)
+{
+    struct appl_context * const
+        p_context =
+        p_this->get_context();
+
+    return
+        p_this->v_destroy(
+            p_context->m_allocator);
+
+} // s_destroy()
+
 //
 //
 //
@@ -145,6 +160,20 @@ appl_hex_convert_module_service::s_create(
             r_instance);
 }
 
+enum appl_status
+appl_hex_convert_module_service::s_destroy(
+    struct appl_hex_convert_module * const
+        p_this)
+{
+    struct appl_context * const
+        p_context =
+        p_this->get_context();
+
+    return
+        p_this->v_destroy(
+            p_context->m_allocator);
+}
+
 //
 //
 //
@@ -176,6 +205,23 @@ appl_file_sink_module_service::s_create(
             p_file_sink_module_descriptor,
             r_instance);
 
+}
+
+//
+//
+//
+enum appl_status
+appl_file_sink_module_service::s_destroy(
+    struct appl_file_sink_module * const
+        p_this)
+{
+    struct appl_context * const
+        p_context =
+        p_this->get_context();
+
+    return
+        p_this->v_destroy(
+            p_context->m_allocator);
 }
 
 //

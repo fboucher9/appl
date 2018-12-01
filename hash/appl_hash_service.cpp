@@ -48,6 +48,24 @@ appl_hash_service::s_create(
 //
 //
 //
+enum appl_status
+appl_hash_service::s_destroy(
+    struct appl_hash * const
+        p_hash)
+{
+    struct appl_context * const
+        p_context =
+        p_hash->get_context();
+
+    return
+        p_hash->v_destroy(
+            p_context->m_allocator);
+
+} // s_destroy()
+
+//
+//
+//
 struct appl_object *
 appl_hash_service::s_parent(
     struct appl_hash * const

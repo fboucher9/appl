@@ -70,6 +70,34 @@ appl_socket_service::s_create(
 } // s_create()
 
 //
+//
+//
+enum appl_status
+appl_socket_service::s_destroy(
+    struct appl_socket * const
+        p_socket)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_context * const
+        p_context =
+        p_socket->get_context();
+
+    class appl_socket_mgr * const
+        p_socket_mgr =
+        p_context->m_socket_mgr;
+
+    e_status =
+        p_socket_mgr->v_destroy_socket(
+            p_socket);
+
+    return
+        e_status;
+
+} // s_destroy()
+
+//
 //  Function: s_accept()
 //
 //  Description:

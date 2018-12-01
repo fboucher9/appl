@@ -31,10 +31,28 @@ appl_timer_service::s_create(
         r_timer)
 {
     return
-        p_context->m_timer_mgr->v_create(
+        p_context->m_timer_mgr->v_create_node(
             r_timer);
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+appl_timer_service::s_destroy(
+    struct appl_timer * const
+        p_timer)
+{
+    struct appl_context * const
+        p_context =
+        p_timer->get_context();
+
+    return
+        p_context->m_timer_mgr->v_destroy_node(
+            p_timer);
+
+} // s_destroy()
 
 //
 //

@@ -49,6 +49,13 @@ class appl_pool_service
 
         //
         static
+        enum appl_status
+            s_destroy(
+                struct appl_pool * const
+                    p_pool);
+
+        //
+        static
         struct appl_allocator *
             s_parent(
                 struct appl_pool * const

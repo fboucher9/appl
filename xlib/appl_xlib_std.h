@@ -126,7 +126,7 @@ class appl_xlib_std : public appl_xlib
                 class appl_xlib_std const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         enum appl_status

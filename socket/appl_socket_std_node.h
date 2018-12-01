@@ -46,6 +46,14 @@ class appl_socket_std_node : public appl_socket
                 struct appl_socket * * const
                     r_socket);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                struct appl_socket * const
+                    p_socket);
+
         appl_socket_std_node();
 
         virtual
@@ -109,7 +117,7 @@ class appl_socket_std_node : public appl_socket
                 p_socket_descriptor);
 
         virtual
-        enum appl_status
+        appl_size_t
         v_cleanup(void);
 
         virtual

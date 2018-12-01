@@ -30,6 +30,20 @@ appl_options_create(
 /*
 
 */
+enum appl_status
+appl_options_destroy(
+    struct appl_options * const
+        p_options)
+{
+    return
+        appl_options_service::s_destroy(
+            p_options);
+
+} /* destroy() */
+
+/*
+
+*/
 struct appl_object *
 appl_options_parent(
     struct appl_options * const

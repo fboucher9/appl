@@ -35,6 +35,14 @@ class appl_timer_std_node : public appl_timer
                 struct appl_timer * * const
                     r_timer);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                struct appl_timer * const
+                    p_timer);
+
         appl_timer_std_node();
 
         virtual
@@ -76,7 +84,7 @@ class appl_timer_std_node : public appl_timer
                 class appl_timer_std_node const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual

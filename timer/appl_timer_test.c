@@ -100,9 +100,8 @@ appl_timer_test_1(
             printf("... done\n");
         }
 
-        appl_object_destroy(
-            appl_timer_parent(
-                p_timer));
+        appl_timer_destroy(
+            p_timer);
     }
 
     return

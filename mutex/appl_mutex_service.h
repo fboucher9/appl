@@ -44,6 +44,12 @@ class appl_mutex_service
 
         static
         enum appl_status
+            s_destroy(
+                struct appl_mutex * const
+                    p_mutex);
+
+        static
+        enum appl_status
             s_lock(
                 struct appl_mutex * const
                     p_mutex);

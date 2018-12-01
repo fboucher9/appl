@@ -31,6 +31,11 @@ appl_file_create(
     struct appl_file * * const
         r_file);
 
+enum appl_status
+appl_file_destroy(
+    struct appl_file * const
+        p_file);
+
 struct appl_object *
 appl_file_parent(
     struct appl_file * const

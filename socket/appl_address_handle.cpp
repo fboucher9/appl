@@ -30,6 +30,20 @@ appl_address_create(
 
 } /* appl_address_create() */
 
+/*
+
+*/
+enum appl_status
+appl_address_destroy(
+    struct appl_address * const
+        p_address)
+{
+    return
+        appl_address_service::s_destroy(
+            p_address);
+
+} /* _destroy() */
+
 struct appl_object *
 appl_address_parent(
     struct appl_address * const

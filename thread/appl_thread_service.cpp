@@ -56,7 +56,7 @@ appl_thread_service::s_create(
         p_thread_node;
 
     e_status =
-        p_thread_mgr->v_create(
+        p_thread_mgr->v_create_node(
             p_thread_property,
             p_thread_descriptor,
             &(
@@ -74,6 +74,34 @@ appl_thread_service::s_create(
         e_status;
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+appl_thread_service::s_destroy(
+    struct appl_thread * const
+        p_thread)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_context * const
+        p_context =
+        p_thread->get_context();
+
+    class appl_thread_mgr * const
+        p_thread_mgr =
+        p_context->m_thread_mgr;
+
+    e_status =
+        p_thread_mgr->v_destroy_node(
+            p_thread);
+
+    return
+        e_status;
+
+} // s_destroy()
 
 //
 //

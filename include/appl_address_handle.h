@@ -31,6 +31,11 @@ appl_address_create(
     struct appl_address * * const
         r_address);
 
+enum appl_status
+appl_address_destroy(
+    struct appl_address * const
+        p_address);
+
 struct appl_object *
 appl_address_parent(
     struct appl_address * const

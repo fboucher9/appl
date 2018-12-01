@@ -29,6 +29,11 @@ appl_thread_property_create(
     struct appl_thread_property * * const
         r_thread_property);
 
+enum appl_status
+appl_thread_property_destroy(
+    struct appl_thread_property * const
+        p_thread_property);
+
 struct appl_property *
 appl_thread_property_parent(
     struct appl_thread_property * const

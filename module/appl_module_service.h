@@ -92,6 +92,12 @@ class appl_file_source_module_service
                 r_instance);
 
         static
+        enum appl_status
+        s_destroy(
+            struct appl_file_source_module * const
+                p_this);
+
+        static
         struct appl_module *
         s_parent(
             struct appl_file_source_module * const
@@ -131,6 +137,12 @@ class appl_hex_convert_module_service
                 r_instance);
 
         static
+        enum appl_status
+        s_destroy(
+            struct appl_hex_convert_module * const
+                p_this);
+
+        static
         struct appl_module *
         s_parent(
             struct appl_hex_convert_module * const
@@ -162,6 +174,12 @@ class appl_file_sink_module_service
                 p_file_sink_module_descriptor,
             struct appl_file_sink_module * * const
                 r_instance);
+
+        static
+        enum appl_status
+        s_destroy(
+            struct appl_file_sink_module * const
+                p_this);
 
         static
         struct appl_module *

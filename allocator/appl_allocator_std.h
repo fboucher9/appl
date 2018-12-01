@@ -44,7 +44,7 @@ class appl_allocator_std : public appl_allocator
                 class appl_allocator_std const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual

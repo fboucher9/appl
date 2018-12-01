@@ -387,9 +387,8 @@ appl_test_prompt_dispatch(
                     p_output_options);
         }
 
-        appl_object_destroy(
-            appl_options_parent(
-                p_expand_options));
+        appl_options_destroy(
+            p_expand_options);
     }
 
     return
@@ -557,9 +556,8 @@ appl_test_prompt(
             if (
                 b_input_options_created)
             {
-                appl_object_destroy(
-                    appl_options_parent(
-                        p_input_options));
+                appl_options_destroy(
+                    p_input_options);
 
                 b_input_options_created =
                     0;
@@ -569,9 +567,8 @@ appl_test_prompt(
         if (
             b_output_options_created)
         {
-            appl_object_destroy(
-                appl_options_parent(
-                    p_output_options));
+            appl_options_destroy(
+                p_output_options);
 
             b_output_options_created =
                 0;

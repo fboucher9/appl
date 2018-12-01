@@ -68,7 +68,7 @@ class appl_thread_std_mgr :
                 class appl_thread_std_mgr const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual

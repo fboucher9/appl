@@ -172,9 +172,8 @@ enum appl_status
                     appl_status_ok
                     != e_status)
                 {
-                    appl_object_destroy(
-                        appl_string_parent(
-                            p_string));
+                    appl_string_destroy(
+                        p_string);
                 }
             }
         }
@@ -367,17 +366,11 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
 appl_env_std::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        sizeof(class appl_env_std);
 
 } // v_cleanup()
 

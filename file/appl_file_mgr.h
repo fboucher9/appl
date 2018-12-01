@@ -37,6 +37,12 @@ class appl_file_mgr : public appl_object
                 struct appl_file * * const
                     r_file_node);
 
+        virtual
+        enum appl_status
+            v_destroy_node(
+                struct appl_file * const
+                    p_file_node);
+
     protected:
 
         appl_file_mgr();

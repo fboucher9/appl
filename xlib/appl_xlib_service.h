@@ -33,6 +33,12 @@ class appl_xlib_service
                 r_instance);
 
         static
+        enum appl_status
+        s_destroy(
+            struct appl_xlib * const
+                p_xlib);
+
+        static
         struct appl_object *
         s_parent(
             struct appl_xlib * const

@@ -33,12 +33,18 @@ class appl_property_service
         static
         enum appl_status
         s_create(
-            struct appl_allocator * const
-                p_allocator,
+            struct appl_context * const
+                p_context,
             unsigned int const
                 i_count,
             struct appl_property * * const
                 r_property);
+
+        static
+        enum appl_status
+        s_destroy(
+            struct appl_property * const
+                p_property);
 
         static
         enum appl_status

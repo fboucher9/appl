@@ -14,6 +14,10 @@
 
 #include <appl_unused.h>
 
+#if defined APPL_DEBUG
+#include <appl_debug_handle.h>
+#endif /* #if defined APPL_DEBUG */
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -36,6 +40,16 @@ enum appl_status
         p_property,
         r_address);
 
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "socket mgr create address not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
+
     e_status =
         appl_status_not_implemented;
 
@@ -43,6 +57,39 @@ enum appl_status
         e_status;
 
 } // v_create_address()
+
+//
+//
+//
+enum appl_status
+    appl_socket_mgr::v_destroy_address(
+        struct appl_address * const
+            p_address_node)
+{
+    enum appl_status
+        e_status;
+
+    appl_unused(
+        p_address_node);
+
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "socket mgr destroy address not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
+
+    e_status =
+        appl_status_not_implemented;
+
+    return
+        e_status;
+
+} // v_destroy_address()
+
 
 //
 //
@@ -61,6 +108,16 @@ enum appl_status
         p_socket_descriptor,
         r_socket);
 
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "socket mgr create socket not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
+
     e_status =
         appl_status_not_implemented;
 
@@ -68,6 +125,38 @@ enum appl_status
         e_status;
 
 } // v_create_socket()
+
+//
+//
+//
+enum appl_status
+    appl_socket_mgr::v_destroy_socket(
+        struct appl_socket * const
+            p_socket_node)
+{
+    enum appl_status
+        e_status;
+
+    appl_unused(
+        p_socket_node);
+
+#if defined APPL_DEBUG
+    {
+        static unsigned char const s_msg[] =
+            "socket mgr destroy socket not implemented\n";
+        appl_debug_print0(
+            m_context,
+            s_msg);
+    }
+#endif /* #if defined APPL_DEBUG */
+
+    e_status =
+        appl_status_not_implemented;
+
+    return
+        e_status;
+
+} // v_destroy_socket()
 
 //
 //

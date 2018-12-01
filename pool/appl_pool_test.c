@@ -55,10 +55,8 @@ appl_pool_test_1(
         == e_status)
     {
         e_status =
-            appl_object_destroy(
-                appl_allocator_parent(
-                    appl_pool_parent(
-                        p_pool)));
+            appl_pool_destroy(
+                p_pool);
 
         if (
             appl_status_ok
@@ -163,10 +161,8 @@ appl_pool_test_2(
         }
 
         e_status =
-            appl_object_destroy(
-                appl_allocator_parent(
-                    appl_pool_parent(
-                        p_pool)));
+            appl_pool_destroy(
+                p_pool);
 
         if (
             appl_status_ok
@@ -380,10 +376,8 @@ appl_pool_test_3(
                 0u;
         }
 
-        appl_object_destroy(
-            appl_allocator_parent(
-                appl_pool_parent(
-                    p_pool)));
+        appl_pool_destroy(
+            p_pool);
     }
     else
     {

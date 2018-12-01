@@ -50,7 +50,36 @@ enum appl_status
     return
         e_status;
 
-} // create_node()
+} // s_create()
+
+//
+//
+//
+enum appl_status
+appl_file_service::s_destroy(
+    struct appl_file * const
+        p_file)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_context * const
+        p_context =
+        p_file->get_context();
+
+    class appl_file_mgr * const
+        p_file_mgr =
+        p_context->m_file_mgr;
+
+    e_status =
+        p_file_mgr->v_destroy_node(
+            p_file);
+
+    return
+        e_status;
+
+} // s_destroy()
+
 
 //
 //

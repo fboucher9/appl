@@ -51,6 +51,10 @@ class appl_socket_std_mgr : public appl_socket_mgr
                 class appl_socket_std_mgr const & r);
 
         virtual
+        appl_size_t
+            v_cleanup(void);
+
+        virtual
         enum appl_status
             v_create_address(
                 struct appl_address_property const * const
@@ -60,11 +64,23 @@ class appl_socket_std_mgr : public appl_socket_mgr
 
         virtual
         enum appl_status
+            v_destroy_address(
+                struct appl_address * const
+                    p_address_node);
+
+        virtual
+        enum appl_status
             v_create_socket(
                 struct appl_socket_property const * const
                     p_socket_descriptor,
                 struct appl_socket * * const
                     r_socket_node);
+
+        virtual
+        enum appl_status
+            v_destroy_socket(
+                struct appl_socket * const
+                    p_socket_node);
 
         virtual
         enum appl_status

@@ -34,6 +34,20 @@ appl_string_create(
 
 } /* create() */
 
+/*
+
+*/
+enum appl_status
+appl_string_destroy(
+    struct appl_string * const
+        p_string)
+{
+    return
+        appl_string_service::s_destroy(
+            p_string);
+
+} /* _destroy() */
+
 enum appl_status
 appl_string_create_dup_buffer(
     struct appl_object const * const
@@ -118,9 +132,8 @@ appl_string_create_dup_buffer_n(
         }
         else
         {
-            appl_object_service::s_destroy(
-                appl_string_service::s_parent(
-                    p_string));
+            appl_string_service::s_destroy(
+                p_string);
         }
     }
 
