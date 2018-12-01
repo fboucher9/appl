@@ -34,6 +34,14 @@ class appl_event_std_mgr : public appl_event_mgr
                 class appl_event_mgr * * const
                     r_event_mgr);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                class appl_event_mgr * const
+                    p_event_mgr);
+
         appl_event_std_mgr();
 
         virtual
@@ -72,11 +80,17 @@ class appl_event_std_mgr : public appl_event_mgr
 
         virtual
         enum appl_status
-            v_create(
+            v_create_node(
                 struct appl_event_descriptor const * const
                     p_event_descriptor,
                 struct appl_event * * const
                     r_event);
+
+        virtual
+        enum appl_status
+            v_destroy_node(
+                struct appl_event * const
+                    p_event);
 
 }; // class appl_event_std_mgr
 

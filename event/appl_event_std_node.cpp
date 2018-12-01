@@ -84,6 +84,28 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_event_std_node::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_event * const
+            p_event)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_event->v_destroy(
+            p_allocator);
+
+    return
+        e_status;
+
+} // s_destroy()
+
+//
+//
+//
 appl_event_std_node::appl_event_std_node() :
     appl_event(),
     m_event_impl(),
@@ -260,5 +282,35 @@ appl_event_std_node_sizeof(void)
             class appl_event_std_node);
 
 } // appl_event_std_node_sizeof()
+
+enum appl_status
+    appl_event_std_node_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_event * const
+            p_event);
+
+//
+//
+//
+enum appl_status
+    appl_event_std_node_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_event * const
+            p_event)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_event_std_node::s_destroy(
+            p_allocator,
+            p_event);
+
+    return
+        e_status;
+
+} // appl_event_std_node_destroy()
 
 /* end-of-file: appl_event_std_node.cpp */

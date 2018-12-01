@@ -50,6 +50,14 @@ class appl_thread_std_node : public appl_thread
                 struct appl_thread * * const
                     r_thread);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                struct appl_thread * const
+                    p_thread);
+
         appl_thread_std_node();
 
         virtual

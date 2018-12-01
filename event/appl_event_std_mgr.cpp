@@ -67,6 +67,28 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_event_std_mgr::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        class appl_event_mgr * const
+            p_event_mgr)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_event_mgr->v_destroy(
+            p_allocator);
+
+    return
+        e_status;
+
+} // s_destroy()
+
+//
+//
+//
 appl_event_std_mgr::appl_event_std_mgr() :
     appl_event_mgr(),
     m_pool(),
@@ -92,6 +114,13 @@ enum appl_status
             p_event_descriptor,
         struct appl_event * * const
             r_event);
+
+enum appl_status
+    appl_event_std_node_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_event * const
+            p_event);
 
 //
 //
@@ -162,7 +191,7 @@ appl_size_t
 //
 //
 enum appl_status
-    appl_event_std_mgr::v_create(
+    appl_event_std_mgr::v_create_node(
         struct appl_event_descriptor const * const
             p_event_descriptor,
         struct appl_event * * const
@@ -180,6 +209,27 @@ enum appl_status
     return
         e_status;
 
-} // v_create()
+} // v_create_node()
+
+//
+//
+//
+enum appl_status
+    appl_event_std_mgr::v_destroy_node(
+        struct appl_event * const
+            p_event)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_event_std_node_destroy(
+            m_pool,
+            p_event);
+
+    return
+        e_status;
+
+} // v_destroy_node()
 
 /* end-of-file: appl_event_std_mgr.cpp */

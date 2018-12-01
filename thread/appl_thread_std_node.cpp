@@ -102,6 +102,28 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_thread_std_node::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_thread * const
+            p_thread)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_thread->v_destroy(
+            p_allocator);
+
+    return
+        e_status;
+
+} // s_destroy()
+
+//
+//
+//
 appl_thread_std_node::appl_thread_std_node() :
     appl_thread(),
     m_thread_impl()
@@ -214,5 +236,26 @@ enum appl_status
             r_thread);
 
 } /* appl_thread_std_node_create() */
+
+enum appl_status
+    appl_thread_std_node_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_thread * const
+            p_thread);
+
+enum appl_status
+    appl_thread_std_node_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_thread * const
+            p_thread)
+{
+    return
+        appl_thread_std_node::s_destroy(
+            p_allocator,
+            p_thread);
+
+} /* appl_thread_std_node_destroy() */
 
 /* end-of-file: appl_thread_std_node.cpp */

@@ -155,11 +155,18 @@ enum appl_status
         struct appl_thread * * const
             r_thread);
 
+enum appl_status
+    appl_thread_std_node_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_thread * const
+            p_thread);
+
 //
 //
 //
 enum appl_status
-    appl_thread_std_mgr::v_create(
+    appl_thread_std_mgr::v_create_node(
         struct appl_thread_property const * const
             p_thread_property,
         struct appl_thread_descriptor const * const
@@ -180,6 +187,27 @@ enum appl_status
     return
         e_status;
 
-} // v_create()
+} // v_create_node()
+
+//
+//
+//
+enum appl_status
+    appl_thread_std_mgr::v_destroy_node(
+        struct appl_thread * const
+            p_thread)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_thread_std_node_destroy(
+            m_pool,
+            p_thread);
+
+    return
+        e_status;
+
+} // v_destroy_node()
 
 /* end-of-file: appl_thread_std_mgr.cpp */

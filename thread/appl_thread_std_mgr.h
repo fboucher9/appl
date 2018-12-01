@@ -35,6 +35,14 @@ class appl_thread_std_mgr :
                 class appl_thread_mgr * * const
                     r_thread_mgr);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                class appl_thread_mgr * const
+                    p_thread_mgr);
+
         enum appl_status
             f_init(void);
 
@@ -73,13 +81,19 @@ class appl_thread_std_mgr :
 
         virtual
         enum appl_status
-            v_create(
+            v_create_node(
                 struct appl_thread_property const * const
                     p_thread_property,
                 struct appl_thread_descriptor const * const
                     p_thread_descriptor,
                 struct appl_thread * * const
                     r_thread);
+
+        virtual
+        enum appl_status
+            v_destroy_node(
+                struct appl_thread * const
+                    p_thread);
 
 }; // class appl_thread_std_mgr
 

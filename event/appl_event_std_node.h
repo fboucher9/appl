@@ -42,6 +42,14 @@ class appl_event_std_node : public appl_event
                 struct appl_event * * const
                     r_event);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                struct appl_event * const
+                    p_event);
+
         appl_event_std_node();
 
         virtual
