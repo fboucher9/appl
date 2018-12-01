@@ -24,8 +24,6 @@ class appl_heap_std;
 //
 class appl_heap_std : public appl_heap
 {
-    // friend struct appl_object;
-
     public:
 
         static

@@ -39,45 +39,28 @@ enum appl_status
     enum appl_status
         e_status;
 
-    void *
-        p_placement;
-
-    appl_size_t
-        i_placement_len;
-
-    i_placement_len =
+    appl_size_t const
+        i_placement_len =
         sizeof(
             class appl_heap_std);
 
-    p_placement =
+    void * const
+        p_placement =
         malloc(
             i_placement_len);
 
     if (
         p_placement)
     {
-        union object_ptr
-        {
-            void *
-                p_placement;
-
-            struct appl_object *
-                p_object;
-
-            class appl_heap_std *
-                p_heap_std;
-
-        } o_object_ptr;
-
-        new (
-            p_placement)
-            class appl_heap_std;
-
-        o_object_ptr.p_placement =
-            p_placement;
+        class appl_heap_std *
+            p_heap_std;
 
         e_status =
-            o_object_ptr.p_heap_std->f_init();
+            appl_object::init_object(
+                0,
+                p_placement,
+                &(
+                    p_heap_std));
 
         if (
             appl_status_ok
@@ -85,13 +68,10 @@ enum appl_status
         {
             *(
                 r_heap) =
-                o_object_ptr.p_heap_std;
+                p_heap_std;
         }
         else
         {
-            delete
-                o_object_ptr.p_heap_std;
-
             ::free(
                 p_placement);
         }
