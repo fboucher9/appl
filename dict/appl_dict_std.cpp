@@ -232,15 +232,39 @@ enum appl_status
         void * * const
             r_value)
 {
-    // Lookup
+    enum appl_status
+        e_status;
 
-    appl_unused(
-        p_name_min,
-        p_name_max,
-        r_value);
+    // Lookup
+    union appl_dict_std_node_ptr
+        o_node_ptr;
+
+    // Lookup else fail
+    if (
+        appl_hash_lookup(
+            m_hash,
+            p_name_min,
+            appl_buf_len(
+                p_name_min,
+                p_name_max),
+            &(
+                o_node_ptr.p_list)))
+    {
+        *(
+            r_value) =
+            o_node_ptr.p_dict_std_node->p_value;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_fail;
+        e_status;
 
 } // v_get()
 
