@@ -62,6 +62,8 @@ class appl_timer_mgr;
 
 struct appl_xlib;
 
+class appl_backtrace;
+
 //
 //
 //
@@ -77,8 +79,8 @@ struct appl_context : public appl_object
 
         /* -- */
 
-        void *
-            z_options[1u];
+        class appl_backtrace *
+            m_backtrace;
 
         class appl_thread_mgr *
             m_thread_mgr;

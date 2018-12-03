@@ -24,6 +24,10 @@ appl_base-deps := \
     allocator/appl_allocator_service.cpp \
     allocator/appl_allocator_std.cpp \
     allocator/appl_allocator_placement.cpp \
+    backtrace/appl_backtrace_handle.cpp \
+    backtrace/appl_backtrace_service.cpp \
+    backtrace/appl_backtrace.cpp \
+    backtrace/appl_backtrace_std.cpp \
     appl_buf.cpp \
     appl_buf0.cpp \
     appl_chunk.cpp \

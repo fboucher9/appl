@@ -78,8 +78,13 @@ class appl_context_std : public appl_context
         bool
             b_init_heap;
 
+#if defined APPL_DEBUG
         bool
             b_init_debug;
+#else /* #if defined APPL_DEBUG */
+        bool
+            z_init_debug[1u];
+#endif /* #if defined APPL_DEBUG */
 
         bool
             b_init_thread_mgr;
@@ -135,8 +140,13 @@ class appl_context_std : public appl_context
             z_init_xlib[1u];
 #endif /* #if defined APPL_HAVE_XLIB */
 
-#define PADDING (1)
+        bool
+            b_init_backtrace;
+
+#define PADDING (2)
 #include <appl_padding.h>
+
+        /* -- */
 
         appl_context_std(
             class appl_context_std const & r);
@@ -153,11 +163,15 @@ class appl_context_std : public appl_context
         void
             cleanup_heap(void);
 
+#if defined APPL_DEBUG
         enum appl_status
             init_debug(void);
+#endif /* #if defined APPL_DEBUG */
 
+#if defined APPL_DEBUG
         void
             cleanup_debug(void);
+#endif /* #if defined APPL_DEBUG */
 
         enum appl_status
             init_options(
@@ -258,6 +272,12 @@ class appl_context_std : public appl_context
         void
             cleanup_xlib(void);
 #endif /* #if defined APPL_HAVE_XLIB */
+
+        enum appl_status
+            init_backtrace(void);
+
+        void
+            cleanup_backtrace(void);
 
 }; // class appl_context_std
 

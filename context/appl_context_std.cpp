@@ -160,6 +160,10 @@
 
 #endif /* #if defined APPL_HAVE_XLIB */
 
+#include <backtrace/appl_backtrace.h>
+
+#include <backtrace/appl_backtrace_std.h>
+
 #include <appl_convert.h>
 
 extern
@@ -1206,6 +1210,67 @@ void
 //
 //
 enum appl_status
+    appl_context_std::init_backtrace(void)
+{
+    enum appl_status
+        e_status;
+
+#if defined APPL_OS_LINUX
+
+    e_status =
+        appl_backtrace_std::s_create(
+            m_allocator,
+            &(
+                m_backtrace));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        b_init_backtrace =
+            true;
+    }
+
+#else /* #if defined APPL_OS_LINUX */
+
+    e_status =
+        appl_status_ok;
+
+#endif /* #if defined APPL_OS_LINUX */
+
+    return
+        e_status;
+
+} // init_backtrace()
+
+//
+//
+//
+void
+    appl_context_std::cleanup_backtrace(void)
+{
+    if (
+        b_init_backtrace)
+    {
+#if defined APPL_OS_LINUX
+        appl_backtrace_std::s_destroy(
+            m_allocator,
+            m_backtrace);
+#else /* #if defined APPL_OS_LINUX */
+#endif /* #if defined APPL_OS_LINUX */
+
+        m_backtrace =
+            0;
+
+        b_init_backtrace =
+            false;
+    }
+} // cleanup_backtrace()
+
+//
+//
+//
+enum appl_status
     appl_context_std::create_instance(
         struct appl_context * * const
             r_context)
@@ -1290,7 +1355,9 @@ enum appl_status
 appl_context_std::appl_context_std() :
     appl_context()
     , b_init_heap()
+#if defined APPL_DEBUG
     , b_init_debug()
+#endif /* #if defined APPL_DEBUG */
     , b_init_thread_mgr()
     , b_init_mutex_mgr()
     , b_init_file_mgr()
@@ -1308,6 +1375,7 @@ appl_context_std::appl_context_std() :
 #if defined APPL_HAVE_XLIB
     , b_init_xlib()
 #endif /* #if defined APPL_HAVE_XLIB */
+    , b_init_backtrace()
 {
 }
 
@@ -1322,6 +1390,16 @@ struct appl_context_std::init_cleanup_item
 const
 appl_context_std::g_init_cleanup_items[] =
 {
+#if defined APPL_DEBUG
+    {
+        & appl_context_std::init_debug,
+        & appl_context_std::cleanup_debug
+    },
+#endif /* #if defined APPL_DEBUG */
+    {
+        & appl_context_std::init_backtrace,
+        & appl_context_std::cleanup_backtrace
+    },
     {
         & appl_context_std::init_pool_mgr,
         & appl_context_std::cleanup_pool_mgr
@@ -1404,67 +1482,47 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
-#if defined APPL_DEBUG
-        e_status =
-            init_debug();
-#endif /* #if defined APPL_DEBUG */
+        unsigned int
+            i_item_iterator;
 
-        if (
-            appl_status_ok
-            == e_status)
+        i_item_iterator =
+            0;
+
+        while (
+            (
+                appl_status_ok
+                == e_status)
+            && (
+                i_item_iterator
+                < sizeof(g_init_cleanup_items) / sizeof(g_init_cleanup_items[0u])))
         {
+            struct init_cleanup_item const *
+                p_item;
+
+            p_item =
+                g_init_cleanup_items + i_item_iterator;
+
+            e_status =
+                ((this)->*(p_item->p_init))();
+
+            if (
+                appl_status_ok
+                == e_status)
             {
-                unsigned int
-                    i_item_iterator;
-
-                i_item_iterator =
-                    0;
-
-                while (
-                    (
-                        appl_status_ok
-                        == e_status)
-                    && (
-                        i_item_iterator
-                        < sizeof(g_init_cleanup_items) / sizeof(g_init_cleanup_items[0u])))
+                i_item_iterator ++;
+            }
+            else
+            {
+                while (i_item_iterator)
                 {
-                    struct init_cleanup_item const *
-                        p_item;
+                    i_item_iterator --;
 
                     p_item =
                         g_init_cleanup_items + i_item_iterator;
 
-                    e_status =
-                        ((this)->*(p_item->p_init))();
-
-                    if (
-                        appl_status_ok
-                        == e_status)
-                    {
-                        i_item_iterator ++;
-                    }
-                    else
-                    {
-                        while (i_item_iterator)
-                        {
-                            i_item_iterator --;
-
-                            p_item =
-                                g_init_cleanup_items + i_item_iterator;
-
-                            ((this)->*(p_item->p_cleanup))();
-                        }
-                    }
+                    ((this)->*(p_item->p_cleanup))();
                 }
             }
-
-#if defined APPL_DEBUG
-            if (
-                appl_status_ok != e_status)
-            {
-                cleanup_debug();
-            }
-#endif /* #if defined APPL_DEBUG */
         }
 
         if (
@@ -1510,10 +1568,6 @@ appl_size_t
 
         ((this)->*(p_item->p_cleanup))();
     }
-
-#if defined APPL_DEBUG
-    cleanup_debug();
-#endif /* #if defined APPL_DEBUG */
 
     cleanup_heap();
 
