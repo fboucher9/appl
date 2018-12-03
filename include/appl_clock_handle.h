@@ -4,14 +4,18 @@
 
 */
 
+/* Included. */
+#define INC_APPL_CLOCK_HANDLE_H
+
 /* Reverse include guard */
 enum guard_appl_clock_handle_h
 {
-    inc_appl_clock_handle_h =
+    inc_appl_clock_handle_h = 1
         /* Header file dependency */
-        inc_appl_status_h
+        + inc_appl_status_h
 };
 
+/* Predefine */
 struct appl_context;
 
 #if defined(__cplusplus)
