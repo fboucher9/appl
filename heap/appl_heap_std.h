@@ -29,8 +29,18 @@ class appl_heap_std : public appl_heap
         static
         enum appl_status
             s_create(
+                struct appl_allocator * const
+                    p_allocator,
                 struct appl_heap * * const
                     r_heap);
+
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                struct appl_heap * const
+                    p_heap);
 
         appl_heap_std();
 

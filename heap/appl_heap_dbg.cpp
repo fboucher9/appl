@@ -18,8 +18,6 @@
 
 #include <unistd.h>
 
-#include <execinfo.h>
-
 #else /* #if defined APPL_OS_LINUX */
 
 #include <windows.h>
@@ -43,6 +41,8 @@
 #include <mutex/appl_mutex_impl.h>
 
 #include <heap/appl_heap_dbg.h>
+
+#include <backtrace/appl_backtrace_impl.h>
 
 #include <appl_convert.h>
 
@@ -124,7 +124,7 @@ static unsigned char const g_appl_heap_dbg_footer_magic = (0x8Du);
 
 struct appl_heap_dbg_header : public appl_list
 {
-    void *
+    void const *
         a_backtrace[8u];
 
     /* -- */
@@ -263,13 +263,19 @@ appl_size_t
                     pv_allocation,
                     ul_buf_len);
 
-#if defined APPL_OS_LINUX
-                backtrace_symbols_fd(
-                    p_header->a_backtrace,
-                    appl_convert::to_int(
-                        p_header->i_backtrace_count),
-                    STDOUT_FILENO);
-#endif /* #if defined APPL_OS_LINUX */
+                {
+                    if (
+                        appl_status_ok
+                        == appl_backtrace_impl::s_report(
+                            p_header->a_backtrace,
+                            p_header->i_backtrace_count))
+                    {
+                    }
+                    else
+                    {
+                        printf("! oops backtrace service failed\n");
+                    }
+                }
             }
         }
     }
@@ -359,14 +365,25 @@ enum appl_status
             o_header_ptr.p_header->i_buf_len =
                 i_buf_len;
 
-#if defined APPL_OS_LINUX
             /* Grab a backtrace */
             o_header_ptr.p_header->i_backtrace_count =
-                appl_convert::to_unsigned(
-                    backtrace(
+                0;
+
+            {
+                if (
+                    appl_status_ok
+                    == appl_backtrace_impl::s_capture(
                         o_header_ptr.p_header->a_backtrace,
-                        8));
-#endif /* #if defined APPL_OS_LINUX */
+                        8,
+                        &(
+                            o_header_ptr.p_header->i_backtrace_count)))
+                {
+                }
+                else
+                {
+                    printf("! oops backtrace service failed\n");
+                }
+            }
 
             {
                 unsigned int i_header_iterator;

@@ -23,10 +23,12 @@ enum appl_status
     appl_backtrace_service::s_capture(
         struct appl_context * const
             p_context,
-        void * const
+        void const * * const
             p_buffer,
         appl_size_t const
-            i_buffer_length)
+            i_count_max,
+        appl_size_t * const
+            r_count)
 {
     enum appl_status
         e_status;
@@ -38,7 +40,8 @@ enum appl_status
     e_status =
         p_backtrace->v_capture(
             p_buffer,
-            i_buffer_length);
+            i_count_max,
+            r_count);
 
     return
         e_status;
@@ -52,10 +55,10 @@ enum appl_status
     appl_backtrace_service::s_report(
         struct appl_context * const
             p_context,
-        void const * const
+        void const * const * const
             p_buffer,
         appl_size_t const
-            i_buffer_length)
+            i_count)
 {
     enum appl_status
         e_status;
@@ -67,7 +70,7 @@ enum appl_status
     e_status =
         p_backtrace->v_report(
             p_buffer,
-            i_buffer_length);
+            i_count);
 
     return
         e_status;

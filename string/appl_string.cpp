@@ -20,7 +20,7 @@
 
 #include <context/appl_context.h>
 
-#include <heap/appl_heap.h>
+#include <appl_heap_handle.h>
 
 struct appl_string_descriptor
 {
@@ -160,7 +160,8 @@ enum appl_status
         o_buf_ptr;
 
     e_status =
-        m_context->m_heap->v_alloc(
+        appl_heap_alloc(
+            m_context,
             p_string_descriptor->i_alloc_len,
             &(
                 o_buf_ptr.p_void));
@@ -193,7 +194,8 @@ appl_size_t
     o_buf_ptr.p_uchar =
         m_buf_min;
 
-    m_context->m_heap->v_free(
+    appl_heap_free(
+        m_context,
         appl_buf_len(
             m_buf_min,
             m_buf_max),

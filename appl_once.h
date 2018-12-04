@@ -29,6 +29,12 @@ struct appl_once
 #endif /* #if defined APPL_OS_LINUX */
 }; /* struct appl_once */
 
+#if defined APPL_OS_LINUX
+#define APPL_ONCE_INIT PTHREAD_ONCE_INIT
+#else /* #if defined APPL_OS_LINUX */
+#define APPL_ONCE_INIT 0
+#endif /* #if defined APPL_OS_LINUX */
+
 #if defined __cplusplus
 extern "C" {
 #endif /* #if defined __cplusplus */

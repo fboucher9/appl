@@ -22,7 +22,7 @@
 
 #include <appl_convert.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 //
 //
@@ -41,7 +41,8 @@ enum appl_status
         p_clock_w32;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_allocator_alloc_object(
+            p_allocator,
             &(
                 p_clock_w32));
 
@@ -58,6 +59,22 @@ enum appl_status
         e_status;
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+    appl_clock_w32::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        class appl_clock * const
+            p_clock)
+{
+    return
+        p_clock->v_destroy(
+            p_allocator);
+
+} // s_destroy()
 
 //
 //
@@ -117,12 +134,9 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_clock_w32::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     MMRESULT
         iWindowsResult;
 
@@ -140,17 +154,13 @@ enum appl_status
         TIMERR_NOERROR
         == iWindowsResult)
     {
-        e_status =
-            appl_status_ok;
     }
     else
     {
-        e_status =
-            appl_status_fail;
     }
 
     return
-        e_status;
+        sizeof(class appl_clock_w32);
 
 } // v_cleanup()
 

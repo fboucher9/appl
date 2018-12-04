@@ -279,6 +279,10 @@ class appl_context_std : public appl_context
         void
             cleanup_backtrace(void);
 
+        static
+        void
+            s_bootstrap(void);
+
 }; // class appl_context_std
 
 /* end-of-file: appl_context_std.h */

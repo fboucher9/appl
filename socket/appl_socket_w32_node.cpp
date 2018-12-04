@@ -34,9 +34,9 @@
 
 #include <appl_convert.h>
 
-#include <context/appl_context.h>
+#include <appl_allocator_handle.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_context_handle.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -62,7 +62,8 @@ enum appl_status
         p_socket_w32_node;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_allocator_alloc_object(
+            p_allocator,
             p_socket_descriptor,
             &(
                 p_socket_w32_node));
@@ -527,12 +528,9 @@ appl_socket_w32_node::init_connect(
 //
 //
 //
-enum appl_status
+appl_size_t
 appl_socket_w32_node::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     if (
         INVALID_SOCKET
         != m_fd)
@@ -544,11 +542,8 @@ appl_socket_w32_node::v_cleanup(void)
             INVALID_SOCKET;
     }
 
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        sizeof(class appl_socket_w32_node);
 
 } // v_cleanup()
 
@@ -625,8 +620,14 @@ appl_socket_w32_node::v_accept(
                 class appl_socket_w32_node *
                     p_socket_w32_node;
 
+                struct appl_allocator * const
+                    p_allocator =
+                    appl_context_get_allocator(
+                        m_context);
+
                 e_status =
-                    m_context->m_allocator->alloc_object(
+                    appl_allocator_alloc_object(
+                        p_allocator,
                         &(
                             i_accept_result),
                         &(

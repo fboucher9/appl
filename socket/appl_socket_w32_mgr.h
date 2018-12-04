@@ -54,7 +54,7 @@ class appl_socket_w32_mgr : public appl_socket_mgr
                 class appl_socket_w32_mgr const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual

@@ -16,10 +16,6 @@
 
 #include <appl_mutex_handle.h>
 
-#include <mutex/appl_mutex_node.h>
-
-#include <mutex/appl_mutex_mgr.h>
-
 #include <appl_thread_descriptor.h>
 
 #include <property/appl_property_types.h>
@@ -36,10 +32,6 @@
 
 #include <appl_event_handle.h>
 
-#include <event/appl_event_node.h>
-
-#include <event/appl_event_mgr.h>
-
 #include <timer/appl_timer_std_node.h>
 
 #include <appl_timer_handle.h>
@@ -48,7 +40,7 @@
 
 #include <allocator/appl_allocator.h>
 
-#include <heap/appl_heap.h>
+#include <appl_heap_handle.h>
 
 #include <clock/appl_clock.h>
 
@@ -159,7 +151,8 @@ enum appl_status
         o_mutex_descriptor;
 
     e_status =
-        m_context->m_mutex_mgr->v_create_node(
+        appl_mutex_create(
+            m_context,
             &(
                 o_mutex_descriptor),
             &(
@@ -174,7 +167,8 @@ enum appl_status
             o_event_descriptor;
 
         e_status =
-            m_context->m_event_mgr->v_create_node(
+            appl_event_create(
+                m_context,
                 &(
                     o_event_descriptor),
                 &(
@@ -246,7 +240,7 @@ enum appl_status
                 appl_status_ok
                 != e_status)
             {
-                m_context->m_event_mgr->v_destroy_node(
+                appl_event_destroy(
                     m_event);
             }
         }
@@ -255,7 +249,7 @@ enum appl_status
             appl_status_ok
             != e_status)
         {
-            m_context->m_mutex_mgr->v_destroy_node(
+            appl_mutex_destroy(
                 m_lock);
         }
     }
@@ -295,14 +289,14 @@ appl_size_t
         !(
             m_thread_killed))
     {
-        m_lock->v_lock();
+        appl_mutex_lock(m_lock);
 
         m_thread_kill =
             1l;
 
-        m_event->v_signal();
+        appl_event_signal(m_event);
 
-        m_lock->v_unlock();
+        appl_mutex_unlock(m_lock);
 
         if (
             !m_thread_killed)
@@ -316,10 +310,10 @@ appl_size_t
     m_context->m_thread_mgr->v_destroy_node(
         m_thread);
 
-    m_context->m_event_mgr->v_destroy_node(
+    appl_event_destroy(
         m_event);
 
-    m_context->m_mutex_mgr->v_destroy_node(
+    appl_mutex_destroy(
         m_lock);
 
     // Release all active nodes
@@ -360,7 +354,8 @@ appl_size_t
                 o_timer_std_event_ptr.p_list,
                 o_timer_std_event_ptr.p_list);
 
-            m_context->m_heap->free_structure(
+            appl_heap_free_structure(
+                m_context,
                 o_timer_std_event_ptr.p_timer_std_event);
         }
     }
@@ -385,7 +380,7 @@ enum appl_status
     struct appl_timer_std_event *
         p_timer_std_event;
 
-    m_lock->v_lock();
+    appl_mutex_lock(m_lock);
 
     if (
         m_free_list.o_next.p_node
@@ -414,7 +409,8 @@ enum appl_status
     else
     {
         e_status =
-            m_context->m_heap->alloc_structure(
+            appl_heap_alloc_structure(
+                m_context,
                 &(
                     p_timer_std_event));
 
@@ -443,7 +439,7 @@ enum appl_status
                 m_used_list));
     }
 
-    m_lock->v_unlock();
+    appl_mutex_unlock(m_lock);
 
     return
         e_status;
@@ -514,7 +510,7 @@ void
         i_min_usec =
             i_now_usec + 100000ul;
 
-        m_lock->v_lock();
+        appl_mutex_lock(m_lock);
 
         if (
             !(
@@ -583,7 +579,8 @@ void
             if (
                 !b_found)
             {
-                m_event->v_wait(
+                appl_event_wait(
+                    m_event,
                     m_lock,
                     1000000ul,
                     appl_convert::to_ulong(
@@ -599,7 +596,7 @@ void
                 false;
         }
 
-        m_lock->v_unlock();
+        appl_mutex_unlock(m_lock);
 
         // Do something
         if (

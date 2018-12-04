@@ -22,7 +22,7 @@
 
 #include <queue/appl_queue_std.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
 //
 //
@@ -36,9 +36,14 @@ enum appl_status
         struct appl_queue * * const
             r_instance)
 {
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            p_context);
+
     return
         appl_queue_std::s_create(
-            p_context->m_allocator,
+            p_allocator,
             p_descriptor,
             r_instance);
 
@@ -56,9 +61,14 @@ enum appl_status
         p_context =
         p_queue->get_context();
 
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            p_context);
+
     return
         appl_queue_std::s_destroy(
-            p_context->m_allocator,
+            p_allocator,
             p_queue);
 
 } // s_destroy()

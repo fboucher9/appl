@@ -14,13 +14,7 @@
 
 #include <thread/appl_thread_std_mgr.h>
 
-#include <context/appl_context.h>
-
-#include <allocator/appl_allocator.h>
-
-#include <pool/appl_pool.h>
-
-#include <pool/appl_pool_mgr.h>
+#include <appl_allocator_handle.h>
 
 #include <appl_pool_handle.h>
 
@@ -41,7 +35,8 @@ enum appl_status
         p_thread_std_mgr;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_allocator_alloc_object(
+            p_allocator,
             &(
                 p_thread_std_mgr));
 
@@ -101,7 +96,8 @@ enum appl_status
         0u;
 
     e_status =
-        m_context->m_pool_mgr->v_create_node(
+        appl_pool_create(
+            m_context,
             &(
                 o_pool_descriptor),
             &(
@@ -129,7 +125,7 @@ appl_size_t
     if (
         m_pool_created)
     {
-        m_context->m_pool_mgr->v_destroy_node(
+        appl_pool_destroy(
             m_pool);
 
         m_pool =
@@ -179,7 +175,8 @@ enum appl_status
 
     e_status =
         appl_thread_std_node_create(
-            m_pool,
+            appl_pool_parent(
+                m_pool),
             p_thread_property,
             p_thread_descriptor,
             r_thread);
@@ -202,7 +199,8 @@ enum appl_status
 
     e_status =
         appl_thread_std_node_destroy(
-            m_pool,
+            appl_pool_parent(
+                m_pool),
             p_thread);
 
     return

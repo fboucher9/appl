@@ -37,11 +37,11 @@ Comments:
 
 #include <appl_object.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
-#include <heap/appl_heap.h>
+#include <appl_heap_handle.h>
 
 #include <string.h>
 
@@ -152,7 +152,8 @@ enum appl_status
         e_status;
 
     e_status =
-        m_context->m_heap->alloc_structure_array(
+        appl_heap_alloc_structure_array(
+            m_context,
             p_binary_heap_descriptor->i_initial_max,
             &(
                 m_table));
@@ -186,7 +187,8 @@ appl_size_t
     if (
         m_table)
     {
-        m_context->m_heap->free_structure_array(
+        appl_heap_free_structure_array(
+            m_context,
             m_count_max,
             m_table);
 
@@ -231,7 +233,8 @@ enum appl_status
             m_count_max * 2;
 
         e_status =
-            m_context->m_heap->alloc_structure_array(
+            appl_heap_alloc_structure_array(
+                m_context,
                 i_new_count_max,
                 &(
                     p_new_table));
@@ -245,7 +248,8 @@ enum appl_status
                 m_table,
                 m_count_max * sizeof(void *));
 
-            m_context->m_heap->free_structure_array(
+            appl_heap_free_structure_array(
+                m_context,
                 m_count_max,
                 m_table);
 
@@ -469,8 +473,14 @@ enum appl_status
         struct appl_binary_heap * * const
             r_instance)
 {
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            p_context);
+
     return
-        p_context->m_allocator->alloc_object(
+        appl_allocator_alloc_object(
+            p_allocator,
             p_binary_heap_descriptor,
             r_instance);
 
@@ -491,9 +501,14 @@ enum appl_status
         p_context =
         p_binary_heap->get_context();
 
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            p_context);
+
     e_status =
         p_binary_heap->v_destroy(
-            p_context->m_allocator);
+            p_allocator);
 
     return
         e_status;

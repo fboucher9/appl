@@ -16,7 +16,7 @@
 
 #include <appl_unused.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 #include <file/appl_file_node.h>
 
@@ -74,7 +74,8 @@ enum appl_status
             r_instance)
 {
     return
-        p_allocator->alloc_object(
+        appl_allocator_alloc_object(
+            p_allocator,
             p_file_source_module_descriptor,
             r_instance);
 
@@ -211,7 +212,8 @@ enum appl_status
             r_instance)
 {
     return
-        p_allocator->alloc_object(
+        appl_allocator_alloc_object(
+            p_allocator,
             p_hex_convert_module_descriptor,
             r_instance);
 
@@ -577,7 +579,8 @@ enum appl_status
             r_instance)
 {
     return
-        p_allocator->alloc_object(
+        appl_allocator_alloc_object(
+            p_allocator,
             p_file_sink_module_descriptor,
             r_instance);
 
@@ -714,7 +717,8 @@ enum appl_status
             r_instance)
 {
     return
-        p_allocator->alloc_object(
+        appl_allocator_alloc_object(
+            p_allocator,
             p_custom_module_descriptor,
             r_instance);
 
@@ -799,7 +803,8 @@ enum appl_status
             r_instance)
 {
     return
-        p_allocator->alloc_object(
+        appl_allocator_alloc_object(
+            p_allocator,
             r_instance);
 
 }

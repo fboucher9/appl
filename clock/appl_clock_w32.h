@@ -41,6 +41,14 @@ class appl_clock_w32 : public appl_clock
                 class appl_clock * * const
                     r_clock);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                class appl_clock * const
+                    p_clock);
+
         appl_clock_w32();
 
         virtual
@@ -61,7 +69,7 @@ class appl_clock_w32 : public appl_clock
                 class appl_clock_w32 const & r);
 
         virtual
-        enum appl_status
+        appl_size_t
             v_cleanup(void);
 
         virtual

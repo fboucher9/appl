@@ -24,19 +24,21 @@ enum appl_status
     appl_backtrace_capture(
         struct appl_context * const
             p_context,
-        void * const
+        void const * * const
             p_buffer,
         appl_size_t const
-            i_buffer_length);
+            i_count_max,
+        appl_size_t * const
+            r_count);
 
 enum appl_status
     appl_backtrace_report(
         struct appl_context * const
             p_context,
-        void const * const
+        void const * const * const
             p_buffer,
         appl_size_t const
-            i_buffer_length);
+            i_count);
 
 #if defined __cplusplus
 } /* extern "C" */

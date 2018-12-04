@@ -112,8 +112,6 @@ enum appl_status
 template <typename T_instance>
 enum appl_status
     appl_allocator_alloc_object(
-        struct appl_context * const
-            p_context,
         struct appl_allocator * const
             p_allocator,
         T_instance * * const
@@ -138,10 +136,9 @@ enum appl_status
     {
         e_status =
             appl_object::init_object(
-                p_context,
-                p_allocator,
+                appl_allocator_parent(
+                    p_allocator)->get_context(),
                 p_placement,
-                sizeof(T_instance),
                 r_object);
 
         if (
@@ -166,8 +163,6 @@ enum appl_status
 template <typename T_instance, typename T_descriptor>
 enum appl_status
     appl_allocator_alloc_object(
-        struct appl_context * const
-            p_context,
         struct appl_allocator * const
             p_allocator,
         T_descriptor const * const
@@ -194,10 +189,9 @@ enum appl_status
     {
         e_status =
             appl_object::init_object(
-                p_context,
-                p_allocator,
+                appl_allocator_parent(
+                    p_allocator)->get_context(),
                 p_placement,
-                sizeof(T_instance),
                 p_descriptor,
                 r_object);
 
@@ -216,6 +210,20 @@ enum appl_status
         e_status;
 
 } // appl_allocator_alloc_object()
+
+template <typename T_instance>
+enum appl_status
+    appl_allocator_free_object(
+        struct appl_allocator * const
+            p_allocator,
+        T_instance * const
+            p_object)
+{
+    return
+        p_object->v_destroy(
+            p_allocator);
+
+} // appl_allocator_free_object()
 
 #endif /* #if defined INC_APPL_OBJECT_H */
 

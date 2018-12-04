@@ -71,10 +71,10 @@ class appl_pool_std : public appl_pool
         // --
 
         // size in bytes of each item
-        unsigned long int
+        appl_size_t
             m_count_remain;
 
-#define PADDING (APPL_SIZEOF_LONG)
+#define PADDING (APPL_SIZEOF_PTR)
 #include <appl_padding.h>
 
         appl_pool_std(

@@ -16,14 +16,6 @@
 
 #include <appl_object.h>
 
-#include <mutex/appl_mutex_node.h>
-
-#include <event/appl_event_node.h>
-
-#include <mutex/appl_mutex_mgr.h>
-
-#include <event/appl_event_mgr.h>
-
 #include <appl_list.h>
 
 #include <queue/appl_queue_impl.h>
@@ -76,7 +68,8 @@ enum appl_status
         o_mutex_descriptor;
 
     e_status =
-        p_context->m_mutex_mgr->v_create_node(
+        appl_mutex_create(
+            p_context,
             &(
                 o_mutex_descriptor),
             &(
@@ -90,7 +83,8 @@ enum appl_status
             o_event_descriptor;
 
         e_status =
-            p_context->m_event_mgr->v_create_node(
+            appl_event_create(
+                p_context,
                 &(
                     o_event_descriptor),
                 &(
@@ -104,7 +98,7 @@ enum appl_status
                 appl_status_ok
                 != e_status)
             {
-                p_context->m_event_mgr->v_destroy_node(
+                appl_event_destroy(
                     m_event);
             }
         }
@@ -113,7 +107,7 @@ enum appl_status
             appl_status_ok
             != e_status)
         {
-            p_context->m_mutex_mgr->v_destroy_node(
+            appl_mutex_destroy(
                 m_lock);
         }
     }
@@ -134,12 +128,15 @@ enum appl_status
     enum appl_status
         e_status;
 
+    appl_unused(
+        p_context);
+
     // Free all nodes?
 
-    p_context->m_event_mgr->v_destroy_node(
+    appl_event_destroy(
         m_event);
 
-    p_context->m_mutex_mgr->v_destroy_node(
+    appl_mutex_destroy(
         m_lock);
 
     e_status =
@@ -167,14 +164,15 @@ enum appl_status
 
     if (
         appl_status_ok
-        == m_lock->v_lock())
+        == appl_mutex_lock(m_lock))
     {
         if (
             m_count >= m_descriptor.i_max_count)
         {
             if (
                 appl_status_ok
-                == m_event->v_wait(
+                == appl_event_wait(
+                    m_event,
                     m_lock,
                     i_wait_freq,
                     i_wait_count))
@@ -192,7 +190,7 @@ enum appl_status
 
             m_count ++;
 
-            m_event->v_signal();
+            appl_event_signal(m_event);
 
             e_status =
                 appl_status_ok;
@@ -203,7 +201,7 @@ enum appl_status
                 appl_status_fail;
         }
 
-        m_lock->v_unlock();
+        appl_mutex_unlock(m_lock);
     }
     else
     {
@@ -233,7 +231,7 @@ enum appl_status
 
     if (
         appl_status_ok
-        == m_lock->v_lock())
+        == appl_mutex_lock(m_lock))
     {
         if (
             0
@@ -241,7 +239,8 @@ enum appl_status
         {
             if (
                 appl_status_ok
-                == m_event->v_wait(
+                == appl_event_wait(
+                    m_event,
                     m_lock,
                     i_wait_freq,
                     i_wait_count))
@@ -265,7 +264,7 @@ enum appl_status
 
             m_count --;
 
-            m_event->v_signal();
+            appl_event_signal(m_event);
 
             *(
                 r_node) =
@@ -280,7 +279,7 @@ enum appl_status
                 appl_status_fail;
         }
 
-        m_lock->v_unlock();
+        appl_mutex_unlock(m_lock);
     }
     else
     {
@@ -304,14 +303,14 @@ enum appl_status
 
     if (
         appl_status_ok
-        == m_lock->v_lock())
+        == appl_mutex_lock(m_lock))
     {
-        m_event->v_signal();
+        appl_event_signal(m_event);
 
         e_status =
             appl_status_ok;
 
-        m_lock->v_unlock();
+        appl_mutex_unlock(m_lock);
     }
     else
     {

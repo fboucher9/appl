@@ -222,9 +222,6 @@ appl_address_property_destroy(
         appl_address_property::s_destroy(
             p_address_property);
 
-    return
-        appl_status_ok;
-
 } /* destroy() */
 
 /*

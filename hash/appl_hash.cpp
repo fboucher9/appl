@@ -20,7 +20,7 @@
 
 #include <allocator/appl_allocator.h>
 
-#include <heap/appl_heap.h>
+#include <appl_heap_handle.h>
 
 //
 //
@@ -34,7 +34,8 @@ enum appl_status
         e_status;
 
     e_status =
-        m_context->m_heap->alloc_structure_array(
+        appl_heap_alloc_structure_array(
+            m_context,
             p_descriptor->i_max_index,
             &(
                 m_table));
@@ -73,7 +74,8 @@ enum appl_status
             appl_status_ok
             != e_status)
         {
-            m_context->m_heap->free_structure_array(
+            appl_heap_free_structure_array(
+                m_context,
                 p_descriptor->i_max_index,
                 m_table);
         }
@@ -271,7 +273,8 @@ appl_hash::~appl_hash()
 appl_size_t
     appl_hash::v_cleanup(void)
 {
-    m_context->m_heap->free_structure_array(
+    appl_heap_free_structure_array(
+        m_context,
         m_descriptor.i_max_index,
         m_table);
 

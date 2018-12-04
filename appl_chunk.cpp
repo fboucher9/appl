@@ -22,7 +22,7 @@ Description:
 
 #include <allocator/appl_allocator.h>
 
-#include <heap/appl_heap.h>
+#include <appl_heap_handle.h>
 
 #include <context/appl_context.h>
 
@@ -401,7 +401,8 @@ appl_chunk_std::f_free_node_list(void)
             o_chunk_node_ptr.p_chunk_node,
             o_chunk_node_ptr.p_chunk_node);
 
-        m_context->m_heap->free_structure(
+        appl_heap_free_structure(
+            m_context,
             o_chunk_node_ptr.p_chunk_node);
     }
 } // f_free_node_list()
@@ -435,7 +436,8 @@ appl_chunk_std::f_append_node(
         p_chunk_node;
 
     e_status =
-        m_context->m_heap->alloc_structure(
+        appl_heap_alloc_structure(
+            m_context,
             &(
                 p_chunk_node));
 
@@ -770,7 +772,7 @@ appl_chunk_service::s_create(
 {
     return
         appl_chunk_std::s_create(
-            p_context->m_heap,
+            p_context->m_allocator,
             r_chunk);
 
 } // s_create()
@@ -789,7 +791,7 @@ appl_chunk_service::s_destroy(
 
     return
         p_chunk->v_destroy(
-            p_context->m_heap);
+            p_context->m_allocator);
 
 } // s_destroy()
 

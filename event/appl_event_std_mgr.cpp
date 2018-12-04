@@ -14,13 +14,7 @@
 
 #include <event/appl_event_std_mgr.h>
 
-#include <allocator/appl_allocator.h>
-
-#include <context/appl_context.h>
-
-#include <pool/appl_pool_mgr.h>
-
-#include <pool/appl_pool.h>
+#include <appl_allocator_handle.h>
 
 #include <appl_pool_handle.h>
 
@@ -46,7 +40,8 @@ enum appl_status
         p_event_std_mgr;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_allocator_alloc_object(
+            p_allocator,
             &(
                 p_event_std_mgr));
 
@@ -144,7 +139,8 @@ enum appl_status
         0u;
 
     e_status =
-        m_context->m_pool_mgr->v_create_node(
+        appl_pool_create(
+            m_context,
             &(
                 o_pool_descriptor),
             &(
@@ -172,7 +168,7 @@ appl_size_t
     if (
         m_pool_created)
     {
-        m_context->m_pool_mgr->v_destroy_node(
+        appl_pool_destroy(
             m_pool);
 
         m_pool =
@@ -202,7 +198,8 @@ enum appl_status
 
     e_status =
         appl_event_std_node_create(
-            m_pool,
+            appl_pool_parent(
+                m_pool),
             p_event_descriptor,
             r_event);
 
@@ -224,7 +221,8 @@ enum appl_status
 
     e_status =
         appl_event_std_node_destroy(
-            m_pool,
+            appl_pool_parent(
+                m_pool),
             p_event);
 
     return

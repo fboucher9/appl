@@ -22,7 +22,7 @@
 
 #include <allocator/appl_allocator.h>
 
-#include <heap/appl_heap.h>
+#include <appl_heap_handle.h>
 
 #include <appl_convert.h>
 
@@ -214,7 +214,8 @@ enum appl_status
         m_count)
     {
         e_status =
-            m_context->m_heap->alloc_structure_array(
+            appl_heap_alloc_structure_array(
+                m_context,
                 m_count,
                 &(
                     a_values));
@@ -227,7 +228,8 @@ enum appl_status
                 true;
 
             e_status =
-                m_context->m_heap->alloc_structure_array(
+                appl_heap_alloc_structure_array(
+                    m_context,
                     m_count,
                     &(
                         a_types));
@@ -258,7 +260,8 @@ enum appl_status
                     appl_status_ok
                     != e_status)
                 {
-                    m_context->m_heap->free_structure_array(
+                    appl_heap_free_structure_array(
+                        m_context,
                         m_count,
                         a_types);
 
@@ -271,7 +274,8 @@ enum appl_status
                 appl_status_ok
                 != e_status)
             {
-                m_context->m_heap->free_structure_array(
+                appl_heap_free_structure_array(
+                    m_context,
                     m_count,
                     a_values);
 
@@ -300,7 +304,8 @@ appl_size_t
     if (
         b_types_allocated)
     {
-        m_context->m_heap->free_structure_array(
+        appl_heap_free_structure_array(
+            m_context,
             m_count,
             a_types);
 
@@ -314,7 +319,8 @@ appl_size_t
     if (
         b_values_allocated)
     {
-        m_context->m_heap->free_structure_array(
+        appl_heap_free_structure_array(
+            m_context,
             m_count,
             a_values);
 

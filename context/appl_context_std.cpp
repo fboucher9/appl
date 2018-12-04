@@ -34,6 +34,8 @@
 
 #include <allocator/appl_allocator.h>
 
+#include <allocator/appl_allocator_std.h>
+
 #include <heap/appl_heap.h>
 
 #include <heap/appl_heap_std.h>
@@ -163,6 +165,8 @@
 #include <backtrace/appl_backtrace.h>
 
 #include <backtrace/appl_backtrace_std.h>
+
+#include <appl_once.h>
 
 #include <appl_convert.h>
 
@@ -327,7 +331,7 @@ appl_context_std::init_thread_mgr(void)
 
     e_status =
         appl_thread_std_mgr::s_create(
-            m_heap,
+            m_allocator,
             &(
                 m_thread_mgr));
 
@@ -352,7 +356,7 @@ appl_context_std::cleanup_thread_mgr(void)
 {
     if (b_init_thread_mgr)
     {
-        m_thread_mgr->v_destroy(m_heap);
+        m_thread_mgr->v_destroy(m_allocator);
 
         m_thread_mgr =
             0;
@@ -374,7 +378,7 @@ enum appl_status
 
     e_status =
         appl_mutex_std_mgr::s_create(
-            m_heap,
+            m_allocator,
             &(
                 m_mutex_mgr));
 
@@ -399,7 +403,7 @@ void
 {
     if (b_init_mutex_mgr)
     {
-        m_mutex_mgr->v_destroy(m_heap);
+        m_mutex_mgr->v_destroy(m_allocator);
 
         m_mutex_mgr =
             0;
@@ -420,7 +424,7 @@ enum appl_status
 
     e_status =
         appl_file_std_mgr::s_create(
-            m_heap,
+            m_allocator,
             &(
                 m_file_mgr));
 
@@ -445,7 +449,7 @@ void
     if (
         b_init_file_mgr)
     {
-        m_file_mgr->v_destroy(m_heap);
+        m_file_mgr->v_destroy(m_allocator);
 
         m_file_mgr =
             0;
@@ -489,7 +493,7 @@ void
     if (
         b_init_poll_mgr)
     {
-        m_poll_mgr->v_destroy(m_heap);
+        m_poll_mgr->v_destroy(m_allocator);
 
         m_poll_mgr =
             0;
@@ -1270,19 +1274,116 @@ void
 //
 //
 //
+class appl_context_default : public appl_context
+{
+    public:
+
+        appl_context_default();
+
+        virtual
+        ~appl_context_default();
+
+        void
+            f_init(void);
+
+    protected:
+
+    private:
+
+        class appl_allocator_std
+            m_allocator_std;
+
+        virtual
+        appl_size_t
+            v_cleanup(void);
+
+        appl_context_default(
+            class appl_context_default const & r);
+
+        class appl_context_default &
+            operator =(
+                class appl_context_default const & r);
+
+}; // class appl_context_default
+
+appl_context_default::appl_context_default() :
+    appl_context(),
+    m_allocator_std()
+{
+}
+
+appl_context_default::~appl_context_default()
+{
+}
+
+void
+appl_context_default::f_init(void)
+{
+    m_allocator_std.set_context(
+        this);
+    m_allocator_std.f_init();
+
+    m_allocator =
+        &(
+            m_allocator_std);
+
+}
+
+appl_size_t
+appl_context_default::v_cleanup(void)
+{
+    return
+        0;
+
+}
+
+static unsigned char g_context_default_placement[sizeof(class appl_context_default)];
+
+static class appl_context_default * g_context_default = 0;
+
+//
+//
+//
+void
+    appl_context_std::s_bootstrap(void)
+{
+    // Initialize global stuff here...
+    g_context_default = new(g_context_default_placement) class appl_context_default;
+
+    g_context_default->f_init();
+
+} // s_bootstrap()
+
+//
+//
+//
 enum appl_status
     appl_context_std::create_instance(
         struct appl_context * * const
             r_context)
 {
+    static
+    struct appl_once
+    g_bootstrap =
+    {
+        APPL_ONCE_INIT
+    };
+
     enum appl_status
         e_status;
 
     struct appl_heap *
         p_heap;
 
+    appl_once_dispatch(
+        &(
+            g_bootstrap),
+        &(
+            appl_context_std::s_bootstrap));
+
     e_status =
         appl_heap_std::s_create(
+            g_context_default->m_allocator,
             &(
                 p_heap));
 
@@ -1330,7 +1431,9 @@ enum appl_status
         if (
             appl_status_ok != e_status)
         {
-            p_heap->v_destroy(0);
+            appl_heap_std::s_destroy(
+                g_context_default->m_allocator,
+                p_heap);
         }
     }
 

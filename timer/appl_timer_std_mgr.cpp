@@ -20,9 +20,9 @@
 
 #include <timer/appl_timer_std_node.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
 //
 //
@@ -41,7 +41,8 @@ enum appl_status
         p_timer_std_mgr;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_allocator_alloc_object(
+            p_allocator,
             &(
                 p_timer_std_mgr));
 
@@ -103,9 +104,18 @@ enum appl_status
         struct appl_timer * * const
             r_timer)
 {
+    struct appl_context * const
+        p_context =
+        get_context();
+
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            p_context);
+
     return
         appl_timer_std_node::s_create(
-            m_context->m_allocator,
+            p_allocator,
             r_timer);
 
 } // v_create_node()
@@ -118,9 +128,18 @@ enum appl_status
         struct appl_timer * const
             p_timer)
 {
+    struct appl_context * const
+        p_context =
+        get_context();
+
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            p_context);
+
     return
         appl_timer_std_node::s_destroy(
-            m_context->m_allocator,
+            p_allocator,
             p_timer);
 
 } // v_destroy_node()

@@ -95,7 +95,7 @@ class appl_socket_w32_node : public appl_socket
                 p_socket_descriptor);
 
         virtual
-        enum appl_status
+        appl_size_t
         v_cleanup(void);
 
         virtual

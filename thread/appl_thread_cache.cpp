@@ -704,7 +704,7 @@ class appl_thread_cache_mgr : public appl_object
             union appl_thread_cache_node_ptr
                 o_thread_cache_node_ptr;
 
-            m_lock->v_lock();
+            appl_mutex_lock(m_lock);
 
             if (m_unused_nodes.p_next != &m_unused_nodes)
             {
@@ -762,7 +762,7 @@ class appl_thread_cache_mgr : public appl_object
                 }
             }
 
-            m_lock->v_unlock();
+            appl_mutex_unlock(m_lock);
 
             return
                 e_status;
@@ -791,7 +791,7 @@ class appl_thread_cache_mgr : public appl_object
                 class appl_thread_cache_node * const
                     p_thread_cache_node)
         {
-            m_lock->v_lock();
+            appl_mutex_lock(m_lock);
 
             appl_node::join(
                 p_thread_cache_node,
@@ -802,7 +802,7 @@ class appl_thread_cache_mgr : public appl_object
                 &(
                     m_unused_nodes));
 
-            m_lock->v_unlock();
+            appl_mutex_unlock(m_lock);
 
         } // f_retire()
 
@@ -814,13 +814,13 @@ class appl_thread_cache_mgr : public appl_object
                 class appl_thread_cache_node * const
                     p_thread_cache_node)
         {
-            m_lock->v_lock();
+            appl_mutex_lock(m_lock);
 
             appl_thread_cache_node::s_destroy_instance(
                 m_context->m_allocator,
                 p_thread_cache_node);
 
-            m_lock->v_unlock();
+            appl_mutex_unlock(m_lock);
 
         } // f_destroy_node()
 
@@ -853,7 +853,8 @@ class appl_thread_cache_mgr : public appl_object
             struct appl_mutex_descriptor
                 o_mutex_descriptor;
 
-            m_context->m_mutex_mgr->v_create_node(
+            appl_mutex_create(
+                m_context,
                 &(
                     o_mutex_descriptor),
                 &(
@@ -905,7 +906,7 @@ class appl_thread_cache_mgr : public appl_object
                 while (
                     b_continue)
                 {
-                    m_lock->v_lock();
+                    appl_mutex_lock(m_lock);
 
                     if (
                         m_active_nodes.p_next
@@ -920,7 +921,7 @@ class appl_thread_cache_mgr : public appl_object
                             false;
                     }
 
-                    m_lock->v_unlock();
+                    appl_mutex_unlock(m_lock);
 
                     if (
                         b_continue)
@@ -956,7 +957,7 @@ class appl_thread_cache_mgr : public appl_object
                 {
                     // Find an unused thread
 
-                    m_lock->v_lock();
+                    appl_mutex_lock(m_lock);
 
                     if (
                         m_unused_nodes.p_next
@@ -978,7 +979,7 @@ class appl_thread_cache_mgr : public appl_object
                             false;
                     }
 
-                    m_lock->v_unlock();
+                    appl_mutex_unlock(m_lock);
 
                     if (
                         b_continue)
@@ -1001,7 +1002,7 @@ class appl_thread_cache_mgr : public appl_object
                 }
             }
 
-            m_context->m_mutex_mgr->v_destroy_node(
+            appl_mutex_destroy(
                 m_lock);
 
             return

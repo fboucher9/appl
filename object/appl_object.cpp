@@ -15,10 +15,15 @@
 #include <allocator/appl_allocator.h>
 
 #if defined APPL_DEBUG
+
+#include <backtrace/appl_backtrace_impl.h>
+
 #if defined APPL_OS_LINUX
+
 #include <unistd.h>
-#include <execinfo.h>
+
 #endif /* #if defined APPL_OS_LINUX */
+
 #endif /* #if defined APPL_DEBUG */
 
 //
@@ -147,11 +152,28 @@ appl_size_t
         static unsigned char const s_msg[] =
             "object cleanup not implemented\n";
         write(1, s_msg, sizeof(s_msg) - 1);
-        void * a_stack[8u];
-        backtrace(a_stack, 8);
-        backtrace_symbols_fd(a_stack, 8, 1);
     }
 #endif /* #if defined APPL_OS_LINUX */
+    {
+        void const *
+            a_stack[8u];
+
+        appl_size_t
+            i_count;
+
+        if (
+            appl_status_ok
+            == appl_backtrace_impl::s_capture(
+                a_stack,
+                8u,
+                &(
+                    i_count)))
+        {
+            appl_backtrace_impl::s_report(
+                a_stack,
+                i_count);
+        }
+    }
 #endif /* #if defined APPL_DEBUG */
 
     return

@@ -16,7 +16,9 @@
 
 #include <module/appl_module.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
+
+#include <appl_allocator_handle.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -94,7 +96,7 @@ appl_file_source_module_service::s_create(
 {
     return
         appl_file_source_module::s_create(
-            p_context->m_allocator,
+            appl_context_get_allocator(p_context),
             p_file_source_module_descriptor,
             r_instance);
 
@@ -110,8 +112,9 @@ appl_file_source_module_service::s_destroy(
         p_this->get_context();
 
     return
-        p_this->v_destroy(
-            p_context->m_allocator);
+        appl_allocator_free_object(
+            appl_context_get_allocator(p_context),
+            p_this);
 
 } // s_destroy()
 
@@ -155,7 +158,7 @@ appl_hex_convert_module_service::s_create(
 {
     return
         appl_hex_convert_module::s_create(
-            p_context->m_allocator,
+            appl_context_get_allocator(p_context),
             p_hex_convert_module_descriptor,
             r_instance);
 }
@@ -171,7 +174,7 @@ appl_hex_convert_module_service::s_destroy(
 
     return
         p_this->v_destroy(
-            p_context->m_allocator);
+            appl_context_get_allocator(p_context));
 }
 
 //
@@ -201,7 +204,7 @@ appl_file_sink_module_service::s_create(
 {
     return
         appl_file_sink_module::s_create(
-            p_context->m_allocator,
+            appl_context_get_allocator(p_context),
             p_file_sink_module_descriptor,
             r_instance);
 
@@ -221,7 +224,7 @@ appl_file_sink_module_service::s_destroy(
 
     return
         p_this->v_destroy(
-            p_context->m_allocator);
+            appl_context_get_allocator(p_context));
 }
 
 //
@@ -251,7 +254,7 @@ appl_custom_module_service::s_create(
 {
     return
         appl_custom_module::s_create(
-            p_context->m_allocator,
+            appl_context_get_allocator(p_context),
             p_custom_module_descriptor,
             r_instance);
 
@@ -282,7 +285,7 @@ appl_null_module_service::s_create(
 {
     return
         appl_null_module::s_create(
-            p_context->m_allocator,
+            appl_context_get_allocator(p_context),
             r_instance);
 
 }

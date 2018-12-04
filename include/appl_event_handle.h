@@ -58,6 +58,11 @@ appl_event_create(
     struct appl_event * * const
         r_event);
 
+enum appl_status
+appl_event_destroy(
+    struct appl_event * const
+        p_event);
+
 /* Obtain pointer to parent object handle */
 struct appl_object *
 appl_event_parent(

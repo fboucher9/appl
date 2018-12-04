@@ -38,7 +38,7 @@
 
 #include <allocator/appl_allocator.h>
 
-#include <heap/appl_heap.h>
+#include <appl_heap_handle.h>
 
 #include <context/appl_context.h>
 
@@ -232,7 +232,8 @@ enum appl_status
         p_pollfd_array;
 
     e_status =
-        m_context->m_heap->alloc_structure_array(
+        appl_heap_alloc_structure_array(
+            m_context,
             i_count,
             &(
                 p_pollfd_array));
@@ -394,7 +395,8 @@ enum appl_status
                 appl_status_fail;
         }
 
-        m_context->m_heap->free_structure_array(
+        appl_heap_free_structure_array(
+            m_context,
             i_count,
             p_pollfd_array);
     }

@@ -14,7 +14,7 @@
 
 #include <options/appl_options.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
 #include <appl_list.h>
 
@@ -32,7 +32,7 @@ appl_options_service::s_create(
 {
     return
         appl_options_std::s_create(
-            p_context->m_allocator,
+            appl_context_get_allocator(p_context),
             r_instance);
 
 } // s_create()
@@ -51,7 +51,7 @@ appl_options_service::s_destroy(
 
     return
         appl_options_std::s_destroy(
-            p_context->m_allocator,
+            appl_context_get_allocator(p_context),
             p_options);
 
 } // s_destroy()

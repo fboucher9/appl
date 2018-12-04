@@ -25,18 +25,20 @@ class appl_backtrace : public appl_object
         virtual
         enum appl_status
             v_capture(
-                void * const
+                void const * * const
                     p_buffer,
                 appl_size_t const
-                    i_buffer_length);
+                    i_count_max,
+                appl_size_t * const
+                    r_count);
 
         virtual
         enum appl_status
             v_report(
-                void const * const
+                void const * const * const
                     p_buffer,
                 appl_size_t const
-                    i_buffer_length);
+                    i_count);
 
     protected:
 

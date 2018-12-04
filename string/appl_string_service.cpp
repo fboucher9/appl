@@ -16,9 +16,7 @@
 
 #include <string/appl_string.h>
 
-#include <context/appl_context.h>
-
-#include <allocator/appl_allocator.h>
+#include <appl_context_handle.h>
 
 //
 //
@@ -36,9 +34,14 @@ appl_string_service::s_create(
         p_context =
         p_object->get_context();
 
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            p_context);
+
     return
         appl_string::s_create(
-            p_context->m_allocator,
+            p_allocator,
             i_alloc_len,
             r_string);
 
@@ -56,9 +59,14 @@ appl_string_service::s_destroy(
         p_context =
         p_string->get_context();
 
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            p_context);
+
     return
         appl_string::s_destroy(
-            p_context->m_allocator,
+            p_allocator,
             p_string);
 
 } // s_destroy()

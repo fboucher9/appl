@@ -72,6 +72,26 @@ appl_event_create(
 
 /*
 
+*/
+enum appl_status
+appl_event_destroy(
+    struct appl_event * const
+        p_event)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_event_service::s_destroy(
+            p_event);
+
+    return
+        e_status;
+
+} /* appl_event_destroy() */
+
+/*
+
 Function: appl_event_parent()
 
 Description:

@@ -33,59 +33,51 @@
 //
 enum appl_status
     appl_heap_std::s_create(
+        struct appl_allocator * const
+            p_allocator,
         struct appl_heap * * const
             r_heap)
 {
     enum appl_status
         e_status;
 
-    appl_size_t const
-        i_placement_len =
-        sizeof(
-            class appl_heap_std);
+    class appl_heap_std *
+        p_heap_std;
 
-    void * const
-        p_placement =
-        malloc(
-            i_placement_len);
+    e_status =
+        p_allocator->alloc_object(
+            &(
+                p_heap_std));
 
     if (
-        p_placement)
+        appl_status_ok
+        == e_status)
     {
-        class appl_heap_std *
+        *(
+            r_heap) =
             p_heap_std;
-
-        e_status =
-            appl_object::init_object(
-                0,
-                p_placement,
-                &(
-                    p_heap_std));
-
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            *(
-                r_heap) =
-                p_heap_std;
-        }
-        else
-        {
-            ::free(
-                p_placement);
-        }
-    }
-    else
-    {
-        e_status =
-            appl_status_out_of_memory;
     }
 
     return
         e_status;
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+    appl_heap_std::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_heap * const
+            p_heap)
+{
+    return
+        p_heap->v_destroy(
+            p_allocator);
+
+} // s_destroy()
 
 //
 //

@@ -18,11 +18,11 @@
 
 #include <env/appl_env_w32.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
-#include <heap/appl_heap.h>
+#include <appl_heap_handle.h>
 
 #include <appl_object_handle.h>
 
@@ -53,7 +53,8 @@ appl_env_w32::s_create(
         p_env_w32;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_allocator_alloc_object(
+            p_allocator,
             &(
                 p_env_w32));
 
@@ -155,17 +156,12 @@ enum appl_status
         if (
             dwResult)
         {
-            class appl_heap *
-                p_heap;
-
-            p_heap =
-                m_context->m_heap;
-
             unsigned char *
                 p_value0;
 
             e_status =
-                p_heap->alloc_structure_array(
+                appl_heap_alloc_structure_array(
+                    m_context,
                     dwResult + 1,
                     &(
                         p_value0));
@@ -193,7 +189,8 @@ enum appl_status
 
                     e_status =
                         appl_string_create_dup_buffer(
-                            m_context,
+                            appl_context_parent(
+                                m_context),
                             p_value0,
                             p_value0 + dwResult2,
                             &(
@@ -212,13 +209,13 @@ enum appl_status
                         appl_status_ok
                         != e_status)
                     {
-                        appl_object_destroy(
-                            appl_string_parent(
-                                p_string));
+                        appl_string_destroy(
+                            p_string);
                     }
                 }
 
-                p_heap->v_free(
+                appl_heap_free_structure_array(
+                    m_context,
                     dwResult + 1,
                     p_value0);
             }
@@ -337,8 +334,14 @@ enum appl_status
     enum appl_status
         e_status;
 
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            m_context);
+
     e_status =
-        m_context->m_allocator->alloc_object(
+        appl_allocator_alloc_object(
+            p_allocator,
             &(
                 m_refcount));
 
@@ -350,27 +353,29 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_env_w32::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
+    appl_size_t
+        i_cleanup_result;
 
     if (m_refcount->f_release())
     {
-        m_refcount->v_destroy();
+        m_refcount->v_destroy(
+            appl_context_get_allocator(
+                m_context));
 
-        e_status =
-            appl_status_ok;
+        i_cleanup_result =
+            sizeof(class appl_env_w32);
     }
     else
     {
-        e_status =
-            appl_status_fail;
+        i_cleanup_result =
+            0;
     }
 
     return
-        e_status;
+        i_cleanup_result;
 
 } // v_cleanup()
 

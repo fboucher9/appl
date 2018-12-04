@@ -28,7 +28,7 @@
 
 #include <appl_unused.h>
 
-#include <heap/appl_heap.h>
+#include <appl_heap_handle.h>
 
 #include <appl_buf.h>
 
@@ -188,11 +188,13 @@ void
                 o_options_std_node_ptr.p_options_std_node->p_buf_min,
                 o_options_std_node_ptr.p_options_std_node->p_buf_max);
 
-        m_context->m_heap->free_structure_array(
+        appl_heap_free_structure_array(
+            m_context,
             i_buf_len,
             o_options_std_node_ptr.p_options_std_node->p_buf_min);
 
-        m_context->m_heap->free_structure(
+        appl_heap_free_structure(
+            m_context,
             o_options_std_node_ptr.p_options_std_node);
     }
 
@@ -342,7 +344,8 @@ enum appl_status
                 p_buf;
 
             e_status =
-                m_context->m_heap->alloc_structure_array(
+                appl_heap_alloc_structure_array(
+                    m_context,
                     i_length,
                     &(
                         p_buf));
@@ -367,7 +370,8 @@ enum appl_status
                             p_buf + i_length);
                 }
 
-                m_context->m_heap->free_structure_array(
+                appl_heap_free_structure_array(
+                    m_context,
                     i_length,
                     p_buf);
             }
@@ -698,7 +702,8 @@ enum appl_status
         p_options_std_node;
 
     e_status =
-        m_context->m_heap->alloc_structure(
+        appl_heap_alloc_structure(
+            m_context,
             &(
                 p_options_std_node));
 
@@ -717,7 +722,8 @@ enum appl_status
                 p_buf_max);
 
         e_status =
-            m_context->m_heap->alloc_structure_array(
+            appl_heap_alloc_structure_array(
+                m_context,
                 i_buf_len,
                 &(
                     p_options_std_node->p_buf_min));

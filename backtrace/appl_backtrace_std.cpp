@@ -14,9 +14,9 @@
 
 #include <backtrace/appl_backtrace_std.h>
 
-#include <allocator/appl_allocator.h>
+#include <backtrace/appl_backtrace_impl.h>
 
-#include <appl_unused.h>
+#include <appl_allocator_handle.h>
 
 //
 //
@@ -35,7 +35,8 @@ enum appl_status
         p_backtrace_std;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_allocator_alloc_object(
+            p_allocator,
             &(
                 p_backtrace_std));
 
@@ -115,17 +116,18 @@ appl_size_t
 //
 enum appl_status
     appl_backtrace_std::v_capture(
-        void * const
+        void const * * const
             p_buffer,
         appl_size_t const
-            i_buffer_length)
+            i_count_max,
+        appl_size_t * const
+            r_count)
 {
-    appl_unused(
-        p_buffer,
-        i_buffer_length);
-
     return
-        appl_status_not_implemented;
+        appl_backtrace_impl::s_capture(
+            p_buffer,
+            i_count_max,
+            r_count);
 
 } // v_capture()
 
@@ -134,17 +136,15 @@ enum appl_status
 //
 enum appl_status
     appl_backtrace_std::v_report(
-        void const * const
+        void const * const * const
             p_buffer,
         appl_size_t const
-            i_buffer_length)
+            i_count)
 {
-    appl_unused(
-        p_buffer,
-        i_buffer_length);
-
     return
-        appl_status_not_implemented;
+        appl_backtrace_impl::s_report(
+            p_buffer,
+            i_count);
 
 } // v_report()
 

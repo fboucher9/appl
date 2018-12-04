@@ -20,6 +20,8 @@
 
 #include <context/appl_context.h>
 
+#include <appl_context_handle.h>
+
 //
 //
 //
@@ -66,9 +68,14 @@ appl_xlib_service::s_destroy(
         p_context =
         p_xlib->get_context();
 
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            p_context);
+
     return
         p_xlib->v_destroy(
-            p_context->m_allocator);
+            p_allocator);
 
 } // s_destroy()
 

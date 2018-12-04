@@ -43,12 +43,24 @@ class appl_debug_w32 : public appl_debug
                 class appl_debug * * const
                     r_debug);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                class appl_debug * const
+                    p_debug);
+
         appl_debug_w32();
 
         virtual
         ~appl_debug_w32();
 
     protected:
+
+        virtual
+        appl_size_t
+            v_cleanup(void);
 
         virtual
         enum appl_status

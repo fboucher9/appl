@@ -19,14 +19,17 @@
 //
 enum appl_status
     appl_backtrace::v_capture(
-        void * const
+        void const * * const
             p_buffer,
         appl_size_t const
-            i_buffer_length)
+            i_count_max,
+        appl_size_t * const
+            r_count)
 {
     appl_unused(
         p_buffer,
-        i_buffer_length);
+        i_count_max,
+        r_count);
 
     return
         appl_status_not_implemented;
@@ -38,14 +41,14 @@ enum appl_status
 //
 enum appl_status
     appl_backtrace::v_report(
-        void const * const
+        void const * const * const
             p_buffer,
         appl_size_t const
-            i_buffer_length)
+            i_count)
 {
     appl_unused(
         p_buffer,
-        i_buffer_length);
+        i_count);
 
     return
         appl_status_not_implemented;

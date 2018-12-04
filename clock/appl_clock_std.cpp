@@ -22,7 +22,7 @@
 
 #include <appl_convert.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 //
 //
@@ -41,7 +41,8 @@ enum appl_status
         p_clock_std;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_allocator_alloc_object(
+            p_allocator,
             &(
                 p_clock_std));
 

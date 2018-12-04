@@ -60,6 +60,22 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_debug_w32::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        class appl_debug * const
+            p_debug)
+{
+    return
+        p_debug->v_destroy(
+            p_allocator);
+
+} // s_destroy()
+
+//
+//
+//
 appl_debug_w32::appl_debug_w32() :
     appl_debug()
 {
@@ -71,6 +87,17 @@ appl_debug_w32::appl_debug_w32() :
 appl_debug_w32::~appl_debug_w32()
 {
 }
+
+//
+//
+//
+appl_size_t
+    appl_debug_w32::v_cleanup(void)
+{
+    return
+        sizeof(class appl_debug_w32);
+
+} // v_cleanup()
 
 //
 //

@@ -158,19 +158,13 @@ enum appl_status
 //
 //
 //
-enum appl_status
+appl_size_t
     appl_socket_w32_mgr::v_cleanup(void)
 {
-    enum appl_status
-        e_status;
-
     WSACleanup();
 
-    e_status =
-        appl_status_ok;
-
     return
-        e_status;
+        sizeof(class appl_socket_w32_mgr);
 
 } // v_cleanup()
 
