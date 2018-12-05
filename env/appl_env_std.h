@@ -39,6 +39,14 @@ class appl_env_std : public appl_env
             struct appl_env * * const
                 r_env);
 
+        static
+        enum appl_status
+        s_destroy(
+            struct appl_allocator * const
+                p_allocator,
+            struct appl_env * const
+                p_env);
+
         appl_env_std();
 
         virtual

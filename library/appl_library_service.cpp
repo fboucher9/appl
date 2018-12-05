@@ -22,9 +22,7 @@
 
 #include <context/appl_context.h>
 
-#include <appl_unused.h>
-
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 #include <appl_buf.h>
 
@@ -51,14 +49,16 @@
 extern
 enum appl_status
     appl_library_mgr_create(
-        struct appl_context * const
-            p_context,
+        struct appl_allocator * const
+            p_allocator,
         class appl_library_mgr * * const
             r_library_mgr);
 
 extern
 enum appl_status
     appl_library_mgr_destroy(
+        struct appl_allocator * const
+            p_allocator,
         class appl_library_mgr * const
             p_library_mgr);
 
@@ -67,8 +67,8 @@ enum appl_status
 //
 enum appl_status
     appl_library_mgr_create(
-        struct appl_context * const
-            p_context,
+        struct appl_allocator * const
+            p_allocator,
         class appl_library_mgr * * const
             r_library_mgr)
 {
@@ -79,14 +79,14 @@ enum appl_status
 
     e_status =
         appl_library_std_mgr::s_create(
-            p_context->m_allocator,
+            p_allocator,
             r_library_mgr);
 
 #elif defined APPL_OS_WINDOWS
 
     e_status =
         appl_library_w32_mgr::s_create(
-            p_context->m_allocator,
+            p_allocator,
             r_library_mgr);
 
 #else /* #if definde APPL_OS_Xx */
@@ -106,16 +106,15 @@ enum appl_status
 //
 enum appl_status
     appl_library_mgr_destroy(
+        struct appl_allocator * const
+            p_allocator,
         class appl_library_mgr * const
             p_library_mgr)
 {
-    struct appl_context * const
-        p_context =
-        p_library_mgr->get_context();
-
     return
-        p_library_mgr->v_destroy(
-            p_context->m_allocator);
+        appl_delete(
+            p_allocator,
+            p_library_mgr);
 
 } // appl_library_mgr_destroy()
 

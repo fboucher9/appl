@@ -40,7 +40,7 @@ enum appl_status
         p_event_std_mgr;
 
     e_status =
-        appl_allocator_alloc_object(
+        appl_new(
             p_allocator,
             &(
                 p_event_std_mgr));
@@ -73,8 +73,9 @@ enum appl_status
         e_status;
 
     e_status =
-        p_event_mgr->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_event_mgr);
 
     return
         e_status;

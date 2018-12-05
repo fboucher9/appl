@@ -12,6 +12,8 @@
 
 #include <allocator/appl_allocator_service.h>
 
+#include <appl_object.h>
+
 /*
 
 */
@@ -65,5 +67,46 @@ enum appl_status
             p_buf);
 
 } /* free() */
+
+//
+//
+//
+enum appl_status
+    appl_delete(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_object * const
+            p_object)
+{
+    enum appl_status
+        e_status;
+
+    void * const
+        p_placement =
+        p_object;
+
+    appl_size_t const
+        i_placement_length =
+        p_object->v_cleanup();
+
+    if (
+        i_placement_length)
+    {
+        delete
+            p_object;
+
+        appl_allocator_free(
+            p_allocator,
+            i_placement_length,
+            p_placement);
+    }
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // appl_delete()
 
 /* end-of-file: appl_allocator_handle.cpp */

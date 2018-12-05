@@ -20,21 +20,19 @@
 
 #include <env/appl_env_std.h>
 
-#include <context/appl_context.h>
-
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 #include <appl_object_handle.h>
 
 #include <appl_string_handle.h>
+
+#include <appl_context_handle.h>
 
 #include <appl_convert.h>
 
 #include <appl_buf.h>
 
 #include <appl_buf0.h>
-
-#include <appl_unused.h>
 
 //
 //
@@ -53,7 +51,8 @@ appl_env_std::s_create(
         p_env_std;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 p_env_std));
 
@@ -70,6 +69,23 @@ appl_env_std::s_create(
         e_status;
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+appl_env_std::s_destroy(
+    struct appl_allocator * const
+        p_allocator,
+    struct appl_env * const
+        p_env)
+{
+    return
+        appl_delete(
+            p_allocator,
+            p_env);
+
+} // s_destroy()
 
 //
 //
@@ -152,7 +168,8 @@ enum appl_status
 
             e_status =
                 appl_string_create_dup_buffer(
-                    m_context,
+                    appl_context_parent(
+                        m_context),
                     appl_convert::to_uchar_ptr(
                         p_value0),
                     appl_convert::to_uchar_ptr(

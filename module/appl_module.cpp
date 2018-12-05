@@ -74,7 +74,7 @@ enum appl_status
             r_instance)
 {
     return
-        appl_allocator_alloc_object(
+        appl_new(
             p_allocator,
             p_file_source_module_descriptor,
             r_instance);
@@ -212,7 +212,7 @@ enum appl_status
             r_instance)
 {
     return
-        appl_allocator_alloc_object(
+        appl_new(
             p_allocator,
             p_hex_convert_module_descriptor,
             r_instance);
@@ -579,7 +579,7 @@ enum appl_status
             r_instance)
 {
     return
-        appl_allocator_alloc_object(
+        appl_new(
             p_allocator,
             p_file_sink_module_descriptor,
             r_instance);
@@ -717,7 +717,7 @@ enum appl_status
             r_instance)
 {
     return
-        appl_allocator_alloc_object(
+        appl_new(
             p_allocator,
             p_custom_module_descriptor,
             r_instance);
@@ -803,7 +803,7 @@ enum appl_status
             r_instance)
 {
     return
-        appl_allocator_alloc_object(
+        appl_new(
             p_allocator,
             r_instance);
 

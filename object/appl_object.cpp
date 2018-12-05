@@ -12,7 +12,7 @@
 
 #include <appl_unused.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 #if defined APPL_DEBUG
 
@@ -25,44 +25,6 @@
 #endif /* #if defined APPL_OS_LINUX */
 
 #endif /* #if defined APPL_DEBUG */
-
-//
-//
-//
-enum appl_status
-    appl_object::v_destroy(
-        struct appl_allocator * const
-            p_allocator)
-{
-    enum appl_status
-        e_status;
-
-    void * const
-        p_placement =
-        this;
-
-    appl_size_t const
-        i_placement_length =
-        v_cleanup();
-
-    if (
-        i_placement_length)
-    {
-        delete
-            this;
-
-        p_allocator->v_free(
-            i_placement_length,
-            p_placement);
-    }
-
-    e_status =
-        appl_status_ok;
-
-    return
-        e_status;
-
-} // v_destroy()
 
 //
 //

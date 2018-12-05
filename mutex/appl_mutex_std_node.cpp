@@ -28,7 +28,7 @@
 
 #include <appl_unused.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -54,7 +54,8 @@ enum appl_status
         p_mutex_std_node;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             p_mutex_descriptor,
             &(
                 p_mutex_std_node));
@@ -287,8 +288,9 @@ appl_mutex_std_node_destroy(
         p_mutex)
 {
     return
-        p_mutex->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_mutex);
 
 } // appl_mutex_std_node_destroy()
 

@@ -51,7 +51,7 @@ Description:
 
 #include <context/appl_context.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 //
 //
@@ -72,7 +72,8 @@ enum appl_status
         p_address_std_node;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             p_property,
             &(
                 p_address_std_node));
@@ -105,8 +106,9 @@ enum appl_status
         e_status;
 
     e_status =
-        p_address->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_address);
 
     return
         e_status;

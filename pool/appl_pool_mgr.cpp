@@ -24,6 +24,8 @@
 
 #include <allocator/appl_allocator.h>
 
+#include <appl_allocator_handle.h>
+
 #include <pool/appl_pool.h>
 
 #include <appl_list.h>
@@ -55,7 +57,8 @@ enum appl_status
         e_status;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             r_instance);
 
     return
@@ -74,8 +77,9 @@ enum appl_status
             p_pool_mgr)
 {
     return
-        p_pool_mgr->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_pool_mgr);
 
 } // s_destroy()
 
@@ -125,8 +129,9 @@ enum appl_status
             p_pool_node)
 {
     return
-        p_pool_node->v_destroy(
-            m_context->m_allocator);
+        appl_delete(
+            m_context->m_allocator,
+            p_pool_node);
 
 } // v_destroy_node()
 

@@ -34,45 +34,6 @@ struct appl_pool : public appl_allocator
 {
     public:
 
-        template <typename T_instance>
-        enum appl_status
-            alloc_struct(
-                T_instance * * const
-                    r_object)
-        {
-            enum appl_status
-                e_status;
-
-            union object_ptr
-            {
-                void *
-                    p_placement;
-
-                T_instance *
-                    p_instance;
-
-            } o_object_ptr;
-
-            e_status =
-                v_alloc(
-                    0,
-                    &(
-                        o_object_ptr.p_placement));
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                *(
-                    r_object) =
-                    o_object_ptr.p_instance;
-            }
-
-            return
-                e_status;
-
-        } // alloc_struct()
-
     protected:
 
         appl_pool();

@@ -16,9 +16,9 @@
 
 #include <string/appl_string.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
 #include <appl_heap_handle.h>
 
@@ -54,7 +54,8 @@ enum appl_status
         i_alloc_len;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 o_string_descriptor),
             r_string);
@@ -75,8 +76,9 @@ enum appl_status
             p_string)
 {
     return
-        p_string->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_string);
 
 } // s_destroy()
 

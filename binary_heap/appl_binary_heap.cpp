@@ -479,7 +479,7 @@ enum appl_status
             p_context);
 
     return
-        appl_allocator_alloc_object(
+        appl_new(
             p_allocator,
             p_binary_heap_descriptor,
             r_instance);
@@ -507,8 +507,9 @@ enum appl_status
             p_context);
 
     e_status =
-        p_binary_heap->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_binary_heap);
 
     return
         e_status;

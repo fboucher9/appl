@@ -35,7 +35,7 @@ enum appl_status
         p_thread_std_mgr;
 
     e_status =
-        appl_allocator_alloc_object(
+        appl_new(
             p_allocator,
             &(
                 p_thread_std_mgr));
@@ -53,6 +53,20 @@ enum appl_status
         e_status;
 
 } // s_create()
+
+enum appl_status
+    appl_thread_std_mgr::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        class appl_thread_mgr * const
+            p_thread_mgr)
+{
+    return
+        appl_delete(
+            p_allocator,
+            p_thread_mgr);
+
+} // s_destroy()
 
 //
 //

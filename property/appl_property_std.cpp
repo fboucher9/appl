@@ -20,7 +20,7 @@
 
 #include <context/appl_context.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 #include <appl_heap_handle.h>
 
@@ -55,7 +55,8 @@ enum appl_status
         p_property_std;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 o_property_std_descriptor),
             &(
@@ -86,8 +87,9 @@ enum appl_status
             p_property)
 {
     return
-        p_property->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_property);
 
 } // s_destroy()
 

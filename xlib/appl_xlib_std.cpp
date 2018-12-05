@@ -26,17 +26,11 @@ Description:
 
 #include <xlib/appl_xlib_std.h>
 
-#include <allocator/appl_allocator.h>
-
-#include <appl_unused.h>
+#include <appl_allocator_handle.h>
 
 #include <appl_library_handle.h>
 
-#include <library/appl_library_node.h>
-
 #include <appl_mutex_handle.h>
-
-#include <mutex/appl_mutex_node.h>
 
 #if defined APPL_DEBUG
 #include <appl_debug_handle.h>
@@ -59,7 +53,8 @@ enum appl_status
         p_xlib_std;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 p_xlib_std));
 
@@ -214,7 +209,8 @@ enum appl_status
     };
 
     e_status =
-        m_xlib_handle->v_query(
+        appl_library_query(
+            m_xlib_handle,
             g_open_display_name,
             g_open_display_name + sizeof(g_open_display_name),
             &(
@@ -266,7 +262,8 @@ enum appl_status
     };
 
     e_status =
-        m_xlib_handle->v_query(
+        appl_library_query(
+            m_xlib_handle,
             g_close_display_name,
             g_close_display_name + sizeof(g_close_display_name),
             &(
@@ -319,7 +316,8 @@ enum appl_status
     };
 
     e_status =
-        m_xlib_handle->v_query(
+        appl_library_query(
+            m_xlib_handle,
             g_default_screen_name,
             g_default_screen_name + sizeof(g_default_screen_name),
             &(
@@ -371,7 +369,8 @@ enum appl_status
     };
 
     e_status =
-        m_xlib_handle->v_query(
+        appl_library_query(
+            m_xlib_handle,
             g_display_width_name,
             g_display_width_name + sizeof(g_display_width_name),
             &(
@@ -424,7 +423,8 @@ enum appl_status
     };
 
     e_status =
-        m_xlib_handle->v_query(
+        appl_library_query(
+            m_xlib_handle,
             g_display_height_name,
             g_display_height_name + sizeof(g_display_height_name),
             &(
@@ -589,7 +589,7 @@ enum appl_status
         e_status;
 
     e_status =
-        m_lock->v_lock();
+        appl_mutex_lock(m_lock);
 
     if (
         appl_status_ok
@@ -602,7 +602,7 @@ enum appl_status
 
         m_ref_count ++;
 
-        m_lock->v_unlock();
+        appl_mutex_unlock(m_lock);
     }
 
     return

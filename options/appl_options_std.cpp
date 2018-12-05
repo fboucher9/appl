@@ -16,11 +16,9 @@
 
 #include <options/appl_options_std.h>
 
-#include <string/appl_string.h>
+#include <appl_context_handle.h>
 
-#include <context/appl_context.h>
-
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 #include <appl_buf0.h>
 
@@ -77,7 +75,8 @@ appl_options_std::s_create(
         p_options_std;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 p_options_std));
 
@@ -106,8 +105,9 @@ appl_options_std::s_destroy(
         p_options_std)
 {
     return
-        p_options_std->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_options_std);
 
 } // s_destroy()
 

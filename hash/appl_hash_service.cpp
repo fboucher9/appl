@@ -20,7 +20,7 @@
 
 #include <context/appl_context.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 //
 //
@@ -39,7 +39,8 @@ appl_hash_service::s_create(
         p_context->m_allocator;
 
     return
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             p_descriptor,
             r_instance);
 
@@ -58,8 +59,9 @@ appl_hash_service::s_destroy(
         p_hash->get_context();
 
     return
-        p_hash->v_destroy(
-            p_context->m_allocator);
+        appl_delete(
+            p_context->m_allocator,
+            p_hash);
 
 } // s_destroy()
 

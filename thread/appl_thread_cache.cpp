@@ -38,6 +38,8 @@ Comments:
 
 #include <allocator/appl_allocator.h>
 
+#include <appl_allocator_handle.h>
+
 #include <queue/appl_queue.h>
 
 #include <appl_queue_handle.h>
@@ -511,7 +513,8 @@ class appl_thread_cache_node : public appl_node
                 p_thread_property;
 
             e_status =
-                p_allocator->alloc_object(
+                appl_new(
+                    p_allocator,
                     &(
                         o_thread_cache_descriptor),
                     r_instance);
@@ -533,8 +536,9 @@ class appl_thread_cache_node : public appl_node
                     p_thread_cache_node)
         {
             return
-                p_thread_cache_node->v_destroy(
-                    p_allocator);
+                appl_delete(
+                    p_allocator,
+                    p_thread_cache_node);
 
         } // s_destroy_instance()
 
@@ -681,12 +685,27 @@ class appl_thread_cache_mgr : public appl_object
                 e_status;
 
             e_status =
-                p_allocator->alloc_object(
+                appl_new(
+                    p_allocator,
                     r_instance);
 
             return
                 e_status;
 
+        }
+
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                class appl_thread_cache_mgr * const
+                    p_instance)
+        {
+            return
+                appl_delete(
+                    p_allocator,
+                    p_instance);
         }
 
         enum appl_status
@@ -779,7 +798,9 @@ class appl_thread_cache_mgr : public appl_object
         {
             // Object will be retired to unused list
             return
-                p_thread_cache->v_destroy(0);
+                appl_delete(
+                    0,
+                    p_thread_cache);
 
         } // f_destroy_node()
 
@@ -1364,8 +1385,9 @@ appl_thread_cache_mgr_destroy(
         p_thread_cache_mgr)
 {
     return
-        p_thread_cache_mgr->v_destroy(
-            p_allocator);
+        appl_thread_cache_mgr::s_destroy(
+            p_allocator,
+            p_thread_cache_mgr);
 
 } // appl_thread_cache_mgr_destroy()
 

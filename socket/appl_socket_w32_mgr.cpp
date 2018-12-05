@@ -30,7 +30,7 @@
 
 #include <appl_unused.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 #include <context/appl_context.h>
 
@@ -51,7 +51,8 @@ enum appl_status
         p_socket_w32_mgr;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 p_socket_w32_mgr));
 
@@ -68,6 +69,23 @@ enum appl_status
         e_status;
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+    appl_socket_w32_mgr::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        class appl_socket_mgr * const
+            p_socket_mgr)
+{
+    return
+        appl_delete(
+            p_allocator,
+            p_socket_mgr);
+
+} // s_destroy()
 
 //
 //

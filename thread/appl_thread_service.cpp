@@ -32,8 +32,8 @@
 //
 enum appl_status
 appl_thread_service::s_create(
-    struct appl_object const * const
-        p_object,
+    struct appl_context * const
+        p_context,
     struct appl_thread_property const * const
         p_thread_property,
     struct appl_thread_descriptor const * const
@@ -43,10 +43,6 @@ appl_thread_service::s_create(
 {
     enum appl_status
         e_status;
-
-    struct appl_context * const
-        p_context =
-        p_object->get_context();
 
     class appl_thread_mgr * const
         p_thread_mgr =

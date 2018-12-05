@@ -111,7 +111,7 @@ enum appl_status
 //
 template <typename T_instance>
 enum appl_status
-    appl_allocator_alloc_object(
+    appl_new(
         struct appl_allocator * const
             p_allocator,
         T_instance * * const
@@ -134,17 +134,31 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
+        T_instance * const
+            p_instance = new (
+                p_placement)
+                T_instance;
+
+        p_instance->set_context(
+            appl_allocator_parent(
+                p_allocator)->get_context());
+
         e_status =
-            appl_object::init_object(
-                appl_allocator_parent(
-                    p_allocator)->get_context(),
-                p_placement,
-                r_object);
+            p_instance->f_init();
 
         if (
             appl_status_ok
-            != e_status)
+            == e_status)
         {
+            *(
+                r_object) =
+                p_instance;
+        }
+        else
+        {
+            delete
+                p_instance;
+
             appl_allocator_free(
                 p_allocator,
                 sizeof(T_instance),
@@ -155,14 +169,14 @@ enum appl_status
     return
         e_status;
 
-} // appl_allocator_alloc_object()
+} // appl_new()
 
 //
 //
 //
 template <typename T_instance, typename T_descriptor>
 enum appl_status
-    appl_allocator_alloc_object(
+    appl_new(
         struct appl_allocator * const
             p_allocator,
         T_descriptor const * const
@@ -187,18 +201,31 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
+        T_instance * const
+            p_instance = new (
+                p_placement)
+                T_instance;
+
+        p_instance->set_context(
+            appl_allocator_parent(
+                p_allocator)->get_context());
+
         e_status =
-            appl_object::init_object(
-                appl_allocator_parent(
-                    p_allocator)->get_context(),
-                p_placement,
-                p_descriptor,
-                r_object);
+            p_instance->f_init(p_descriptor);
 
         if (
             appl_status_ok
-            != e_status)
+            == e_status)
         {
+            *(
+                r_object) =
+                p_instance;
+        }
+        else
+        {
+            delete
+                p_instance;
+
             appl_allocator_free(
                 p_allocator,
                 sizeof(T_instance),
@@ -209,23 +236,16 @@ enum appl_status
     return
         e_status;
 
-} // appl_allocator_alloc_object()
-
-template <typename T_instance>
-enum appl_status
-    appl_allocator_free_object(
-        struct appl_allocator * const
-            p_allocator,
-        T_instance * const
-            p_object)
-{
-    return
-        p_object->v_destroy(
-            p_allocator);
-
-} // appl_allocator_free_object()
+} // appl_new()
 
 #endif /* #if defined INC_APPL_OBJECT_H */
+
+enum appl_status
+    appl_delete(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_object * const
+            p_object);
 
 #endif /* #if defined __cplusplus */
 

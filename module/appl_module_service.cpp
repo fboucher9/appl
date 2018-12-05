@@ -112,7 +112,7 @@ appl_file_source_module_service::s_destroy(
         p_this->get_context();
 
     return
-        appl_allocator_free_object(
+        appl_delete(
             appl_context_get_allocator(p_context),
             p_this);
 
@@ -173,8 +173,9 @@ appl_hex_convert_module_service::s_destroy(
         p_this->get_context();
 
     return
-        p_this->v_destroy(
-            appl_context_get_allocator(p_context));
+        appl_delete(
+            appl_context_get_allocator(p_context),
+            p_this);
 }
 
 //
@@ -223,8 +224,9 @@ appl_file_sink_module_service::s_destroy(
         p_this->get_context();
 
     return
-        p_this->v_destroy(
-            appl_context_get_allocator(p_context));
+        appl_delete(
+            appl_context_get_allocator(p_context),
+            p_this);
 }
 
 //

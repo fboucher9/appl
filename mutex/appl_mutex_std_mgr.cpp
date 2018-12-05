@@ -40,7 +40,7 @@ enum appl_status
         p_mutex_std_mgr;
 
     e_status =
-        appl_allocator_alloc_object(
+        appl_new(
             p_allocator,
             &(
                 p_mutex_std_mgr));
@@ -58,6 +58,23 @@ enum appl_status
         e_status;
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+    appl_mutex_std_mgr::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        class appl_mutex_mgr * const
+            p_mutex_mgr)
+{
+    return
+        appl_delete(
+            p_allocator,
+            p_mutex_mgr);
+
+} // s_destroy()
 
 //
 //

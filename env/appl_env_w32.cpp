@@ -53,7 +53,7 @@ appl_env_w32::s_create(
         p_env_w32;
 
     e_status =
-        appl_allocator_alloc_object(
+        appl_new(
             p_allocator,
             &(
                 p_env_w32));
@@ -71,6 +71,23 @@ appl_env_w32::s_create(
         e_status;
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+appl_env_w32::s_destroy(
+    struct appl_allocator * const
+        p_allocator,
+    struct appl_env * const
+        p_env)
+{
+    return
+        appl_delete(
+            p_allocator,
+            p_env);
+
+} // s_destroy()
 
 //
 //
@@ -340,7 +357,7 @@ enum appl_status
             m_context);
 
     e_status =
-        appl_allocator_alloc_object(
+        appl_new(
             p_allocator,
             &(
                 m_refcount));
@@ -361,9 +378,10 @@ appl_size_t
 
     if (m_refcount->f_release())
     {
-        m_refcount->v_destroy(
+        appl_delete(
             appl_context_get_allocator(
-                m_context));
+                m_context),
+            m_refcount);
 
         i_cleanup_result =
             sizeof(class appl_env_w32);

@@ -794,8 +794,7 @@ static void appl_test_thread(
 
         e_status =
             appl_thread_create(
-                appl_context_parent(
-                    p_context),
+                p_context,
                 p_property,
                 &(
                     o_thread_descriptor),
@@ -1169,8 +1168,7 @@ appl_test_socket_process_client(
 
             e_status =
                 appl_thread_create(
-                    appl_context_parent(
-                        p_context),
+                    p_context,
                     p_thread_property,
                     &(
                         o_thread_descriptor),

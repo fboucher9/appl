@@ -34,6 +34,14 @@ class appl_socket_std_mgr : public appl_socket_mgr
                 class appl_socket_mgr * * const
                     r_socket_mgr);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                class appl_socket_mgr * const
+                    p_socket_mgr);
+
         appl_socket_std_mgr();
 
         virtual

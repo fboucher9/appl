@@ -32,7 +32,7 @@
 
 #include <thread/appl_thread_std_node.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 #include <appl_unused.h>
 
@@ -79,7 +79,8 @@ enum appl_status
         p_thread_descriptor;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 o_thread_std_node_descriptor),
             &(
@@ -113,8 +114,9 @@ enum appl_status
         e_status;
 
     e_status =
-        p_thread->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_thread);
 
     return
         e_status;

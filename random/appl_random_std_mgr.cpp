@@ -24,9 +24,9 @@
 
 #include <appl_unused.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 //
 //
@@ -45,7 +45,8 @@ appl_random_std_mgr::s_create(
         p_random_std_mgr;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 p_random_std_mgr));
 
@@ -74,8 +75,9 @@ appl_random_std_mgr::s_destroy(
         p_random_mgr)
 {
     return
-        p_random_mgr->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_random_mgr);
 
 } // s_destroy()
 
@@ -131,7 +133,8 @@ appl_random_std_mgr::v_create_node(
     {
         e_status =
             appl_random_std_crypto::s_create(
-                m_context->m_allocator,
+                appl_context_get_allocator(
+                    m_context),
                 r_node);
     }
     else
@@ -159,8 +162,10 @@ appl_random_std_mgr::v_destroy_node(
         e_status;
 
     e_status =
-        p_random->v_destroy(
-            m_context->m_allocator);
+        appl_delete(
+            appl_context_get_allocator(
+                m_context),
+            p_random);
 
     return
         e_status;

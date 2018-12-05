@@ -15,8 +15,8 @@
 */
 enum appl_status
 appl_thread_create(
-    struct appl_object const * const
-        p_object,
+    struct appl_context * const
+        p_context,
     struct appl_thread_property const * const
         p_thread_property,
     struct appl_thread_descriptor const * const
@@ -26,7 +26,7 @@ appl_thread_create(
 {
     return
         appl_thread_service::s_create(
-            p_object,
+            p_context,
             p_thread_property,
             p_thread_descriptor,
             r_thread);

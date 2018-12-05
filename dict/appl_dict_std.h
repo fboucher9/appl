@@ -36,6 +36,14 @@ class appl_dict_std : public appl_dict
                 class appl_dict_std * * const
                     r_instance);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                class appl_dict_std * const
+                    p_instance);
+
         appl_dict_std();
 
         virtual

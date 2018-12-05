@@ -36,7 +36,7 @@
 
 #include <appl_convert.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 struct appl_file_std_node_descriptor
 {
@@ -70,7 +70,8 @@ enum appl_status
         p_file_std_node;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 o_file_std_node_descriptor),
             &(
@@ -101,8 +102,9 @@ enum appl_status
             p_file_node)
 {
     return
-        p_file_node->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_file_node);
 
 } // s_destroy()
 

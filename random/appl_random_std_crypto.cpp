@@ -20,7 +20,7 @@
 
 #include <appl_unused.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 //
 //
@@ -39,7 +39,8 @@ appl_random_std_crypto::s_create(
         p_random_std_crypto;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 p_random_std_crypto));
 
@@ -68,8 +69,9 @@ appl_random_std_crypto::s_destroy(
         p_random)
 {
     return
-        p_random->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_random);
 
 } // s_destroy()
 

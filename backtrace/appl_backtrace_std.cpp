@@ -35,7 +35,7 @@ enum appl_status
         p_backtrace_std;
 
     e_status =
-        appl_allocator_alloc_object(
+        appl_new(
             p_allocator,
             &(
                 p_backtrace_std));
@@ -68,8 +68,9 @@ enum appl_status
         e_status;
 
     e_status =
-        p_instance->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_instance);
 
     return
         e_status;

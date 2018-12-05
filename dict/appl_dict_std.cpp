@@ -22,7 +22,7 @@
 
 #include <appl_unused.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 #include <appl_buf.h>
 
@@ -71,10 +71,28 @@ enum appl_status
             r_instance)
 {
     return
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             r_instance);
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+    appl_dict_std::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        class appl_dict_std * const
+            p_instance)
+{
+    return
+        appl_delete(
+            p_allocator,
+            p_instance);
+
+} // s_destroy()
 
 //
 //
@@ -380,7 +398,8 @@ enum appl_status
         p_dict_std_node;
 
     e_status =
-        m_context->m_allocator->alloc_structure(
+        appl_allocator_alloc_structure(
+            m_context->m_allocator,
             &(
                 p_dict_std_node));
 
@@ -413,7 +432,8 @@ enum appl_status
         }
         else
         {
-            m_context->m_allocator->free_structure(
+            appl_allocator_free_structure(
+                m_context->m_allocator,
                 p_dict_std_node);
         }
     }

@@ -20,11 +20,9 @@
 
 #include <library/appl_library_std_node.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
-#include <allocator/appl_allocator.h>
-
-#include <heap/appl_heap.h>
+#include <appl_allocator_handle.h>
 
 //
 //
@@ -43,7 +41,8 @@ enum appl_status
         p_library_std_mgr;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 p_library_std_mgr));
 
@@ -99,7 +98,8 @@ enum appl_status
 {
     return
         appl_library_std_node::s_create(
-            m_context->m_allocator,
+            appl_context_get_allocator(
+                m_context),
             p_library_descriptor,
             r_library);
 
@@ -115,7 +115,8 @@ enum appl_status
 {
     return
         appl_library_std_node::s_destroy(
-            m_context->m_allocator,
+            appl_context_get_allocator(
+                m_context),
             p_library);
 
 } // v_destroy_node()

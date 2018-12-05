@@ -20,8 +20,6 @@
 
 #include <context/appl_context.h>
 
-#include <allocator/appl_allocator.h>
-
 //
 //
 //

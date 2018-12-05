@@ -41,7 +41,7 @@ enum appl_status
         p_clock_w32;
 
     e_status =
-        appl_allocator_alloc_object(
+        appl_new(
             p_allocator,
             &(
                 p_clock_w32));
@@ -71,8 +71,9 @@ enum appl_status
             p_clock)
 {
     return
-        p_clock->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_clock);
 
 } // s_destroy()
 

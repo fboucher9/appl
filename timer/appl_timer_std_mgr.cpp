@@ -41,7 +41,7 @@ enum appl_status
         p_timer_std_mgr;
 
     e_status =
-        appl_allocator_alloc_object(
+        appl_new(
             p_allocator,
             &(
                 p_timer_std_mgr));

@@ -20,7 +20,7 @@
 
 #include <appl_buf.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 //
 //
@@ -39,7 +39,8 @@ enum appl_status
         p_debug_w32;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 p_debug_w32));
 
@@ -68,8 +69,9 @@ enum appl_status
             p_debug)
 {
     return
-        p_debug->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_debug);
 
 } // s_destroy()
 

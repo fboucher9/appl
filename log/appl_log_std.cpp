@@ -18,9 +18,7 @@
 
 #include <log/appl_log_std.h>
 
-#include <appl_unused.h>
-
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 //
 //
@@ -36,13 +34,31 @@ enum appl_status
         e_status;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             r_instance);
 
     return
         e_status;
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+    appl_log_std::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_log * const
+            p_instance)
+{
+    return
+        appl_delete(
+            p_allocator,
+            p_instance);
+
+} // s_destroy()
 
 //
 //

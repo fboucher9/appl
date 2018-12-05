@@ -20,6 +20,8 @@
 
 #include <allocator/appl_allocator.h>
 
+#include <appl_allocator_handle.h>
+
 #include <heap/appl_heap.h>
 
 #include <appl_list.h>
@@ -45,7 +47,8 @@ enum appl_status
         p_heap_std;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 p_heap_std));
 
@@ -74,8 +77,9 @@ enum appl_status
             p_heap)
 {
     return
-        p_heap->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_heap);
 
 } // s_destroy()
 

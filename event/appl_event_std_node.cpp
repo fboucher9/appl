@@ -36,7 +36,7 @@
 
 #include <appl_convert.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -62,7 +62,8 @@ enum appl_status
         p_event_std_node;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             p_event_descriptor,
             &(
                 p_event_std_node));
@@ -95,8 +96,9 @@ enum appl_status
         e_status;
 
     e_status =
-        p_event->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_event);
 
     return
         e_status;

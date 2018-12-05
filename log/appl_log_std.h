@@ -35,6 +35,14 @@ class appl_log_std : public appl_log
                 class appl_log_std * * const
                     r_instance);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                struct appl_log * const
+                    p_instance);
+
         appl_log_std();
 
         virtual

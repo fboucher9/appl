@@ -36,6 +36,14 @@ class appl_mutex_std_mgr : public appl_mutex_mgr
                 class appl_mutex_mgr * * const
                     r_mutex_mgr);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                class appl_mutex_mgr * const
+                    p_mutex_mgr);
+
         appl_mutex_std_mgr();
 
         virtual

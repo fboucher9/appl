@@ -27,9 +27,6 @@ struct appl_object;
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
-// Predefine
-struct appl_allocator;
-
 //
 //
 //
@@ -38,10 +35,11 @@ struct appl_object
     public:
 
         virtual
-        enum appl_status
-            v_destroy(
-                struct appl_allocator * const
-                    p_allocator);
+        ~appl_object();
+
+        virtual
+        appl_size_t
+            v_cleanup(void);
 
         struct appl_context *
             get_context(void) const;
@@ -82,133 +80,6 @@ struct appl_object
             void * const
                 p_placement);
 
-        template <typename T_instance>
-        static
-        enum appl_status
-            init_object(
-                struct appl_context * const
-                    p_context,
-                void * const
-                    p_placement,
-                T_instance * * const
-                    r_object)
-        {
-            enum appl_status
-                e_status;
-
-            union object_ptr
-            {
-                void *
-                    p_placement;
-
-                struct appl_object *
-                    p_object;
-
-                T_instance *
-                    p_instance;
-
-            } o_object_ptr;
-
-            o_object_ptr.p_placement =
-                p_placement;
-
-            new (
-                o_object_ptr.p_placement)
-                T_instance;
-
-            o_object_ptr.p_object->set_context(
-                p_context);
-
-            e_status =
-                o_object_ptr.p_instance->f_init();
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                *(
-                    r_object) =
-                    o_object_ptr.p_instance;
-            }
-
-            if (
-                appl_status_ok
-                != e_status)
-            {
-                delete
-                    o_object_ptr.p_instance;
-            }
-
-            return
-                e_status;
-
-        } // init_object()
-
-        template <typename T_instance, typename T_descriptor>
-        static
-        enum appl_status
-            init_object(
-                struct appl_context * const
-                    p_context,
-                void * const
-                    p_placement,
-                T_descriptor const * const
-                    p_descriptor,
-                T_instance * * const
-                    r_object)
-        {
-            enum appl_status
-                e_status;
-
-            union object_ptr
-            {
-                void *
-                    p_placement;
-
-                struct appl_object *
-                    p_object;
-
-                T_instance *
-                    p_instance;
-
-            } o_object_ptr;
-
-            o_object_ptr.p_placement =
-                p_placement;
-
-            new (
-                o_object_ptr.p_placement)
-                T_instance;
-
-            o_object_ptr.p_object->set_context(
-                p_context);
-
-            e_status =
-                o_object_ptr.p_instance->f_init(
-                    p_descriptor);
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                *(
-                    r_object) =
-                    o_object_ptr.p_instance;
-            }
-
-            if (
-                appl_status_ok
-                != e_status)
-            {
-                delete
-                    o_object_ptr.p_instance;
-            }
-
-            return
-                e_status;
-
-        } // init_object()
-
     protected:
 
         // --
@@ -221,13 +92,6 @@ struct appl_object
         // --
 
         appl_object();
-
-        virtual
-        ~appl_object();
-
-        virtual
-        appl_size_t
-            v_cleanup(void);
 
     private:
 

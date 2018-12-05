@@ -26,9 +26,7 @@
 
 #include <appl_thread_property.h>
 
-#include <thread/appl_thread_node.h>
-
-#include <thread/appl_thread_mgr.h>
+#include <appl_thread_handle.h>
 
 #include <appl_event_handle.h>
 
@@ -36,13 +34,13 @@
 
 #include <appl_timer_handle.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 #include <appl_heap_handle.h>
 
-#include <clock/appl_clock.h>
+#include <appl_clock_handle.h>
 
 #include <appl_convert.h>
 
@@ -67,7 +65,8 @@ enum appl_status
         p_timer_std_node;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 p_timer_std_node));
 
@@ -96,8 +95,9 @@ enum appl_status
             p_timer)
 {
     return
-        p_timer->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_timer);
 
 } // s_destroy()
 
@@ -218,7 +218,8 @@ enum appl_status
                     this;
 
                 e_status =
-                    m_context->m_thread_mgr->v_create_node(
+                    appl_thread_create(
+                        m_context,
                         p_thread_property,
                         &(
                             o_thread_descriptor),
@@ -301,13 +302,14 @@ appl_size_t
         if (
             !m_thread_killed)
         {
-            m_context->m_clock->v_delay(
+            appl_clock_delay(
+                m_context,
                 1000ul,
                 100ul);
         }
     }
 
-    m_context->m_thread_mgr->v_destroy_node(
+    appl_thread_destroy(
         m_thread);
 
     appl_event_destroy(
@@ -622,7 +624,8 @@ appl_ull_t
     i_count_usec =
         0u;
 
-    m_context->m_clock->v_read(
+    appl_clock_read(
+        m_context,
         1000000ul,
         &(
             i_count_usec));

@@ -24,7 +24,7 @@
 
 #include <appl_convert.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 //
 //
@@ -43,7 +43,8 @@ appl_random_w32_crypto::s_create(
         p_random_w32_crypto;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 p_random_w32_crypto));
 
@@ -75,6 +76,17 @@ appl_random_w32_crypto::appl_random_w32_crypto() :
 appl_random_w32_crypto::~appl_random_w32_crypto()
 {
 }
+
+//
+//
+//
+appl_size_t
+appl_random_w32_crypto::v_cleanup(void)
+{
+    return
+        sizeof(class appl_random_w32_crypto);
+
+} // v_cleanup()
 
 //
 //

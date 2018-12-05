@@ -22,7 +22,7 @@
 
 #include <context/appl_context.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 //
 //
@@ -67,8 +67,9 @@ appl_random_mgr::v_destroy_node(
         p_node)
 {
     return
-        p_node->v_destroy(
-            m_context->m_allocator);
+        appl_delete(
+            m_context->m_allocator,
+            p_node);
 
 } // v_destroy_node()
 

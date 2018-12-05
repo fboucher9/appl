@@ -45,6 +45,14 @@ class appl_library_w32_node : public appl_library
                 struct appl_library * * const
                     r_library);
 
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_allocator * const
+                    p_allocator,
+                struct appl_library * const
+                    p_library);
+
         //
         //
         //
@@ -63,6 +71,10 @@ class appl_library_w32_node : public appl_library
             f_init(
                 struct appl_library_descriptor const * const
                     p_library_descriptor);
+
+        virtual
+        appl_size_t
+            v_cleanup(void);
 
     protected:
 

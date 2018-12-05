@@ -62,7 +62,7 @@ enum appl_status
         p_socket_w32_node;
 
     e_status =
-        appl_allocator_alloc_object(
+        appl_new(
             p_allocator,
             p_socket_descriptor,
             &(
@@ -626,7 +626,7 @@ appl_socket_w32_node::v_accept(
                         m_context);
 
                 e_status =
-                    appl_allocator_alloc_object(
+                    appl_new(
                         p_allocator,
                         &(
                             i_accept_result),

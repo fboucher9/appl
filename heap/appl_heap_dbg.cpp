@@ -34,6 +34,8 @@
 
 #include <allocator/appl_allocator.h>
 
+#include <appl_allocator_handle.h>
+
 #include <heap/appl_heap.h>
 
 #include <appl_list.h>
@@ -79,7 +81,8 @@ enum appl_status
         p_parent;
 
     e_status =
-        p_parent->alloc_object(
+        appl_new(
+            p_parent,
             &(
                 o_descriptor),
             &(

@@ -16,9 +16,9 @@
 
 #include <hash/appl_hash.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 #include <appl_heap_handle.h>
 

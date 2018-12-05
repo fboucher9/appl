@@ -32,9 +32,9 @@
 
 #include <appl_convert.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 #define APPL_ADDRESS_PROPERTY_GUID (0xe0bfd095ul)
 
@@ -109,7 +109,9 @@ appl_address_property::s_create(
         r_address_property)
 {
     return
-        p_context->m_allocator->alloc_object(
+        appl_new(
+            appl_context_get_allocator(
+                p_context),
             r_address_property);
 
 } // s_create()
@@ -127,8 +129,10 @@ appl_address_property::s_destroy(
         p_address_property->get_context();
 
     return
-        p_address_property->v_destroy(
-            p_context->m_allocator);
+        appl_delete(
+            appl_context_get_allocator(
+                p_context),
+            p_address_property);
 
 } // s_destroy()
 

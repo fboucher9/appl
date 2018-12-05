@@ -24,9 +24,7 @@
 
 #include <appl_convert.h>
 
-#include <appl_unused.h>
-
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 //
 //
@@ -47,7 +45,8 @@ enum appl_status
         p_library_std_node;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             p_library_descriptor,
             &(
                 p_library_std_node));
@@ -77,8 +76,9 @@ enum appl_status
             p_library)
 {
     return
-        p_library->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_library);
 
 } // s_destroy()
 

@@ -22,9 +22,9 @@
 
 #include <random/appl_random_w32_crypto.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
 //
 //
@@ -43,7 +43,8 @@ appl_random_w32_mgr::s_create(
         p_random_w32_mgr;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 p_random_w32_mgr));
 
@@ -64,6 +65,23 @@ appl_random_w32_mgr::s_create(
 //
 //
 //
+enum appl_status
+appl_random_w32_mgr::s_destroy(
+    struct appl_allocator * const
+        p_allocator,
+    class appl_random_mgr * const
+        p_random_mgr)
+{
+    return
+        appl_delete(
+            p_allocator,
+            p_random_mgr);
+
+} // s_destroy()
+
+//
+//
+//
 appl_random_w32_mgr::appl_random_w32_mgr() :
     appl_random_mgr()
 {
@@ -75,6 +93,17 @@ appl_random_w32_mgr::appl_random_w32_mgr() :
 appl_random_w32_mgr::~appl_random_w32_mgr()
 {
 }
+
+//
+//
+//
+appl_size_t
+    appl_random_w32_mgr::v_cleanup(void)
+{
+    return
+        sizeof(class appl_random_w32_mgr);
+
+} // v_cleanup()
 
 //
 //
@@ -106,7 +135,8 @@ appl_random_w32_mgr::v_create_node(
     {
         e_status =
             appl_random_w32_crypto::s_create(
-                m_context->m_allocator,
+                appl_context_get_allocator(
+                    m_context),
                 r_node);
     }
     else
@@ -121,6 +151,28 @@ appl_random_w32_mgr::v_create_node(
         e_status;
 
 } // v_create_node()
+
+//
+//
+//
+enum appl_status
+appl_random_w32_mgr::v_destroy_node(
+    struct appl_random * const
+        p_node)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_delete(
+            appl_context_get_allocator(
+                m_context),
+            p_node);
+
+    return
+        e_status;
+
+} // v_destroy_node()
 
 #endif /* #if defined APPL_OS_WINDOWS */
 

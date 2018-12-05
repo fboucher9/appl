@@ -20,9 +20,7 @@
 
 #include <queue/appl_queue_std.h>
 
-#include <appl_unused.h>
-
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 //
 //
@@ -43,7 +41,8 @@ enum appl_status
         p_queue_std;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             p_descriptor,
             &(
                 p_queue_std));
@@ -73,8 +72,9 @@ enum appl_status
             p_queue)
 {
     return
-        p_queue->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_queue);
 
 } // s_destroy()
 

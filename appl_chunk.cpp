@@ -20,7 +20,7 @@ Description:
 
 #include <appl_object.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 #include <appl_heap_handle.h>
 
@@ -326,7 +326,8 @@ appl_chunk_std::s_create(
         p_chunk_std;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 p_chunk_std));
 
@@ -790,8 +791,9 @@ appl_chunk_service::s_destroy(
         p_chunk->get_context();
 
     return
-        p_chunk->v_destroy(
-            p_context->m_allocator);
+        appl_delete(
+            p_context->m_allocator,
+            p_chunk);
 
 } // s_destroy()
 

@@ -36,6 +36,8 @@
 
 #include <context/appl_context.h>
 
+#include <appl_allocator_handle.h>
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -64,7 +66,8 @@ enum appl_status
             r_instance)
 {
     return
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             p_pool_descriptor,
             r_instance);
 

@@ -22,6 +22,8 @@
 
 #include <appl_context_handle.h>
 
+#include <appl_allocator_handle.h>
+
 //
 //
 //
@@ -74,8 +76,9 @@ appl_xlib_service::s_destroy(
             p_context);
 
     return
-        p_xlib->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_xlib);
 
 } // s_destroy()
 

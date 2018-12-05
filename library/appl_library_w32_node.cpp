@@ -24,7 +24,7 @@
 
 #include <appl_convert.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 //
 //
@@ -45,7 +45,8 @@ enum appl_status
         p_library_w32_node;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             p_library_descriptor,
             &(
                 p_library_w32_node));
@@ -63,6 +64,23 @@ enum appl_status
         e_status;
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+    appl_library_w32_node::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_library * const
+            p_library)
+{
+    return
+        appl_delete(
+            p_allocator,
+            p_library);
+
+} // s_destroy()
 
 //
 //
@@ -131,6 +149,20 @@ enum appl_status
 
 } // f_init()
 
+//
+//
+//
+appl_size_t
+    appl_library_w32_node::v_cleanup(void)
+{
+    return
+        sizeof(class appl_library_w32_node);
+
+} // v_cleanup()
+
+//
+//
+//
 enum appl_status
     appl_library_w32_node::v_query(
         unsigned char const * const

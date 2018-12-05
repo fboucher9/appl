@@ -16,7 +16,7 @@
 
 #include <appl_unused.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 //
 //
@@ -37,7 +37,8 @@ appl_random_pseudo::s_create(
         p_random_pseudo;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             &(
                 i_seed),
             &(

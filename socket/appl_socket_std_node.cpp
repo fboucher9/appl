@@ -44,7 +44,7 @@
 
 #include <appl_convert.h>
 
-#include <allocator/appl_allocator.h>
+#include <appl_allocator_handle.h>
 
 #include <context/appl_context.h>
 
@@ -72,7 +72,8 @@ enum appl_status
         p_socket_std_node;
 
     e_status =
-        p_allocator->alloc_object(
+        appl_new(
+            p_allocator,
             p_socket_descriptor,
             &(
                 p_socket_std_node));
@@ -105,8 +106,9 @@ enum appl_status
         e_status;
 
     e_status =
-        p_socket->v_destroy(
-            p_allocator);
+        appl_delete(
+            p_allocator,
+            p_socket);
 
     return
         e_status;
@@ -843,7 +845,8 @@ appl_socket_std_node::v_accept(
                     p_socket_std_node;
 
                 e_status =
-                    m_context->m_allocator->alloc_object(
+                    appl_new(
+                        m_context->m_allocator,
                         &(
                             i_accept_result),
                         &(
