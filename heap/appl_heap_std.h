@@ -50,6 +50,10 @@ class appl_heap_std : public appl_heap
         enum appl_status
             f_init(void);
 
+        virtual
+        appl_size_t
+            v_cleanup(void);
+
     protected:
 
     private:
@@ -60,10 +64,6 @@ class appl_heap_std : public appl_heap
         class appl_heap_std &
             operator =(
                 class appl_heap_std const & r);
-
-        virtual
-        appl_size_t
-            v_cleanup(void);
 
         virtual
         enum appl_status

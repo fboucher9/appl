@@ -36,11 +36,19 @@ class appl_heap_dbg : public appl_heap
 
         static
         enum appl_status
-            create_instance(
+            s_create(
                 struct appl_heap * const
                     p_parent,
                 struct appl_heap * * const
                     r_heap);
+
+        static
+        enum appl_status
+            s_destroy(
+                struct appl_heap * const
+                    p_parent,
+                struct appl_heap * const
+                    p_heap);
 
         appl_heap_dbg();
 

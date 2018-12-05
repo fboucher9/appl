@@ -62,7 +62,7 @@ struct appl_heap_dbg_descriptor
 //
 //
 enum appl_status
-    appl_heap_dbg::create_instance(
+    appl_heap_dbg::s_create(
         struct appl_heap * const
             p_parent,
         struct appl_heap * * const
@@ -100,7 +100,21 @@ enum appl_status
     return
         e_status;
 
-} // create_instance()
+} // s_create()
+
+enum appl_status
+    appl_heap_dbg::s_destroy(
+        struct appl_heap * const
+            p_parent,
+        struct appl_heap * const
+            p_heap)
+{
+    return
+        appl_delete(
+            p_parent,
+            p_heap);
+
+} // s_destroy()
 
 //
 //
@@ -287,27 +301,11 @@ appl_size_t
         printf("*** no memory leaks ***\n");
     }
 
-    struct appl_heap * const
-        p_parent =
-        m_parent;
-
     m_parent =
         0;
 
-    void * const
-        p_placement =
-        this;
-
-    delete
-        this;
-
-    p_parent->v_free(
-        sizeof(
-            class appl_heap_dbg),
-        p_placement);
-
     return
-        0;
+        sizeof(class appl_heap_dbg);
 
 } // v_cleanup()
 

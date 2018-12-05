@@ -32,7 +32,7 @@ class appl_context_std : public appl_context
 
         static
         enum appl_status
-            create_instance(
+            s_create(
                 struct appl_context * * const
                     r_context);
 
@@ -48,9 +48,7 @@ class appl_context_std : public appl_context
         ~appl_context_std();
 
         enum appl_status
-            f_init(
-                struct appl_context_init_descriptor const * const
-                    p_context_descriptor);
+            f_init(void);
 
     protected:
 
@@ -72,6 +70,11 @@ class appl_context_std : public appl_context
         }
         const
         g_init_cleanup_items[];
+
+        /* -- */
+
+        class appl_heap_std
+            m_heap_std;
 
         /* -- */
 
@@ -156,9 +159,7 @@ class appl_context_std : public appl_context
                 class appl_context_std const & r);
 
         enum appl_status
-            init_heap(
-                struct appl_heap * const
-                    p_heap);
+            init_heap(void);
 
         void
             cleanup_heap(void);

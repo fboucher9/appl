@@ -14,6 +14,12 @@
 
 #include <context/appl_context.h>
 
+#include <allocator/appl_allocator.h>
+
+#include <heap/appl_heap.h>
+
+#include <heap/appl_heap_std.h>
+
 #include <context/appl_context_std.h>
 
 //
@@ -31,7 +37,7 @@ appl_context_service::s_create(
         p_context;
 
     e_status =
-        appl_context_std::create_instance(
+        appl_context_std::s_create(
             &(
                 p_context));
 

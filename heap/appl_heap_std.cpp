@@ -115,18 +115,8 @@ enum appl_status
 appl_size_t
 appl_heap_std::v_cleanup(void)
 {
-    void * const
-        p_placement =
-        this;
-
-    delete
-        this;
-
-    free(
-        p_placement);
-
     return
-        0;
+        sizeof(class appl_heap_std);
 
 } // v_cleanup()
 

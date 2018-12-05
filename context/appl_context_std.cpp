@@ -4,15 +4,15 @@
 
 */
 
-#if defined APPL_DEBUG
+#if defined APPL_OS_LINUX
 
 #include <pthread.h>
+
+#endif /* #if defined APPL_OS_LINUX */
 
 #if defined APPL_OS_WINDOWS
 
 #include <windows.h>
-
-#endif /* #if defined APPL_OS_WINDOWS */
 
 #endif /* #if defined APPL_DEBUG */
 
@@ -30,17 +30,17 @@
 
 #include <context/appl_context.h>
 
-#include <context/appl_context_std.h>
-
 #include <allocator/appl_allocator.h>
 
 #include <allocator/appl_allocator_std.h>
 
-#include <appl_allocator_handle.h>
-
 #include <heap/appl_heap.h>
 
 #include <heap/appl_heap_std.h>
+
+#include <context/appl_context_std.h>
+
+#include <appl_allocator_handle.h>
 
 #if defined APPL_DEBUG
 
@@ -188,38 +188,141 @@ enum appl_status
         class appl_library_mgr * const
             p_library_mgr);
 
-struct appl_context_init_descriptor
+//
+//
+//
+class appl_context_default : public appl_context
 {
-    struct appl_heap *
-        p_heap;
+    public:
 
-}; /* struct appl_context_init_descriptor */
+        appl_context_default();
+
+        virtual
+        ~appl_context_default();
+
+        void
+            f_init(void);
+
+    protected:
+
+    private:
+
+        class appl_allocator_std
+            m_allocator_std;
+
+        virtual
+        appl_size_t
+            v_cleanup(void);
+
+        appl_context_default(
+            class appl_context_default const & r);
+
+        class appl_context_default &
+            operator =(
+                class appl_context_default const & r);
+
+}; // class appl_context_default
+
+appl_context_default::appl_context_default() :
+    appl_context(),
+    m_allocator_std()
+{
+}
+
+appl_context_default::~appl_context_default()
+{
+}
+
+void
+appl_context_default::f_init(void)
+{
+    m_allocator_std.set_context(
+        this);
+    m_allocator_std.f_init();
+
+    m_allocator =
+        &(
+            m_allocator_std);
+
+}
+
+appl_size_t
+appl_context_default::v_cleanup(void)
+{
+    return
+        0;
+
+}
+
+static unsigned char g_context_default_placement[sizeof(class appl_context_default)];
+
+static class appl_context_default * g_context_default = 0;
 
 //
 //
 //
 enum appl_status
-    appl_context_std::init_heap(
-        struct appl_heap * const
-            p_heap)
+    appl_context_std::init_heap(void)
 {
     enum appl_status
         e_status;
 
-    m_heap =
-        p_heap;
-
-    m_heap->set_context(
-        this);
-
-    m_allocator =
-        m_heap;
-
-    b_init_heap =
-        true;
-
     e_status =
-        appl_status_ok;
+        m_heap_std.f_init();
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        struct appl_heap *
+            p_heap;
+
+        p_heap =
+            &(
+                m_heap_std);
+
+#if defined APPL_DEBUG
+        e_status =
+            appl_heap_dbg::s_create(
+                p_heap,
+                &(
+                    p_heap));
+
+        if (
+            appl_status_ok
+            == e_status)
+#endif /* #if defined APPL_DEBUG */
+        {
+            m_heap =
+                p_heap;
+
+            m_allocator =
+                m_heap;
+
+            m_heap->set_context(
+                this);
+
+            b_init_heap =
+                true;
+
+#if defined APPL_DEBUG
+            if (
+                appl_status_ok != e_status)
+            {
+                appl_heap_dbg::s_destroy(
+                    &(
+                        m_heap_std),
+                    p_heap);
+            }
+#endif /* #if defined APPL_DEBUG */
+        }
+
+        if (
+            appl_status_ok != e_status)
+        {
+            m_heap_std.v_cleanup();
+        }
+    }
 
     return
         e_status;
@@ -235,6 +338,15 @@ void
     if (
         b_init_heap)
     {
+#if defined APPL_DEBUG
+        appl_heap_dbg::s_destroy(
+            &(
+                m_heap_std),
+            m_heap);
+#endif /* #if defined APPL_DEBUG */
+
+        m_heap_std.v_cleanup();
+
         m_heap =
             0;
 
@@ -1324,76 +1436,6 @@ void
 //
 //
 //
-class appl_context_default : public appl_context
-{
-    public:
-
-        appl_context_default();
-
-        virtual
-        ~appl_context_default();
-
-        void
-            f_init(void);
-
-    protected:
-
-    private:
-
-        class appl_allocator_std
-            m_allocator_std;
-
-        virtual
-        appl_size_t
-            v_cleanup(void);
-
-        appl_context_default(
-            class appl_context_default const & r);
-
-        class appl_context_default &
-            operator =(
-                class appl_context_default const & r);
-
-}; // class appl_context_default
-
-appl_context_default::appl_context_default() :
-    appl_context(),
-    m_allocator_std()
-{
-}
-
-appl_context_default::~appl_context_default()
-{
-}
-
-void
-appl_context_default::f_init(void)
-{
-    m_allocator_std.set_context(
-        this);
-    m_allocator_std.f_init();
-
-    m_allocator =
-        &(
-            m_allocator_std);
-
-}
-
-appl_size_t
-appl_context_default::v_cleanup(void)
-{
-    return
-        0;
-
-}
-
-static unsigned char g_context_default_placement[sizeof(class appl_context_default)];
-
-static class appl_context_default * g_context_default = 0;
-
-//
-//
-//
 void
     appl_context_std::s_bootstrap(void)
 {
@@ -1408,7 +1450,7 @@ void
 //
 //
 enum appl_status
-    appl_context_std::create_instance(
+    appl_context_std::s_create(
         struct appl_context * * const
             r_context)
 {
@@ -1422,77 +1464,37 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_heap *
-        p_heap;
-
     appl_once_dispatch(
         &(
             g_bootstrap),
         &(
             appl_context_std::s_bootstrap));
 
+    class appl_context_std *
+        p_context_std;
+
     e_status =
-        appl_heap_std::s_create(
+        appl_new(
             g_context_default->m_allocator,
             &(
-                p_heap));
+                p_context_std));
 
     if (
-        appl_status_ok
-        == e_status)
+        appl_status_ok == e_status)
     {
-#if defined APPL_DEBUG
-        e_status =
-            appl_heap_dbg::create_instance(
-                p_heap,
-                &(
-                    p_heap));
-#endif /* #if defined APPL_DEBUG */
-
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            struct appl_context_init_descriptor
-                o_init_descriptor;
-
-            o_init_descriptor.p_heap =
-                p_heap;
-
-            class appl_context_std *
-                p_context_std;
-
-            e_status =
-                appl_new(
-                    p_heap,
-                    &(
-                        o_init_descriptor),
-                    &(
-                        p_context_std));
-
-            if (
-                appl_status_ok == e_status)
-            {
-                *(
-                    r_context) =
-                    p_context_std;
-            }
-        }
-
-        if (
-            appl_status_ok != e_status)
-        {
-            appl_heap_std::s_destroy(
-                g_context_default->m_allocator,
-                p_heap);
-        }
+        *(
+            r_context) =
+            p_context_std;
     }
 
     return
         e_status;
 
-} // create_instance()
+} // s_create()
 
+//
+//
+//
 enum appl_status
     appl_context_std::s_destroy(
         struct appl_context * const
@@ -1500,7 +1502,7 @@ enum appl_status
 {
     return
         appl_delete(
-            0,
+            g_context_default->m_allocator,
             p_context);
 
 } // s_destroy()
@@ -1510,6 +1512,7 @@ enum appl_status
 //
 appl_context_std::appl_context_std() :
     appl_context()
+    , m_heap_std()
     , b_init_heap()
 #if defined APPL_DEBUG
     , b_init_debug()
@@ -1546,6 +1549,9 @@ struct appl_context_std::init_cleanup_item
 const
 appl_context_std::g_init_cleanup_items[] =
 {
+    {   & appl_context_std::init_heap,
+        & appl_context_std::cleanup_heap
+    },
 #if defined APPL_DEBUG
     {
         & appl_context_std::init_debug,
@@ -1620,9 +1626,7 @@ appl_context_std::g_init_cleanup_items[] =
 //
 //
 enum appl_status
-    appl_context_std::f_init(
-        struct appl_context_init_descriptor const * const
-            p_context_init_descriptor)
+    appl_context_std::f_init(void)
 {
     enum appl_status
         e_status;
@@ -1630,19 +1634,15 @@ enum appl_status
     m_context =
         this;
 
-    e_status =
-        init_heap(
-            p_context_init_descriptor->p_heap);
-
-    if (
-        appl_status_ok
-        == e_status)
     {
         unsigned int
             i_item_iterator;
 
         i_item_iterator =
             0;
+
+        e_status =
+            appl_status_ok;
 
         while (
             (
@@ -1680,12 +1680,6 @@ enum appl_status
                 }
             }
         }
-
-        if (
-            appl_status_ok != e_status)
-        {
-            cleanup_heap();
-        }
     }
 
     return
@@ -1699,10 +1693,6 @@ enum appl_status
 appl_size_t
     appl_context_std::v_cleanup(void)
 {
-    struct appl_heap * const
-        p_heap =
-        m_heap;
-
     // destroy objects
 
     unsigned int
@@ -1725,24 +1715,8 @@ appl_size_t
         ((this)->*(p_item->p_cleanup))();
     }
 
-    cleanup_heap();
-
-    // manual delete
-    void * const
-        p_placement =
-        this;
-
-    p_heap->v_free(
-        sizeof(
-            *this),
-        p_placement);
-
-    appl_delete(
-        0,
-        p_heap);
-
     return
-        0;
+        sizeof(class appl_context_std);
 
 } // v_cleanup()
 
