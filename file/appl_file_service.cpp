@@ -38,14 +38,23 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_file_mgr * const
-        p_file_mgr =
-        p_context->m_file_mgr;
+    class appl_file_mgr *
+        p_file_mgr;
 
     e_status =
-        p_file_mgr->v_create_node(
-            p_file_descriptor,
-            r_file);
+        p_context->v_file_mgr(
+            &(
+                p_file_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_file_mgr->v_create_node(
+                p_file_descriptor,
+                r_file);
+    }
 
     return
         e_status;
@@ -67,13 +76,22 @@ appl_file_service::s_destroy(
         p_context =
         p_file->get_context();
 
-    class appl_file_mgr * const
-        p_file_mgr =
-        p_context->m_file_mgr;
+    class appl_file_mgr *
+        p_file_mgr;
 
     e_status =
-        p_file_mgr->v_destroy_node(
-            p_file);
+        p_context->v_file_mgr(
+            &(
+                p_file_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_file_mgr->v_destroy_node(
+                p_file);
+    }
 
     return
         e_status;

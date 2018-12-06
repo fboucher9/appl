@@ -87,29 +87,41 @@ struct appl_context : public appl_object
 
         /* -- */
 
-        class appl_mutex_mgr *
-            m_mutex_mgr;
+        virtual
+        enum appl_status
+            v_mutex_mgr(
+                class appl_mutex_mgr * * const
+                    r_mutex_mgr) const;
 
-        class appl_file_mgr *
-            m_file_mgr;
+        virtual
+        enum appl_status
+            v_file_mgr(
+                class appl_file_mgr * * const
+                    r_file_mgr) const;
 
-        /* -- */
+        virtual
+        enum appl_status
+            v_poll_mgr(
+                class appl_poll_mgr * * const
+                    r_poll_mgr) const;
 
-        class appl_poll_mgr *
-            m_poll_mgr;
+        virtual
+        enum appl_status
+            v_clock(
+                class appl_clock * * const
+                    r_clock) const;
 
-        class appl_clock *
-            m_clock;
+        virtual
+        enum appl_status
+            v_env(
+                struct appl_env * * const
+                    r_env) const;
 
-        /* -- */
-
-        struct appl_env *
-            m_env;
-
-        class appl_library_mgr *
-            m_library_mgr;
-
-        /* -- */
+        virtual
+        enum appl_status
+            v_library_mgr(
+                class appl_library_mgr * * const
+                    r_library_mgr);
 
         virtual
         enum appl_status
@@ -174,50 +186,6 @@ struct appl_context : public appl_object
                 p_object);
 
     protected:
-
-        /* -- */
-
-        class appl_random_mgr *
-            m_random_mgr;
-
-        class appl_thread_cache_mgr *
-            m_thread_cache_mgr;
-
-        /* -- */
-
-        struct appl_log *
-            m_log;
-
-        class appl_pool_mgr *
-            m_pool_mgr;
-
-        /* -- */
-
-        class appl_timer_mgr *
-            m_timer_mgr;
-
-        struct appl_xlib *
-            m_xlib;
-
-        /* -- */
-
-        class appl_event_mgr *
-            m_event_mgr;
-
-        class appl_socket_mgr *
-            m_socket_mgr;
-
-        /* -- */
-
-#if defined APPL_DEBUG
-        class appl_debug *
-            m_debug;
-
-        void *
-            pv_debug_padding[1u];
-#endif /* #if defined APPL_DEBUG */
-
-        /* -- */
 
         appl_context();
 

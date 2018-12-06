@@ -46,7 +46,7 @@ Comments:
 
 #include <appl_list.h>
 
-#include <clock/appl_clock.h>
+#include <appl_clock_handle.h>
 
 #if defined APPL_DEBUG
 #include <appl_debug_handle.h>
@@ -958,7 +958,8 @@ class appl_thread_cache_mgr : public appl_object
                         }
 #endif /* #if defined APPL_DEBUG */
 
-                        m_context->m_clock->v_delay(
+                        appl_clock_delay(
+                            m_context,
                             1000ul,
                             100ul);
                     }
@@ -1016,7 +1017,8 @@ class appl_thread_cache_mgr : public appl_object
                         }
 #endif /* #if defined APPL_DEBUG */
 
-                        m_context->m_clock->v_delay(
+                        appl_clock_delay(
+                            m_context,
                             1000ul,
                             100ul);
                     }

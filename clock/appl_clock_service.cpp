@@ -36,14 +36,23 @@ appl_clock_service::s_read(
     enum appl_status
         e_status;
 
-    class appl_clock * const
-        p_clock =
-        p_context->m_clock;
+    class appl_clock *
+        p_clock;
 
     e_status =
-        p_clock->v_read(
-            i_time_freq,
-            p_time_count);
+        p_context->v_clock(
+            &(
+                p_clock));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_clock->v_read(
+                i_time_freq,
+                p_time_count);
+    }
 
     return
         e_status;
@@ -65,14 +74,23 @@ appl_clock_service::s_delay(
     enum appl_status
         e_status;
 
-    class appl_clock * const
-        p_clock =
-        p_context->m_clock;
+    class appl_clock *
+        p_clock;
 
     e_status =
-        p_clock->v_delay(
-            i_time_freq,
-            i_time_count);
+        p_context->v_clock(
+            &(
+                p_clock));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_clock->v_delay(
+                i_time_freq,
+                i_time_count);
+    }
 
     return
         e_status;

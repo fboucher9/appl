@@ -40,14 +40,23 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_poll_mgr * const
-        p_poll_mgr =
-        p_context->m_poll_mgr;
+    class appl_poll_mgr *
+        p_poll_mgr;
 
     e_status =
-        p_poll_mgr->v_create(
-            p_poll_descriptor,
-            r_poll);
+        p_context->v_poll_mgr(
+            &(
+                p_poll_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_poll_mgr->v_create(
+                p_poll_descriptor,
+                r_poll);
+    }
 
     return
         e_status;

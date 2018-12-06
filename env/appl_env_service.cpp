@@ -33,11 +33,24 @@ appl_env_service::s_get(
     enum appl_status
         e_status;
 
+    struct appl_env *
+        p_env;
+
     e_status =
-        p_context->m_env->v_get(
-            p_name_min,
-            p_name_max,
-            r_string);
+        p_context->v_env(
+            &(
+                p_env));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_env->v_get(
+                p_name_min,
+                p_name_max,
+                r_string);
+    }
 
     return
         e_status;
@@ -65,12 +78,31 @@ appl_env_service::s_query(
     void * const
         p_query_context)
 {
+    enum appl_status
+        e_status;
+
+    struct appl_env *
+        p_env;
+
+    e_status =
+        p_context->v_env(
+            &(
+                p_env));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_env->v_query(
+                p_name_min,
+                p_name_max,
+                p_query_callback,
+                p_query_context);
+    }
+
     return
-        p_context->m_env->v_query(
-            p_name_min,
-            p_name_max,
-            p_query_callback,
-            p_query_context);
+        e_status;
 
 } // s_query()
 
@@ -93,12 +125,25 @@ appl_env_service::s_set(
     enum appl_status
         e_status;
 
+    struct appl_env *
+        p_env;
+
     e_status =
-        p_context->m_env->v_set(
-            p_name_min,
-            p_name_max,
-            p_value_min,
-            p_value_max);
+        p_context->v_env(
+            &(
+                p_env));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_env->v_set(
+                p_name_min,
+                p_name_max,
+                p_value_min,
+                p_value_max);
+    }
 
     return
         e_status;

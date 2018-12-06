@@ -78,6 +78,72 @@ class appl_context_std : public appl_context
 
         /* -- */
 
+        class appl_mutex_mgr *
+            m_mutex_mgr;
+
+        class appl_file_mgr *
+            m_file_mgr;
+
+        /* -- */
+
+        class appl_poll_mgr *
+            m_poll_mgr;
+
+        class appl_clock *
+            m_clock;
+
+        /* -- */
+
+        struct appl_env *
+            m_env;
+
+        class appl_library_mgr *
+            m_library_mgr;
+
+        /* -- */
+
+        class appl_random_mgr *
+            m_random_mgr;
+
+        class appl_thread_cache_mgr *
+            m_thread_cache_mgr;
+
+        /* -- */
+
+        struct appl_log *
+            m_log;
+
+        class appl_pool_mgr *
+            m_pool_mgr;
+
+        /* -- */
+
+        class appl_timer_mgr *
+            m_timer_mgr;
+
+        struct appl_xlib *
+            m_xlib;
+
+        /* -- */
+
+        class appl_event_mgr *
+            m_event_mgr;
+
+        class appl_socket_mgr *
+            m_socket_mgr;
+
+        /* -- */
+
+#if defined APPL_DEBUG
+        class appl_debug *
+            m_debug;
+
+        void *
+            pv_debug_padding[1u];
+#endif /* #if defined APPL_DEBUG */
+
+        /* -- */
+
         bool
             b_init_heap;
 
@@ -283,6 +349,98 @@ class appl_context_std : public appl_context
         static
         void
             s_bootstrap(void);
+
+        virtual
+        enum appl_status
+            v_mutex_mgr(
+                class appl_mutex_mgr * * const
+                    r_mutex_mgr) const;
+
+        virtual
+        enum appl_status
+            v_file_mgr(
+                class appl_file_mgr * * const
+                    r_file_mgr) const;
+
+        virtual
+        enum appl_status
+            v_poll_mgr(
+                class appl_poll_mgr * * const
+                    r_poll_mgr) const;
+
+        virtual
+        enum appl_status
+            v_clock(
+                class appl_clock * * const
+                    r_clock) const;
+
+        virtual
+        enum appl_status
+            v_env(
+                struct appl_env * * const
+                    r_env) const;
+
+        virtual
+        enum appl_status
+            v_library_mgr(
+                class appl_library_mgr * * const
+                    r_library_mgr);
+
+        virtual
+        enum appl_status
+            v_random_mgr(
+                class appl_random_mgr * * const
+                    r_random_mgr) const;
+
+        virtual
+        enum appl_status
+            v_thread_cache_mgr(
+                class appl_thread_cache_mgr * * const
+                    r_thread_cache_mgr) const;
+
+        virtual
+        enum appl_status
+            v_log(
+                struct appl_log * * const
+                    r_log) const;
+
+        virtual
+        enum appl_status
+            v_pool_mgr(
+                class appl_pool_mgr * * const
+                    r_pool_mgr) const;
+
+        virtual
+        enum appl_status
+            v_timer_mgr(
+                class appl_timer_mgr * * const
+                    r_timer_mgr) const;
+
+        virtual
+        enum appl_status
+            v_xlib(
+                struct appl_xlib * * const
+                    r_xlib) const;
+
+        virtual
+        enum appl_status
+            v_socket_mgr(
+                class appl_socket_mgr * * const
+                    r_socket_mgr) const;
+
+        virtual
+        enum appl_status
+            v_event_mgr(
+                class appl_event_mgr * * const
+                    r_event_mgr) const;
+
+#if defined APPL_DEBUG
+        virtual
+        enum appl_status
+            v_debug(
+                class appl_debug * * const
+                    r_debug) const;
+#endif /* #if defined APPL_DEBUG */
 
 }; // class appl_context_std
 

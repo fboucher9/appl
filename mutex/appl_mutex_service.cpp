@@ -38,10 +38,23 @@ enum appl_status
     enum appl_status
         e_status;
 
+    class appl_mutex_mgr *
+        p_mutex_mgr;
+
     e_status =
-        p_context->m_mutex_mgr->v_create_node(
-            p_mutex_descriptor,
-            r_mutex);
+        p_context->v_mutex_mgr(
+            &(
+                p_mutex_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_mutex_mgr->v_create_node(
+                p_mutex_descriptor,
+                r_mutex);
+    }
 
     return
         e_status;
@@ -63,9 +76,22 @@ enum appl_status
         p_context =
         p_mutex->get_context();
 
+    class appl_mutex_mgr *
+        p_mutex_mgr;
+
     e_status =
-        p_context->m_mutex_mgr->v_destroy_node(
-            p_mutex);
+        p_context->v_mutex_mgr(
+            &(
+                p_mutex_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_mutex_mgr->v_destroy_node(
+                p_mutex);
+    }
 
     return
         e_status;

@@ -130,10 +130,29 @@ enum appl_status
         struct appl_library * * const
             r_library)
 {
+    enum appl_status
+        e_status;
+
+    class appl_library_mgr *
+        p_library_mgr;
+
+    e_status =
+        p_context->v_library_mgr(
+            &(
+                p_library_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_library_mgr->v_create_node(
+                p_library_descriptor,
+                r_library);
+    }
+
     return
-        p_context->m_library_mgr->v_create_node(
-            p_library_descriptor,
-            r_library);
+        e_status;
 
 } // s_create()
 
@@ -145,15 +164,32 @@ enum appl_status
         struct appl_library * const
             p_library)
 {
+    enum appl_status
+        e_status;
+
     struct appl_context * const
         p_context =
         p_library->get_context();
 
-    p_context->m_library_mgr->v_destroy_node(
-        p_library);
+    class appl_library_mgr *
+        p_library_mgr;
+
+    e_status =
+        p_context->v_library_mgr(
+            &(
+                p_library_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_library_mgr->v_destroy_node(
+                p_library);
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 } // s_destroy()
 

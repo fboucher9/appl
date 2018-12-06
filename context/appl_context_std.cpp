@@ -1513,6 +1513,23 @@ enum appl_status
 appl_context_std::appl_context_std() :
     appl_context()
     , m_heap_std()
+    , m_mutex_mgr()
+    , m_file_mgr()
+    , m_poll_mgr()
+    , m_clock()
+    , m_env()
+    , m_library_mgr()
+    , m_random_mgr()
+    , m_thread_cache_mgr()
+    , m_log()
+    , m_pool_mgr()
+    , m_timer_mgr()
+    , m_xlib()
+    , m_event_mgr()
+    , m_socket_mgr()
+#if defined APPL_DEBUG
+    , m_debug()
+#endif /* #if defined APPL_DEBUG */
     , b_init_heap()
 #if defined APPL_DEBUG
     , b_init_debug()
@@ -1719,5 +1736,244 @@ appl_size_t
         sizeof(class appl_context_std);
 
 } // v_cleanup()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_mutex_mgr(
+        class appl_mutex_mgr * * const
+            r_mutex_mgr) const
+{
+    *( r_mutex_mgr) =
+        m_mutex_mgr;
+
+    return
+        appl_status_ok;
+
+} // v_mutex_mgr()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_file_mgr(
+        class appl_file_mgr * * const
+            r_file_mgr) const
+{
+    *(r_file_mgr) =
+        m_file_mgr;
+
+    return
+        appl_status_ok;
+
+} // v_file_mgr()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_poll_mgr(
+        class appl_poll_mgr * * const
+            r_poll_mgr) const
+{
+    *(r_poll_mgr) =
+        m_poll_mgr;
+
+    return
+        appl_status_ok;
+
+} // v_poll_mgr()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_clock(
+        class appl_clock * * const
+            r_clock) const
+{
+    *(r_clock) =
+        m_clock;
+
+    return
+        appl_status_ok;
+
+} // v_clock()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_env(
+        struct appl_env * * const
+            r_env) const
+{
+    *(r_env) =
+        m_env;
+
+    return
+        appl_status_ok;
+
+} // v_env()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_library_mgr(
+        class appl_library_mgr * * const
+            r_library_mgr)
+{
+    *(r_library_mgr) =
+        m_library_mgr;
+
+    return
+        appl_status_ok;
+
+} // v_library_mgr()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_random_mgr(
+        class appl_random_mgr * * const
+            r_random_mgr) const
+{
+    *(r_random_mgr) =
+        m_random_mgr;
+
+    return
+        appl_status_ok;
+}
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_thread_cache_mgr(
+        class appl_thread_cache_mgr * * const
+            r_thread_cache_mgr) const
+{
+    *(r_thread_cache_mgr) =
+        m_thread_cache_mgr;
+
+    return
+        appl_status_ok;
+}
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_log(
+        struct appl_log * * const
+            r_log) const
+{
+    *(r_log) =
+        m_log;
+
+    return
+        appl_status_ok;
+
+}
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_pool_mgr(
+        class appl_pool_mgr * * const
+            r_pool_mgr) const
+{
+    *(r_pool_mgr) =
+        m_pool_mgr;
+
+    return
+        appl_status_ok;
+
+}
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_timer_mgr(
+        class appl_timer_mgr * * const
+            r_timer_mgr) const
+{
+    *(r_timer_mgr) =
+        m_timer_mgr;
+
+    return
+        appl_status_ok;
+
+} // v_timer_mgr()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_xlib(
+        struct appl_xlib * * const
+            r_xlib) const
+{
+    *(r_xlib) =
+        m_xlib;
+
+    return
+        appl_status_ok;
+
+} // v_xlib()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_socket_mgr(
+        class appl_socket_mgr * * const
+            r_socket_mgr) const
+{
+    *(r_socket_mgr) =
+        m_socket_mgr;
+
+    return
+        appl_status_ok;
+}
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_event_mgr(
+        class appl_event_mgr * * const
+            r_event_mgr) const
+{
+    *(r_event_mgr) =
+        m_event_mgr;
+
+    return
+        appl_status_ok;
+
+}
+
+//
+//
+//
+#if defined APPL_DEBUG
+enum appl_status
+    appl_context_std::v_debug(
+        class appl_debug * * const
+            r_debug) const
+{
+    *(r_debug) =
+        m_debug;
+
+    return
+        appl_status_ok;
+
+}
+#endif /* #if defined APPL_DEBUG */
 
 /* end-of-file: appl_context_std.cpp */
