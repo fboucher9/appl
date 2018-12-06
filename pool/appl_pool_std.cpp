@@ -34,9 +34,9 @@
 
 #include <appl_unused.h>
 
-#include <context/appl_context.h>
-
 #include <appl_allocator_handle.h>
+
+#include <appl_heap_handle.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -151,7 +151,8 @@ enum appl_status
                     o_node_ptr;
 
                 e_status =
-                    m_context->m_allocator->v_alloc(
+                    appl_heap_alloc(
+                        m_context,
                         m_descriptor.i_length,
                         &(
                             o_node_ptr.p_void));
@@ -200,7 +201,8 @@ appl_size_t
             p_node,
             p_node);
 
-        m_context->m_allocator->v_free(
+        appl_heap_free(
+            m_context,
             m_descriptor.i_length,
             p_node);
     }
@@ -282,7 +284,8 @@ enum appl_status
             {
                 // allocate new item
                 e_status =
-                    m_context->m_allocator->v_alloc(
+                    appl_heap_alloc(
+                        m_context,
                         m_descriptor.i_length,
                         &(
                             p_buf));

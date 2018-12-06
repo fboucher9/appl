@@ -121,7 +121,7 @@ enum appl_status
 {
     return
         appl_library_w32_node::s_create(
-            m_context->m_allocator,
+            m_context->v_allocator(),
             p_library_descriptor,
             r_library);
 
@@ -137,7 +137,7 @@ enum appl_status
 {
     return
         appl_library_w32_node::s_destroy(
-            m_context->m_allocator,
+            m_context->v_allocator(),
             p_library);
 
 } // v_destroy_node()

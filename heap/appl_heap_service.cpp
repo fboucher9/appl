@@ -16,19 +16,6 @@
 
 #include <allocator/appl_allocator.h>
 
-#include <heap/appl_heap.h>
-
-static
-struct appl_heap *
-get_heap_from_object(
-    struct appl_context const * const
-        p_context)
-{
-    return
-        p_context->m_heap;
-
-} // get_heap_from_object()
-
 //
 //
 //
@@ -41,14 +28,15 @@ enum appl_status
         void * * const
             r_buf)
 {
-    struct appl_heap * const
-        p_heap =
-        get_heap_from_object(
-            p_context);
+    enum appl_status
+        e_status;
 
-    enum appl_status const
-        e_status =
-        p_heap->v_alloc(
+    struct appl_allocator * const
+        p_allocator =
+        p_context->v_allocator();
+
+    e_status =
+        p_allocator->v_alloc(
             i_length,
             r_buf);
 
@@ -66,14 +54,15 @@ enum appl_status
         void * const
             p_buf)
 {
-    struct appl_heap * const
-        p_heap =
-        get_heap_from_object(
-            p_context);
+    enum appl_status
+        e_status;
 
-    enum appl_status const
-        e_status =
-        p_heap->v_free(
+    struct appl_allocator * const
+        p_allocator =
+        p_context->v_allocator();
+
+    e_status =
+        p_allocator->v_free(
             i_length,
             p_buf);
 

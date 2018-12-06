@@ -12,10 +12,6 @@
 
 #include <queue/appl_queue_service.h>
 
-#include <appl_object.h>
-
-#include <context/appl_context.h>
-
 /*
 
 */

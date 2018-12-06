@@ -78,6 +78,22 @@ class appl_context_std : public appl_context
 
         /* -- */
 
+        struct appl_allocator *
+            m_allocator;
+
+        void *
+            z_allocator[1u];
+
+        /* -- */
+
+        class appl_backtrace *
+            m_backtrace;
+
+        class appl_thread_mgr *
+            m_thread_mgr;
+
+        /* -- */
+
         class appl_mutex_mgr *
             m_mutex_mgr;
 
@@ -135,17 +151,17 @@ class appl_context_std : public appl_context
         /* -- */
 
 #if defined APPL_DEBUG
+        class appl_heap_dbg *
+            m_heap_dbg;
+
         class appl_debug *
             m_debug;
-
-        void *
-            pv_debug_padding[1u];
 #endif /* #if defined APPL_DEBUG */
 
         /* -- */
 
         bool
-            b_init_heap;
+            b_init_allocator;
 
 #if defined APPL_DEBUG
         bool
@@ -349,6 +365,22 @@ class appl_context_std : public appl_context
         static
         void
             s_bootstrap(void);
+
+        virtual
+        struct appl_allocator *
+            v_allocator(void) const;
+
+        virtual
+        enum appl_status
+            v_backtrace(
+                class appl_backtrace * * const
+                    r_backtrace) const;
+
+        virtual
+        enum appl_status
+            v_thread_mgr(
+                class appl_thread_mgr * * const
+                    r_thread_mgr) const;
 
         virtual
         enum appl_status

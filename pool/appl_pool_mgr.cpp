@@ -36,7 +36,7 @@
 
 #include <pool/appl_pool_std.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -101,7 +101,8 @@ enum appl_status
 
     e_status =
         appl_pool_std::s_create(
-            m_context->m_allocator,
+            appl_context_get_allocator(
+                m_context),
             p_pool_descriptor,
             &(
                 p_pool_std));
@@ -130,7 +131,8 @@ enum appl_status
 {
     return
         appl_delete(
-            m_context->m_allocator,
+            appl_context_get_allocator(
+                m_context),
             p_pool_node);
 
 } // v_destroy_node()

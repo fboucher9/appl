@@ -30,7 +30,7 @@
 
 #include <appl_string_handle.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
 /*
 
@@ -399,7 +399,8 @@ enum appl_status
 
     e_status =
         appl_allocator_alloc_structure(
-            m_context->m_allocator,
+            appl_context_get_allocator(
+                m_context),
             &(
                 p_dict_std_node));
 
@@ -433,7 +434,8 @@ enum appl_status
         else
         {
             appl_allocator_free_structure(
-                m_context->m_allocator,
+                appl_context_get_allocator(
+                    m_context),
                 p_dict_std_node);
         }
     }

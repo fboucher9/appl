@@ -34,15 +34,21 @@ appl_hash_service::s_create(
     struct appl_hash * * const
         r_instance)
 {
+    enum appl_status
+        e_status;
+
     struct appl_allocator * const
         p_allocator =
-        p_context->m_allocator;
+        p_context->v_allocator();
 
-    return
+    e_status =
         appl_new(
             p_allocator,
             p_descriptor,
             r_instance);
+
+    return
+        e_status;
 
 } // s_create()
 
@@ -54,14 +60,24 @@ appl_hash_service::s_destroy(
     struct appl_hash * const
         p_hash)
 {
+    enum appl_status
+        e_status;
+
     struct appl_context * const
         p_context =
         p_hash->get_context();
 
-    return
+    struct appl_allocator * const
+        p_allocator =
+        p_context->v_allocator();
+
+    e_status =
         appl_delete(
-            p_context->m_allocator,
+            p_allocator,
             p_hash);
+
+    return
+        e_status;
 
 } // s_destroy()
 

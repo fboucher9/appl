@@ -44,26 +44,35 @@ appl_thread_service::s_create(
     enum appl_status
         e_status;
 
-    class appl_thread_mgr * const
-        p_thread_mgr =
-        p_context->m_thread_mgr;
-
-    struct appl_thread *
-        p_thread_node;
+    class appl_thread_mgr *
+        p_thread_mgr;
 
     e_status =
-        p_thread_mgr->v_create_node(
-            p_thread_property,
-            p_thread_descriptor,
+        p_context->v_thread_mgr(
             &(
-                p_thread_node));
+                p_thread_mgr));
 
     if (
-        appl_status_ok == e_status)
+        appl_status_ok
+        == e_status)
     {
-        *(
-            r_thread) =
+        struct appl_thread *
             p_thread_node;
+
+        e_status =
+            p_thread_mgr->v_create_node(
+                p_thread_property,
+                p_thread_descriptor,
+                &(
+                    p_thread_node));
+
+        if (
+            appl_status_ok == e_status)
+        {
+            *(
+                r_thread) =
+                p_thread_node;
+        }
     }
 
     return
@@ -86,13 +95,22 @@ appl_thread_service::s_destroy(
         p_context =
         p_thread->get_context();
 
-    class appl_thread_mgr * const
-        p_thread_mgr =
-        p_context->m_thread_mgr;
+    class appl_thread_mgr *
+        p_thread_mgr;
 
     e_status =
-        p_thread_mgr->v_destroy_node(
-            p_thread);
+        p_context->v_thread_mgr(
+            &(
+                p_thread_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_thread_mgr->v_destroy_node(
+                p_thread);
+    }
 
     return
         e_status;

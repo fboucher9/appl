@@ -43,7 +43,7 @@ appl_random_mgr::v_create_node(
     {
         e_status =
             appl_random_pseudo::s_create(
-                m_context->m_allocator,
+                m_context->v_allocator(),
                 p_descriptor->i_seed,
                 r_node);
     }
@@ -68,7 +68,7 @@ appl_random_mgr::v_destroy_node(
 {
     return
         appl_delete(
-            m_context->m_allocator,
+            m_context->v_allocator(),
             p_node);
 
 } // v_destroy_node()

@@ -211,36 +211,33 @@ struct appl_thread_cache : public appl_thread
             o_thread_descriptor.o_callback.p_context =
                 o_thread_cache_ptr.p_thread_context;
 
+            class appl_thread_mgr *
+                p_thread_mgr;
+
             e_status =
-                m_context->m_thread_mgr->v_create_node(
-                    p_thread_cache_descriptor->p_thread_property,
+                m_context->v_thread_mgr(
                     &(
-                        o_thread_descriptor),
-                    &(
-                        m_thread_handle));
+                        p_thread_mgr));
 
             if (
                 appl_status_ok
                 == e_status)
             {
-                struct appl_queue_descriptor
-                    o_queue_descriptor;
-
-                o_queue_descriptor.i_max_count =
-                    1ul;
-
                 e_status =
-                    appl_queue_create(
-                        m_context,
+                    p_thread_mgr->v_create_node(
+                        p_thread_cache_descriptor->p_thread_property,
                         &(
-                            o_queue_descriptor),
+                            o_thread_descriptor),
                         &(
-                            m_queue_used));
+                            m_thread_handle));
 
                 if (
                     appl_status_ok
                     == e_status)
                 {
+                    struct appl_queue_descriptor
+                        o_queue_descriptor;
+
                     o_queue_descriptor.i_max_count =
                         1ul;
 
@@ -250,28 +247,52 @@ struct appl_thread_cache : public appl_thread
                             &(
                                 o_queue_descriptor),
                             &(
-                                m_queue_free));
+                                m_queue_used));
 
                     if (
                         appl_status_ok
                         == e_status)
                     {
-                        appl_list_init(
-                            &(
-                                m_task.o_list));
+                        o_queue_descriptor.i_max_count =
+                            1ul;
 
-                        m_queue_free->v_push(
-                            &(
-                                m_task.o_list),
-                            1000ul,
-                            0);
+                        e_status =
+                            appl_queue_create(
+                                m_context,
+                                &(
+                                    o_queue_descriptor),
+                                &(
+                                    m_queue_free));
+
+                        if (
+                            appl_status_ok
+                            == e_status)
+                        {
+                            appl_list_init(
+                                &(
+                                    m_task.o_list));
+
+                            m_queue_free->v_push(
+                                &(
+                                    m_task.o_list),
+                                1000ul,
+                                0);
+
+                            if (
+                                appl_status_ok
+                                != e_status)
+                            {
+                                appl_queue_destroy(
+                                    m_queue_free);
+                            }
+                        }
 
                         if (
                             appl_status_ok
                             != e_status)
                         {
                             appl_queue_destroy(
-                                m_queue_free);
+                                m_queue_used);
                         }
                     }
 
@@ -279,17 +300,9 @@ struct appl_thread_cache : public appl_thread
                         appl_status_ok
                         != e_status)
                     {
-                        appl_queue_destroy(
-                            m_queue_used);
+                        p_thread_mgr->v_destroy_node(
+                            m_thread_handle);
                     }
-                }
-
-                if (
-                    appl_status_ok
-                    != e_status)
-                {
-                    m_context->m_thread_mgr->v_destroy_node(
-                        m_thread_handle);
                 }
             }
 
@@ -741,7 +754,7 @@ class appl_thread_cache_mgr : public appl_object
             {
                 e_status =
                     appl_thread_cache_node::s_create_instance(
-                        m_context->m_allocator,
+                        m_context->v_allocator(),
                         this,
                         p_thread_property,
                         &(
@@ -838,7 +851,7 @@ class appl_thread_cache_mgr : public appl_object
             appl_mutex_lock(m_lock);
 
             appl_thread_cache_node::s_destroy_instance(
-                m_context->m_allocator,
+                m_context->v_allocator(),
                 p_thread_cache_node);
 
             appl_mutex_unlock(m_lock);
@@ -1192,8 +1205,18 @@ appl_thread_cache::f_deinit(void)
     appl_queue_destroy(
         m_queue_used);
 
-    m_context->m_thread_mgr->v_destroy_node(
-        m_thread_handle);
+    class appl_thread_mgr *
+        p_thread_mgr;
+
+    if (
+        appl_status_ok
+        == m_context->v_thread_mgr(
+            &(
+                p_thread_mgr)))
+    {
+        p_thread_mgr->v_destroy_node(
+            m_thread_handle);
+    }
 
     e_status =
         appl_status_ok;

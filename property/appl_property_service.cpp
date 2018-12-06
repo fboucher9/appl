@@ -20,7 +20,7 @@
 
 #include <property/appl_property_std.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
 //
 //
@@ -42,7 +42,8 @@ appl_property_service::s_create(
 
     struct appl_allocator * const
         p_allocator =
-        p_context->m_allocator;
+        appl_context_get_allocator(
+            p_context);
 
     e_status =
         appl_property_std::s_create(
@@ -79,7 +80,8 @@ appl_property_service::s_destroy(
 
     struct appl_allocator * const
         p_allocator =
-        p_context->m_allocator;
+        appl_context_get_allocator(
+            p_context);
 
     return
         appl_property_std::s_destroy(

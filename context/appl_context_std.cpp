@@ -193,6 +193,8 @@ enum appl_status
 //
 class appl_context_default : public appl_context
 {
+    friend class appl_context_std;
+
     public:
 
         appl_context_default();
@@ -210,9 +212,23 @@ class appl_context_default : public appl_context
         class appl_allocator_std
             m_allocator_std;
 
+        // --
+
+        struct appl_allocator *
+            m_allocator;
+
+#define PADDING (APPL_SIZEOF_PTR)
+#include <appl_padding.h>
+
+        // --
+
         virtual
         appl_size_t
             v_cleanup(void);
+
+        virtual
+        struct appl_allocator *
+            v_allocator(void) const;
 
         appl_context_default(
             class appl_context_default const & r);
@@ -225,7 +241,8 @@ class appl_context_default : public appl_context
 
 appl_context_default::appl_context_default() :
     appl_context(),
-    m_allocator_std()
+    m_allocator_std(),
+    m_allocator()
 {
 }
 
@@ -243,7 +260,6 @@ appl_context_default::f_init(void)
     m_allocator =
         &(
             m_allocator_std);
-
 }
 
 appl_size_t
@@ -251,6 +267,14 @@ appl_context_default::v_cleanup(void)
 {
     return
         0;
+
+}
+
+struct appl_allocator *
+    appl_context_default::v_allocator(void) const
+{
+    return
+        m_allocator;
 
 }
 
@@ -267,6 +291,9 @@ enum appl_status
     enum appl_status
         e_status;
 
+    m_heap_std.set_context(
+        this);
+
     e_status =
         m_heap_std.f_init();
 
@@ -274,35 +301,29 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
-        struct appl_heap *
-            p_heap;
-
-        p_heap =
-            &(
-                m_heap_std);
-
 #if defined APPL_DEBUG
         e_status =
             appl_heap_dbg::s_create(
-                p_heap,
                 &(
-                    p_heap));
+                    m_heap_std),
+                &(
+                    m_heap_dbg));
 
         if (
             appl_status_ok
             == e_status)
 #endif /* #if defined APPL_DEBUG */
         {
-            m_heap =
-                p_heap;
-
             m_allocator =
-                m_heap;
+#if defined APPL_DEBUG
+                m_heap_dbg
+#else /* #if defined APPL_DEBUG */
+                &(
+                    m_heap_std)
+#endif /* #if defined APPL_DEBUG */
+                ;
 
-            m_heap->set_context(
-                this);
-
-            b_init_heap =
+            b_init_allocator =
                 true;
 
 #if defined APPL_DEBUG
@@ -312,7 +333,7 @@ enum appl_status
                 appl_heap_dbg::s_destroy(
                     &(
                         m_heap_std),
-                    p_heap);
+                    m_heap_dbg);
             }
 #endif /* #if defined APPL_DEBUG */
         }
@@ -336,21 +357,24 @@ void
     appl_context_std::cleanup_heap(void)
 {
     if (
-        b_init_heap)
+        b_init_allocator)
     {
 #if defined APPL_DEBUG
         appl_heap_dbg::s_destroy(
             &(
                 m_heap_std),
-            m_heap);
+            m_heap_dbg);
+
+        m_heap_dbg =
+            0;
 #endif /* #if defined APPL_DEBUG */
 
         m_heap_std.v_cleanup();
 
-        m_heap =
+        m_allocator =
             0;
 
-        b_init_heap =
+        b_init_allocator =
             false;
     }
 
@@ -1513,6 +1537,9 @@ enum appl_status
 appl_context_std::appl_context_std() :
     appl_context()
     , m_heap_std()
+    , m_allocator()
+    , m_backtrace()
+    , m_thread_mgr()
     , m_mutex_mgr()
     , m_file_mgr()
     , m_poll_mgr()
@@ -1528,9 +1555,10 @@ appl_context_std::appl_context_std() :
     , m_event_mgr()
     , m_socket_mgr()
 #if defined APPL_DEBUG
+    , m_heap_dbg()
     , m_debug()
 #endif /* #if defined APPL_DEBUG */
-    , b_init_heap()
+    , b_init_allocator()
 #if defined APPL_DEBUG
     , b_init_debug()
 #endif /* #if defined APPL_DEBUG */
@@ -1736,6 +1764,49 @@ appl_size_t
         sizeof(class appl_context_std);
 
 } // v_cleanup()
+
+//
+//
+//
+struct appl_allocator *
+    appl_context_std::v_allocator(void) const
+{
+    return
+        m_allocator;
+
+} // v_allocator()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_backtrace(
+        class appl_backtrace * * const
+            r_backtrace) const
+{
+    *(r_backtrace) =
+        m_backtrace;
+
+    return
+        appl_status_ok;
+
+} // v_backtrace()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_thread_mgr(
+        class appl_thread_mgr * * const
+            r_thread_mgr) const
+{
+    *(r_thread_mgr) =
+        m_thread_mgr;
+
+    return
+        appl_status_ok;
+
+} // v_thread_mgr()
 
 //
 //

@@ -71,21 +71,21 @@ struct appl_context : public appl_object
 {
     public:
 
+        virtual
         struct appl_allocator *
-            m_allocator;
+            v_allocator(void) const;
 
-        struct appl_heap *
-            m_heap;
+        virtual
+        enum appl_status
+            v_backtrace(
+                class appl_backtrace * * const
+                    r_backtrace) const;
 
-        /* -- */
-
-        class appl_backtrace *
-            m_backtrace;
-
-        class appl_thread_mgr *
-            m_thread_mgr;
-
-        /* -- */
+        virtual
+        enum appl_status
+            v_thread_mgr(
+                class appl_thread_mgr * * const
+                    r_thread_mgr) const;
 
         virtual
         enum appl_status

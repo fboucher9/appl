@@ -136,7 +136,7 @@ enum appl_status
 
     e_status =
         appl_address_std_node::s_create(
-            m_context->m_allocator,
+            m_context->v_allocator(),
             p_property,
             r_address);
 
@@ -158,7 +158,7 @@ enum appl_status
 
     e_status =
         appl_address_std_node::s_destroy(
-            m_context->m_allocator,
+            m_context->v_allocator(),
             p_address_node);
 
     return
@@ -181,7 +181,7 @@ enum appl_status
 
     e_status =
         appl_socket_std_node::s_create(
-            m_context->m_allocator,
+            m_context->v_allocator(),
             p_socket_descriptor,
             r_socket);
 
@@ -203,7 +203,7 @@ enum appl_status
 
     e_status =
         appl_socket_std_node::s_destroy(
-            m_context->m_allocator,
+            m_context->v_allocator(),
             p_socket_node);
 
     return

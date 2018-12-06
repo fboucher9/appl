@@ -846,7 +846,7 @@ appl_socket_std_node::v_accept(
 
                 e_status =
                     appl_new(
-                        m_context->m_allocator,
+                        m_context->v_allocator(),
                         &(
                             i_accept_result),
                         &(

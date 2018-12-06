@@ -18,7 +18,7 @@
 
 #include <dict/appl_dict_std.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
 //
 //
@@ -38,7 +38,8 @@ appl_dict_service::s_create(
 
     e_status =
         appl_dict_std::s_create(
-            p_context->m_allocator,
+            appl_context_get_allocator(
+                p_context),
             &(
                 p_dict_std));
 

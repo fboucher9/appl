@@ -65,8 +65,8 @@ enum appl_status
     appl_heap_dbg::s_create(
         struct appl_heap * const
             p_parent,
-        struct appl_heap * * const
-            r_heap)
+        class appl_heap_dbg * * const
+            r_heap_dbg)
 {
     enum appl_status
         e_status;
@@ -93,7 +93,7 @@ enum appl_status
         == e_status)
     {
         *(
-            r_heap) =
+            r_heap_dbg) =
             p_heap_dbg;
     }
 
@@ -106,7 +106,7 @@ enum appl_status
     appl_heap_dbg::s_destroy(
         struct appl_heap * const
             p_parent,
-        struct appl_heap * const
+        class appl_heap_dbg * const
             p_heap)
 {
     return

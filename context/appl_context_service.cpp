@@ -103,7 +103,7 @@ appl_context_service::s_get_allocator(
         p_context)
 {
     return
-        p_context->m_allocator;
+        p_context->v_allocator();
 
 } // s_get_allocator()
 

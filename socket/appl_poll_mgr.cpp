@@ -26,11 +26,9 @@
 
 #include <socket/appl_poll_node.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
-#include <allocator/appl_allocator.h>
-
-#include <heap/appl_heap.h>
+#include <appl_allocator_handle.h>
 
 #include <appl_buf.h>
 
@@ -110,9 +108,10 @@ enum appl_status
     }
 
     // allocate an array
-    struct appl_heap * const
-        p_heap =
-        m_context->m_heap;
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            m_context);
 
     appl_size_t
         i_allocation_length;
@@ -128,7 +127,8 @@ enum appl_status
             * p_poll_table->i_count);
 
     e_status =
-        p_heap->v_alloc(
+        appl_allocator_alloc(
+            p_allocator,
             i_allocation_length,
             &(
                 p_poll_table->p_allocation));
@@ -235,11 +235,13 @@ void
     p_mutex->v_unlock();
 
     // free the tables
-    struct appl_heap * const
-        p_heap =
-        m_context->m_heap;
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            m_context);
 
-    p_heap->v_free(
+    appl_allocator_free(
+        p_allocator,
         p_poll_table->i_allocation_length,
         p_poll_table->p_allocation);
 

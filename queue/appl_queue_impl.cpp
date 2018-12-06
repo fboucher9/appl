@@ -20,8 +20,6 @@
 
 #include <queue/appl_queue_impl.h>
 
-#include <context/appl_context.h>
-
 #include <appl_unused.h>
 
 //

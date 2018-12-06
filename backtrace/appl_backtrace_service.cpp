@@ -33,15 +33,24 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_backtrace * const
-        p_backtrace =
-        p_context->m_backtrace;
+    class appl_backtrace *
+        p_backtrace;
 
     e_status =
-        p_backtrace->v_capture(
-            p_buffer,
-            i_count_max,
-            r_count);
+        p_context->v_backtrace(
+            &(
+                p_backtrace));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_backtrace->v_capture(
+                p_buffer,
+                i_count_max,
+                r_count);
+    }
 
     return
         e_status;
@@ -63,14 +72,23 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_backtrace * const
-        p_backtrace =
-        p_context->m_backtrace;
+    class appl_backtrace *
+        p_backtrace;
 
     e_status =
-        p_backtrace->v_report(
-            p_buffer,
-            i_count);
+        p_context->v_backtrace(
+            &(
+                p_backtrace));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_backtrace->v_report(
+                p_buffer,
+                i_count);
+    }
 
     return
         e_status;

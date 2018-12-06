@@ -49,8 +49,6 @@ Description:
 
 #include <appl_buf0.h>
 
-#include <context/appl_context.h>
-
 #include <appl_allocator_handle.h>
 
 //

@@ -24,7 +24,7 @@ Description:
 
 #include <appl_heap_handle.h>
 
-#include <context/appl_context.h>
+#include <appl_context_handle.h>
 
 #include <appl_unused.h>
 
@@ -773,7 +773,8 @@ appl_chunk_service::s_create(
 {
     return
         appl_chunk_std::s_create(
-            p_context->m_allocator,
+            appl_context_get_allocator(
+                p_context),
             r_chunk);
 
 } // s_create()
@@ -792,7 +793,8 @@ appl_chunk_service::s_destroy(
 
     return
         appl_delete(
-            p_context->m_allocator,
+            appl_context_get_allocator(
+                p_context),
             p_chunk);
 
 } // s_destroy()

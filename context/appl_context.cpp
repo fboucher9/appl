@@ -17,14 +17,8 @@
 //
 //
 //
-appl_context::appl_context()
-    : appl_object()
-    // public
-    , m_allocator()
-    , m_heap()
-    , m_backtrace()
-    , m_thread_mgr()
-    // protected
+appl_context::appl_context() :
+    appl_object()
 {
 }
 
@@ -47,6 +41,49 @@ appl_context::from_object_handle(
         p_object->get_context();
 
 } // from_object_handle()
+
+//
+//
+//
+struct appl_allocator *
+    appl_context::v_allocator(void) const
+{
+    return
+        0;
+
+} // v_allocator()
+
+//
+//
+//
+enum appl_status
+    appl_context::v_backtrace(
+        class appl_backtrace * * const
+            r_backtrace) const
+{
+    appl_unused(
+        r_backtrace);
+
+    return
+        appl_status_not_implemented;
+
+} // v_backtrace()
+
+//
+//
+//
+enum appl_status
+    appl_context::v_thread_mgr(
+        class appl_thread_mgr * * const
+            r_thread_mgr) const
+{
+    appl_unused(
+        r_thread_mgr);
+
+    return
+        appl_status_not_implemented;
+
+} // v_thread_mgr()
 
 //
 //
