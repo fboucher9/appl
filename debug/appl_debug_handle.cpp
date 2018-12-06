@@ -62,12 +62,21 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_debug * const
-        p_debug =
-        p_context->m_debug;
+    class appl_debug *
+        p_debug;
 
     e_status =
-        p_debug->v_break();
+        p_context->v_debug(
+            &(
+                p_debug));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_debug->v_break();
+    }
 
     return
         e_status;
@@ -89,14 +98,23 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_debug * const
-        p_debug =
-        p_context->m_debug;
+    class appl_debug *
+        p_debug;
 
     e_status =
-        p_debug->v_print(
-            p_msg_min,
-            p_msg_max);
+        p_context->v_debug(
+            &(
+                p_debug));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_debug->v_print(
+                p_msg_min,
+                p_msg_max);
+    }
 
     return
         e_status;

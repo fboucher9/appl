@@ -32,10 +32,29 @@ enum appl_status
         struct appl_pool * * const
             r_pool)
 {
+    enum appl_status
+        e_status;
+
+    class appl_pool_mgr *
+        p_pool_mgr;
+
+    e_status =
+        p_context->v_pool_mgr(
+            &(
+                p_pool_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_pool_mgr->v_create_node(
+                p_pool_descriptor,
+                r_pool);
+    }
+
     return
-        p_context->m_pool_mgr->v_create_node(
-            p_pool_descriptor,
-            r_pool);
+        e_status;
 
 } // s_create()
 
@@ -47,13 +66,32 @@ enum appl_status
         struct appl_pool * const
             p_pool)
 {
+    enum appl_status
+        e_status;
+
     struct appl_context * const
         p_context =
         p_pool->get_context();
 
+    class appl_pool_mgr *
+        p_pool_mgr;
+
+    e_status =
+        p_context->v_pool_mgr(
+            &(
+                p_pool_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_pool_mgr->v_destroy_node(
+                p_pool);
+    }
+
     return
-        p_context->m_pool_mgr->v_destroy_node(
-            p_pool);
+        e_status;
 
 } // s_destroy()
 

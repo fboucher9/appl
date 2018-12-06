@@ -58,11 +58,24 @@ appl_socket_service::s_create(
     enum appl_status
         e_status;
 
-    // Dispatch to socket manager
+    class appl_socket_mgr *
+        p_socket_mgr;
+
     e_status =
-        p_context->m_socket_mgr->v_create_socket(
-            p_socket_descriptor,
-            r_socket);
+        p_context->v_socket_mgr(
+            &(
+                p_socket_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        // Dispatch to socket manager
+        e_status =
+            p_socket_mgr->v_create_socket(
+                p_socket_descriptor,
+                r_socket);
+    }
 
     return
         e_status;
@@ -84,13 +97,22 @@ appl_socket_service::s_destroy(
         p_context =
         p_socket->get_context();
 
-    class appl_socket_mgr * const
-        p_socket_mgr =
-        p_context->m_socket_mgr;
+    class appl_socket_mgr *
+        p_socket_mgr;
 
     e_status =
-        p_socket_mgr->v_destroy_socket(
-            p_socket);
+        p_context->v_socket_mgr(
+            &(
+                p_socket_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_socket_mgr->v_destroy_socket(
+                p_socket);
+    }
 
     return
         e_status;
@@ -316,16 +338,25 @@ appl_socket_service::s_poll(
     enum appl_status
         e_status;
 
-    class appl_socket_mgr * const
-        p_socket_mgr =
-        p_context->m_socket_mgr;
+    class appl_socket_mgr *
+        p_socket_mgr;
 
     e_status =
-        p_socket_mgr->v_poll(
-            p_poll_descriptor_min,
-            p_poll_descriptor_max,
-            i_wait_freq,
-            i_wait_count);
+        p_context->v_socket_mgr(
+            &(
+                p_socket_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_socket_mgr->v_poll(
+                p_poll_descriptor_min,
+                p_poll_descriptor_max,
+                i_wait_freq,
+                i_wait_count);
+    }
 
     return
         e_status;

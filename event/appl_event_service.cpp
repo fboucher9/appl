@@ -35,14 +35,23 @@ appl_event_service::s_create(
     enum appl_status
         e_status;
 
-    class appl_event_mgr * const
-        p_event_mgr =
-        p_context->m_event_mgr;
+    class appl_event_mgr *
+        p_event_mgr;
 
     e_status =
-        p_event_mgr->v_create_node(
-            p_event_descriptor,
-            r_event);
+        p_context->v_event_mgr(
+            &(
+                p_event_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_event_mgr->v_create_node(
+                p_event_descriptor,
+                r_event);
+    }
 
     return
         e_status;
@@ -64,13 +73,22 @@ appl_event_service::s_destroy(
         p_context =
         p_event->get_context();
 
-    class appl_event_mgr * const
-        p_event_mgr =
-        p_context->m_event_mgr;
+    class appl_event_mgr *
+        p_event_mgr;
 
     e_status =
-        p_event_mgr->v_destroy_node(
-            p_event);
+        p_context->v_event_mgr(
+            &(
+                p_event_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_event_mgr->v_destroy_node(
+                p_event);
+    }
 
     return
         e_status;

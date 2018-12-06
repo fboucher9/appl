@@ -1223,16 +1223,27 @@ class appl_thread_cache_service
                 struct appl_thread_cache * * const
                     r_thread_cache)
         {
-            class appl_thread_cache_mgr * const
-                p_thread_cache_mgr =
-                p_context->m_thread_cache_mgr;
-
             enum appl_status
+                e_status;
+
+            class appl_thread_cache_mgr *
+                p_thread_cache_mgr;
+
+            e_status =
+                p_context->v_thread_cache_mgr(
+                    &(
+                        p_thread_cache_mgr));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
                 e_status =
-                p_thread_cache_mgr->f_create_node(
-                    p_thread_property,
-                    p_thread_descriptor,
-                    r_thread_cache);
+                    p_thread_cache_mgr->f_create_node(
+                        p_thread_property,
+                        p_thread_descriptor,
+                        r_thread_cache);
+            }
 
             return
                 e_status;
@@ -1255,13 +1266,22 @@ class appl_thread_cache_service
                 p_context =
                 p_thread_cache->get_context();
 
-            class appl_thread_cache_mgr * const
-                p_thread_cache_mgr =
-                p_context->m_thread_cache_mgr;
+            class appl_thread_cache_mgr *
+                p_thread_cache_mgr;
 
             e_status =
-                p_thread_cache_mgr->f_destroy_node(
-                    p_thread_cache);
+                p_context->v_thread_cache_mgr(
+                    &(
+                        p_thread_cache_mgr));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    p_thread_cache_mgr->f_destroy_node(
+                        p_thread_cache);
+            }
 
             return
                 e_status;

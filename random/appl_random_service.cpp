@@ -32,10 +32,29 @@ appl_random_service::s_create(
     struct appl_random * * const
         r_random)
 {
+    enum appl_status
+        e_status;
+
+    class appl_random_mgr *
+        p_random_mgr;
+
+    e_status =
+        p_context->v_random_mgr(
+            &(
+                p_random_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_random_mgr->v_create_node(
+                p_descriptor,
+                r_random);
+    }
+
     return
-        p_context->m_random_mgr->v_create_node(
-            p_descriptor,
-            r_random);
+        e_status;
 
 } // s_create()
 
@@ -54,13 +73,22 @@ appl_random_service::s_destroy(
         p_context =
         p_random->get_context();
 
-    class appl_random_mgr * const
-        p_random_mgr =
-        p_context->m_random_mgr;
+    class appl_random_mgr *
+        p_random_mgr;
 
     e_status =
-        p_random_mgr->v_destroy_node(
-            p_random);
+        p_context->v_random_mgr(
+            &(
+                p_random_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_random_mgr->v_destroy_node(
+                p_random);
+    }
 
     return
         e_status;

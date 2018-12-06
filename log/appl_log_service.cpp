@@ -36,15 +36,24 @@ enum appl_status
         e_status;
 
     // Dispatch to appl_log object
-    struct appl_log * const
-        p_log =
-        p_context->m_log;
+    struct appl_log *
+        p_log;
 
     e_status =
-        p_log->v_print(
-            e_level,
-            p_message_min,
-            p_message_max);
+        p_context->v_log(
+            &(
+                p_log));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_log->v_print(
+                e_level,
+                p_message_min,
+                p_message_max);
+    }
 
     return
         e_status;

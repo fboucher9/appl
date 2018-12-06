@@ -30,9 +30,28 @@ appl_timer_service::s_create(
     struct appl_timer * * const
         r_timer)
 {
+    enum appl_status
+        e_status;
+
+    class appl_timer_mgr *
+        p_timer_mgr;
+
+    e_status =
+        p_context->v_timer_mgr(
+            &(
+                p_timer_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_timer_mgr->v_create_node(
+                r_timer);
+    }
+
     return
-        p_context->m_timer_mgr->v_create_node(
-            r_timer);
+        e_status;
 
 } // s_create()
 
@@ -44,13 +63,32 @@ appl_timer_service::s_destroy(
     struct appl_timer * const
         p_timer)
 {
+    enum appl_status
+        e_status;
+
     struct appl_context * const
         p_context =
         p_timer->get_context();
 
+    class appl_timer_mgr *
+        p_timer_mgr;
+
+    e_status =
+        p_context->v_timer_mgr(
+            &(
+                p_timer_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_timer_mgr->v_destroy_node(
+                p_timer);
+    }
+
     return
-        p_context->m_timer_mgr->v_destroy_node(
-            p_timer);
+        e_status;
 
 } // s_destroy()
 

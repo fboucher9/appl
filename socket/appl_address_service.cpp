@@ -60,27 +60,36 @@ appl_address_service::s_create(
         e_status;
 
     // Use the C++ context object to query socket manager
-    class appl_socket_mgr * const
-        p_socket_mgr =
-        p_context->m_socket_mgr;
+    class appl_socket_mgr *
+        p_socket_mgr;
 
-    struct appl_address *
-        p_address_node;
-
-    // Use socket manager to dispatch this request
     e_status =
-        p_socket_mgr->v_create_address(
-            p_address_property,
+        p_context->v_socket_mgr(
             &(
-                p_address_node));
+                p_socket_mgr));
 
     if (
         appl_status_ok
         == e_status)
     {
-        *(
-            r_address) =
+        struct appl_address *
             p_address_node;
+
+        // Use socket manager to dispatch this request
+        e_status =
+            p_socket_mgr->v_create_address(
+                p_address_property,
+                &(
+                    p_address_node));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            *(
+                r_address) =
+                p_address_node;
+        }
     }
 
     return
@@ -96,17 +105,32 @@ appl_address_service::s_destroy(
     struct appl_address * const
         p_address)
 {
+    enum appl_status
+        e_status;
+
     struct appl_context * const
         p_context =
         p_address->get_context();
 
-    class appl_socket_mgr * const
-        p_socket_mgr =
-        p_context->m_socket_mgr;
+    class appl_socket_mgr *
+        p_socket_mgr;
+
+    e_status =
+        p_context->v_socket_mgr(
+            &(
+                p_socket_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_socket_mgr->v_destroy_address(
+                p_address);
+    }
 
     return
-        p_socket_mgr->v_destroy_address(
-            p_address);
+        e_status;
 
 } // s_destroy()
 

@@ -103,19 +103,77 @@ struct appl_context : public appl_object
 
         /* -- */
 
-        class appl_event_mgr *
-            m_event_mgr;
-
-        class appl_socket_mgr *
-            m_socket_mgr;
-
-        /* -- */
-
         struct appl_env *
             m_env;
 
         class appl_library_mgr *
             m_library_mgr;
+
+        /* -- */
+
+        virtual
+        enum appl_status
+            v_random_mgr(
+                class appl_random_mgr * * const
+                    r_random_mgr) const;
+
+        virtual
+        enum appl_status
+            v_thread_cache_mgr(
+                class appl_thread_cache_mgr * * const
+                    r_thread_cache_mgr) const;
+
+        virtual
+        enum appl_status
+            v_log(
+                struct appl_log * * const
+                    r_log) const;
+
+        virtual
+        enum appl_status
+            v_pool_mgr(
+                class appl_pool_mgr * * const
+                    r_pool_mgr) const;
+
+        virtual
+        enum appl_status
+            v_timer_mgr(
+                class appl_timer_mgr * * const
+                    r_timer_mgr) const;
+
+        virtual
+        enum appl_status
+            v_xlib(
+                struct appl_xlib * * const
+                    r_xlib) const;
+
+        virtual
+        enum appl_status
+            v_socket_mgr(
+                class appl_socket_mgr * * const
+                    r_socket_mgr) const;
+
+        virtual
+        enum appl_status
+            v_event_mgr(
+                class appl_event_mgr * * const
+                    r_event_mgr) const;
+
+#if defined APPL_DEBUG
+        virtual
+        enum appl_status
+            v_debug(
+                class appl_debug * * const
+                    r_debug) const;
+#endif /* #if defined APPL_DEBUG */
+
+        static
+        struct appl_context *
+        from_object_handle(
+            struct appl_object const * const
+                p_object);
+
+    protected:
 
         /* -- */
 
@@ -143,6 +201,14 @@ struct appl_context : public appl_object
 
         /* -- */
 
+        class appl_event_mgr *
+            m_event_mgr;
+
+        class appl_socket_mgr *
+            m_socket_mgr;
+
+        /* -- */
+
 #if defined APPL_DEBUG
         class appl_debug *
             m_debug;
@@ -151,13 +217,7 @@ struct appl_context : public appl_object
             pv_debug_padding[1u];
 #endif /* #if defined APPL_DEBUG */
 
-        static
-        struct appl_context *
-        from_object_handle(
-            struct appl_object const * const
-                p_object);
-
-    protected:
+        /* -- */
 
         appl_context();
 

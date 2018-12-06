@@ -37,20 +37,29 @@ appl_xlib_service::s_create(
     enum appl_status
         e_status;
 
-    struct appl_xlib * const
-        p_xlib =
-        p_context->m_xlib;
+    struct appl_xlib *
+        p_xlib;
 
     e_status =
-        p_xlib->v_add_ref();
+        p_context->v_xlib(
+            &(
+                p_xlib));
 
     if (
         appl_status_ok
         == e_status)
     {
-        *(
-            r_instance) =
-            p_xlib;
+        e_status =
+            p_xlib->v_add_ref();
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            *(
+                r_instance) =
+                p_xlib;
+        }
     }
 
     return
