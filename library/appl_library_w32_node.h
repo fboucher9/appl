@@ -56,7 +56,9 @@ class appl_library_w32_node : public appl_library
         //
         //
         //
-        appl_library_w32_node();
+        appl_library_w32_node(
+            struct appl_context * const
+                p_context);
 
         //
         //

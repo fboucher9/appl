@@ -27,7 +27,9 @@ class appl_allocator_std : public appl_allocator
 {
     public:
 
-        appl_allocator_std();
+        appl_allocator_std(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_allocator_std();

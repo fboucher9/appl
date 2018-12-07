@@ -61,8 +61,11 @@ appl_random_pseudo::s_create(
 //
 //
 //
-appl_random_pseudo::appl_random_pseudo() :
-    appl_random(),
+appl_random_pseudo::appl_random_pseudo(
+    struct appl_context * const
+        p_context) :
+    appl_random(
+        p_context),
     m_seed(1)
 {
 }

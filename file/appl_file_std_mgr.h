@@ -45,7 +45,9 @@ class appl_file_std_mgr : public appl_file_mgr
                 class appl_file_mgr * const
                     p_file_mgr);
 
-        appl_file_std_mgr();
+        appl_file_std_mgr(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_file_std_mgr();

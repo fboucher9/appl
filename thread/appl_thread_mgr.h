@@ -50,7 +50,9 @@ class appl_thread_mgr : public appl_object
 
     protected:
 
-        appl_thread_mgr();
+        appl_thread_mgr(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_thread_mgr();

@@ -38,7 +38,9 @@ class appl_timer_std_mgr : public appl_timer_mgr
                 class appl_timer_mgr * * const
                     r_timer_mgr);
 
-        appl_timer_std_mgr();
+        appl_timer_std_mgr(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_timer_std_mgr();

@@ -90,8 +90,11 @@ enum appl_status
 //
 //
 //
-appl_socket_w32_mgr::appl_socket_w32_mgr() :
-    appl_socket_mgr()
+appl_socket_w32_mgr::appl_socket_w32_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_socket_mgr(
+        p_context)
 {
 }
 

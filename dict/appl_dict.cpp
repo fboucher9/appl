@@ -85,8 +85,11 @@ enum appl_status
 //
 //
 //
-appl_dict::appl_dict() :
-    appl_object()
+appl_dict::appl_dict(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

@@ -78,8 +78,11 @@ enum appl_status
 //
 //
 //
-appl_debug_w32::appl_debug_w32() :
-    appl_debug()
+appl_debug_w32::appl_debug_w32(
+    struct appl_context * const
+        p_context) :
+    appl_debug(
+        p_context)
 {
 }
 

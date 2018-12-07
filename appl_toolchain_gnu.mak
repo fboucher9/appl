@@ -16,6 +16,12 @@ appl-toolchain-gnu-cxx = $(CXX)
 # Select archive program
 appl-toolchain-gnu-ar = $(AR)
 
+# Options to add for gprof
+# -pg
+
+# Options to add for gcov
+# -ftest-coverage -fprofile-arcs
+
 # Common compiler flags for C and C++
 appl-toolchain-gnu-common-flags = \
     -g \
@@ -24,6 +30,7 @@ appl-toolchain-gnu-common-flags = \
     -DAPPL_HAVE_XLIB \
     -I$(APPL_SRC). \
     -I$(APPL_SRC)include \
+    -ansi \
     -pedantic \
     -Wall \
     -Wextra \

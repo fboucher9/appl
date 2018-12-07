@@ -80,8 +80,11 @@ enum appl_status
 //
 //
 //
-appl_clock_w32::appl_clock_w32() :
-    appl_clock()
+appl_clock_w32::appl_clock_w32(
+    struct appl_context * const
+        p_context) :
+    appl_clock(
+        p_context)
 {
 }
 

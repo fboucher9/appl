@@ -63,8 +63,11 @@ enum appl_status
 //
 //
 //
-appl_timer_std_mgr::appl_timer_std_mgr() :
-    appl_timer_mgr()
+appl_timer_std_mgr::appl_timer_std_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_timer_mgr(
+        p_context)
 {
 }
 

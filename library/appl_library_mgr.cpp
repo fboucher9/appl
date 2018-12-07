@@ -70,8 +70,11 @@ enum appl_status
 //
 //
 //
-appl_library_mgr::appl_library_mgr() :
-    appl_object()
+appl_library_mgr::appl_library_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

@@ -253,8 +253,11 @@ void
 //
 //
 //
-appl_hash::appl_hash() :
-    appl_object(),
+appl_hash::appl_hash(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context),
     m_descriptor(),
     m_table()
 {

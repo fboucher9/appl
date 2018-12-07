@@ -39,7 +39,9 @@ class appl_xlib_std : public appl_xlib
                 struct appl_xlib * * const
                     r_instance);
 
-        appl_xlib_std();
+        appl_xlib_std(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_xlib_std();

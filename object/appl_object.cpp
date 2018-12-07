@@ -37,6 +37,17 @@ appl_object::appl_object() :
 //
 //
 //
+appl_object::appl_object(
+    struct appl_context * const
+        p_context) :
+    m_context(
+        p_context)
+{
+}
+
+//
+//
+//
 appl_object::~appl_object()
 {
 }
@@ -153,18 +164,5 @@ struct appl_context *
         m_context;
 
 } // get_context()
-
-//
-//
-//
-void
-    appl_object::set_context(
-        struct appl_context * const
-            p_context)
-{
-    m_context =
-        p_context;
-
-} // set_context()
 
 /* end-of-file: appl_object.cpp */

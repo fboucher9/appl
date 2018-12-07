@@ -187,7 +187,9 @@ struct appl_context : public appl_object
 
     protected:
 
-        appl_context();
+        appl_context(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_context();

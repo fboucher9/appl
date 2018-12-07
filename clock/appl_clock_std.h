@@ -49,7 +49,9 @@ class appl_clock_std : public appl_clock
                 class appl_clock * const
                     p_clock);
 
-        appl_clock_std();
+        appl_clock_std(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_clock_std();

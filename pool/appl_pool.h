@@ -36,7 +36,9 @@ struct appl_pool : public appl_allocator
 
     protected:
 
-        appl_pool();
+        appl_pool(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_pool();

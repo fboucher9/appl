@@ -58,8 +58,11 @@ enum appl_status
 //
 //
 //
-appl_backtrace::appl_backtrace() :
-    appl_object()
+appl_backtrace::appl_backtrace(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

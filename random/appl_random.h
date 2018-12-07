@@ -34,7 +34,9 @@ struct appl_random : public appl_object
 
     protected:
 
-        appl_random();
+        appl_random(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_random();

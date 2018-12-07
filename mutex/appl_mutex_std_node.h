@@ -48,7 +48,9 @@ class appl_mutex_std_node : public appl_mutex
                 struct appl_mutex * * const
                     r_mutex);
 
-        appl_mutex_std_node();
+        appl_mutex_std_node(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_mutex_std_node();

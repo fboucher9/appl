@@ -46,7 +46,9 @@ class appl_library_mgr : public appl_object
 
     protected:
 
-        appl_library_mgr();
+        appl_library_mgr(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_library_mgr();

@@ -86,8 +86,11 @@ enum appl_status
 //
 //
 //
-appl_library_w32_mgr::appl_library_w32_mgr() :
-    appl_library_mgr()
+appl_library_w32_mgr::appl_library_w32_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_library_mgr(
+        p_context)
 {
 }
 

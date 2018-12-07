@@ -63,8 +63,11 @@ enum appl_status
 //
 //
 //
-appl_log_std::appl_log_std() :
-    appl_log(),
+appl_log_std::appl_log_std(
+    struct appl_context * const
+        p_context) :
+    appl_log(
+        p_context),
     m_log_impl()
 {
 }

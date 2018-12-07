@@ -44,7 +44,9 @@ struct appl_module : public appl_object
 
     protected:
 
-        appl_module();
+        appl_module(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_module();
@@ -82,7 +84,9 @@ struct appl_file_source_module : public appl_module
                 struct appl_file_source_module * * const
                     r_instance);
 
-        appl_file_source_module();
+        appl_file_source_module(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_file_source_module();
@@ -158,7 +162,9 @@ struct appl_hex_convert_module : public appl_module
                 struct appl_hex_convert_module * * const
                     r_instance);
 
-        appl_hex_convert_module();
+        appl_hex_convert_module(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_hex_convert_module();
@@ -247,7 +253,9 @@ struct appl_file_sink_module : public appl_module
                 struct appl_file_sink_module * * const
                     r_instance);
 
-        appl_file_sink_module();
+        appl_file_sink_module(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_file_sink_module();
@@ -315,7 +323,9 @@ struct appl_custom_module : public appl_module
                 struct appl_custom_module * * const
                     r_instance);
 
-        appl_custom_module();
+        appl_custom_module(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_custom_module();
@@ -378,7 +388,9 @@ struct appl_null_module : public appl_module
                 struct appl_null_module * * const
                     r_instance);
 
-        appl_null_module();
+        appl_null_module(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_null_module();

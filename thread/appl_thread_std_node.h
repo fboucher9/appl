@@ -58,7 +58,9 @@ class appl_thread_std_node : public appl_thread
                 struct appl_thread * const
                     p_thread);
 
-        appl_thread_std_node();
+        appl_thread_std_node(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_thread_std_node();

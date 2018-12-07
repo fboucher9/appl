@@ -36,8 +36,11 @@ appl_random::v_pick(
 //
 //
 //
-appl_random::appl_random() :
-    appl_object()
+appl_random::appl_random(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

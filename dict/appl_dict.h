@@ -45,7 +45,9 @@ struct appl_dict : public appl_object
 
     protected:
 
-        appl_dict();
+        appl_dict(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_dict();

@@ -55,8 +55,11 @@ enum appl_status
 
 }
 
-appl_module::appl_module() :
-    appl_object()
+appl_module::appl_module(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 
@@ -81,8 +84,11 @@ enum appl_status
 
 }
 
-appl_file_source_module::appl_file_source_module() :
-    appl_module(),
+appl_file_source_module::appl_file_source_module(
+    struct appl_context * const
+        p_context) :
+    appl_module(
+        p_context),
     m_file_source_descriptor()
 {
 }
@@ -222,8 +228,11 @@ enum appl_status
 //
 //
 //
-appl_hex_convert_module::appl_hex_convert_module() :
-    appl_module(),
+appl_hex_convert_module::appl_hex_convert_module(
+    struct appl_context * const
+        p_context) :
+    appl_module(
+        p_context),
     m_hex_convert_descriptor(),
     m_offset(),
     m_count()
@@ -589,8 +598,11 @@ enum appl_status
 //
 //
 //
-appl_file_sink_module::appl_file_sink_module() :
-    appl_module(),
+appl_file_sink_module::appl_file_sink_module(
+    struct appl_context * const
+        p_context) :
+    appl_module(
+        p_context),
     m_file_sink_descriptor()
 {
 }
@@ -727,8 +739,11 @@ enum appl_status
 //
 //
 //
-appl_custom_module::appl_custom_module() :
-    appl_module(),
+appl_custom_module::appl_custom_module(
+    struct appl_context * const
+        p_context) :
+    appl_module(
+        p_context),
     m_custom_module_descriptor()
 {
 }
@@ -812,8 +827,11 @@ enum appl_status
 //
 //
 //
-appl_null_module::appl_null_module() :
-    appl_module()
+appl_null_module::appl_null_module(
+    struct appl_context * const
+        p_context) :
+    appl_module(
+        p_context)
 {
 }
 

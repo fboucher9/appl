@@ -45,7 +45,9 @@ class appl_file_mgr : public appl_object
 
     protected:
 
-        appl_file_mgr();
+        appl_file_mgr(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_file_mgr();

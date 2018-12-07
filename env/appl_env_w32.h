@@ -51,7 +51,9 @@ class appl_env_w32 : public appl_env
             struct appl_env * const
                 p_env);
 
-        appl_env_w32();
+        appl_env_w32(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_env_w32();

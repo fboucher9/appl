@@ -133,8 +133,11 @@ enum appl_status
 //
 //
 //
-appl_string::appl_string() :
-    appl_object(),
+appl_string::appl_string(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context),
     m_buf_min(),
     m_buf_max()
 {

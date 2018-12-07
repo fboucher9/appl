@@ -48,7 +48,9 @@ struct appl_allocator : public appl_object
 
     protected:
 
-        appl_allocator();
+        appl_allocator(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_allocator();

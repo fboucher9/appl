@@ -63,8 +63,11 @@ enum appl_status
 //
 //
 //
-appl_library_std_mgr::appl_library_std_mgr() :
-    appl_library_mgr()
+appl_library_std_mgr::appl_library_std_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_library_mgr(
+        p_context)
 {
 }
 

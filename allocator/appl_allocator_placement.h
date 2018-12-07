@@ -64,6 +64,8 @@ class appl_allocator_placement : public appl_allocator
     public:
 
         appl_allocator_placement(
+            struct appl_context * const
+                p_context,
             void * const
                 p_placement);
 

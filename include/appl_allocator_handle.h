@@ -134,14 +134,16 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
+        struct appl_context * const
+            p_context =
+            appl_allocator_parent(
+                p_allocator)->get_context();
+
         T_instance * const
             p_instance = new (
                 p_placement)
-                T_instance;
-
-        p_instance->set_context(
-            appl_allocator_parent(
-                p_allocator)->get_context());
+                T_instance(
+                    p_context);
 
         e_status =
             p_instance->f_init();
@@ -201,17 +203,20 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
+        struct appl_context * const
+            p_context =
+            appl_allocator_parent(
+                p_allocator)->get_context();
+
         T_instance * const
             p_instance = new (
                 p_placement)
-                T_instance;
-
-        p_instance->set_context(
-            appl_allocator_parent(
-                p_allocator)->get_context());
+                T_instance(
+                    p_context);
 
         e_status =
-            p_instance->f_init(p_descriptor);
+            p_instance->f_init(
+                p_descriptor);
 
         if (
             appl_status_ok

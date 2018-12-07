@@ -75,8 +75,11 @@ enum appl_status
 //
 //
 //
-appl_xlib_std::appl_xlib_std() :
-    appl_xlib(),
+appl_xlib_std::appl_xlib_std(
+    struct appl_context * const
+        p_context) :
+    appl_xlib(
+        p_context),
     m_xlib_handle(),
     m_lock(),
     m_xlib_intf(),

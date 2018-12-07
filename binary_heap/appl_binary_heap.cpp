@@ -52,7 +52,9 @@ struct appl_binary_heap : public appl_object
 {
     public:
 
-        appl_binary_heap();
+        appl_binary_heap(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_binary_heap();
@@ -124,8 +126,11 @@ struct appl_binary_heap : public appl_object
 //
 //
 //
-appl_binary_heap::appl_binary_heap() :
-    appl_object(),
+appl_binary_heap::appl_binary_heap(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context),
     m_table(),
     m_count(),
     m_count_max(),

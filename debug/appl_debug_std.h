@@ -40,7 +40,9 @@ class appl_debug_std : public appl_debug
                 class appl_debug * const
                     p_debug);
 
-        appl_debug_std();
+        appl_debug_std(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_debug_std();

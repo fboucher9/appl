@@ -42,7 +42,9 @@ class appl_context_std : public appl_context
                 struct appl_context * const
                     p_context);
 
-        appl_context_std();
+        appl_context_std(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_context_std();

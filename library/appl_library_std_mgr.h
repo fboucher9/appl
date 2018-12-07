@@ -45,7 +45,9 @@ class appl_library_std_mgr : public appl_library_mgr
                 class appl_library_mgr * * const
                     r_library_mgr);
 
-        appl_library_std_mgr();
+        appl_library_std_mgr(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_library_std_mgr();

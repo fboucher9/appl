@@ -79,8 +79,11 @@ enum appl_status
 //
 //
 //
-appl_mutex_std_mgr::appl_mutex_std_mgr() :
-    appl_mutex_mgr(),
+appl_mutex_std_mgr::appl_mutex_std_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_mutex_mgr(
+        p_context),
     m_pool(),
     m_pool_created()
 {

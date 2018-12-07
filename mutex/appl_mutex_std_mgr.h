@@ -44,7 +44,9 @@ class appl_mutex_std_mgr : public appl_mutex_mgr
                 class appl_mutex_mgr * const
                     p_mutex_mgr);
 
-        appl_mutex_std_mgr();
+        appl_mutex_std_mgr(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_mutex_std_mgr();

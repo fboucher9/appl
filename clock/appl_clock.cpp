@@ -91,8 +91,11 @@ enum appl_status
 //
 //
 //
-appl_clock::appl_clock() :
-    appl_object()
+appl_clock::appl_clock(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

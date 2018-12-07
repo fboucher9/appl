@@ -49,8 +49,11 @@ enum appl_status
 //
 //
 //
-appl_debug::appl_debug() :
-    appl_object()
+appl_debug::appl_debug(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

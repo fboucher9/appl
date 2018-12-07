@@ -62,7 +62,9 @@ struct appl_string : public appl_object
                 unsigned char * * const
                     r_buf_max) const;
 
-        appl_string();
+        appl_string(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_string();

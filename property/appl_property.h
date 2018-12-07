@@ -72,7 +72,9 @@ struct appl_property : public appl_object
 
     protected:
 
-        appl_property();
+        appl_property(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_property();

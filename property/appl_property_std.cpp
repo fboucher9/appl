@@ -181,8 +181,11 @@ enum appl_status
 //
 //
 //
-appl_property_std::appl_property_std() :
-    appl_property(),
+appl_property_std::appl_property_std(
+    struct appl_context * const
+        p_context) :
+    appl_property(
+        p_context),
     a_values(),
     a_types(),
     m_count(),

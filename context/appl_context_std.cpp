@@ -172,6 +172,8 @@
 
 #include <appl_convert.h>
 
+#include <appl_unused.h>
+
 extern
 enum appl_status
     appl_library_mgr_create(
@@ -240,8 +242,8 @@ class appl_context_default : public appl_context
 }; // class appl_context_default
 
 appl_context_default::appl_context_default() :
-    appl_context(),
-    m_allocator_std(),
+    appl_context(this),
+    m_allocator_std(this),
     m_allocator()
 {
 }
@@ -253,8 +255,6 @@ appl_context_default::~appl_context_default()
 void
 appl_context_default::f_init(void)
 {
-    m_allocator_std.set_context(
-        this);
     m_allocator_std.f_init();
 
     m_allocator =
@@ -290,9 +290,6 @@ enum appl_status
 {
     enum appl_status
         e_status;
-
-    m_heap_std.set_context(
-        this);
 
     e_status =
         m_heap_std.f_init();
@@ -1534,9 +1531,13 @@ enum appl_status
 //
 //
 //
-appl_context_std::appl_context_std() :
-    appl_context()
-    , m_heap_std()
+appl_context_std::appl_context_std(
+    struct appl_context * const
+        p_context) :
+    appl_context(
+        this)
+    , m_heap_std(
+        this)
     , m_allocator()
     , m_backtrace()
     , m_thread_mgr()
@@ -1581,6 +1582,8 @@ appl_context_std::appl_context_std() :
 #endif /* #if defined APPL_HAVE_XLIB */
     , b_init_backtrace()
 {
+    appl_unused(
+        p_context);
 }
 
 //

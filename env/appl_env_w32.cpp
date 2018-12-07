@@ -92,8 +92,11 @@ appl_env_w32::s_destroy(
 //
 //
 //
-appl_env_w32::appl_env_w32() :
-    appl_env(),
+appl_env_w32::appl_env_w32(
+    struct appl_context * const
+        p_context) :
+    appl_env(
+        p_context),
     m_refcount()
 {
 }

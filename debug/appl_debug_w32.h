@@ -51,7 +51,9 @@ class appl_debug_w32 : public appl_debug
                 class appl_debug * const
                     p_debug);
 
-        appl_debug_w32();
+        appl_debug_w32(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_debug_w32();

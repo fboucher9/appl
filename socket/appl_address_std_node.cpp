@@ -116,8 +116,11 @@ enum appl_status
 //
 //
 //
-appl_address_std_node::appl_address_std_node() :
-    appl_address(),
+appl_address_std_node::appl_address_std_node(
+    struct appl_context * const
+        p_context) :
+    appl_address(
+        p_context),
     m_sockaddr()
 {
 }

@@ -69,7 +69,9 @@ struct appl_xlib : public appl_object
 
     protected:
 
-        appl_xlib();
+        appl_xlib(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_xlib();

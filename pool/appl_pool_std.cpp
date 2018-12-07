@@ -76,8 +76,11 @@ enum appl_status
 //
 //
 //
-appl_pool_std::appl_pool_std() :
-    appl_pool(),
+appl_pool_std::appl_pool_std(
+    struct appl_context * const
+        p_context) :
+    appl_pool(
+        p_context),
     m_available_items(),
     m_lock(),
     m_descriptor(),

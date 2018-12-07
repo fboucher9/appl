@@ -20,8 +20,12 @@
 //
 //
 appl_allocator_placement::appl_allocator_placement(
+    struct appl_context * const
+        p_context,
     void * const
         p_placement) :
+    appl_allocator(
+        p_context),
     m_placement(
         p_placement)
 {

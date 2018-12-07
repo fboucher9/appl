@@ -88,8 +88,11 @@ enum appl_status
 //
 //
 //
-appl_mutex_mgr::appl_mutex_mgr() :
-    appl_object()
+appl_mutex_mgr::appl_mutex_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

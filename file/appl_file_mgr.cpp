@@ -92,8 +92,11 @@ enum appl_status
 //
 //
 //
-appl_file_mgr::appl_file_mgr() :
-    appl_object()
+appl_file_mgr::appl_file_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

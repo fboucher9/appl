@@ -44,7 +44,9 @@ class appl_clock : public appl_object
 
     protected:
 
-        appl_clock();
+        appl_clock(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_clock();

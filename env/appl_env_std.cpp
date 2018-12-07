@@ -90,8 +90,11 @@ appl_env_std::s_destroy(
 //
 //
 //
-appl_env_std::appl_env_std() :
-    appl_env()
+appl_env_std::appl_env_std(
+    struct appl_context * const
+        p_context) :
+    appl_env(
+        p_context)
 {
 }
 

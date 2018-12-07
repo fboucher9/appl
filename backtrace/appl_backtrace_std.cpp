@@ -80,8 +80,11 @@ enum appl_status
 //
 //
 //
-appl_backtrace_std::appl_backtrace_std() :
-    appl_backtrace()
+appl_backtrace_std::appl_backtrace_std(
+    struct appl_context * const
+        p_context) :
+    appl_backtrace(
+        p_context)
 {
 }
 

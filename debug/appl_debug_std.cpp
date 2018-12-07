@@ -80,8 +80,11 @@ enum appl_status
 //
 //
 //
-appl_debug_std::appl_debug_std() :
-    appl_debug()
+appl_debug_std::appl_debug_std(
+    struct appl_context * const
+        p_context) :
+    appl_debug(
+        p_context)
 {
 }
 

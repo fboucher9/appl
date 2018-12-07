@@ -48,7 +48,9 @@ class appl_debug : public appl_object
 
     protected:
 
-        appl_debug();
+        appl_debug(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_debug();

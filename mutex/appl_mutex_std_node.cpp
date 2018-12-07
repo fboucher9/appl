@@ -77,8 +77,11 @@ enum appl_status
 //
 //
 //
-appl_mutex_std_node::appl_mutex_std_node() :
-    appl_mutex(),
+appl_mutex_std_node::appl_mutex_std_node(
+    struct appl_context * const
+        p_context) :
+    appl_mutex(
+        p_context),
     m_mutex_impl(),
     m_mutex_impl_initialized()
 {

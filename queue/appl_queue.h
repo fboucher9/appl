@@ -56,7 +56,9 @@ struct appl_queue : public appl_object
 
     protected:
 
-        appl_queue();
+        appl_queue(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_queue();

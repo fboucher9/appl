@@ -39,7 +39,9 @@ class appl_pool_std : public appl_pool
                 class appl_pool_std * * const
                     r_instance);
 
-        appl_pool_std();
+        appl_pool_std(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_pool_std();

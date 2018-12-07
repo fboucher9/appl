@@ -44,7 +44,9 @@ class appl_random_std_mgr : public appl_random_mgr
             class appl_random_mgr * const
                 p_random_mgr);
 
-        appl_random_std_mgr();
+        appl_random_std_mgr(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_random_std_mgr();

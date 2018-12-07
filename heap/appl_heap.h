@@ -29,7 +29,9 @@ struct appl_heap : public appl_allocator
 
     protected:
 
-        appl_heap();
+        appl_heap(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_heap();

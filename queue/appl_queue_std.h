@@ -52,7 +52,9 @@ class appl_queue_std : public appl_queue
                 struct appl_queue * const
                     p_queue);
 
-        appl_queue_std();
+        appl_queue_std(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_queue_std();

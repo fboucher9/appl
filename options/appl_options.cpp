@@ -162,8 +162,11 @@ enum appl_status
 //
 //
 //
-appl_options::appl_options() :
-    appl_object()
+appl_options::appl_options(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

@@ -104,8 +104,11 @@ enum appl_status
 //
 //
 //
-appl_timer_std_node::appl_timer_std_node() :
-    appl_timer(),
+appl_timer_std_node::appl_timer_std_node(
+    struct appl_context * const
+        p_context) :
+    appl_timer(
+        p_context),
     m_used_list(),
     m_free_list(),
     m_thread(),

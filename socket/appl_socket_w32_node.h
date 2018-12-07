@@ -42,7 +42,9 @@ class appl_socket_w32_node : public appl_socket
                 struct appl_socket * * const
                     r_socket);
 
-        appl_socket_w32_node();
+        appl_socket_w32_node(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_socket_w32_node();

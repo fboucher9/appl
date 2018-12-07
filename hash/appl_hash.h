@@ -73,7 +73,9 @@ struct appl_hash : public appl_object
                 void * const
                     p_context);
 
-        appl_hash();
+        appl_hash(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_hash();

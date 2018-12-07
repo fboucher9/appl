@@ -42,7 +42,9 @@ class appl_event_std_mgr : public appl_event_mgr
                 class appl_event_mgr * const
                     p_event_mgr);
 
-        appl_event_std_mgr();
+        appl_event_std_mgr(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_event_std_mgr();

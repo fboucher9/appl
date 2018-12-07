@@ -19,8 +19,11 @@
 //
 //
 //
-appl_refcount::appl_refcount() :
-    appl_object(),
+appl_refcount::appl_refcount(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context),
     m_mutex(),
     m_refcount(1)
 {

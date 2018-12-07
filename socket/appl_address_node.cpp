@@ -73,8 +73,11 @@ enum appl_status
 //  Description:
 //      Initialize to default values.
 //
-appl_address::appl_address() :
-    appl_object()
+appl_address::appl_address(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

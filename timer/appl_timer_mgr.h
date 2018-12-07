@@ -36,7 +36,9 @@ class appl_timer_mgr : public appl_object
 
     protected:
 
-        appl_timer_mgr();
+        appl_timer_mgr(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_timer_mgr();

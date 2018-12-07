@@ -114,8 +114,11 @@ appl_options_std::s_destroy(
 //
 //
 //
-appl_options_std::appl_options_std() :
-    appl_options(),
+appl_options_std::appl_options_std(
+    struct appl_context * const
+        p_context) :
+    appl_options(
+        p_context),
     m_list(),
     m_chunk(),
     m_count(),

@@ -82,8 +82,11 @@ enum appl_status
 //
 //
 //
-appl_file_std_mgr::appl_file_std_mgr() :
-    appl_file_mgr(),
+appl_file_std_mgr::appl_file_std_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_file_mgr(
+        p_context),
     m_pool()
 {
 }

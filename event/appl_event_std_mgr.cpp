@@ -85,8 +85,11 @@ enum appl_status
 //
 //
 //
-appl_event_std_mgr::appl_event_std_mgr() :
-    appl_event_mgr(),
+appl_event_std_mgr::appl_event_std_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_event_mgr(
+        p_context),
     m_pool(),
     m_pool_created()
 {

@@ -17,8 +17,11 @@
 //
 //
 //
-appl_heap::appl_heap() :
-    appl_allocator()
+appl_heap::appl_heap(
+    struct appl_context * const
+        p_context) :
+    appl_allocator(
+        p_context)
 {
 }
 

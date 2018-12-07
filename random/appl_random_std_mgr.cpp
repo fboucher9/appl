@@ -84,8 +84,11 @@ appl_random_std_mgr::s_destroy(
 //
 //
 //
-appl_random_std_mgr::appl_random_std_mgr() :
-    appl_random_mgr()
+appl_random_std_mgr::appl_random_std_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_random_mgr(
+        p_context)
 {
 }
 

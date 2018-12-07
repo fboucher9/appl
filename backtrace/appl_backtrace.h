@@ -42,7 +42,9 @@ class appl_backtrace : public appl_object
 
     protected:
 
-        appl_backtrace();
+        appl_backtrace(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_backtrace();

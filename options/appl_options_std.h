@@ -62,7 +62,9 @@ class appl_options_std : public appl_options
             struct appl_options * const
                 p_options_std);
 
-        appl_options_std();
+        appl_options_std(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_options_std();

@@ -65,9 +65,6 @@ class appl_thread_cache_node;
 */
 struct appl_thread_cache_descriptor
 {
-    struct appl_context *
-        p_context;
-
     class appl_thread_cache_mgr *
         p_thread_cache_mgr;
 
@@ -139,8 +136,11 @@ struct appl_thread_cache : public appl_thread
         //
         //
         //
-        appl_thread_cache() :
-            appl_thread(),
+        appl_thread_cache(
+            struct appl_context * const
+                p_context) :
+            appl_thread(
+                p_context),
             m_thread_cache_mgr(),
             m_thread_cache_node(),
             m_thread_handle(),
@@ -170,9 +170,6 @@ struct appl_thread_cache : public appl_thread
         {
             enum appl_status
                 e_status;
-
-            set_context(
-                p_thread_cache_descriptor->p_context);
 
             m_thread_cache_mgr =
                 p_thread_cache_descriptor->p_thread_cache_mgr;
@@ -516,9 +513,6 @@ class appl_thread_cache_node : public appl_node
             struct appl_thread_cache_descriptor
                 o_thread_cache_descriptor;
 
-            o_thread_cache_descriptor.p_context =
-                p_allocator->get_context();
-
             o_thread_cache_descriptor.p_thread_cache_mgr =
                 p_thread_cache_mgr;
 
@@ -570,9 +564,13 @@ class appl_thread_cache_node : public appl_node
         //
         //
         //
-        appl_thread_cache_node() :
-            appl_node(),
-            m_thread_cache()
+        appl_thread_cache_node(
+            struct appl_context * const
+                p_context) :
+            appl_node(
+                p_context),
+            m_thread_cache(
+                p_context)
         {
         }
 
@@ -861,11 +859,16 @@ class appl_thread_cache_mgr : public appl_object
         //
         //
         //
-        appl_thread_cache_mgr() :
-            appl_object(),
+        appl_thread_cache_mgr(
+            struct appl_context * const
+                p_context) :
+            appl_object(
+                p_context),
             m_lock(),
-            m_unused_nodes(),
-            m_active_nodes()
+            m_unused_nodes(
+                p_context),
+            m_active_nodes(
+                p_context)
         {
         }
 

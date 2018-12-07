@@ -112,8 +112,11 @@ enum appl_status
 //
 //
 //
-appl_mutex::appl_mutex() :
-    appl_object()
+appl_mutex::appl_mutex(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

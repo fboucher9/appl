@@ -50,7 +50,9 @@ class appl_heap_dbg : public appl_heap
                 class appl_heap_dbg * const
                     p_heap_dbg);
 
-        appl_heap_dbg();
+        appl_heap_dbg(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_heap_dbg();

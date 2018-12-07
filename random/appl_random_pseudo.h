@@ -36,7 +36,9 @@ class appl_random_pseudo : public appl_random
             struct appl_random * * const
                 r_random);
 
-        appl_random_pseudo();
+        appl_random_pseudo(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_random_pseudo();

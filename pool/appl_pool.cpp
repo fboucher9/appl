@@ -14,8 +14,11 @@
 //
 //
 //
-appl_pool::appl_pool() :
-    appl_allocator()
+appl_pool::appl_pool(
+    struct appl_context * const
+        p_context) :
+    appl_allocator(
+        p_context)
 {
 }
 

@@ -74,7 +74,9 @@ class appl_socket_mgr : public appl_object
 
     protected:
 
-        appl_socket_mgr();
+        appl_socket_mgr(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_socket_mgr();

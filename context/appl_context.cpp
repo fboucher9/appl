@@ -17,8 +17,11 @@
 //
 //
 //
-appl_context::appl_context() :
-    appl_object()
+appl_context::appl_context(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

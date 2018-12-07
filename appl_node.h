@@ -26,7 +26,9 @@ class appl_node : public appl_object
 {
     public:
 
-        appl_node();
+        appl_node(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_node();

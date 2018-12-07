@@ -44,7 +44,9 @@ class appl_dict_std : public appl_dict
                 class appl_dict_std * const
                     p_instance);
 
-        appl_dict_std();
+        appl_dict_std(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_dict_std();

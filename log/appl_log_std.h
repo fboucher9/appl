@@ -43,7 +43,9 @@ class appl_log_std : public appl_log
                 struct appl_log * const
                     p_instance);
 
-        appl_log_std();
+        appl_log_std(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_log_std();

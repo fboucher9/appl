@@ -46,7 +46,9 @@ class appl_random_mgr : public appl_object
 
     protected:
 
-        appl_random_mgr();
+        appl_random_mgr(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_random_mgr();

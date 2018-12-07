@@ -71,7 +71,9 @@ struct appl_options : public appl_object
 
     protected:
 
-        appl_options();
+        appl_options(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_options();

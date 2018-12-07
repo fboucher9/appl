@@ -39,7 +39,9 @@ struct appl_thread : public appl_object
 
     protected:
 
-        appl_thread();
+        appl_thread(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_thread();

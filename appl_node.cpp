@@ -47,8 +47,11 @@ void
 //
 //
 //
-appl_node::appl_node() :
-    appl_object(),
+appl_node::appl_node(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context),
     p_next(),
     p_prev()
 {

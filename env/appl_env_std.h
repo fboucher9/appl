@@ -47,7 +47,9 @@ class appl_env_std : public appl_env
             struct appl_env * const
                 p_env);
 
-        appl_env_std();
+        appl_env_std(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_env_std();

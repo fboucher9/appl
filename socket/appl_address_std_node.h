@@ -55,7 +55,9 @@ class appl_address_std_node : public appl_address
                 struct appl_address * const
                     p_address);
 
-        appl_address_std_node();
+        appl_address_std_node(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_address_std_node();

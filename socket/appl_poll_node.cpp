@@ -103,8 +103,11 @@ bool
 //
 //
 //
-appl_poll::appl_poll() :
-    appl_node(),
+appl_poll::appl_poll(
+    struct appl_context * const
+        p_context) :
+    appl_node(
+        p_context),
     m_descriptor(),
     m_poll_mgr(),
     m_fd(),

@@ -54,7 +54,9 @@ class appl_socket_std_node : public appl_socket
                 struct appl_socket * const
                     p_socket);
 
-        appl_socket_std_node();
+        appl_socket_std_node(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_socket_std_node();

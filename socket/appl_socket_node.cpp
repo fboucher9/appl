@@ -147,8 +147,11 @@ appl_socket::v_wait(
 //
 //
 //
-appl_socket::appl_socket() :
-    appl_object()
+appl_socket::appl_socket(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

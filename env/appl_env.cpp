@@ -88,8 +88,11 @@ enum appl_status
 //
 //
 //
-appl_env::appl_env() :
-    appl_object()
+appl_env::appl_env(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

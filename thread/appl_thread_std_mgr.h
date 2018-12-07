@@ -46,7 +46,9 @@ class appl_thread_std_mgr :
         enum appl_status
             f_init(void);
 
-        appl_thread_std_mgr();
+        appl_thread_std_mgr(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_thread_std_mgr();

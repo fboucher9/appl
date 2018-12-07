@@ -21,8 +21,11 @@
 //
 //
 //
-appl_allocator_std::appl_allocator_std() :
-    appl_allocator()
+appl_allocator_std::appl_allocator_std(
+    struct appl_context * const
+        p_context) :
+    appl_allocator(
+        p_context)
 {
 }
 

@@ -50,7 +50,9 @@ class appl_file_std_node : public appl_file
                 struct appl_file * const
                     p_file_node);
 
-        appl_file_std_node();
+        appl_file_std_node(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_file_std_node();

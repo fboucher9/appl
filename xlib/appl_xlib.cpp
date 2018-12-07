@@ -118,8 +118,11 @@ appl_xlib::v_display_height(
 //
 //
 //
-appl_xlib::appl_xlib() :
-    appl_object()
+appl_xlib::appl_xlib(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

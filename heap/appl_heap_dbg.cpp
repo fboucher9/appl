@@ -119,8 +119,11 @@ enum appl_status
 //
 //
 //
-appl_heap_dbg::appl_heap_dbg() :
-    appl_heap(),
+appl_heap_dbg::appl_heap_dbg(
+    struct appl_context * const
+        p_context) :
+    appl_heap(
+        p_context),
     m_parent(),
     m_alloc_count(0),
     m_list(),

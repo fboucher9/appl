@@ -180,8 +180,11 @@ enum appl_status
 //
 //
 //
-appl_property::appl_property() :
-    appl_object()
+appl_property::appl_property(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

@@ -50,7 +50,9 @@ struct appl_file : public appl_object
 
     protected:
 
-        appl_file();
+        appl_file(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_file();

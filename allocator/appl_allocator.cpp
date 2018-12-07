@@ -55,8 +55,11 @@ enum appl_status
 //
 //
 //
-appl_allocator::appl_allocator() :
-    appl_object()
+appl_allocator::appl_allocator(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

@@ -99,7 +99,9 @@ struct appl_socket : public appl_object
 
     protected:
 
-        appl_socket();
+        appl_socket(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_socket();

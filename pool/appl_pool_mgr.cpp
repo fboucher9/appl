@@ -141,7 +141,11 @@ enum appl_status
 //
 //
 //
-appl_pool_mgr::appl_pool_mgr()
+appl_pool_mgr::appl_pool_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

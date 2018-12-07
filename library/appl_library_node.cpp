@@ -51,8 +51,11 @@ enum appl_status
 //
 //
 //
-appl_library::appl_library() :
-    appl_object()
+appl_library::appl_library(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

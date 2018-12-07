@@ -60,7 +60,9 @@ struct appl_address : public appl_object
 
     protected:
 
-        appl_address();
+        appl_address(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_address();

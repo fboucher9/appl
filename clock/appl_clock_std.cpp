@@ -80,8 +80,11 @@ enum appl_status
 //
 //
 //
-appl_clock_std::appl_clock_std() :
-    appl_clock()
+appl_clock_std::appl_clock_std(
+    struct appl_context * const
+        p_context) :
+    appl_clock(
+        p_context)
 {
 }
 

@@ -111,8 +111,11 @@ enum appl_status
 //
 //
 //
-appl_file_std_node::appl_file_std_node() :
-    appl_file(),
+appl_file_std_node::appl_file_std_node(
+    struct appl_context * const
+        p_context) :
+    appl_file(
+        p_context),
     m_fd(),
     m_close(false)
 {

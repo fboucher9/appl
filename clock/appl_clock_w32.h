@@ -49,7 +49,9 @@ class appl_clock_w32 : public appl_clock
                 class appl_clock * const
                     p_clock);
 
-        appl_clock_w32();
+        appl_clock_w32(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_clock_w32();

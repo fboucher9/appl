@@ -47,7 +47,9 @@ struct appl_mutex : public appl_object
 
     protected:
 
-        appl_mutex();
+        appl_mutex(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_mutex();

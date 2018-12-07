@@ -50,7 +50,9 @@ class appl_event_std_node : public appl_event
                 struct appl_event * const
                     p_event);
 
-        appl_event_std_node();
+        appl_event_std_node(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_event_std_node();

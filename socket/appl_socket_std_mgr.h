@@ -42,7 +42,9 @@ class appl_socket_std_mgr : public appl_socket_mgr
                 class appl_socket_mgr * const
                     p_socket_mgr);
 
-        appl_socket_std_mgr();
+        appl_socket_std_mgr(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_socket_std_mgr();

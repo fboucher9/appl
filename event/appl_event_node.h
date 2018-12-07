@@ -42,7 +42,9 @@ struct appl_event : public appl_object
 
     protected:
 
-        appl_event();
+        appl_event(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_event();

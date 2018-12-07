@@ -62,8 +62,11 @@ enum appl_status
 //
 //
 //
-appl_event::appl_event() :
-    appl_object()
+appl_event::appl_event(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

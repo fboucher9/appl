@@ -78,8 +78,11 @@ appl_random_std_crypto::s_destroy(
 //
 //
 //
-appl_random_std_crypto::appl_random_std_crypto() :
-    appl_random()
+appl_random_std_crypto::appl_random_std_crypto(
+    struct appl_context * const
+        p_context) :
+    appl_random(
+        p_context)
 {
 }
 

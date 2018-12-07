@@ -38,7 +38,9 @@ struct appl_library : public appl_object
 
     protected:
 
-        appl_library();
+        appl_library(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_library();

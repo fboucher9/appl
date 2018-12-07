@@ -73,7 +73,9 @@ struct appl_address_property : public appl_property_std
             struct appl_address_property * const
                 p_address_property);
 
-        appl_address_property();
+        appl_address_property(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_address_property();
@@ -139,8 +141,11 @@ appl_address_property::s_destroy(
 //
 //
 //
-appl_address_property::appl_address_property() :
-    appl_property_std()
+appl_address_property::appl_address_property(
+    struct appl_context * const
+        p_context) :
+    appl_property_std(
+        p_context)
 {
 }
 

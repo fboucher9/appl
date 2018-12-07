@@ -114,7 +114,9 @@ struct appl_chunk : public appl_object
 
     protected:
 
-        appl_chunk();
+        appl_chunk(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_chunk();
@@ -198,8 +200,11 @@ appl_chunk::v_reset(void)
 //
 //
 //
-appl_chunk::appl_chunk() :
-    appl_object()
+appl_chunk::appl_chunk(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 
@@ -230,7 +235,9 @@ class appl_chunk_std : public appl_chunk
             struct appl_chunk * * const
                 r_chunk);
 
-        appl_chunk_std();
+        appl_chunk_std(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_chunk_std();
@@ -348,8 +355,11 @@ appl_chunk_std::s_create(
 //
 //
 //
-appl_chunk_std::appl_chunk_std() :
-    appl_chunk(),
+appl_chunk_std::appl_chunk_std(
+    struct appl_context * const
+        p_context) :
+    appl_chunk(
+        p_context),
     o_nodes(),
     i_total_len()
 {

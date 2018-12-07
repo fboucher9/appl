@@ -97,8 +97,11 @@ enum appl_status
 //
 //
 //
-appl_dict_std::appl_dict_std() :
-    appl_dict(),
+appl_dict_std::appl_dict_std(
+    struct appl_context * const
+        p_context) :
+    appl_dict(
+        p_context),
     m_hash()
 {
 }

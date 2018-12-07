@@ -71,8 +71,11 @@ enum appl_status
 //
 //
 //
-appl_thread_std_mgr::appl_thread_std_mgr() :
-    appl_thread_mgr(),
+appl_thread_std_mgr::appl_thread_std_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_thread_mgr(
+        p_context),
     m_pool(),
     m_pool_created()
 {

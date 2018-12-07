@@ -81,8 +81,11 @@ enum appl_status
 //
 //
 //
-appl_queue_std::appl_queue_std() :
-    appl_queue(),
+appl_queue_std::appl_queue_std(
+    struct appl_context * const
+        p_context) :
+    appl_queue(
+        p_context),
     m_queue_impl()
 {
 }

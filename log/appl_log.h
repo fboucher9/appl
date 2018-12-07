@@ -37,7 +37,9 @@ struct appl_log : public appl_object
 
     protected:
 
-        appl_log();
+        appl_log(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_log();

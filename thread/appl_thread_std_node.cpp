@@ -126,8 +126,11 @@ enum appl_status
 //
 //
 //
-appl_thread_std_node::appl_thread_std_node() :
-    appl_thread(),
+appl_thread_std_node::appl_thread_std_node(
+    struct appl_context * const
+        p_context) :
+    appl_thread(
+        p_context),
     m_thread_impl()
 {
 }

@@ -43,7 +43,9 @@ class appl_timer_std_node : public appl_timer
                 struct appl_timer * const
                     p_timer);
 
-        appl_timer_std_node();
+        appl_timer_std_node(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_timer_std_node();

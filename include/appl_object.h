@@ -44,11 +44,6 @@ struct appl_object
         struct appl_context *
             get_context(void) const;
 
-        void
-            set_context(
-                struct appl_context * const
-                    p_context);
-
         enum appl_status
             f_init(void);
 
@@ -92,6 +87,10 @@ struct appl_object
         // --
 
         appl_object();
+
+        appl_object(
+            struct appl_context * const
+                p_context);
 
     private:
 

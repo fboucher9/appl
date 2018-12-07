@@ -82,8 +82,11 @@ appl_random_w32_mgr::s_destroy(
 //
 //
 //
-appl_random_w32_mgr::appl_random_w32_mgr() :
-    appl_random_mgr()
+appl_random_w32_mgr::appl_random_w32_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_random_mgr(
+        p_context)
 {
 }
 

@@ -60,7 +60,9 @@ class appl_pool_mgr : public appl_object
                 struct appl_pool * const
                     p_pool_node);
 
-        appl_pool_mgr();
+        appl_pool_mgr(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_pool_mgr();

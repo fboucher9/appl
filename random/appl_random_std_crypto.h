@@ -42,7 +42,9 @@ class appl_random_std_crypto : public appl_random
             struct appl_random * const
                 p_random);
 
-        appl_random_std_crypto();
+        appl_random_std_crypto(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_random_std_crypto();

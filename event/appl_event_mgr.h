@@ -48,7 +48,9 @@ class appl_event_mgr : public appl_object
 
     protected:
 
-        appl_event_mgr();
+        appl_event_mgr(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_event_mgr();

@@ -76,8 +76,11 @@ appl_random_mgr::v_destroy_node(
 //
 //
 //
-appl_random_mgr::appl_random_mgr() :
-    appl_object()
+appl_random_mgr::appl_random_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

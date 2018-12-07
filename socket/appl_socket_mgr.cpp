@@ -192,8 +192,11 @@ enum appl_status
 //
 //
 //
-appl_socket_mgr::appl_socket_mgr() :
-    appl_object()
+appl_socket_mgr::appl_socket_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 

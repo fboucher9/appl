@@ -86,8 +86,11 @@ enum appl_status
 //
 //
 //
-appl_heap_std::appl_heap_std() :
-    appl_heap()
+appl_heap_std::appl_heap_std(
+    struct appl_context * const
+        p_context) :
+    appl_heap(
+        p_context)
 {
 }
 

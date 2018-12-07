@@ -87,7 +87,9 @@ class appl_refcount : public appl_object
 {
     public:
 
-        appl_refcount();
+        appl_refcount(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_refcount();

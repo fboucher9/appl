@@ -51,7 +51,9 @@ struct appl_poll : public appl_node
 
     protected:
 
-        appl_poll();
+        appl_poll(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_poll();

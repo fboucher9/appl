@@ -85,8 +85,11 @@ enum appl_status
 //
 //
 //
-appl_library_std_node::appl_library_std_node() :
-    appl_library(),
+appl_library_std_node::appl_library_std_node(
+    struct appl_context * const
+        p_context) :
+    appl_library(
+        p_context),
     m_library_handle(),
     b_library_handle_initialized()
 {

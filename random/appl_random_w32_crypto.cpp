@@ -65,8 +65,11 @@ appl_random_w32_crypto::s_create(
 //
 //
 //
-appl_random_w32_crypto::appl_random_w32_crypto() :
-    appl_random()
+appl_random_w32_crypto::appl_random_w32_crypto(
+    struct appl_context * const
+        p_context) :
+    appl_random(
+        p_context)
 {
 }
 

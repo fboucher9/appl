@@ -34,7 +34,9 @@ struct appl_timer : public appl_object
 
     protected:
 
-        appl_timer();
+        appl_timer(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_timer();

@@ -108,8 +108,11 @@ enum appl_status
 //
 //
 //
-appl_event_std_node::appl_event_std_node() :
-    appl_event(),
+appl_event_std_node::appl_event_std_node(
+    struct appl_context * const
+        p_context) :
+    appl_event(
+        p_context),
     m_event_impl(),
     m_event_impl_initialized()
 {

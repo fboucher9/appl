@@ -55,7 +55,9 @@ class appl_library_std_node : public appl_library
                 struct appl_library * const
                     p_library);
 
-        appl_library_std_node();
+        appl_library_std_node(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_library_std_node();

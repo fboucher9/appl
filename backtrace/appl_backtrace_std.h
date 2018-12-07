@@ -38,7 +38,9 @@ class appl_backtrace_std : public appl_backtrace
                 class appl_backtrace * const
                     p_instance);
 
-        appl_backtrace_std();
+        appl_backtrace_std(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_backtrace_std();

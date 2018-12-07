@@ -57,7 +57,9 @@ struct appl_property_std : public appl_property
                 struct appl_property * const
                     p_property);
 
-        appl_property_std();
+        appl_property_std(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_property_std();

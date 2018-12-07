@@ -42,7 +42,9 @@ class appl_heap_std : public appl_heap
                 struct appl_heap * const
                     p_heap);
 
-        appl_heap_std();
+        appl_heap_std(
+            struct appl_context * const
+                p_context);
 
         virtual
         ~appl_heap_std();

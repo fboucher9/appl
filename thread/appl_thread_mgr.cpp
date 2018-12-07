@@ -55,8 +55,11 @@ enum appl_status
 //
 //
 //
-appl_thread_mgr::appl_thread_mgr() :
-    appl_object()
+appl_thread_mgr::appl_thread_mgr(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context)
 {
 }
 
