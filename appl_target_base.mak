@@ -47,6 +47,7 @@ appl_base-deps := \
     debug/appl_debug_handle.cpp \
     debug/appl_debug_std.cpp \
     debug/appl_debug_w32.cpp \
+    debug/appl_debug_impl.cpp \
     dict/appl_dict_handle.cpp \
     dict/appl_dict_service.cpp \
     dict/appl_dict.cpp \

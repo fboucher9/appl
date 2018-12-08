@@ -25,6 +25,9 @@ appl-toolchain-gnu-ar = $(AR)
 # Common compiler flags for C and C++
 appl-toolchain-gnu-common-flags = \
     -g \
+    -pg \
+    -ftest-coverage \
+    -fprofile-arcs \
     -DAPPL_OS_LINUX \
     -D_DEFAULT_SOURCE \
     -DAPPL_HAVE_XLIB \

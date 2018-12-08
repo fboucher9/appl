@@ -12,17 +12,9 @@
 
 #include <appl_unused.h>
 
-#include <appl_allocator_handle.h>
-
 #if defined APPL_DEBUG
 
 #include <backtrace/appl_backtrace_impl.h>
-
-#if defined APPL_OS_LINUX
-
-#include <unistd.h>
-
-#endif /* #if defined APPL_OS_LINUX */
 
 #endif /* #if defined APPL_DEBUG */
 
@@ -120,32 +112,13 @@ appl_size_t
     appl_object::v_cleanup(void)
 {
 #if defined APPL_DEBUG
-#if defined APPL_OS_LINUX
     {
         static unsigned char const s_msg[] =
             "object cleanup not implemented\n";
-        write(1, s_msg, sizeof(s_msg) - 1);
-    }
-#endif /* #if defined APPL_OS_LINUX */
-    {
-        void const *
-            a_stack[8u];
 
-        appl_size_t
-            i_count;
-
-        if (
-            appl_status_ok
-            == appl_backtrace_impl::s_capture(
-                a_stack,
-                8u,
-                &(
-                    i_count)))
-        {
-            appl_backtrace_impl::s_report(
-                a_stack,
-                i_count);
-        }
+        appl_backtrace_impl::s_ouch(
+            s_msg,
+            s_msg + sizeof(s_msg) - 1);
     }
 #endif /* #if defined APPL_DEBUG */
 

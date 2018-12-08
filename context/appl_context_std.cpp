@@ -1611,8 +1611,24 @@ appl_context_std::g_init_cleanup_items[] =
         & appl_context_std::cleanup_backtrace
     },
     {
+        & appl_context_std::init_clock,
+        & appl_context_std::cleanup_clock
+    },
+    {
+        & appl_context_std::init_env,
+        & appl_context_std::cleanup_env
+    },
+    {
         & appl_context_std::init_pool_mgr,
         & appl_context_std::cleanup_pool_mgr
+    },
+    {
+        & appl_context_std::init_mutex_mgr,
+        & appl_context_std::cleanup_mutex_mgr
+    },
+    {
+        & appl_context_std::init_event_mgr,
+        & appl_context_std::cleanup_event_mgr
     },
     {
         & appl_context_std::init_thread_mgr,
@@ -1623,24 +1639,8 @@ appl_context_std::g_init_cleanup_items[] =
         & appl_context_std::cleanup_file_mgr
     },
     {
-        & appl_context_std::init_mutex_mgr,
-        & appl_context_std::cleanup_mutex_mgr
-    },
-    {
-        & appl_context_std::init_clock,
-        & appl_context_std::cleanup_clock
-    },
-    {
-        & appl_context_std::init_event_mgr,
-        & appl_context_std::cleanup_event_mgr
-    },
-    {
         & appl_context_std::init_socket_mgr,
         & appl_context_std::cleanup_socket_mgr
-    },
-    {
-        & appl_context_std::init_env,
-        & appl_context_std::cleanup_env
     },
     {
         & appl_context_std::init_library_mgr,

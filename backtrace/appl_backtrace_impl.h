@@ -41,6 +41,14 @@ class appl_backtrace_impl
                 appl_size_t const
                     i_count);
 
+        static
+        void
+            s_ouch(
+                unsigned char const * const
+                    p_header_min,
+                unsigned char const * const
+                    p_header_max);
+
 }; // class appl_backtrace_impl
 
 /* end-of-file: appl_backtrace_impl.h */

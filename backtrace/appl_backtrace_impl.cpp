@@ -14,9 +14,13 @@
 #include <execinfo.h>
 #endif /* #if defined APPL_OS_LINUX */
 
+#include <stdio.h>
+
 #include <appl_unused.h>
 
 #include <appl_convert.h>
+
+#include <appl_buf.h>
 
 //
 //
@@ -109,7 +113,7 @@ enum appl_status
         appl_convert::to_int(
             appl_convert::to_signed(
                 i_count)),
-        1);
+        2);
 
     e_status =
         appl_status_ok;
@@ -129,5 +133,43 @@ enum appl_status
         e_status;
 
 } // s_report()
+
+//
+//
+//
+void
+appl_backtrace_impl::s_ouch(
+    unsigned char const * const
+        p_header_min,
+    unsigned char const * const
+        p_header_max)
+{
+    void const *
+        a_stack[8u];
+
+    appl_size_t
+        i_count;
+
+    fwrite(
+        p_header_min,
+        1,
+        appl_buf_len(
+            p_header_min,
+            p_header_max),
+        stderr);
+
+    if (
+        appl_status_ok
+        == appl_backtrace_impl::s_capture(
+            a_stack,
+            8u,
+            &(
+                i_count)))
+    {
+        appl_backtrace_impl::s_report(
+            a_stack,
+            i_count);
+    }
+} // s_ouch()
 
 /* end-of-file: appl_backtrace_impl.cpp */
