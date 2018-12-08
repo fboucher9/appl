@@ -50,6 +50,8 @@
 
 #include <heap/appl_heap_dbg.h>
 
+#include <debug/appl_debug_impl.h>
+
 #endif /* #if defined APPL_DEBUG */
 
 #if defined APPL_DEBUG
@@ -1552,7 +1554,9 @@ appl_context_std::appl_context_std(
     , m_log()
     , m_pool_mgr()
     , m_timer_mgr()
+#if defined APPL_HAVE_XLIB
     , m_xlib()
+#endif /* #if defined APPL_HAVE_XLIB */
     , m_event_mgr()
     , m_socket_mgr()
 #if defined APPL_DEBUG
@@ -1717,6 +1721,11 @@ enum appl_status
             }
             else
             {
+#if defined APPL_DEBUG
+                appl_debug_impl::s_print0(
+                    "cleanup during failed init\n");
+#endif /* #if defined APPL_DEBUG */
+
                 while (i_item_iterator)
                 {
                     i_item_iterator --;
@@ -1774,6 +1783,15 @@ appl_size_t
 struct appl_allocator *
     appl_context_std::v_allocator(void) const
 {
+#if defined APPL_DEBUG
+    if (
+        !b_init_allocator)
+    {
+        appl_debug_impl::s_print0(
+            "allocator not initialized\n");
+    }
+#endif /* #if defined APPL_DEBUG */
+
     return
         m_allocator;
 
@@ -1787,11 +1805,31 @@ enum appl_status
         class appl_backtrace * * const
             r_backtrace) const
 {
-    *(r_backtrace) =
-        m_backtrace;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_backtrace)
+    {
+        *(r_backtrace) =
+            m_backtrace;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "backtrace not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 } // v_backtrace()
 
@@ -1803,11 +1841,31 @@ enum appl_status
         class appl_thread_mgr * * const
             r_thread_mgr) const
 {
-    *(r_thread_mgr) =
-        m_thread_mgr;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_thread_mgr)
+    {
+        *(r_thread_mgr) =
+            m_thread_mgr;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "thread_mgr not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 } // v_thread_mgr()
 
@@ -1819,11 +1877,31 @@ enum appl_status
         class appl_mutex_mgr * * const
             r_mutex_mgr) const
 {
-    *( r_mutex_mgr) =
-        m_mutex_mgr;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_mutex_mgr)
+    {
+        *(r_mutex_mgr) =
+            m_mutex_mgr;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "mutex_mgr not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 } // v_mutex_mgr()
 
@@ -1835,11 +1913,31 @@ enum appl_status
         class appl_file_mgr * * const
             r_file_mgr) const
 {
-    *(r_file_mgr) =
-        m_file_mgr;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_file_mgr)
+    {
+        *(r_file_mgr) =
+            m_file_mgr;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "file_mgr not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 } // v_file_mgr()
 
@@ -1851,11 +1949,31 @@ enum appl_status
         class appl_poll_mgr * * const
             r_poll_mgr) const
 {
-    *(r_poll_mgr) =
-        m_poll_mgr;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_poll_mgr)
+    {
+        *(r_poll_mgr) =
+            m_poll_mgr;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "poll_mgr not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 } // v_poll_mgr()
 
@@ -1867,11 +1985,31 @@ enum appl_status
         class appl_clock * * const
             r_clock) const
 {
-    *(r_clock) =
-        m_clock;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_clock)
+    {
+        *(r_clock) =
+            m_clock;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "clock not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 } // v_clock()
 
@@ -1883,11 +2021,31 @@ enum appl_status
         struct appl_env * * const
             r_env) const
 {
-    *(r_env) =
-        m_env;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_env)
+    {
+        *(r_env) =
+            m_env;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "env not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 } // v_env()
 
@@ -1899,11 +2057,31 @@ enum appl_status
         class appl_library_mgr * * const
             r_library_mgr)
 {
-    *(r_library_mgr) =
-        m_library_mgr;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_library_mgr)
+    {
+        *(r_library_mgr) =
+            m_library_mgr;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "library_mgr not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 } // v_library_mgr()
 
@@ -1915,11 +2093,32 @@ enum appl_status
         class appl_random_mgr * * const
             r_random_mgr) const
 {
-    *(r_random_mgr) =
-        m_random_mgr;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_random_mgr)
+    {
+        *(r_random_mgr) =
+            m_random_mgr;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "random_mgr not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
+
 }
 
 //
@@ -1930,11 +2129,32 @@ enum appl_status
         class appl_thread_cache_mgr * * const
             r_thread_cache_mgr) const
 {
-    *(r_thread_cache_mgr) =
-        m_thread_cache_mgr;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_thread_cache_mgr)
+    {
+        *(r_thread_cache_mgr) =
+            m_thread_cache_mgr;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "thread_cache_mgr not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
+
 }
 
 //
@@ -1945,11 +2165,31 @@ enum appl_status
         struct appl_log * * const
             r_log) const
 {
-    *(r_log) =
-        m_log;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_log)
+    {
+        *(r_log) =
+            m_log;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "log not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 }
 
@@ -1961,11 +2201,31 @@ enum appl_status
         class appl_pool_mgr * * const
             r_pool_mgr) const
 {
-    *(r_pool_mgr) =
-        m_pool_mgr;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_pool_mgr)
+    {
+        *(r_pool_mgr) =
+            m_pool_mgr;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "pool_mgr not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 }
 
@@ -1977,29 +2237,71 @@ enum appl_status
         class appl_timer_mgr * * const
             r_timer_mgr) const
 {
-    *(r_timer_mgr) =
-        m_timer_mgr;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_timer_mgr)
+    {
+        *(r_timer_mgr) =
+            m_timer_mgr;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "timer_mgr not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 } // v_timer_mgr()
 
 //
 //
 //
+#if defined APPL_HAVE_XLIB
 enum appl_status
     appl_context_std::v_xlib(
         struct appl_xlib * * const
             r_xlib) const
 {
-    *(r_xlib) =
-        m_xlib;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_xlib)
+    {
+        *(r_xlib) =
+            m_xlib;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "xlib not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 } // v_xlib()
+#endif /* #if defined APPL_HAVE_XLIB */
 
 //
 //
@@ -2009,11 +2311,32 @@ enum appl_status
         class appl_socket_mgr * * const
             r_socket_mgr) const
 {
-    *(r_socket_mgr) =
-        m_socket_mgr;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_socket_mgr)
+    {
+        *(r_socket_mgr) =
+            m_socket_mgr;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "socket_mgr not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
+
 }
 
 //
@@ -2024,11 +2347,31 @@ enum appl_status
         class appl_event_mgr * * const
             r_event_mgr) const
 {
-    *(r_event_mgr) =
-        m_event_mgr;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_event_mgr)
+    {
+        *(r_event_mgr) =
+            m_event_mgr;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "event_mgr not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 }
 
@@ -2041,11 +2384,31 @@ enum appl_status
         class appl_debug * * const
             r_debug) const
 {
-    *(r_debug) =
-        m_debug;
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_debug)
+    {
+        *(r_debug) =
+            m_debug;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "debug not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_status_ok;
+        e_status;
 
 }
 #endif /* #if defined APPL_DEBUG */

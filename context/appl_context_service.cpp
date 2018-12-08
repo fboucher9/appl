@@ -22,6 +22,12 @@
 
 #include <context/appl_context_std.h>
 
+#if defined APPL_DEBUG
+
+#include <debug/appl_debug_impl.h>
+
+#endif /* #if defined APPL_DEBUG */
+
 //
 //
 //

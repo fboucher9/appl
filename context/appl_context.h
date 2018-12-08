@@ -60,7 +60,9 @@ class appl_pool_mgr;
 
 class appl_timer_mgr;
 
+#if defined APPL_HAVE_XLIB
 struct appl_xlib;
+#endif /* #if defined APPL_HAVE_XLIB */
 
 class appl_backtrace;
 
@@ -153,11 +155,13 @@ struct appl_context : public appl_object
                 class appl_timer_mgr * * const
                     r_timer_mgr) const;
 
+#if defined APPL_HAVE_XLIB
         virtual
         enum appl_status
             v_xlib(
                 struct appl_xlib * * const
                     r_xlib) const;
+#endif /* #if defined APPL_HAVE_XLIB */
 
         virtual
         enum appl_status

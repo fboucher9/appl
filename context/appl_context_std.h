@@ -4,12 +4,16 @@
 
 */
 
+/* Included. */
+#define INC_APPL_CONTEXT_STD_H
+
 /* Reverse include guard */
 enum guard_appl_context_std_h
 {
-    inc_appl_context_std_h =
+    inc_appl_context_std_h = 1
         /* Header file dependencies */
-        inc_appl_context_h
+        + inc_appl_status_h
+        + inc_appl_context_h
 };
 
 /* Assert compiler */
@@ -18,10 +22,6 @@ enum guard_appl_context_std_h
 #endif /* #if !defined(__cplusplus) */
 
 struct appl_context;
-
-struct appl_context_init_descriptor;
-
-class appl_context_std;
 
 //
 //
@@ -139,8 +139,13 @@ class appl_context_std : public appl_context
         class appl_timer_mgr *
             m_timer_mgr;
 
+#if defined APPL_HAVE_XLIB
         struct appl_xlib *
             m_xlib;
+#else /* #if defined APPL_HAVE_XLIB */
+        void *
+            z_xlib[1u];
+#endif /* #if defined APPL_HAVE_XLIB */
 
         /* -- */
 
@@ -450,11 +455,13 @@ class appl_context_std : public appl_context
                 class appl_timer_mgr * * const
                     r_timer_mgr) const;
 
+#if defined APPL_HAVE_XLIB
         virtual
         enum appl_status
             v_xlib(
                 struct appl_xlib * * const
                     r_xlib) const;
+#endif /* #if defined APPL_HAVE_XLIB */
 
         virtual
         enum appl_status

@@ -14,6 +14,10 @@
 
 #include <appl_unused.h>
 
+#if defined APPL_DEBUG
+#include <debug/appl_debug_impl.h>
+#endif /* #if defined APPL_DEBUG */
+
 //
 //
 //
@@ -67,6 +71,11 @@ enum appl_status
     appl_unused(
         r_backtrace);
 
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_backtrace not implemented\n");
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_status_not_implemented;
 
@@ -82,6 +91,11 @@ enum appl_status
 {
     appl_unused(
         r_thread_mgr);
+
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_thread_mgr not implemented\n");
+#endif /* #if defined APPL_DEBUG */
 
     return
         appl_status_not_implemented;
@@ -99,6 +113,11 @@ enum appl_status
     appl_unused(
         r_mutex_mgr);
 
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_mutex_mgr not implemented\n");
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_status_not_implemented;
 
@@ -114,6 +133,11 @@ enum appl_status
 {
     appl_unused(
         r_file_mgr);
+
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_file_mgr not implemented\n");
+#endif /* #if defined APPL_DEBUG */
 
     return
         appl_status_not_implemented;
@@ -131,6 +155,11 @@ enum appl_status
     appl_unused(
         r_poll_mgr);
 
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_poll_mgr not implemented\n");
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_status_not_implemented;
 
@@ -146,6 +175,11 @@ enum appl_status
 {
     appl_unused(
         r_clock);
+
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_clock not implemented\n");
+#endif /* #if defined APPL_DEBUG */
 
     return
         appl_status_not_implemented;
@@ -163,6 +197,11 @@ enum appl_status
     appl_unused(
         r_env);
 
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_env not implemented\n");
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_status_not_implemented;
 
@@ -178,6 +217,11 @@ enum appl_status
 {
     appl_unused(
         r_library_mgr);
+
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_library_mgr not implemented\n");
+#endif /* #if defined APPL_DEBUG */
 
     return
         appl_status_not_implemented;
@@ -195,6 +239,11 @@ enum appl_status
     appl_unused(
         r_random_mgr);
 
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_random_mgr not implemented\n");
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_status_not_implemented;
 }
@@ -210,6 +259,11 @@ enum appl_status
     appl_unused(
         r_thread_cache_mgr);
 
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_thread_cache_mgr not implemented\n");
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_status_not_implemented;
 }
@@ -224,6 +278,11 @@ enum appl_status
 {
     appl_unused(
         r_log);
+
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_log not implemented\n");
+#endif /* #if defined APPL_DEBUG */
 
     return
         appl_status_not_implemented;
@@ -241,6 +300,11 @@ enum appl_status
     appl_unused(
         r_pool_mgr);
 
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_pool_mgr not implemented\n");
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_status_not_implemented;
 
@@ -257,6 +321,11 @@ enum appl_status
     appl_unused(
         r_timer_mgr);
 
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_timer_mgr not implemented\n");
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_status_not_implemented;
 
@@ -265,6 +334,7 @@ enum appl_status
 //
 //
 //
+#if defined APPL_HAVE_XLIB
 enum appl_status
     appl_context::v_xlib(
         struct appl_xlib * * const
@@ -273,10 +343,16 @@ enum appl_status
     appl_unused(
         r_xlib);
 
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_xlib not implemented\n");
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_status_not_implemented;
 
 } // v_xlib()
+#endif /* #if defined APPL_HAVE_XLIB */
 
 //
 //
@@ -288,6 +364,11 @@ enum appl_status
 {
     appl_unused(
         r_socket_mgr);
+
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_socket_mgr not implemented\n");
+#endif /* #if defined APPL_DEBUG */
 
     return
         appl_status_not_implemented;
@@ -303,6 +384,11 @@ enum appl_status
 {
     appl_unused(
         r_event_mgr);
+
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_event_mgr not implemented\n");
+#endif /* #if defined APPL_DEBUG */
 
     return
         appl_status_not_implemented;
@@ -320,6 +406,9 @@ enum appl_status
 {
     appl_unused(
         r_debug);
+
+    appl_debug_impl::s_print0(
+        "v_debug not implemented\n");
 
     return
         appl_status_not_implemented;
