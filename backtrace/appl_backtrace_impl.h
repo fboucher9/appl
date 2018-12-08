@@ -44,10 +44,8 @@ class appl_backtrace_impl
         static
         void
             s_ouch(
-                unsigned char const * const
-                    p_header_min,
-                unsigned char const * const
-                    p_header_max);
+                char const * const
+                    p_header0);
 
 }; // class appl_backtrace_impl
 

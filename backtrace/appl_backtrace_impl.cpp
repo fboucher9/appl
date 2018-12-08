@@ -22,6 +22,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_buf0.h>
+
 //
 //
 //
@@ -139,11 +141,14 @@ enum appl_status
 //
 void
 appl_backtrace_impl::s_ouch(
-    unsigned char const * const
-        p_header_min,
-    unsigned char const * const
-        p_header_max)
+    char const * const
+        p_header0)
 {
+    unsigned char const * const
+        pc_uchar =
+        appl_convert::to_uchar_ptr(
+            p_header0);
+
     void const *
         a_stack[8u];
 
@@ -151,11 +156,10 @@ appl_backtrace_impl::s_ouch(
         i_count;
 
     fwrite(
-        p_header_min,
+        pc_uchar,
         1,
-        appl_buf_len(
-            p_header_min,
-            p_header_max),
+        appl_buf0_len(
+            pc_uchar),
         stderr);
 
     if (

@@ -14,17 +14,11 @@
 
 #if defined APPL_DEBUG
 
+#include <debug/appl_debug_impl.h>
+
 #include <backtrace/appl_backtrace_impl.h>
 
 #endif /* #if defined APPL_DEBUG */
-
-//
-//
-//
-appl_object::appl_object() :
-    m_context()
-{
-}
 
 //
 //
@@ -44,22 +38,39 @@ appl_object::~appl_object()
 {
 }
 
+//
+//
+//
 void *
 appl_object::operator new(
     appl_size_t const
         i_buf_len)
 {
-    static unsigned char g_uiDummy = 123;
+    static
+    unsigned char
+    g_uiDummy = 123;
+
     appl_unused(
         i_buf_len);
+
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "incorrect use of operator new\n");
+#endif /* #if defined APPL_DEBUG */
+
     void * const
         p_result =
         &(
             g_uiDummy);
+
     return
         p_result;
+
 } // operator new
 
+//
+//
+//
 void
 appl_object::operator delete(
     void *
@@ -69,6 +80,9 @@ appl_object::operator delete(
         p_buf);
 } // operator delete
 
+//
+//
+//
 void *
 appl_object::operator new(
     appl_size_t const
@@ -82,6 +96,9 @@ appl_object::operator new(
         p_placement;
 } // operator new
 
+//
+//
+//
 void
 appl_object::operator delete (
     void *
@@ -92,6 +109,12 @@ appl_object::operator delete (
     appl_unused(
         p_buf,
         p_placement);
+
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "incorrect use of operator delete");
+#endif /* #if defined APPL_DEBUG */
+
 } // operator delete
 
 //
@@ -112,14 +135,8 @@ appl_size_t
     appl_object::v_cleanup(void)
 {
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "object cleanup not implemented\n";
-
-        appl_backtrace_impl::s_ouch(
-            s_msg,
-            s_msg + sizeof(s_msg) - 1);
-    }
+    appl_backtrace_impl::s_ouch(
+        "object cleanup not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     return

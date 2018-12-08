@@ -54,6 +54,12 @@ class appl_debug_impl
                 unsigned char const * const
                     p_message_max);
 
+        static
+        void
+            s_print0(
+                char const * const
+                    p_message0);
+
 }; // class appl_debug_impl
 
 /* end-of-file: appl_debug_impl.h */

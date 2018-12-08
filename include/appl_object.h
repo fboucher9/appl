@@ -86,8 +86,6 @@ struct appl_object
 
         // --
 
-        appl_object();
-
         appl_object(
             struct appl_context * const
                 p_context);

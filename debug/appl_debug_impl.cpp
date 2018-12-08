@@ -17,7 +17,13 @@ Description:
 
 #include <appl_buf.h>
 
+#include <appl_status.h>
+
+#include <appl_buf0.h>
+
 #include <appl_unused.h>
+
+#include <appl_convert.h>
 
 #undef NDEBUG
 #include <assert.h>
@@ -51,6 +57,26 @@ void
             p_message_max),
         stderr);
 } // s_print()
+
+//
+//
+//
+void
+    appl_debug_impl::s_print0(
+        char const * const
+            p_message0)
+{
+    unsigned char const * const
+        pc_uchar =
+        appl_convert::to_uchar_ptr(
+            p_message0);
+
+    appl_debug_impl::s_print(
+        pc_uchar,
+        pc_uchar + appl_buf0_len(
+            pc_uchar));
+
+} // s_print0()
 
 #else /* #if defined APPL_DEBUG */
 

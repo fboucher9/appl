@@ -14,6 +14,12 @@
 
 #include <appl_object.h>
 
+#if defined APPL_DEBUG
+
+#include <debug/appl_debug_impl.h>
+
+#endif /* #if defined APPL_DEBUG */
+
 /*
 
 */
@@ -22,6 +28,14 @@ struct appl_object *
         struct appl_allocator * const
             p_allocator)
 {
+#if defined APPL_DEBUG
+    if (!p_allocator)
+    {
+        appl_debug_impl::s_print0(
+            "appl_allocator_parent invalid param\n");
+    }
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_allocator_service::s_parent(
             p_allocator);
@@ -40,11 +54,33 @@ enum appl_status
         void * * const
             r_buf)
 {
+    enum appl_status
+        e_status;
+
+    if (
+        p_allocator
+        && i_buf_len
+        && r_buf)
+    {
+        e_status =
+            appl_allocator_service::s_alloc(
+                p_allocator,
+                i_buf_len,
+                r_buf);
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "appl_allocator_alloc invalid param\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
+
     return
-        appl_allocator_service::s_alloc(
-            p_allocator,
-            i_buf_len,
-            r_buf);
+        e_status;
 
 } /* alloc() */
 
@@ -60,11 +96,33 @@ enum appl_status
         void * const
             p_buf)
 {
+    enum appl_status
+        e_status;
+
+    if (
+        p_allocator
+        && i_buf_len
+        && p_buf)
+    {
+        e_status =
+            appl_allocator_service::s_free(
+                p_allocator,
+                i_buf_len,
+                p_buf);
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "appl_allocator_free invalid param\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
+
     return
-        appl_allocator_service::s_free(
-            p_allocator,
-            i_buf_len,
-            p_buf);
+        e_status;
 
 } /* free() */
 
@@ -81,28 +139,45 @@ enum appl_status
     enum appl_status
         e_status;
 
-    void * const
-        p_placement =
-        p_object;
-
-    appl_size_t const
-        i_placement_length =
-        p_object->v_cleanup();
-
     if (
-        i_placement_length)
+        p_object)
     {
-        delete
+        void * const
+            p_placement =
             p_object;
 
-        appl_allocator_free(
-            p_allocator,
-            i_placement_length,
-            p_placement);
-    }
+        appl_size_t const
+            i_placement_length =
+            p_object->v_cleanup();
 
-    e_status =
-        appl_status_ok;
+        if (
+            i_placement_length)
+        {
+            delete
+                p_object;
+
+            e_status =
+                appl_allocator_free(
+                    p_allocator,
+                    i_placement_length,
+                    p_placement);
+        }
+        else
+        {
+            e_status =
+                appl_status_ok;
+        }
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "appl_delete invalid param\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;

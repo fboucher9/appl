@@ -16,6 +16,12 @@
 
 #include <appl_unused.h>
 
+#if defined APPL_DEBUG
+
+#include <debug/appl_debug_impl.h>
+
+#endif /* #if defined APPL_DEBUG */
+
 #include <stdlib.h>
 
 //
@@ -63,6 +69,17 @@ enum appl_status
     void *
         p_buf;
 
+#if defined APPL_DEBUG
+    if (
+        !i_buf_len
+        || !r_buf)
+    {
+        appl_debug_impl::s_print0(
+            "v_alloc invalid param\n");
+        appl_debug_impl::s_break();
+    }
+#endif /* #if defined APPL_DEBUG */
+
     p_buf =
         malloc(
             i_buf_len);
@@ -79,6 +96,11 @@ enum appl_status
     }
     else
     {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "out of memory\n");
+#endif /* #if defined APPL_DEBUG */
+
         e_status =
             appl_status_fail;
     }
@@ -103,6 +125,17 @@ enum appl_status
 
     appl_unused(
         i_buf_len);
+
+#if defined APPL_DEBUG
+    if (
+        !i_buf_len
+        || !p_buf)
+    {
+        appl_debug_impl::s_print0(
+            "v_free invalid param\n");
+        appl_debug_impl::s_break();
+    }
+#endif /* #if defined APPL_DEBUG */
 
     free(
         p_buf);
