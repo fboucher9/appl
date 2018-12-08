@@ -41,7 +41,7 @@ enum appl_status
 appl_debug_print0(
     struct appl_context * const
         p_context,
-    unsigned char const * const
+    char const * const
         p_msg_0);
 
 enum appl_status

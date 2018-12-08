@@ -40,13 +40,9 @@ enum appl_status
         r_file_node);
 
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "file mgr create node not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "file mgr create node not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     e_status =
@@ -72,13 +68,9 @@ enum appl_status
         p_file_node);
 
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "file mgr destroy node not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "file mgr destroy node not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     e_status =

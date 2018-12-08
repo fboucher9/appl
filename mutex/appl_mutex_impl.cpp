@@ -17,7 +17,7 @@
 #include <mutex/appl_mutex_impl.h>
 
 #if defined APPL_DEBUG
-#include <appl_debug_handle.h>
+#include <debug/appl_debug_impl.h>
 #endif /* #if defined APPL_DEBUG */
 
 #include <appl_unused.h>
@@ -64,6 +64,11 @@ enum appl_status
     }
     else
     {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "pthread_mutex_init fail\n");
+#endif /* #if defined APPL_DEBUG */
+
         e_status =
             appl_status_fail;
     }
@@ -110,6 +115,11 @@ enum appl_status
     }
     else
     {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "pthread_mutex_destroy fail\n");
+#endif /* #if defined APPL_DEBUG */
+
         e_status =
             appl_status_fail;
     }
@@ -156,6 +166,11 @@ enum appl_status
     }
     else
     {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "pthread_mutex_lock fail\n");
+#endif /* #if defined APPL_DEBUG */
+
         e_status =
             appl_status_fail;
     }
@@ -202,6 +217,11 @@ enum appl_status
     }
     else
     {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "pthread_mutex_unlock fail\n");
+#endif /* #if defined APPL_DEBUG */
+
         e_status =
             appl_status_fail;
     }

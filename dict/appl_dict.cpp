@@ -36,13 +36,9 @@ enum appl_status
         p_value);
 
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "dict set not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "dict set not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     return
@@ -68,13 +64,9 @@ enum appl_status
         r_value);
 
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "dict get not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "dict get not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     return

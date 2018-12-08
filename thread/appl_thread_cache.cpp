@@ -965,7 +965,7 @@ class appl_thread_cache_mgr : public appl_object
                     {
 #if defined APPL_DEBUG
                         {
-                            static unsigned char const s_msg[] =
+                            static char const s_msg[] =
                                 "appl_thread_cache_mgr::v_cleanup wait for active nodes\n";
 
                             appl_debug_print0(
@@ -1024,7 +1024,7 @@ class appl_thread_cache_mgr : public appl_object
                     {
 #if defined APPL_DEBUG
                         {
-                            static unsigned char const s_msg[] =
+                            static char const s_msg[] =
                                 "appl_thread_cache_mgr::v_cleanup wait for unused nodes\n";
 
                             appl_debug_print0(
@@ -1091,7 +1091,7 @@ void
 
 #if defined APPL_DEBUG
     {
-        static unsigned char const s_msg[] =
+        static char const s_msg[] =
             "appl_thread_cache::f_task enter {...\n";
 
         appl_debug_print0(
@@ -1126,7 +1126,7 @@ void
             {
 #if defined APPL_DEBUG
                 {
-                    static unsigned char const s_msg[] =
+                    static char const s_msg[] =
                         "appl_thread_cache::f_task kill detected\n";
 
                     appl_debug_print0(
@@ -1142,7 +1142,7 @@ void
             {
 #if defined APPL_DEBUG
                 {
-                    static unsigned char const s_msg[] =
+                    static char const s_msg[] =
                         "appl_thread_cache::f_task before cb\n";
 
                     appl_debug_print0(
@@ -1156,7 +1156,7 @@ void
 
 #if defined APPL_DEBUG
                 {
-                    static unsigned char const s_msg[] =
+                    static char const s_msg[] =
                         "appl_thread_cache::f_task after cb\n";
 
                     appl_debug_print0(
@@ -1182,7 +1182,7 @@ void
 
 #if defined APPL_DEBUG
     {
-        static unsigned char const s_msg[] =
+        static char const s_msg[] =
             "appl_thread_cache::f_task leave ...}\n";
 
         appl_debug_print0(

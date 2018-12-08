@@ -35,13 +35,9 @@ enum appl_status
         p_symbol_name_max,
         r_symbol);
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "library query not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "library query not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     return

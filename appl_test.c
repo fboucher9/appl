@@ -2448,8 +2448,7 @@ appl_test_main(
 
         appl_debug_print0(
             p_context,
-            (unsigned char const *)(
-                "debug_print0 number=["));
+            "debug_print0 number=[");
 
         appl_debug_print_number(
             p_context,
@@ -2459,8 +2458,7 @@ appl_test_main(
 
         appl_debug_print0(
             p_context,
-            (unsigned char const *)(
-                "]\n"));
+            "]\n");
 
         if (g_test_debug_break)
         {

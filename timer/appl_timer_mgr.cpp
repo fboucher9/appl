@@ -31,7 +31,7 @@ enum appl_status
 
 #if defined APPL_DEBUG
     {
-        static unsigned char const s_msg[] =
+        static char const s_msg[] =
             "timer mgr create node not implemented\n";
         appl_debug_print0(
             m_context,
@@ -57,7 +57,7 @@ enum appl_status
 
 #if defined APPL_DEBUG
     {
-        static unsigned char const s_msg[] =
+        static char const s_msg[] =
             "timer mgr destroy node not implemented\n";
         appl_debug_print0(
             m_context,

@@ -22,6 +22,8 @@
 
 #include <appl_buf0.h>
 
+#include <appl_convert.h>
+
 #if ! defined __cplusplus
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
@@ -174,14 +176,19 @@ enum appl_status
 appl_debug_print0(
     struct appl_context * const
         p_context,
-    unsigned char const * const
+    char const * const
         p_msg_0)
 {
+    unsigned char const * const
+        pc_uchar =
+        appl_convert::to_uchar_ptr(
+            p_msg_0);
+
     return
         appl_debug_print(
             p_context,
-            p_msg_0,
-            p_msg_0 + appl_buf0_len(p_msg_0));
+            pc_uchar,
+            pc_uchar + appl_buf0_len(pc_uchar));
 
 } /* appl_debug_print0() */
 

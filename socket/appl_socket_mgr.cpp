@@ -41,13 +41,9 @@ enum appl_status
         r_address);
 
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "socket mgr create address not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "socket mgr create address not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     e_status =
@@ -74,7 +70,7 @@ enum appl_status
 
 #if defined APPL_DEBUG
     {
-        static unsigned char const s_msg[] =
+        static char const s_msg[] =
             "socket mgr destroy address not implemented\n";
         appl_debug_print0(
             m_context,
@@ -110,7 +106,7 @@ enum appl_status
 
 #if defined APPL_DEBUG
     {
-        static unsigned char const s_msg[] =
+        static char const s_msg[] =
             "socket mgr create socket not implemented\n";
         appl_debug_print0(
             m_context,
@@ -142,7 +138,7 @@ enum appl_status
 
 #if defined APPL_DEBUG
     {
-        static unsigned char const s_msg[] =
+        static char const s_msg[] =
             "socket mgr destroy socket not implemented\n";
         appl_debug_print0(
             m_context,

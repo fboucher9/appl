@@ -36,13 +36,9 @@ enum appl_status
         p_time_count);
 
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "clock read not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "clock read not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     e_status =
@@ -71,13 +67,9 @@ enum appl_status
         i_time_count);
 
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "clock delay not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "clock delay not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     e_status =

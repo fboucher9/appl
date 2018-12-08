@@ -28,13 +28,9 @@ enum appl_status
         e_status;
 
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "mutex lock not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "mutex lock not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     e_status =
@@ -55,13 +51,9 @@ enum appl_status
         e_status;
 
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "mutex unlock not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "mutex unlock not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     e_status =
@@ -92,13 +84,9 @@ enum appl_status
         p_sync_context);
 
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "mutex sync not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "mutex sync not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     e_status =

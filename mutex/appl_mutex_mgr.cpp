@@ -36,13 +36,9 @@ enum appl_status
         r_mutex);
 
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "mutex mgr create node not implement\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "mutex mgr create node not implement\n");
 #endif /* #if defined APPL_DEBUG */
 
     e_status =
@@ -68,13 +64,9 @@ enum appl_status
         p_mutex);
 
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "mutex mgr destroy node not implement\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "mutex mgr destroy node not implement\n");
 #endif /* #if defined APPL_DEBUG */
 
     e_status =

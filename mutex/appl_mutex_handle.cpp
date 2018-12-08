@@ -16,6 +16,10 @@
 
 #include <mutex/appl_mutex_node.h>
 
+#if defined APPL_DEBUG
+#include <debug/appl_debug_impl.h>
+#endif /* #if defined APPL_DEBUG */
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -36,11 +40,27 @@ appl_mutex_create(
     enum appl_status
         e_status;
 
-    e_status =
-        appl_mutex_service::s_create(
-            p_context,
-            p_mutex_descriptor,
-            r_mutex);
+    if (
+        p_context
+        && p_mutex_descriptor
+        && r_mutex)
+    {
+        e_status =
+            appl_mutex_service::s_create(
+                p_context,
+                p_mutex_descriptor,
+                r_mutex);
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "appl_mutex_create: invalid param\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;
@@ -55,9 +75,29 @@ appl_mutex_destroy(
     struct appl_mutex * const
         p_mutex)
 {
+    enum appl_status
+        e_status;
+
+    if (
+        p_mutex)
+    {
+        e_status =
+            appl_mutex_service::s_destroy(
+                p_mutex);
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "appl_mutex_destroy: invalid param\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
+
     return
-        appl_mutex_service::s_destroy(
-            p_mutex);
+        e_status;
 
 } /* appl_mutex_destroy() */
 
@@ -66,6 +106,15 @@ appl_mutex_parent(
     struct appl_mutex * const
         p_mutex)
 {
+#if defined APPL_DEBUG
+    if (
+        !p_mutex)
+    {
+        appl_debug_impl::s_print0(
+            "appl_mutex_parent: invalid param\n");
+    }
+#endif /* #if defined APPL_DEBUG */
+
     return
         p_mutex;
 
@@ -76,6 +125,15 @@ appl_mutex_const_parent(
     struct appl_mutex const * const
         p_mutex)
 {
+#if defined APPL_DEBUG
+    if (
+        !p_mutex)
+    {
+        appl_debug_impl::s_print0(
+            "appl_mutex_const_parent: invalid param\n");
+    }
+#endif /* #if defined APPL_DEBUG */
+
     return
         p_mutex;
 
@@ -92,9 +150,23 @@ appl_mutex_lock(
     enum appl_status
         e_status;
 
-    e_status =
-        appl_mutex_service::s_lock(
-            p_mutex);
+    if (
+        p_mutex)
+    {
+        e_status =
+            appl_mutex_service::s_lock(
+                p_mutex);
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "appl_mutex_lock: invalid param\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;
@@ -112,9 +184,23 @@ appl_mutex_unlock(
     enum appl_status
         e_status;
 
-    e_status =
-        appl_mutex_service::s_unlock(
-            p_mutex);
+    if (
+        p_mutex)
+    {
+        e_status =
+            appl_mutex_service::s_unlock(
+                p_mutex);
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "appl_mutex_unlock: invalid param\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;
@@ -135,11 +221,32 @@ appl_mutex_sync(
     void * const
         p_sync_context)
 {
+    enum appl_status
+        e_status;
+
+    if (
+        p_mutex
+        && p_sync_callback)
+    {
+        e_status =
+            appl_mutex_service::s_sync(
+                p_mutex,
+                p_sync_callback,
+                p_sync_context);
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "appl_mutex_sync: invalid param\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
+
     return
-        appl_mutex_service::s_sync(
-            p_mutex,
-            p_sync_callback,
-            p_sync_context);
+        e_status;
 
 } /* appl_mutex_sync() */
 

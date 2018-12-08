@@ -30,13 +30,9 @@ enum appl_status
         r_count);
 
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "options count not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "options count not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     return
@@ -61,13 +57,9 @@ enum appl_status
         r_buf_max);
 
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "options get not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "options get not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     return
@@ -95,13 +87,9 @@ enum appl_status
         p_ready);
 
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "options write not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "options write not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     return
@@ -124,13 +112,9 @@ enum appl_status
         p_buf_max);
 
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "options append argument not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "options append argument not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     return
@@ -145,13 +129,9 @@ enum appl_status
     appl_options::v_reset(void)
 {
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "options reset not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "options reset not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 
     return

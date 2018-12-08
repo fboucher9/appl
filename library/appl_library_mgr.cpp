@@ -32,13 +32,9 @@ enum appl_status
         p_library_descriptor,
         r_library);
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "library mgr create node not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "library mgr create node not implemented\n");
 #endif /* #if defined APPL_DEBUG */
     return
         appl_status_not_implemented;
@@ -55,13 +51,9 @@ enum appl_status
     appl_unused(
         p_library);
 #if defined APPL_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "library mgr destroy node not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
+    appl_debug_print0(
+        m_context,
+        "library mgr destroy node not implemented\n");
 #endif /* #if defined APPL_DEBUG */
     return
         appl_status_not_implemented;

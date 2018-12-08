@@ -297,8 +297,7 @@ appl_address_property_assert_guid(
             appl_object_get_context(
                 appl_address_property_const_parent(
                     p_address_property)),
-            appl_convert::to_uchar_ptr(
-                "invalid guid for appl_address_property object\n"));
+            "invalid guid for appl_address_property object\n");
     }
 }
 #endif /* #if defined APPL_DEBUG */
