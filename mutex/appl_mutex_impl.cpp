@@ -48,12 +48,25 @@ enum appl_status
 
 #if defined APPL_OS_LINUX
 
-    int const
+
+    int
+        i_init_result;
+
+#if defined APPL_HAVE_GCOV
+    if (appl_coverage_check())
+    {
         i_init_result =
-        pthread_mutex_init(
-            &(
-                m_storage.m_private),
-            NULL);
+            -1;
+    }
+    else
+#endif /* #if defined APPL_HAVE_GCOV */
+    {
+        i_init_result =
+            pthread_mutex_init(
+                &(
+                    m_storage.m_private),
+                NULL);
+    }
 
     if (
         0

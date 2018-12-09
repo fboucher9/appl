@@ -28,6 +28,7 @@ test_appl-deps = \
     options/appl_options_test.c \
     xlib/appl_xlib_test.c \
     appl_test_prompt.c \
+    mutex/appl_mutex_test.c \
     $(appl_base-deps)
 
 # List of libraries required to link test application

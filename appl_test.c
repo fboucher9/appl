@@ -31,6 +31,8 @@
 
 #include <appl_test_prompt.h>
 
+#include <mutex/appl_mutex_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2397,6 +2399,12 @@ appl_test_main(
 {
     enum appl_status
         e_status;
+
+    if (1)
+    {
+        appl_mutex_test_1(
+            p_context);
+    }
 
     /* Print the argument list */
     if (1)
