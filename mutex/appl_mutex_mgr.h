@@ -4,6 +4,9 @@
 
 */
 
+/* Included. */
+#define INC_APPL_MUTEX_MGR_H
+
 /* Reverse include guard */
 enum guard_appl_mutex_mgr_h
 {

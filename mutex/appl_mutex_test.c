@@ -91,7 +91,9 @@ void
                 struct appl_mutex *
                     p_mutex_tmp;
 
-                appl_coverage_limit(n);
+                appl_coverage_limit(i);
+                printf(
+                    "appl_mutex_create test #%lu\n", i);
                 appl_mutex_create(
                     p_context,
                     &(

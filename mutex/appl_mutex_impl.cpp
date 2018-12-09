@@ -106,14 +106,21 @@ enum appl_status
 
 #if defined APPL_OS_LINUX
 
-    int const
-        i_destroy_result =
-#if defined APPL_HAVE_COVERAGE
-        appl_coverage_check() ? -1 :
-#endif /* #if defined APPL_HAVE_COVERAGE */
+    int
+        i_destroy_result;
+
+    i_destroy_result =
         pthread_mutex_destroy(
             &(
                 m_storage.m_private));
+
+#if defined APPL_HAVE_COVERAGE
+    if (appl_coverage_check())
+    {
+        i_destroy_result =
+            -1;
+    }
+#endif /* #if defined APPL_HAVE_COVERAGE */
 
     if (
         0
@@ -214,14 +221,21 @@ enum appl_status
 
 #if defined APPL_OS_LINUX
 
-    int const
-        i_unlock_result =
-#if defined APPL_HAVE_COVERAGE
-        appl_coverage_check() ? -1 :
-#endif /* #if defined APPL_HAVE_COVERAGE */
+    int
+        i_unlock_result;
+
+    i_unlock_result =
         pthread_mutex_unlock(
             &(
                 m_storage.m_private));
+
+#if defined APPL_HAVE_COVERAGE
+    if (appl_coverage_check())
+    {
+        i_unlock_result =
+            -1;
+    }
+#endif /* #if defined APPL_HAVE_COVERAGE */
 
     if (
         0

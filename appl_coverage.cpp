@@ -48,6 +48,8 @@ char
     char
         b_result;
 
+    g_coverage_count ++;
+
     if (
         g_coverage_limit)
     {
@@ -60,8 +62,6 @@ char
         b_result =
             0;
     }
-
-    g_coverage_count ++;
 
     return
         b_result;
