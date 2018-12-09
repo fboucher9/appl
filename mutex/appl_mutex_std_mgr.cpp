@@ -18,6 +18,10 @@
 
 #include <appl_pool_handle.h>
 
+#if defined APPL_HAVE_COVERAGE
+#include <appl_coverage.h>
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -147,21 +151,37 @@ enum appl_status
 appl_size_t
     appl_mutex_std_mgr::v_cleanup(void)
 {
-    if (
-        m_pool_created)
+    appl_size_t
+        i_cleanup_result;
+
+#if defined APPL_HAVE_COVERAGE
+    if (appl_coverage_check())
     {
-        appl_pool_destroy(
-            m_pool);
+        i_cleanup_result =
+            appl_mutex_mgr::v_cleanup();
+    }
+    else
+#endif /* #if defined APPL_HAVE_COVERAGE */
+    {
+        if (
+            m_pool_created)
+        {
+            appl_pool_destroy(
+                m_pool);
 
-        m_pool =
-            0;
+            m_pool =
+                0;
 
-        m_pool_created =
-            false;
+            m_pool_created =
+                false;
+        }
+
+        i_cleanup_result =
+            sizeof(class appl_mutex_std_mgr);
     }
 
     return
-        sizeof(class appl_mutex_std_mgr);
+        i_cleanup_result;
 
 } // v_cleanup()
 
@@ -194,12 +214,24 @@ enum appl_status
     enum appl_status
         e_status;
 
-    e_status =
-        appl_mutex_std_node_create(
-            appl_pool_parent(
-                m_pool),
-            p_mutex_descriptor,
-            r_mutex);
+#if defined APPL_HAVE_COVERAGE
+    if (appl_coverage_check())
+    {
+        e_status =
+            appl_mutex_mgr::v_create_node(
+                p_mutex_descriptor,
+                r_mutex);
+    }
+    else
+#endif /* #if defined APPL_HAVE_COVERAGE */
+    {
+        e_status =
+            appl_mutex_std_node_create(
+                appl_pool_parent(
+                    m_pool),
+                p_mutex_descriptor,
+                r_mutex);
+    }
 
     return
         e_status;
@@ -214,11 +246,28 @@ enum appl_status
         struct appl_mutex * const
             p_mutex)
 {
+    enum appl_status
+        e_status;
+
+#if defined APPL_HAVE_COVERAGE
+    if (appl_coverage_check())
+    {
+        e_status =
+            appl_mutex_mgr::v_destroy_node(
+                p_mutex);
+    }
+    else
+#endif /* #if defined APPL_HAVE_COVERAGE */
+    {
+        e_status =
+            appl_mutex_std_node_destroy(
+                appl_pool_parent(
+                    m_pool),
+                p_mutex);
+    }
+
     return
-        appl_mutex_std_node_destroy(
-            appl_pool_parent(
-                m_pool),
-            p_mutex);
+        e_status;
 
 } // v_destroy_node()
 

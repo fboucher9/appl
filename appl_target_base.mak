@@ -41,6 +41,7 @@ appl_base-deps := \
     context/appl_context_handle.cpp \
     context/appl_context_service.cpp \
     context/appl_context_std.cpp \
+    appl_coverage.cpp \
     appl_crc16.cpp \
     appl_crc32.cpp \
     debug/appl_debug.cpp \

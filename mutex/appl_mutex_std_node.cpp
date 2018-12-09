@@ -30,6 +30,10 @@
 
 #include <appl_allocator_handle.h>
 
+#if defined APPL_HAVE_COVERAGE
+#include <appl_coverage.h>
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -156,17 +160,33 @@ enum appl_status
 appl_size_t
     appl_mutex_std_node::v_cleanup(void)
 {
-    if (
-        m_mutex_impl_initialized)
-    {
-        m_mutex_impl.f_cleanup();
+    appl_size_t
+        i_cleanup_result;
 
-        m_mutex_impl_initialized =
-            false;
+#if defined APPL_HAVE_COVERAGE
+    if (appl_coverage_check())
+    {
+        i_cleanup_result =
+            appl_mutex::v_cleanup();
+    }
+    else
+#endif /* #if defined APPL_HAVE_COVERAGE */
+    {
+        if (
+            m_mutex_impl_initialized)
+        {
+            m_mutex_impl.f_cleanup();
+
+            m_mutex_impl_initialized =
+                false;
+        }
+
+        i_cleanup_result =
+            sizeof(class appl_mutex_std_node);
     }
 
     return
-        sizeof(class appl_mutex_std_node);
+        i_cleanup_result;
 
 } // v_cleanup()
 
@@ -179,8 +199,17 @@ enum appl_status
     enum appl_status
         e_status;
 
-    e_status =
-        m_mutex_impl.f_lock();
+#if defined APPL_HAVE_COVERAGE
+    if (appl_coverage_check())
+    {
+        appl_mutex::v_lock();
+    }
+    else
+#endif /* #if defined APPL_HAVE_COVERAGE */
+    {
+        e_status =
+            m_mutex_impl.f_lock();
+    }
 
     return
         e_status;
@@ -196,8 +225,17 @@ enum appl_status
     enum appl_status
         e_status;
 
-    e_status =
-        m_mutex_impl.f_unlock();
+#if defined APPL_HAVE_COVERAGE
+    if (appl_coverage_check())
+    {
+        appl_mutex::v_unlock();
+    }
+    else
+#endif /* #if defined APPL_HAVE_COVERAGE */
+    {
+        e_status =
+            m_mutex_impl.f_unlock();
+    }
 
     return
         e_status;
@@ -219,10 +257,21 @@ enum appl_status
     enum appl_status
         e_status;
 
-    e_status =
-        m_mutex_impl.f_sync(
+#if defined APPL_HAVE_COVERAGE
+    if (appl_coverage_check())
+    {
+        appl_mutex::v_sync(
             p_sync_callback,
             p_sync_context);
+    }
+    else
+#endif /* #if defined APPL_HAVE_COVERAGE */
+    {
+        e_status =
+            m_mutex_impl.f_sync(
+                p_sync_callback,
+                p_sync_context);
+    }
 
     return
         e_status;

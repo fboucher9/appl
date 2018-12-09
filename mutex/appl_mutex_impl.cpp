@@ -22,6 +22,9 @@
 
 #include <appl_unused.h>
 
+#if defined APPL_HAVE_COVERAGE
+#include <appl_coverage.h>
+#endif /* #if defined APPL_HAVE_COVERAGE */
 //
 //
 //
@@ -48,25 +51,15 @@ enum appl_status
 
 #if defined APPL_OS_LINUX
 
-
-    int
-        i_init_result;
-
-#if defined APPL_HAVE_GCOV
-    if (appl_coverage_check())
-    {
+    int const
         i_init_result =
-            -1;
-    }
-    else
-#endif /* #if defined APPL_HAVE_GCOV */
-    {
-        i_init_result =
-            pthread_mutex_init(
-                &(
-                    m_storage.m_private),
-                NULL);
-    }
+#if defined APPL_HAVE_COVERAGE
+        appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
+        pthread_mutex_init(
+            &(
+                m_storage.m_private),
+            NULL);
 
     if (
         0
@@ -115,6 +108,9 @@ enum appl_status
 
     int const
         i_destroy_result =
+#if defined APPL_HAVE_COVERAGE
+        appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
         pthread_mutex_destroy(
             &(
                 m_storage.m_private));
@@ -166,6 +162,9 @@ enum appl_status
 
     int const
         i_lock_result =
+#if defined APPL_HAVE_COVERAGE
+        appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
         pthread_mutex_lock(
             &(
                 m_storage.m_private));
@@ -217,6 +216,9 @@ enum appl_status
 
     int const
         i_unlock_result =
+#if defined APPL_HAVE_COVERAGE
+        appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
         pthread_mutex_unlock(
             &(
                 m_storage.m_private));

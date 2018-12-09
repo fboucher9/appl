@@ -31,6 +31,7 @@ appl-toolchain-gnu-common-flags = \
     -DAPPL_OS_LINUX \
     -D_DEFAULT_SOURCE \
     -DAPPL_HAVE_XLIB \
+    -DAPPL_HAVE_COVERAGE \
     -I$(APPL_SRC). \
     -I$(APPL_SRC)include \
     -ansi \

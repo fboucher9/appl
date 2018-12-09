@@ -8,6 +8,10 @@
 
 #include <mutex/appl_mutex_test.h>
 
+#if defined APPL_HAVE_COVERAGE
+#include <appl_coverage.h>
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
 #include <stdio.h>
 
 static
@@ -61,6 +65,10 @@ void
     {
     }
 
+#if defined APPL_HAVE_COVERAGE
+    appl_coverage_limit(0ul);
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
     e_status =
         appl_mutex_create(
             p_context,
@@ -68,6 +76,34 @@ void
                 o_mutex_descriptor),
             &(
                 p_mutex));
+
+#if defined APPL_HAVE_COVERAGE
+    {
+        unsigned long int n;
+        n = appl_coverage_query();
+        printf(
+            "appl_mutex_create has %lu coverage points\n", n);
+
+        {
+            unsigned long int i;
+            for (i=1; i<=n; i++)
+            {
+                struct appl_mutex *
+                    p_mutex_tmp;
+
+                appl_coverage_limit(n);
+                appl_mutex_create(
+                    p_context,
+                    &(
+                        o_mutex_descriptor),
+                    &(
+                        p_mutex_tmp));
+            }
+        }
+
+        appl_coverage_limit(0ul);
+    }
+#endif /* #if defined APPL_HAVE_COVERAGE */
 
     if (
         appl_status_ok

@@ -14,12 +14,6 @@
 
 #include <allocator/appl_allocator.h>
 
-#if defined APPL_DEBUG
-
-#include <debug/appl_debug_impl.h>
-
-#endif /* #if defined APPL_DEBUG */
-
 //
 //
 //
@@ -28,14 +22,6 @@ struct appl_object *
         struct appl_allocator * const
             p_allocator)
 {
-#if defined APPL_DEBUG
-    if (!p_allocator)
-    {
-        appl_debug_impl::s_print0(
-            "appl_allocator_service::s_parent invalid param\n");
-    }
-#endif /* #if defined APPL_DEBUG */
-
     return
         p_allocator;
 
@@ -53,16 +39,6 @@ enum appl_status
         void * * const
             r_buf)
 {
-#if defined APPL_DEBUG
-    if (!p_allocator
-        || !i_buf_len
-        || !r_buf)
-    {
-        appl_debug_impl::s_print0(
-            "appl_allocator_service::s_alloc invalid param\n");
-    }
-#endif /* #if defined APPL_DEBUG */
-
     return
         p_allocator->v_alloc(
             i_buf_len,
@@ -82,17 +58,6 @@ enum appl_status
         void * const
             p_buf)
 {
-#if defined APPL_DEBUG
-    if (
-        !p_allocator
-        || !i_buf_len
-        || !p_buf)
-    {
-        appl_debug_impl::s_print0(
-            "appl_allocator_service::s_free invalid param\n");
-    }
-#endif /* #if defined APPL_DEBUG */
-
     return
         p_allocator->v_free(
             i_buf_len,
