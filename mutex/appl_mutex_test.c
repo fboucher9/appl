@@ -88,22 +88,37 @@ void
             unsigned long int i;
             for (i=1; i<=n; i++)
             {
+                enum appl_status
+                    e_temp_status;
+
                 struct appl_mutex *
-                    p_mutex_tmp;
+                    p_temp_mutex;
 
                 appl_coverage_limit(i);
+
                 printf(
                     "appl_mutex_create test #%lu\n", i);
-                appl_mutex_create(
-                    p_context,
-                    &(
-                        o_mutex_descriptor),
-                    &(
-                        p_mutex_tmp));
+
+                e_temp_status =
+                    appl_mutex_create(
+                        p_context,
+                        &(
+                            o_mutex_descriptor),
+                        &(
+                            p_temp_mutex));
+
+                appl_coverage_limit(0ul);
+
+                if (
+                    appl_status_ok
+                    == e_temp_status)
+                {
+                    appl_mutex_destroy(
+                        p_temp_mutex);
+                }
             }
         }
 
-        appl_coverage_limit(0ul);
     }
 #endif /* #if defined APPL_HAVE_COVERAGE */
 

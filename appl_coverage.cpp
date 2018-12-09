@@ -55,7 +55,7 @@ char
     {
         b_result = (
             g_coverage_count
-            >= g_coverage_limit);
+            == g_coverage_limit);
     }
     else
     {
