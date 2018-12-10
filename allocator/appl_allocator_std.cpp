@@ -22,6 +22,12 @@
 
 #endif /* #if defined APPL_DEBUG */
 
+#if defined APPL_HAVE_COVERAGE
+
+#include <appl_coverage.h>
+
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
 #include <stdlib.h>
 
 //
@@ -80,9 +86,19 @@ enum appl_status
     }
 #endif /* #if defined APPL_DEBUG */
 
-    p_buf =
-        malloc(
-            i_buf_len);
+#if defined APPL_HAVE_COVERAGE
+    if (appl_coverage_check())
+    {
+        p_buf =
+            0;
+    }
+    else
+#endif /* #if defined APPL_HAVE_COVERAGE */
+    {
+        p_buf =
+            malloc(
+                i_buf_len);
+    }
 
     if (
         p_buf)

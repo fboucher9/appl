@@ -12,6 +12,10 @@
 
 #include <clock/appl_clock_service.h>
 
+#if defined APPL_DEBUG
+#include <debug/appl_debug_impl.h>
+#endif /* #if defined APPL_DEBUG */
+
 /*
 
 */
@@ -27,11 +31,27 @@ appl_clock_read(
     enum appl_status
         e_status;
 
-    e_status =
-        appl_clock_service::s_read(
-            p_context,
-            i_time_freq,
-            p_time_count);
+    if (
+        p_context
+        && i_time_freq
+        && p_time_count)
+    {
+        e_status =
+            appl_clock_service::s_read(
+                p_context,
+                i_time_freq,
+                p_time_count);
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "clock read invalid param\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;
@@ -53,11 +73,26 @@ appl_clock_delay(
     enum appl_status
         e_status;
 
-    e_status =
-        appl_clock_service::s_delay(
-            p_context,
-            i_time_freq,
-            i_time_count);
+    if (
+        p_context
+        && i_time_freq)
+    {
+        e_status =
+            appl_clock_service::s_delay(
+                p_context,
+                i_time_freq,
+                i_time_count);
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "clock delay invalid param\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;

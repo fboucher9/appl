@@ -30,6 +30,14 @@
 
 #include <appl_unused.h>
 
+#if defined APPL_DEBUG
+#include <debug/appl_debug_impl.h>
+#endif /* #if defined APPL_DEBUG */
+
+#if defined APPL_HAVE_COVERAGE
+#include <appl_coverage.h>
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
 //
 //
 //
@@ -136,29 +144,42 @@ enum appl_status
     enum appl_status
         e_status;
 
-    {
-        void *
-            p_allocation;
+    void *
+        p_allocation;
 
+#if defined APPL_HAVE_COVERAGE
+    if (appl_coverage_check())
+    {
+        p_allocation =
+            0;
+    }
+    else
+#endif /* #if defined APPL_HAVE_COVERAGE */
+    {
         p_allocation =
             malloc(
                 i_buf_len);
+    }
 
-        if (
-            p_allocation)
-        {
-            *(
-                r_buf) =
-                p_allocation;
+    if (
+        p_allocation)
+    {
+        *(
+            r_buf) =
+            p_allocation;
 
-            e_status =
-                appl_status_ok;
-        }
-        else
-        {
-            e_status =
-                appl_status_fail;
-        }
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "appl_heap_std v_alloc: out of memory\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
     }
 
     return

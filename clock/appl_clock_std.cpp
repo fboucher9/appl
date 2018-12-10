@@ -24,6 +24,14 @@
 
 #include <appl_allocator_handle.h>
 
+#if defined APPL_DEBUG
+#include <debug/appl_debug_impl.h>
+#endif /* #if defined APPL_DEBUG */
+
+#if defined APPL_HAVE_COVERAGE
+#include <appl_coverage.h>
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
 //
 //
 //
@@ -101,6 +109,13 @@ appl_clock_std::~appl_clock_std()
 appl_size_t
 appl_clock_std::v_cleanup(void)
 {
+#if defined APPL_HAVE_COVERAGE
+    if (appl_coverage_check())
+    {
+        appl_clock::v_cleanup();
+    }
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
     return
         sizeof(class appl_clock_std);
 
@@ -145,6 +160,15 @@ appl_clock_std::v_read(
     enum appl_status
         e_status;
 
+#if defined APPL_HAVE_COVERAGE
+    if (appl_coverage_check())
+    {
+        appl_clock::v_read(
+            i_time_freq,
+            p_time_count);
+    }
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
     int
         i_clock_result;
 
@@ -152,6 +176,9 @@ appl_clock_std::v_read(
         o_clock_value;
 
     i_clock_result =
+#if defined APPL_HAVE_COVERAGE
+        appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
         clock_gettime(
             CLOCK_MONOTONIC,
             &(
@@ -193,6 +220,11 @@ appl_clock_std::v_read(
     }
     else
     {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "clock_gettime error\n");
+#endif /* #if defined APPL_DEBUG */
+
         e_status =
             appl_status_fail;
     }
@@ -215,6 +247,15 @@ appl_clock_std::v_delay(
     enum appl_status
         e_status;
 
+#if defined APPL_HAVE_COVERAGE
+    if (appl_coverage_check())
+    {
+        appl_clock::v_delay(
+            i_time_freq,
+            i_time_count);
+    }
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
     if (
         i_time_freq)
     {
@@ -230,14 +271,39 @@ appl_clock_std::v_delay(
             appl_convert::to_uint(
                 ul_time_usec);
 
-        usleep(
-            ui_time_usec);
+        int const
+            i_usleep_result =
+#if defined APPL_HAVE_COVERAGE
+            appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
+            usleep(
+                ui_time_usec);
 
-        e_status =
-            appl_status_ok;
+        if (
+            0
+            == i_usleep_result)
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+#if defined APPL_DEBUG
+            appl_debug_impl::s_print0(
+                "usleep error\n");
+#endif /* #if defined APPL_DEBUG */
+
+            e_status =
+                appl_status_fail;
+        }
     }
     else
     {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "clock std delay invalid param\n");
+#endif /* #if defined APPL_DEBUG */
+
         e_status =
             appl_status_fail;
     }
