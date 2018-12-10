@@ -32,6 +32,18 @@ appl_options_test_1(
     (void)(
         p_context);
 
+    {
+        struct appl_object const *
+            pc_object;
+
+        pc_object =
+            appl_options_const_parent(
+                p_options);
+
+        (void)(
+            pc_object);
+    }
+
     e_status =
         appl_options_count(
             p_options,
@@ -111,31 +123,63 @@ appl_options_test_2(
         char
             b_ready;
 
-        static unsigned char a_msg[] = "test '1 2 3' a\\ b\\ c\n";
+        static unsigned char a_msg[] = " \n\t test '1 2 3' a\\ b\\ c\n";
 
-        e_status =
-            appl_options_write(
-                p_options,
-                a_msg,
-                a_msg + sizeof(a_msg),
-                &(
-                    i_count),
-                &(
-                    b_ready));
+        unsigned char * p_msg_iterator;
 
-        if (
-            appl_status_ok
-            == e_status)
         {
+            struct appl_object *
+                p_object;
+
+            p_object =
+                appl_options_parent(
+                    p_options);
+
+            (void)(
+                p_object);
+        }
+
+        p_msg_iterator =
+            a_msg;
+
+        while (
+            (
+                appl_status_ok
+                == e_status)
+            && (
+                p_msg_iterator
+                != a_msg + sizeof(a_msg)))
+        {
+            e_status =
+                appl_options_write(
+                    p_options,
+                    p_msg_iterator,
+                    a_msg + sizeof(a_msg),
+                    &(
+                        i_count),
+                    &(
+                        b_ready));
+
             if (
-                b_ready)
+                appl_status_ok
+                == e_status)
             {
-                e_status =
-                    appl_options_test_1(
-                        p_context,
-                        p_options);
+                if (
+                    b_ready)
+                {
+                    e_status =
+                        appl_options_test_1(
+                            p_context,
+                            p_options);
+                }
+
+                p_msg_iterator +=
+                    i_count;
             }
         }
+
+        appl_options_reset(
+            p_options);
 
         appl_options_destroy(
             p_options);

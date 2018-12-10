@@ -343,40 +343,44 @@ enum appl_status
             appl_status_ok
             == e_status)
         {
-            unsigned char *
-                p_buf;
-
-            e_status =
-                appl_heap_alloc_structure_array(
-                    m_context,
-                    i_length,
-                    &(
-                        p_buf));
-
             if (
-                appl_status_ok
-                == e_status)
+                i_length)
             {
+                unsigned char *
+                    p_buf;
+
                 e_status =
-                    appl_chunk_read(
-                        m_chunk,
-                        p_buf,
-                        p_buf + i_length);
+                    appl_heap_alloc_structure_array(
+                        m_context,
+                        i_length,
+                        &(
+                            p_buf));
 
                 if (
                     appl_status_ok
                     == e_status)
                 {
                     e_status =
-                        v_append_argument(
+                        appl_chunk_read(
+                            m_chunk,
                             p_buf,
                             p_buf + i_length);
-                }
 
-                appl_heap_free_structure_array(
-                    m_context,
-                    i_length,
-                    p_buf);
+                    if (
+                        appl_status_ok
+                        == e_status)
+                    {
+                        e_status =
+                            v_append_argument(
+                                p_buf,
+                                p_buf + i_length);
+                    }
+
+                    appl_heap_free_structure_array(
+                        m_context,
+                        i_length,
+                        p_buf);
+                }
             }
         }
 

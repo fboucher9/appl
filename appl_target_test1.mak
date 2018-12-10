@@ -29,6 +29,8 @@ test_appl-deps = \
     xlib/appl_xlib_test.c \
     appl_test_prompt.c \
     mutex/appl_mutex_test.c \
+    clock/appl_clock_test.c \
+    random/appl_random_test.c \
     $(appl_base-deps)
 
 # List of libraries required to link test application
