@@ -35,15 +35,11 @@ enum appl_status
         p_event_descriptor,
         r_event);
 
-#if defined LNET_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "event mgr create node not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
-#endif /* #if defined LNET_DEBUG */
+#if defined APPL_DEBUG
+    appl_debug_print0(
+        m_context,
+        "event mgr create node not implemented\n");
+#endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_status_not_implemented;
@@ -67,15 +63,11 @@ enum appl_status
     appl_unused(
         p_event);
 
-#if defined LNET_DEBUG
-    {
-        static unsigned char const s_msg[] =
-            "event mgr destroy node not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
-#endif /* #if defined LNET_DEBUG */
+#if defined APPL_DEBUG
+    appl_debug_print0(
+        m_context,
+        "event mgr destroy node not implemented\n");
+#endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_status_not_implemented;

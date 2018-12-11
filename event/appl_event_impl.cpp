@@ -1,3 +1,8 @@
+/* See LICENSE for license details */
+
+/*
+
+*/
 
 #include <appl_status.h>
 
@@ -22,6 +27,14 @@
 #include <mutex/appl_mutex_impl.h>
 
 #include <appl_convert.h>
+
+#if defined APPL_DEBUG
+#include <debug/appl_debug_impl.h>
+#endif /* #if defined APPL_DEBUG */
+
+#if defined APPL_HAVE_COVERAGE
+#include <appl_coverage.h>
+#endif /* #if defined APPL_HAVE_COVERAGE */
 
 //
 //
@@ -51,6 +64,9 @@ enum appl_status
 
     int const
         i_init_result =
+#if defined APPL_HAVE_COVERAGE
+        appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
         pthread_cond_init(
             &(
                 m_storage.m_private),
@@ -65,6 +81,11 @@ enum appl_status
     }
     else
     {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "pthread_cond_init fail\n");
+#endif /* #if defined APPL_DEBUG */
+
         e_status =
             appl_status_fail;
     }
@@ -98,6 +119,9 @@ enum appl_status
 
     int const
         i_destroy_result =
+#if defined APPL_HAVE_COVERAGE
+        appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
         pthread_cond_destroy(
             &(
                 m_storage.m_private));
@@ -111,6 +135,11 @@ enum appl_status
     }
     else
     {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "pthread_cond_destroy fail\n");
+#endif /* #if defined APPL_DEBUG */
+
         e_status =
             appl_status_fail;
     }
@@ -140,6 +169,9 @@ enum appl_status
 
     int const
         i_signal_result =
+#if defined APPL_HAVE_COVERAGE
+        appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
         pthread_cond_signal(
             &(
                 m_storage.m_private));
@@ -153,6 +185,10 @@ enum appl_status
     }
     else
     {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "pthread_cond_signal fail\n");
+#endif /* #if defined APPL_DEBUG */
         e_status =
             appl_status_fail;
     }
@@ -197,6 +233,9 @@ enum appl_status
         i_clock_result;
 
     i_clock_result =
+#if defined APPL_HAVE_COVERAGE
+        appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
         clock_gettime(
             CLOCK_REALTIME,
             &(
@@ -254,6 +293,9 @@ enum appl_status
 
         int const
             i_wait_result =
+#if defined APPL_HAVE_COVERAGE
+            appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
             pthread_cond_timedwait(
                 &(
                     m_storage.m_private),
@@ -271,12 +313,22 @@ enum appl_status
         }
         else
         {
+#if defined APPL_DEBUG
+            appl_debug_impl::s_print0(
+                "pthread_cond_timedwait fail\n");
+#endif /* #if defined APPL_DEBUG */
+
             e_status =
                 appl_status_fail;
         }
     }
     else
     {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "clock_gettime fail\n");
+#endif /* #if defined APPL_DEBUG */
+
         e_status =
             appl_status_fail;
     }

@@ -17,6 +17,10 @@ Description:
 
 #include <event/appl_event_service.h>
 
+#if defined APPL_DEBUG
+#include <debug/appl_debug_impl.h>
+#endif /* #if defined APPL_DEBUG */
+
 /*
 
 Function: appl_event_create()
@@ -59,11 +63,27 @@ appl_event_create(
     enum appl_status
         e_status;
 
-    e_status =
-        appl_event_service::s_create(
-            p_context,
-            p_event_descriptor,
-            r_event);
+    if (
+        p_context
+        && p_event_descriptor
+        && r_event)
+    {
+        e_status =
+            appl_event_service::s_create(
+                p_context,
+                p_event_descriptor,
+                r_event);
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "event create invalid param\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_invalid_param;
+    }
 
     return
         e_status;
@@ -81,9 +101,23 @@ appl_event_destroy(
     enum appl_status
         e_status;
 
-    e_status =
-        appl_event_service::s_destroy(
-            p_event);
+    if (
+        p_event)
+    {
+        e_status =
+            appl_event_service::s_destroy(
+                p_event);
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "event destroy invalid param\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_invalid_param;
+    }
 
     return
         e_status;
@@ -119,6 +153,15 @@ appl_event_parent(
     struct appl_event * const
         p_event)
 {
+#if defined APPL_DEBUG
+    if (
+        !p_event)
+    {
+        appl_debug_impl::s_print0(
+            "event parent invalid param\n");
+    }
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_event_service::s_parent(
             p_event);
@@ -153,6 +196,15 @@ appl_event_const_parent(
     struct appl_event const * const
         p_event)
 {
+#if defined APPL_DEBUG
+    if (
+        !p_event)
+    {
+        appl_debug_impl::s_print0(
+            "event parent invalid param\n");
+    }
+#endif /* #if defined APPL_DEBUG */
+
     return
         appl_event_service::s_const_parent(
             p_event);
@@ -189,9 +241,23 @@ appl_event_signal(
     enum appl_status
         e_status;
 
-    e_status =
-        appl_event_service::s_signal(
-            p_event);
+    if (
+        p_event)
+    {
+        e_status =
+            appl_event_service::s_signal(
+                p_event);
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "event signal invalid param\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_invalid_param;
+    }
 
     return
         e_status;
@@ -245,12 +311,28 @@ appl_event_wait(
     enum appl_status
         e_status;
 
-    e_status =
-        appl_event_service::s_wait(
-            p_event,
-            p_mutex,
-            i_wait_freq,
-            i_wait_count);
+    if (
+        p_event
+        && p_mutex
+        && i_wait_freq)
+    {
+        e_status =
+            appl_event_service::s_wait(
+                p_event,
+                p_mutex,
+                i_wait_freq,
+                i_wait_count);
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "event wait invalid param\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_invalid_param;
+    }
 
     return
         e_status;

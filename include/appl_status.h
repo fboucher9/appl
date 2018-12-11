@@ -39,7 +39,10 @@ enum appl_status
     appl_status_not_implemented = 4,
 
     /* Timeout occured */
-    appl_status_timeout = 5
+    appl_status_timeout = 5,
+
+    /* Invalid parameter */
+    appl_status_invalid_param = 6
 
 }; /* enum appl_status */
 

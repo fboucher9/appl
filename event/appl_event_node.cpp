@@ -14,6 +14,8 @@
 
 #include <appl_unused.h>
 
+#include <appl_debug_handle.h>
+
 //
 //
 //
@@ -22,6 +24,12 @@ enum appl_status
 {
     enum appl_status
         e_status;
+
+#if defined APPL_DEBUG
+    appl_debug_print0(
+        m_context,
+        "event signal not implemented\n");
+#endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_status_not_implemented;
@@ -50,6 +58,12 @@ enum appl_status
         p_mutex,
         i_wait_freq,
         i_wait_count);
+
+#if defined APPL_DEBUG
+    appl_debug_print0(
+        m_context,
+        "event wait not implemented\n");
+#endif /* #if defined APPL_DEBUG */
 
     e_status =
         appl_status_not_implemented;

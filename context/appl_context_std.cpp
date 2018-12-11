@@ -176,6 +176,10 @@
 
 #include <appl_unused.h>
 
+#if defined APPL_HAVE_COVERAGE
+#include <appl_coverage.h>
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
 extern
 enum appl_status
     appl_library_mgr_create(
@@ -1989,7 +1993,11 @@ enum appl_status
         e_status;
 
     if (
-        b_init_clock)
+        b_init_clock
+#if defined APPL_HAVE_COVERAGE
+        && !appl_coverage_check()
+#endif /* #if defined APPL_HAVE_COVERAGE */
+        )
     {
         *(r_clock) =
             m_clock;
