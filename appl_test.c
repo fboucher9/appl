@@ -37,6 +37,8 @@
 
 #include <random/appl_random_test.h>
 
+#include <event/appl_event_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2207,6 +2209,12 @@ appl_test_main(
     if (1)
     {
         appl_mutex_test_1(
+            p_context);
+    }
+
+    if (1)
+    {
+        appl_event_test_1(
             p_context);
     }
 

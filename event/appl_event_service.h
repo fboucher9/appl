@@ -41,6 +41,12 @@ class appl_event_service
 
         static
         enum appl_status
+        s_validate(
+            bool const
+                b_condition);
+
+        static
+        enum appl_status
         s_create(
             struct appl_context * const
                 p_context,

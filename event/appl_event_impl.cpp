@@ -55,7 +55,7 @@ appl_event_impl::~appl_event_impl()
 //
 //
 enum appl_status
-    appl_event_impl::init(void)
+    appl_event_impl::f_init(void)
 {
     enum appl_status
         e_status;
@@ -110,7 +110,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_event_impl::cleanup(void)
+    appl_event_impl::f_cleanup(void)
 {
     enum appl_status
         e_status;
@@ -160,7 +160,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_event_impl::signal(void)
+    appl_event_impl::f_signal(void)
 {
     enum appl_status
         e_status;
@@ -213,7 +213,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_event_impl::wait(
+    appl_event_impl::f_wait(
         class appl_mutex_impl * const
             p_mutex_impl,
         unsigned long int const

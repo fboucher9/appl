@@ -156,16 +156,24 @@ enum appl_status
             delete
                 p_object;
 
+            // Ignore failure of free()
+            appl_allocator_free(
+                p_allocator,
+                i_placement_length,
+                p_placement);
+
             e_status =
-                appl_allocator_free(
-                    p_allocator,
-                    i_placement_length,
-                    p_placement);
+                appl_status_ok;
         }
         else
         {
+#if defined APPL_DEBUG
+            appl_debug_impl::s_print0(
+                "v_cleanup returned 0\n");
+#endif /* #if defined APPL_DEBUG */
+
             e_status =
-                appl_status_ok;
+                appl_status_fail;
         }
     }
     else

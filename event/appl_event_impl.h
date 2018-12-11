@@ -30,16 +30,16 @@ class appl_event_impl
         ~appl_event_impl();
 
         enum appl_status
-            init(void);
+            f_init(void);
 
         enum appl_status
-            cleanup(void);
+            f_cleanup(void);
 
         enum appl_status
-            signal(void);
+            f_signal(void);
 
         enum appl_status
-            wait(
+            f_wait(
                 class appl_mutex_impl * const
                     p_mutex_impl,
                 unsigned long int const

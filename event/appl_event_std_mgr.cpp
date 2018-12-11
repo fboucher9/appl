@@ -14,9 +14,15 @@
 
 #include <event/appl_event_std_mgr.h>
 
+#include <event/appl_event_service.h>
+
 #include <appl_allocator_handle.h>
 
 #include <appl_pool_handle.h>
+
+#if defined APPL_HAVE_COVERAGE
+#include <appl_coverage.h>
+#endif /* #if defined APPL_HAVE_COVERAGE */
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -36,22 +42,32 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_event_std_mgr *
-        p_event_std_mgr;
-
     e_status =
-        appl_new(
-            p_allocator,
-            &(
-                p_event_std_mgr));
+        appl_event_service::s_validate(
+            (0 != p_allocator)
+            && (0 != r_event_mgr));
 
     if (
         appl_status_ok
         == e_status)
     {
-        *(
-            r_event_mgr) =
+        class appl_event_std_mgr *
             p_event_std_mgr;
+
+        e_status =
+            appl_new(
+                p_allocator,
+                &(
+                    p_event_std_mgr));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            *(
+                r_event_mgr) =
+                p_event_std_mgr;
+        }
     }
 
     return
@@ -73,9 +89,19 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_delete(
-            p_allocator,
-            p_event_mgr);
+        appl_event_service::s_validate(
+            (0 != p_allocator)
+            && (0 != p_event_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_delete(
+                p_allocator,
+                p_event_mgr);
+    }
 
     return
         e_status;
@@ -169,21 +195,32 @@ enum appl_status
 appl_size_t
     appl_event_std_mgr::v_cleanup(void)
 {
+#if defined APPL_HAVE_COVERAGE
     if (
-        m_pool_created)
+        appl_coverage_check())
     {
-        appl_pool_destroy(
-            m_pool);
-
-        m_pool =
-            0;
-
-        m_pool_created =
-            false;
+        return
+            appl_event_mgr::v_cleanup();
     }
+    else
+#endif /* #if defined APPL_HAVE_COVERAGE */
+    {
+        if (
+            m_pool_created)
+        {
+            appl_pool_destroy(
+                m_pool);
 
-    return
-        sizeof(class appl_event_std_mgr);
+            m_pool =
+                0;
+
+            m_pool_created =
+                false;
+        }
+
+        return
+            sizeof(class appl_event_std_mgr);
+    }
 
 } // v_cleanup()
 
@@ -200,12 +237,35 @@ enum appl_status
     enum appl_status
         e_status;
 
-    e_status =
-        appl_event_std_node_create(
-            appl_pool_parent(
-                m_pool),
-            p_event_descriptor,
-            r_event);
+#if defined APPL_HAVE_COVERAGE
+    if (
+        appl_coverage_check())
+    {
+        e_status =
+            appl_event_mgr::v_create_node(
+                p_event_descriptor,
+                r_event);
+    }
+    else
+#endif /* #if defined APPL_HAVE_COVERAGE */
+    {
+        e_status =
+            appl_event_service::s_validate(
+                (0 != p_event_descriptor)
+                && (0 != r_event));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            e_status =
+                appl_event_std_node_create(
+                    appl_pool_parent(
+                        m_pool),
+                    p_event_descriptor,
+                    r_event);
+        }
+    }
 
     return
         e_status;
@@ -223,11 +283,32 @@ enum appl_status
     enum appl_status
         e_status;
 
-    e_status =
-        appl_event_std_node_destroy(
-            appl_pool_parent(
-                m_pool),
-            p_event);
+#if defined APPL_HAVE_COVERAGE
+    if (
+        appl_coverage_check())
+    {
+        e_status =
+            appl_event_mgr::v_destroy_node(
+                p_event);
+    }
+    else
+#endif /* #if defined APPL_HAVE_COVERAGE */
+    {
+        e_status =
+            appl_event_service::s_validate(
+                (0 != p_event));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            e_status =
+                appl_event_std_node_destroy(
+                    appl_pool_parent(
+                        m_pool),
+                    p_event);
+        }
+    }
 
     return
         e_status;

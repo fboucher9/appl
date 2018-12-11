@@ -26,6 +26,8 @@
 
 #include <event/appl_event_std_node.h>
 
+#include <event/appl_event_service.h>
+
 #include <mutex/appl_mutex_node.h>
 
 #include <mutex/appl_mutex_impl.h>
@@ -37,6 +39,10 @@
 #include <appl_convert.h>
 
 #include <appl_allocator_handle.h>
+
+#if defined APPL_HAVE_COVERAGE
+#include <appl_coverage.h>
+#endif /* #if defined APPL_HAVE_COVERAGE */
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -58,23 +64,34 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_event_std_node *
-        p_event_std_node;
-
     e_status =
-        appl_new(
-            p_allocator,
-            p_event_descriptor,
-            &(
-                p_event_std_node));
+        appl_event_service::s_validate(
+            (0 != p_allocator)
+            && (0 != p_event_descriptor)
+            && (0 != r_event_node));
 
     if (
         appl_status_ok
         == e_status)
     {
-        *(
-            r_event_node) =
+        class appl_event_std_node *
             p_event_std_node;
+
+        e_status =
+            appl_new(
+                p_allocator,
+                p_event_descriptor,
+                &(
+                    p_event_std_node));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            *(
+                r_event_node) =
+                p_event_std_node;
+        }
     }
 
     return
@@ -96,9 +113,19 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_delete(
-            p_allocator,
-            p_event);
+        appl_event_service::s_validate(
+            (0 != p_allocator)
+            && (0 != p_event));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_delete(
+                p_allocator,
+                p_event);
+    }
 
     return
         e_status;
@@ -136,18 +163,27 @@ enum appl_status
     enum appl_status
         e_status;
 
-    appl_unused(
-        p_event_descriptor);
-
     e_status =
-        m_event_impl.init();
+        appl_event_service::s_validate(
+            (0 != p_event_descriptor));
 
     if (
         appl_status_ok
         == e_status)
     {
-        m_event_impl_initialized =
-            true;
+        appl_unused(
+            p_event_descriptor);
+
+        e_status =
+            m_event_impl.f_init();
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            m_event_impl_initialized =
+                true;
+        }
     }
 
     return
@@ -161,17 +197,34 @@ enum appl_status
 appl_size_t
     appl_event_std_node::v_cleanup(void)
 {
-    if (
-        m_event_impl_initialized)
-    {
-        m_event_impl.cleanup();
+    appl_size_t
+        i_cleanup_result;
 
-        m_event_impl_initialized =
-            false;
+#if defined APPL_HAVE_COVERAGE
+    if (
+        appl_coverage_check())
+    {
+        i_cleanup_result =
+            appl_event::v_cleanup();
+    }
+    else
+#endif /* #if defined APPL_HAVE_COVERAGE */
+    {
+        if (
+            m_event_impl_initialized)
+        {
+            m_event_impl.f_cleanup();
+
+            m_event_impl_initialized =
+                false;
+        }
+
+        i_cleanup_result =
+            sizeof(class appl_event_std_node);
     }
 
     return
-        sizeof(class appl_event_std_node);
+        i_cleanup_result;
 
 } // v_cleanup()
 
@@ -184,16 +237,27 @@ enum appl_status
     enum appl_status
         e_status;
 
+#if defined APPL_HAVE_COVERAGE
     if (
-        m_event_impl_initialized)
+        appl_coverage_check())
     {
         e_status =
-            m_event_impl.signal();
+            appl_event::v_signal();
     }
     else
+#endif /* #if defined APPL_HAVE_COVERAGE */
     {
         e_status =
-            appl_status_fail;
+            appl_event_service::s_validate(
+                m_event_impl_initialized);
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            e_status =
+                m_event_impl.f_signal();
+        }
     }
 
     return
@@ -216,27 +280,41 @@ enum appl_status
     enum appl_status
         e_status;
 
+#if defined APPL_HAVE_COVERAGE
     if (
-        m_event_impl_initialized)
+        appl_coverage_check())
     {
-        class appl_mutex_std_node *
-            p_mutex_std_node;
-
-        p_mutex_std_node =
-            appl_mutex_std_node::convert_handle(
-                p_mutex_node);
-
         e_status =
-            m_event_impl.wait(
-                &(
-                    p_mutex_std_node->m_mutex_impl),
+            appl_event::v_wait(
+                p_mutex_node,
                 i_wait_freq,
                 i_wait_count);
     }
     else
+#endif /* #if defined APPL_HAVE_COVERAGE */
     {
         e_status =
-            appl_status_fail;
+            appl_event_service::s_validate(
+                m_event_impl_initialized
+                && (0 != p_mutex_node)
+                && (0 != i_wait_freq));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            class appl_mutex_std_node * const
+                p_mutex_std_node =
+                appl_mutex_std_node::convert_handle(
+                    p_mutex_node);
+
+            e_status =
+                m_event_impl.f_wait(
+                    &(
+                        p_mutex_std_node->m_mutex_impl),
+                    i_wait_freq,
+                    i_wait_count);
+        }
     }
 
     return
