@@ -40,6 +40,12 @@ class appl_backtrace : public appl_object
                 appl_size_t const
                     i_count);
 
+        virtual
+        enum appl_status
+            v_ouch(
+                char const * const
+                    p_header0);
+
     protected:
 
         appl_backtrace(

@@ -139,11 +139,14 @@ enum appl_status
 //
 //
 //
-void
+enum appl_status
 appl_backtrace_impl::s_ouch(
     char const * const
         p_header0)
 {
+    enum appl_status
+        e_status;
+
     unsigned char const * const
         pc_uchar =
         appl_convert::to_uchar_ptr(
@@ -162,18 +165,26 @@ appl_backtrace_impl::s_ouch(
             pc_uchar),
         stderr);
 
-    if (
-        appl_status_ok
-        == appl_backtrace_impl::s_capture(
+    e_status =
+        appl_backtrace_impl::s_capture(
             a_stack,
             8u,
             &(
-                i_count)))
+                i_count));
+
+    if (
+        appl_status_ok
+        == e_status)
     {
-        appl_backtrace_impl::s_report(
-            a_stack,
-            i_count);
+        e_status =
+            appl_backtrace_impl::s_report(
+                a_stack,
+                i_count);
     }
+
+    return
+        e_status;
+
 } // s_ouch()
 
 /* end-of-file: appl_backtrace_impl.cpp */

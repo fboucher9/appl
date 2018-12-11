@@ -74,6 +74,12 @@ class appl_backtrace_std : public appl_backtrace
                 appl_size_t const
                     i_count);
 
+        virtual
+        enum appl_status
+            v_ouch(
+                char const * const
+                    p_header0);
+
         appl_backtrace_std(
             class appl_backtrace_std const & r);
 

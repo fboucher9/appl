@@ -152,4 +152,18 @@ enum appl_status
 
 } // v_report()
 
+//
+//
+//
+enum appl_status
+    appl_backtrace_std::v_ouch(
+        char const * const
+            p_header0)
+{
+    return
+        appl_backtrace_impl::s_ouch(
+            p_header0);
+
+} // v_ouch()
+
 /* end-of-file: appl_backtrace_std.cpp */

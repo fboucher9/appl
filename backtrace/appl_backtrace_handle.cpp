@@ -55,4 +55,21 @@ enum appl_status
 
 } /* appl_backtrace_report() */
 
+/*
+
+*/
+enum appl_status
+    appl_backtrace_ouch(
+        struct appl_context * const
+            p_context,
+        char const * const
+            p_header0)
+{
+    return
+        appl_backtrace_service::s_ouch(
+            p_context,
+            p_header0);
+
+} /* appl_backtrace_ouch() */
+
 /* end-of-file: appl_backtrace_handle.cpp */

@@ -58,6 +58,22 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_backtrace::v_ouch(
+        char const * const
+            p_header0)
+{
+    appl_unused(
+        p_header0);
+
+    return
+        appl_status_not_implemented;
+
+} // v_ouch()
+
+//
+//
+//
 appl_backtrace::appl_backtrace(
     struct appl_context * const
         p_context) :

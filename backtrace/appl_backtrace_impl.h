@@ -42,7 +42,7 @@ class appl_backtrace_impl
                     i_count);
 
         static
-        void
+        enum appl_status
             s_ouch(
                 char const * const
                     p_header0);

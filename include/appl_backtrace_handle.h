@@ -40,6 +40,13 @@ enum appl_status
         appl_size_t const
             i_count);
 
+enum appl_status
+    appl_backtrace_ouch(
+        struct appl_context * const
+            p_context,
+        char const * const
+            p_header0);
+
 #if defined __cplusplus
 } /* extern "C" */
 #endif /* #if defined __cplusplus */

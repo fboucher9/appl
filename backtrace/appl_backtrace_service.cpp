@@ -95,4 +95,39 @@ enum appl_status
 
 } // s_report()
 
+//
+//
+//
+enum appl_status
+    appl_backtrace_service::s_ouch(
+        struct appl_context * const
+            p_context,
+        char const * const
+            p_header0)
+{
+    enum appl_status
+        e_status;
+
+    class appl_backtrace *
+        p_backtrace;
+
+    e_status =
+        p_context->v_backtrace(
+            &(
+                p_backtrace));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_backtrace->v_ouch(
+                p_header0);
+    }
+
+    return
+        e_status;
+
+} // s_ouch()
+
 /* end-of-file: appl_backtrace_service.cpp */

@@ -48,6 +48,14 @@ class appl_backtrace_service
                 appl_size_t const
                     i_count);
 
+        static
+        enum appl_status
+            s_ouch(
+                struct appl_context * const
+                    p_context,
+                char const * const
+                    p_header0);
+
 }; // class appl_backtrace_service
 
 /* end-of-file: appl_backtrace_service.h */
