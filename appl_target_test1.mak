@@ -32,6 +32,7 @@ test_appl-deps = \
     clock/appl_clock_test.c \
     random/appl_random_test.c \
     event/appl_event_test.c \
+    backtrace/appl_backtrace_test.cpp \
     $(appl_base-deps)
 
 # List of libraries required to link test application

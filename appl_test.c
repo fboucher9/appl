@@ -39,6 +39,8 @@
 
 #include <event/appl_event_test.h>
 
+#include <backtrace/appl_backtrace_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2199,6 +2201,12 @@ appl_test_main(
 {
     enum appl_status
         e_status;
+
+    if (1)
+    {
+        appl_backtrace_test_1(
+            p_context);
+    }
 
     if (1)
     {
