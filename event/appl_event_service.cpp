@@ -20,13 +20,7 @@
 
 #include <mutex/appl_mutex_node.h>
 
-#if defined APPL_DEBUG
-#include <debug/appl_debug_impl.h>
-#endif /* #if defined APPL_DEBUG */
-
-#if defined APPL_HAVE_COVERAGE
-#include <appl_coverage.h>
-#endif /* #if defined APPL_HAVE_COVERAGE */
+#include <appl_validate.h>
 
 //
 //
@@ -39,26 +33,9 @@ appl_event_service::s_validate(
     enum appl_status
         e_status;
 
-    if (
-        b_condition
-#if defined APPL_HAVE_COVERAGE
-        && !appl_coverage_check()
-#endif /* #if defined APPL_HAVE_COVERAGE */
-        )
-    {
-        e_status =
-            appl_status_ok;
-    }
-    else
-    {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "event invalid param\n");
-#endif /* #if defined APPL_DEBUG */
-
-        e_status =
-            appl_status_invalid_param;
-    }
+    e_status =
+        appl_validate(
+            b_condition);
 
     return
         e_status;

@@ -30,6 +30,8 @@
 #include <appl_coverage.h>
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
+#include <appl_validate.h>
+
 //
 //
 //
@@ -69,13 +71,14 @@ enum appl_status
     enum appl_status
         e_status;
 
+    e_status =
+        appl_validate(
+            (0 != i_time_freq)
+            && (0 != p_time_count));
+
     if (
-        i_time_freq
-        && p_time_count
-#if defined APPL_HAVE_COVERAGE
-        && !appl_coverage_check()
-#endif /* #if defined APPL_HAVE_COVERAGE */
-       )
+        appl_status_ok
+        == e_status)
     {
 #if defined APPL_OS_LINUX
 
@@ -150,16 +153,6 @@ enum appl_status
 
 #endif /* #if defined APPL_OS_Xx */
     }
-    else
-    {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "clock impl read invalid param\n");
-#endif /* #if defined APPL_DEBUG */
-
-        e_status =
-            appl_status_invalid_param;
-    }
 
     return
         e_status;
@@ -179,12 +172,13 @@ enum appl_status
     enum appl_status
         e_status;
 
+    e_status =
+        appl_validate(
+            (0 != i_time_freq));
+
     if (
-        i_time_freq
-#if defined APPL_HAVE_COVERAGE
-        && !appl_coverage_check()
-#endif /* #if defined APPL_HAVE_COVERAGE */
-        )
+        appl_status_ok
+        == e_status)
     {
 #if defined APPL_OS_LINUX
 
@@ -236,16 +230,6 @@ enum appl_status
             appl_status_not_implemented;
 
 #endif /* #if defined APPL_OS_Xx */
-    }
-    else
-    {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "clock impl delay invalid param\n");
-#endif /* #if defined APPL_DEBUG */
-
-        e_status =
-            appl_status_invalid_param;
     }
 
     return

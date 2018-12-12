@@ -42,7 +42,10 @@ enum appl_status
     appl_status_timeout = 5,
 
     /* Invalid parameter */
-    appl_status_invalid_param = 6
+    appl_status_invalid_param = 6,
+
+    /* Fault injection */
+    appl_status_fault_injection = 7
 
 }; /* enum appl_status */
 

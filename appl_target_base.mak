@@ -172,6 +172,7 @@ appl_base-deps := \
     timer/appl_timer.cpp \
     timer/appl_timer_std_mgr.cpp \
     timer/appl_timer_std_node.cpp \
+    appl_validate.cpp \
     xlib/appl_xlib.cpp \
     xlib/appl_xlib_std.cpp \
     xlib/appl_xlib_handle.cpp \

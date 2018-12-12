@@ -386,29 +386,41 @@ void
                 }
 
                 /* Coverage tests... */
-                coverage_loop(
-                    &(
-                        appl_event_test_create_cb),
-                    &(
-                        o_event_test));
+                if (1)
+                {
+                    coverage_loop(
+                        &(
+                            appl_event_test_create_cb),
+                        &(
+                            o_event_test));
+                }
 
-                coverage_loop(
-                    &(
-                        appl_event_test_signal_cb),
-                    &(
-                        o_event_test));
+                if (1)
+                {
+                    coverage_loop(
+                        &(
+                            appl_event_test_signal_cb),
+                        &(
+                            o_event_test));
+                }
 
-                coverage_loop(
-                    &(
-                        appl_event_test_wait_cb),
-                    &(
-                        o_event_test));
+                if (1)
+                {
+                    coverage_loop(
+                        &(
+                            appl_event_test_wait_cb),
+                        &(
+                            o_event_test));
+                }
 
-                coverage_loop(
-                    &(
-                        appl_event_test_destroy_cb),
-                    &(
-                        o_event_test));
+                if (0)
+                {
+                    coverage_loop(
+                        &(
+                            appl_event_test_destroy_cb),
+                        &(
+                            o_event_test));
+                }
 
                 appl_event_destroy(
                     o_event_test.p_event);
