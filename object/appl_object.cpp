@@ -140,7 +140,7 @@ appl_size_t
 #endif /* #if defined APPL_DEBUG */
 
     return
-        0;
+        1;
 
 } // v_cleanup()
 

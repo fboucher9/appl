@@ -29,6 +29,13 @@ struct appl_env : public appl_object
 {
     public:
 
+        appl_env(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_env();
+
         virtual
         enum appl_status
             v_get(
@@ -67,15 +74,6 @@ struct appl_env : public appl_object
                     p_value_min,
                 unsigned char const * const
                     p_value_max);
-
-    protected:
-
-        appl_env(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_env();
 
     private:
 

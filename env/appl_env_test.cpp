@@ -22,46 +22,11 @@
 
 #include <appl_unused.h>
 
+#include <appl_allocator_handle.h>
+
+#include <appl_context_handle.h>
+
 #include <stdio.h>
-
-//
-//
-//
-class appl_env_null : public appl_env
-{
-    public:
-
-        appl_env_null(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_env_null();
-
-    protected:
-
-    private:
-
-        appl_env_null(
-            class appl_env_null const & r);
-
-        class appl_env_null &
-            operator =(
-                class appl_env_null const & r);
-
-}; // class appl_env_null
-
-appl_env_null::appl_env_null(
-    struct appl_context * const
-        p_context) :
-    appl_env(
-        p_context)
-{
-}
-
-appl_env_null::~appl_env_null()
-{
-}
 
 //
 //
@@ -100,7 +65,7 @@ appl_env_test_1(
     struct appl_string *
         p_string;
 
-    static unsigned char a_name[] =
+    static unsigned char const a_name[] =
     {
         'H', 'O', 'M', 'E'
     };
@@ -130,12 +95,46 @@ appl_env_test_1(
                 appl_env_test_query_cb),
             0);
 
-    static unsigned char a_test[] =
+    static unsigned char const a_homer[] =
+    {
+        'h',
+        'o',
+        'm',
+        'e',
+        'r'
+    };
+
+    e_status =
+        appl_env_get(
+            p_context,
+            a_homer,
+            a_homer + sizeof(a_homer),
+            &(
+                p_string));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        appl_string_destroy(
+            p_string);
+    }
+
+    e_status =
+        appl_env_query(
+            p_context,
+            a_homer,
+            a_homer + sizeof(a_homer),
+            &(
+                appl_env_test_query_cb),
+            0);
+
+    static unsigned char const a_test[] =
     {
         'T', 'E', 'S', 'T'
     };
 
-    static unsigned char a_value[] =
+    static unsigned char const a_value[] =
     {
         '1', '2', '3'
     };
@@ -148,32 +147,63 @@ appl_env_test_1(
             a_value,
             a_value + sizeof(a_value));
 
+    static unsigned char const a_bad_name[] =
     {
-        class appl_env_null
-            o_env_null(
+        '='
+    };
+
+    e_status =
+        appl_env_set(
+            p_context,
+            a_bad_name,
+            a_bad_name + sizeof(a_bad_name),
+            a_value,
+            a_value + sizeof(a_value));
+
+    {
+        class appl_env *
+            p_env;
+
+        struct appl_allocator *
+            p_allocator;
+
+        p_allocator =
+            appl_context_get_allocator(
                 p_context);
 
-        o_env_null.f_init();
+        e_status =
+            appl_new(
+                p_allocator,
+                &(
+                    p_env));
 
-        o_env_null.v_get(
-            0,
-            0,
-            0);
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            p_env->v_get(
+                0,
+                0,
+                0);
 
-        o_env_null.v_query(
-            0,
-            0,
-            &(
-                appl_env_test_query_cb),
-            0);
+            p_env->v_query(
+                0,
+                0,
+                &(
+                    appl_env_test_query_cb),
+                0);
 
-        o_env_null.v_set(
-            0,
-            0,
-            0,
-            0);
+            p_env->v_set(
+                0,
+                0,
+                0,
+                0);
 
-        o_env_null.v_cleanup();
+            appl_delete(
+                p_allocator,
+                p_env);
+        }
+
     }
 
 } // appl_env_test_1()

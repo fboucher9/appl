@@ -226,6 +226,7 @@ enum appl_status
                         r_string) =
                         p_string;
 
+#if 0
                     if (
                         appl_status_ok
                         != e_status)
@@ -233,6 +234,7 @@ enum appl_status
                         appl_string_destroy(
                             p_string);
                     }
+#endif
                 }
             }
             else
