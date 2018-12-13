@@ -34,6 +34,8 @@
 
 #include <appl_buf0.h>
 
+#include <appl_validate.h>
+
 //
 //
 //
@@ -47,22 +49,32 @@ appl_env_std::s_create(
     enum appl_status
         e_status;
 
-    class appl_env_std *
-        p_env_std;
-
     e_status =
-        appl_new(
-            p_allocator,
-            &(
-                p_env_std));
+        appl_validate(
+            (0 != p_allocator)
+            && (0 != r_env));
 
     if (
         appl_status_ok
         == e_status)
     {
-        *(
-            r_env) =
+        class appl_env_std *
             p_env_std;
+
+        e_status =
+            appl_new(
+                p_allocator,
+                &(
+                    p_env_std));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            *(
+                r_env) =
+                p_env_std;
+        }
     }
 
     return
@@ -80,10 +92,26 @@ appl_env_std::s_destroy(
     struct appl_env * const
         p_env)
 {
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_validate(
+            (0 != p_allocator)
+            && (0 != p_env));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_delete(
+                p_allocator,
+                p_env);
+    }
+
     return
-        appl_delete(
-            p_allocator,
-            p_env);
+        e_status;
 
 } // s_destroy()
 
@@ -137,80 +165,86 @@ enum appl_status
     enum appl_status
         e_status;
 
-    unsigned char *
-        p_name0;
-
     e_status =
-        appl_buf0_create(
-            m_context,
-            p_name_min,
-            p_name_max,
-            &(
-                p_name0));
+        appl_validate(
+            (0 != p_name_min)
+            && (0 != p_name_max)
+            && (0 != r_string));
 
     if (
         appl_status_ok
         == e_status)
     {
-        char const * const
-            p_value0 =
-            getenv(
-                appl_convert::to_char_ptr(
+        unsigned char *
+            p_name0;
+
+        e_status =
+            appl_buf0_create(
+                m_context,
+                p_name_min,
+                p_name_max,
+                &(
                     p_name0));
 
         if (
-            p_value0)
+            appl_status_ok
+            == e_status)
         {
-            appl_size_t const
-                i_value_len =
-                strlen(
-                    p_value0);
-
-            struct appl_string *
-                p_string;
-
-            e_status =
-                appl_string_create_dup_buffer(
-                    appl_context_parent(
-                        m_context),
-                    appl_convert::to_uchar_ptr(
-                        p_value0),
-                    appl_convert::to_uchar_ptr(
-                        p_value0 + i_value_len),
-                    &(
-                        p_string));
+            char const * const
+                p_value0 =
+                getenv(
+                    appl_convert::to_char_ptr(
+                        p_name0));
 
             if (
-                appl_status_ok
-                == e_status)
+                p_value0)
             {
-                *(
-                    r_string) =
+                appl_size_t const
+                    i_value_len =
+                    strlen(
+                        p_value0);
+
+                struct appl_string *
                     p_string;
+
+                e_status =
+                    appl_string_create_dup_buffer(
+                        appl_context_parent(
+                            m_context),
+                        appl_convert::to_uchar_ptr(
+                            p_value0),
+                        appl_convert::to_uchar_ptr(
+                            p_value0 + i_value_len),
+                        &(
+                            p_string));
 
                 if (
                     appl_status_ok
-                    != e_status)
+                    == e_status)
                 {
-                    appl_string_destroy(
-                        p_string);
+                    *(
+                        r_string) =
+                        p_string;
+
+                    if (
+                        appl_status_ok
+                        != e_status)
+                    {
+                        appl_string_destroy(
+                            p_string);
+                    }
                 }
             }
-        }
-        else
-        {
-            e_status =
-                appl_status_fail;
-        }
+            else
+            {
+                e_status =
+                    appl_status_fail;
+            }
 
-        appl_buf0_destroy(
-            m_context,
-            p_name0);
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
+            appl_buf0_destroy(
+                m_context,
+                p_name0);
+        }
     }
 
     return
@@ -240,59 +274,65 @@ enum appl_status
     enum appl_status
         e_status;
 
-    unsigned char *
-        p_name0;
-
     e_status =
-        appl_buf0_create(
-            m_context,
-            p_name_min,
-            p_name_max,
-            &(
-                p_name0));
+        appl_validate(
+            (0 != p_name_min)
+            && (0 != p_name_max)
+            && (0 != p_query_callback));
 
     if (
         appl_status_ok
         == e_status)
     {
-        char const * const
-            p_value0 =
-            getenv(
-                appl_convert::to_char_ptr(
+        unsigned char *
+            p_name0;
+
+        e_status =
+            appl_buf0_create(
+                m_context,
+                p_name_min,
+                p_name_max,
+                &(
                     p_name0));
 
         if (
-            p_value0)
+            appl_status_ok
+            == e_status)
         {
-            appl_size_t const
-                i_value_len =
-                strlen(
-                    p_value0);
+            char const * const
+                p_value0 =
+                getenv(
+                    appl_convert::to_char_ptr(
+                        p_name0));
 
-            (*p_query_callback)(
-                p_query_context,
-                appl_convert::to_uchar_ptr(
-                    p_value0),
-                appl_convert::to_uchar_ptr(
-                    p_value0 + i_value_len));
+            if (
+                p_value0)
+            {
+                appl_size_t const
+                    i_value_len =
+                    strlen(
+                        p_value0);
 
-            e_status =
-                appl_status_ok;
+                (*p_query_callback)(
+                    p_query_context,
+                    appl_convert::to_uchar_ptr(
+                        p_value0),
+                    appl_convert::to_uchar_ptr(
+                        p_value0 + i_value_len));
+
+                e_status =
+                    appl_status_ok;
+            }
+            else
+            {
+                e_status =
+                    appl_status_fail;
+            }
+
+            appl_buf0_destroy(
+                m_context,
+                p_name0);
         }
-        else
-        {
-            e_status =
-                appl_status_fail;
-        }
-
-        appl_buf0_destroy(
-            m_context,
-            p_name0);
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
     }
 
     return
@@ -317,65 +357,77 @@ enum appl_status
     enum appl_status
         e_status;
 
-    unsigned char *
-        p_name0;
-
     e_status =
-        appl_buf0_create(
-            m_context,
-            p_name_min,
-            p_name_max,
-            &(
-                p_name0));
+        appl_validate(
+            (0 != p_name_min)
+            && (0 != p_name_max)
+            && (0 != p_value_min)
+            && (0 != p_value_max));
 
     if (
         appl_status_ok
         == e_status)
     {
         unsigned char *
-            p_value0;
+            p_name0;
 
         e_status =
             appl_buf0_create(
                 m_context,
-                p_value_min,
-                p_value_max,
+                p_name_min,
+                p_name_max,
                 &(
-                    p_value0));
+                    p_name0));
 
         if (
             appl_status_ok
             == e_status)
         {
-            int const
-                i_setenv_result =
-                setenv(
-                    appl_convert::to_char_ptr(
-                        p_name0),
-                    appl_convert::to_char_ptr(
-                        p_value0),
-                    1);
+            unsigned char *
+                p_value0;
+
+            e_status =
+                appl_buf0_create(
+                    m_context,
+                    p_value_min,
+                    p_value_max,
+                    &(
+                        p_value0));
 
             if (
-                0 == i_setenv_result)
+                appl_status_ok
+                == e_status)
             {
-                e_status =
-                    appl_status_ok;
-            }
-            else
-            {
-                e_status =
-                    appl_status_fail;
+                int const
+                    i_setenv_result =
+                    setenv(
+                        appl_convert::to_char_ptr(
+                            p_name0),
+                        appl_convert::to_char_ptr(
+                            p_value0),
+                        1);
+
+                if (
+                    0 == i_setenv_result)
+                {
+                    e_status =
+                        appl_status_ok;
+                }
+                else
+                {
+                    e_status =
+                        appl_status_fail;
+                }
+
+                appl_buf0_destroy(
+                    m_context,
+                    p_value0);
             }
 
             appl_buf0_destroy(
                 m_context,
-                p_value0);
+                p_name0);
         }
-
-        appl_buf0_destroy(
-            m_context,
-            p_name0);
     }
 
     return

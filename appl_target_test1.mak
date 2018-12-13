@@ -33,6 +33,7 @@ test_appl-deps = \
     random/appl_random_test.c \
     event/appl_event_test.c \
     backtrace/appl_backtrace_test.cpp \
+    env/appl_env_test.cpp \
     $(appl_base-deps)
 
 # List of libraries required to link test application

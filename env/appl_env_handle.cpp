@@ -10,7 +10,7 @@
 
 #include <env/appl_env_service.h>
 
-#include <appl_string_handle.h>
+#include <appl_validate.h>
 
 /*
 
@@ -30,11 +30,23 @@ appl_env_get(
         e_status;
 
     e_status =
-        appl_env_service::s_get(
-            p_context,
-            p_name_min,
-            p_name_max,
-            r_string);
+        appl_validate(
+            (0 != p_context)
+            && (0 != p_name_min)
+            && (0 != p_name_max)
+            && (0 != r_string));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_env_service::s_get(
+                p_context,
+                p_name_min,
+                p_name_max,
+                r_string);
+    }
 
     return
         e_status;
@@ -62,13 +74,31 @@ appl_env_query(
     void * const
         p_query_context)
 {
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_validate(
+            (0 != p_context)
+            && (0 != p_name_min)
+            && (0 != p_name_max)
+            && (0 != p_query_callback));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_env_service::s_query(
+                p_context,
+                p_name_min,
+                p_name_max,
+                p_query_callback,
+                p_query_context);
+    }
+
     return
-        appl_env_service::s_query(
-            p_context,
-            p_name_min,
-            p_name_max,
-            p_query_callback,
-            p_query_context);
+        e_status;
 
 } /* appl_env_query() */
 
@@ -92,12 +122,25 @@ appl_env_set(
         e_status;
 
     e_status =
-        appl_env_service::s_set(
-            p_context,
-            p_name_min,
-            p_name_max,
-            p_value_min,
-            p_value_max);
+        appl_validate(
+            (0 != p_context)
+            && (0 != p_name_min)
+            && (0 != p_name_max)
+            && (0 != p_value_min)
+            && (0 != p_value_max));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_env_service::s_set(
+                p_context,
+                p_name_min,
+                p_name_max,
+                p_value_min,
+                p_value_max);
+    }
 
     return
         e_status;

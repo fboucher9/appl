@@ -14,6 +14,10 @@
 
 #include <appl_unused.h>
 
+#if defined APPL_DEBUG
+#include <debug/appl_debug_impl.h>
+#endif /* #if defined APPL_DEBUG */
+
 //
 //
 //
@@ -30,6 +34,10 @@ enum appl_status
         p_name_min,
         p_name_max,
         r_string);
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "env get not implemented\n");
+#endif /* #if defined APPL_DEBUG */
     return
         appl_status_not_implemented;
 } // v_get()
@@ -58,6 +66,10 @@ enum appl_status
         p_name_max,
         p_query_callback,
         p_query_context);
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "env query not implemented\n");
+#endif /* #if defined APPL_DEBUG */
     return
         appl_status_not_implemented;
 } // v_query()
@@ -81,6 +93,10 @@ enum appl_status
         p_name_max,
         p_value_min,
         p_value_max);
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "env set not implemented\n");
+#endif /* #if defined APPL_DEBUG */
     return
         appl_status_not_implemented;
 } // v_set()
