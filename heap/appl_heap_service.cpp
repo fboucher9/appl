@@ -16,6 +16,8 @@
 
 #include <allocator/appl_allocator.h>
 
+#include <appl_validate.h>
+
 //
 //
 //
@@ -31,14 +33,25 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_allocator * const
-        p_allocator =
-        p_context->v_allocator();
-
     e_status =
-        p_allocator->v_alloc(
-            i_length,
-            r_buf);
+        appl_validate(
+            (0 != p_context)
+            && (0 != i_length)
+            && (0 != r_buf));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        struct appl_allocator * const
+            p_allocator =
+            p_context->v_allocator();
+
+        e_status =
+            p_allocator->v_alloc(
+                i_length,
+                r_buf);
+    }
 
     return
         e_status;

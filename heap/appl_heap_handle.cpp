@@ -16,6 +16,8 @@
 #include <debug/appl_debug_impl.h>
 #endif /* #if defined APPL_DEBUG */
 
+#include <appl_validate.h>
+
 /*
 
 */
@@ -31,26 +33,21 @@ appl_heap_alloc(
     enum appl_status
         e_status;
 
+    e_status =
+        appl_validate(
+            (0 != p_context)
+            && (0 != i_length)
+            && (0 != r_buf));
+
     if (
-        p_context
-        && i_length
-        && r_buf)
+        appl_status_ok
+        == e_status)
     {
         e_status =
             appl_heap_service::s_alloc(
                 p_context,
                 i_length,
                 r_buf);
-    }
-    else
-    {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "appl_heap_alloc: invalid param\n");
-#endif /* #if defined APPL_DEBUG */
-
-        e_status =
-            appl_status_fail;
     }
 
     return
@@ -73,26 +70,21 @@ appl_heap_free(
     enum appl_status
         e_status;
 
+    e_status =
+        appl_validate(
+            (0 != p_context)
+            && (0 != i_length)
+            && (0 != p_buf));
+
     if (
-        p_context
-        && i_length
-        && p_buf)
+        appl_status_ok
+        == e_status)
     {
         e_status =
             appl_heap_service::s_free(
                 p_context,
                 i_length,
                 p_buf);
-    }
-    else
-    {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "appl_heap_free: invalid param\n");
-#endif /* #if defined APPL_DEBUG */
-
-        e_status =
-            appl_status_fail;
     }
 
     return
