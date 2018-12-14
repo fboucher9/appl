@@ -28,12 +28,13 @@ test_appl-deps = \
     options/appl_options_test.c \
     xlib/appl_xlib_test.c \
     appl_test_prompt.c \
-    mutex/appl_mutex_test.c \
-    clock/appl_clock_test.c \
+    mutex/appl_mutex_test.cpp \
+    clock/appl_clock_test.cpp \
     random/appl_random_test.c \
     event/appl_event_test.c \
     backtrace/appl_backtrace_test.cpp \
     env/appl_env_test.cpp \
+    heap/appl_heap_test.cpp \
     $(appl_base-deps)
 
 # List of libraries required to link test application

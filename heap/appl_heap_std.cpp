@@ -41,59 +41,6 @@
 //
 //
 //
-enum appl_status
-    appl_heap_std::s_create(
-        struct appl_allocator * const
-            p_allocator,
-        struct appl_heap * * const
-            r_heap)
-{
-    enum appl_status
-        e_status;
-
-    class appl_heap_std *
-        p_heap_std;
-
-    e_status =
-        appl_new(
-            p_allocator,
-            &(
-                p_heap_std));
-
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        *(
-            r_heap) =
-            p_heap_std;
-    }
-
-    return
-        e_status;
-
-} // s_create()
-
-//
-//
-//
-enum appl_status
-    appl_heap_std::s_destroy(
-        struct appl_allocator * const
-            p_allocator,
-        struct appl_heap * const
-            p_heap)
-{
-    return
-        appl_delete(
-            p_allocator,
-            p_heap);
-
-} // s_destroy()
-
-//
-//
-//
 appl_heap_std::appl_heap_std(
     struct appl_context * const
         p_context) :

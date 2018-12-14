@@ -27,14 +27,14 @@ struct appl_heap : public appl_allocator
 {
     public:
 
-    protected:
-
         appl_heap(
             struct appl_context * const
                 p_context);
 
         virtual
         ~appl_heap();
+
+    protected:
 
     private:
 

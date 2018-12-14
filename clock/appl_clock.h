@@ -26,6 +26,13 @@ class appl_clock : public appl_object
 {
     public:
 
+        appl_clock(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_clock();
+
         virtual
         enum appl_status
         v_read(
@@ -43,13 +50,6 @@ class appl_clock : public appl_object
                 i_time_count);
 
     protected:
-
-        appl_clock(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_clock();
 
     private:
 

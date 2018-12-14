@@ -58,6 +58,9 @@ enum appl_status
 
 } // s_alloc()
 
+//
+//
+//
 enum appl_status
     appl_heap_service::s_free(
         struct appl_context const * const
@@ -70,14 +73,25 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_allocator * const
-        p_allocator =
-        p_context->v_allocator();
-
     e_status =
-        p_allocator->v_free(
-            i_length,
-            p_buf);
+        appl_validate(
+            (0 != p_context)
+            && (0 != i_length)
+            && (0 != p_buf));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        struct appl_allocator * const
+            p_allocator =
+            p_context->v_allocator();
+
+        e_status =
+            p_allocator->v_free(
+                i_length,
+                p_buf);
+    }
 
     return
         e_status;

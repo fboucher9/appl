@@ -24,10 +24,6 @@
 
 #include <appl_allocator_handle.h>
 
-#if defined APPL_HAVE_COVERAGE
-#include <appl_coverage.h>
-#endif /* #if defined APPL_HAVE_COVERAGE */
-
 //
 //
 //
@@ -105,13 +101,6 @@ appl_clock_std::~appl_clock_std()
 appl_size_t
 appl_clock_std::v_cleanup(void)
 {
-#if defined APPL_HAVE_COVERAGE
-    if (appl_coverage_check())
-    {
-        appl_clock::v_cleanup();
-    }
-#endif /* #if defined APPL_HAVE_COVERAGE */
-
     return
         sizeof(class appl_clock_std);
 
@@ -129,15 +118,6 @@ appl_clock_std::v_read(
 {
     enum appl_status
         e_status;
-
-#if defined APPL_HAVE_COVERAGE
-    if (appl_coverage_check())
-    {
-        appl_clock::v_read(
-            i_time_freq,
-            p_time_count);
-    }
-#endif /* #if defined APPL_HAVE_COVERAGE */
 
     e_status =
         appl_clock_impl::s_read(
@@ -161,15 +141,6 @@ appl_clock_std::v_delay(
 {
     enum appl_status
         e_status;
-
-#if defined APPL_HAVE_COVERAGE
-    if (appl_coverage_check())
-    {
-        appl_clock::v_delay(
-            i_time_freq,
-            i_time_count);
-    }
-#endif /* #if defined APPL_HAVE_COVERAGE */
 
     e_status =
         appl_clock_impl::s_delay(

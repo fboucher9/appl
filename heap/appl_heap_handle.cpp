@@ -12,10 +12,6 @@
 
 #include <heap/appl_heap_service.h>
 
-#if defined APPL_DEBUG
-#include <debug/appl_debug_impl.h>
-#endif /* #if defined APPL_DEBUG */
-
 #include <appl_validate.h>
 
 /*

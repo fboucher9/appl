@@ -43,6 +43,8 @@
 
 #include <env/appl_env_test.h>
 
+#include <heap/appl_heap_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2206,6 +2208,12 @@ appl_test_main(
 
     if (1)
     {
+        appl_heap_test_1(
+            p_context);
+    }
+
+    if (1)
+    {
         appl_env_test_1(
             p_context);
     }
@@ -2225,6 +2233,12 @@ appl_test_main(
     if (1)
     {
         appl_mutex_test_1(
+            p_context);
+
+        appl_mutex_test_2(
+            p_context);
+
+        appl_mutex_test_3(
             p_context);
     }
 
@@ -2279,6 +2293,7 @@ appl_test_main(
     }
 
 #if defined APPL_DEBUG
+    if (1)
     {
         static char g_test_debug_break = 0;
 

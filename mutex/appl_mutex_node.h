@@ -27,6 +27,13 @@ struct appl_mutex : public appl_object
 {
     public:
 
+        appl_mutex(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_mutex();
+
         virtual
         enum appl_status
             v_lock(void);
@@ -46,13 +53,6 @@ struct appl_mutex : public appl_object
                     p_sync_context);
 
     protected:
-
-        appl_mutex(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_mutex();
 
     private:
 

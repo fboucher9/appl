@@ -157,10 +157,24 @@ enum appl_status
                 p_object;
 
             // Ignore failure of free()
-            appl_allocator_free(
-                p_allocator,
-                i_placement_length,
-                p_placement);
+            e_status =
+                appl_allocator_free(
+                    p_allocator,
+                    i_placement_length,
+                    p_placement);
+
+#if defined APPL_HAVE_COVERAGE
+            if (
+                appl_status_ok
+                != e_status)
+            {
+                e_status =
+                    appl_allocator_free(
+                        p_allocator,
+                        i_placement_length,
+                        p_placement);
+            }
+#endif /* #if defined APPL_HAVE_COVERAGE */
 
             e_status =
                 appl_status_ok;

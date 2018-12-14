@@ -1,0 +1,187 @@
+/* See LICENSE for license details */
+
+/*
+
+*/
+
+#include <heap/appl_heap_test.h>
+
+#include <appl_status.h>
+
+#include <appl_types.h>
+
+#include <appl_object.h>
+
+#include <allocator/appl_allocator.h>
+
+#include <heap/appl_heap.h>
+
+#include <appl_heap_handle.h>
+
+#include <appl_context_handle.h>
+
+#include <appl_allocator_handle.h>
+
+#if defined APPL_HAVE_COVERAGE
+#include <appl_coverage.h>
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
+#include <heap/appl_heap_std.h>
+
+#include <stdio.h>
+
+//
+//
+//
+void
+    appl_heap_test_1(
+        struct appl_context * const
+            p_context)
+{
+    enum appl_status
+            e_status;
+
+    struct appl_allocator *
+        p_allocator;
+
+    p_allocator =
+        appl_context_get_allocator(
+            p_context);
+
+    // Normal heap alloc test
+    {
+        void *
+            p_buffer;
+
+        appl_size_t
+            i_buffer_length;
+
+        i_buffer_length =
+            123u;
+
+        e_status =
+            appl_heap_alloc(
+                p_context,
+                i_buffer_length,
+                &(
+                    p_buffer));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            appl_heap_free(
+                p_context,
+                i_buffer_length,
+                p_buffer);
+        }
+    }
+
+    // Test of heap base class
+    {
+        class appl_heap *
+            p_heap;
+
+        e_status =
+            appl_new(
+                p_allocator,
+                &(
+                    p_heap));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            e_status =
+                p_heap->v_alloc(
+                    0u,
+                    0);
+
+            e_status =
+                p_heap->v_free(
+                    0u,
+                    0);
+
+            appl_delete(
+                p_allocator,
+                p_heap);
+        }
+    }
+
+    // Coverage testing of alloc and free
+#if defined APPL_HAVE_COVERAGE
+    {
+        unsigned long int n_max;
+        unsigned long int i;
+        unsigned long int n;
+        i = 0u;
+        n = 0u;
+        n_max = 0u;
+        do
+        {
+            appl_coverage_limit(i);
+
+            void *
+                p_buffer;
+
+            appl_size_t const
+                i_buffer_length =
+                123u;
+
+            e_status =
+                appl_heap_alloc(
+                    p_context,
+                    i_buffer_length,
+                    &(
+                        p_buffer));
+
+            n = appl_coverage_query();
+            if (n_max < n)
+            {
+                n_max = n;
+                printf("appl_heap_alloc max coverage is %lu\n", n_max);
+            }
+            appl_coverage_limit(0u);
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                appl_heap_free(
+                    p_context,
+                    i_buffer_length,
+                    p_buffer);
+            }
+
+            i++;
+        }
+        while (
+            i <= n_max)
+            ;
+    }
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
+    // Test of std deleting destructor
+    {
+        class appl_heap_std *
+            p_heap_std;
+
+        e_status =
+            appl_new(
+                p_allocator,
+                &(
+                    p_heap_std));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            appl_delete(
+                p_allocator,
+                p_heap_std);
+        }
+    }
+
+} // appl_heap_test_1()
+
+/* end-of-file: appl_heap_test.cpp */

@@ -4,9 +4,23 @@
 
 */
 
-#include <appl.h>
-
 #include <mutex/appl_mutex_test.h>
+
+#include <appl_status.h>
+
+#include <appl_types.h>
+
+#include <appl_object.h>
+
+#include <appl_mutex_handle.h>
+
+#include <appl_context_handle.h>
+
+#include <appl_allocator_handle.h>
+
+#include <mutex/appl_mutex_node.h>
+
+#include <mutex/appl_mutex_mgr.h>
 
 #if defined APPL_HAVE_COVERAGE
 #include <appl_coverage.h>
@@ -252,5 +266,197 @@ void
     }
 
 } /* appl_mutex_test_1() */
+
+//
+//
+//
+void
+    appl_mutex_test_2(
+        struct appl_context * const
+            p_context)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_allocator *
+        p_allocator;
+
+    p_allocator =
+        appl_context_get_allocator(
+            p_context);
+
+    {
+        class appl_mutex_mgr *
+            p_mutex_mgr;
+
+        e_status =
+            appl_new(
+                p_allocator,
+                &(
+                    p_mutex_mgr));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            e_status =
+                p_mutex_mgr->v_create_node(
+                    0,
+                    0);
+
+            e_status =
+                p_mutex_mgr->v_destroy_node(
+                    0);
+
+            appl_delete(
+                p_allocator,
+                p_mutex_mgr);
+        }
+    }
+
+    {
+        struct appl_mutex *
+            p_mutex_node;
+
+        e_status =
+            appl_new(
+                p_allocator,
+                &(
+                    p_mutex_node));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            e_status =
+                p_mutex_node->v_lock();
+
+            e_status =
+                p_mutex_node->v_unlock();
+
+            e_status =
+                p_mutex_node->v_sync(
+                    0,
+                    0);
+
+            appl_delete(
+                p_allocator,
+                p_mutex_node);
+        }
+    }
+
+} // appl_mutex_test_2()
+
+static
+unsigned long int
+    appl_mutex_test_3_step(
+        struct appl_context * const
+            p_context,
+        unsigned long int const
+            i_limit)
+{
+    unsigned long int
+        i_count;
+
+    enum appl_status
+        e_status;
+
+    struct appl_mutex_descriptor
+        o_mutex_descriptor;
+
+    struct appl_mutex *
+        p_mutex;
+
+    i_count =
+        0ul;
+
+    e_status =
+        appl_mutex_create(
+            p_context,
+            &(
+                o_mutex_descriptor),
+            &(
+                p_mutex));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+#if defined APPL_HAVE_COVERAGE
+        appl_coverage_limit(
+            i_limit);
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
+        e_status =
+            appl_mutex_destroy(
+                p_mutex);
+
+#if defined APPL_HAVE_COVERAGE
+        i_count =
+            appl_coverage_query();
+
+        appl_coverage_limit(
+            0ul);
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
+        if (
+            appl_status_ok
+            != e_status)
+        {
+            appl_mutex_destroy(
+                p_mutex);
+        }
+    }
+
+    return
+        i_count;
+
+}
+
+//
+//
+//
+void
+    appl_mutex_test_3(
+        struct appl_context * const
+            p_context)
+{
+    unsigned long int
+        i_count_max;
+
+    unsigned long int
+        i_limit;
+
+    unsigned long int
+        i_count;
+
+    i_limit =
+        0ul;
+
+    i_count =
+        0ul;
+
+    i_count_max =
+        0ul;
+
+    do
+    {
+        i_count =
+            appl_mutex_test_3_step(
+                p_context,
+                i_limit);
+
+        if (
+            i_count_max < i_count)
+        {
+            i_count_max = i_count;
+        }
+
+        i_limit ++;
+    }
+    while (
+        i_limit <= i_count_max);
+
+} // appl_mutex_test_3()
 
 /* end-of-file: appl_mutex_test.c */
