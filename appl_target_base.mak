@@ -82,6 +82,7 @@ appl_base-deps := \
     heap/appl_heap_service.cpp \
     heap/appl_heap_std.cpp \
     heap/appl_heap_impl.cpp \
+    heap/appl_heap_primary.cpp \
     library/appl_library_handle.cpp \
     library/appl_library_service.cpp \
     library/appl_library_mgr.cpp \

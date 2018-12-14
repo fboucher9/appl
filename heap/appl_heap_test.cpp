@@ -28,6 +28,20 @@
 
 #include <heap/appl_heap_std.h>
 
+#include <appl_list.h>
+
+#if defined APPL_OS_LINUX
+#include <pthread.h>
+#else
+#include <windows.h>
+#endif
+
+#include <mutex/appl_mutex_impl.h>
+
+#include <heap/appl_heap_primary.h>
+
+#include <heap/appl_heap_impl.h>
+
 #include <stdio.h>
 
 //
@@ -179,6 +193,109 @@ void
             appl_delete(
                 p_allocator,
                 p_heap_std);
+        }
+    }
+
+    // Test of appl_heap_impl module
+    {
+        class appl_heap_impl
+            o_heap_impl;
+
+        static unsigned char g_mmap[2048u];
+
+        e_status =
+            o_heap_impl.f_init(
+                g_mmap,
+                g_mmap + sizeof(g_mmap));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            unsigned long int i;
+
+            // Allocate small
+            for (i = 0; i < 2; i++)
+            {
+                void *
+                    p_buffer;
+
+                appl_size_t const
+                    i_buffer_length =
+                    64u;
+
+                e_status =
+                    o_heap_impl.f_alloc(
+                        i_buffer_length,
+                        &(
+                            p_buffer));
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    o_heap_impl.f_free(
+                        i_buffer_length,
+                        p_buffer);
+                }
+            }
+
+            // Allocate large
+            for (i = 0; i < 2; i++)
+            {
+                void *
+                    p_buffer;
+
+                appl_size_t const
+                    i_buffer_length =
+                    5000u;
+
+                e_status =
+                    o_heap_impl.f_alloc(
+                        i_buffer_length,
+                        &(
+                            p_buffer));
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    o_heap_impl.f_free(
+                        i_buffer_length,
+                        p_buffer);
+                }
+            }
+
+            // Verify grow
+            {
+                void *
+                    p_buffer;
+
+                appl_size_t const
+                    i_buffer_length =
+                    3000u;
+
+                e_status =
+                    o_heap_impl.f_alloc(
+                        i_buffer_length,
+                        &(
+                            p_buffer));
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    o_heap_impl.f_free(
+                        i_buffer_length,
+                        p_buffer);
+                }
+            }
+
+            // Verify grow failure
+            {
+            }
+
+            o_heap_impl.f_cleanup();
         }
     }
 
