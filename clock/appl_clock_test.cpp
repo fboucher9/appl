@@ -27,17 +27,29 @@
 #include <appl_coverage.h>
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
+#include <appl_coverage_test.h>
+
 /*
 
 */
 static
-void
+unsigned long int
     appl_clock_test_1_read(
-        struct appl_context * const
-            p_context)
+        void * const
+            p_void,
+        unsigned long int const
+            i_limit)
 {
+    unsigned long int
+        i_count = 0ul;
+
     enum appl_status
         e_status;
+
+    struct appl_context * const
+        p_context =
+        (struct appl_context *)(
+            p_void);
 
     appl_ull_t
         i_clock_value;
@@ -49,6 +61,10 @@ void
             &(
                 i_clock_value));
 
+#if defined APPL_HAVE_COVERAGE
+    appl_coverage_start(i_limit);
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
     e_status =
         appl_clock_read(
             p_context,
@@ -56,19 +72,36 @@ void
             &(
                 i_clock_value));
 
+#if defined APPL_HAVE_COVERAGE
+    i_count = appl_coverage_stop();
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
     (void)(
         e_status);
+
+    return
+        i_count;
 
 } /* appl_clock_test_1_read() */
 
 static
-void
+unsigned long int
     appl_clock_test_1_delay(
-        struct appl_context * const
-            p_context)
+        void * const
+            p_void,
+        unsigned long int const
+            i_limit)
 {
+    unsigned long int
+        i_count = 0ul;
+
     enum appl_status
         e_status;
+
+    struct appl_context * const
+        p_context =
+        (struct appl_context *)(
+            p_void);
 
     e_status =
         appl_clock_delay(
@@ -76,60 +109,27 @@ void
             0u,
             1u);
 
+#if defined APPL_HAVE_COVERAGE
+    appl_coverage_start(i_limit);
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
     e_status =
         appl_clock_delay(
             p_context,
             1000u,
             1u);
 
+#if defined APPL_HAVE_COVERAGE
+    i_count = appl_coverage_stop();
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
     (void)(
         e_status);
 
-} /* appl_clock_test_1_read() */
-
-static
-void
-    appl_clock_test_1_coverage(
-        void (* p_callback)(
-            struct appl_context * const
-                p_context),
-        struct appl_context * const
-            p_context)
-{
-#if defined APPL_HAVE_COVERAGE
-    unsigned long int
+    return
         i_count;
 
-    unsigned long int
-        i_iterator;
-
-    appl_coverage_start(0u);
-
-    (*p_callback)(
-        p_context);
-
-    i_count =
-        appl_coverage_stop();
-
-    for (
-        i_iterator = 1;
-        i_iterator <= i_count;
-        i_iterator ++)
-    {
-        appl_coverage_start(
-            i_iterator);
-
-        (*p_callback)(
-            p_context);
-
-        appl_coverage_stop();
-    }
-
-#else /* #if defined APPL_HAVE_COVERAGE */
-    (*p_callback)(
-        p_context);
-#endif /* #if defined APPL_HAVE_COVERAGE */
-}
+} /* appl_clock_test_1_read() */
 
 /*
 
@@ -139,12 +139,12 @@ void
         struct appl_context * const
             p_context)
 {
-    appl_clock_test_1_coverage(
+    appl_coverage_test(
         &(
             appl_clock_test_1_read),
         p_context);
 
-    appl_clock_test_1_coverage(
+    appl_coverage_test(
         &(
             appl_clock_test_1_delay),
         p_context);

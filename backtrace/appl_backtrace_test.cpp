@@ -14,8 +14,6 @@
 
 #include <backtrace/appl_backtrace.h>
 
-#include <backtrace/appl_backtrace_null.h>
-
 #include <backtrace/appl_backtrace_test.h>
 
 #include <appl_allocator_handle.h>
@@ -33,28 +31,37 @@ appl_backtrace_test_1(
     enum appl_status
         e_status;
 
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            p_context);
+
     {
-        class appl_backtrace_null
-            o_backtrace_null(
-                p_context);
+        class appl_backtrace *
+            p_backtrace;
 
         e_status =
-            o_backtrace_null.f_init();
+            appl_new(
+                p_allocator,
+                &(
+                    p_backtrace));
 
         if (
             appl_status_ok
             == e_status)
         {
             e_status =
-                o_backtrace_null.v_capture(0, 0, 0);
+                p_backtrace->v_capture(0, 0, 0);
 
             e_status =
-                o_backtrace_null.v_report(0, 0);
+                p_backtrace->v_report(0, 0);
 
             e_status =
-                o_backtrace_null.v_ouch("ouch!\n");
+                p_backtrace->v_ouch("ouch!\n");
 
-            o_backtrace_null.v_cleanup();
+            appl_delete(
+                p_allocator,
+                p_backtrace);
         }
     }
 

@@ -22,6 +22,13 @@ class appl_backtrace : public appl_object
 {
     public:
 
+        appl_backtrace(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_backtrace();
+
         virtual
         enum appl_status
             v_capture(
@@ -47,13 +54,6 @@ class appl_backtrace : public appl_object
                     p_header0);
 
     protected:
-
-        appl_backtrace(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_backtrace();
 
     private:
 
