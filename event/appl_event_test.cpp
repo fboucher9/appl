@@ -14,6 +14,12 @@
 
 #include <appl_coverage_test.h>
 
+#include <event/appl_event_node.h>
+
+#include <event/appl_event_mgr.h>
+
+#include <appl_unused.h>
+
 struct appl_event_test
 {
     struct appl_context *
@@ -199,9 +205,6 @@ unsigned long int
         (struct appl_event_test *)(
             p_context);
 
-    char
-        b_event_created;
-
     struct appl_event *
         p_event;
 
@@ -220,9 +223,6 @@ unsigned long int
         appl_status_ok
         == e_status)
     {
-        b_event_created =
-            1;
-
 #if defined APPL_HAVE_COVERAGE
         appl_coverage_start(
             i_limit);
@@ -232,27 +232,17 @@ unsigned long int
             appl_event_destroy(
                 p_event);
 
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            b_event_created =
-                0;
-        }
-
 #if defined APPL_HAVE_COVERAGE
         i_count =
             appl_coverage_stop();
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
         if (
-            b_event_created)
+            appl_status_ok
+            != e_status)
         {
             appl_event_destroy(
                 p_event);
-
-            b_event_created =
-                0;
         }
     }
 
@@ -382,7 +372,7 @@ void
                             o_event_test));
                 }
 
-                if (0)
+                if (1)
                 {
                     appl_coverage_test(
                         &(
@@ -404,5 +394,77 @@ void
     }
 
 } /* appl_event_test_1() */
+
+/*
+
+*/
+void
+appl_event_test_2(
+    struct appl_context * const
+        p_context)
+{
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            p_context);
+
+    enum appl_status
+        e_status;
+
+    {
+        struct appl_event *
+            p_event_node;
+
+        e_status =
+            appl_new(
+                p_allocator,
+                &(
+                    p_event_node));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            p_event_node->v_signal();
+
+            p_event_node->v_wait(
+                0,
+                0,
+                0);
+
+            appl_delete(
+                p_allocator,
+                p_event_node);
+        }
+    }
+
+    {
+        class appl_event_mgr *
+            p_event_mgr;
+
+        e_status =
+            appl_new(
+                p_allocator,
+                &(
+                    p_event_mgr));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            p_event_mgr->v_create_node(
+                0,
+                0);
+
+            p_event_mgr->v_destroy_node(
+                0);
+
+            appl_delete(
+                p_allocator,
+                p_event_mgr);
+        }
+    }
+
+}
 
 /* end-of-file: appl_event_test.c */

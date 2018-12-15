@@ -30,6 +30,13 @@ struct appl_allocator : public appl_object
 {
     public:
 
+        appl_allocator(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_allocator();
+
         virtual
         enum appl_status
             v_alloc(
@@ -47,13 +54,6 @@ struct appl_allocator : public appl_object
                     p_buf);
 
     protected:
-
-        appl_allocator(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_allocator();
 
     private:
 

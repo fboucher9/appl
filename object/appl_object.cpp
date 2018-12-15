@@ -140,7 +140,7 @@ appl_size_t
 #endif /* #if defined APPL_DEBUG */
 
     return
-        1;
+        sizeof(struct appl_object);
 
 } // v_cleanup()
 

@@ -40,10 +40,6 @@
 
 #include <appl_allocator_handle.h>
 
-#if defined APPL_HAVE_COVERAGE
-#include <appl_coverage.h>
-#endif /* #if defined APPL_HAVE_COVERAGE */
-
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -200,28 +196,17 @@ appl_size_t
     appl_size_t
         i_cleanup_result;
 
-#if defined APPL_HAVE_COVERAGE
     if (
-        appl_coverage_check())
+        m_event_impl_initialized)
     {
-        i_cleanup_result =
-            appl_event::v_cleanup();
-    }
-    else
-#endif /* #if defined APPL_HAVE_COVERAGE */
-    {
-        if (
-            m_event_impl_initialized)
-        {
-            m_event_impl.f_cleanup();
+        m_event_impl.f_cleanup();
 
-            m_event_impl_initialized =
-                false;
-        }
-
-        i_cleanup_result =
-            sizeof(class appl_event_std_node);
+        m_event_impl_initialized =
+            false;
     }
+
+    i_cleanup_result =
+        sizeof(class appl_event_std_node);
 
     return
         i_cleanup_result;
@@ -237,27 +222,16 @@ enum appl_status
     enum appl_status
         e_status;
 
-#if defined APPL_HAVE_COVERAGE
-    if (
-        appl_coverage_check())
-    {
-        e_status =
-            appl_event::v_signal();
-    }
-    else
-#endif /* #if defined APPL_HAVE_COVERAGE */
-    {
-        e_status =
-            appl_event_service::s_validate(
-                m_event_impl_initialized);
+    e_status =
+        appl_event_service::s_validate(
+            m_event_impl_initialized);
 
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            e_status =
-                m_event_impl.f_signal();
-        }
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            m_event_impl.f_signal();
     }
 
     return
@@ -280,41 +254,27 @@ enum appl_status
     enum appl_status
         e_status;
 
-#if defined APPL_HAVE_COVERAGE
+    e_status =
+        appl_event_service::s_validate(
+            m_event_impl_initialized
+            && (0 != p_mutex_node)
+            && (0 != i_wait_freq));
+
     if (
-        appl_coverage_check())
+        appl_status_ok
+        == e_status)
     {
+        class appl_mutex_std_node * const
+            p_mutex_std_node =
+            appl_mutex_std_node::convert_handle(
+                p_mutex_node);
+
         e_status =
-            appl_event::v_wait(
-                p_mutex_node,
+            m_event_impl.f_wait(
+                &(
+                    p_mutex_std_node->m_mutex_impl),
                 i_wait_freq,
                 i_wait_count);
-    }
-    else
-#endif /* #if defined APPL_HAVE_COVERAGE */
-    {
-        e_status =
-            appl_event_service::s_validate(
-                m_event_impl_initialized
-                && (0 != p_mutex_node)
-                && (0 != i_wait_freq));
-
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            class appl_mutex_std_node * const
-                p_mutex_std_node =
-                appl_mutex_std_node::convert_handle(
-                    p_mutex_node);
-
-            e_status =
-                m_event_impl.f_wait(
-                    &(
-                        p_mutex_std_node->m_mutex_impl),
-                    i_wait_freq,
-                    i_wait_count);
-        }
     }
 
     return

@@ -36,6 +36,8 @@ test_appl-deps = \
     env/appl_env_test.cpp \
     heap/appl_heap_test.cpp \
     appl_coverage_test.cpp \
+    object/appl_object_test.cpp \
+    allocator/appl_allocator_test.cpp \
     $(appl_base-deps)
 
 # List of libraries required to link test application

@@ -20,6 +20,8 @@
 
 #endif /* #if defined APPL_DEBUG */
 
+#include <appl_validate.h>
+
 /*
 
 */
@@ -57,26 +59,21 @@ enum appl_status
     enum appl_status
         e_status;
 
+    e_status =
+        appl_validate(
+            (0 != p_allocator)
+            && (0 != i_buf_len)
+            && (0 != r_buf));
+
     if (
-        p_allocator
-        && i_buf_len
-        && r_buf)
+        appl_status_ok
+        == e_status)
     {
         e_status =
             appl_allocator_service::s_alloc(
                 p_allocator,
                 i_buf_len,
                 r_buf);
-    }
-    else
-    {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "appl_allocator_alloc invalid param\n");
-#endif /* #if defined APPL_DEBUG */
-
-        e_status =
-            appl_status_fail;
     }
 
     return
@@ -99,26 +96,21 @@ enum appl_status
     enum appl_status
         e_status;
 
+    e_status =
+        appl_validate(
+            (0 != p_allocator)
+            && (0 != i_buf_len)
+            && (0 != p_buf));
+
     if (
-        p_allocator
-        && i_buf_len
-        && p_buf)
+        appl_status_ok
+        == e_status)
     {
         e_status =
             appl_allocator_service::s_free(
                 p_allocator,
                 i_buf_len,
                 p_buf);
-    }
-    else
-    {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "appl_allocator_free invalid param\n");
-#endif /* #if defined APPL_DEBUG */
-
-        e_status =
-            appl_status_fail;
     }
 
     return
@@ -139,8 +131,13 @@ enum appl_status
     enum appl_status
         e_status;
 
+    e_status =
+        appl_validate(
+            (0 != p_object));
+
     if (
-        p_object)
+        appl_status_ok
+        == e_status)
     {
         void * const
             p_placement =
@@ -189,16 +186,6 @@ enum appl_status
             e_status =
                 appl_status_fail;
         }
-    }
-    else
-    {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "appl_delete invalid param\n");
-#endif /* #if defined APPL_DEBUG */
-
-        e_status =
-            appl_status_fail;
     }
 
     return

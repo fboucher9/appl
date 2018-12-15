@@ -15,6 +15,8 @@
 
 #include <appl_chunk.h>
 
+#include <object/appl_object_test.h>
+
 #include <hash/appl_hash_test.h>
 
 #include <pool/appl_pool_test.h>
@@ -44,6 +46,8 @@
 #include <env/appl_env_test.h>
 
 #include <heap/appl_heap_test.h>
+
+#include <allocator/appl_allocator_test.h>
 
 void
 appl_thread_cache_test(
@@ -2208,6 +2212,15 @@ appl_test_main(
 
     if (1)
     {
+        appl_object_test_1(
+            p_context);
+
+        appl_object_test_2(
+            p_context);
+    }
+
+    if (1)
+    {
         appl_heap_test_1(
             p_context);
     }
@@ -2246,6 +2259,9 @@ appl_test_main(
     {
         appl_event_test_1(
             p_context);
+
+        appl_event_test_2(
+            p_context);
     }
 
     /* Print the argument list */
@@ -2259,6 +2275,12 @@ appl_test_main(
     if (1)
     {
         appl_options_test_2(
+            p_context);
+    }
+
+    if (1)
+    {
+        appl_allocator_test_1(
             p_context);
     }
 

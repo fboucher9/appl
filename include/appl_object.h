@@ -34,6 +34,10 @@ struct appl_object
 {
     public:
 
+        appl_object(
+            struct appl_context * const
+                p_context);
+
         virtual
         ~appl_object();
 
@@ -85,10 +89,6 @@ struct appl_object
             m_context;
 
         // --
-
-        appl_object(
-            struct appl_context * const
-                p_context);
 
     private:
 

@@ -233,9 +233,22 @@ enum appl_status
     appl_unused(
         i_buf_len);
 
+    e_status =
+        m_lock.f_lock();
+
+#if defined APPL_HAVE_COVERAGE
     if (
         appl_status_ok
-        == m_lock.f_lock())
+        != e_status)
+    {
+        e_status =
+            m_lock.f_lock();
+    }
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
+    if (
+        appl_status_ok
+        == e_status)
     {
         void *
             p_buf;
@@ -276,7 +289,17 @@ enum appl_status
                 true;
         }
 
-        m_lock.f_unlock();
+        if (
+            appl_status_ok
+            == m_lock.f_unlock())
+        {
+        }
+        else
+        {
+#if defined APPL_HAVE_COVERAGE
+            m_lock.f_unlock();
+#endif /* #if defined APPL_HAVE_COVERAGE */
+        }
 
         if (
             !(
@@ -348,9 +371,22 @@ enum appl_status
     appl_unused(
         i_buf_len);
 
+    e_status =
+        m_lock.f_lock();
+
+#if defined APPL_HAVE_COVERAGE
     if (
         appl_status_ok
-        == m_lock.f_lock())
+        != e_status)
+    {
+        e_status =
+            m_lock.f_lock();
+    }
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
+    if (
+        appl_status_ok
+        == e_status)
     {
         union appl_pool_node_ptr
             o_node_ptr;
@@ -371,19 +407,13 @@ enum appl_status
             appl_status_ok
             == m_lock.f_unlock())
         {
-            e_status =
-                appl_status_ok;
         }
         else
         {
-            e_status =
-                appl_status_fail;
+#if defined APPL_HAVE_COVERAGE
+            m_lock.f_unlock();
+#endif /* #if defined APPL_HAVE_COVERAGE */
         }
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
     }
 
     return

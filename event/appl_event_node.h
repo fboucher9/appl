@@ -4,6 +4,9 @@
 
 */
 
+/* Included. */
+#define INC_APPL_EVENT_NODE_H
+
 /* Reverse include guard */
 enum guard_appl_event_node_h
 {
@@ -26,6 +29,13 @@ struct appl_event : public appl_object
 {
     public:
 
+        appl_event(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_event();
+
         virtual
         enum appl_status
             v_signal(void);
@@ -41,13 +51,6 @@ struct appl_event : public appl_object
                     i_wait_count);
 
     protected:
-
-        appl_event(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_event();
 
     private:
 

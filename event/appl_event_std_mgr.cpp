@@ -195,32 +195,21 @@ enum appl_status
 appl_size_t
     appl_event_std_mgr::v_cleanup(void)
 {
-#if defined APPL_HAVE_COVERAGE
     if (
-        appl_coverage_check())
+        m_pool_created)
     {
-        return
-            appl_event_mgr::v_cleanup();
+        appl_pool_destroy(
+            m_pool);
+
+        m_pool =
+            0;
+
+        m_pool_created =
+            false;
     }
-    else
-#endif /* #if defined APPL_HAVE_COVERAGE */
-    {
-        if (
-            m_pool_created)
-        {
-            appl_pool_destroy(
-                m_pool);
 
-            m_pool =
-                0;
-
-            m_pool_created =
-                false;
-        }
-
-        return
-            sizeof(class appl_event_std_mgr);
-    }
+    return
+        sizeof(class appl_event_std_mgr);
 
 } // v_cleanup()
 
@@ -237,34 +226,21 @@ enum appl_status
     enum appl_status
         e_status;
 
-#if defined APPL_HAVE_COVERAGE
+    e_status =
+        appl_event_service::s_validate(
+            (0 != p_event_descriptor)
+            && (0 != r_event));
+
     if (
-        appl_coverage_check())
+        appl_status_ok
+        == e_status)
     {
         e_status =
-            appl_event_mgr::v_create_node(
+            appl_event_std_node_create(
+                appl_pool_parent(
+                    m_pool),
                 p_event_descriptor,
                 r_event);
-    }
-    else
-#endif /* #if defined APPL_HAVE_COVERAGE */
-    {
-        e_status =
-            appl_event_service::s_validate(
-                (0 != p_event_descriptor)
-                && (0 != r_event));
-
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            e_status =
-                appl_event_std_node_create(
-                    appl_pool_parent(
-                        m_pool),
-                    p_event_descriptor,
-                    r_event);
-        }
     }
 
     return
@@ -283,31 +259,19 @@ enum appl_status
     enum appl_status
         e_status;
 
-#if defined APPL_HAVE_COVERAGE
-    if (
-        appl_coverage_check())
-    {
-        e_status =
-            appl_event_mgr::v_destroy_node(
-                p_event);
-    }
-    else
-#endif /* #if defined APPL_HAVE_COVERAGE */
-    {
-        e_status =
-            appl_event_service::s_validate(
-                (0 != p_event));
+    e_status =
+        appl_event_service::s_validate(
+            (0 != p_event));
 
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            e_status =
-                appl_event_std_node_destroy(
-                    appl_pool_parent(
-                        m_pool),
-                    p_event);
-        }
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_event_std_node_destroy(
+                appl_pool_parent(
+                    m_pool),
+                p_event);
     }
 
     return

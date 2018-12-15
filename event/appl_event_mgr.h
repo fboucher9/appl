@@ -32,6 +32,13 @@ class appl_event_mgr : public appl_object
 {
     public:
 
+        appl_event_mgr(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_event_mgr();
+
         virtual
         enum appl_status
             v_create_node(
@@ -47,13 +54,6 @@ class appl_event_mgr : public appl_object
                     p_event);
 
     protected:
-
-        appl_event_mgr(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_event_mgr();
 
     private:
 

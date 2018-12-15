@@ -28,6 +28,8 @@
 
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
+#include <appl_validate.h>
+
 #include <stdlib.h>
 
 //
@@ -75,50 +77,49 @@ enum appl_status
     void *
         p_buf;
 
-#if defined APPL_DEBUG
-    if (
-        !i_buf_len
-        || !r_buf)
-    {
-        appl_debug_impl::s_print0(
-            "v_alloc invalid param\n");
-        appl_debug_impl::s_break();
-    }
-#endif /* #if defined APPL_DEBUG */
+    e_status =
+        appl_validate(
+            (0 != i_buf_len)
+            && (0 != r_buf));
 
+    if (
+        appl_status_ok
+        == e_status)
+    {
 #if defined APPL_HAVE_COVERAGE
-    if (appl_coverage_check())
-    {
-        p_buf =
-            0;
-    }
-    else
+        if (appl_coverage_check())
+        {
+            p_buf =
+                0;
+        }
+        else
 #endif /* #if defined APPL_HAVE_COVERAGE */
-    {
-        p_buf =
-            malloc(
-                i_buf_len);
-    }
+        {
+            p_buf =
+                malloc(
+                    i_buf_len);
+        }
 
-    if (
-        p_buf)
-    {
-        *(
-            r_buf) =
-            p_buf;
+        if (
+            p_buf)
+        {
+            *(
+                r_buf) =
+                p_buf;
 
-        e_status =
-            appl_status_ok;
-    }
-    else
-    {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
 #if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "out of memory\n");
+            appl_debug_impl::s_print0(
+                "out of memory\n");
 #endif /* #if defined APPL_DEBUG */
 
-        e_status =
-            appl_status_fail;
+            e_status =
+                appl_status_fail;
+        }
     }
 
     return
@@ -139,25 +140,18 @@ enum appl_status
     enum appl_status
         e_status;
 
-    appl_unused(
-        i_buf_len);
-
-#if defined APPL_DEBUG
-    if (
-        !i_buf_len
-        || !p_buf)
-    {
-        appl_debug_impl::s_print0(
-            "v_free invalid param\n");
-        appl_debug_impl::s_break();
-    }
-#endif /* #if defined APPL_DEBUG */
-
-    free(
-        p_buf);
-
     e_status =
-        appl_status_ok;
+        appl_validate(
+            (0 != i_buf_len)
+            && (0 != p_buf));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        free(
+            p_buf);
+    }
 
     return
         e_status;
