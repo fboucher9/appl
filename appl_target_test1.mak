@@ -31,7 +31,7 @@ test_appl-deps = \
     mutex/appl_mutex_test.cpp \
     clock/appl_clock_test.cpp \
     random/appl_random_test.c \
-    event/appl_event_test.c \
+    event/appl_event_test.cpp \
     backtrace/appl_backtrace_test.cpp \
     env/appl_env_test.cpp \
     heap/appl_heap_test.cpp \
