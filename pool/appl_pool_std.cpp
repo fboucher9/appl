@@ -289,17 +289,7 @@ enum appl_status
                 true;
         }
 
-        if (
-            appl_status_ok
-            == m_lock.f_unlock())
-        {
-        }
-        else
-        {
-#if defined APPL_HAVE_COVERAGE
-            m_lock.f_unlock();
-#endif /* #if defined APPL_HAVE_COVERAGE */
-        }
+        m_lock.f_unlock();
 
         if (
             !(
@@ -403,17 +393,7 @@ enum appl_status
             &(
                 m_available_items));
 
-        if (
-            appl_status_ok
-            == m_lock.f_unlock())
-        {
-        }
-        else
-        {
-#if defined APPL_HAVE_COVERAGE
-            m_lock.f_unlock();
-#endif /* #if defined APPL_HAVE_COVERAGE */
-        }
+        m_lock.f_unlock();
     }
 
     return
