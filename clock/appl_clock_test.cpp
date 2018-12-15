@@ -103,27 +103,26 @@ void
     unsigned long int
         i_iterator;
 
-    appl_coverage_limit(0u);
+    appl_coverage_start(0u);
 
     (*p_callback)(
         p_context);
 
     i_count =
-        appl_coverage_query();
+        appl_coverage_stop();
 
     for (
         i_iterator = 1;
         i_iterator <= i_count;
         i_iterator ++)
     {
-        appl_coverage_limit(
+        appl_coverage_start(
             i_iterator);
 
         (*p_callback)(
             p_context);
 
-        appl_coverage_limit(
-            0u);
+        appl_coverage_stop();
     }
 
 #else /* #if defined APPL_HAVE_COVERAGE */

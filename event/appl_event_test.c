@@ -12,6 +12,8 @@
 #include <appl_coverage.h>
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
+#include <appl_coverage_test.h>
+
 struct appl_event_test
 {
     struct appl_context *
@@ -19,14 +21,6 @@ struct appl_event_test
 
     struct appl_mutex *
         p_mutex;
-
-    /* -- */
-
-    unsigned long int
-        i_limit;
-
-    unsigned long int
-        i_limit_max;
 
     /* -- */
 
@@ -39,13 +33,21 @@ struct appl_event_test
 };
 
 static
-void
+unsigned long int
     appl_event_test_create_cb(
-        struct appl_event_test * const
-            p_event_test)
+        void * const
+            p_context,
+        unsigned long int const
+            i_limit)
 {
+    unsigned long int
+        i_count = 0ul;
+
     enum appl_status
         e_status;
+
+    struct appl_event_test *
+        p_event_test;
 
     struct appl_event *
         p_event;
@@ -53,9 +55,13 @@ void
     struct appl_event_descriptor
         o_event_descriptor;
 
+    p_event_test =
+        (struct appl_event_test *)(
+            p_context);
+
 #if defined APPL_HAVE_COVERAGE
-    appl_coverage_limit(
-        p_event_test->i_limit);
+    appl_coverage_start(
+        i_limit);
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
     e_status =
@@ -67,21 +73,8 @@ void
                 p_event));
 
 #if defined APPL_HAVE_COVERAGE
-    {
-        unsigned long int
-            i_count;
-
-        i_count =
-            appl_coverage_query();
-
-        appl_coverage_limit(0ul);
-
-        if (
-            p_event_test->i_limit_max < i_count)
-        {
-            p_event_test->i_limit_max = i_count;
-        }
-    }
+    i_count =
+        appl_coverage_stop();
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
     if (
@@ -91,20 +84,33 @@ void
         appl_event_destroy(
             p_event);
     }
+
+    return
+        i_count;
 }
 
 static
-void
+unsigned long int
     appl_event_test_signal_cb(
-        struct appl_event_test * const
-            p_event_test)
+        void * const
+            p_context,
+        unsigned long int const
+            i_limit)
 {
+    unsigned long int
+        i_count = 0ul;
+
+    struct appl_event_test *
+        p_event_test =
+        (struct appl_event_test *)(
+            p_context);
+
     enum appl_status
         e_status;
 
 #if defined APPL_HAVE_COVERAGE
-    appl_coverage_limit(
-        p_event_test->i_limit);
+    appl_coverage_start(
+        i_limit);
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
     e_status =
@@ -112,21 +118,8 @@ void
             p_event_test->p_event);
 
 #if defined APPL_HAVE_COVERAGE
-    {
-        unsigned long int
-            i_count;
-
-        i_count =
-            appl_coverage_query();
-
-        appl_coverage_limit(0ul);
-
-        if (
-            p_event_test->i_limit_max < i_count)
-        {
-            p_event_test->i_limit_max = i_count;
-        }
-    }
+    i_count =
+        appl_coverage_stop();
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
     if (
@@ -134,20 +127,34 @@ void
         == e_status)
     {
     }
+
+    return
+        i_count;
+
 }
 
 static
-void
+unsigned long int
     appl_event_test_wait_cb(
-        struct appl_event_test * const
-            p_event_test)
+        void * const
+            p_context,
+        unsigned long int const
+            i_limit)
 {
+    unsigned long int
+        i_count = 0ul;
+
+    struct appl_event_test *
+        p_event_test =
+        (struct appl_event_test *)(
+            p_context);
+
     enum appl_status
         e_status;
 
 #if defined APPL_HAVE_COVERAGE
-    appl_coverage_limit(
-        p_event_test->i_limit);
+    appl_coverage_start(
+        i_limit);
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
     e_status =
@@ -158,21 +165,8 @@ void
             1ul);
 
 #if defined APPL_HAVE_COVERAGE
-    {
-        unsigned long int
-            i_count;
-
-        i_count =
-            appl_coverage_query();
-
-        appl_coverage_limit(0ul);
-
-        if (
-            p_event_test->i_limit_max < i_count)
-        {
-            p_event_test->i_limit_max = i_count;
-        }
-    }
+    i_count =
+        appl_coverage_stop();
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
     if (
@@ -180,16 +174,30 @@ void
         == e_status)
     {
     }
+
+    return
+        i_count;
+
 }
 
 static
-void
+unsigned long int
     appl_event_test_destroy_cb(
-        struct appl_event_test * const
-            p_event_test)
+        void * const
+            p_context,
+        unsigned long int const
+            i_limit)
 {
+    unsigned long int
+        i_count = 0ul;
+
     enum appl_status
         e_status;
+
+    struct appl_event_test *
+        p_event_test =
+        (struct appl_event_test *)(
+            p_context);
 
     char
         b_event_created;
@@ -216,8 +224,8 @@ void
             1;
 
 #if defined APPL_HAVE_COVERAGE
-        appl_coverage_limit(
-            p_event_test->i_limit);
+        appl_coverage_start(
+            i_limit);
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
         e_status =
@@ -233,21 +241,8 @@ void
         }
 
 #if defined APPL_HAVE_COVERAGE
-        {
-            unsigned long int
-                i_count;
-
-            i_count =
-                appl_coverage_query();
-
-            appl_coverage_limit(0ul);
-
-            if (
-                p_event_test->i_limit_max < i_count)
-            {
-                p_event_test->i_limit_max = i_count;
-            }
-        }
+        i_count =
+            appl_coverage_stop();
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
         if (
@@ -260,36 +255,10 @@ void
                 0;
         }
     }
-}
 
-static
-void
-    coverage_loop(
-        void (* p_callback)(
-            struct appl_event_test * const
-                p_event_test),
-        struct appl_event_test * const
-            p_event_test)
-{
-    p_event_test->i_limit_max =
-        0ul;
+    return
+        i_count;
 
-    p_event_test->i_limit =
-        0ul;
-
-    (*p_callback)(
-        p_event_test);
-
-    p_event_test->i_limit ++;
-
-    while (
-        p_event_test->i_limit <= p_event_test->i_limit_max)
-    {
-        (*p_callback)(
-            p_event_test);
-
-        p_event_test->i_limit ++;
-    }
 }
 
 /*
@@ -388,7 +357,7 @@ void
                 /* Coverage tests... */
                 if (1)
                 {
-                    coverage_loop(
+                    appl_coverage_test(
                         &(
                             appl_event_test_create_cb),
                         &(
@@ -397,7 +366,7 @@ void
 
                 if (1)
                 {
-                    coverage_loop(
+                    appl_coverage_test(
                         &(
                             appl_event_test_signal_cb),
                         &(
@@ -406,7 +375,7 @@ void
 
                 if (1)
                 {
-                    coverage_loop(
+                    appl_coverage_test(
                         &(
                             appl_event_test_wait_cb),
                         &(
@@ -415,7 +384,7 @@ void
 
                 if (0)
                 {
-                    coverage_loop(
+                    appl_coverage_test(
                         &(
                             appl_event_test_destroy_cb),
                         &(

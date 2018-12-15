@@ -15,33 +15,6 @@ static unsigned long int g_coverage_limit = 0ul;
 /*
 
 */
-void
-    appl_coverage_limit(
-        unsigned long int const
-            i_limit)
-{
-    g_coverage_count =
-        0ul;
-
-    g_coverage_limit =
-        i_limit;
-
-} /* appl_coverage_limit() */
-
-/*
-
-*/
-unsigned long int
-    appl_coverage_query(void)
-{
-    return
-        g_coverage_count;
-
-} /* appl_coverage_query() */
-
-/*
-
-*/
 char
     appl_coverage_check(void)
 {
@@ -67,6 +40,42 @@ char
         b_result;
 
 } /* appl_coverage_check() */
+
+/*
+
+*/
+void
+    appl_coverage_start(
+        unsigned long int const
+            i_limit)
+{
+    g_coverage_count =
+        0ul;
+
+    g_coverage_limit =
+        i_limit;
+
+} /* appl_coverage_start() */
+
+/*
+
+*/
+unsigned long int
+    appl_coverage_stop(void)
+{
+    unsigned long int
+        i_count;
+
+    i_count =
+        g_coverage_count;
+
+    g_coverage_limit =
+        0ul;
+
+    return
+        i_count;
+
+} /* appl_coverage_stop() */
 
 #endif /* #if defined APPL_HAVE_COVERAGE */
 

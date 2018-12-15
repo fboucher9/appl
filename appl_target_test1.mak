@@ -35,6 +35,7 @@ test_appl-deps = \
     backtrace/appl_backtrace_test.cpp \
     env/appl_env_test.cpp \
     heap/appl_heap_test.cpp \
+    appl_coverage_test.cpp \
     $(appl_base-deps)
 
 # List of libraries required to link test application

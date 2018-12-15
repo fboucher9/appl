@@ -51,12 +51,12 @@ extern "C" {
 #endif /* #if defined __cplusplus */
 
 void
-    appl_coverage_limit(
+    appl_coverage_start(
         unsigned long int const
             i_limit);
 
 unsigned long int
-    appl_coverage_query(void);
+    appl_coverage_stop(void);
 
 char
     appl_coverage_check(void);

@@ -80,7 +80,7 @@ void
     }
 
 #if defined APPL_HAVE_COVERAGE
-    appl_coverage_limit(0ul);
+    appl_coverage_start(0ul);
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
     e_status =
@@ -94,7 +94,7 @@ void
 #if defined APPL_HAVE_COVERAGE
     {
         unsigned long int n;
-        n = appl_coverage_query();
+        n = appl_coverage_stop();
         printf(
             "appl_mutex_create has %lu coverage points\n", n);
 
@@ -108,7 +108,7 @@ void
                 struct appl_mutex *
                     p_temp_mutex;
 
-                appl_coverage_limit(i);
+                appl_coverage_start(i);
 
                 printf(
                     "appl_mutex_create test #%lu\n", i);
@@ -121,7 +121,7 @@ void
                         &(
                             p_temp_mutex));
 
-                appl_coverage_limit(0ul);
+                appl_coverage_stop();
 
                 if (
                     appl_status_ok
@@ -383,7 +383,7 @@ unsigned long int
         == e_status)
     {
 #if defined APPL_HAVE_COVERAGE
-        appl_coverage_limit(
+        appl_coverage_start(
             i_limit);
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
@@ -393,10 +393,7 @@ unsigned long int
 
 #if defined APPL_HAVE_COVERAGE
         i_count =
-            appl_coverage_query();
-
-        appl_coverage_limit(
-            0ul);
+            appl_coverage_stop();
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
         if (

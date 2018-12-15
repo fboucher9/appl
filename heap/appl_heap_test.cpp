@@ -133,7 +133,7 @@ void
         n_max = 0u;
         do
         {
-            appl_coverage_limit(i);
+            appl_coverage_start(i);
 
             void *
                 p_buffer;
@@ -149,13 +149,12 @@ void
                     &(
                         p_buffer));
 
-            n = appl_coverage_query();
+            n = appl_coverage_stop();
             if (n_max < n)
             {
                 n_max = n;
                 printf("appl_heap_alloc max coverage is %lu\n", n_max);
             }
-            appl_coverage_limit(0u);
 
             if (
                 appl_status_ok
