@@ -112,7 +112,7 @@ appl_object::operator delete (
 
 #if defined APPL_DEBUG
     appl_debug_impl::s_print0(
-        "incorrect use of operator delete");
+        "incorrect use of operator delete\n");
 #endif /* #if defined APPL_DEBUG */
 
 } // operator delete

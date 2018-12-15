@@ -29,6 +29,34 @@
 
 #include <appl_coverage_test.h>
 
+#include <stdio.h>
+
+struct appl_clock_test_context
+{
+    unsigned long int
+        i_pass_count;
+
+    unsigned long int
+        i_fail_count;
+
+    // --
+
+    unsigned long int
+        i_warn_count;
+
+    unsigned long int
+        i_total_count;
+
+    // --
+
+    struct appl_context *
+        p_context;
+
+#define PADDING (APPL_SIZEOF_PTR)
+#include <appl_padding.h>
+
+};
+
 /*
 
 */
@@ -46,20 +74,13 @@ unsigned long int
     enum appl_status
         e_status;
 
-    struct appl_context * const
-        p_context =
-        (struct appl_context *)(
+    struct appl_clock_test_context * const
+        p_clock_test_context =
+        (struct appl_clock_test_context *)(
             p_void);
 
     appl_ull_t
         i_clock_value;
-
-    e_status =
-        appl_clock_read(
-            p_context,
-            0u,
-            &(
-                i_clock_value));
 
 #if defined APPL_HAVE_COVERAGE
     appl_coverage_start(i_limit);
@@ -67,7 +88,7 @@ unsigned long int
 
     e_status =
         appl_clock_read(
-            p_context,
+            p_clock_test_context->p_context,
             1000u,
             &(
                 i_clock_value));
@@ -76,8 +97,18 @@ unsigned long int
     i_count = appl_coverage_stop();
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
-    (void)(
-        e_status);
+    if (
+        0ul == i_limit)
+    {
+        p_clock_test_context->i_pass_count += (appl_status_ok == e_status);
+        p_clock_test_context->i_fail_count += (appl_status_ok != e_status);
+    }
+    else
+    {
+        p_clock_test_context->i_pass_count += (appl_status_ok != e_status);
+        p_clock_test_context->i_warn_count += (appl_status_ok == e_status);
+    }
+    p_clock_test_context->i_total_count ++;
 
     return
         i_count;
@@ -95,19 +126,13 @@ unsigned long int
     unsigned long int
         i_count = 0ul;
 
-    enum appl_status
-        e_status;
-
-    struct appl_context * const
-        p_context =
-        (struct appl_context *)(
+    struct appl_clock_test_context * const
+        p_clock_test_context =
+        (struct appl_clock_test_context *)(
             p_void);
 
-    e_status =
-        appl_clock_delay(
-            p_context,
-            0u,
-            1u);
+    enum appl_status
+        e_status;
 
 #if defined APPL_HAVE_COVERAGE
     appl_coverage_start(i_limit);
@@ -115,7 +140,7 @@ unsigned long int
 
     e_status =
         appl_clock_delay(
-            p_context,
+            p_clock_test_context->p_context,
             1000u,
             1u);
 
@@ -123,13 +148,103 @@ unsigned long int
     i_count = appl_coverage_stop();
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
-    (void)(
-        e_status);
+    if (
+        0ul == i_limit)
+    {
+        p_clock_test_context->i_pass_count += (appl_status_ok == e_status);
+        p_clock_test_context->i_fail_count += (appl_status_ok != e_status);
+    }
+    else
+    {
+        p_clock_test_context->i_pass_count += (appl_status_ok != e_status);
+        p_clock_test_context->i_warn_count += (appl_status_ok == e_status);
+    }
+    p_clock_test_context->i_total_count ++;
 
     return
         i_count;
 
 } /* appl_clock_test_1_read() */
+
+static
+void
+    appl_clock_test_automatic_1(
+        struct appl_clock_test_context * const
+            p_clock_test_context)
+{
+    appl_ull_t
+        i_clock_value;
+
+    enum appl_status const
+        e_status =
+        appl_clock_read(
+            p_clock_test_context->p_context,
+            1000u,
+            &(
+                i_clock_value));
+
+    p_clock_test_context->i_pass_count += (appl_status_ok == e_status);
+    p_clock_test_context->i_fail_count += (appl_status_ok != e_status);
+    p_clock_test_context->i_total_count ++;
+}
+
+static
+void
+    appl_clock_test_automatic_2(
+        struct appl_clock_test_context * const
+            p_clock_test_context)
+{
+    appl_ull_t
+        i_clock_value;
+
+    enum appl_status const
+        e_status =
+        appl_clock_read(
+            p_clock_test_context->p_context,
+            0u,
+            &(
+                i_clock_value));
+
+    p_clock_test_context->i_pass_count += (appl_status_ok != e_status);
+    p_clock_test_context->i_fail_count += (appl_status_ok == e_status);
+    p_clock_test_context->i_total_count ++;
+}
+
+static
+void
+    appl_clock_test_automatic_3(
+        struct appl_clock_test_context * const
+            p_clock_test_context)
+{
+    enum appl_status const
+        e_status =
+        appl_clock_delay(
+            p_clock_test_context->p_context,
+            1000u,
+            1u);
+
+    p_clock_test_context->i_pass_count += (appl_status_ok == e_status);
+    p_clock_test_context->i_fail_count += (appl_status_ok != e_status);
+    p_clock_test_context->i_total_count ++;
+}
+
+static
+void
+    appl_clock_test_automatic_4(
+        struct appl_clock_test_context * const
+            p_clock_test_context)
+{
+    enum appl_status const
+        e_status =
+        appl_clock_delay(
+            p_clock_test_context->p_context,
+            0u,
+            1u);
+
+    p_clock_test_context->i_pass_count += (appl_status_ok != e_status);
+    p_clock_test_context->i_fail_count += (appl_status_ok == e_status);
+    p_clock_test_context->i_total_count ++;
+}
 
 /*
 
@@ -139,15 +254,57 @@ void
         struct appl_context * const
             p_context)
 {
+    struct appl_clock_test_context
+        o_clock_test_context;
+
+    o_clock_test_context.i_pass_count =
+        0ul;
+
+    o_clock_test_context.i_fail_count =
+        0ul;
+
+    o_clock_test_context.i_warn_count =
+        0ul;
+
+    o_clock_test_context.i_total_count =
+        0ul;
+
+    o_clock_test_context.p_context =
+        p_context;
+
+    appl_clock_test_automatic_1(
+        &(
+            o_clock_test_context));
+
+    appl_clock_test_automatic_2(
+        &(
+            o_clock_test_context));
+
+    appl_clock_test_automatic_3(
+        &(
+            o_clock_test_context));
+
+    appl_clock_test_automatic_4(
+        &(
+            o_clock_test_context));
+
     appl_coverage_test(
         &(
             appl_clock_test_1_read),
-        p_context);
+        &(
+            o_clock_test_context));
 
     appl_coverage_test(
         &(
             appl_clock_test_1_delay),
-        p_context);
+        &(
+            o_clock_test_context));
+
+    printf("clock test results: pass=%lu fail=%lu warn=%lu total=%lu\n",
+        o_clock_test_context.i_pass_count,
+        o_clock_test_context.i_fail_count,
+        o_clock_test_context.i_warn_count,
+        o_clock_test_context.i_total_count);
 
 #if defined __cplusplus
     // base class
