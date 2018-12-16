@@ -16,8 +16,6 @@
 
 #include <debug/appl_debug_impl.h>
 
-#include <backtrace/appl_backtrace_impl.h>
-
 #endif /* #if defined APPL_DEBUG */
 
 //
@@ -135,7 +133,7 @@ appl_size_t
     appl_object::v_cleanup(void)
 {
 #if defined APPL_DEBUG
-    appl_backtrace_impl::s_ouch(
+    appl_debug_impl::s_print0(
         "object cleanup not implemented\n");
 #endif /* #if defined APPL_DEBUG */
 

@@ -52,6 +52,8 @@ void
         struct appl_context * const
             p_context)
 {
+    printf("=== appl_heap_test_1 ===\n");
+
     enum appl_status
             e_status;
 
@@ -96,6 +98,8 @@ void
         class appl_heap *
             p_heap;
 
+        printf("heap base test {...\n");
+
         e_status =
             appl_new(
                 p_allocator,
@@ -106,20 +110,30 @@ void
             appl_status_ok
             == e_status)
         {
+            printf("heap base test - v_alloc {...\n");
+
             e_status =
                 p_heap->v_alloc(
                     0u,
                     0);
+
+            printf("heap base test - v_alloc ...}\n");
+
+            printf("heap base test - v_free {...\n");
 
             e_status =
                 p_heap->v_free(
                     0u,
                     0);
 
+            printf("heap base test - v_free ...}\n");
+
             appl_delete(
                 p_allocator,
                 p_heap);
         }
+
+        printf("heap base test ...}\n");
     }
 
     // Coverage testing of alloc and free
@@ -297,6 +311,8 @@ void
             o_heap_impl.f_cleanup();
         }
     }
+
+    printf("^^^ appl_heap_test_1 ^^^\n");
 
 } // appl_heap_test_1()
 

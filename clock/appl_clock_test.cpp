@@ -172,6 +172,8 @@ void
         struct appl_clock_test_context * const
             p_clock_test_context)
 {
+    printf("clock test automatic #1 ...\n");
+
     appl_ull_t
         i_clock_value;
 
@@ -183,9 +185,16 @@ void
             &(
                 i_clock_value));
 
-    p_clock_test_context->i_pass_count += (appl_status_ok == e_status);
-    p_clock_test_context->i_fail_count += (appl_status_ok != e_status);
+    bool const b_result =
+        (appl_status_ok == e_status);
+
+    printf("clock test result %s\n", b_result ? "PASS" : "FAIL");
+
+    p_clock_test_context->i_pass_count += b_result;
+    p_clock_test_context->i_fail_count += !b_result;
     p_clock_test_context->i_total_count ++;
+
+    printf("... done\n");
 }
 
 static
@@ -194,6 +203,8 @@ void
         struct appl_clock_test_context * const
             p_clock_test_context)
 {
+    printf("clock test automatic #2 ...\n");
+
     appl_ull_t
         i_clock_value;
 
@@ -205,9 +216,16 @@ void
             &(
                 i_clock_value));
 
-    p_clock_test_context->i_pass_count += (appl_status_ok != e_status);
-    p_clock_test_context->i_fail_count += (appl_status_ok == e_status);
+    bool const b_result =
+        (appl_status_ok != e_status);
+
+    printf("clock test result %s\n", b_result ? "PASS" : "FAIL");
+
+    p_clock_test_context->i_pass_count += b_result;
+    p_clock_test_context->i_fail_count += !b_result;
     p_clock_test_context->i_total_count ++;
+
+    printf("... done\n");
 }
 
 static
@@ -216,6 +234,8 @@ void
         struct appl_clock_test_context * const
             p_clock_test_context)
 {
+    printf("clock test automatic #3 ...\n");
+
     enum appl_status const
         e_status =
         appl_clock_delay(
@@ -223,9 +243,16 @@ void
             1000u,
             1u);
 
-    p_clock_test_context->i_pass_count += (appl_status_ok == e_status);
-    p_clock_test_context->i_fail_count += (appl_status_ok != e_status);
+    bool const b_result =
+        (appl_status_ok == e_status);
+
+    printf("clock test result %s\n", b_result ? "PASS" : "FAIL");
+
+    p_clock_test_context->i_pass_count += b_result;
+    p_clock_test_context->i_fail_count += !b_result;
     p_clock_test_context->i_total_count ++;
+
+    printf("... done\n");
 }
 
 static
@@ -234,6 +261,7 @@ void
         struct appl_clock_test_context * const
             p_clock_test_context)
 {
+    printf("clock test automatic #4 ...\n");
     enum appl_status const
         e_status =
         appl_clock_delay(
@@ -241,9 +269,16 @@ void
             0u,
             1u);
 
-    p_clock_test_context->i_pass_count += (appl_status_ok != e_status);
-    p_clock_test_context->i_fail_count += (appl_status_ok == e_status);
+    bool const b_result =
+        (appl_status_ok != e_status);
+
+    printf("clock test result %s\n", b_result ? "PASS" : "FAIL");
+
+    p_clock_test_context->i_pass_count += b_result;
+    p_clock_test_context->i_fail_count += !b_result;
     p_clock_test_context->i_total_count ++;
+
+    printf("... done\n");
 }
 
 /*
@@ -254,6 +289,8 @@ void
         struct appl_context * const
             p_context)
 {
+    printf("=== appl_clock_test_1 ===\n");
+
     struct appl_clock_test_context
         o_clock_test_context;
 
@@ -305,6 +342,8 @@ void
         o_clock_test_context.i_fail_count,
         o_clock_test_context.i_warn_count,
         o_clock_test_context.i_total_count);
+
+    printf("^^^ appl_clock_test_1 ^^^\n");
 
 #if defined __cplusplus
     // base class

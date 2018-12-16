@@ -8,6 +8,8 @@
 
 #include <object/appl_object_test.h>
 
+#include <stdio.h>
+
 /*
 
 */
@@ -16,6 +18,8 @@ void
         struct appl_context * const
             p_context)
 {
+    printf("=== appl_object_test_1 ===\n");
+
     struct appl_object *
         p_object;
 
@@ -43,6 +47,8 @@ void
         appl_object::operator delete(g_placement);
     }
 
+    printf("^^^ appl_object_test_1 ^^^\n");
+
 } /* appl_object_test_1() */
 
 /*
@@ -53,6 +59,8 @@ void
         struct appl_context * const
             p_context)
 {
+    printf("=== appl_object_test_2 ===\n");
+
     struct appl_allocator * const
         p_allocator =
         appl_context_get_allocator(
@@ -78,6 +86,8 @@ void
             p_allocator,
             p_dummy_object);
     }
+
+    printf("^^^ appl_object_test_2 ^^^\n");
 
 } /* appl_object_test_2() */
 

@@ -10,6 +10,8 @@
 
 #if defined APPL_OS_LINUX
 
+#include <errno.h>
+
 #include <pthread.h>
 
 #else /* #if defined APPL_OS_Xx */
@@ -305,8 +307,11 @@ enum appl_status
                     o_abstime));
 
         if (
-            0
-            == i_wait_result)
+            (
+                0
+                == i_wait_result)
+            || (
+                ETIMEDOUT == i_wait_result))
         {
             e_status =
                 appl_status_ok;
