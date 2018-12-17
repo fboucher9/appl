@@ -29,18 +29,8 @@ enum appl_status
     appl_unused(
         r_timer);
 
-#if defined APPL_DEBUG
-    {
-        static char const s_msg[] =
-            "timer mgr create node not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
-#endif /* #if defined APPL_DEBUG */
-
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
 } // v_create_node()
 
@@ -55,18 +45,8 @@ enum appl_status
     appl_unused(
         p_timer);
 
-#if defined APPL_DEBUG
-    {
-        static char const s_msg[] =
-            "timer mgr destroy node not implemented\n";
-        appl_debug_print0(
-            m_context,
-            s_msg);
-    }
-#endif /* #if defined APPL_DEBUG */
-
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
 } // v_destroy_node()
 

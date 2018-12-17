@@ -31,13 +31,8 @@ enum appl_status
     appl_unused(
         p_library_descriptor,
         r_library);
-#if defined APPL_DEBUG
-    appl_debug_print0(
-        m_context,
-        "library mgr create node not implemented\n");
-#endif /* #if defined APPL_DEBUG */
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 } // v_create_node()
 
 //
@@ -50,13 +45,8 @@ enum appl_status
 {
     appl_unused(
         p_library);
-#if defined APPL_DEBUG
-    appl_debug_print0(
-        m_context,
-        "library mgr destroy node not implemented\n");
-#endif /* #if defined APPL_DEBUG */
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 } // v_destroy_node()
 
 //

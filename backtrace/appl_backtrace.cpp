@@ -32,7 +32,7 @@ enum appl_status
         r_count);
 
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
 } // v_capture()
 
@@ -51,7 +51,7 @@ enum appl_status
         i_count);
 
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
 } // v_report()
 
@@ -67,7 +67,7 @@ enum appl_status
         p_header0);
 
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
 } // v_ouch()
 

@@ -34,13 +34,8 @@ enum appl_status
         i_buf_len,
         r_buf);
 
-#if defined APPL_DEBUG
-    appl_debug_impl::s_print0(
-        "v_alloc not implemented\n");
-#endif /* #if defined APPL_DEBUG */
-
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
 } // v_alloc()
 
@@ -58,13 +53,8 @@ enum appl_status
         i_buf_len,
         p_buf);
 
-#if defined APPL_DEBUG
-    appl_debug_impl::s_print0(
-        "v_free not implemented\n");
-#endif /* #if defined APPL_DEBUG */
-
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
 } // v_free()
 

@@ -149,7 +149,7 @@ enum appl_status
             p_time_count);
 
         e_status =
-            appl_status_not_implemented;
+            appl_raise_not_implemented();
 
 #endif /* #if defined APPL_OS_Xx */
     }
@@ -227,7 +227,7 @@ enum appl_status
             i_time_count);
 
         e_status =
-            appl_status_not_implemented;
+            appl_raise_not_implemented();
 
 #endif /* #if defined APPL_OS_Xx */
     }

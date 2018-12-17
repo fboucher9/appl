@@ -44,13 +44,8 @@ appl_validate(
         }
         else
         {
-#if defined APPL_DEBUG
-            appl_debug_impl::s_print0(
-                "invalid param\n");
-#endif /* #if defined APPL_DEBUG */
-
             e_status =
-                appl_status_invalid_param;
+                appl_raise_invalid_param();
         }
     }
 

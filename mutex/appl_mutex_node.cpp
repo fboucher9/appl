@@ -27,14 +27,8 @@ enum appl_status
     enum appl_status
         e_status;
 
-#if defined APPL_DEBUG
-    appl_debug_print0(
-        m_context,
-        "mutex lock not implemented\n");
-#endif /* #if defined APPL_DEBUG */
-
     e_status =
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
     return
         e_status;
@@ -50,14 +44,8 @@ enum appl_status
     enum appl_status
         e_status;
 
-#if defined APPL_DEBUG
-    appl_debug_print0(
-        m_context,
-        "mutex unlock not implemented\n");
-#endif /* #if defined APPL_DEBUG */
-
     e_status =
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
     return
         e_status;
@@ -83,14 +71,8 @@ enum appl_status
         p_sync_callback,
         p_sync_context);
 
-#if defined APPL_DEBUG
-    appl_debug_print0(
-        m_context,
-        "mutex sync not implemented\n");
-#endif /* #if defined APPL_DEBUG */
-
     e_status =
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
     return
         e_status;

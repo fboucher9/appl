@@ -12,6 +12,7 @@ appl_target_base.mak-included := 1
 
 appl_base-deps := \
     appl.cpp \
+    appl_status.cpp \
     appl_tree.cpp \
     binary_heap/appl_binary_heap.cpp \
     socket/appl_address_handle.cpp \

@@ -35,14 +35,8 @@ enum appl_status
         p_mutex_descriptor,
         r_mutex);
 
-#if defined APPL_DEBUG
-    appl_debug_print0(
-        m_context,
-        "mutex mgr create node not implement\n");
-#endif /* #if defined APPL_DEBUG */
-
     e_status =
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
     return
         e_status;
@@ -63,14 +57,8 @@ enum appl_status
     appl_unused(
         p_mutex);
 
-#if defined APPL_DEBUG
-    appl_debug_print0(
-        m_context,
-        "mutex mgr destroy node not implement\n");
-#endif /* #if defined APPL_DEBUG */
-
     e_status =
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
     return
         e_status;

@@ -29,14 +29,8 @@ enum appl_status
     appl_unused(
         r_count);
 
-#if defined APPL_DEBUG
-    appl_debug_print0(
-        m_context,
-        "options count not implemented\n");
-#endif /* #if defined APPL_DEBUG */
-
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 } // v_count()
 
 //
@@ -56,14 +50,8 @@ enum appl_status
         r_buf_min,
         r_buf_max);
 
-#if defined APPL_DEBUG
-    appl_debug_print0(
-        m_context,
-        "options get not implemented\n");
-#endif /* #if defined APPL_DEBUG */
-
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 } // v_get()
 
 //
@@ -86,14 +74,8 @@ enum appl_status
         p_count,
         p_ready);
 
-#if defined APPL_DEBUG
-    appl_debug_print0(
-        m_context,
-        "options write not implemented\n");
-#endif /* #if defined APPL_DEBUG */
-
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
 } // v_write()
 
@@ -111,14 +93,8 @@ enum appl_status
         p_buf_min,
         p_buf_max);
 
-#if defined APPL_DEBUG
-    appl_debug_print0(
-        m_context,
-        "options append argument not implemented\n");
-#endif /* #if defined APPL_DEBUG */
-
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
 } // v_append_argument()
 
@@ -128,14 +104,8 @@ enum appl_status
 enum appl_status
     appl_options::v_reset(void)
 {
-#if defined APPL_DEBUG
-    appl_debug_print0(
-        m_context,
-        "options reset not implemented\n");
-#endif /* #if defined APPL_DEBUG */
-
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
 } // v_reset()
 

@@ -26,7 +26,7 @@ enum appl_status
         p_timer_descriptor);
 
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
 } // v_schedule()
 

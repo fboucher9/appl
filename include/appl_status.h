@@ -49,4 +49,35 @@ enum appl_status
 
 }; /* enum appl_status */
 
+#if defined __cplusplus
+extern "C" {
+#endif /* #if defined __cplusplus */
+
+enum appl_status
+    appl_raise(
+        enum appl_status const
+            e_status);
+
+enum appl_status
+    appl_raise_fail(void);
+
+enum appl_status
+    appl_raise_out_of_memory(void);
+
+enum appl_status
+    appl_raise_not_implemented(void);
+
+enum appl_status
+    appl_raise_timeout(void);
+
+enum appl_status
+    appl_raise_invalid_param(void);
+
+enum appl_status
+    appl_raise_fault_injection(void);
+
+#if defined __cplusplus
+} /* extern "C" */
+#endif /* #if defined __cplusplus */
+
 /* end-of-file: appl_status.h */

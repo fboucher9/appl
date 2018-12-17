@@ -37,7 +37,7 @@ enum appl_status
         p_message_max);
 
     e_status =
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
     return
         e_status;

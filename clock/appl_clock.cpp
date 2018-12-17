@@ -35,14 +35,8 @@ enum appl_status
         i_time_freq,
         p_time_count);
 
-#if defined APPL_DEBUG
-    appl_debug_print0(
-        m_context,
-        "clock read not implemented\n");
-#endif /* #if defined APPL_DEBUG */
-
     e_status =
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
     return
         e_status;
@@ -66,14 +60,8 @@ enum appl_status
         i_time_freq,
         i_time_count);
 
-#if defined APPL_DEBUG
-    appl_debug_print0(
-        m_context,
-        "clock delay not implemented\n");
-#endif /* #if defined APPL_DEBUG */
-
     e_status =
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 
     return
         e_status;

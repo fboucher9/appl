@@ -34,14 +34,8 @@ enum appl_status
         p_symbol_name_min,
         p_symbol_name_max,
         r_symbol);
-#if defined APPL_DEBUG
-    appl_debug_print0(
-        m_context,
-        "library query not implemented\n");
-#endif /* #if defined APPL_DEBUG */
-
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 }
 
 //
