@@ -34,6 +34,13 @@ class appl_debug : public appl_object
 {
     public:
 
+        appl_debug(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_debug();
+
         virtual
         enum appl_status
             v_break(void);
@@ -47,13 +54,6 @@ class appl_debug : public appl_object
                     p_msg_max);
 
     protected:
-
-        appl_debug(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_debug();
 
     private:
 

@@ -20,9 +20,9 @@
 
 #include <debug/appl_debug_std.h>
 
-#include <appl_buf.h>
-
 #include <appl_allocator_handle.h>
+
+#include <debug/appl_debug_impl.h>
 
 //
 //
@@ -101,10 +101,16 @@ appl_debug_std::~appl_debug_std()
 enum appl_status
     appl_debug_std::v_break(void)
 {
-    raise(SIGINT);
+    enum appl_status
+        e_status;
+
+    appl_debug_impl::s_break();
+
+    e_status =
+        appl_status_ok;
 
     return
-        appl_status_ok;
+        e_status;
 
 } // v_break()
 
@@ -121,29 +127,12 @@ enum appl_status
     enum appl_status
         e_status;
 
-    signed long int
-        i_write_result;
+    appl_debug_impl::s_print(
+        p_msg_min,
+        p_msg_max);
 
-    i_write_result =
-        write(
-            STDERR_FILENO,
-            p_msg_min,
-            appl_buf_len(
-                p_msg_min,
-                p_msg_max));
-
-    if (
-        i_write_result > 0)
-    {
-        e_status =
-            appl_status_ok;
-
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
-    }
+    e_status =
+        appl_status_ok;
 
     return
         e_status;

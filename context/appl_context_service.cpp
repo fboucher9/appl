@@ -108,8 +108,28 @@ appl_context_service::s_get_allocator(
     struct appl_context const * const
         p_context)
 {
+    struct appl_allocator *
+        p_allocator;
+
+    if (
+        p_context)
+    {
+        p_allocator =
+            p_context->v_allocator();
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "null context ptr\n");
+#endif /* #if defined APPL_DEBUG */
+
+        p_allocator =
+            0;
+    }
+
     return
-        p_context->v_allocator();
+        p_allocator;
 
 } // s_get_allocator()
 

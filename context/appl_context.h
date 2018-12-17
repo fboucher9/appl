@@ -73,6 +73,20 @@ struct appl_context : public appl_object
 {
     public:
 
+        appl_context(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_context();
+
+        enum appl_status
+            f_init(void);
+
+        virtual
+        appl_size_t
+            v_cleanup(void);
+
         virtual
         struct appl_allocator *
             v_allocator(void) const;
@@ -183,20 +197,7 @@ struct appl_context : public appl_object
                     r_debug) const;
 #endif /* #if defined APPL_DEBUG */
 
-        static
-        struct appl_context *
-        from_object_handle(
-            struct appl_object const * const
-                p_object);
-
     protected:
-
-        appl_context(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_context();
 
     private:
 

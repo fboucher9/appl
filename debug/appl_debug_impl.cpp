@@ -25,10 +25,12 @@ Description:
 
 #include <appl_convert.h>
 
-#undef NDEBUG
-#include <assert.h>
-
-#include <stdio.h>
+#if defined APPL_OS_LINUX
+#include <signal.h>
+#include <unistd.h>
+#else /* #if defined APPL_OS_LINUX */
+#include <windows.h>
+#endif /* #if defined APPL_OS_LINUX */
 
 //
 //
@@ -36,7 +38,12 @@ Description:
 void
     appl_debug_impl::s_break(void)
 {
-    assert(0);
+#if defined APPL_OS_LINUX
+    raise(SIGINT);
+#else /* #if defined APPL_OS_LINUX */
+    DebugBreak();
+#endif /* #if defined APPL_OS_LINUX */
+
 } // s_break()
 
 //
@@ -49,13 +56,54 @@ void
         unsigned char const * const
             p_message_max)
 {
-    fwrite(
-        p_message_min,
-        1,
-        appl_buf_len(
+#if defined APPL_OS_LINUX
+    signed long int
+        i_write_result;
+
+    i_write_result =
+        write(
+            STDERR_FILENO,
             p_message_min,
-            p_message_max),
-        stderr);
+            appl_buf_len(
+                p_message_min,
+                p_message_max));
+
+    appl_unused(
+        i_write_result);
+
+#else /* #if defined APPL_OS_LINUX */
+    HANDLE const
+        h_stderr_file =
+        GetStdHandle(
+            STD_ERROR_HANDLE);
+
+    if (
+        INVALID_HANDLE_VALUE
+        != h_stderr_file)
+    {
+        BOOL
+            b_write_file_result;
+
+        DWORD
+            dwBytesWritten;
+
+        b_write_file_result =
+            WriteFile(
+                h_stderr_file,
+                p_message_min,
+                appl_buf_len(
+                    p_message_min,
+                    p_message_max),
+                &(
+                    dwBytesWritten),
+                NULL);
+
+        appl_unused(
+            b_write_file_result);
+    }
+
+#endif /* #if defined APPL_OS_LINUX */
+
 } // s_print()
 
 //

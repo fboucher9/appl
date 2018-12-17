@@ -49,6 +49,12 @@
 
 #include <allocator/appl_allocator_test.h>
 
+#if defined APPL_DEBUG
+#include <debug/appl_debug_test.h>
+#endif /* #if defined APPL_DEBUG */
+
+#include <context/appl_context_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2201,11 +2207,11 @@ appl_test_thread_cache(
 
 static
 enum appl_status
-appl_test_main(
-    struct appl_context * const
-        p_context,
-    struct appl_options const * const
-        p_options)
+    appl_test_main_default(
+        struct appl_context * const
+            p_context,
+        struct appl_options const * const
+            p_options)
 {
     enum appl_status
         e_status;
@@ -2317,48 +2323,11 @@ appl_test_main(
 #if defined APPL_DEBUG
     if (1)
     {
-        static char g_test_debug_break = 0;
+        appl_debug_test_1(
+            p_context);
 
-        appl_debug_print0(
-            p_context,
-            "debug_print0 number=[");
-
-        appl_debug_print_number(
-            p_context,
-            666,
-            0,
-            0);
-
-        appl_debug_print0(
-            p_context,
-            "]\n");
-
-        if (g_test_debug_break)
-        {
-            static unsigned char const g_msg[] =
-            {
-                'd',
-                'e',
-                'b',
-                'u',
-                'g',
-                '_',
-                'b',
-                'r',
-                'e',
-                'a',
-                'k',
-                '\n'
-            };
-
-            appl_debug_print(
-                p_context,
-                g_msg,
-                g_msg + sizeof(g_msg));
-
-            appl_debug_break(
-                p_context);
-        }
+        appl_debug_test_2(
+            p_context);
     }
 #endif /* #if defined APPL_DEBUG */
 
@@ -2506,7 +2475,7 @@ appl_test_main(
     }
 
     /* Prompt */
-    if (1)
+    if (0)
     {
         struct appl_file *
             p_file;
@@ -2543,7 +2512,7 @@ appl_test_main(
         }
     }
 
-    if ((1))
+    if ((0))
     {
         appl_test_file_stdin(
             p_context);
@@ -2697,6 +2666,184 @@ appl_test_main(
 
     e_status =
         appl_status_ok;
+
+    return
+        e_status;
+
+}
+
+static
+enum appl_status
+appl_test_main(
+    struct appl_context * const
+        p_context,
+    struct appl_options const * const
+        p_options)
+{
+    enum appl_status
+        e_status;
+
+    unsigned long int
+        i_count;
+
+    e_status =
+        appl_options_count(
+            p_options,
+            &(
+                i_count));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        if (
+            1ul
+            >= i_count)
+        {
+            e_status =
+                appl_test_main_default(
+                    p_context,
+                    p_options);
+        }
+        else
+        {
+            unsigned long int
+                i_index;
+
+            i_index =
+                1ul;
+
+            while (
+                (
+                    appl_status_ok
+                    == e_status)
+                && (
+                    i_index
+                    < i_count))
+            {
+                unsigned char const *
+                    p_buf_min;
+
+                unsigned char const *
+                    p_buf_max;
+
+                e_status =
+                    appl_options_get(
+                        p_options,
+                        i_index,
+                        &(
+                            p_buf_min),
+                        &(
+                            p_buf_max));
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    static unsigned char const g_ref_clock[] =
+                    {
+                        'c',
+                        'l',
+                        'o',
+                        'c',
+                        'k'
+                    };
+
+#if defined APPL_DEBUG
+                    static unsigned char const g_ref_debug[] =
+                    {
+                        'd',
+                        'e',
+                        'b',
+                        'u',
+                        'g'
+                    };
+#endif /* #if defined APPL_DEBUG */
+
+                    static unsigned char const g_ref_backtrace[] =
+                    {
+                        'b',
+                        'a',
+                        'c',
+                        'k',
+                        't',
+                        'r',
+                        'a',
+                        'c',
+                        'e'
+                    };
+
+                    static unsigned char const g_ref_context[] =
+                    {
+                        'c',
+                        'o',
+                        'n',
+                        't',
+                        'e',
+                        'x',
+                        't'
+                    };
+
+                    if (
+                        0
+                        == appl_buf_compare(
+                            p_buf_min,
+                            p_buf_max,
+                            g_ref_clock,
+                            g_ref_clock + sizeof(g_ref_clock)))
+                    {
+                        appl_clock_test_1(
+                            p_context);
+                    }
+#if defined APPL_DEBUG
+                    else if (
+                        0
+                        == appl_buf_compare(
+                            p_buf_min,
+                            p_buf_max,
+                            g_ref_debug,
+                            g_ref_debug + sizeof(g_ref_debug)))
+                    {
+                        appl_debug_test_1(
+                            p_context);
+
+                        appl_debug_test_2(
+                            p_context);
+                    }
+#endif /* #if defined APPL_DEBUG */
+                    else if (
+                        0
+                        == appl_buf_compare(
+                            p_buf_min,
+                            p_buf_max,
+                            g_ref_backtrace,
+                            g_ref_backtrace + sizeof(g_ref_backtrace)))
+                    {
+                        appl_backtrace_test_1(
+                            p_context);
+                    }
+                    else if (
+                        0
+                        == appl_buf_compare(
+                            p_buf_min,
+                            p_buf_max,
+                            g_ref_context,
+                            g_ref_context + sizeof(g_ref_context)))
+                    {
+                        appl_context_test_1(
+                            p_context);
+                    }
+                    else
+                    {
+                        appl_print0(
+                            "unknown arg\n");
+                    }
+
+                    i_index ++;
+                }
+            }
+        }
+    }
 
     return
         e_status;

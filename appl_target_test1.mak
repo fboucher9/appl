@@ -38,6 +38,8 @@ test_appl-deps = \
     appl_coverage_test.cpp \
     object/appl_object_test.cpp \
     allocator/appl_allocator_test.cpp \
+    debug/appl_debug_test.cpp \
+    context/appl_context_test.cpp \
     $(appl_base-deps)
 
 # List of libraries required to link test application

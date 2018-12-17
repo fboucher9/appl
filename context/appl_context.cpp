@@ -39,15 +39,24 @@ appl_context::~appl_context()
 //
 //
 //
-struct appl_context *
-appl_context::from_object_handle(
-    struct appl_object const * const
-        p_object)
+enum appl_status
+    appl_context::f_init(void)
 {
     return
-        p_object->get_context();
+        appl_status_ok;
 
-} // from_object_handle()
+} // f_init()
+
+//
+//
+//
+appl_size_t
+    appl_context::v_cleanup(void)
+{
+    return
+        sizeof(struct appl_context);
+
+} // v_cleanup()
 
 //
 //
@@ -55,6 +64,11 @@ appl_context::from_object_handle(
 struct appl_allocator *
     appl_context::v_allocator(void) const
 {
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_allocator not implemented\n");
+#endif /* #if defined APPL_DEBUG */
+
     return
         0;
 
