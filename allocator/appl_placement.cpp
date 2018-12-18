@@ -12,29 +12,26 @@
 
 #include <allocator/appl_allocator.h>
 
-#include <allocator/appl_allocator_placement.h>
+#include <allocator/appl_placement.h>
 
 #include <appl_unused.h>
 
 //
 //
 //
-appl_allocator_placement::appl_allocator_placement(
+appl_placement::appl_placement(
     struct appl_context * const
-        p_context,
-    void * const
-        p_placement) :
+        p_context) :
     appl_allocator(
         p_context),
-    m_placement(
-        p_placement)
+    m_descriptor()
 {
 }
 
 //
 //
 //
-appl_allocator_placement::~appl_allocator_placement()
+appl_placement::~appl_placement()
 {
 }
 
@@ -42,7 +39,35 @@ appl_allocator_placement::~appl_allocator_placement()
 //
 //
 enum appl_status
-    appl_allocator_placement::v_alloc(
+    appl_placement::f_init(
+        struct appl_placement_descriptor const * const
+            p_descriptor)
+{
+    m_descriptor =
+        *(
+            p_descriptor);
+
+    return
+        appl_status_ok;
+
+} // f_init()
+
+//
+//
+//
+appl_size_t
+    appl_placement::v_cleanup(void)
+{
+    return
+        sizeof(class appl_placement);
+
+} // v_cleanup()
+
+//
+//
+//
+enum appl_status
+    appl_placement::v_alloc(
         appl_size_t const
             i_buf_len,
         void * * const
@@ -53,7 +78,7 @@ enum appl_status
 
     *(
         r_buf) =
-        m_placement;
+        m_descriptor.p_placement;
 
     return
         appl_status_ok;
@@ -64,7 +89,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_allocator_placement::v_free(
+    appl_placement::v_free(
         appl_size_t const
             i_buf_len,
         void * const
@@ -79,4 +104,4 @@ enum appl_status
 
 } // v_free()
 
-/* end-of-file: appl_allocator_placement.cpp */
+/* end-of-file: appl_placement.cpp */

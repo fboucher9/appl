@@ -22,6 +22,8 @@
 
 #include <appl_validate.h>
 
+#include <appl_unused.h>
+
 /*
 
 */
@@ -69,6 +71,28 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
+#if defined APPL_HAVE_COVERAGE
+        {
+            bool
+                b_coverage;
+
+            if (
+                i_buf_len < 4096u)
+            {
+                b_coverage =
+                    true;
+            }
+            else
+            {
+                b_coverage =
+                    false;
+            }
+
+            appl_unused(
+                b_coverage);
+        }
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
         e_status =
             appl_allocator_service::s_alloc(
                 p_allocator,

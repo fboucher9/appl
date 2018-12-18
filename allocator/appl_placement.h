@@ -2,7 +2,7 @@
 
 /*
 
-Module: appl_allocator_placement.h
+Module: appl_placement.h
 
 Description:
 
@@ -20,36 +20,53 @@ Comments:
             class appl_demo_parent : appl_object {
                 public:
                     appl_demo_parent() :
-                        m_allocator(m_buffer),
+                        m_allocator(),
                         m_child() { }
                     enum appl_status f_init(void) {
+                        struct appl_placement_descriptor o_descriptor;
+                        o_descriptor.p_placement = m_buffer;
+                        m_allocator.f_init(m_buffer);
                         return m_allocator.alloc_object(
                             &(m_child));
                     }
                     virtual enum appl_status v_cleanup(void) {
                         m_child->v_destroy();
+                        m_allocator.v_cleanup();
                         return appl_status_ok;
                     }
                 private:
                     unsigned char m_buffer[
                             sizeof(class appl_demo_child)];
-                    class appl_allocator_placement m_allocator;
+                    class appl_placement m_allocator;
                     class appl_demo_child * m_child;
             };
 
 */
 
 /* Included. */
-#define INC_APPL_ALLOCATOR_PLACEMENT_H
+#define INC_APPL_PLACEMENT_H
 
 /* Reverse include guard */
-enum guard_appl_allocator_placement_h
+enum guard_appl_placement_h
 {
-    inc_appl_allocator_placement_h = 1
+    inc_appl_placement_h = 1
         /* Header file dependency */
         + inc_appl_allocator_h
         + inc_appl_types_h
 };
+
+/*
+
+*/
+struct appl_placement_descriptor
+{
+    void *
+        p_placement;
+
+#define PADDING (APPL_SIZEOF_PTR)
+#include <appl_padding.h>
+
+}; /* struct appl_placement_descriptor */
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -59,28 +76,32 @@ enum guard_appl_allocator_placement_h
 //
 //
 //
-class appl_allocator_placement : public appl_allocator
+class appl_placement : public appl_allocator
 {
     public:
 
-        appl_allocator_placement(
+        appl_placement(
             struct appl_context * const
-                p_context,
-            void * const
-                p_placement);
+                p_context);
 
         virtual
-        ~appl_allocator_placement();
+        ~appl_placement();
+
+        enum appl_status
+            f_init(
+                struct appl_placement_descriptor const * const
+                    p_descriptor);
+
+        virtual
+        appl_size_t
+            v_cleanup(void);
 
     protected:
 
     private:
 
-        void *
-            m_placement;
-
-#define PADDING (APPL_SIZEOF_PTR)
-#include <appl_padding.h>
+        struct appl_placement_descriptor
+            m_descriptor;
 
         virtual
         enum appl_status
@@ -98,13 +119,13 @@ class appl_allocator_placement : public appl_allocator
                 void * const
                     p_buf);
 
-        appl_allocator_placement(
-            class appl_allocator_placement const & r);
+        appl_placement(
+            class appl_placement const & r);
 
-        class appl_allocator_placement &
+        class appl_placement &
             operator =(
-                class appl_allocator_placement const & r);
+                class appl_placement const & r);
 
-}; // class appl_allocator_placement
+}; // class appl_placement
 
-/* end-of-file: appl_allocator_placement.h */
+/* end-of-file: appl_placement.h */

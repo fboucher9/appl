@@ -80,6 +80,43 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
+#if defined APPL_HAVE_COVERAGE
+        {
+            bool
+                b_coverage;
+
+            if (
+                1000ul
+                <= i_time_freq)
+            {
+                b_coverage =
+                    true;
+            }
+            else if (
+                1000000ul
+                <= i_time_freq)
+            {
+                b_coverage =
+                    true;
+            }
+            else if (
+                1000000000ul
+                <= i_time_freq)
+            {
+                b_coverage =
+                    true;
+            }
+            else
+            {
+                b_coverage =
+                    true;
+            }
+
+            appl_unused(
+                b_coverage);
+        }
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
 #if defined APPL_OS_LINUX
 
         int
@@ -180,6 +217,43 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
+#if defined APPL_HAVE_COVERAGE
+        {
+            bool
+                b_coverage;
+
+            if (
+                1000ul
+                <= i_time_freq)
+            {
+                b_coverage =
+                    true;
+            }
+            else if (
+                1000000ul
+                <= i_time_freq)
+            {
+                b_coverage =
+                    true;
+            }
+            else if (
+                1000000000ul
+                <= i_time_freq)
+            {
+                b_coverage =
+                    true;
+            }
+            else
+            {
+                b_coverage =
+                    true;
+            }
+
+            appl_unused(
+                b_coverage);
+        }
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
 #if defined APPL_OS_LINUX
 
         appl_ull_t const
