@@ -12,11 +12,15 @@
 
 #include <allocator/appl_allocator_std.h>
 
+#include <allocator/appl_placement.h>
+
 #include <appl_coverage_test.h>
 
 #if defined APPL_HAVE_COVERAGE
 #include <appl_coverage.h>
 #endif /* #if defined APPL_HAVE_COVERAGE */
+
+#include <appl_unused.h>
 
 //
 //
@@ -94,6 +98,69 @@ void
         appl_context_get_allocator(
             p_context);
 
+    // test of parent
+    {
+        struct appl_object *
+            p_object;
+
+        p_object =
+            appl_allocator_parent(
+                p_allocator);
+
+        p_object =
+            appl_allocator_parent(
+                0);
+
+        appl_unused(
+            p_object);
+    }
+
+    // test of small allocation
+    {
+        void *
+            p_buffer;
+
+        e_status =
+            appl_allocator_alloc(
+                p_allocator,
+                123u,
+                &(
+                    p_buffer));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            appl_allocator_free(
+                p_allocator,
+                123u,
+                p_buffer);
+        }
+    }
+
+    // test of large allocation
+    {
+        void *
+            p_buffer;
+
+        e_status =
+            appl_allocator_alloc(
+                p_allocator,
+                256ul * 1024ul,
+                &(
+                    p_buffer));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            appl_allocator_free(
+                p_allocator,
+                256ul * 1024ul,
+                p_buffer);
+        }
+    }
+
     {
         class appl_allocator_std *
             p_allocator_std;
@@ -168,6 +235,59 @@ void
     }
 
     {
+        static unsigned char g_placement_buffer[256u];
+
+        class appl_placement *
+            p_placement;
+
+        struct appl_placement_descriptor
+            o_placement_descriptor;
+
+        o_placement_descriptor.p_placement =
+            g_placement_buffer;
+
+        e_status =
+            appl_new(
+                p_allocator,
+                &(
+                    o_placement_descriptor),
+                &(
+                    p_placement));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            struct appl_allocator *
+                p_placement_base;
+
+            void *
+                p_buffer;
+
+            p_placement_base =
+                p_placement;
+
+            e_status =
+                p_placement_base->v_alloc(
+                    64u,
+                    &(
+                        p_buffer));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    p_placement_base->v_free(
+                        64u,
+                        p_buffer);
+            }
+
+            appl_delete(
+                p_allocator,
+                p_placement);
+        }
+
     }
 
 } /* appl_allocator_test_1() */

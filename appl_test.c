@@ -2784,6 +2784,15 @@ appl_test_main(
                         't'
                     };
 
+                    static unsigned char const g_ref_alloc[] =
+                    {
+                        'a',
+                        'l',
+                        'l',
+                        'o',
+                        'c'
+                    };
+
                     if (
                         0
                         == appl_buf_compare(
@@ -2831,6 +2840,17 @@ appl_test_main(
                             g_ref_context + sizeof(g_ref_context)))
                     {
                         appl_context_test_1(
+                            p_context);
+                    }
+                    else if (
+                        0
+                        == appl_buf_compare(
+                            p_buf_min,
+                            p_buf_max,
+                            g_ref_alloc,
+                            g_ref_alloc + sizeof(g_ref_alloc)))
+                    {
+                        appl_allocator_test_1(
                             p_context);
                     }
                     else
