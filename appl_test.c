@@ -2301,6 +2301,12 @@ enum appl_status
     }
 #endif /* #if defined APPL_HAVE_XLIB */
 
+    if (1)
+    {
+        appl_file_test_1(
+            p_context);
+    }
+
     /* Test memory leak */
     if (1)
     {
