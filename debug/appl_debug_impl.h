@@ -60,6 +60,14 @@ class appl_debug_impl
                 char const * const
                     p_message0);
 
+        static
+        void
+            s_validate(
+                bool const
+                    b_condition,
+                char const * const
+                    p_message0);
+
 }; // class appl_debug_impl
 
 /* end-of-file: appl_debug_impl.h */

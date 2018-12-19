@@ -289,11 +289,13 @@ class appl_context_std : public appl_context
         void
             cleanup_file_mgr(void);
 
+#if 0
         enum appl_status
             init_poll_mgr(void);
 
         void
             cleanup_poll_mgr(void);
+#endif
 
         enum appl_status
             init_clock(void);
@@ -401,11 +403,13 @@ class appl_context_std : public appl_context
                 class appl_file_mgr * * const
                     r_file_mgr) const;
 
+#if 0
         virtual
         enum appl_status
             v_poll_mgr(
                 class appl_poll_mgr * * const
                     r_poll_mgr) const;
+#endif
 
         virtual
         enum appl_status

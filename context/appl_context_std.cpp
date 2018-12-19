@@ -611,6 +611,7 @@ void
 //
 //
 //
+#if 0
 enum appl_status
     appl_context_std::init_poll_mgr(void)
 {
@@ -632,10 +633,12 @@ enum appl_status
         e_status;
 
 }
+#endif
 
 //
 //
 //
+#if 0
 void
     appl_context_std::cleanup_poll_mgr(void)
 {
@@ -655,6 +658,7 @@ void
             false;
     }
 }
+#endif
 
 //
 //
@@ -744,27 +748,24 @@ enum appl_status
     enum appl_status
         e_status;
 
-    if (
-        !b_init_event_mgr)
-    {
-        e_status =
-            appl_event_std_mgr::s_create(
-                m_allocator,
-                &(
-                    m_event_mgr));
+#if defined APPL_DEBUG
+    appl_debug_impl::s_validate(
+        !b_init_event_mgr,
+        "event mgr already initialized\n");
+#endif /* #if defined APPL_DEBUG */
 
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            b_init_event_mgr =
-                true;
-        }
-    }
-    else
+    e_status =
+        appl_event_std_mgr::s_create(
+            m_allocator,
+            &(
+                m_event_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
     {
-        e_status =
-            appl_status_fail;
+        b_init_event_mgr =
+            true;
     }
 
     return
@@ -802,44 +803,41 @@ enum appl_status
     enum appl_status
         e_status;
 
-    if (
-        !b_init_socket_mgr)
-    {
+#if defined APPL_DEBUG
+    appl_debug_impl::s_validate(
+        !b_init_socket_mgr,
+        "socket mgr already initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
 #if defined APPL_OS_LINUX
 
-        e_status =
-            appl_socket_std_mgr::s_create(
-                m_allocator,
-                &(
-                    m_socket_mgr));
+    e_status =
+        appl_socket_std_mgr::s_create(
+            m_allocator,
+            &(
+                m_socket_mgr));
 
 #elif defined APPL_OS_WINDOWS
 
-        e_status =
-            appl_socket_w32_mgr::s_create(
-                m_allocator,
-                &(
-                    m_socket_mgr));
+    e_status =
+        appl_socket_w32_mgr::s_create(
+            m_allocator,
+            &(
+                m_socket_mgr));
 
 #else /* #if defined APPL_OS_Xx */
 
-        e_status =
-            appl_status_fail;
+    e_status =
+        appl_status_fail;
 
 #endif /* #if defined APPL_OS_Xx */
 
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            b_init_socket_mgr =
-                true;
-        }
-    }
-    else
+    if (
+        appl_status_ok
+        == e_status)
     {
-        e_status =
-            appl_status_fail;
+        b_init_socket_mgr =
+            true;
     }
 
     return
@@ -885,8 +883,12 @@ enum appl_status
     enum appl_status
         e_status;
 
-    if (
-        !b_init_env)
+#if defined APPL_DEBUG
+    appl_debug_impl::s_validate(
+        !b_init_env,
+        "env already initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
     {
 #if defined APPL_OS_LINUX
         e_status =
@@ -912,11 +914,6 @@ enum appl_status
             b_init_env =
                 true;
         }
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
     }
 
     return
@@ -961,8 +958,12 @@ enum appl_status
     enum appl_status
         e_status;
 
-    if (
-        !b_init_library_mgr)
+#if defined APPL_DEBUG
+    appl_debug_impl::s_validate(
+        !b_init_library_mgr,
+        "library mgr already initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
     {
         e_status =
             appl_library_mgr_create(
@@ -977,11 +978,6 @@ enum appl_status
             b_init_library_mgr =
                 true;
         }
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
     }
 
     return
@@ -1019,8 +1015,12 @@ enum appl_status
     enum appl_status
         e_status;
 
-    if (
-        !b_init_random_mgr)
+#if defined APPL_DEBUG
+    appl_debug_impl::s_validate(
+        !b_init_random_mgr,
+        "random mgr already initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
     {
 #if defined APPL_OS_LINUX
         e_status =
@@ -1046,11 +1046,6 @@ enum appl_status
             b_init_random_mgr =
                 true;
         }
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
     }
 
     return
@@ -1095,8 +1090,12 @@ enum appl_status
     enum appl_status
         e_status;
 
-    if (
-        !b_init_log)
+#if defined APPL_DEBUG
+    appl_debug_impl::s_validate(
+        !b_init_log,
+        "log already initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
     {
         class appl_log_std *
             p_log_std;
@@ -1117,11 +1116,6 @@ enum appl_status
             b_init_log =
                 true;
         }
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
     }
 
     return
@@ -1159,8 +1153,12 @@ enum appl_status
     enum appl_status
         e_status;
 
-    if (
-        !b_init_pool_mgr)
+#if defined APPL_DEBUG
+    appl_debug_impl::s_validate(
+        !b_init_pool_mgr,
+        "pool mgr already initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
     {
         e_status =
             appl_pool_mgr::s_create(
@@ -1175,11 +1173,6 @@ enum appl_status
             b_init_pool_mgr =
                 true;
         }
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
     }
 
     return
@@ -1225,9 +1218,12 @@ enum appl_status
     enum appl_status
         e_status;
 
-    if (
-        !(
-            b_init_thread_cache_mgr))
+#if defined APPL_DEBUG
+    appl_debug_impl::s_validate(
+        !b_init_thread_cache_mgr,
+        "thread cache mgr already initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
     {
         e_status =
             appl_thread_cache_mgr_create(
@@ -1237,11 +1233,6 @@ enum appl_status
 
         b_init_thread_cache_mgr =
             true;
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
     }
 
     return
@@ -1287,13 +1278,12 @@ enum appl_status
     enum appl_status
         e_status;
 
-    if (
-        b_init_timer_mgr)
-    {
-        e_status =
-            appl_status_fail;
-    }
-    else
+#if defined APPL_DEBUG
+    appl_debug_impl::s_validate(
+        !b_init_timer_mgr,
+        "timer mgr already initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
     {
         e_status =
             appl_timer_std_mgr::s_create(
@@ -1347,13 +1337,12 @@ enum appl_status
     enum appl_status
         e_status;
 
-    if (
-        b_init_xlib)
-    {
-        e_status =
-            appl_status_ok;
-    }
-    else
+#if defined APPL_DEBUG
+    appl_debug_impl::s_validate(
+        !b_init_xlib,
+        "xlib already initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
     {
         e_status =
             appl_xlib_std::s_create(
@@ -1948,6 +1937,7 @@ enum appl_status
 //
 //
 //
+#if 0
 enum appl_status
     appl_context_std::v_poll_mgr(
         class appl_poll_mgr * * const
@@ -1980,6 +1970,7 @@ enum appl_status
         e_status;
 
 } // v_poll_mgr()
+#endif
 
 //
 //

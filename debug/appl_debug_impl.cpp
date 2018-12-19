@@ -126,6 +126,27 @@ void
 
 } // s_print0()
 
+//
+//
+//
+void
+    appl_debug_impl::s_validate(
+        bool const
+            b_condition,
+        char const * const
+            p_message0)
+{
+    if (
+        b_condition)
+    {
+    }
+    else
+    {
+        appl_debug_impl::s_print0(
+            p_message0);
+    }
+} // s_validate()
+
 #else /* #if defined APPL_DEBUG */
 
 typedef void appl_dummy;
