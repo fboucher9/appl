@@ -25,6 +25,13 @@ struct appl_log : public appl_object
 {
     public:
 
+        appl_log(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_log();
+
         virtual
         enum appl_status
             v_print(
@@ -36,13 +43,6 @@ struct appl_log : public appl_object
                     p_message_max);
 
     protected:
-
-        appl_log(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_log();
 
     private:
 

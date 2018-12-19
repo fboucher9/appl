@@ -57,6 +57,8 @@
 
 #include <file/appl_file_test.h>
 
+#include <log/appl_log_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2303,6 +2305,12 @@ enum appl_status
 
     if (1)
     {
+        appl_context_test_1(
+            p_context);
+    }
+
+    if (1)
+    {
         appl_file_test_1(
             p_context);
     }
@@ -2575,18 +2583,9 @@ enum appl_status
 
     if ((1))
     {
-        static unsigned char const s_msg[] =
-        {
-            'b',
-            'y',
-            'e'
-        };
+        appl_log_test_1(
+            p_context);
 
-        appl_log_print(
-            p_context,
-            appl_log_level_info,
-            s_msg,
-            s_msg + sizeof(s_msg));
     }
 
     if (1)
@@ -2809,6 +2808,13 @@ appl_test_main(
                         'e'
                     };
 
+                    static unsigned char const g_ref_log[] =
+                    {
+                        'l',
+                        'o',
+                        'g'
+                    };
+
                     if (
                         0
                         == appl_buf_compare(
@@ -2878,6 +2884,17 @@ appl_test_main(
                             g_ref_file + sizeof(g_ref_file)))
                     {
                         appl_file_test_1(
+                            p_context);
+                    }
+                    else if (
+                        0
+                        == appl_buf_compare(
+                            p_buf_min,
+                            p_buf_max,
+                            g_ref_log,
+                            g_ref_log + sizeof(g_ref_log)))
+                    {
+                        appl_log_test_1(
                             p_context);
                     }
                     else

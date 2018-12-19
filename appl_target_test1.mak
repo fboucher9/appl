@@ -41,6 +41,7 @@ test_appl-deps = \
     debug/appl_debug_test.cpp \
     context/appl_context_test.cpp \
     file/appl_file_test.cpp \
+    log/appl_log_test.cpp \
     $(appl_base-deps)
 
 # List of libraries required to link test application
