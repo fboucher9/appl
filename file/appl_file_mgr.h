@@ -29,6 +29,13 @@ class appl_file_mgr : public appl_object
 {
     public:
 
+        appl_file_mgr(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_file_mgr();
+
         virtual
         enum appl_status
             v_create_node(
@@ -44,13 +51,6 @@ class appl_file_mgr : public appl_object
                     p_file_node);
 
     protected:
-
-        appl_file_mgr(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_file_mgr();
 
     private:
 

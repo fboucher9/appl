@@ -231,36 +231,49 @@ enum appl_status
             else
             {
                 i_flags =
-                    0;
+                    -1;
             }
 
-            int
-                i_mode;
+            if (
+                -1
+                != i_flags)
+            {
+                int
+                    i_mode;
 
 #if defined APPL_OS_LINUX
-            i_mode =
-                S_IRUSR
-                | S_IWUSR
-                | S_IRGRP
-                | S_IWGRP
-                | S_IROTH;
+                i_mode =
+                    S_IRUSR
+                    | S_IWUSR
+                    | S_IRGRP
+                    | S_IWGRP
+                    | S_IROTH;
 #else /* #if defined APPL_OS_LINUX */
-            i_mode =
-                0664;
+                i_mode =
+                    0664;
 #endif /* #if defined APPL_OS_LINUX */
 
-            m_fd =
-                open(
-                    appl_convert::to_char_ptr(
-                        a_pathname),
-                    i_flags,
-                    i_mode);
+                m_fd =
+                    open(
+                        appl_convert::to_char_ptr(
+                            a_pathname),
+                        i_flags,
+                        i_mode);
 
-            if (
-                m_fd >= 0)
-            {
-                e_status =
-                    appl_status_ok;
+                if (
+                    m_fd >= 0)
+                {
+                    m_close =
+                        true;
+
+                    e_status =
+                        appl_status_ok;
+                }
+                else
+                {
+                    e_status =
+                        appl_status_fail;
+                }
             }
             else
             {

@@ -55,6 +55,5 @@ dkms.conf
 tags
 
 # Project specific
-input.bin
-output.bin
+*.bin
 test_appl

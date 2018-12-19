@@ -40,6 +40,7 @@ test_appl-deps = \
     allocator/appl_allocator_test.cpp \
     debug/appl_debug_test.cpp \
     context/appl_context_test.cpp \
+    file/appl_file_test.cpp \
     $(appl_base-deps)
 
 # List of libraries required to link test application

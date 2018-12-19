@@ -55,6 +55,8 @@
 
 #include <context/appl_context_test.h>
 
+#include <file/appl_file_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2793,6 +2795,14 @@ appl_test_main(
                         'c'
                     };
 
+                    static unsigned char const g_ref_file[] =
+                    {
+                        'f',
+                        'i',
+                        'l',
+                        'e'
+                    };
+
                     if (
                         0
                         == appl_buf_compare(
@@ -2851,6 +2861,17 @@ appl_test_main(
                             g_ref_alloc + sizeof(g_ref_alloc)))
                     {
                         appl_allocator_test_1(
+                            p_context);
+                    }
+                    else if (
+                        0
+                        == appl_buf_compare(
+                            p_buf_min,
+                            p_buf_max,
+                            g_ref_file,
+                            g_ref_file + sizeof(g_ref_file)))
+                    {
+                        appl_file_test_1(
                             p_context);
                     }
                     else

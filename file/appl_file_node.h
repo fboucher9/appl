@@ -28,6 +28,13 @@ struct appl_file : public appl_object
 {
     public:
 
+        appl_file(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_file();
+
         virtual
         enum appl_status
             v_read(
@@ -49,13 +56,6 @@ struct appl_file : public appl_object
                     r_count);
 
     protected:
-
-        appl_file(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_file();
 
     private:
 
