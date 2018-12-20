@@ -8,6 +8,10 @@
 
 #include <timer/appl_timer_test.h>
 
+#include <timer/appl_timer.h>
+
+#include <timer/appl_timer_mgr.h>
+
 #include <stdio.h>
 
 /*
@@ -25,7 +29,7 @@ appl_timer_test_event_cb(
 /*
 
 */
-enum appl_status
+void
 appl_timer_test_1(
     struct appl_context * const
         p_context)
@@ -35,6 +39,13 @@ appl_timer_test_1(
 
     struct appl_timer *
         p_timer;
+
+    struct appl_allocator *
+        p_allocator;
+
+    p_allocator =
+        appl_context_get_allocator(
+            p_context);
 
     /* Create a timer and schedule some events */
     e_status =
@@ -47,10 +58,14 @@ appl_timer_test_1(
         appl_status_ok
         == e_status)
     {
-        /* Detect current time */
         appl_ull_t
             i_now_usec;
 
+        /* Parent */
+        appl_timer_parent(
+            p_timer);
+
+        /* Detect current time */
         e_status =
             appl_clock_read(
                 p_context,
@@ -104,8 +119,56 @@ appl_timer_test_1(
             p_timer);
     }
 
-    return
-        e_status;
+    // base timer mgr
+    {
+        class appl_timer_mgr *
+            p_timer_mgr;
+
+        e_status =
+            appl_new(
+                p_allocator,
+                &(
+                    p_timer_mgr));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            p_timer_mgr->v_create_node(
+                0);
+
+            p_timer_mgr->v_destroy_node(
+                0);
+
+            appl_delete(
+                p_allocator,
+                p_timer_mgr);
+        }
+    }
+
+    // base timer node
+    {
+        struct appl_timer *
+            p_timer_node;
+
+        e_status =
+            appl_new(
+                p_allocator,
+                &(
+                    p_timer_node));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            p_timer_node->v_schedule(
+                0);
+
+            appl_delete(
+                p_allocator,
+                p_timer_node);
+        }
+    }
 
 } /* appl_timer_test_1() */
 

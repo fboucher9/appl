@@ -26,6 +26,13 @@ struct appl_library : public appl_object
 {
     public:
 
+        appl_library(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_library();
+
         virtual
         enum appl_status
             v_query(
@@ -37,13 +44,6 @@ struct appl_library : public appl_object
                     r_symbol) const;
 
     protected:
-
-        appl_library(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_library();
 
     private:
 

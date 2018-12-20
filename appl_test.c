@@ -59,6 +59,8 @@
 
 #include <log/appl_log_test.h>
 
+#include <library/appl_library_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2210,6 +2212,321 @@ appl_test_thread_cache(
 } /* appl_test_thread_cache() */
 
 static
+void
+    appl_pool_test_batch(
+        struct appl_context * const
+            p_context)
+{
+    char
+        b_result;
+
+    b_result =
+        appl_pool_test_1(
+            p_context);
+
+    appl_print0(
+        "appl_pool_test_1 : ");
+
+    appl_print0(
+        b_result
+        ? "pass."
+        : "FAIL!");
+
+    appl_print0(
+        "\n");
+
+    b_result =
+        appl_pool_test_2(
+            p_context);
+
+    appl_print0(
+        "appl_pool_test_2 : ");
+
+    appl_print0(
+        b_result
+        ? "pass."
+        : "FAIL!");
+
+    appl_print0(
+        "\n");
+
+    b_result =
+        appl_pool_test_3(
+            p_context);
+
+    appl_print0(
+        "appl_pool_test_3 : ");
+
+    appl_print0(
+        b_result
+        ? "pass."
+        : "FAIL!");
+
+    appl_print0(
+        "\n");
+}
+
+static unsigned char const g_ref_object[] =
+{
+    'o',
+    'b',
+    'j',
+    'e',
+    'c',
+    't'
+};
+
+static unsigned char const g_ref_clock[] =
+{
+    'c',
+    'l',
+    'o',
+    'c',
+    'k'
+};
+
+#if defined APPL_DEBUG
+static unsigned char const g_ref_debug[] =
+{
+    'd',
+    'e',
+    'b',
+    'u',
+    'g'
+};
+#endif /* #if defined APPL_DEBUG */
+
+static unsigned char const g_ref_backtrace[] =
+{
+    'b',
+    'a',
+    'c',
+    'k',
+    't',
+    'r',
+    'a',
+    'c',
+    'e'
+};
+
+static unsigned char const g_ref_context[] =
+{
+    'c',
+    'o',
+    'n',
+    't',
+    'e',
+    'x',
+    't'
+};
+
+static unsigned char const g_ref_alloc[] =
+{
+    'a',
+    'l',
+    'l',
+    'o',
+    'c'
+};
+
+static unsigned char const g_ref_heap[] =
+{
+    'h',
+    'e',
+    'a',
+    'p'
+};
+
+static unsigned char const g_ref_env[] =
+{
+    'e',
+    'n',
+    'v'
+};
+
+static unsigned char const g_ref_file[] =
+{
+    'f',
+    'i',
+    'l',
+    'e'
+};
+
+static unsigned char const g_ref_log[] =
+{
+    'l',
+    'o',
+    'g'
+};
+
+static unsigned char const g_ref_mutex[] =
+{
+    'm',
+    'u',
+    't',
+    'e',
+    'x'
+};
+
+static unsigned char const g_ref_event[] =
+{
+    'e',
+    'v',
+    'e',
+    'n',
+    't'
+};
+
+static unsigned char const g_ref_timer[] =
+{
+    't',
+    'i',
+    'm',
+    'e',
+    'r'
+};
+
+static unsigned char const g_ref_library[] =
+{
+    'l',
+    'i',
+    'b',
+    'r',
+    'a',
+    'r',
+    'y'
+};
+
+static unsigned char const g_ref_pool[] =
+{
+    'p',
+    'o',
+    'o',
+    'l'
+};
+
+struct appl_test_command
+{
+    unsigned char const *
+        p_name_min;
+
+    unsigned char const *
+        p_name_max;
+
+    void (*
+        p_function)(
+        struct appl_context * const
+            p_context);
+
+};
+
+static struct appl_test_command const g_test_commands[] =
+{
+    {
+        g_ref_object,
+        g_ref_object + sizeof(g_ref_object),
+        & appl_object_test_1
+    },
+    {
+        g_ref_object,
+        g_ref_object + sizeof(g_ref_object),
+        & appl_object_test_2
+    },
+    {
+        g_ref_clock,
+        g_ref_clock + sizeof(g_ref_clock),
+        & appl_clock_test_1
+    },
+#if defined APPL_DEBUG
+    {
+        g_ref_debug,
+        g_ref_debug + sizeof(g_ref_debug),
+        & appl_debug_test_1
+    },
+    {
+        g_ref_debug,
+        g_ref_debug + sizeof(g_ref_debug),
+        & appl_debug_test_2
+    },
+#endif /* #if defined APPL_DEBUG */
+    {
+        g_ref_backtrace,
+        g_ref_backtrace + sizeof(g_ref_backtrace),
+        & appl_backtrace_test_1
+    },
+    {
+        g_ref_context,
+        g_ref_context + sizeof(g_ref_context),
+        & appl_context_test_1
+    },
+    {
+        g_ref_alloc,
+        g_ref_alloc + sizeof(g_ref_alloc),
+        & appl_allocator_test_1
+    },
+    {
+        g_ref_heap,
+        g_ref_heap + sizeof(g_ref_heap),
+        & appl_heap_test_1
+    },
+    {
+        g_ref_env,
+        g_ref_env + sizeof(g_ref_env),
+        & appl_env_test_1
+    },
+    {
+        g_ref_file,
+        g_ref_file + sizeof(g_ref_file),
+        & appl_file_test_1
+    },
+    {
+        g_ref_log,
+        g_ref_log + sizeof(g_ref_log),
+        & appl_log_test_1
+    },
+    {
+        g_ref_mutex,
+        g_ref_mutex + sizeof(g_ref_mutex),
+        & appl_mutex_test_1
+    },
+    {
+        g_ref_mutex,
+        g_ref_mutex + sizeof(g_ref_mutex),
+        & appl_mutex_test_2
+    },
+    {
+        g_ref_mutex,
+        g_ref_mutex + sizeof(g_ref_mutex),
+        & appl_mutex_test_3
+    },
+    {
+        g_ref_event,
+        g_ref_event + sizeof(g_ref_event),
+        & appl_event_test_1
+    },
+    {
+        g_ref_event,
+        g_ref_event + sizeof(g_ref_event),
+        & appl_event_test_2
+    },
+    {
+        g_ref_timer,
+        g_ref_timer + sizeof(g_ref_timer),
+        & appl_timer_test_1
+    },
+    {
+        g_ref_library,
+        g_ref_library + sizeof(g_ref_library),
+        & appl_library_test_1
+    },
+    {
+        g_ref_pool,
+        g_ref_pool + sizeof(g_ref_pool),
+        & appl_pool_test_batch
+    }
+};
+
+static
 enum appl_status
     appl_test_main_default(
         struct appl_context * const
@@ -2222,75 +2539,7 @@ enum appl_status
 
     if (1)
     {
-        appl_object_test_1(
-            p_context);
-
-        appl_object_test_2(
-            p_context);
-    }
-
-    if (1)
-    {
-        appl_heap_test_1(
-            p_context);
-    }
-
-    if (1)
-    {
-        appl_env_test_1(
-            p_context);
-    }
-
-    if (1)
-    {
-        appl_backtrace_test_1(
-            p_context);
-    }
-
-    if (1)
-    {
-        appl_clock_test_1(
-            p_context);
-    }
-
-    if (1)
-    {
-        appl_mutex_test_1(
-            p_context);
-
-        appl_mutex_test_2(
-            p_context);
-
-        appl_mutex_test_3(
-            p_context);
-    }
-
-    if (1)
-    {
-        appl_event_test_1(
-            p_context);
-
-        appl_event_test_2(
-            p_context);
-    }
-
-    /* Print the argument list */
-    if (1)
-    {
-        appl_options_test_1(
-            p_context,
-            p_options);
-    }
-
-    if (1)
-    {
         appl_options_test_2(
-            p_context);
-    }
-
-    if (1)
-    {
-        appl_allocator_test_1(
             p_context);
     }
 
@@ -2302,18 +2551,6 @@ enum appl_status
             p_context);
     }
 #endif /* #if defined APPL_HAVE_XLIB */
-
-    if (1)
-    {
-        appl_context_test_1(
-            p_context);
-    }
-
-    if (1)
-    {
-        appl_file_test_1(
-            p_context);
-    }
 
     /* Test memory leak */
     if (1)
@@ -2335,17 +2572,6 @@ enum appl_status
         appl_module_test_1(
             p_context);
     }
-
-#if defined APPL_DEBUG
-    if (1)
-    {
-        appl_debug_test_1(
-            p_context);
-
-        appl_debug_test_2(
-            p_context);
-    }
-#endif /* #if defined APPL_DEBUG */
 
     if ((1))
     {
@@ -2581,13 +2807,6 @@ enum appl_status
             p_context);
     }
 
-    if ((1))
-    {
-        appl_log_test_1(
-            p_context);
-
-    }
-
     if (1)
     {
         /* Test of thread cache... */
@@ -2603,65 +2822,15 @@ enum appl_status
 
     if (1)
     {
-        char
-            b_result;
+        appl_pool_test_batch(
+            p_context);
 
-        b_result =
-            appl_pool_test_1(
-                p_context);
-
-        appl_print0(
-            "appl_pool_test_1 : ");
-
-        appl_print0(
-            b_result
-            ? "pass."
-            : "FAIL!");
-
-        appl_print0(
-            "\n");
-
-        b_result =
-            appl_pool_test_2(
-                p_context);
-
-        appl_print0(
-            "appl_pool_test_2 : ");
-
-        appl_print0(
-            b_result
-            ? "pass."
-            : "FAIL!");
-
-        appl_print0(
-            "\n");
-
-        b_result =
-            appl_pool_test_3(
-                p_context);
-
-        appl_print0(
-            "appl_pool_test_3 : ");
-
-        appl_print0(
-            b_result
-            ? "pass."
-            : "FAIL!");
-
-        appl_print0(
-            "\n");
 
     }
 
     if (1)
     {
         appl_thread_cache_test(
-            p_context);
-    }
-
-    if (1)
-    {
-        appl_timer_test_1(
             p_context);
     }
 
@@ -2692,6 +2861,11 @@ appl_test_main(
 
     unsigned long int
         i_count;
+
+    /* Print the argument list */
+    appl_options_test_1(
+        p_context,
+        p_options);
 
     e_status =
         appl_options_count(
@@ -2747,160 +2921,54 @@ appl_test_main(
                     appl_status_ok
                     == e_status)
                 {
-                    static unsigned char const g_ref_clock[] =
-                    {
-                        'c',
-                        'l',
-                        'o',
-                        'c',
-                        'k'
-                    };
+                    unsigned int
+                        i;
 
-#if defined APPL_DEBUG
-                    static unsigned char const g_ref_debug[] =
-                    {
-                        'd',
-                        'e',
-                        'b',
-                        'u',
-                        'g'
-                    };
-#endif /* #if defined APPL_DEBUG */
+                    char
+                        b_found;
 
-                    static unsigned char const g_ref_backtrace[] =
-                    {
-                        'b',
-                        'a',
-                        'c',
-                        'k',
-                        't',
-                        'r',
-                        'a',
-                        'c',
-                        'e'
-                    };
+                    b_found =
+                        0;
 
-                    static unsigned char const g_ref_context[] =
+                    for (
+                        i = 0;
+                        i < sizeof(g_test_commands) / sizeof(g_test_commands[0u]);
+                        i ++)
                     {
-                        'c',
-                        'o',
-                        'n',
-                        't',
-                        'e',
-                        'x',
-                        't'
-                    };
+                        struct appl_test_command const *
+                            p_test_command;
 
-                    static unsigned char const g_ref_alloc[] =
-                    {
-                        'a',
-                        'l',
-                        'l',
-                        'o',
-                        'c'
-                    };
+                        p_test_command =
+                            g_test_commands + i;
 
-                    static unsigned char const g_ref_file[] =
-                    {
-                        'f',
-                        'i',
-                        'l',
-                        'e'
-                    };
+                        if (
+                            0
+                            == appl_buf_compare(
+                                p_buf_min,
+                                p_buf_max,
+                                p_test_command->p_name_min,
+                                p_test_command->p_name_max))
+                        {
+                            printf(
+                                "run command [%.*s]\n",
+                                (int)(p_test_command->p_name_max
+                                    - p_test_command->p_name_min),
+                                (char const *)(
+                                    p_test_command->p_name_min));
 
-                    static unsigned char const g_ref_log[] =
-                    {
-                        'l',
-                        'o',
-                        'g'
-                    };
+                            b_found =
+                                1;
+
+                            (*(p_test_command->p_function))(
+                                p_context);
+                        }
+                    }
 
                     if (
-                        0
-                        == appl_buf_compare(
-                            p_buf_min,
-                            p_buf_max,
-                            g_ref_clock,
-                            g_ref_clock + sizeof(g_ref_clock)))
-                    {
-                        appl_clock_test_1(
-                            p_context);
-                    }
-#if defined APPL_DEBUG
-                    else if (
-                        0
-                        == appl_buf_compare(
-                            p_buf_min,
-                            p_buf_max,
-                            g_ref_debug,
-                            g_ref_debug + sizeof(g_ref_debug)))
-                    {
-                        appl_debug_test_1(
-                            p_context);
-
-                        appl_debug_test_2(
-                            p_context);
-                    }
-#endif /* #if defined APPL_DEBUG */
-                    else if (
-                        0
-                        == appl_buf_compare(
-                            p_buf_min,
-                            p_buf_max,
-                            g_ref_backtrace,
-                            g_ref_backtrace + sizeof(g_ref_backtrace)))
-                    {
-                        appl_backtrace_test_1(
-                            p_context);
-                    }
-                    else if (
-                        0
-                        == appl_buf_compare(
-                            p_buf_min,
-                            p_buf_max,
-                            g_ref_context,
-                            g_ref_context + sizeof(g_ref_context)))
-                    {
-                        appl_context_test_1(
-                            p_context);
-                    }
-                    else if (
-                        0
-                        == appl_buf_compare(
-                            p_buf_min,
-                            p_buf_max,
-                            g_ref_alloc,
-                            g_ref_alloc + sizeof(g_ref_alloc)))
-                    {
-                        appl_allocator_test_1(
-                            p_context);
-                    }
-                    else if (
-                        0
-                        == appl_buf_compare(
-                            p_buf_min,
-                            p_buf_max,
-                            g_ref_file,
-                            g_ref_file + sizeof(g_ref_file)))
-                    {
-                        appl_file_test_1(
-                            p_context);
-                    }
-                    else if (
-                        0
-                        == appl_buf_compare(
-                            p_buf_min,
-                            p_buf_max,
-                            g_ref_log,
-                            g_ref_log + sizeof(g_ref_log)))
-                    {
-                        appl_log_test_1(
-                            p_context);
-                    }
-                    else
+                        !b_found)
                     {
                         appl_print0(
-                            "unknown arg\n");
+                            "unknown command!\n");
                     }
 
                     i_index ++;

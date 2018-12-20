@@ -10,6 +10,12 @@
 
 #include <pool/appl_pool_test.h>
 
+#include <pool/appl_pool_mgr.h>
+
+#include <allocator/appl_allocator.h>
+
+#include <pool/appl_pool.h>
+
 /*
 
 */
@@ -54,6 +60,12 @@ appl_pool_test_1(
         appl_status_ok
         == e_status)
     {
+        appl_pool_parent(
+            p_pool);
+
+        appl_pool_const_parent(
+            p_pool);
+
         e_status =
             appl_pool_destroy(
                 p_pool);
@@ -73,6 +85,64 @@ appl_pool_test_1(
     {
         b_result =
             0;
+    }
+
+    {
+        struct appl_allocator *
+            p_allocator;
+
+        p_allocator =
+            appl_context_get_allocator(
+                p_context);
+
+#if 0
+        {
+            class appl_pool_mgr *
+                p_pool_mgr;
+
+            e_status =
+                appl_new(
+                    p_allocator,
+                    &(
+                        p_pool_mgr));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                p_pool_mgr->v_create_node(
+                    0,
+                    0);
+
+                p_pool_mgr->v_destroy_node(
+                    0);
+
+                appl_delete(
+                    p_allocator,
+                    p_pool_mgr);
+            }
+        }
+#endif
+
+        {
+            struct appl_pool *
+                p_pool_node;
+
+            e_status =
+                appl_new(
+                    p_allocator,
+                    &(
+                        p_pool_node));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                appl_delete(
+                    p_allocator,
+                    p_pool_node);
+            }
+        }
     }
 
     return

@@ -22,6 +22,13 @@ class appl_timer_mgr : public appl_object
 {
     public:
 
+        appl_timer_mgr(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_timer_mgr();
+
         virtual
         enum appl_status
             v_create_node(
@@ -35,13 +42,6 @@ class appl_timer_mgr : public appl_object
                     p_timer);
 
     protected:
-
-        appl_timer_mgr(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_timer_mgr();
 
     private:
 

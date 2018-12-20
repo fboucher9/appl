@@ -30,6 +30,13 @@ class appl_library_mgr : public appl_object
 {
     public:
 
+        appl_library_mgr(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_library_mgr();
+
         virtual
         enum appl_status
             v_create_node(
@@ -45,13 +52,6 @@ class appl_library_mgr : public appl_object
                     p_library);
 
     protected:
-
-        appl_library_mgr(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_library_mgr();
 
     private:
 

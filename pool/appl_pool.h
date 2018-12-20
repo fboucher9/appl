@@ -34,14 +34,14 @@ struct appl_pool : public appl_allocator
 {
     public:
 
-    protected:
-
         appl_pool(
             struct appl_context * const
                 p_context);
 
         virtual
         ~appl_pool();
+
+    protected:
 
     private:
 

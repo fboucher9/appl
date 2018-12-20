@@ -20,10 +20,9 @@ test_appl-exports = appl.exports
 test_appl-deps = \
     appl_test.c \
     hash/appl_hash_test.c \
-    pool/appl_pool_test.c \
+    pool/appl_pool_test.cpp \
     thread/appl_thread_cache_test.c \
     module/appl_module_test.c \
-    timer/appl_timer_test.c \
     binary_heap/appl_binary_heap_test.c \
     options/appl_options_test.c \
     xlib/appl_xlib_test.c \
@@ -42,6 +41,8 @@ test_appl-deps = \
     context/appl_context_test.cpp \
     file/appl_file_test.cpp \
     log/appl_log_test.cpp \
+    library/appl_library_test.cpp \
+    timer/appl_timer_test.cpp \
     $(appl_base-deps)
 
 # List of libraries required to link test application

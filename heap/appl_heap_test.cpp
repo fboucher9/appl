@@ -312,6 +312,34 @@ void
         }
     }
 
+    // Test of leak report
+    {
+        struct appl_context *
+            p_context_temp;
+
+        e_status =
+            appl_context_create(
+                &(
+                    p_context_temp));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            void *
+                p_buffer;
+
+            appl_heap_alloc(
+                p_context_temp,
+                123u,
+                &(
+                    p_buffer));
+
+            appl_context_destroy(
+                p_context_temp);
+        }
+    }
+
     printf("^^^ appl_heap_test_1 ^^^\n");
 
 } // appl_heap_test_1()

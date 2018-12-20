@@ -26,6 +26,13 @@ struct appl_timer : public appl_object
 {
     public:
 
+        appl_timer(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_timer();
+
         virtual
         enum appl_status
             v_schedule(
@@ -33,13 +40,6 @@ struct appl_timer : public appl_object
                     p_timer_descriptor);
 
     protected:
-
-        appl_timer(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_timer();
 
     private:
 
