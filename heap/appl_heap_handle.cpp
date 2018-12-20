@@ -10,6 +10,10 @@
 
 #include <appl_heap_handle.h>
 
+#include <appl_context_handle.h>
+
+#include <appl_allocator_handle.h>
+
 #include <heap/appl_heap_service.h>
 
 #include <appl_validate.h>
@@ -87,5 +91,27 @@ appl_heap_free(
         e_status;
 
 } /* appl_heap_free() */
+
+//
+//
+//
+enum appl_status
+    appl_delete(
+        struct appl_context * const
+            p_context,
+        struct appl_object * const
+            p_object)
+{
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            p_context);
+
+    return
+        appl_delete(
+            p_allocator,
+            p_object);
+
+} // appl_delete()
 
 /* end-of-file: appl_heap_handle.cpp */

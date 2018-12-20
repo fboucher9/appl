@@ -16,9 +16,7 @@
 
 #include <appl_debug_handle.h>
 
-#include <appl_context_handle.h>
-
-#include <appl_allocator_handle.h>
+#include <appl_heap_handle.h>
 
 #include <debug/appl_debug_test.h>
 
@@ -79,13 +77,6 @@ void
         struct appl_context * const
             p_context)
 {
-    struct appl_allocator *
-        p_allocator;
-
-    p_allocator =
-        appl_context_get_allocator(
-            p_context);
-
     class appl_debug *
         p_debug_base;
 
@@ -94,7 +85,7 @@ void
 
     e_status =
         appl_new(
-            p_allocator,
+            p_context,
             &(
                 p_debug_base));
 
@@ -125,7 +116,7 @@ void
 #endif /* #if defined APPL_OS_LINUX */
 
         appl_delete(
-            p_allocator,
+            p_context,
             p_debug_base);
     }
 

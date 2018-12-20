@@ -23,13 +23,6 @@ void
     enum appl_status
         e_status;
 
-    struct appl_allocator *
-        p_allocator;
-
-    p_allocator =
-        appl_context_get_allocator(
-            p_context);
-
     // normal test
     {
         static unsigned char const g_library_name[] =
@@ -182,7 +175,7 @@ void
 
         e_status =
             appl_new(
-                p_allocator,
+                p_context,
                 &(
                     p_library_mgr));
 
@@ -198,7 +191,7 @@ void
                 0);
 
             appl_delete(
-                p_allocator,
+                p_context,
                 p_library_mgr);
         }
     }
@@ -210,7 +203,7 @@ void
 
         e_status =
             appl_new(
-                p_allocator,
+                p_context,
                 &(
                     p_library_node));
 
@@ -224,7 +217,7 @@ void
                 0);
 
             appl_delete(
-                p_allocator,
+                p_context,
                 p_library_node);
         }
     }

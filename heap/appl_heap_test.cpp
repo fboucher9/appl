@@ -20,8 +20,6 @@
 
 #include <appl_context_handle.h>
 
-#include <appl_allocator_handle.h>
-
 #if defined APPL_HAVE_COVERAGE
 #include <appl_coverage.h>
 #endif /* #if defined APPL_HAVE_COVERAGE */
@@ -56,13 +54,6 @@ void
 
     enum appl_status
             e_status;
-
-    struct appl_allocator *
-        p_allocator;
-
-    p_allocator =
-        appl_context_get_allocator(
-            p_context);
 
     // Normal heap alloc test
     {
@@ -102,7 +93,7 @@ void
 
         e_status =
             appl_new(
-                p_allocator,
+                p_context,
                 &(
                     p_heap));
 
@@ -129,7 +120,7 @@ void
             printf("heap base test - v_free ...}\n");
 
             appl_delete(
-                p_allocator,
+                p_context,
                 p_heap);
         }
 
@@ -195,7 +186,7 @@ void
 
         e_status =
             appl_new(
-                p_allocator,
+                p_context,
                 &(
                     p_heap_std));
 
@@ -204,7 +195,7 @@ void
             == e_status)
         {
             appl_delete(
-                p_allocator,
+                p_context,
                 p_heap_std);
         }
     }

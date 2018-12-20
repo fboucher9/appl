@@ -88,13 +88,6 @@ appl_pool_test_1(
     }
 
     {
-        struct appl_allocator *
-            p_allocator;
-
-        p_allocator =
-            appl_context_get_allocator(
-                p_context);
-
 #if 0
         {
             class appl_pool_mgr *
@@ -102,7 +95,7 @@ appl_pool_test_1(
 
             e_status =
                 appl_new(
-                    p_allocator,
+                    p_context,
                     &(
                         p_pool_mgr));
 
@@ -118,7 +111,7 @@ appl_pool_test_1(
                     0);
 
                 appl_delete(
-                    p_allocator,
+                    p_context,
                     p_pool_mgr);
             }
         }
@@ -130,7 +123,7 @@ appl_pool_test_1(
 
             e_status =
                 appl_new(
-                    p_allocator,
+                    p_context,
                     &(
                         p_pool_node));
 
@@ -139,7 +132,7 @@ appl_pool_test_1(
                 == e_status)
             {
                 appl_delete(
-                    p_allocator,
+                    p_context,
                     p_pool_node);
             }
         }

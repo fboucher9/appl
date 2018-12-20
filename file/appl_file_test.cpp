@@ -664,16 +664,9 @@ void
         enum appl_status
             e_status;
 
-        struct appl_allocator *
-            p_allocator;
-
-        p_allocator =
-            appl_context_get_allocator(
-                p_context);
-
         e_status =
             appl_new(
-                p_allocator,
+                p_context,
                 &(
                     p_file_mgr));
 
@@ -689,7 +682,7 @@ void
                 0);
 
             appl_delete(
-                p_allocator,
+                p_context,
                 p_file_mgr);
         }
     }
@@ -702,16 +695,9 @@ void
         enum appl_status
             e_status;
 
-        struct appl_allocator *
-            p_allocator;
-
-        p_allocator =
-            appl_context_get_allocator(
-                p_context);
-
         e_status =
             appl_new(
-                p_allocator,
+                p_context,
                 &(
                     p_file_node));
 
@@ -730,7 +716,7 @@ void
                 0);
 
             appl_delete(
-                p_allocator,
+                p_context,
                 p_file_node);
         }
     }

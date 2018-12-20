@@ -808,9 +808,13 @@ class appl_thread_cache_mgr : public appl_object
                     p_thread_cache)
         {
             // Object will be retired to unused list
+            struct appl_allocator * const
+                p_allocator =
+                0;
+
             return
                 appl_delete(
-                    0,
+                    p_allocator,
                     p_thread_cache);
 
         } // f_destroy_node()

@@ -16,9 +16,7 @@
 
 #include <backtrace/appl_backtrace_test.h>
 
-#include <appl_allocator_handle.h>
-
-#include <appl_context_handle.h>
+#include <appl_heap_handle.h>
 
 //
 //
@@ -31,18 +29,13 @@ appl_backtrace_test_1(
     enum appl_status
         e_status;
 
-    struct appl_allocator * const
-        p_allocator =
-        appl_context_get_allocator(
-            p_context);
-
     {
         class appl_backtrace *
             p_backtrace;
 
         e_status =
             appl_new(
-                p_allocator,
+                p_context,
                 &(
                     p_backtrace));
 
@@ -60,7 +53,7 @@ appl_backtrace_test_1(
                 p_backtrace->v_ouch("ouch!\n");
 
             appl_delete(
-                p_allocator,
+                p_context,
                 p_backtrace);
         }
     }

@@ -40,13 +40,6 @@ appl_timer_test_1(
     struct appl_timer *
         p_timer;
 
-    struct appl_allocator *
-        p_allocator;
-
-    p_allocator =
-        appl_context_get_allocator(
-            p_context);
-
     /* Create a timer and schedule some events */
     e_status =
         appl_timer_create(
@@ -126,7 +119,7 @@ appl_timer_test_1(
 
         e_status =
             appl_new(
-                p_allocator,
+                p_context,
                 &(
                     p_timer_mgr));
 
@@ -141,7 +134,7 @@ appl_timer_test_1(
                 0);
 
             appl_delete(
-                p_allocator,
+                p_context,
                 p_timer_mgr);
         }
     }
@@ -153,7 +146,7 @@ appl_timer_test_1(
 
         e_status =
             appl_new(
-                p_allocator,
+                p_context,
                 &(
                     p_timer_node));
 
@@ -165,7 +158,7 @@ appl_timer_test_1(
                 0);
 
             appl_delete(
-                p_allocator,
+                p_context,
                 p_timer_node);
         }
     }

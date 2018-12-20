@@ -2537,6 +2537,39 @@ enum appl_status
     enum appl_status
         e_status;
 
+    {
+        static unsigned int const
+            g_test_commands_max =
+            (unsigned int)(
+                sizeof(g_test_commands)
+                / sizeof(g_test_commands[0u]));
+
+        unsigned int
+            i_test_command_iterator;
+
+        for (
+            i_test_command_iterator = 0;
+            i_test_command_iterator < g_test_commands_max;
+            i_test_command_iterator++)
+        {
+            struct appl_test_command const *
+                p_test_command;
+
+            p_test_command =
+                g_test_commands + i_test_command_iterator;
+
+            printf(
+                "run command [%.*s]\n",
+                (int)(p_test_command->p_name_max
+                    - p_test_command->p_name_min),
+                (char const *)(
+                    p_test_command->p_name_min));
+
+            (*(p_test_command->p_function))(
+                p_context);
+        }
+    }
+
     if (1)
     {
         appl_options_test_2(
@@ -2828,7 +2861,7 @@ enum appl_status
 
     }
 
-    if (1)
+    if (0)
     {
         appl_thread_cache_test(
             p_context);

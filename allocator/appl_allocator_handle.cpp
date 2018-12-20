@@ -8,6 +8,8 @@
 
 #include <appl_types.h>
 
+#include <appl_context_handle.h>
+
 #include <appl_allocator_handle.h>
 
 #include <allocator/appl_allocator_service.h>

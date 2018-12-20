@@ -24,6 +24,8 @@
 
 #include <appl_allocator_handle.h>
 
+#include <appl_heap_handle.h>
+
 //
 //
 //
@@ -79,14 +81,9 @@ appl_xlib_service::s_destroy(
         p_context =
         p_xlib->get_context();
 
-    struct appl_allocator * const
-        p_allocator =
-        appl_context_get_allocator(
-            p_context);
-
     return
         appl_delete(
-            p_allocator,
+            p_context,
             p_xlib);
 
 } // s_destroy()

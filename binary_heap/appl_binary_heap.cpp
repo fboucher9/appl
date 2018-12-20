@@ -478,14 +478,9 @@ enum appl_status
         struct appl_binary_heap * * const
             r_instance)
 {
-    struct appl_allocator * const
-        p_allocator =
-        appl_context_get_allocator(
-            p_context);
-
     return
         appl_new(
-            p_allocator,
+            p_context,
             p_binary_heap_descriptor,
             r_instance);
 
@@ -506,14 +501,9 @@ enum appl_status
         p_context =
         p_binary_heap->get_context();
 
-    struct appl_allocator * const
-        p_allocator =
-        appl_context_get_allocator(
-            p_context);
-
     e_status =
         appl_delete(
-            p_allocator,
+            p_context,
             p_binary_heap);
 
     return

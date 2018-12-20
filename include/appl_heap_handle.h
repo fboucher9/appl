@@ -169,6 +169,140 @@ enum appl_status
             p_object);
 }
 
+//
+//
+//
+template <typename T_instance>
+enum appl_status
+    appl_new(
+        struct appl_context * const
+            p_context,
+        T_instance * * const
+            r_object)
+{
+    enum appl_status
+        e_status;
+
+    void *
+        p_placement;
+
+    e_status =
+        appl_heap_alloc(
+            p_context,
+            sizeof(T_instance),
+            &(
+                p_placement));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        T_instance * const
+            p_instance = new (
+                p_placement)
+                T_instance(
+                    p_context);
+
+        e_status =
+            p_instance->f_init();
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            *(
+                r_object) =
+                p_instance;
+        }
+        else
+        {
+            delete
+                p_instance;
+
+            appl_heap_free(
+                p_context,
+                sizeof(T_instance),
+                p_placement);
+        }
+    }
+
+    return
+        e_status;
+
+} // appl_new()
+
+//
+//
+//
+template <typename T_instance, typename T_descriptor>
+enum appl_status
+    appl_new(
+        struct appl_context * const
+            p_context,
+        T_descriptor const * const
+            p_descriptor,
+        T_instance * * const
+            r_object)
+{
+    enum appl_status
+        e_status;
+
+    void *
+        p_placement;
+
+    e_status =
+        appl_heap_alloc(
+            p_context,
+            sizeof(T_instance),
+            &(
+                p_placement));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        T_instance * const
+            p_instance = new (
+                p_placement)
+                T_instance(
+                    p_context);
+
+        e_status =
+            p_instance->f_init(
+                p_descriptor);
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            *(
+                r_object) =
+                p_instance;
+        }
+        else
+        {
+            delete
+                p_instance;
+
+            appl_heap_free(
+                p_context,
+                sizeof(T_instance),
+                p_placement);
+        }
+    }
+
+    return
+        e_status;
+
+} // appl_new()
+
+enum appl_status
+    appl_delete(
+        struct appl_context * const
+            p_context,
+        struct appl_object * const
+            p_object);
+
 #endif /* #if defined __cplusplus */
 
 /* end-of-file: appl_heap_handle.h */

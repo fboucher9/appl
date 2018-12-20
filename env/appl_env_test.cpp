@@ -22,9 +22,7 @@
 
 #include <appl_unused.h>
 
-#include <appl_allocator_handle.h>
-
-#include <appl_context_handle.h>
+#include <appl_heap_handle.h>
 
 #include <stdio.h>
 
@@ -164,16 +162,9 @@ appl_env_test_1(
         class appl_env *
             p_env;
 
-        struct appl_allocator *
-            p_allocator;
-
-        p_allocator =
-            appl_context_get_allocator(
-                p_context);
-
         e_status =
             appl_new(
-                p_allocator,
+                p_context,
                 &(
                     p_env));
 
@@ -200,7 +191,7 @@ appl_env_test_1(
                 0);
 
             appl_delete(
-                p_allocator,
+                p_context,
                 p_env);
         }
 

@@ -14,9 +14,7 @@
 
 #include <appl_clock_handle.h>
 
-#include <appl_context_handle.h>
-
-#include <appl_allocator_handle.h>
+#include <appl_heap_handle.h>
 
 #include <clock/appl_clock.h>
 
@@ -354,16 +352,9 @@ void
         class appl_clock *
             p_clock;
 
-        struct appl_allocator *
-            p_allocator;
-
-        p_allocator =
-            appl_context_get_allocator(
-                p_context);
-
         e_status =
             appl_new(
-                p_allocator,
+                p_context,
                 &(
                     p_clock));
 
@@ -386,7 +377,7 @@ void
                     100u);
 
             appl_delete(
-                p_allocator,
+                p_context,
                 p_clock);
         }
     }

@@ -354,14 +354,9 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_allocator * const
-        p_allocator =
-        appl_context_get_allocator(
-            m_context);
-
     e_status =
         appl_new(
-            p_allocator,
+            p_context,
             &(
                 m_refcount));
 
@@ -382,8 +377,7 @@ appl_size_t
     if (m_refcount->f_release())
     {
         appl_delete(
-            appl_context_get_allocator(
-                m_context),
+            m_context,
             m_refcount);
 
         i_cleanup_result =

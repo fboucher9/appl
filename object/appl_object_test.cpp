@@ -61,11 +61,6 @@ void
 {
     printf("=== appl_object_test_2 ===\n");
 
-    struct appl_allocator * const
-        p_allocator =
-        appl_context_get_allocator(
-            p_context);
-
     struct appl_object *
         p_dummy_object;
 
@@ -74,7 +69,7 @@ void
 
     e_status =
         appl_new(
-            p_allocator,
+            p_context,
             &(
                 p_dummy_object));
 
@@ -83,7 +78,7 @@ void
         == e_status)
     {
         appl_delete(
-            p_allocator,
+            p_context,
             p_dummy_object);
     }
 

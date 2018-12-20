@@ -403,11 +403,6 @@ appl_event_test_2(
     struct appl_context * const
         p_context)
 {
-    struct appl_allocator * const
-        p_allocator =
-        appl_context_get_allocator(
-            p_context);
-
     enum appl_status
         e_status;
 
@@ -417,7 +412,7 @@ appl_event_test_2(
 
         e_status =
             appl_new(
-                p_allocator,
+                p_context,
                 &(
                     p_event_node));
 
@@ -433,7 +428,7 @@ appl_event_test_2(
                 0);
 
             appl_delete(
-                p_allocator,
+                p_context,
                 p_event_node);
         }
     }
@@ -444,7 +439,7 @@ appl_event_test_2(
 
         e_status =
             appl_new(
-                p_allocator,
+                p_context,
                 &(
                     p_event_mgr));
 
@@ -460,7 +455,7 @@ appl_event_test_2(
                 0);
 
             appl_delete(
-                p_allocator,
+                p_context,
                 p_event_mgr);
         }
     }

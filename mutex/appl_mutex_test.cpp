@@ -14,9 +14,7 @@
 
 #include <appl_mutex_handle.h>
 
-#include <appl_context_handle.h>
-
-#include <appl_allocator_handle.h>
+#include <appl_heap_handle.h>
 
 #include <mutex/appl_mutex_node.h>
 
@@ -278,20 +276,13 @@ void
     enum appl_status
         e_status;
 
-    struct appl_allocator *
-        p_allocator;
-
-    p_allocator =
-        appl_context_get_allocator(
-            p_context);
-
     {
         class appl_mutex_mgr *
             p_mutex_mgr;
 
         e_status =
             appl_new(
-                p_allocator,
+                p_context,
                 &(
                     p_mutex_mgr));
 
@@ -309,7 +300,7 @@ void
                     0);
 
             appl_delete(
-                p_allocator,
+                p_context,
                 p_mutex_mgr);
         }
     }
@@ -320,7 +311,7 @@ void
 
         e_status =
             appl_new(
-                p_allocator,
+                p_context,
                 &(
                     p_mutex_node));
 
@@ -340,7 +331,7 @@ void
                     0);
 
             appl_delete(
-                p_allocator,
+                p_context,
                 p_mutex_node);
         }
     }
