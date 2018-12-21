@@ -84,7 +84,7 @@ enum appl_status
     appl_dict_std::s_destroy(
         struct appl_allocator * const
             p_allocator,
-        class appl_dict_std * const
+        struct appl_dict * const
             p_instance)
 {
     return

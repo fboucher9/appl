@@ -41,7 +41,7 @@ class appl_dict_std : public appl_dict
             s_destroy(
                 struct appl_allocator * const
                     p_allocator,
-                class appl_dict_std * const
+                struct appl_dict * const
                     p_instance);
 
         appl_dict_std(

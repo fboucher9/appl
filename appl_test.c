@@ -67,6 +67,8 @@
 
 #include <appl_node_test.h>
 
+#include <dict/appl_dict_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2531,6 +2533,14 @@ static unsigned char const g_ref_random[] =
     'm'
 };
 
+static unsigned char const g_ref_dict[] =
+{
+    'd',
+    'i',
+    'c',
+    't'
+};
+
 struct appl_test_command
 {
     unsigned char const *
@@ -2691,6 +2701,11 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_random,
         g_ref_random + sizeof(g_ref_random),
         & appl_random_test_1
+    },
+    {
+        g_ref_dict,
+        g_ref_dict + sizeof(g_ref_dict),
+        & appl_dict_test_1
     }
 };
 

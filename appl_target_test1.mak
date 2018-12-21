@@ -46,6 +46,7 @@ test_appl-deps = \
     appl_crc_test.cpp \
     chunk/appl_chunk_test.cpp \
     appl_node_test.cpp \
+    dict/appl_dict_test.cpp \
     $(appl_base-deps)
 
 # List of libraries required to link test application

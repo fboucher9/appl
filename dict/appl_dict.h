@@ -23,6 +23,13 @@ struct appl_dict : public appl_object
 {
     public:
 
+        appl_dict(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_dict();
+
         virtual
         enum appl_status
             v_set(
@@ -44,13 +51,6 @@ struct appl_dict : public appl_object
                     r_value);
 
     protected:
-
-        appl_dict(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_dict();
 
     private:
 

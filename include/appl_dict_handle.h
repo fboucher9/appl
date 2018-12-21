@@ -15,6 +15,9 @@ enum guard_appl_dict_handle_h
 };
 
 /* Predefine */
+struct appl_context;
+
+/* Predefine */
 struct appl_dict;
 
 #if defined __cplusplus
@@ -28,6 +31,14 @@ appl_dict_create(
         p_context,
     struct appl_dict * * const
         r_dict);
+
+/* Destroy a dictionary object */
+enum appl_status
+appl_dict_destroy(
+    struct appl_context * const
+        p_context,
+    struct appl_dict * const
+        p_dict);
 
 /* Get pointer to base class */
 struct appl_object *

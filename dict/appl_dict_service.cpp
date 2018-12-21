@@ -36,10 +36,14 @@ appl_dict_service::s_create(
     class appl_dict_std *
         p_dict_std;
 
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            p_context);
+
     e_status =
         appl_dict_std::s_create(
-            appl_context_get_allocator(
-                p_context),
+            p_allocator,
             &(
                 p_dict_std));
 
@@ -56,6 +60,28 @@ appl_dict_service::s_create(
         e_status;
 
 } // s_create()
+
+//
+//
+//
+enum appl_status
+appl_dict_service::s_destroy(
+    struct appl_context * const
+        p_context,
+    struct appl_dict * const
+        p_dict)
+{
+    struct appl_allocator * const
+        p_allocator =
+        appl_context_get_allocator(
+            p_context);
+
+    return
+        appl_dict_std::s_destroy(
+            p_allocator,
+            p_dict);
+
+} // s_destroy()
 
 //
 //

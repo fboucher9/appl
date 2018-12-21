@@ -45,6 +45,14 @@ class appl_dict_service
                 r_dict);
 
         static
+        enum appl_status
+        s_destroy(
+            struct appl_context * const
+                p_context,
+            struct appl_dict * const
+                p_dict);
+
+        static
         struct appl_object *
         s_parent(
             struct appl_dict * const

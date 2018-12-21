@@ -6,7 +6,7 @@
 
 #include <appl_status.h>
 
-#include <dict/appl_dict_handle.h>
+#include <appl_dict_handle.h>
 
 #include <dict/appl_dict_service.h>
 
@@ -26,6 +26,23 @@ appl_dict_create(
             r_dict);
 
 } /* _create() */
+
+/*
+
+*/
+enum appl_status
+appl_dict_destroy(
+    struct appl_context * const
+        p_context,
+    struct appl_dict * const
+        p_dict)
+{
+    return
+        appl_dict_service::s_destroy(
+            p_context,
+            p_dict);
+
+} /* _destroy() */
 
 /*
 
