@@ -34,6 +34,7 @@ class appl_random_std_crypto : public appl_random
             struct appl_random * * const
                 r_random);
 
+#if 0
         static
         enum appl_status
         s_destroy(
@@ -41,6 +42,7 @@ class appl_random_std_crypto : public appl_random
                 p_allocator,
             struct appl_random * const
                 p_random);
+#endif
 
         appl_random_std_crypto(
             struct appl_context * const

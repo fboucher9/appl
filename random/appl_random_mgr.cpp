@@ -34,27 +34,12 @@ appl_random_mgr::v_create_node(
     struct appl_random * * const
         r_node)
 {
-    enum appl_status
-        e_status;
-
-    if (
-        appl_random_type_pseudo
-        == p_descriptor->e_type)
-    {
-        e_status =
-            appl_random_pseudo::s_create(
-                m_context->v_allocator(),
-                p_descriptor->i_seed,
-                r_node);
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
-    }
+    appl_unused(
+        p_descriptor,
+        r_node);
 
     return
-        e_status;
+        appl_status_not_implemented;
 
 } // v_create_node()
 
@@ -66,10 +51,11 @@ appl_random_mgr::v_destroy_node(
     struct appl_random * const
         p_node)
 {
+    appl_unused(
+        p_node);
+
     return
-        appl_delete(
-            m_context->v_allocator(),
-            p_node);
+        appl_status_not_implemented;
 
 } // v_destroy_node()
 
@@ -90,5 +76,29 @@ appl_random_mgr::appl_random_mgr(
 appl_random_mgr::~appl_random_mgr()
 {
 }
+
+//
+//
+//
+enum appl_status
+    appl_random_mgr::f_create_pseudo_node(
+        unsigned long int const
+            i_seed,
+        struct appl_random * * const
+            r_node)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_random_pseudo::s_create(
+            m_context->v_allocator(),
+            i_seed,
+            r_node);
+
+    return
+        e_status;
+
+} // f_create_pseudo_node()
 
 /* end-of-file: appl_random_mgr.cpp */

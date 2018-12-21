@@ -24,6 +24,13 @@ struct appl_random : public appl_object
 {
     public:
 
+        appl_random(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_random();
+
         virtual
         enum appl_status
             v_pick(
@@ -33,13 +40,6 @@ struct appl_random : public appl_object
                     r_value);
 
     protected:
-
-        appl_random(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_random();
 
     private:
 

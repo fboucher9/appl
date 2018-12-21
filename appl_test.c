@@ -2521,6 +2521,16 @@ static unsigned char const g_ref_xlib[] =
 };
 #endif /* #if defined APPL_HAVE_XLIB */
 
+static unsigned char const g_ref_random[] =
+{
+    'r',
+    'a',
+    'n',
+    'd',
+    'o',
+    'm'
+};
+
 struct appl_test_command
 {
     unsigned char const *
@@ -2676,6 +2686,11 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_options,
         g_ref_options + sizeof(g_ref_options),
         & appl_options_test_2
+    },
+    {
+        g_ref_random,
+        g_ref_random + sizeof(g_ref_random),
+        & appl_random_test_1
     }
 };
 
@@ -2963,12 +2978,6 @@ enum appl_status
     if ((1))
     {
         appl_test_library(
-            p_context);
-    }
-
-    if ((1))
-    {
-        appl_random_test_1(
             p_context);
     }
 

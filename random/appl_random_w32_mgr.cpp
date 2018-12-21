@@ -145,8 +145,8 @@ appl_random_w32_mgr::v_create_node(
     else
     {
         e_status =
-            appl_random_mgr::v_create_node(
-                p_descriptor,
+            appl_random_mgr::f_create_pseudo_node(
+                p_descriptor->i_seed,
                 r_node);
     }
 

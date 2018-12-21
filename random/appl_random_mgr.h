@@ -30,6 +30,13 @@ class appl_random_mgr : public appl_object
 {
     public:
 
+        appl_random_mgr(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_random_mgr();
+
         virtual
         enum appl_status
         v_create_node(
@@ -46,12 +53,12 @@ class appl_random_mgr : public appl_object
 
     protected:
 
-        appl_random_mgr(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_random_mgr();
+        enum appl_status
+            f_create_pseudo_node(
+                unsigned long int const
+                    i_seed,
+                struct appl_random * * const
+                    r_node);
 
     private:
 

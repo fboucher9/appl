@@ -61,6 +61,7 @@ appl_random_std_crypto::s_create(
 //
 //
 //
+#if 0
 enum appl_status
 appl_random_std_crypto::s_destroy(
     struct appl_allocator * const
@@ -74,6 +75,7 @@ appl_random_std_crypto::s_destroy(
             p_random);
 
 } // s_destroy()
+#endif
 
 //
 //
