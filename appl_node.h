@@ -4,6 +4,9 @@
 
 */
 
+/* Included. */
+#define INC_APPL_NODE_H
+
 /* Reverse include guard */
 enum guard_appl_node_h
 {

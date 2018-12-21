@@ -65,6 +65,8 @@
 
 #include <chunk/appl_chunk_test.h>
 
+#include <appl_node_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2490,6 +2492,14 @@ static unsigned char const g_ref_chunk[] =
     'k'
 };
 
+static unsigned char const g_ref_node[] =
+{
+    'n',
+    'o',
+    'd',
+    'e'
+};
+
 struct appl_test_command
 {
     unsigned char const *
@@ -2623,6 +2633,11 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_chunk,
         g_ref_chunk + sizeof(g_ref_chunk),
         & appl_chunk_test_1
+    },
+    {
+        g_ref_node,
+        g_ref_node + sizeof(g_ref_node),
+        & appl_node_test_1
     }
 };
 
