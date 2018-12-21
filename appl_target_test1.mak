@@ -43,6 +43,8 @@ test_appl-deps = \
     log/appl_log_test.cpp \
     library/appl_library_test.cpp \
     timer/appl_timer_test.cpp \
+    appl_crc_test.cpp \
+    chunk/appl_chunk_test.cpp \
     $(appl_base-deps)
 
 # List of libraries required to link test application

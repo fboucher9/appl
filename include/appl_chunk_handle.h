@@ -2,7 +2,7 @@
 
 /*
 
-Module: appl_chunk.h
+Module: appl_chunk_handle.h
 
 Description:
 
@@ -64,12 +64,12 @@ Example:
 */
 
 /* Included. */
-#define INC_APPL_CHUNK_H
+#define INC_APPL_CHUNK_HANDLE_H
 
 /* Reverse include guard */
-enum guard_appl_chunk_h
+enum guard_appl_chunk_handle_h
 {
-    inc_appl_chunk_h =
+    inc_appl_chunk_handle_h =
         /* Header file dependency */
         inc_appl_status_h
 };
@@ -128,4 +128,4 @@ appl_chunk_reset(
 } /* extern "C" */
 #endif /* #if defined __cplusplus */
 
-/* end-of-file: appl_chunk.h */
+/* end-of-file: appl_chunk_handle.h */

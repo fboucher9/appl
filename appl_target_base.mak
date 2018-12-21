@@ -32,7 +32,10 @@ appl_base-deps := \
     backtrace/appl_backtrace_impl.cpp \
     appl_buf.cpp \
     appl_buf0.cpp \
-    appl_chunk.cpp \
+    chunk/appl_chunk_handle.cpp \
+    chunk/appl_chunk_service.cpp \
+    chunk/appl_chunk_std.cpp \
+    chunk/appl_chunk.cpp \
     clock/appl_clock.cpp \
     clock/appl_clock_handle.cpp \
     clock/appl_clock_service.cpp \

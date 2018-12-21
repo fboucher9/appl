@@ -13,7 +13,7 @@
 
 #include <appl.h>
 
-#include <appl_chunk.h>
+#include <appl_chunk_handle.h>
 
 #include <object/appl_object_test.h>
 
@@ -60,6 +60,10 @@
 #include <log/appl_log_test.h>
 
 #include <library/appl_library_test.h>
+
+#include <appl_crc_test.h>
+
+#include <chunk/appl_chunk_test.h>
 
 void
 appl_thread_cache_test(
@@ -2266,6 +2270,61 @@ void
         "\n");
 }
 
+static
+void
+    appl_status_test_1(
+        struct appl_context * const
+            p_context)
+{
+    (void)(
+        p_context);
+
+    appl_raise(
+        appl_status_ok);
+
+    appl_raise(
+        appl_status_fail);
+
+    appl_raise_fail();
+
+    appl_raise(
+        appl_status_out_of_memory);
+
+    appl_raise_out_of_memory();
+
+    appl_raise(
+        appl_status_not_implemented);
+
+    appl_raise_not_implemented();
+
+    appl_raise(
+        appl_status_invalid_param);
+
+    appl_raise_invalid_param();
+
+    appl_raise(
+        appl_status_timeout);
+
+    appl_raise_timeout();
+
+    appl_raise(
+        appl_status_fault_injection);
+
+    appl_raise_fault_injection();
+
+    {
+        int
+            i_bad_status;
+
+        i_bad_status =
+            -1;
+
+        appl_raise(
+            (enum appl_status)(
+                i_bad_status));
+    }
+}
+
 static unsigned char const g_ref_object[] =
 {
     'o',
@@ -2405,6 +2464,32 @@ static unsigned char const g_ref_pool[] =
     'l'
 };
 
+static unsigned char const g_ref_crc[] =
+{
+    'c',
+    'r',
+    'c'
+};
+
+static unsigned char const g_ref_status[] =
+{
+    's',
+    't',
+    'a',
+    't',
+    'u',
+    's'
+};
+
+static unsigned char const g_ref_chunk[] =
+{
+    'c',
+    'h',
+    'u',
+    'n',
+    'k'
+};
+
 struct appl_test_command
 {
     unsigned char const *
@@ -2422,6 +2507,11 @@ struct appl_test_command
 
 static struct appl_test_command const g_test_commands[] =
 {
+    {
+        g_ref_status,
+        g_ref_status + sizeof(g_ref_status),
+        & appl_status_test_1
+    },
     {
         g_ref_object,
         g_ref_object + sizeof(g_ref_object),
@@ -2523,6 +2613,16 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_pool,
         g_ref_pool + sizeof(g_ref_pool),
         & appl_pool_test_batch
+    },
+    {
+        g_ref_crc,
+        g_ref_crc + sizeof(g_ref_crc),
+        & appl_crc_test_1
+    },
+    {
+        g_ref_chunk,
+        g_ref_chunk + sizeof(g_ref_chunk),
+        & appl_chunk_test_1
     }
 };
 
