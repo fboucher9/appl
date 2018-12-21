@@ -25,7 +25,7 @@ test_appl-deps = \
     module/appl_module_test.c \
     binary_heap/appl_binary_heap_test.c \
     options/appl_options_test.cpp \
-    xlib/appl_xlib_test.c \
+    xlib/appl_xlib_test.cpp \
     appl_test_prompt.c \
     mutex/appl_mutex_test.cpp \
     clock/appl_clock_test.cpp \

@@ -29,6 +29,13 @@ struct appl_xlib : public appl_object
 {
     public:
 
+        appl_xlib(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_xlib();
+
         virtual
         enum appl_status
             v_add_ref(void);
@@ -68,13 +75,6 @@ struct appl_xlib : public appl_object
                 i_screen_number);
 
     protected:
-
-        appl_xlib(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_xlib();
 
     private:
 

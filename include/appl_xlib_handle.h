@@ -4,12 +4,14 @@
 
 */
 
+#define INC_APPL_XLIB_HANDLE_H
+
 /* Reverse include guard */
-enum guard_appl_xlib_h
+enum guard_appl_xlib_handle_h
 {
-    inc_appl_xlib_h =
+    inc_appl_xlib_handle_h = 1
         /* Header file dependency */
-        inc_appl_status_h
+        + inc_appl_status_h
 };
 
 /* Assert configuration */
