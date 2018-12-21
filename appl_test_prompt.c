@@ -527,7 +527,6 @@ appl_test_prompt(
                                     p_output_options);
 
                                 appl_options_test_1(
-                                    p_context,
                                     p_output_options);
 
                                 appl_options_reset(

@@ -11,7 +11,7 @@ Description:
 */
 
 /* Basic sanity check */
-enum appl_status
+void
 appl_xlib_test_1(
     struct appl_context * const
         p_context);

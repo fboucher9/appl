@@ -29,6 +29,13 @@ struct appl_options : public appl_object
 {
     public:
 
+        appl_options(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_options();
+
         virtual
         enum appl_status
             v_count(
@@ -70,13 +77,6 @@ struct appl_options : public appl_object
             v_reset(void);
 
     protected:
-
-        appl_options(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_options();
 
     private:
 

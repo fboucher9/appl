@@ -2500,6 +2500,27 @@ static unsigned char const g_ref_node[] =
     'e'
 };
 
+static unsigned char const g_ref_options[] =
+{
+    'o',
+    'p',
+    't',
+    'i',
+    'o',
+    'n',
+    's'
+};
+
+#if defined APPL_HAVE_XLIB
+static unsigned char const g_ref_xlib[] =
+{
+    'x',
+    'l',
+    'i',
+    'b'
+};
+#endif /* #if defined APPL_HAVE_XLIB */
+
 struct appl_test_command
 {
     unsigned char const *
@@ -2619,6 +2640,13 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_library + sizeof(g_ref_library),
         & appl_library_test_1
     },
+#if defined APPL_HAVE_XLIB
+    {
+        g_ref_xlib,
+        g_ref_xlib + sizeof(g_ref_xlib),
+        & appl_xlib_test_1
+    },
+#endif /* #if defined APPL_HAVE_XLIB */
     {
         g_ref_pool,
         g_ref_pool + sizeof(g_ref_pool),
@@ -2638,6 +2666,16 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_node,
         g_ref_node + sizeof(g_ref_node),
         & appl_node_test_1
+    },
+    {
+        g_ref_options,
+        g_ref_options + sizeof(g_ref_options),
+        & appl_options_test_3
+    },
+    {
+        g_ref_options,
+        g_ref_options + sizeof(g_ref_options),
+        & appl_options_test_2
     }
 };
 
@@ -2684,21 +2722,6 @@ enum appl_status
                 p_context);
         }
     }
-
-    if (1)
-    {
-        appl_options_test_2(
-            p_context);
-    }
-
-#if defined APPL_HAVE_XLIB
-    /* Test X11/Xlib */
-    if (1)
-    {
-        appl_xlib_test_1(
-            p_context);
-    }
-#endif /* #if defined APPL_HAVE_XLIB */
 
     /* Test memory leak */
     if (1)
@@ -3012,7 +3035,6 @@ appl_test_main(
 
     /* Print the argument list */
     appl_options_test_1(
-        p_context,
         p_options);
 
     e_status =

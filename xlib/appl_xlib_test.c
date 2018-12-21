@@ -19,7 +19,7 @@
 /*
 
 */
-enum appl_status
+void
 appl_xlib_test_1(
     struct appl_context * const
         p_context)
@@ -90,9 +90,6 @@ appl_xlib_test_1(
         appl_xlib_destroy(
             p_xlib);
     }
-
-    return
-        e_status;
 
 } /* appl_xlib_test_1() */
 
