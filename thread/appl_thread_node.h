@@ -33,18 +33,18 @@ struct appl_thread : public appl_object
 {
     public:
 
-        virtual
-        enum appl_status
-            v_interrupt(void);
-
-    protected:
-
         appl_thread(
             struct appl_context * const
                 p_context);
 
         virtual
         ~appl_thread();
+
+        virtual
+        enum appl_status
+            v_interrupt(void);
+
+    protected:
 
     private:
 

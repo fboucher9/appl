@@ -32,6 +32,13 @@ class appl_thread_mgr : public appl_object
 {
     public:
 
+        appl_thread_mgr(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_thread_mgr();
+
         virtual
         enum appl_status
             v_create_node(
@@ -49,13 +56,6 @@ class appl_thread_mgr : public appl_object
                     p_thread);
 
     protected:
-
-        appl_thread_mgr(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_thread_mgr();
 
     private:
 

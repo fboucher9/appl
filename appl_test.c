@@ -71,6 +71,8 @@
 
 #include <queue/appl_queue_test.h>
 
+#include <thread/appl_thread_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2560,6 +2562,16 @@ static unsigned char const g_ref_hash[] =
     'h'
 };
 
+static unsigned char const g_ref_thread[] =
+{
+    't',
+    'h',
+    'r',
+    'e',
+    'a',
+    'd'
+};
+
 struct appl_test_command
 {
     unsigned char const *
@@ -2735,6 +2747,11 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_hash,
         g_ref_hash + sizeof(g_ref_hash),
         & appl_hash_test_1
+    },
+    {
+        g_ref_thread,
+        g_ref_thread + sizeof(g_ref_thread),
+        & appl_thread_test_1
     }
 };
 
