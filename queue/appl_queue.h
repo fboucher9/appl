@@ -7,9 +7,9 @@
 /* Reverse include guard */
 enum guard_appl_queue_h
 {
-    inc_appl_queue_h =
+    inc_appl_queue_h = 1
         /* Header file dependency */
-        inc_appl_object_h
+        + inc_appl_object_h
 };
 
 struct appl_context;
@@ -29,6 +29,13 @@ struct appl_list;
 struct appl_queue : public appl_object
 {
     public:
+
+        appl_queue(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_queue();
 
         virtual
         enum appl_status
@@ -55,13 +62,6 @@ struct appl_queue : public appl_object
             v_interrupt(void);
 
     protected:
-
-        appl_queue(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_queue();
 
     private:
 

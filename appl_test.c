@@ -69,6 +69,8 @@
 
 #include <dict/appl_dict_test.h>
 
+#include <queue/appl_queue_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2541,6 +2543,15 @@ static unsigned char const g_ref_dict[] =
     't'
 };
 
+static unsigned char const g_ref_queue[] =
+{
+    'q',
+    'u',
+    'e',
+    'u',
+    'e'
+};
+
 struct appl_test_command
 {
     unsigned char const *
@@ -2706,6 +2717,11 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_dict,
         g_ref_dict + sizeof(g_ref_dict),
         & appl_dict_test_1
+    },
+    {
+        g_ref_queue,
+        g_ref_queue + sizeof(g_ref_queue),
+        & appl_queue_test_1
     }
 };
 
