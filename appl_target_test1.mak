@@ -19,7 +19,7 @@ test_appl-exports = appl.exports
 
 test_appl-deps = \
     appl_test.c \
-    hash/appl_hash_test.c \
+    hash/appl_hash_test.cpp \
     pool/appl_pool_test.cpp \
     thread/appl_thread_cache_test.c \
     module/appl_module_test.c \

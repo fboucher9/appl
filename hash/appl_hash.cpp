@@ -70,6 +70,7 @@ enum appl_status
             }
         }
 
+#if 0 // not used yet
         if (
             appl_status_ok
             != e_status)
@@ -79,6 +80,7 @@ enum appl_status
                 p_descriptor->i_max_index,
                 m_table);
         }
+#endif // not used yet
     }
 
     return

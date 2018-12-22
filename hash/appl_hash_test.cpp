@@ -12,7 +12,7 @@
 
 #include <hash/appl_hash_test.h>
 
-#include <appl_crc16.h>
+#include <appl_unused.h>
 
 /*
 
@@ -89,14 +89,18 @@ appl_hash_test_index_string(
     unsigned long int const
         i_key_len)
 {
-    (void)(
-        p_context);
+    appl_unused(
+        p_context,
+        i_key_len);
+
+    unsigned char const * const
+        p_uchar =
+        (unsigned char const *)(
+            p_key);
 
     return
-        appl_crc16(
-            (unsigned char const *)(
-                p_key),
-            i_key_len);
+        *(
+            p_uchar);
 
 } /* appl_hash_test_index_string() */
 
@@ -260,84 +264,159 @@ Description:
 
 */
 void
-appl_hash_test(
+appl_hash_test_1(
     struct appl_context * const
         p_context)
 {
-    enum appl_status
-        e_status;
-
-    struct appl_hash *
-        p_hash;
-
-    struct appl_hash_descriptor
-        o_hash_descriptor;
-
-    o_hash_descriptor.p_compare =
-        &(
-            appl_hash_test_compare_string);
-
-    o_hash_descriptor.p_index =
-        &(
-            appl_hash_test_index_string);
-
-    o_hash_descriptor.i_max_index =
-        16ul;
-
-    e_status =
-        appl_hash_create(
-            p_context,
-            &(
-                o_hash_descriptor),
-            &(
-                p_hash));
-
-    if (
-        appl_status_ok
-        == e_status)
     {
-        /* create some nodes */
-        struct appl_hash_test_node *
-            p_node;
+        enum appl_status
+            e_status;
+
+        struct appl_hash *
+            p_hash;
+
+        struct appl_hash_descriptor
+            o_hash_descriptor;
+
+        o_hash_descriptor.p_compare =
+            &(
+                appl_hash_test_compare_string);
+
+        o_hash_descriptor.p_index =
+            &(
+                appl_hash_test_index_string);
+
+        o_hash_descriptor.i_max_index =
+            16ul;
 
         e_status =
-            appl_hash_test_create_node(
+            appl_hash_create(
                 p_context,
-                "felix",
                 &(
-                    p_node));
+                    o_hash_descriptor),
+                &(
+                    p_hash));
 
         if (
             appl_status_ok
             == e_status)
         {
-            /* insert into hash table */
-            appl_hash_insert(
-                p_hash,
-                (void const *)(
-                    p_node->p_string),
-                (unsigned long int)(
-                    p_node->i_string_len),
-                &(
-                    p_node->o_list));
+            {
+                struct appl_object *
+                    p_object;
 
-            /* Verify */
-            appl_hash_test_dump(
+                p_object =
+                    appl_hash_parent(
+                        p_hash);
+
+                appl_unused(
+                    p_object);
+            }
+
+            static char const g_good_key1[] = "felix";
+
+            static char const g_good_key2[] = "falafel";
+
+            static char const g_bad_key[] = "bad";
+
+            /* create some nodes */
+            struct appl_hash_test_node *
+                p_node1;
+
+            e_status =
+                appl_hash_test_create_node(
+                    p_context,
+                    g_good_key1,
+                    &(
+                        p_node1));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                /* insert into hash table */
+                appl_hash_insert(
+                    p_hash,
+                    (void const *)(
+                        p_node1->p_string),
+                    (unsigned long int)(
+                        p_node1->i_string_len),
+                    &(
+                        p_node1->o_list));
+
+                struct appl_hash_test_node *
+                    p_node2;
+
+                e_status =
+                    appl_hash_test_create_node(
+                        p_context,
+                        g_good_key2,
+                        &(
+                            p_node2));
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    appl_hash_insert(
+                        p_hash,
+                        (void const *)(
+                            p_node2->p_string),
+                        (unsigned long int)(
+                            p_node2->i_string_len),
+                        &(
+                            p_node2->o_list));
+
+                    /* Verify */
+                    appl_hash_test_dump(
+                        p_hash);
+
+                    // Lookup good and bad
+                    {
+                        struct appl_list *
+                            p_lookup_result;
+
+                        appl_hash_lookup(
+                            p_hash,
+                            g_good_key1,
+                            (unsigned long int)(sizeof(g_good_key1) - 1),
+                            &(
+                                p_lookup_result));
+
+                        appl_hash_lookup(
+                            p_hash,
+                            g_good_key2,
+                            (unsigned long int)(sizeof(g_good_key2) - 1),
+                            &(
+                                p_lookup_result));
+
+                        appl_hash_lookup(
+                            p_hash,
+                            g_bad_key,
+                            (unsigned long int)(sizeof(g_bad_key) - 1),
+                            &(
+                                p_lookup_result));
+                    }
+
+                    appl_hash_test_destroy_node(
+                        p_context,
+                        p_node2);
+                }
+
+                appl_hash_test_destroy_node(
+                    p_context,
+                    p_node1);
+            }
+
+            /* locate nodes */
+
+            /* remove nodes */
+
+            /* iterate */
+
+            appl_hash_destroy(
                 p_hash);
-
-            appl_hash_test_destroy_node(
-                p_context,
-                p_node);
         }
-
-        /* locate nodes */
-
-        /* remove nodes */
-
-        /* iterate */
-
-        appl_hash_destroy(
-            p_hash);
     }
 
 } /* appl_hash_test() */

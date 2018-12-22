@@ -2552,6 +2552,14 @@ static unsigned char const g_ref_queue[] =
     'e'
 };
 
+static unsigned char const g_ref_hash[] =
+{
+    'h',
+    'a',
+    's',
+    'h'
+};
+
 struct appl_test_command
 {
     unsigned char const *
@@ -2722,6 +2730,11 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_queue,
         g_ref_queue + sizeof(g_ref_queue),
         & appl_queue_test_1
+    },
+    {
+        g_ref_hash,
+        g_ref_hash + sizeof(g_ref_hash),
+        & appl_hash_test_1
     }
 };
 
@@ -3022,12 +3035,6 @@ enum appl_status
     {
         /* Test of thread cache... */
         appl_test_thread_cache(
-            p_context);
-    }
-
-    if (1)
-    {
-        appl_hash_test(
             p_context);
     }
 
