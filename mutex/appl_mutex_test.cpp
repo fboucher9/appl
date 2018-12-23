@@ -24,6 +24,8 @@
 #include <appl_coverage.h>
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
+#include <appl_unused.h>
+
 #include <stdio.h>
 
 static
@@ -357,6 +359,11 @@ unsigned long int
 
     struct appl_mutex *
         p_mutex;
+
+#if ! defined APPL_HAVE_COVERAGE
+    appl_unused(
+        i_limit);
+#endif /* #if ! defined APPL_HAVE_COVERAGE */
 
     i_count =
         0ul;

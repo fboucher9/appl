@@ -35,6 +35,16 @@ struct appl_hash_test_node
 
 }; /* struct appl_hash_test_node */
 
+union appl_hash_test_node_ptr
+{
+    struct appl_list *
+        p_list;
+
+    struct appl_hash_test_node *
+        p_hash_test_node;
+
+};
+
 /*
 
 */
@@ -53,22 +63,26 @@ appl_hash_test_compare_string(
     int
         i_compare_result;
 
+    union appl_hash_test_node_ptr
+        o_hash_test_node_ptr;
+
     struct appl_hash_test_node const *
         p_hash_test_node;
 
-    (void)(
-        p_context);
-    (void)(
+    appl_unused(
+        p_context,
         i_key_len);
 
+    o_hash_test_node_ptr.p_list =
+        p_list;
+
     p_hash_test_node =
-        (struct appl_hash_test_node const *)(
-            p_list);
+        o_hash_test_node_ptr.p_hash_test_node;
 
     i_compare_result =
         strcmp(
             p_hash_test_node->p_string,
-            (char const *)(
+            static_cast<char const *>(
                 p_key));
 
     return
@@ -95,7 +109,7 @@ appl_hash_test_index_string(
 
     unsigned char const * const
         p_uchar =
-        (unsigned char const *)(
+        static_cast<unsigned char const *>(
             p_key);
 
     return
@@ -120,35 +134,19 @@ appl_hash_test_create_node(
     enum appl_status
         e_status;
 
-    unsigned long int
-        i_placement_length;
-
-    void *
-        p_placement;
-
-    i_placement_length =
-        (unsigned long int)(
-            sizeof(
-                struct appl_hash_test_node));
+    struct appl_hash_test_node *
+        p_node;
 
     e_status =
-        appl_heap_alloc(
+        appl_heap_alloc_structure(
             p_context,
-            i_placement_length,
             &(
-                p_placement));
+                p_node));
 
     if (
         appl_status_ok
         == e_status)
     {
-        struct appl_hash_test_node *
-            p_node;
-
-        p_node =
-            (struct appl_hash_test_node *)(
-                p_placement);
-
         appl_list_init(
             &(
                 p_node->o_list));
@@ -185,7 +183,7 @@ appl_hash_test_destroy_node(
     void *
         p_placement;
 
-    unsigned long int
+    appl_size_t
         i_placement_length;
 
     p_placement =
@@ -193,9 +191,8 @@ appl_hash_test_destroy_node(
             p_node);
 
     i_placement_length =
-        (unsigned long int)(
-            sizeof(
-                struct appl_hash_test_node));
+        sizeof(
+            struct appl_hash_test_node);
 
     appl_list_join(
         &(
@@ -224,7 +221,7 @@ appl_hash_test_dump_callback(
     struct appl_hash_test_node *
         p_node;
 
-    (void)(
+    appl_unused(
         p_context);
 
     p_node =

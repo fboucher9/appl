@@ -3005,7 +3005,7 @@ enum appl_status
     }
 
     /* Prompt */
-    if (0)
+    if ((0))
     {
         struct appl_file *
             p_file;
@@ -3104,7 +3104,7 @@ enum appl_status
 
     }
 
-    if (0)
+    if (1)
     {
         appl_thread_cache_test(
             p_context);

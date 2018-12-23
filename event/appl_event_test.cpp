@@ -33,8 +33,18 @@ struct appl_event_test
     struct appl_event *
         p_event;
 
-#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG)
+#define PADDING (APPL_SIZEOF_PTR)
 #include <appl_padding.h>
+
+};
+
+union appl_event_test_ptr
+{
+    void *
+        p_callback_context;
+
+    struct appl_event_test *
+        p_event_test;
 
 };
 
@@ -52,6 +62,9 @@ unsigned long int
     enum appl_status
         e_status;
 
+    union appl_event_test_ptr
+        o_event_test_ptr;
+
     struct appl_event_test *
         p_event_test;
 
@@ -61,9 +74,16 @@ unsigned long int
     struct appl_event_descriptor
         o_event_descriptor;
 
+#if ! defined APPL_HAVE_COVERAGE
+    appl_unused(
+        i_limit);
+#endif /* #if ! defined APPL_HAVE_COVERAGE */
+
+    o_event_test_ptr.p_callback_context =
+        p_context;
+
     p_event_test =
-        (struct appl_event_test *)(
-            p_context);
+        o_event_test_ptr.p_event_test;
 
 #if defined APPL_HAVE_COVERAGE
     appl_coverage_start(
@@ -106,13 +126,23 @@ unsigned long int
     unsigned long int
         i_count = 0ul;
 
+    union appl_event_test_ptr
+        o_event_test_ptr;
+
+    o_event_test_ptr.p_callback_context =
+        p_context;
+
     struct appl_event_test *
         p_event_test =
-        (struct appl_event_test *)(
-            p_context);
+        o_event_test_ptr.p_event_test;
 
     enum appl_status
         e_status;
+
+#if ! defined APPL_HAVE_COVERAGE
+    appl_unused(
+        i_limit);
+#endif /* #if ! defined APPL_HAVE_COVERAGE */
 
 #if defined APPL_HAVE_COVERAGE
     appl_coverage_start(
@@ -150,13 +180,23 @@ unsigned long int
     unsigned long int
         i_count = 0ul;
 
+    union appl_event_test_ptr
+        o_event_test_ptr;
+
+    o_event_test_ptr.p_callback_context =
+        p_context;
+
     struct appl_event_test *
         p_event_test =
-        (struct appl_event_test *)(
-            p_context);
+        o_event_test_ptr.p_event_test;
 
     enum appl_status
         e_status;
+
+#if ! defined APPL_HAVE_COVERAGE
+    appl_unused(
+        i_limit);
+#endif /* #if ! defined APPL_HAVE_COVERAGE */
 
 #if defined APPL_HAVE_COVERAGE
     appl_coverage_start(
@@ -200,10 +240,20 @@ unsigned long int
     enum appl_status
         e_status;
 
+#if ! defined APPL_HAVE_COVERAGE
+    appl_unused(
+        i_limit);
+#endif /* #if ! defined APPL_HAVE_COVERAGE */
+
+    union appl_event_test_ptr
+        o_event_test_ptr;
+
+    o_event_test_ptr.p_callback_context =
+        p_context;
+
     struct appl_event_test *
         p_event_test =
-        (struct appl_event_test *)(
-            p_context);
+        o_event_test_ptr.p_event_test;
 
     struct appl_event *
         p_event;

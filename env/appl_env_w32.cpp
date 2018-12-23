@@ -209,8 +209,7 @@ enum appl_status
 
                     e_status =
                         appl_string_create_dup_buffer(
-                            appl_context_parent(
-                                m_context),
+                            m_context,
                             p_value0,
                             p_value0 + dwResult2,
                             &(
@@ -356,7 +355,7 @@ enum appl_status
 
     e_status =
         appl_new(
-            p_context,
+            m_context,
             &(
                 m_refcount));
 

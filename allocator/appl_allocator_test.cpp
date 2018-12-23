@@ -51,6 +51,11 @@ appl_allocator_test_alloc_cb(
     void *
         p_buffer;
 
+#if ! defined APPL_HAVE_COVERAGE
+    appl_unused(
+        i_limit);
+#endif /* #if ! defined APPL_HAVE_COVERAGE */
+
 #if defined APPL_HAVE_COVERAGE
     appl_coverage_start(i_limit);
 #endif /* #if defined APPL_HAVE_COVERAGE */

@@ -35,6 +35,7 @@
 //
 //
 //
+#if defined APPL_OS_LINUX
 static
 appl_ull_t
 appl_math_muldiv(
@@ -57,6 +58,7 @@ appl_math_muldiv(
             / i_div);
 
 } // appl_math_muldiv()
+#endif /* #if defined APPL_OS_LINUX */
 
 //
 //
