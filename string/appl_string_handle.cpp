@@ -19,8 +19,8 @@
 */
 enum appl_status
 appl_string_create(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned long int const
         i_alloc_len,
     struct appl_string * * const
@@ -28,7 +28,7 @@ appl_string_create(
 {
     return
         appl_string_service::s_create(
-            p_object,
+            p_context,
             i_alloc_len,
             r_string);
 
@@ -50,8 +50,8 @@ appl_string_destroy(
 
 enum appl_status
 appl_string_create_dup_buffer(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
@@ -61,7 +61,7 @@ appl_string_create_dup_buffer(
 {
     return
         appl_string_create_dup_buffer_n(
-            p_object,
+            p_context,
             p_buf_min,
             p_buf_max,
             appl_buf_len(
@@ -73,8 +73,8 @@ appl_string_create_dup_buffer(
 
 enum appl_status
 appl_string_create_dup_buffer_n(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
@@ -92,7 +92,7 @@ appl_string_create_dup_buffer_n(
 
     e_status =
         appl_string_service::s_create(
-            p_object,
+            p_context,
             i_count,
             &(
                 p_string));
@@ -172,8 +172,9 @@ appl_string_create_dup_object(
     {
         e_status =
             appl_string_create_dup_buffer(
-                appl_string_service::s_const_parent(
-                    p_ref_string),
+                appl_object_service::s_get_context(
+                    appl_string_service::s_const_parent(
+                        p_ref_string)),
                 p_buf_min,
                 p_buf_max,
                 r_string);
@@ -216,8 +217,9 @@ appl_string_create_dup_object_n(
     {
         e_status =
             appl_string_create_dup_buffer_n(
-                appl_string_service::s_const_parent(
-                    p_ref_string),
+                appl_object_service::s_get_context(
+                    appl_string_service::s_const_parent(
+                        p_ref_string)),
                 p_buf_min,
                 p_buf_max,
                 i_count,

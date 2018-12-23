@@ -23,17 +23,13 @@
 //
 enum appl_status
 appl_string_service::s_create(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned long int const
         i_alloc_len,
     struct appl_string * * const
         r_string)
 {
-    struct appl_context * const
-        p_context =
-        p_object->get_context();
-
     struct appl_allocator * const
         p_allocator =
         appl_context_get_allocator(

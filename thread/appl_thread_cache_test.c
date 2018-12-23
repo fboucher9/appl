@@ -37,6 +37,9 @@ test_thread_cache_entry(
         (struct test_thread_cache_data *)(
             p_thread_context);
 
+    appl_thread_cache_parent(
+        p_data->p_thread_cache);
+
     appl_clock_delay(
         p_data->p_context,
         1000ul,

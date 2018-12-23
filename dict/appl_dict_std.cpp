@@ -417,7 +417,7 @@ enum appl_status
 
         e_status =
             appl_string_create_dup_buffer(
-                this,
+                m_context,
                 p_name_min,
                 p_name_max,
                 &(

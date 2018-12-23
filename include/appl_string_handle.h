@@ -22,6 +22,8 @@ enum guard_appl_string_handle_h
         inc_appl_status_h
 };
 
+struct appl_context;
+
 struct appl_string;
 
 #if defined __cplusplus
@@ -30,8 +32,8 @@ extern "C" {
 
 enum appl_status
 appl_string_create(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned long int const
         i_alloc_len,
     struct appl_string * * const
@@ -44,8 +46,8 @@ appl_string_destroy(
 
 enum appl_status
 appl_string_create_dup_buffer(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned char const * const
         p_buf_min,
     unsigned char const * const
@@ -55,8 +57,8 @@ appl_string_create_dup_buffer(
 
 enum appl_status
 appl_string_create_dup_buffer_n(
-    struct appl_object const * const
-        p_object,
+    struct appl_context const * const
+        p_context,
     unsigned char const * const
         p_buf_min,
     unsigned char const * const

@@ -220,21 +220,24 @@ struct appl_thread_cache : public appl_thread
                 appl_status_ok
                 == e_status)
             {
+                struct appl_queue_descriptor
+                    o_queue_descriptor;
+
+                o_queue_descriptor.i_max_count =
+                    1ul;
+
                 e_status =
-                    p_thread_mgr->v_create_node(
-                        p_thread_cache_descriptor->p_thread_property,
+                    appl_queue_create(
+                        m_context,
                         &(
-                            o_thread_descriptor),
+                            o_queue_descriptor),
                         &(
-                            m_thread_handle));
+                            m_queue_used));
 
                 if (
                     appl_status_ok
                     == e_status)
                 {
-                    struct appl_queue_descriptor
-                        o_queue_descriptor;
-
                     o_queue_descriptor.i_max_count =
                         1ul;
 
@@ -244,22 +247,19 @@ struct appl_thread_cache : public appl_thread
                             &(
                                 o_queue_descriptor),
                             &(
-                                m_queue_used));
+                                m_queue_free));
 
                     if (
                         appl_status_ok
                         == e_status)
                     {
-                        o_queue_descriptor.i_max_count =
-                            1ul;
-
                         e_status =
-                            appl_queue_create(
-                                m_context,
+                            p_thread_mgr->v_create_node(
+                                p_thread_cache_descriptor->p_thread_property,
                                 &(
-                                    o_queue_descriptor),
+                                    o_thread_descriptor),
                                 &(
-                                    m_queue_free));
+                                    m_thread_handle));
 
                         if (
                             appl_status_ok

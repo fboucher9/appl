@@ -29,6 +29,13 @@ struct appl_property : public appl_object
 {
     public:
 
+        appl_property(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_property();
+
         virtual
         enum appl_status
             v_set(
@@ -71,13 +78,6 @@ struct appl_property : public appl_object
                     r_value) const;
 
     protected:
-
-        appl_property(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_property();
 
     private:
 

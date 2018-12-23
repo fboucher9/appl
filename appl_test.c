@@ -73,6 +73,10 @@
 
 #include <thread/appl_thread_test.h>
 
+#include <string/appl_string_test.h>
+
+#include <property/appl_property_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2572,6 +2576,28 @@ static unsigned char const g_ref_thread[] =
     'd'
 };
 
+static unsigned char const g_ref_string[] =
+{
+    's',
+    't',
+    'r',
+    'i',
+    'n',
+    'g'
+};
+
+static unsigned char const g_ref_property[] =
+{
+    'p',
+    'r',
+    'o',
+    'p',
+    'e',
+    'r',
+    't',
+    'y'
+};
+
 struct appl_test_command
 {
     unsigned char const *
@@ -2752,6 +2778,21 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_thread,
         g_ref_thread + sizeof(g_ref_thread),
         & appl_thread_test_1
+    },
+    {
+        g_ref_thread,
+        g_ref_thread + sizeof(g_ref_thread),
+        & appl_thread_cache_test
+    },
+    {
+        g_ref_string,
+        g_ref_string + sizeof(g_ref_string),
+        & appl_string_test_1
+    },
+    {
+        g_ref_property,
+        g_ref_property + sizeof(g_ref_property),
+        & appl_property_test_1
     }
 };
 

@@ -209,8 +209,7 @@ enum appl_status
 
                 e_status =
                     appl_string_create_dup_buffer(
-                        appl_context_parent(
-                            m_context),
+                        m_context,
                         appl_convert::to_uchar_ptr(
                             p_value0),
                         appl_convert::to_uchar_ptr(

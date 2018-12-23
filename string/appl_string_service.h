@@ -14,6 +14,8 @@ enum guard_appl_string_service_h
 
 struct appl_object;
 
+struct appl_context;
+
 struct appl_string;
 
 /* Assert compiler */
@@ -33,8 +35,8 @@ class appl_string_service
         static
         enum appl_status
         s_create(
-            struct appl_object const * const
-                p_object,
+            struct appl_context const * const
+                p_context,
             unsigned long int const
                 i_alloc_len,
             struct appl_string * * const

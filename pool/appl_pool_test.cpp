@@ -56,6 +56,9 @@ appl_pool_test_1(
             &(
                 p_pool));
 
+    b_result =
+        (appl_status_ok == e_status) ? b_result : 0;
+
     if (
         appl_status_ok
         == e_status)
@@ -70,21 +73,9 @@ appl_pool_test_1(
             appl_pool_destroy(
                 p_pool);
 
-        if (
-            appl_status_ok
-            == e_status)
-        {
-        }
-        else
-        {
-            b_result =
-                0;
-        }
-    }
-    else
-    {
         b_result =
-            0;
+            (appl_status_ok == e_status) ? b_result : 0;
+
     }
 
     {
@@ -183,6 +174,9 @@ appl_pool_test_2(
             &(
                 p_pool));
 
+    b_result =
+        (appl_status_ok == e_status) ? b_result : 0;
+
     if (
         appl_status_ok
         == e_status)
@@ -196,6 +190,9 @@ appl_pool_test_2(
                 &(
                     p_alloc));
 
+        b_result =
+            (appl_status_ok == e_status) ? b_result : 0;
+
         if (
             appl_status_ok
             == e_status)
@@ -206,42 +203,17 @@ appl_pool_test_2(
                     p_pool,
                     p_alloc);
 
-            if (
-                appl_status_ok
-                == e_status)
-            {
-            }
-            else
-            {
-                b_result =
-                    0;
-            }
-        }
-        else
-        {
             b_result =
-                0;
+                (appl_status_ok == e_status) ? b_result : 0;
+
         }
 
         e_status =
             appl_pool_destroy(
                 p_pool);
 
-        if (
-            appl_status_ok
-            == e_status)
-        {
-        }
-        else
-        {
-            b_result =
-                0;
-        }
-    }
-    else
-    {
         b_result =
-            0;
+            (appl_status_ok == e_status) ? b_result : 0;
     }
 
     return
@@ -273,6 +245,9 @@ appl_pool_test_3(
     struct appl_pool *
         p_pool;
 
+    b_result =
+        1;
+
     o_pool_descriptor.i_length =
         20u;
 
@@ -289,6 +264,9 @@ appl_pool_test_3(
                 o_pool_descriptor),
             &(
                 p_pool));
+
+    b_result =
+        (appl_status_ok == e_status) ? b_result : 0;
 
     if (
         appl_status_ok
@@ -315,137 +293,105 @@ appl_pool_test_3(
                 &(
                     a_table[0u]));
 
+        b_result =
+            (appl_status_ok == e_status) ? b_result : 0;
+
+        b_table[0u] =
+            (appl_status_ok == e_status) ? 1 : 0;
+
         if (
             appl_status_ok
             == e_status)
         {
-            b_table[0u] =
-                1;
-
             e_status =
                 appl_pool_alloc(
                     p_pool,
                     &(
                         a_table[1u]));
 
+            b_result =
+                (appl_status_ok == e_status) ? b_result : 0;
+
+            b_table[1u] =
+                (appl_status_ok == e_status) ? 1 : 0;
+
             if (
                 appl_status_ok
                 == e_status)
             {
-                b_table[1u] =
-                    1;
-
                 e_status =
                     appl_pool_alloc(
                         p_pool,
                         &(
                             a_table[2u]));
 
+                b_result =
+                    (appl_status_ok != e_status) ? b_result : 0;
+
+                b_table[2u] =
+                    (appl_status_ok == e_status) ? 1 : 0;
+
                 if (
                     appl_status_ok
-                    == e_status)
-                {
-                    b_table[2u] =
-                        1;
-
-                    b_result =
-                        0;
-                }
-                else
+                    != e_status)
                 {
                     e_status =
                         appl_pool_free(
                             p_pool,
                             a_table[0u]);
 
+                    b_result =
+                        (appl_status_ok == e_status) ? b_result : 0;
+
+                    b_table[0u] =
+                        (appl_status_ok == e_status) ? 0 : b_table[0u];
+
                     if (
                         appl_status_ok
                         == e_status)
                     {
-                        b_table[0u] =
-                            0;
-
                         e_status =
                             appl_pool_alloc(
                                 p_pool,
                                 &(
                                     a_table[2u]));
 
-                        if (
-                            appl_status_ok
-                            == e_status)
-                        {
-                            b_table[2u] =
-                                1;
-
-                            b_result =
-                                1;
-                        }
-                        else
-                        {
-                            b_result =
-                                0;
-                        }
-                    }
-                    else
-                    {
                         b_result =
-                            0;
+                            (appl_status_ok == e_status) ? b_result : 0;
+
+                        b_table[2u] =
+                            (appl_status_ok == e_status) ? 1 : b_table[2u];
                     }
                 }
             }
-            else
-            {
-                b_result =
-                    0;
-            }
-        }
-        else
-        {
-            b_result =
-                0;
         }
 
-        if (
-            b_table[0u])
-        {
-            appl_pool_free(
-                p_pool,
-                a_table[0u]);
+        b_table[0u] =
+            (char)(
+                b_table[0u]
+                ? appl_pool_free(
+                    p_pool,
+                    a_table[0u]), 0
+                : 0);
 
-            b_table[0u] =
-                0;
-        }
+        b_table[1u] =
+            (char)(
+                b_table[1u]
+                ? appl_pool_free(
+                    p_pool,
+                    a_table[1u]), 0
+                : 0);
 
-        if (
-            b_table[1u])
-        {
-            appl_pool_free(
-                p_pool,
-                a_table[1u]);
-
-            b_table[1u] =
-                0;
-        }
-
-        if (
-            b_table[2u])
-        {
-            appl_pool_free(
-                p_pool,
-                a_table[2u]);
-
-            b_table[2u] =
-                0u;
-        }
+        b_table[2u] =
+            (char)(
+                b_table[2u]
+                ? appl_pool_free(
+                    p_pool,
+                    a_table[2u]), 0
+                : 0);
 
         appl_pool_destroy(
             p_pool);
-    }
-    else
-    {
-        b_result =
-            0;
     }
 
     return

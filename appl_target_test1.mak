@@ -49,6 +49,8 @@ test_appl-deps = \
     dict/appl_dict_test.cpp \
     queue/appl_queue_test.cpp \
     thread/appl_thread_test.cpp \
+    string/appl_string_test.cpp \
+    property/appl_property_test.cpp \
     $(appl_base-deps)
 
 # List of libraries required to link test application
