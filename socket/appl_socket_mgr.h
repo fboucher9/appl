@@ -32,6 +32,13 @@ class appl_socket_mgr : public appl_object
 {
     public:
 
+        appl_socket_mgr(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_socket_mgr();
+
         virtual
         enum appl_status
             v_create_address(
@@ -73,13 +80,6 @@ class appl_socket_mgr : public appl_object
                     i_wait_count);
 
     protected:
-
-        appl_socket_mgr(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_socket_mgr();
 
     private:
 

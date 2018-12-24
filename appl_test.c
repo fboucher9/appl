@@ -77,6 +77,8 @@
 
 #include <property/appl_property_test.h>
 
+#include <socket/appl_socket_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2598,6 +2600,16 @@ static unsigned char const g_ref_property[] =
     'y'
 };
 
+static unsigned char const g_ref_socket[] =
+{
+    's',
+    'o',
+    'c',
+    'k',
+    'e',
+    't'
+};
+
 struct appl_test_command
 {
     unsigned char const *
@@ -2793,6 +2805,11 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_property,
         g_ref_property + sizeof(g_ref_property),
         & appl_property_test_1
+    },
+    {
+        g_ref_socket,
+        g_ref_socket + sizeof(g_ref_socket),
+        & appl_socket_test_1
     }
 };
 

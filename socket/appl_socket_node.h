@@ -35,6 +35,13 @@ struct appl_socket : public appl_object
 {
     public:
 
+        appl_socket(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_socket();
+
         virtual
         enum appl_status
         v_accept(
@@ -98,13 +105,6 @@ struct appl_socket : public appl_object
                 i_wait_count);
 
     protected:
-
-        appl_socket(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_socket();
 
     private:
 

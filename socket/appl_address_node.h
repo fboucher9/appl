@@ -36,6 +36,13 @@ struct appl_address : public appl_object
 {
     public:
 
+        appl_address(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_address();
+
         virtual
         enum appl_status
             v_get_name_len(
@@ -59,13 +66,6 @@ struct appl_address : public appl_object
                     r_port) const;
 
     protected:
-
-        appl_address(
-            struct appl_context * const
-                p_context);
-
-        virtual
-        ~appl_address();
 
     private:
 

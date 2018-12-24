@@ -26,15 +26,13 @@
 
 #if defined APPL_DEBUG
 
-#include <appl_debug_handle.h>
+#include <debug/appl_debug_impl.h>
 
 #endif /* #if defined APPL_DEBUG */
 
 #include <appl_convert.h>
 
-#include <appl_context_handle.h>
-
-#include <appl_allocator_handle.h>
+#include <appl_heap_handle.h>
 
 #define APPL_ADDRESS_PROPERTY_GUID (0xe0bfd095ul)
 
@@ -112,8 +110,7 @@ appl_address_property::s_create(
 {
     return
         appl_new(
-            appl_context_get_allocator(
-                p_context),
+            p_context,
             r_address_property);
 
 } // s_create()
@@ -132,8 +129,7 @@ appl_address_property::s_destroy(
 
     return
         appl_delete(
-            appl_context_get_allocator(
-                p_context),
+            p_context,
             p_address_property);
 
 } // s_destroy()
@@ -282,23 +278,14 @@ appl_address_property_assert_guid(
             &(
                 u_value));
 
-    if (
+    appl_debug_impl::s_validate(
         (
             appl_status_ok
             == e_status)
         && (
             APPL_ADDRESS_PROPERTY_GUID
-            == u_value))
-    {
-    }
-    else
-    {
-        appl_debug_print0(
-            appl_object_get_context(
-                appl_address_property_const_parent(
-                    p_address_property)),
-            "invalid guid for appl_address_property object\n");
-    }
+            == u_value),
+        "invalid guid for appl_address_property object\n");
 }
 #endif /* #if defined APPL_DEBUG */
 
