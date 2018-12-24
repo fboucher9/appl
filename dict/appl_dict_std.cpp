@@ -60,6 +60,16 @@ union appl_dict_std_node_ptr
 
 };
 
+union appl_dict_std_ptr
+{
+    void *
+        p_void;
+
+    class appl_dict_std *
+        p_dict_std;
+
+};
+
 //
 //
 //
@@ -165,6 +175,19 @@ enum appl_status
 appl_size_t
     appl_dict_std::v_cleanup(void)
 {
+    // Free the nodes?
+    union appl_dict_std_ptr
+        o_dict_std_ptr;
+
+    o_dict_std_ptr.p_dict_std =
+        this;
+
+    appl_hash_iterate(
+        m_hash,
+        &(
+            appl_dict_std::s_hash_callback),
+        o_dict_std_ptr.p_void);
+
     // Destroy hash table
     appl_hash_destroy(
         m_hash);
@@ -447,5 +470,77 @@ enum appl_status
         e_status;
 
 } // f_alloc_node()
+
+//
+//
+//
+void
+    appl_dict_std::s_hash_callback(
+        void * const
+            p_context,
+        struct appl_list * const
+            p_list)
+{
+    union appl_dict_std_ptr
+        o_dict_std_ptr;
+
+    o_dict_std_ptr.p_void =
+        p_context;
+
+    class appl_dict_std * const
+        p_dict_std =
+        o_dict_std_ptr.p_dict_std;
+
+    p_dict_std->f_hash_callback(
+        p_list);
+
+} // s_hash_callback()
+
+//
+//
+//
+void
+    appl_dict_std::f_hash_callback(
+        struct appl_list * const
+            p_list)
+{
+    union appl_dict_std_node_ptr
+        o_dict_std_node_ptr;
+
+    o_dict_std_node_ptr.p_list =
+        p_list;
+
+    struct appl_dict_std_node * const
+        p_dict_std_node =
+        o_dict_std_node_ptr.p_dict_std_node;
+
+    f_free_node(
+        p_dict_std_node);
+
+} // f_hash_callback()
+
+//
+//
+//
+void
+    appl_dict_std::f_free_node(
+        struct appl_dict_std_node * const
+            p_dict_std_node)
+{
+    appl_list_join(
+        &(
+            p_dict_std_node->o_list),
+        &(
+            p_dict_std_node->o_list));
+
+    appl_string_destroy(
+        p_dict_std_node->p_name);
+
+    appl_allocator_free_structure(
+        appl_context_get_allocator(
+            m_context),
+        p_dict_std_node);
+
+} // f_free_node()
 
 /* end-of-file: appl_dict_std.cpp */

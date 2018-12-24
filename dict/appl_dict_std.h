@@ -132,6 +132,24 @@ class appl_dict_std : public appl_dict
                 struct appl_dict_std_node * * const
                     r_node);
 
+        static
+        void
+            s_hash_callback(
+                void * const
+                    p_context,
+                struct appl_list * const
+                    p_list);
+
+        void
+            f_hash_callback(
+                struct appl_list * const
+                    p_list);
+
+        void
+            f_free_node(
+                struct appl_dict_std_node * const
+                    p_node);
+
 }; // class appl_dict_std
 
 /* end-of-file: appl_dict_std.h */
