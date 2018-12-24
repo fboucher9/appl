@@ -122,6 +122,11 @@ appl_thread_cache_test(
             appl_status_ok
             == e_status)
         {
+            appl_clock_delay(
+                p_context,
+                1000ul,
+                1000ul);
+
         }
 
         appl_thread_property_destroy(
