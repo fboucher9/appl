@@ -145,7 +145,7 @@ static unsigned char const g_appl_heap_dbg_footer_magic = (0x8Du);
 struct appl_heap_dbg_header : public appl_list
 {
     void const *
-        a_backtrace[8u];
+        a_backtrace[12u];
 
     /* -- */
 
@@ -378,7 +378,8 @@ enum appl_status
                     appl_status_ok
                     == appl_backtrace_impl::s_capture(
                         o_header_ptr.p_header->a_backtrace,
-                        8,
+                        (sizeof(o_header_ptr.p_header->a_backtrace)
+                        / sizeof(o_header_ptr.p_header->a_backtrace[0u])),
                         &(
                             o_header_ptr.p_header->i_backtrace_count)))
                 {
