@@ -10,6 +10,11 @@
 ifndef appl_target_base.mak-included
 appl_target_base.mak-included := 1
 
+# socket/appl_poll_handle.cpp
+# socket/appl_poll_mgr.cpp
+# socket/appl_poll_node.cpp
+# socket/appl_poll_service.cpp
+
 appl_base-deps := \
     appl.cpp \
     appl_status.cpp \
@@ -123,10 +128,6 @@ appl_base-deps := \
     options/appl_options_handle.cpp \
     options/appl_options_service.cpp \
     appl_refcount.cpp \
-    socket/appl_poll_handle.cpp \
-    socket/appl_poll_mgr.cpp \
-    socket/appl_poll_node.cpp \
-    socket/appl_poll_service.cpp \
     pool/appl_pool.cpp \
     pool/appl_pool_std.cpp \
     pool/appl_pool_mgr.cpp \
