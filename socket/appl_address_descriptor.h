@@ -7,8 +7,8 @@
 /* Reverse include guard */
 enum guard_appl_address_descriptor_h
 {
-    inc_appl_address_descriptor_h =
-        1
+    inc_appl_address_descriptor_h = 1
+        + inc_appl_address_property_h
 };
 
 /*
@@ -24,6 +24,9 @@ struct appl_address_descriptor
 
     /* -- */
 
+    enum appl_address_family
+        e_family;
+
     unsigned short int
         i_port;
 
@@ -33,7 +36,7 @@ struct appl_address_descriptor
     unsigned char
         b_port;
 
-#define PADDING (4)
+#define PADDING (4 + APPL_SIZEOF_INT)
 #include <appl_padding.h>
 
 }; /* struct appl_address_descriptor */

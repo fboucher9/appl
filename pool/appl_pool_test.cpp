@@ -367,27 +367,27 @@ appl_pool_test_3(
         }
 
         b_table[0u] =
-            (char)(
+            static_cast<char>(
                 b_table[0u]
-                ? appl_pool_free(
+                ? static_cast<void>(appl_pool_free(
                     p_pool,
-                    a_table[0u]), 0
+                    a_table[0u])), 0
                 : 0);
 
         b_table[1u] =
-            (char)(
+            static_cast<char>(
                 b_table[1u]
-                ? appl_pool_free(
+                ? static_cast<void>(appl_pool_free(
                     p_pool,
-                    a_table[1u]), 0
+                    a_table[1u])), 0
                 : 0);
 
         b_table[2u] =
-            (char)(
+            static_cast<char>(
                 b_table[2u]
-                ? appl_pool_free(
+                ? static_cast<void>(appl_pool_free(
                     p_pool,
-                    a_table[2u]), 0
+                    a_table[2u])), 0
                 : 0);
 
         appl_pool_destroy(

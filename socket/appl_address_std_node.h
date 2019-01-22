@@ -86,7 +86,20 @@ class appl_address_std_node : public appl_address
             struct sockaddr_in
                 o_sockaddr_in;
 
+            struct sockaddr_in6
+                o_sockaddr_in6;
+
         } m_sockaddr;
+
+        // --
+
+        unsigned long int
+            m_sockaddr_len;
+
+#define PADDING (APPL_SIZEOF_LONG)
+#include <appl_padding.h>
+
+        // --
 
         appl_address_std_node(
             class appl_address_std_node const  & r);

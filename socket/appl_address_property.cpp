@@ -46,7 +46,9 @@ enum appl_address_property_id
 
     appl_address_property_id_port = 3,
 
-    appl_address_property_id_max = 4
+    appl_address_property_id_family = 4,
+
+    appl_address_property_id_max = 5
 
 }; /* enum appl_address_property_id */
 
@@ -81,11 +83,11 @@ struct appl_address_property : public appl_property_std
         enum appl_status
             f_init(void);
 
-    protected:
-
         virtual
         appl_size_t
             v_cleanup(void);
+
+    protected:
 
     private:
 
@@ -358,6 +360,33 @@ appl_address_property_set_port(
 
 */
 enum appl_status
+appl_address_property_set_family(
+    struct appl_address_property * const
+        p_address_property,
+    enum appl_address_family const
+        e_family)
+{
+#if defined APPL_DEBUG
+    appl_address_property_assert_guid(
+        p_address_property);
+#endif /* #if defined APPL_DEBUG */
+
+    unsigned long int const
+        u_value =
+        e_family;
+
+    return
+        appl_property_set_ulong(
+            p_address_property,
+            appl_address_property_id_family,
+            u_value);
+
+} /* appl_address_property_set_family() */
+
+/*
+
+*/
+enum appl_status
 appl_address_property_get_name(
     struct appl_address_property const * const
         p_address_property,
@@ -459,5 +488,70 @@ appl_address_property_get_port(
         e_status;
 
 } /* appl_address_property_get_port() */
+
+/*
+
+*/
+enum appl_status
+appl_address_property_get_family(
+    struct appl_address_property const * const
+        p_address_property,
+    enum appl_address_family * const
+        r_family)
+{
+    enum appl_status
+        e_status;
+
+    unsigned long int
+        u_value;
+
+    e_status =
+        appl_property_get_ulong(
+            p_address_property,
+            appl_address_property_id_family,
+            &(
+                u_value));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        signed long int const
+            l_value =
+            appl_convert::to_signed(
+                u_value);
+
+        if (
+            sizeof(int) == sizeof(enum appl_address_family))
+        {
+            union appl_address_family_convert
+            {
+                int
+                    i_value;
+
+                enum appl_address_family
+                    e_family;
+
+            } o_address_family_convert;
+
+            o_address_family_convert.i_value =
+                appl_convert::to_int(
+                    l_value);
+
+            *(
+                r_family) =
+                o_address_family_convert.e_family;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+    }
+
+    return
+        e_status;
+
+} /* appl_address_property_get_family() */
 
 /* end-of-file: appl_address_property.cpp */

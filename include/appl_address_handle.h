@@ -10,6 +10,7 @@ enum guard_appl_address_handle_h
     inc_appl_address_handle_h =
         /* Header file dependencies */
         inc_appl_status_h
+        + inc_appl_address_property_h
 };
 
 struct appl_object;
@@ -70,6 +71,13 @@ appl_address_get_port(
         p_address,
     unsigned short int * const
         r_port);
+
+enum appl_status
+appl_address_get_family(
+    struct appl_address const * const
+        p_address,
+    enum appl_address_family * const
+        r_family);
 
 #if defined(__cplusplus)
 } /* extern "C" */

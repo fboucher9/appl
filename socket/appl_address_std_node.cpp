@@ -19,6 +19,8 @@ Description:
 
 #include <arpa/inet.h>
 
+#include <netdb.h>
+
 #elif defined APPL_OS_WINDOWS
 
 #include <winsock2.h>
@@ -37,9 +39,9 @@ Description:
 
 #include <appl_buf.h>
 
-#include <socket/appl_address_descriptor.h>
-
 #include <appl_address_property.h>
+
+#include <socket/appl_address_descriptor.h>
 
 #include <property/appl_property_types.h>
 
@@ -121,7 +123,8 @@ appl_address_std_node::appl_address_std_node(
         p_context) :
     appl_address(
         p_context),
-    m_sockaddr()
+    m_sockaddr(),
+    m_sockaddr_len()
 {
 }
 
@@ -170,11 +173,6 @@ enum appl_status
             1;
     }
 
-    struct sockaddr_in *
-        p_sockaddr_in =
-        &(
-            m_sockaddr.o_sockaddr_in);
-
     memset(
         &(
             m_sockaddr),
@@ -182,16 +180,44 @@ enum appl_status
         sizeof(
             m_sockaddr));
 
-    p_sockaddr_in->sin_family =
-        AF_INET;
+    unsigned char
+        ac_port[16u];
+
+    union appl_buf_ptr
+        o_port_ptr;
 
     if (
         o_address_descriptor.b_port)
     {
-        p_sockaddr_in->sin_port =
-            htons(
-                o_address_descriptor.i_port);
+        unsigned char *
+            p_port_end;
+
+        p_port_end =
+            appl_buf_print_number(
+                ac_port,
+                ac_port + sizeof(ac_port),
+                o_address_descriptor.i_port,
+                0,
+                0);
+
+        *(
+            p_port_end) =
+            '\000';
+
+        o_port_ptr.p_uchar =
+            ac_port;
     }
+    else
+    {
+        o_port_ptr.p_uchar =
+            0;
+    }
+
+    unsigned char
+        ac_buffer[256u];
+
+    union appl_buf_ptr
+        o_name_ptr;
 
     if (
         o_address_descriptor.b_name)
@@ -205,11 +231,8 @@ enum appl_status
                 o_address_descriptor.p_name_max);
 
         if (
-            i_name_len < 64u)
+            i_name_len < sizeof(ac_buffer))
         {
-            char
-                ac_buffer[64u];
-
             memcpy(
                 ac_buffer,
                 o_address_descriptor.p_name_min,
@@ -217,15 +240,85 @@ enum appl_status
 
             ac_buffer[i_name_len] =
                 '\000';
-
-            p_sockaddr_in->sin_addr.s_addr =
-                inet_addr(
-                    ac_buffer);
         }
+
+        o_name_ptr.p_uchar =
+            ac_buffer;
+    }
+    else
+    {
+        o_name_ptr.p_uchar =
+            0;
     }
 
-    e_status =
-        appl_status_ok;
+    // Do getaddrinfo...
+    int
+        i_addrinfo_result;
+
+    struct addrinfo *
+        p_addrinfo_list;
+
+    struct addrinfo
+        o_hints;
+
+    if (
+        o_name_ptr.pc_char)
+    {
+        o_hints.ai_flags =
+            AI_V4MAPPED
+            | AI_ADDRCONFIG;
+    }
+    else
+    {
+        o_hints.ai_flags =
+            AI_V4MAPPED
+            | AI_ADDRCONFIG
+            | AI_PASSIVE;
+    }
+
+    o_hints.ai_family =
+        AF_UNSPEC;
+
+    o_hints.ai_socktype =
+        SOCK_STREAM;
+
+    o_hints.ai_protocol =
+        0;
+
+    i_addrinfo_result =
+        getaddrinfo(
+            o_name_ptr.pc_char,
+            o_port_ptr.pc_char,
+            &(o_hints),
+            &(p_addrinfo_list));
+
+    if (
+        0
+        == i_addrinfo_result)
+    {
+        if (
+            p_addrinfo_list->ai_addr)
+        {
+            memcpy(
+                &(
+                    m_sockaddr.o_sockaddr_storage),
+                p_addrinfo_list->ai_addr,
+                p_addrinfo_list->ai_addrlen);
+
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;

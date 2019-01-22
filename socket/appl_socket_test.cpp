@@ -129,6 +129,17 @@ class appl_socket_test_service
                     r_instance);
 
         static
+        enum appl_status
+            s_create_udp_socket(
+                struct appl_context * const
+                    p_context,
+                struct appl_address const * const
+                    p_bind_address,
+                struct appl_socket * * const
+                    r_instance);
+
+
+        static
         void
             s_server_thread(
                 void * const
@@ -533,6 +544,69 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_socket_test_service::s_create_udp_socket(
+        struct appl_context * const
+            p_context,
+        struct appl_address const * const
+            p_bind_address,
+        struct appl_socket * * const
+            r_instance)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_socket_property *
+        p_socket_property;
+
+    e_status =
+        appl_socket_property_create(
+            p_context,
+            &(
+                p_socket_property));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        struct appl_socket *
+            p_socket_node;
+
+        appl_socket_property_set_protocol(
+            p_socket_property,
+            appl_socket_protocol_udp_dgram);
+
+        appl_socket_property_set_bind_address(
+            p_socket_property,
+            p_bind_address);
+
+        e_status =
+            appl_socket_create(
+                p_context,
+                p_socket_property,
+                &(
+                    p_socket_node));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            *(r_instance) =
+                p_socket_node;
+        }
+
+        appl_socket_property_destroy(
+            p_socket_property);
+    }
+
+    return
+        e_status;
+
+} // s_create_udp_socket()
+
+//
+//
+//
 void
     appl_socket_test_service::s_server_thread(
         void * const
@@ -828,6 +902,19 @@ void
         struct appl_context * const
             p_context)
 {
+    static unsigned char const g_name[] =
+    {
+        '1',
+        '2',
+        '7',
+        '.',
+        '0',
+        '.',
+        '0',
+        '.',
+        '1'
+    };
+
     // address property sanity check
     // address handle sanity check
     // socket property sanity check
@@ -877,19 +964,6 @@ void
                     &(
                         i_port));
             }
-
-            static unsigned char const g_name[] =
-            {
-                '1',
-                '2',
-                '7',
-                '.',
-                '0',
-                '.',
-                '0',
-                '.',
-                '1'
-            };
 
             appl_address_property_set_name(
                 p_address_property,
@@ -1369,6 +1443,123 @@ void
             }
         }
     }
+
+    // Test of udp sockets
+    {
+        enum appl_status
+            e_status;
+
+        struct appl_address *
+            p_udp_address_1;
+
+        e_status =
+            appl_socket_test_service::s_create_address(
+                p_context,
+                g_name,
+                g_name + sizeof(g_name),
+                6020u,
+                &(
+                    p_udp_address_1));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            struct appl_address *
+                p_udp_address_2;
+
+            e_status =
+                appl_socket_test_service::s_create_address(
+                    p_context,
+                    g_name,
+                    g_name + sizeof(g_name),
+                    6030u,
+                    &(
+                        p_udp_address_2));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                struct appl_socket *
+                    p_udp_socket_1;
+
+                e_status =
+                    appl_socket_test_service::s_create_udp_socket(
+                        p_context,
+                        p_udp_address_1,
+                        &(
+                            p_udp_socket_1));
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    struct appl_socket *
+                        p_udp_socket_2;
+
+                    e_status =
+                        appl_socket_test_service::s_create_udp_socket(
+                            p_context,
+                            p_udp_address_2,
+                            &(
+                                p_udp_socket_2));
+
+                    if (
+                        appl_status_ok
+                        == e_status)
+                    {
+                        static unsigned char s_buf[] =
+                        {
+                            1,
+                            2,
+                            3,
+                            4
+                        };
+
+                        unsigned long int
+                            i_count;
+
+                        // test of send to
+                        e_status =
+                            appl_socket_sendto(
+                                p_udp_socket_1,
+                                s_buf,
+                                s_buf + sizeof(s_buf),
+                                &(
+                                    i_count),
+                                p_udp_address_2);
+
+                        unsigned char
+                            a_buf[5u];
+
+                        // test of recv from
+                        e_status =
+                            appl_socket_recvfrom(
+                                p_udp_socket_1,
+                                a_buf,
+                                a_buf + sizeof(a_buf),
+                                &(
+                                    i_count),
+                                p_udp_address_1);
+
+                        appl_socket_destroy(
+                            p_udp_socket_2);
+                    }
+
+                    appl_socket_destroy(
+                        p_udp_socket_1);
+                }
+
+                appl_address_destroy(
+                    p_udp_address_2);
+            }
+
+            appl_address_destroy(
+                p_udp_address_1);
+        }
+    }
+
 } // appl_socket_test_1()
 
 /* end-of-file: appl_socket_test.cpp */

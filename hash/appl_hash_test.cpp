@@ -155,7 +155,7 @@ appl_hash_test_create_node(
             p_string;
 
         p_node->i_string_len =
-            (int)(
+            static_cast<int>(
                 strlen(
                     p_string));
 
@@ -187,7 +187,7 @@ appl_hash_test_destroy_node(
         i_placement_length;
 
     p_placement =
-        (void *)(
+        static_cast<void *>(
             p_node);
 
     i_placement_length =
@@ -225,7 +225,7 @@ appl_hash_test_dump_callback(
         p_context);
 
     p_node =
-        (struct appl_hash_test_node *)(
+        reinterpret_cast<struct appl_hash_test_node *>(
             p_list);
 
     printf(
@@ -247,7 +247,7 @@ appl_hash_test_dump(
         p_hash,
         &(
             appl_hash_test_dump_callback),
-        (void *)(
+        static_cast<void *>(
             p_hash));
 
 } /* appl_hash_test_dump() */
@@ -334,9 +334,9 @@ appl_hash_test_1(
                 /* insert into hash table */
                 appl_hash_insert(
                     p_hash,
-                    (void const *)(
+                    static_cast<void const *>(
                         p_node1->p_string),
-                    (unsigned long int)(
+                    static_cast<unsigned long int>(
                         p_node1->i_string_len),
                     &(
                         p_node1->o_list));
@@ -357,9 +357,9 @@ appl_hash_test_1(
                 {
                     appl_hash_insert(
                         p_hash,
-                        (void const *)(
+                        static_cast<void const *>(
                             p_node2->p_string),
-                        (unsigned long int)(
+                        static_cast<unsigned long int>(
                             p_node2->i_string_len),
                         &(
                             p_node2->o_list));
@@ -376,21 +376,21 @@ appl_hash_test_1(
                         appl_hash_lookup(
                             p_hash,
                             g_good_key1,
-                            (unsigned long int)(sizeof(g_good_key1) - 1),
+                            static_cast<unsigned long int>(sizeof(g_good_key1) - 1),
                             &(
                                 p_lookup_result));
 
                         appl_hash_lookup(
                             p_hash,
                             g_good_key2,
-                            (unsigned long int)(sizeof(g_good_key2) - 1),
+                            static_cast<unsigned long int>(sizeof(g_good_key2) - 1),
                             &(
                                 p_lookup_result));
 
                         appl_hash_lookup(
                             p_hash,
                             g_bad_key,
-                            (unsigned long int)(sizeof(g_bad_key) - 1),
+                            static_cast<unsigned long int>(sizeof(g_bad_key) - 1),
                             &(
                                 p_lookup_result));
                     }
