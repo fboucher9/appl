@@ -809,4 +809,183 @@ appl_buf_print_number(
 
 } /* appl_buf_print_number() */
 
+/*
+
+*/
+unsigned char const *
+appl_buf_scan_number(
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    signed long int * const
+        p_value,
+    int const
+        i_flags)
+{
+    unsigned char const *
+        p_buf_iterator;
+
+    signed long int
+        i_value;
+
+    char
+        b_more;
+
+    char
+        b_negative;
+
+    signed long int
+        i_base;
+
+    if (
+        appl_buf_scan_flag_binary & i_flags)
+    {
+        i_base =
+            2l;
+    }
+    else if (
+        appl_buf_scan_flag_octal & i_flags)
+    {
+        i_base =
+            8l;
+    }
+    else if (
+        appl_buf_scan_flag_hex & i_flags)
+    {
+        i_base =
+            16l;
+    }
+    else
+    {
+        i_base =
+            10l;
+    }
+
+    p_buf_iterator =
+        p_buf_min;
+
+    b_more =
+        1;
+
+    b_negative =
+        0;
+
+    i_value =
+        0;
+
+    while (
+        b_more
+        && (
+            p_buf_iterator
+            < p_buf_max))
+    {
+        unsigned char
+            u_glyph;
+
+        signed long int
+            i_digit;
+
+        char
+            b_digit;
+
+        u_glyph =
+            *(
+                p_buf_iterator);
+
+        i_digit =
+            0l;
+
+        b_digit =
+            0;
+
+        if (
+            ' ' == u_glyph)
+        {
+        }
+        else if (
+            '-' == u_glyph)
+        {
+            b_negative =
+                1;
+        }
+        else if (
+            '+' == u_glyph)
+        {
+        }
+        else if (
+            ('0' <= u_glyph)
+            && ('9' >= u_glyph))
+        {
+            i_digit =
+                (u_glyph - '0' + 0l);
+
+            b_digit =
+                1;
+        }
+        else if (
+            ('a' <= u_glyph)
+            && ('f' >= u_glyph))
+        {
+            i_digit =
+                (u_glyph - 'a' + 10l);
+
+            b_digit =
+                1;
+        }
+        else if (
+            ('A' <= u_glyph)
+            && ('F' >= u_glyph))
+        {
+            i_digit =
+                (u_glyph - 'A' + 10l);
+
+            b_digit =
+                1;
+        }
+        else
+        {
+            b_more =
+                0;
+        }
+
+        if (
+            b_digit)
+        {
+            if (
+                (i_digit >= 0l)
+                && (i_digit < i_base))
+            {
+                i_value =
+                    (i_value * i_base) + i_digit;
+            }
+            else
+            {
+                b_more =
+                    0;
+            }
+        }
+
+        if (
+            b_more)
+        {
+            p_buf_iterator ++;
+        }
+    }
+
+    if (
+        b_negative)
+    {
+        i_value =
+            -(i_value);
+    }
+
+    *(p_value) =
+        i_value;
+
+    return
+        p_buf_iterator;
+
+} /* appl_buf_scan_number() */
+
 /* end-of-file: appl_buf.cpp */
