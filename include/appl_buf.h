@@ -249,6 +249,33 @@ appl_buf_print_number(
     unsigned int const
         i_width);
 
+enum appl_buf_scan_flag
+{
+    /* treat number as unsigned, always positive */
+    appl_buf_scan_flag_unsigned = 4,
+
+    /* base binary */
+    appl_buf_scan_flag_binary = 32,
+
+    /* base octal */
+    appl_buf_scan_flag_octal = 64,
+
+    /* base hexadecimal */
+    appl_buf_scan_flag_hex = 128
+
+}; /* enum appl_buf_scan_flag */
+
+unsigned char const *
+appl_buf_scan_number(
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max,
+    signed long int * const
+        p_value,
+    int const
+        i_flags);
+
 #if defined(__cplusplus)
 } /* extern "C" */
 #endif /* #if defined(__cplusplus) */
