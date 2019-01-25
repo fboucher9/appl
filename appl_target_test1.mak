@@ -52,6 +52,7 @@ test_appl-deps = \
     string/appl_string_test.cpp \
     property/appl_property_test.cpp \
     socket/appl_socket_test.cpp \
+    buf/appl_buf_test.cpp \
     $(appl_base-deps)
 
 # List of libraries required to link test application
