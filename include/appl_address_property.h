@@ -14,6 +14,8 @@ enum guard_appl_address_property_h
 
 enum appl_address_family
 {
+    appl_address_family_unspecified = 0,
+
     appl_address_family_inet = 1,
 
     appl_address_family_inet6 = 2

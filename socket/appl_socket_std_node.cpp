@@ -30,11 +30,11 @@
 
 #include <socket/appl_socket_std_node.h>
 
+#include <appl_address_property.h>
+
 #include <socket/appl_address_node.h>
 
 #include <socket/appl_address_std_node.h>
-
-#include <appl_address_property.h>
 
 #include <appl_address_handle.h>
 
@@ -306,6 +306,32 @@ appl_socket_std_node::init_socket(
                 appl_status_fail;
         }
     }
+    else if (
+        appl_socket_protocol_udp_dgram
+        == e_protocol)
+    {
+        int const
+            i_socket_result =
+            socket(
+                AF_INET,
+                SOCK_DGRAM,
+                0);
+
+        if (
+            -1 != i_socket_result)
+        {
+            m_fd =
+                i_socket_result;
+
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+    }
     else
     {
         e_status =
@@ -349,8 +375,7 @@ appl_socket_std_node::init_bind(
                 m_fd,
                 &(
                     p_address_std_node->m_sockaddr.o_sockaddr_base),
-                sizeof(
-                    p_address_std_node->m_sockaddr.o_sockaddr_in));
+                p_address_std_node->m_sockaddr_len);
 
         if (
             0
@@ -443,8 +468,7 @@ appl_socket_std_node::init_connect(
                 m_fd,
                 &(
                     p_address_std_node->m_sockaddr.o_sockaddr_base),
-                sizeof(
-                    p_address_std_node->m_sockaddr.o_sockaddr_in));
+                p_address_std_node->m_sockaddr_len);
 
         if (
             0
@@ -843,6 +867,9 @@ appl_socket_std_node::v_accept(
             if (
                 -1 != i_accept_result)
             {
+                p_address_std_node->m_sockaddr_len =
+                    i_address_length;
+
                 // create a socket node to hold this new file descriptor
                 class appl_socket_std_node *
                     p_socket_std_node;
@@ -1009,14 +1036,43 @@ appl_socket_std_node::v_sendto(
     enum appl_status
         e_status;
 
-    appl_unused(
-        p_buf_min,
-        p_buf_max,
-        r_count,
-        p_remote_address);
+    appl_ptrdiff_t
+        i_send_result;
 
-    e_status =
-        appl_status_not_implemented;
+    class appl_address_std_node const * const
+        p_address_std_node =
+        appl_address_std_node::convert_handle(
+            p_remote_address);
+
+    i_send_result =
+        sendto(
+            m_fd,
+            p_buf_min,
+            appl_buf_len(
+                p_buf_min,
+                p_buf_max),
+            0,
+            &(
+                p_address_std_node->m_sockaddr.o_sockaddr_base),
+            p_address_std_node->m_sockaddr_len);
+
+    if (
+        -1 != i_send_result)
+    {
+        *(
+            r_count) =
+            appl_convert::to_ulong(
+                appl_convert::to_unsigned(
+                    i_send_result));
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;
@@ -1040,11 +1096,54 @@ appl_socket_std_node::v_recvfrom(
     enum appl_status
         e_status;
 
-    appl_unused(
-        p_buf_min,
-        p_buf_max,
-        r_count,
-        p_remote_address);
+    class appl_address_std_node * const
+        p_address_std_node =
+        appl_address_std_node::convert_handle(
+            p_remote_address);
+
+    appl_ptrdiff_t
+        i_recv_result;
+
+    socklen_t
+        i_sockaddr_len;
+
+    i_sockaddr_len =
+        sizeof(
+            p_address_std_node->m_sockaddr);
+
+    i_recv_result =
+        recvfrom(
+            m_fd,
+            p_buf_min,
+            appl_buf_len(
+                p_buf_min,
+                p_buf_max),
+            0,
+            &(
+                p_address_std_node->m_sockaddr.o_sockaddr_base),
+            &(
+                i_sockaddr_len));
+
+    if (
+        -1 != i_recv_result)
+    {
+        p_address_std_node->m_sockaddr_len =
+            i_sockaddr_len;
+
+        *(
+            r_count) =
+            appl_convert::to_ulong(
+                appl_convert::to_unsigned(
+                    i_recv_result));
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
 
     e_status =
         appl_status_not_implemented;

@@ -33,13 +33,13 @@ Description:
 
 #include <appl_object.h>
 
+#include <appl_address_property.h>
+
 #include <socket/appl_address_node.h>
 
 #include <socket/appl_address_std_node.h>
 
 #include <appl_buf.h>
-
-#include <appl_address_property.h>
 
 #include <socket/appl_address_descriptor.h>
 
@@ -161,6 +161,11 @@ enum appl_status
         o_address_descriptor.b_name =
             1;
     }
+    else
+    {
+        o_address_descriptor.b_name =
+            0;
+    }
 
     if (
         appl_status_ok
@@ -172,6 +177,27 @@ enum appl_status
         o_address_descriptor.b_port =
             1;
     }
+    else
+    {
+        o_address_descriptor.b_port =
+            0;
+    }
+
+    if (
+        appl_status_ok
+        == appl_address_property_get_family(
+            p_property,
+            &(
+                o_address_descriptor.e_family)))
+    {
+        o_address_descriptor.b_family =
+            1;
+    }
+    else
+    {
+        o_address_descriptor.b_family =
+            0;
+    }
 
     memset(
         &(
@@ -180,133 +206,146 @@ enum appl_status
         sizeof(
             m_sockaddr));
 
-    unsigned char
-        ac_port[16u];
-
-    union appl_buf_ptr
-        o_port_ptr;
-
     if (
-        o_address_descriptor.b_port)
+        o_address_descriptor.b_port
+        || o_address_descriptor.b_name)
     {
-        unsigned char *
-            p_port_end;
+        unsigned char
+            ac_port[16u];
 
-        p_port_end =
-            appl_buf_print_number(
-                ac_port,
-                ac_port + sizeof(ac_port),
-                o_address_descriptor.i_port,
-                0,
-                0);
-
-        *(
-            p_port_end) =
-            '\000';
-
-        o_port_ptr.p_uchar =
-            ac_port;
-    }
-    else
-    {
-        o_port_ptr.p_uchar =
-            0;
-    }
-
-    unsigned char
-        ac_buffer[256u];
-
-    union appl_buf_ptr
-        o_name_ptr;
-
-    if (
-        o_address_descriptor.b_name)
-    {
-        unsigned long int
-            i_name_len;
-
-        i_name_len =
-            appl_buf_len(
-                o_address_descriptor.p_name_min,
-                o_address_descriptor.p_name_max);
+        union appl_buf_ptr
+            o_port_ptr;
 
         if (
-            i_name_len < sizeof(ac_buffer))
+            o_address_descriptor.b_port)
         {
-            memcpy(
-                ac_buffer,
-                o_address_descriptor.p_name_min,
-                i_name_len);
+            unsigned char *
+                p_port_end;
 
-            ac_buffer[i_name_len] =
+            p_port_end =
+                appl_buf_print_number(
+                    ac_port,
+                    ac_port + sizeof(ac_port),
+                    o_address_descriptor.i_port,
+                    0,
+                    0);
+
+            *(
+                p_port_end) =
                 '\000';
+
+            o_port_ptr.p_uchar =
+                ac_port;
+        }
+        else
+        {
+            o_port_ptr.p_uchar =
+                0;
         }
 
-        o_name_ptr.p_uchar =
-            ac_buffer;
-    }
-    else
-    {
-        o_name_ptr.p_uchar =
-            0;
-    }
+        unsigned char
+            ac_buffer[256u];
 
-    // Do getaddrinfo...
-    int
-        i_addrinfo_result;
+        union appl_buf_ptr
+            o_name_ptr;
 
-    struct addrinfo *
-        p_addrinfo_list;
-
-    struct addrinfo
-        o_hints;
-
-    if (
-        o_name_ptr.pc_char)
-    {
-        o_hints.ai_flags =
-            AI_V4MAPPED
-            | AI_ADDRCONFIG;
-    }
-    else
-    {
-        o_hints.ai_flags =
-            AI_V4MAPPED
-            | AI_ADDRCONFIG
-            | AI_PASSIVE;
-    }
-
-    o_hints.ai_family =
-        AF_UNSPEC;
-
-    o_hints.ai_socktype =
-        SOCK_STREAM;
-
-    o_hints.ai_protocol =
-        0;
-
-    i_addrinfo_result =
-        getaddrinfo(
-            o_name_ptr.pc_char,
-            o_port_ptr.pc_char,
-            &(o_hints),
-            &(p_addrinfo_list));
-
-    if (
-        0
-        == i_addrinfo_result)
-    {
         if (
-            p_addrinfo_list->ai_addr)
+            o_address_descriptor.b_name)
         {
-            memcpy(
-                &(
-                    m_sockaddr.o_sockaddr_storage),
-                p_addrinfo_list->ai_addr,
-                p_addrinfo_list->ai_addrlen);
+            unsigned long int
+                i_name_len;
 
-            e_status =
-                appl_status_ok;
+            i_name_len =
+                appl_buf_len(
+                    o_address_descriptor.p_name_min,
+                    o_address_descriptor.p_name_max);
+
+            if (
+                i_name_len < sizeof(ac_buffer))
+            {
+                memcpy(
+                    ac_buffer,
+                    o_address_descriptor.p_name_min,
+                    i_name_len);
+
+                ac_buffer[i_name_len] =
+                    '\000';
+            }
+
+            o_name_ptr.p_uchar =
+                ac_buffer;
+        }
+        else
+        {
+            o_name_ptr.p_uchar =
+                0;
+        }
+
+        // Do getaddrinfo...
+        int
+            i_addrinfo_result;
+
+        struct addrinfo *
+            p_addrinfo_list;
+
+        struct addrinfo
+            o_hints;
+
+        if (
+            o_name_ptr.pc_char)
+        {
+            o_hints.ai_flags =
+                AI_V4MAPPED
+                | AI_ADDRCONFIG;
+        }
+        else
+        {
+            o_hints.ai_flags =
+                AI_V4MAPPED
+                | AI_ADDRCONFIG
+                | AI_PASSIVE;
+        }
+
+        o_hints.ai_family =
+            AF_UNSPEC;
+
+        o_hints.ai_socktype =
+            SOCK_STREAM;
+
+        o_hints.ai_protocol =
+            0;
+
+        i_addrinfo_result =
+            getaddrinfo(
+                o_name_ptr.pc_char,
+                o_port_ptr.pc_char,
+                &(o_hints),
+                &(p_addrinfo_list));
+
+        if (
+            0
+            == i_addrinfo_result)
+        {
+            if (
+                p_addrinfo_list->ai_addr)
+            {
+                memcpy(
+                    &(
+                        m_sockaddr.o_sockaddr_storage),
+                    p_addrinfo_list->ai_addr,
+                    p_addrinfo_list->ai_addrlen);
+
+                m_sockaddr_len =
+                    p_addrinfo_list->ai_addrlen;
+
+                e_status =
+                    appl_status_ok;
+            }
+            else
+            {
+                e_status =
+                    appl_status_fail;
+            }
         }
         else
         {
@@ -316,8 +355,9 @@ enum appl_status
     }
     else
     {
+        /* This is an empty address */
         e_status =
-            appl_status_fail;
+            appl_status_ok;
     }
 
     return
@@ -432,28 +472,105 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct sockaddr_in const *
-        p_sockaddr_in =
-        &(
-            m_sockaddr.o_sockaddr_in);
+    if (
+        AF_INET
+        == m_sockaddr.o_sockaddr_storage.ss_family)
+    {
+        struct sockaddr_in const *
+            p_sockaddr_in =
+            &(
+                m_sockaddr.o_sockaddr_in);
 
-    unsigned short int
-        i_port;
+        unsigned short int
+            i_port;
 
-    i_port =
-        ntohs(
-            p_sockaddr_in->sin_port);
+        i_port =
+            ntohs(
+                p_sockaddr_in->sin_port);
 
-    *(
-        r_port) =
-        i_port;
+        *(
+            r_port) =
+            i_port;
 
-    e_status =
-        appl_status_ok;
+        e_status =
+            appl_status_ok;
+    }
+    else if (
+        AF_INET6
+        == m_sockaddr.o_sockaddr_storage.ss_family)
+    {
+        struct sockaddr_in6 const *
+            p_sockaddr_in6 =
+            &(
+                m_sockaddr.o_sockaddr_in6);
+
+        unsigned short int
+            i_port;
+
+        i_port =
+            htons(
+                p_sockaddr_in6->sin6_port);
+
+        *(
+            r_port) =
+            i_port;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
 
     return
         e_status;
 
 } // v_get_port()
+
+//
+//
+//
+enum appl_status
+    appl_address_std_node::v_get_family(
+        enum appl_address_family * const
+            r_family) const
+{
+    enum appl_status
+        e_status;
+
+    if (
+        AF_INET
+        == m_sockaddr.o_sockaddr_storage.ss_family)
+    {
+        *(
+            r_family) =
+            appl_address_family_inet;
+
+        e_status =
+            appl_status_ok;
+    }
+    else if (
+        AF_INET6
+        == m_sockaddr.o_sockaddr_storage.ss_family)
+    {
+        *(
+            r_family) =
+            appl_address_family_inet6;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // v_get_family()
 
 /* end-of-file: appl_address_std_node.cpp */

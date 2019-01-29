@@ -28,6 +28,8 @@
 
 #include <socket/appl_socket_std_node.h>
 
+#include <appl_address_property.h>
+
 #include <socket/appl_address_node.h>
 
 #include <socket/appl_address_std_node.h>

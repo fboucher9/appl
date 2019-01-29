@@ -184,6 +184,12 @@ class appl_address_std_node : public appl_address
                 unsigned short int * const
                     r_port) const;
 
+        virtual
+        enum appl_status
+            v_get_family(
+                enum appl_address_family * const
+                    r_family) const;
+
 }; // class appl_address_std_node
 
 /* end-of-file: appl_address_std_node.h */

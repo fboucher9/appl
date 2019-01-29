@@ -3273,8 +3273,35 @@ appl_test_main(
                     if (
                         !b_found)
                     {
-                        appl_print0(
-                            "unknown command!\n");
+                        static unsigned char const s_socket_test_2_name[] =
+                        {
+                            's',
+                            'o',
+                            'c',
+                            'k'
+                        };
+
+                        if (
+                            0
+                            == appl_buf_compare(
+                                p_buf_min,
+                                p_buf_max,
+                                s_socket_test_2_name,
+                                s_socket_test_2_name + sizeof(s_socket_test_2_name)))
+                        {
+                            appl_socket_test_2_manual(
+                                p_context,
+                                p_options,
+                                i_index);
+
+                            i_index =
+                                i_count;
+                        }
+                        else
+                        {
+                            appl_print0(
+                                "unknown command!\n");
+                        }
                     }
 
                     i_index ++;

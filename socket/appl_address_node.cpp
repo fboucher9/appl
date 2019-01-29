@@ -15,6 +15,8 @@ Description:
 
 #include <appl_object.h>
 
+#include <appl_address_property.h>
+
 #include <socket/appl_address_node.h>
 
 #include <appl_unused.h>
@@ -66,6 +68,20 @@ enum appl_status
     return
         appl_status_not_implemented;
 } // v_get_port()
+
+//
+//
+//
+enum appl_status
+    appl_address::v_get_family(
+        enum appl_address_family * const
+            r_family) const
+{
+    appl_unused(
+        r_family);
+    return
+        appl_status_not_implemented;
+} // v_get_family()
 
 //
 //  Function: appl_address()

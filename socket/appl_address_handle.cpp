@@ -125,4 +125,21 @@ appl_address_get_port(
 
 } /* appl_address_get_port() */
 
+/*
+
+*/
+enum appl_status
+appl_address_get_family(
+    struct appl_address const * const
+        p_address,
+    enum appl_address_family * const
+        r_family)
+{
+    return
+        appl_address_service::s_get_family(
+            p_address,
+            r_family);
+
+} /* appl_address_get_family() */
+
 /* end-of-file: appl_address_handle.cpp */

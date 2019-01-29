@@ -11,6 +11,8 @@ Description:
 
 #include <appl_status.h>
 
+#include <appl_address_property.h>
+
 #include <socket/appl_address_service.h>
 
 #include <appl_types.h>
@@ -231,5 +233,27 @@ appl_address_service::s_get_port(
         e_status;
 
 } // s_get_port()
+
+//
+//
+//
+enum appl_status
+appl_address_service::s_get_family(
+    struct appl_address const * const
+        p_address,
+    enum appl_address_family * const
+        r_family)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_address->v_get_family(
+            r_family);
+
+    return
+        e_status;
+
+} // s_get_family()
 
 /* end-of-file: appl_address_service.cpp */

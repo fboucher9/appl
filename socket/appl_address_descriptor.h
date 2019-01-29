@@ -36,7 +36,10 @@ struct appl_address_descriptor
     unsigned char
         b_port;
 
-#define PADDING (4 + APPL_SIZEOF_INT)
+    unsigned char
+        b_family;
+
+#define PADDING (5 + APPL_SIZEOF_INT)
 #include <appl_padding.h>
 
 }; /* struct appl_address_descriptor */
