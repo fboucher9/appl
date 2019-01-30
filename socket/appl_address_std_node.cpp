@@ -25,6 +25,10 @@ Description:
 
 #include <winsock2.h>
 
+#include <ws2ipdef.h>
+
+#include <ws2tcpip.h>
+
 #endif
 
 #include <appl_status.h>
@@ -210,6 +214,7 @@ enum appl_status
         o_address_descriptor.b_port
         || o_address_descriptor.b_name)
     {
+        // Do getaddrinfo...
         unsigned char
             ac_port[16u];
 
@@ -281,7 +286,6 @@ enum appl_status
                 0;
         }
 
-        // Do getaddrinfo...
         int
             i_addrinfo_result;
 

@@ -8,6 +8,8 @@
 
 #include <winsock2.h>
 
+#include <ws2ipdef.h>
+
 #include <appl_status.h>
 
 #include <appl_types.h>
@@ -20,11 +22,11 @@
 
 #include <socket/appl_socket_w32_node.h>
 
+#include <appl_address_property.h>
+
 #include <socket/appl_address_node.h>
 
 #include <socket/appl_address_std_node.h>
-
-#include <appl_address_property.h>
 
 #include <appl_address_handle.h>
 
