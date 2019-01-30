@@ -1696,6 +1696,73 @@ void
                 static_cast<unsigned short int>(
                     i_value);
 
+            enum appl_address_family
+                e_family;
+
+            e_family =
+                appl_address_family_unspecified;
+
+            unsigned char const *
+                p_family_min;
+
+            unsigned char const *
+                p_family_max;
+
+            if (
+                appl_status_ok
+                == appl_options_get(
+                    p_options,
+                    i_shift + 3u,
+                    &(
+                        p_family_min),
+                    &(
+                        p_family_max)))
+            {
+                static unsigned char const s_ref_inet[] =
+                {
+                    'i',
+                    'n',
+                    'e',
+                    't'
+                };
+
+                static unsigned char const s_ref_inet6[] =
+                {
+                    'i',
+                    'n',
+                    'e',
+                    't',
+                    '6'
+                };
+
+                if (
+                    0
+                    == appl_buf_compare(
+                        p_family_min,
+                        p_family_max,
+                        s_ref_inet,
+                        s_ref_inet + sizeof(s_ref_inet)))
+                {
+                    e_family =
+                        appl_address_family_inet;
+                }
+                else if(
+                    0
+                    == appl_buf_compare(
+                        p_family_min,
+                        p_family_max,
+                        s_ref_inet6,
+                        s_ref_inet6 + sizeof(s_ref_inet6)))
+                {
+                    e_family =
+                        appl_address_family_inet6;
+                }
+                else
+                {
+                    printf("unknown family\n");
+                }
+            }
+
             struct appl_address *
                 p_address;
 
@@ -1705,7 +1772,7 @@ void
                     p_name_min,
                     p_name_max,
                     i_port,
-                    appl_address_family_unspecified,
+                    e_family,
                     &(
                         p_address));
 
@@ -1783,6 +1850,9 @@ void
                 {
                     printf("unable to get name value\n");
                 }
+
+                appl_address_destroy(
+                    p_address);
             }
             else
             {

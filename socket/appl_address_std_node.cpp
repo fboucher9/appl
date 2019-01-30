@@ -310,8 +310,34 @@ enum appl_status
                 | AI_PASSIVE;
         }
 
-        o_hints.ai_family =
-            AF_UNSPEC;
+        if (
+            o_address_descriptor.b_family)
+        {
+            if (
+                appl_address_family_inet
+                == o_address_descriptor.e_family)
+            {
+                o_hints.ai_family =
+                    AF_INET;
+            }
+            else if (
+                appl_address_family_inet6
+                == o_address_descriptor.e_family)
+            {
+                o_hints.ai_family =
+                    AF_INET6;
+            }
+            else
+            {
+                o_hints.ai_family =
+                    AF_UNSPEC;
+            }
+        }
+        else
+        {
+            o_hints.ai_family =
+                AF_UNSPEC;
+        }
 
         o_hints.ai_socktype =
             SOCK_STREAM;
@@ -418,36 +444,48 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct sockaddr_in const *
-        p_sockaddr_in =
-        &(
-            m_sockaddr.o_sockaddr_in);
+    int
+        i_nameinfo_result;
 
-    // convert sin_addr to string
-    char const * const
-        p_name0 =
-        inet_ntoa(
-            p_sockaddr_in->sin_addr);
+    unsigned char
+        a_host0[64u];
+
+    socklen_t const
+        i_addrlen =
+        m_sockaddr_len;
+
+    socklen_t const
+        i_host_maxlen =
+        sizeof(a_host0);
+
+    i_nameinfo_result =
+        getnameinfo(
+            &(
+                m_sockaddr.o_sockaddr_base),
+            i_addrlen,
+            appl_convert::to_char_ptr(
+                a_host0),
+            i_host_maxlen,
+            NULL,
+            0,
+            NI_NUMERICHOST | NI_NUMERICSERV);
 
     if (
-        p_name0)
+        0
+        == i_nameinfo_result)
     {
-        unsigned char const * const
-            p_name0u =
-            appl_convert::to_uchar_ptr(
-                p_name0);
-
-        unsigned long int const
-            i_name0_len =
+        appl_size_t const
+            i_host_len =
             appl_buf0_len(
-                p_name0u);
+                a_host0);
 
-        *(r_name_cur) =
+        *(
+            r_name_cur) =
             appl_buf_copy(
                 p_name_min,
                 p_name_max,
-                p_name0u,
-                p_name0u + i_name0_len);
+                a_host0,
+                a_host0 + i_host_len);
 
         e_status =
             appl_status_ok;
@@ -457,8 +495,6 @@ enum appl_status
         e_status =
             appl_status_fail;
     }
-
-    // copy string to name buffer
 
     return
         e_status;
@@ -476,6 +512,60 @@ enum appl_status
     enum appl_status
         e_status;
 
+    unsigned char
+        a_serv0[16u];
+
+    int
+        i_nameinfo_result;
+
+    i_nameinfo_result =
+        getnameinfo(
+            &(
+                m_sockaddr.o_sockaddr_base),
+            m_sockaddr_len,
+            NULL,
+            0,
+            appl_convert::to_char_ptr(
+                a_serv0),
+            sizeof(
+                a_serv0),
+            NI_NUMERICHOST | NI_NUMERICSERV);
+
+    if (
+        0
+        == i_nameinfo_result)
+    {
+        signed long int
+            i_value;
+
+        appl_size_t const
+            i_servlen =
+            appl_buf0_len(
+                a_serv0);
+
+        appl_buf_scan_number(
+            a_serv0,
+            a_serv0 + i_servlen,
+            &(
+                i_value),
+            0);
+
+        *(
+            r_port) =
+            appl_convert::to_ushort(
+                appl_convert::to_unsigned(
+                    i_value));
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+#if 0
     if (
         AF_INET
         == m_sockaddr.o_sockaddr_storage.ss_family)
@@ -527,6 +617,7 @@ enum appl_status
         e_status =
             appl_status_fail;
     }
+#endif
 
     return
         e_status;
