@@ -1113,6 +1113,16 @@ void
                             p_name_cur));
                 }
 
+                {
+                    enum appl_address_family
+                        e_family;
+
+                    appl_address_get_family(
+                        p_address_node,
+                        &(
+                            e_family));
+                }
+
                 // Create a socket descriptor
                 struct appl_socket_property *
                     p_socket_property;
@@ -1353,6 +1363,9 @@ void
                 0);
 
             p_address_node->v_get_port(
+                0);
+
+            p_address_node->v_get_family(
                 0);
 
             appl_delete(

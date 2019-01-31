@@ -295,19 +295,31 @@ enum appl_status
         struct addrinfo
             o_hints;
 
+        memset(
+            &(
+                o_hints),
+            0u,
+            sizeof(
+                o_hints));
+
+#if defined APPL_OS_LINUX
+        o_hints.ai_flags |=
+            AI_V4MAPPED;
+#endif /* #if defined APPL_OS_LINUX */
+
+#if defined APPL_OS_LINUX
+        o_hints.ai_flags |=
+            AI_ADDRCONFIG;
+#endif /* #if defined APPL_OS_LINUX */
+
         if (
             o_name_ptr.pc_char)
         {
-            o_hints.ai_flags =
-                AI_V4MAPPED
-                | AI_ADDRCONFIG;
         }
         else
         {
-            o_hints.ai_flags =
-                AI_V4MAPPED
-                | AI_ADDRCONFIG
-                | AI_PASSIVE;
+            o_hints.ai_flags |=
+                AI_PASSIVE;
         }
 
         if (
@@ -366,7 +378,8 @@ enum appl_status
                     p_addrinfo_list->ai_addrlen);
 
                 m_sockaddr_len =
-                    p_addrinfo_list->ai_addrlen;
+                    appl_convert::to_ulong(
+                        p_addrinfo_list->ai_addrlen);
 
                 e_status =
                     appl_status_ok;
