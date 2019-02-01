@@ -6,6 +6,8 @@
 
 #include <appl_status.h>
 
+#include <appl_address_property.h>
+
 #include <appl_socket_descriptor.h>
 
 #include <appl_property_handle.h>
@@ -77,6 +79,9 @@ enum appl_socket_option_id
 
     /* Set timeout for call to connect() */
     appl_socket_option_id_connect_timeout = 12,
+
+    /* Family to use for call to socket() */
+    appl_socket_option_id_family = 13,
 
     /* Maximum number of options */
     appl_socket_option_id_max
@@ -581,6 +586,36 @@ appl_socket_property_set_join_interface(
 
 } /* set_join_interface() */
 
+/*
+
+*/
+enum appl_status
+appl_socket_property_set_family(
+    struct appl_socket_property * const
+        p_socket_property,
+    enum appl_address_family const
+        e_family)
+{
+    enum appl_status
+        e_status;
+
+    signed long int
+        i_family_value;
+
+    i_family_value =
+        e_family;
+
+    e_status =
+        appl_property_set_long(
+            p_socket_property,
+            appl_socket_option_id_family,
+            i_family_value);
+
+    return
+        e_status;
+
+} /* set_family() */
+
 enum appl_status
 appl_socket_property_get_protocol(
     struct appl_socket_property const * const
@@ -958,5 +993,68 @@ appl_socket_property_get_join_interface(
         e_status;
 
 } /* get_join_interface() */
+
+/*
+
+*/
+enum appl_status
+appl_socket_property_get_family(
+    struct appl_socket_property const * const
+        p_socket_property,
+    enum appl_address_family * const
+        r_family)
+{
+    enum appl_status
+        e_status;
+
+#if defined APPL_DEBUG
+    appl_socket_property_assert_guid(
+        p_socket_property);
+#endif /* #if defined APPL_DEBUG */
+
+    signed long int
+        i_family_value;
+
+    e_status =
+        appl_property_get_long(
+            p_socket_property,
+            appl_socket_option_id_family,
+            &(
+                i_family_value));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        enum appl_address_family
+            e_family;
+
+        if (
+            appl_address_family_inet == i_family_value)
+        {
+            e_family =
+                appl_address_family_inet;
+        }
+        else if (
+            appl_address_family_inet6 == i_family_value)
+        {
+            e_family =
+                appl_address_family_inet6;
+        }
+        else
+        {
+            e_family =
+                appl_address_family_unspecified;
+        }
+
+        *(
+            r_family) =
+            e_family;
+    }
+
+    return
+        e_status;
+
+} /* get_family() */
 
 /* end-of-file: appl_socket_descriptor.cpp */

@@ -24,13 +24,13 @@
 
 #include <appl_object.h>
 
+#include <appl_address_property.h>
+
 #include <appl_socket_descriptor.h>
 
 #include <socket/appl_socket_node.h>
 
 #include <socket/appl_socket_std_node.h>
-
-#include <appl_address_property.h>
 
 #include <socket/appl_address_node.h>
 
@@ -263,74 +263,87 @@ appl_socket_std_node::init_socket(
     enum appl_status
         e_status;
 
-    enum appl_socket_protocol
-        e_protocol;
+    int
+        i_protocol;
 
-    if (
-        appl_status_ok
-        == appl_socket_property_get_protocol(
-            p_socket_descriptor,
-            &(
-                e_protocol)))
     {
-    }
-    else
-    {
-        e_protocol =
-            appl_socket_protocol_tcp_stream;
-    }
-
-    if (
-        appl_socket_protocol_tcp_stream
-        == e_protocol)
-    {
-        int const
-            i_socket_result =
-            socket(
-                AF_INET,
-                SOCK_STREAM,
-                0);
+        enum appl_socket_protocol
+            e_protocol;
 
         if (
-            -1 != i_socket_result)
+            appl_status_ok
+            == appl_socket_property_get_protocol(
+                p_socket_descriptor,
+                &(
+                    e_protocol)))
         {
-            m_fd =
-                i_socket_result;
-
-            e_status =
-                appl_status_ok;
+            if (
+                appl_socket_protocol_udp_dgram == e_protocol)
+            {
+                i_protocol =
+                    SOCK_DGRAM;
+            }
+            else
+            {
+                i_protocol =
+                    SOCK_STREAM;
+            }
         }
         else
         {
-            e_status =
-                appl_status_fail;
+            i_protocol =
+                SOCK_STREAM;
         }
     }
-    else if (
-        appl_socket_protocol_udp_dgram
-        == e_protocol)
+
+    int
+        i_domain;
+
     {
-        int const
-            i_socket_result =
-            socket(
-                AF_INET,
-                SOCK_DGRAM,
-                0);
+        enum appl_address_family
+            e_family;
 
         if (
-            -1 != i_socket_result)
+            appl_status_ok
+            == appl_socket_property_get_family(
+                p_socket_descriptor,
+                &(
+                    e_family)))
         {
-            m_fd =
-                i_socket_result;
-
-            e_status =
-                appl_status_ok;
+            if (
+                appl_address_family_inet6 == e_family)
+            {
+                i_domain =
+                    AF_INET6;
+            }
+            else
+            {
+                i_domain =
+                    AF_INET;
+            }
         }
         else
         {
-            e_status =
-                appl_status_fail;
+            i_domain =
+                AF_INET;
         }
+    }
+
+    int const
+        i_socket_result =
+        socket(
+            i_domain,
+            i_protocol,
+            0);
+
+    if (
+        -1 != i_socket_result)
+    {
+        m_fd =
+            i_socket_result;
+
+        e_status =
+            appl_status_ok;
     }
     else
     {
@@ -1144,9 +1157,6 @@ appl_socket_std_node::v_recvfrom(
         e_status =
             appl_status_fail;
     }
-
-    e_status =
-        appl_status_not_implemented;
 
     return
         e_status;

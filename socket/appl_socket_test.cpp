@@ -42,6 +42,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_buf0.h>
+
 #include <appl_unused.h>
 
 #include <stdio.h>
@@ -62,6 +64,12 @@ g_client_thread_node =
 class appl_socket_test_service
 {
     public:
+
+        static
+        void
+            s_print_msg(
+                char const * const
+                    p_msg0);
 
         static
         enum appl_status
@@ -145,6 +153,8 @@ class appl_socket_test_service
             s_create_udp_socket(
                 struct appl_context * const
                     p_context,
+                enum appl_address_family const
+                    e_family,
                 struct appl_address const * const
                     p_bind_address,
                 struct appl_socket * * const
@@ -178,6 +188,26 @@ class appl_socket_test_service
                     p_callback_context,
                 int const
                     i_poll_flags);
+
+        static
+        enum appl_status
+            s_parse_family_option(
+                struct appl_options const * const
+                    p_options,
+                unsigned int const
+                    i_shift,
+                enum appl_address_family * const
+                    r_family);
+
+        static
+        enum appl_status
+            s_parse_port_option(
+                struct appl_options const * const
+                    p_options,
+                unsigned int const
+                    i_shift,
+                unsigned short int * const
+                    r_port);
 
 }; // class appl_socket_test_service
 
@@ -314,6 +344,17 @@ enum appl_status
         e_status;
 
 } // s_create_address()
+
+//
+//
+//
+void
+    appl_socket_test_service::s_print_msg(
+        char const * const
+            p_msg0)
+{
+    printf("%s", p_msg0);
+}
 
 //
 //
@@ -587,6 +628,8 @@ enum appl_status
     appl_socket_test_service::s_create_udp_socket(
         struct appl_context * const
             p_context,
+        enum appl_address_family const
+            e_family,
         struct appl_address const * const
             p_bind_address,
         struct appl_socket * * const
@@ -618,6 +661,10 @@ enum appl_status
         appl_socket_property_set_bind_address(
             p_socket_property,
             p_bind_address);
+
+        appl_socket_property_set_family(
+            p_socket_property,
+            e_family);
 
         e_status =
             appl_socket_create(
@@ -654,7 +701,7 @@ void
     enum appl_status
         e_status;
 
-    printf("server thread enter ...\n");
+    appl_socket_test_service::s_print_msg("server thread enter ...\n");
 
     struct appl_context * const
         p_context =
@@ -677,7 +724,7 @@ void
         '1'
     };
 
-    printf("server thread create socket ...\n");
+    appl_socket_test_service::s_print_msg("server thread create socket ...\n");
 
     e_status =
         appl_socket_test_service::s_create_server_socket(
@@ -693,7 +740,7 @@ void
         appl_status_ok
         == e_status)
     {
-        printf("server thread - socket created\n");
+        appl_socket_test_service::s_print_msg("server thread - socket created\n");
 
         struct appl_socket *
             p_socket_client_node;
@@ -707,7 +754,7 @@ void
         appl_socket_const_parent(
             p_socket_server_node);
 
-        printf("server thread accept ...\n");
+        appl_socket_test_service::s_print_msg("server thread accept ...\n");
 
         e_status =
             appl_socket_accept(
@@ -721,7 +768,7 @@ void
             appl_status_ok
             == e_status)
         {
-            printf("server thread - accepted\n");
+            appl_socket_test_service::s_print_msg("server thread - accepted\n");
 
             appl_socket_test_service::s_message_exchange(
                 p_context,
@@ -738,7 +785,7 @@ void
             p_socket_server_node);
     }
 
-    printf("server thread ... leave\n");
+    appl_socket_test_service::s_print_msg("server thread ... leave\n");
 
     appl_thread_destroy(
         g_server_thread_node);
@@ -761,7 +808,7 @@ void
         (struct appl_context *)(
             p_thread_context);
 
-    printf("client thread enter ...\n");
+    appl_socket_test_service::s_print_msg("client thread enter ...\n");
 
     enum appl_status
         e_status;
@@ -782,7 +829,7 @@ void
     struct appl_socket *
         p_socket_client_node;
 
-    printf("client thread create socket ...\n");
+    appl_socket_test_service::s_print_msg("client thread create socket ...\n");
 
     e_status =
         appl_socket_test_service::s_create_client_socket(
@@ -798,7 +845,7 @@ void
         appl_status_ok
         == e_status)
     {
-        printf("client thread - created\n");
+        appl_socket_test_service::s_print_msg("client thread - created\n");
 
         appl_socket_test_service::s_message_exchange(
             p_context,
@@ -808,7 +855,7 @@ void
             p_socket_client_node);
     }
 
-    printf("client thread ... leave\n");
+    appl_socket_test_service::s_print_msg("client thread ... leave\n");
 
     appl_thread_destroy(
         g_client_thread_node);
@@ -934,6 +981,170 @@ void
         e_status);
 
 }
+
+//
+//
+//
+enum appl_status
+    appl_socket_test_service::s_parse_family_option(
+        struct appl_options const * const
+            p_options,
+        unsigned int const
+            i_shift,
+        enum appl_address_family * const
+            r_family)
+{
+    enum appl_status
+        e_status;
+
+    unsigned char const *
+        p_family_min;
+
+    unsigned char const *
+        p_family_max;
+
+    e_status =
+        appl_options_get(
+            p_options,
+            i_shift,
+            &(
+                p_family_min),
+            &(
+                p_family_max));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        static unsigned char const s_ref_inet[] =
+        {
+            'i',
+            'n',
+            'e',
+            't'
+        };
+
+        static unsigned char const s_ref_inet6[] =
+        {
+            'i',
+            'n',
+            'e',
+            't',
+            '6'
+        };
+
+        static unsigned char const s_ref_unspec[] =
+        {
+            'u',
+            'n',
+            's',
+            'p',
+            'e',
+            'c'
+        };
+
+        if (
+            0
+            == appl_buf_compare(
+                p_family_min,
+                p_family_max,
+                s_ref_inet,
+                s_ref_inet + sizeof(s_ref_inet)))
+        {
+            *(r_family) =
+                appl_address_family_inet;
+        }
+        else if(
+            0
+            == appl_buf_compare(
+                p_family_min,
+                p_family_max,
+                s_ref_inet6,
+                s_ref_inet6 + sizeof(s_ref_inet6)))
+        {
+            *(r_family) =
+                appl_address_family_inet6;
+        }
+        else if (
+            0
+            == appl_buf_compare(
+                p_family_min,
+                p_family_max,
+                s_ref_unspec,
+                s_ref_unspec + sizeof(s_ref_unspec)))
+        {
+            *(r_family) =
+                appl_address_family_unspecified;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+    }
+
+    return
+        e_status;
+
+}
+
+//
+//
+//
+enum appl_status
+    appl_socket_test_service::s_parse_port_option(
+        struct appl_options const * const
+            p_options,
+        unsigned int const
+            i_shift,
+        unsigned short int * const
+            r_port)
+{
+    enum appl_status
+        e_status;
+
+    unsigned char const *
+        p_port_min;
+
+    unsigned char const *
+        p_port_max;
+
+    e_status =
+        appl_options_get(
+            p_options,
+            i_shift,
+            &(
+                p_port_min),
+            &(
+                p_port_max));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        signed long int
+            i_value;
+
+        i_value =
+            0l;
+
+        appl_buf_scan_number(
+            p_port_min,
+            p_port_max,
+            &(
+                i_value),
+            0);
+
+        *(
+            r_port) =
+            static_cast<unsigned short int>(
+                i_value);
+    }
+
+    return
+        e_status;
+
+} // s_parse_port_option()
 
 //
 //
@@ -1506,14 +1717,14 @@ void
                 == e_status)
             {
                 // Wait for test to complete
-                printf("socket test : wait for server and client threads ...\n");
+                appl_socket_test_service::s_print_msg("socket test : wait for server and client threads ...\n");
 
                 appl_clock_delay(
                     p_context,
                     1000ul,
                     1000ul);
 
-                printf("socket test : ... done wait for server and client\n");
+                appl_socket_test_service::s_print_msg("socket test : ... done wait for server and client\n");
             }
         }
     }
@@ -1563,6 +1774,7 @@ void
                 e_status =
                     appl_socket_test_service::s_create_udp_socket(
                         p_context,
+                        appl_address_family_inet,
                         p_udp_address_1,
                         &(
                             p_udp_socket_1));
@@ -1577,6 +1789,7 @@ void
                     e_status =
                         appl_socket_test_service::s_create_udp_socket(
                             p_context,
+                            appl_address_family_inet,
                             p_udp_address_2,
                             &(
                                 p_udp_socket_2));
@@ -1654,232 +1867,171 @@ void
     enum appl_status
         e_status;
 
-    // Get address
-    unsigned char const *
-        p_name_min;
+    //
+    //  Options:
+    //      [0]     cmd
+    //      [1]     family
+    //      [2]     name
+    //      [3]     port
+    //
 
-    unsigned char const *
-        p_name_max;
+    // Get family
+    enum appl_address_family
+        e_family;
 
     e_status =
-        appl_options_get(
+        appl_socket_test_service::s_parse_family_option(
             p_options,
             i_shift + 1u,
             &(
-                p_name_min),
-            &(
-                p_name_max));
+                e_family));
 
     if (
         appl_status_ok
         == e_status)
     {
+        // Get address
         unsigned char const *
-            p_port_min;
+            p_name_min;
 
         unsigned char const *
-            p_port_max;
+            p_name_max;
 
-        // Get port
         e_status =
             appl_options_get(
                 p_options,
                 i_shift + 2u,
                 &(
-                    p_port_min),
+                    p_name_min),
                 &(
-                    p_port_max));
+                    p_name_max));
 
         if (
             appl_status_ok
             == e_status)
         {
-            signed long int
-                i_value;
+            unsigned short int
+                i_port;
 
-            appl_buf_scan_number(
-                p_port_min,
-                p_port_max,
-                &(
-                    i_value),
-                0);
-
-            unsigned short int const
-                i_port =
-                static_cast<unsigned short int>(
-                    i_value);
-
-            enum appl_address_family
-                e_family;
-
-            e_family =
-                appl_address_family_unspecified;
-
-            unsigned char const *
-                p_family_min;
-
-            unsigned char const *
-                p_family_max;
-
-            if (
-                appl_status_ok
-                == appl_options_get(
+            e_status =
+                appl_socket_test_service::s_parse_port_option(
                     p_options,
                     i_shift + 3u,
                     &(
-                        p_family_min),
-                    &(
-                        p_family_max)))
-            {
-                static unsigned char const s_ref_inet[] =
-                {
-                    'i',
-                    'n',
-                    'e',
-                    't'
-                };
-
-                static unsigned char const s_ref_inet6[] =
-                {
-                    'i',
-                    'n',
-                    'e',
-                    't',
-                    '6'
-                };
-
-                if (
-                    0
-                    == appl_buf_compare(
-                        p_family_min,
-                        p_family_max,
-                        s_ref_inet,
-                        s_ref_inet + sizeof(s_ref_inet)))
-                {
-                    e_family =
-                        appl_address_family_inet;
-                }
-                else if(
-                    0
-                    == appl_buf_compare(
-                        p_family_min,
-                        p_family_max,
-                        s_ref_inet6,
-                        s_ref_inet6 + sizeof(s_ref_inet6)))
-                {
-                    e_family =
-                        appl_address_family_inet6;
-                }
-                else
-                {
-                    printf("unknown family\n");
-                }
-            }
-
-            struct appl_address *
-                p_address;
-
-            e_status =
-                appl_socket_test_service::s_create_address(
-                    p_context,
-                    p_name_min,
-                    p_name_max,
-                    i_port,
-                    e_family,
-                    &(
-                        p_address));
+                        i_port));
 
             if (
                 appl_status_ok
                 == e_status)
             {
-                unsigned char
-                    a_name_value[64u];
-
-                unsigned char *
-                    p_name_value_cur;
+                struct appl_address *
+                    p_address;
 
                 e_status =
-                    appl_address_get_name(
-                        p_address,
-                        a_name_value,
-                        a_name_value + sizeof(a_name_value),
+                    appl_socket_test_service::s_create_address(
+                        p_context,
+                        p_name_min,
+                        p_name_max,
+                        i_port,
+                        e_family,
                         &(
-                            p_name_value_cur));
+                            p_address));
 
                 if (
                     appl_status_ok
                     == e_status)
                 {
-                    unsigned short int
-                        i_port_value;
+                    unsigned char
+                        a_name_value[64u];
+
+                    unsigned char *
+                        p_name_value_cur;
 
                     e_status =
-                        appl_address_get_port(
+                        appl_address_get_name(
                             p_address,
+                            a_name_value,
+                            a_name_value + sizeof(a_name_value),
                             &(
-                                i_port_value));
+                                p_name_value_cur));
 
                     if (
                         appl_status_ok
                         == e_status)
                     {
-                        enum appl_address_family
-                            e_family_value;
+                        unsigned short int
+                            i_port_value;
 
                         e_status =
-                            appl_address_get_family(
+                            appl_address_get_port(
                                 p_address,
                                 &(
-                                    e_family_value));
+                                    i_port_value));
 
                         if (
                             appl_status_ok
                             == e_status)
                         {
-                            printf(
-                                "[%.*s]:%u %d\n",
-                                static_cast<int>(
-                                    appl_buf_len(
-                                        a_name_value,
-                                        p_name_value_cur)),
-                                a_name_value,
-                                static_cast<unsigned int>(
-                                    i_port_value),
-                                static_cast<int>(
-                                    e_family_value));
+                            enum appl_address_family
+                                e_family_value;
+
+                            e_status =
+                                appl_address_get_family(
+                                    p_address,
+                                    &(
+                                        e_family_value));
+
+                            if (
+                                appl_status_ok
+                                == e_status)
+                            {
+                                printf(
+                                    "[%.*s]:%u %d\n",
+                                    static_cast<int>(
+                                        appl_buf_len(
+                                            a_name_value,
+                                            p_name_value_cur)),
+                                    a_name_value,
+                                    static_cast<unsigned int>(
+                                        i_port_value),
+                                    static_cast<int>(
+                                        e_family_value));
+                            }
+                            else
+                            {
+                                appl_socket_test_service::s_print_msg("unable to get family value\n");
+                            }
                         }
                         else
                         {
-                            printf("unable to get family value\n");
+                            appl_socket_test_service::s_print_msg("unable to get port value\n");
                         }
                     }
                     else
                     {
-                        printf("unable to get port value\n");
+                        appl_socket_test_service::s_print_msg("unable to get name value\n");
                     }
+
+                    appl_address_destroy(
+                        p_address);
                 }
                 else
                 {
-                    printf("unable to get name value\n");
+                    appl_socket_test_service::s_print_msg("unable to create address\n");
                 }
-
-                appl_address_destroy(
-                    p_address);
             }
             else
             {
-                printf("unable to create address\n");
+                appl_socket_test_service::s_print_msg("unable to get port option\n");
             }
         }
         else
         {
-            printf("unable to get port option\n");
+            appl_socket_test_service::s_print_msg("unable to get name option\n");
         }
     }
     else
     {
-        printf("unable to get name option\n");
     }
 }
 
@@ -1896,10 +2048,259 @@ void
         unsigned int const
             i_shift)
 {
+    //
+    //  argv[0] = udp
+    //  argv[1] = family
+    //  argv[2] = bindaddr
+    //  argv[3] = bindport
+    //  argv[4] = destaddr
+    //  argv[5] = destport
+    //
     appl_unused(
         p_context,
         p_options,
         i_shift);
+
+    enum appl_status
+        e_status;
+
+    enum appl_address_family
+        e_family;
+
+    e_status =
+        appl_socket_test_service::s_parse_family_option(
+            p_options,
+            i_shift + 1u,
+            &(
+                e_family));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        unsigned char const *
+            p_bind_name_min;
+
+        unsigned char const *
+            p_bind_name_max;
+
+        e_status =
+            appl_options_get(
+                p_options,
+                i_shift + 2u,
+                &(
+                    p_bind_name_min),
+                &(
+                    p_bind_name_max));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            unsigned short int
+                i_bind_port;
+
+            e_status =
+                appl_socket_test_service::s_parse_port_option(
+                    p_options,
+                    i_shift + 3u,
+                    &(
+                        i_bind_port));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                unsigned char const *
+                    p_dest_name_min;
+
+                unsigned char const *
+                    p_dest_name_max;
+
+                e_status =
+                    appl_options_get(
+                        p_options,
+                        i_shift + 4u,
+                        &(
+                            p_dest_name_min),
+                        &(
+                            p_dest_name_max));
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    unsigned short int
+                        i_dest_port;
+
+                    e_status =
+                        appl_socket_test_service::s_parse_port_option(
+                            p_options,
+                            i_shift + 5u,
+                            &(
+                                i_dest_port));
+
+                    if (
+                        appl_status_ok
+                        == e_status)
+                    {
+                        struct appl_address *
+                            p_bind_address;
+
+                        e_status =
+                            appl_socket_test_service::s_create_address(
+                                p_context,
+                                p_bind_name_min,
+                                p_bind_name_max,
+                                i_bind_port,
+                                e_family,
+                                &(
+                                    p_bind_address));
+
+                        if (
+                            appl_status_ok
+                            == e_status)
+                        {
+                            struct appl_address *
+                                p_dest_address;
+
+                            e_status =
+                                appl_socket_test_service::s_create_address(
+                                    p_context,
+                                    p_dest_name_min,
+                                    p_dest_name_max,
+                                    i_dest_port,
+                                    e_family,
+                                    &(
+                                        p_dest_address));
+
+                            if (
+                                appl_status_ok
+                                == e_status)
+                            {
+                                struct appl_socket *
+                                    p_udp_socket;
+
+                                e_status =
+                                    appl_socket_test_service::s_create_udp_socket(
+                                        p_context,
+                                        e_family,
+                                        p_bind_address,
+                                        &(
+                                            p_udp_socket));
+
+                                if (
+                                    appl_status_ok
+                                    == e_status)
+                                {
+                                    // create a recv thread
+                                    unsigned char a_msg[80u];
+
+                                    if (
+                                        NULL
+                                        != fgets(
+                                            reinterpret_cast<char *>(
+                                                a_msg),
+                                            sizeof(
+                                                a_msg) - 1u,
+                                            stdin))
+                                    {
+                                        unsigned long int
+                                            i_count;
+
+                                        // send
+                                        e_status =
+                                            appl_socket_sendto(
+                                                p_udp_socket,
+                                                a_msg,
+                                                a_msg + appl_buf0_len(
+                                                    a_msg),
+                                                &(
+                                                    i_count),
+                                                p_dest_address);
+
+                                        if (
+                                            appl_status_ok
+                                            == e_status)
+                                        {
+                                            unsigned char a_result[80u];
+
+                                            // recv
+                                            e_status =
+                                                appl_socket_recvfrom(
+                                                    p_udp_socket,
+                                                    a_result,
+                                                    a_result + sizeof(a_result),
+                                                    &(
+                                                        i_count),
+                                                    p_dest_address);
+
+                                            if (
+                                                appl_status_ok
+                                                == e_status)
+                                            {
+                                                unsigned char
+                                                    a_remote_name[64u];
+
+                                                unsigned short int
+                                                    i_remote_port;
+
+                                                unsigned char *
+                                                    p_remote_name_cur;
+
+                                                p_remote_name_cur =
+                                                    a_remote_name;
+
+                                                appl_address_get_name(
+                                                    p_dest_address,
+                                                    a_remote_name,
+                                                    a_remote_name + sizeof(a_remote_name),
+                                                    &(
+                                                        p_remote_name_cur));
+
+                                                i_remote_port =
+                                                    0u;
+
+                                                appl_address_get_port(
+                                                    p_dest_address,
+                                                    &(
+                                                        i_remote_port));
+
+                                                printf(
+                                                    "[%.*s]:%u -> {%.*s}\n",
+                                                    (int)(appl_buf_len(
+                                                            a_remote_name,
+                                                            p_remote_name_cur)),
+                                                    a_remote_name,
+                                                    (unsigned int)(
+                                                        i_remote_port),
+                                                    (int)(i_count),
+                                                    a_result);
+                                            }
+                                            else
+                                            {
+                                                appl_socket_test_service::s_print_msg("recvfrom error!\n");
+                                            }
+                                        }
+                                    }
+
+                                    appl_socket_destroy(
+                                        p_udp_socket);
+                                }
+
+                                appl_address_destroy(
+                                    p_dest_address);
+                            }
+
+                            appl_address_destroy(
+                                p_bind_address);
+                        }
+
+                    }
+                }
+            }
+        }
+    }
 }
 
 //
@@ -1962,229 +2363,109 @@ void
     // [2] bind addr
     // [3] bind port
 
-    unsigned long int
-        i_count;
+    unsigned char const *
+        p_cmd_min;
+
+    unsigned char const *
+        p_cmd_max;
 
     e_status =
-        appl_options_count(
+        appl_options_get(
             p_options,
+            i_shift + 1u,
             &(
-                i_count));
+                p_cmd_min),
+            &(
+                p_cmd_max));
 
     if (
         appl_status_ok
         == e_status)
     {
-        if (
-            (i_shift + 3u) < i_count)
+        // Compare with: udp, server or client
+        static unsigned char const g_ref_udp[] =
         {
-            unsigned char const *
-                p_buf_min;
+            'u',
+            'd',
+            'p'
+        };
 
-            unsigned char const *
-                p_buf_max;
+        static unsigned char const g_ref_srv[] =
+        {
+            's',
+            'r',
+            'v'
+        };
 
-            e_status =
-                appl_options_get(
-                    p_options,
-                    i_shift + 1u,
-                    &(
-                        p_buf_min),
-                    &(
-                        p_buf_max));
+        static unsigned char const g_ref_cli[] =
+        {
+            'c',
+            'l',
+            'i'
+        };
 
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                // Compare with: udp, server or client
-                static unsigned char const g_ref_udp[] =
-                {
-                    'u',
-                    'd',
-                    'p'
-                };
+        static unsigned char const g_ref_addr[] =
+        {
+            'a',
+            'd',
+            'd',
+            'r'
+        };
 
-                static unsigned char const g_ref_srv[] =
-                {
-                    's',
-                    'r',
-                    'v'
-                };
-
-                static unsigned char const g_ref_cli[] =
-                {
-                    'c',
-                    'l',
-                    'i'
-                };
-
-                static unsigned char const g_ref_addr[] =
-                {
-                    'a',
-                    'd',
-                    'd',
-                    'r'
-                };
-
-                if (
-                    0
-                    == appl_buf_compare(
-                        p_buf_min,
-                        p_buf_max,
-                        g_ref_udp,
-                        g_ref_udp + sizeof(g_ref_udp)))
-                {
-                    appl_socket_test_2_udp(
-                        p_context,
-                        p_options,
-                        i_shift + 1u);
-                }
-                else if (
-                    0
-                    == appl_buf_compare(
-                        p_buf_min,
-                        p_buf_max,
-                        g_ref_srv,
-                        g_ref_srv + sizeof(g_ref_srv)))
-                {
-                    appl_socket_test_2_srv(
-                        p_context,
-                        p_options,
-                        i_shift + 1u);
-                }
-                else if (
-                    0
-                    == appl_buf_compare(
-                        p_buf_min,
-                        p_buf_max,
-                        g_ref_cli,
-                        g_ref_cli + sizeof(g_ref_cli)))
-                {
-                    appl_socket_test_2_cli(
-                        p_context,
-                        p_options,
-                        i_shift + 1u);
-                }
-                else if (
-                    0
-                    == appl_buf_compare(
-                        p_buf_min,
-                        p_buf_max,
-                        g_ref_addr,
-                        g_ref_addr + sizeof(g_ref_addr)))
-                {
-                    appl_socket_test_2_addr(
-                        p_context,
-                        p_options,
-                        i_shift + 1u);
-                }
-                else
-                {
-                }
-
-#if 0
-                if (
-                    0
-                    != i_type)
-                {
-                    // Get address
-                    unsigned char const *
-                        p_name_min;
-
-                    unsigned char const *
-                        p_name_max;
-
-                    printf(
-                        "type=%d\n",
-                        static_cast<int>(i_type));
-
-                    e_status =
-                        appl_options_get(
-                            p_options,
-                            i_shift + 2u,
-                            &(
-                                p_name_min),
-                            &(
-                                p_name_max));
-
-                    if (
-                        appl_status_ok
-                        == e_status)
-                    {
-                        // Get port
-                        e_status =
-                            appl_options_get(
-                                p_options,
-                                i_shift + 3u,
-                                &(
-                                    p_buf_min),
-                                &(
-                                    p_buf_max));
-
-                        if (
-                            appl_status_ok
-                            == e_status)
-                        {
-                            signed long int
-                                i_value;
-
-                            appl_buf_scan_number(
-                                p_buf_min,
-                                p_buf_max,
-                                &(
-                                    i_value),
-                                0);
-
-                            unsigned short int const
-                                i_port =
-                                static_cast<unsigned short int>(
-                                    i_value);
-
-                            if (
-                                1 == i_type)
-                            {
-                                struct appl_address *
-                                    p_address;
-
-                                e_status =
-                                    appl_socket_test_service::s_create_address(
-                                        p_context,
-                                        p_name_min,
-                                        p_name_max,
-                                        i_port,
-                                        appl_address_family_inet,
-                                        &(
-                                            p_address));
-
-                                if (
-                                    appl_status_ok
-                                    == e_status)
-                                {
-                                    struct appl_socket *
-                                        p_udp_socket;
-
-                                    e_status =
-                                        appl_socket_test_service::s_create_udp_socket(
-                                            p_context,
-                                            p_address,
-                                            &(
-                                                p_udp_socket));
-                                }
-                            }
-                            else if (
-                                2 == i_type)
-                            {
-                            }
-                            else if (
-                                3 == i_type)
-                            {
-                            }
-                        }
-                    }
-                }
-#endif
-            }
+        if (
+            0
+            == appl_buf_compare(
+                p_cmd_min,
+                p_cmd_max,
+                g_ref_udp,
+                g_ref_udp + sizeof(g_ref_udp)))
+        {
+            appl_socket_test_2_udp(
+                p_context,
+                p_options,
+                i_shift + 1u);
+        }
+        else if (
+            0
+            == appl_buf_compare(
+                p_cmd_min,
+                p_cmd_max,
+                g_ref_srv,
+                g_ref_srv + sizeof(g_ref_srv)))
+        {
+            appl_socket_test_2_srv(
+                p_context,
+                p_options,
+                i_shift + 1u);
+        }
+        else if (
+            0
+            == appl_buf_compare(
+                p_cmd_min,
+                p_cmd_max,
+                g_ref_cli,
+                g_ref_cli + sizeof(g_ref_cli)))
+        {
+            appl_socket_test_2_cli(
+                p_context,
+                p_options,
+                i_shift + 1u);
+        }
+        else if (
+            0
+            == appl_buf_compare(
+                p_cmd_min,
+                p_cmd_max,
+                g_ref_addr,
+                g_ref_addr + sizeof(g_ref_addr)))
+        {
+            appl_socket_test_2_addr(
+                p_context,
+                p_options,
+                i_shift + 1u);
+        }
+        else
+        {
         }
     }
 

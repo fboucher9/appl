@@ -7,9 +7,10 @@
 /* Reverse include guard */
 enum guard_appl_socket_descriptor_h
 {
-    inc_appl_socket_descriptor_h =
+    inc_appl_socket_descriptor_h = 1
         /* Header file dependencies */
-        inc_appl_status_h
+        + inc_appl_status_h
+        + inc_appl_address_property_h
 };
 
 /* Predefine */
@@ -154,6 +155,13 @@ appl_socket_property_set_join_interface(
         p_interface_address);
 
 enum appl_status
+appl_socket_property_set_family(
+    struct appl_socket_property * const
+        p_socket_property,
+    enum appl_address_family const
+        e_family);
+
+enum appl_status
 appl_socket_property_get_protocol(
     struct appl_socket_property const * const
         p_socket_property,
@@ -236,6 +244,13 @@ appl_socket_property_get_join_interface(
         p_socket_property,
     struct appl_address const * * const
         r_interface_address);
+
+enum appl_status
+appl_socket_property_get_family(
+    struct appl_socket_property const * const
+        p_socket_property,
+    enum appl_address_family * const
+        r_family);
 
 #if defined __cplusplus
 } /* extern "C" */

@@ -10,6 +10,8 @@
 
 #include <appl_object.h>
 
+#include <appl_address_property.h>
+
 #include <appl_socket_descriptor.h>
 
 #include <socket/appl_socket_node.h>
