@@ -50,7 +50,10 @@ struct appl_clock_test_context
     struct appl_context *
         p_context;
 
-#define PADDING (APPL_SIZEOF_PTR)
+    unsigned long int
+        i_time_freq;
+
+#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG)
 #include <appl_padding.h>
 
 };
@@ -87,7 +90,7 @@ unsigned long int
     e_status =
         appl_clock_read(
             p_clock_test_context->p_context,
-            1000u,
+            p_clock_test_context->i_time_freq,
             &(
                 i_clock_value));
 
@@ -139,7 +142,7 @@ unsigned long int
     e_status =
         appl_clock_delay(
             p_clock_test_context->p_context,
-            1000u,
+            p_clock_test_context->i_time_freq,
             1u);
 
 #if defined APPL_HAVE_COVERAGE
@@ -307,6 +310,9 @@ void
     o_clock_test_context.p_context =
         p_context;
 
+    o_clock_test_context.i_time_freq =
+        1000ul;
+
     appl_clock_test_automatic_1(
         &(
             o_clock_test_context));
@@ -322,6 +328,54 @@ void
     appl_clock_test_automatic_4(
         &(
             o_clock_test_context));
+
+    o_clock_test_context.i_time_freq =
+        1ul;
+
+    appl_coverage_test(
+        &(
+            appl_clock_test_1_read),
+        &(
+            o_clock_test_context));
+
+    appl_coverage_test(
+        &(
+            appl_clock_test_1_delay),
+        &(
+            o_clock_test_context));
+
+    o_clock_test_context.i_time_freq =
+        1000ul;
+
+    appl_coverage_test(
+        &(
+            appl_clock_test_1_read),
+        &(
+            o_clock_test_context));
+
+    appl_coverage_test(
+        &(
+            appl_clock_test_1_delay),
+        &(
+            o_clock_test_context));
+
+    o_clock_test_context.i_time_freq =
+        1000000ul;
+
+    appl_coverage_test(
+        &(
+            appl_clock_test_1_read),
+        &(
+            o_clock_test_context));
+
+    appl_coverage_test(
+        &(
+            appl_clock_test_1_delay),
+        &(
+            o_clock_test_context));
+
+    o_clock_test_context.i_time_freq =
+        1000000000ul;
 
     appl_coverage_test(
         &(

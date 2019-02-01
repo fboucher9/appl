@@ -88,7 +88,7 @@ enum appl_status
                 b_coverage;
 
             if (
-                1000ul
+                1000000000ul
                 <= i_time_freq)
             {
                 b_coverage =
@@ -102,7 +102,7 @@ enum appl_status
                     true;
             }
             else if (
-                1000000000ul
+                1000ul
                 <= i_time_freq)
             {
                 b_coverage =
@@ -225,7 +225,7 @@ enum appl_status
                 b_coverage;
 
             if (
-                1000ul
+                1000000000ul
                 <= i_time_freq)
             {
                 b_coverage =
@@ -239,7 +239,7 @@ enum appl_status
                     true;
             }
             else if (
-                1000000000ul
+                1000ul
                 <= i_time_freq)
             {
                 b_coverage =
