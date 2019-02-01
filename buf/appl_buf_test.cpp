@@ -47,6 +47,12 @@ void
     }
 
     {
+        appl_buf_zero(
+            a_buf,
+            a_buf + sizeof(a_buf));
+    }
+
+    {
         appl_buf_fill(
             a_buf,
             a_buf + sizeof(a_buf),
