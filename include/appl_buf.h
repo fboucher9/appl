@@ -161,6 +161,14 @@ appl_buf_write_tail_array(
         p_ref_max);
 #endif
 
+/* buf zero */
+unsigned char *
+appl_buf_zero(
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_max);
+
 /* buf fill */
 unsigned char *
 appl_buf_fill(

@@ -289,6 +289,37 @@ appl_buf_write_tail_repeat(
 
 */
 unsigned char *
+appl_buf_zero(
+    unsigned char * const
+        p_buf_min,
+    unsigned char * const
+        p_buf_max)
+{
+    unsigned char *
+        p_buf_it;
+
+    p_buf_it =
+        p_buf_min;
+
+    while (
+        p_buf_it < p_buf_max)
+    {
+        *(
+            p_buf_it) =
+            0u;
+
+        p_buf_it ++;
+    }
+
+    return
+        p_buf_it;
+
+} /* appl_buf_zero() */
+
+/*
+
+*/
+unsigned char *
 appl_buf_fill(
     unsigned char * const
         p_buf_min,
