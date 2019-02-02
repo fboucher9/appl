@@ -132,7 +132,7 @@ enum appl_status
 appl_address_get_family(
     struct appl_address const * const
         p_address,
-    enum appl_address_family * const
+    int * const
         r_family)
 {
     return

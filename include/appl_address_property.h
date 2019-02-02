@@ -12,16 +12,6 @@ enum guard_appl_address_property_h
         inc_appl_status_h
 };
 
-enum appl_address_family
-{
-    appl_address_family_unspecified = 0,
-
-    appl_address_family_inet = 1,
-
-    appl_address_family_inet6 = 2
-
-}; /* enum appl_address_family */
-
 struct appl_address_property;
 
 #if defined __cplusplus
@@ -70,7 +60,7 @@ enum appl_status
 appl_address_property_set_family(
     struct appl_address_property * const
         p_property,
-    enum appl_address_family const
+    int const
         e_family);
 
 enum appl_status
@@ -93,7 +83,7 @@ enum appl_status
 appl_address_property_get_family(
     struct appl_address_property const * const
         p_property,
-    enum appl_address_family * const
+    int * const
         r_family);
 
 #if defined __cplusplus

@@ -24,8 +24,6 @@
 
 #include <appl_object.h>
 
-#include <appl_address_property.h>
-
 #include <appl_socket_descriptor.h>
 
 #include <socket/appl_socket_node.h>
@@ -47,6 +45,10 @@
 #include <appl_allocator_handle.h>
 
 #include <context/appl_context.h>
+
+#include <appl_address_family.h>
+
+#include <appl_address_property.h>
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -300,7 +302,7 @@ appl_socket_std_node::init_socket(
         i_domain;
 
     {
-        enum appl_address_family
+        int
             e_family;
 
         if (

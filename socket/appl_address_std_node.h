@@ -187,7 +187,7 @@ class appl_address_std_node : public appl_address
         virtual
         enum appl_status
             v_get_family(
-                enum appl_address_family * const
+                int * const
                     r_family) const;
 
 }; // class appl_address_std_node

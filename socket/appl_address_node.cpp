@@ -15,8 +15,6 @@ Description:
 
 #include <appl_object.h>
 
-#include <appl_address_property.h>
-
 #include <socket/appl_address_node.h>
 
 #include <appl_unused.h>
@@ -74,7 +72,7 @@ enum appl_status
 //
 enum appl_status
     appl_address::v_get_family(
-        enum appl_address_family * const
+        int * const
             r_family) const
 {
     appl_unused(

@@ -37,8 +37,6 @@ Description:
 
 #include <appl_object.h>
 
-#include <appl_address_property.h>
-
 #include <socket/appl_address_node.h>
 
 #include <socket/appl_address_std_node.h>
@@ -56,6 +54,10 @@ Description:
 #include <appl_buf0.h>
 
 #include <appl_allocator_handle.h>
+
+#include <appl_address_family.h>
+
+#include <appl_address_property.h>
 
 //
 //
@@ -642,7 +644,7 @@ enum appl_status
 //
 enum appl_status
     appl_address_std_node::v_get_family(
-        enum appl_address_family * const
+        int * const
             r_family) const
 {
     enum appl_status

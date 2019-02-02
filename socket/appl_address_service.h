@@ -15,7 +15,6 @@ enum guard_appl_address_service_h
     inc_appl_address_service_h = 1
         /* Header file dependencies */
         + inc_appl_status_h
-        + inc_appl_address_property_h
 };
 
 /* Predefine */
@@ -112,7 +111,7 @@ class appl_address_service
         s_get_family(
             struct appl_address const * const
                 p_address,
-            enum appl_address_family * const
+            int * const
                 r_family);
 
 }; // class appl_address_service

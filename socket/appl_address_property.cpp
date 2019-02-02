@@ -363,7 +363,7 @@ enum appl_status
 appl_address_property_set_family(
     struct appl_address_property * const
         p_address_property,
-    enum appl_address_family const
+    int const
         e_family)
 {
 #if defined APPL_DEBUG
@@ -371,15 +371,15 @@ appl_address_property_set_family(
         p_address_property);
 #endif /* #if defined APPL_DEBUG */
 
-    unsigned long int const
-        u_value =
+    signed long int const
+        i_value =
         e_family;
 
     return
-        appl_property_set_ulong(
+        appl_property_set_long(
             p_address_property,
             appl_address_property_id_family,
-            u_value);
+            i_value);
 
 } /* appl_address_property_set_family() */
 
@@ -496,57 +496,30 @@ enum appl_status
 appl_address_property_get_family(
     struct appl_address_property const * const
         p_address_property,
-    enum appl_address_family * const
+    int * const
         r_family)
 {
     enum appl_status
         e_status;
 
-    unsigned long int
-        u_value;
+    signed long int
+        i_value;
 
     e_status =
-        appl_property_get_ulong(
+        appl_property_get_long(
             p_address_property,
             appl_address_property_id_family,
             &(
-                u_value));
+                i_value));
 
     if (
         appl_status_ok
         == e_status)
     {
-        signed long int const
-            l_value =
-            appl_convert::to_signed(
-                u_value);
-
-        if (
-            sizeof(int) == sizeof(enum appl_address_family))
-        {
-            union appl_address_family_convert
-            {
-                int
-                    i_value;
-
-                enum appl_address_family
-                    e_family;
-
-            } o_address_family_convert;
-
-            o_address_family_convert.i_value =
-                appl_convert::to_int(
-                    l_value);
-
-            *(
-                r_family) =
-                o_address_family_convert.e_family;
-        }
-        else
-        {
-            e_status =
-                appl_status_fail;
-        }
+        *(
+            r_family) =
+            appl_convert::to_int(
+                i_value);
     }
 
     return

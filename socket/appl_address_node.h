@@ -16,7 +16,6 @@ enum guard_appl_address_node_h
     inc_appl_address_node_h = 1
         /* Header file dependency */
         + inc_appl_object_h
-        + inc_appl_address_property_h
 };
 
 /* Predefine */
@@ -69,7 +68,7 @@ struct appl_address : public appl_object
         virtual
         enum appl_status
             v_get_family(
-                enum appl_address_family * const
+                int * const
                     r_family) const;
 
     protected:

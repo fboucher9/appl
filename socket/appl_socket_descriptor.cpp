@@ -593,7 +593,7 @@ enum appl_status
 appl_socket_property_set_family(
     struct appl_socket_property * const
         p_socket_property,
-    enum appl_address_family const
+    int const
         e_family)
 {
     enum appl_status
@@ -1001,7 +1001,7 @@ enum appl_status
 appl_socket_property_get_family(
     struct appl_socket_property const * const
         p_socket_property,
-    enum appl_address_family * const
+    int * const
         r_family)
 {
     enum appl_status
@@ -1026,30 +1026,10 @@ appl_socket_property_get_family(
         appl_status_ok
         == e_status)
     {
-        enum appl_address_family
-            e_family;
-
-        if (
-            appl_address_family_inet == i_family_value)
-        {
-            e_family =
-                appl_address_family_inet;
-        }
-        else if (
-            appl_address_family_inet6 == i_family_value)
-        {
-            e_family =
-                appl_address_family_inet6;
-        }
-        else
-        {
-            e_family =
-                appl_address_family_unspecified;
-        }
-
         *(
             r_family) =
-            e_family;
+            appl_convert::to_int(
+                i_family_value);
     }
 
     return

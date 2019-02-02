@@ -8,6 +8,8 @@
 
 #include <appl_status.h>
 
+#include <appl_address_family.h>
+
 #include <appl_address_property.h>
 
 #include <appl_address_handle.h>
@@ -82,7 +84,7 @@ class appl_socket_test_service
                     p_name_max,
                 unsigned short int const
                     i_port,
-                enum appl_address_family const
+                int const
                     e_family,
                 struct appl_address_property * * const
                     r_instance);
@@ -98,7 +100,7 @@ class appl_socket_test_service
                     p_name_max,
                 unsigned short int const
                     i_port,
-                enum appl_address_family const
+                int const
                     e_family,
                 struct appl_address * * const
                     r_instance);
@@ -127,7 +129,7 @@ class appl_socket_test_service
                     p_bind_name_max,
                 unsigned short int const
                     i_bind_port,
-                enum appl_address_family const
+                int const
                     e_bind_family,
                 struct appl_socket * * const
                     r_instance);
@@ -143,7 +145,7 @@ class appl_socket_test_service
                     p_connect_name_max,
                 unsigned short int const
                     i_connect_port,
-                enum appl_address_family const
+                int const
                     e_connect_family,
                 struct appl_socket * * const
                     r_instance);
@@ -153,7 +155,7 @@ class appl_socket_test_service
             s_create_udp_socket(
                 struct appl_context * const
                     p_context,
-                enum appl_address_family const
+                int const
                     e_family,
                 struct appl_address const * const
                     p_bind_address,
@@ -196,7 +198,7 @@ class appl_socket_test_service
                     p_options,
                 unsigned int const
                     i_shift,
-                enum appl_address_family * const
+                int * const
                     r_family);
 
         static
@@ -224,7 +226,7 @@ enum appl_status
             p_name_max,
         unsigned short int const
             i_port,
-        enum appl_address_family const
+        int const
             e_family,
         struct appl_address_property * * const
             r_instance)
@@ -293,7 +295,7 @@ enum appl_status
             p_name_max,
         unsigned short int const
             i_port,
-        enum appl_address_family const
+        int const
             e_family,
         struct appl_address * * const
             r_instance)
@@ -450,7 +452,7 @@ enum appl_status
             p_bind_name_max,
         unsigned short int const
             i_bind_port,
-        enum appl_address_family const
+        int const
             e_bind_family,
         struct appl_socket * * const
             r_instance)
@@ -544,7 +546,7 @@ enum appl_status
             p_connect_name_max,
         unsigned short int const
             i_connect_port,
-        enum appl_address_family const
+        int const
             e_connect_family,
         struct appl_socket * * const
             r_instance)
@@ -628,7 +630,7 @@ enum appl_status
     appl_socket_test_service::s_create_udp_socket(
         struct appl_context * const
             p_context,
-        enum appl_address_family const
+        int const
             e_family,
         struct appl_address const * const
             p_bind_address,
@@ -991,7 +993,7 @@ enum appl_status
             p_options,
         unsigned int const
             i_shift,
-        enum appl_address_family * const
+        int * const
             r_family)
 {
     enum appl_status
@@ -1204,7 +1206,7 @@ void
                 unsigned short int
                     i_port;
 
-                enum appl_address_family
+                int
                     e_family;
 
                 appl_address_property_get_name(
@@ -1248,7 +1250,7 @@ void
                 unsigned short int
                     i_port;
 
-                enum appl_address_family
+                int
                     e_family;
 
                 appl_address_property_get_name(
@@ -1325,7 +1327,7 @@ void
                 }
 
                 {
-                    enum appl_address_family
+                    int
                         e_family;
 
                     appl_address_get_family(
@@ -1876,7 +1878,7 @@ void
     //
 
     // Get family
-    enum appl_address_family
+    int
         e_family;
 
     e_status =
@@ -1972,7 +1974,7 @@ void
                             appl_status_ok
                             == e_status)
                         {
-                            enum appl_address_family
+                            int
                                 e_family_value;
 
                             e_status =
@@ -2064,7 +2066,7 @@ void
     enum appl_status
         e_status;
 
-    enum appl_address_family
+    int
         e_family;
 
     e_status =

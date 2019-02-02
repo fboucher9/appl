@@ -8,7 +8,6 @@
 enum guard_appl_address_descriptor_h
 {
     inc_appl_address_descriptor_h = 1
-        + inc_appl_address_property_h
 };
 
 /*
@@ -24,7 +23,7 @@ struct appl_address_descriptor
 
     /* -- */
 
-    enum appl_address_family
+    int
         e_family;
 
     unsigned short int
