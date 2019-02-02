@@ -1397,8 +1397,6 @@ enum appl_status
     enum appl_status
         e_status;
 
-#if defined APPL_OS_LINUX
-
     e_status =
         appl_backtrace_std::s_create(
             m_allocator,
@@ -1412,13 +1410,6 @@ enum appl_status
         b_init_backtrace =
             true;
     }
-
-#else /* #if defined APPL_OS_LINUX */
-
-    e_status =
-        appl_status_ok;
-
-#endif /* #if defined APPL_OS_LINUX */
 
     return
         e_status;
@@ -1434,12 +1425,9 @@ void
     if (
         b_init_backtrace)
     {
-#if defined APPL_OS_LINUX
         appl_backtrace_std::s_destroy(
             m_allocator,
             m_backtrace);
-#else /* #if defined APPL_OS_LINUX */
-#endif /* #if defined APPL_OS_LINUX */
 
         m_backtrace =
             0;

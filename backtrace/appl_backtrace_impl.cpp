@@ -14,6 +14,10 @@
 #include <execinfo.h>
 #endif /* #if defined APPL_OS_LINUX */
 
+#if defined APPL_OS_WINDOWS
+#include <windows.h>
+#endif /* #if defined APPL_OS_WINDOWS */
+
 #include <stdio.h>
 
 #include <appl_unused.h>
@@ -39,8 +43,6 @@ enum appl_status
     enum appl_status
         e_status;
 
-#if defined APPL_OS_LINUX
-
     union appl_backtrace_ptr
     {
         void const * *
@@ -53,6 +55,8 @@ enum appl_status
 
     o_backtrace_ptr.ppcv =
         p_buffer;
+
+#if defined APPL_OS_LINUX
 
     *(r_count) =
         appl_convert::to_unsigned(
@@ -67,13 +71,21 @@ enum appl_status
 
 #else /* #if defined APPL_OS_Xx */
 
-    appl_unused(
-        p_buffer,
-        i_count_max,
-        r_count);
+    USHORT
+        i_result;
+
+    i_result =
+        RtlCaptureStackBackTrace(
+            0,
+            i_count_max,
+            o_backtrace_ptr.ppv,
+            NULL);
+
+    *(r_count) =
+        i_result;
 
     e_status =
-        appl_raise_not_implemented();
+        appl_status_ok;
 
 #endif /* #if defined APPL_OS_Xx */
 
@@ -122,12 +134,28 @@ enum appl_status
 
 #else /* #if defined APPL_OS_Xx */
 
-    appl_unused(
-        p_buffer,
-        i_count);
+    appl_size_t
+        i_index;
+
+    i_index =
+        0u;
+
+    while (
+        i_index < i_count)
+    {
+        void const * const
+            p_symbol =
+            p_buffer[i_index];
+
+        printf(
+            " -- %p\n",
+            p_symbol);
+
+        i_index ++;
+    }
 
     e_status =
-        appl_raise_not_implemented();
+        appl_status_ok;
 
 #endif /* #if defined APPL_OS_Xx */
 

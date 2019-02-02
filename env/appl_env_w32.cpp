@@ -34,7 +34,7 @@
 
 #include <appl_convert.h>
 
-#include <appl_refcount.h>
+#include <appl_unused.h>
 
 //
 //
@@ -96,8 +96,7 @@ appl_env_w32::appl_env_w32(
     struct appl_context * const
         p_context) :
     appl_env(
-        p_context),
-    m_refcount()
+        p_context)
 {
 }
 
@@ -107,31 +106,6 @@ appl_env_w32::appl_env_w32(
 appl_env_w32::~appl_env_w32()
 {
 }
-
-//
-//
-//
-enum appl_status
-    appl_env_w32::v_acquire(
-        struct appl_env * * const
-            r_instance)
-{
-    enum appl_status
-        e_status;
-
-    m_refcount->f_acquire();
-
-    *(
-        r_instance) =
-        this;
-
-    e_status =
-        appl_status_ok;
-
-    return
-        e_status;
-
-} // v_acquire()
 
 //
 //
@@ -264,6 +238,42 @@ enum appl_status
 //
 //
 enum appl_status
+    appl_env_w32::v_query(
+        unsigned char const * const
+            p_name_min,
+        unsigned char const * const
+            p_name_max,
+        void (* p_query_callback)(
+            void * const
+                p_query_context,
+            unsigned char const * const
+                p_value_min,
+            unsigned char const * const
+                p_value_max),
+        void * const
+            p_query_context) const
+{
+    enum appl_status
+        e_status;
+
+    appl_unused(
+        p_name_min,
+        p_name_max,
+        p_query_callback,
+        p_query_context);
+
+    e_status =
+        appl_raise_not_implemented();
+
+    return
+        e_status;
+
+} // v_query()
+
+//
+//
+//
+enum appl_status
     appl_env_w32::v_set(
         unsigned char const * const
             p_name_min,
@@ -354,10 +364,7 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_new(
-            m_context,
-            &(
-                m_refcount));
+        appl_status_ok;
 
     return
         e_status;
@@ -370,26 +377,8 @@ enum appl_status
 appl_size_t
     appl_env_w32::v_cleanup(void)
 {
-    appl_size_t
-        i_cleanup_result;
-
-    if (m_refcount->f_release())
-    {
-        appl_delete(
-            m_context,
-            m_refcount);
-
-        i_cleanup_result =
-            sizeof(class appl_env_w32);
-    }
-    else
-    {
-        i_cleanup_result =
-            0;
-    }
-
     return
-        i_cleanup_result;
+        sizeof(class appl_env_w32);
 
 } // v_cleanup()
 
