@@ -77,6 +77,342 @@ appl_size_t
 //
 //
 //
+static
+enum appl_status
+fill_netdevice_descriptor_type(
+    struct ifaddrs const * const
+        p_ifaddrs_iterator,
+    struct appl_netdevice_descriptor * const
+        p_netdevice_descriptor)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        IFF_LOOPBACK
+        & p_ifaddrs_iterator->ifa_flags)
+    {
+        p_netdevice_descriptor->e_type =
+            appl_netdevice_type_loopback;
+
+        p_netdevice_descriptor->i_flags |=
+            APPL_NETDEVICE_FLAGS_TYPE;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        p_netdevice_descriptor->e_type =
+            appl_netdevice_type_normal;
+
+        p_netdevice_descriptor->i_flags |=
+            APPL_NETDEVICE_FLAGS_TYPE;
+
+        e_status =
+            appl_status_ok;
+    }
+
+    return
+        e_status;
+
+} // fill_netdevice_descriptor_type()
+
+//
+//
+//
+static
+enum appl_status
+fill_netdevice_descriptor_index(
+    struct ifaddrs const * const
+        p_ifaddrs_iterator,
+    struct appl_netdevice_descriptor * const
+        p_netdevice_descriptor)
+{
+    enum appl_status
+        e_status;
+
+    unsigned int
+        i_index;
+
+    i_index =
+        if_nametoindex(
+            p_ifaddrs_iterator->ifa_name);
+
+    if (
+        0u
+        != i_index)
+    {
+        p_netdevice_descriptor->i_index =
+            i_index;
+
+        p_netdevice_descriptor->i_flags |=
+            APPL_NETDEVICE_FLAGS_INDEX;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+}
+
+//
+//
+//
+static
+enum appl_status
+fill_netdevice_descriptor_name(
+    struct ifaddrs const * const
+        p_ifaddrs_iterator,
+    struct appl_netdevice_descriptor * const
+        p_netdevice_descriptor)
+{
+    p_netdevice_descriptor->p_name_min =
+        appl_convert::to_uchar_ptr(
+            p_ifaddrs_iterator->ifa_name);
+
+    p_netdevice_descriptor->p_name_max =
+        p_netdevice_descriptor->p_name_min
+        + appl_buf0_len(
+            p_netdevice_descriptor->p_name_min);
+
+    p_netdevice_descriptor->i_flags |=
+        APPL_NETDEVICE_FLAGS_NAME;
+
+    return
+        appl_status_ok;
+
+} // fill_netdevice_descriptor_name()
+
+static
+enum appl_status
+fill_netdevice_descriptor_family(
+    struct ifaddrs const * const
+        p_ifaddrs_iterator,
+    struct appl_netdevice_descriptor * const
+        p_netdevice_descriptor)
+{
+    enum appl_status
+        e_status;
+
+    struct sockaddr * const
+        p_sockaddr =
+        p_ifaddrs_iterator->ifa_addr;
+
+    if (
+        AF_INET == p_sockaddr->sa_family)
+    {
+        p_netdevice_descriptor->e_family =
+            appl_address_family_inet;
+
+        p_netdevice_descriptor->i_flags |=
+            APPL_NETDEVICE_FLAGS_FAMILY;
+
+        e_status =
+            appl_status_ok;
+    }
+    else if (
+        AF_INET6 == p_sockaddr->sa_family)
+    {
+        p_netdevice_descriptor->e_family =
+            appl_address_family_inet6;
+
+        p_netdevice_descriptor->i_flags |=
+            APPL_NETDEVICE_FLAGS_FAMILY;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+}
+
+//
+//
+//
+static
+enum appl_status
+fill_netdevice_descriptor_address(
+    struct ifaddrs const * const
+        p_ifaddrs_iterator,
+    struct appl_netdevice_descriptor * const
+        p_netdevice_descriptor,
+    unsigned char * const
+        a_address,
+    appl_size_t const
+        i_address_length)
+{
+    enum appl_status
+        e_status;
+
+    struct sockaddr * const
+        p_sockaddr =
+        p_ifaddrs_iterator->ifa_addr;
+
+    socklen_t
+        i_sockaddr_len;
+
+    if (
+        AF_INET == p_sockaddr->sa_family)
+    {
+        i_sockaddr_len =
+            sizeof(
+                struct sockaddr_in);
+    }
+    else if (
+        AF_INET6 == p_sockaddr->sa_family)
+    {
+        i_sockaddr_len =
+            sizeof(
+                struct sockaddr_in6);
+    }
+    else
+    {
+        i_sockaddr_len =
+            0;
+    }
+
+    if (
+        i_sockaddr_len)
+    {
+        int
+            i_nameinfo_result;
+
+        i_nameinfo_result =
+            getnameinfo(
+                p_sockaddr,
+                i_sockaddr_len,
+                appl_convert::to_char_ptr(
+                    a_address),
+                i_address_length,
+                0,
+                0,
+                NI_NUMERICHOST);
+
+        if (
+            0
+            == i_nameinfo_result)
+        {
+            p_netdevice_descriptor->p_address_min =
+                a_address;
+
+            p_netdevice_descriptor->p_address_max =
+                a_address
+                + appl_buf0_len(
+                    a_address);
+
+            p_netdevice_descriptor->i_flags |=
+                APPL_NETDEVICE_FLAGS_ADDRESS;
+
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // fill_netdevice_descriptor_address()
+
+//
+//
+//
+static
+enum appl_status
+fill_netdevice_descriptor(
+    struct ifaddrs const * const
+        p_ifaddrs_iterator,
+    struct appl_netdevice_descriptor * const
+        p_netdevice_descriptor,
+    unsigned char * const
+        a_address,
+    appl_size_t const
+        i_address_length)
+{
+    enum appl_status
+        e_status;
+
+    p_netdevice_descriptor->i_flags =
+        0u;
+
+    e_status =
+        fill_netdevice_descriptor_type(
+            p_ifaddrs_iterator,
+            p_netdevice_descriptor);
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            fill_netdevice_descriptor_index(
+                p_ifaddrs_iterator,
+                p_netdevice_descriptor);
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            e_status =
+                fill_netdevice_descriptor_name(
+                    p_ifaddrs_iterator,
+                    p_netdevice_descriptor);
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    fill_netdevice_descriptor_family(
+                        p_ifaddrs_iterator,
+                        p_netdevice_descriptor);
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    e_status =
+                        fill_netdevice_descriptor_address(
+                            p_ifaddrs_iterator,
+                            p_netdevice_descriptor,
+                            a_address,
+                            i_address_length);
+                }
+            }
+        }
+    }
+
+    return
+        e_status;
+
+} // fill_netdevice_descriptor()
+
+//
+//
+//
 enum appl_status
     appl_netdevice_std::v_enumerate(
         struct appl_netdevice_descriptor const * const
@@ -119,133 +455,40 @@ enum appl_status
             p_ifaddrs_iterator)
         {
             if (
-                p_ifaddrs_iterator->ifa_flags
-                & (
-                    IFF_UP
-                    | IFF_RUNNING))
+                (
+                    (
+                        IFF_UP
+                        | IFF_RUNNING)
+                    == (
+                        p_ifaddrs_iterator->ifa_flags
+                        & (
+                            IFF_UP
+                            | IFF_RUNNING)))
+                && p_ifaddrs_iterator->ifa_addr)
             {
                 struct appl_netdevice_descriptor
                     o_descriptor;
-
-                o_descriptor.i_flags =
-                    0u;
-
-                if (
-                    IFF_LOOPBACK
-                    & p_ifaddrs_iterator->ifa_flags)
-                {
-                    o_descriptor.e_type =
-                        appl_netdevice_type_loopback;
-
-                    o_descriptor.i_flags |=
-                        APPL_NETDEVICE_FLAGS_TYPE;
-                }
-                else
-                {
-                    o_descriptor.e_type =
-                        appl_netdevice_type_normal;
-
-                    o_descriptor.i_flags |=
-                        APPL_NETDEVICE_FLAGS_TYPE;
-                }
-
-                o_descriptor.p_name_min =
-                    appl_convert::to_uchar_ptr(
-                        p_ifaddrs_iterator->ifa_name);
-
-                o_descriptor.p_name_max =
-                    o_descriptor.p_name_min
-                    + appl_buf0_len(
-                        o_descriptor.p_name_min);
-
-                o_descriptor.i_flags |=
-                    APPL_NETDEVICE_FLAGS_NAME;
 
                 unsigned char
                     a_address[64u];
 
                 if (
-                    p_ifaddrs_iterator->ifa_addr)
+                    appl_status_ok
+                    == fill_netdevice_descriptor(
+                        p_ifaddrs_iterator,
+                        &(
+                            o_descriptor),
+                        a_address,
+                        sizeof(
+                            a_address)))
                 {
-                    struct sockaddr *
-                        p_sockaddr;
+                    // do filter...
 
-                    socklen_t
-                        i_sockaddr_len;
-
-                    p_sockaddr =
-                        p_ifaddrs_iterator->ifa_addr;
-
-                    if (
-                        AF_INET == p_sockaddr->sa_family)
-                    {
-                        i_sockaddr_len =
-                            sizeof(
-                                struct sockaddr_in);
-
-                        o_descriptor.e_family =
-                            appl_address_family_inet;
-
-                        o_descriptor.i_flags |=
-                            APPL_NETDEVICE_FLAGS_FAMILY;
-                    }
-                    else if (
-                        AF_INET6 == p_sockaddr->sa_family)
-                    {
-                        i_sockaddr_len =
-                            sizeof(
-                                struct sockaddr_in6);
-
-                        o_descriptor.e_family =
-                            appl_address_family_inet6;
-
-                        o_descriptor.i_flags |=
-                            APPL_NETDEVICE_FLAGS_FAMILY;
-                    }
-                    else
-                    {
-                        i_sockaddr_len =
-                            sizeof(
-                                struct sockaddr_storage);
-                    }
-
-                    int
-                        i_nameinfo_result;
-
-                    i_nameinfo_result =
-                        getnameinfo(
-                            p_sockaddr,
-                            i_sockaddr_len,
-                            appl_convert::to_char_ptr(
-                                a_address),
-                            sizeof(a_address),
-                            0,
-                            0,
-                            NI_NUMERICHOST);
-
-                    if (
-                        0
-                        == i_nameinfo_result)
-                    {
-                        o_descriptor.p_address_min =
-                            a_address;
-
-                        o_descriptor.p_address_max =
-                            a_address
-                            + appl_buf0_len(
-                                a_address);
-
-                        o_descriptor.i_flags |=
-                            APPL_NETDEVICE_FLAGS_ADDRESS;
-                    }
+                    (*p_callback)(
+                        p_callback_context,
+                        &(
+                            o_descriptor));
                 }
-
-                // do filter...
-
-                (*p_callback)(
-                    p_callback_context,
-                    &(
-                        o_descriptor));
             }
 
             p_ifaddrs_iterator =
