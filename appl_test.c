@@ -81,6 +81,8 @@
 
 #include <buf/appl_buf_test.h>
 
+#include <socket/appl_netdevice_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2619,6 +2621,19 @@ static unsigned char const g_ref_buf[] =
     'f'
 };
 
+static unsigned char const g_ref_netdevice[] =
+{
+    'n',
+    'e',
+    't',
+    'd',
+    'e',
+    'v',
+    'i',
+    'c',
+    'e'
+};
+
 struct appl_test_command
 {
     unsigned char const *
@@ -2824,6 +2839,11 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_buf,
         g_ref_buf + sizeof(g_ref_buf),
         & appl_buf_test_1
+    },
+    {
+        g_ref_netdevice,
+        g_ref_netdevice + sizeof(g_ref_netdevice),
+        & appl_netdevice_test_1
     }
 };
 

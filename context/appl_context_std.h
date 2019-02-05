@@ -157,6 +157,14 @@ class appl_context_std : public appl_context
 
         /* -- */
 
+        class appl_netdevice_mgr *
+            m_netdevice_mgr;
+
+        void *
+            z_netdevice_mgr[1u];
+
+        /* -- */
+
 #if defined APPL_DEBUG
         class appl_heap_dbg *
             m_heap_dbg;
@@ -235,7 +243,10 @@ class appl_context_std : public appl_context
         bool
             b_init_backtrace;
 
-#define PADDING (2)
+        bool
+            b_init_netdevice_mgr;
+
+#define PADDING (3)
 #include <appl_padding.h>
 
         /* -- */
@@ -371,6 +382,12 @@ class appl_context_std : public appl_context
         void
             cleanup_backtrace(void);
 
+        enum appl_status
+            init_netdevice_mgr(void);
+
+        void
+            cleanup_netdevice_mgr(void);
+
         static
         void
             s_bootstrap(void);
@@ -478,6 +495,12 @@ class appl_context_std : public appl_context
             v_event_mgr(
                 class appl_event_mgr * * const
                     r_event_mgr) const;
+
+        virtual
+        enum appl_status
+            v_netdevice_mgr(
+                class appl_netdevice_mgr * * const
+                    r_netdevice_mgr) const;
 
 #if defined APPL_DEBUG
         virtual

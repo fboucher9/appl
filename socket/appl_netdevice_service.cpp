@@ -10,15 +10,13 @@
 
 #include <socket/appl_netdevice_service.h>
 
-#if defined APPL_OS_LINUX
+#include <appl_types.h>
 
-#include <socket/appl_netdevice_std.h>
+#include <appl_object.h>
 
-#else /* #if defined APPL_OS_LINUX */
+#include <socket/appl_netdevice_mgr.h>
 
-#include <socket/appl_netdevice_w32.h>
-
-#endif /* #if defined APPL_OS_LINUX */
+#include <context/appl_context.h>
 
 //
 //
@@ -36,17 +34,30 @@ enum appl_status
                 p_netdevice_descriptor),
         void * p_callback_context)
 {
+    enum appl_status
+        e_status;
+
+    class appl_netdevice_mgr *
+        p_netdevice_mgr;
+
+    e_status =
+        p_context->v_netdevice_mgr(
+            &(
+                p_netdevice_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_netdevice_mgr->v_enumerate(
+                p_netdevice_filter,
+                p_callback,
+                p_callback_context);
+    }
+
     return
-#if defined APPL_OS_LINUX
-        appl_netdevice_std
-#else /* #if defined APPL_OS_LINUX */
-        appl_netdevice_w32
-#endif /* #if defined APPL_OS_LINUX */
-        ::s_enumerate(
-            p_context,
-            p_netdevice_filter,
-            p_callback,
-            p_callback_context);
+        e_status;
 
 } // s_enumerate()
 

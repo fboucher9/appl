@@ -114,6 +114,18 @@
 
 #endif /* #if defined APPL_OS_Xx */
 
+#include <socket/appl_netdevice_mgr.h>
+
+#if defined APPL_OS_LINUX
+
+#include <socket/appl_netdevice_std.h>
+
+#elif defined APPL_OS_WINDOWS
+
+#include <socket/appl_netdevice_w32.h>
+
+#endif /* #if defined APPL_OS_Xx */
+
 #include <env/appl_env.h>
 
 #if defined APPL_OS_LINUX
@@ -1440,6 +1452,93 @@ void
 //
 //
 //
+enum appl_status
+    appl_context_std::init_netdevice_mgr(void)
+{
+    enum appl_status
+        e_status;
+
+#if defined APPL_DEBUG
+    appl_debug_impl::s_validate(
+        !b_init_netdevice_mgr,
+        "netdevice already initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+#if defined APPL_OS_LINUX
+    {
+        class appl_netdevice_std *
+            p_netdevice_std;
+
+        e_status =
+            appl_new(
+                m_allocator,
+                &(
+                    p_netdevice_std));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            m_netdevice_mgr =
+                p_netdevice_std;
+
+            b_init_netdevice_mgr =
+                true;
+        }
+    }
+#elif defined APPL_OS_WINDOWS
+    {
+        class appl_netdevice_w32 *
+            p_netdevice_w32;
+
+        e_status =
+            appl_new(
+                m_allocator,
+                &(
+                    p_netdevice_w32));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            m_netdevice_mgr =
+                p_netdevice_w32;
+
+            b_init_netdevice_mgr =
+                true;
+        }
+    }
+#else /* #if defined APPL_OS_Xx */
+    e_status =
+        appl_status_fail;
+#endif /* #if defined APPL_OS_Xx */
+
+    return
+        e_status;
+
+} // init_netdevice_mgr()
+
+//
+//
+//
+void
+    appl_context_std::cleanup_netdevice_mgr(void)
+{
+    if (
+        b_init_netdevice_mgr)
+    {
+        appl_delete(
+            m_allocator,
+            m_netdevice_mgr);
+
+        b_init_netdevice_mgr =
+            false;
+    }
+} // cleanup_netdevice_mgr()
+
+//
+//
+//
 void
     appl_context_std::s_bootstrap(void)
 {
@@ -1540,6 +1639,7 @@ appl_context_std::appl_context_std(
 #endif /* #if defined APPL_HAVE_XLIB */
     , m_event_mgr()
     , m_socket_mgr()
+    , m_netdevice_mgr()
 #if defined APPL_DEBUG
     , m_heap_dbg()
     , m_debug()
@@ -1566,6 +1666,7 @@ appl_context_std::appl_context_std(
     , b_init_xlib()
 #endif /* #if defined APPL_HAVE_XLIB */
     , b_init_backtrace()
+    , b_init_netdevice_mgr()
 {
     appl_unused(
         p_context);
@@ -1622,6 +1723,10 @@ appl_context_std::g_init_cleanup_items[] =
     {
         & appl_context_std::init_file_mgr,
         & appl_context_std::cleanup_file_mgr
+    },
+    {
+        & appl_context_std::init_netdevice_mgr,
+        & appl_context_std::cleanup_netdevice_mgr
     },
     {
         & appl_context_std::init_socket_mgr,
@@ -2361,6 +2466,43 @@ enum appl_status
         e_status;
 
 }
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_netdevice_mgr(
+        class appl_netdevice_mgr * * const
+            r_netdevice_mgr) const
+{
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_netdevice_mgr)
+    {
+        *(
+            r_netdevice_mgr) =
+            m_netdevice_mgr;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "netdevice_mgr not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // v_netdevice_mgr()
 
 //
 //

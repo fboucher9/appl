@@ -189,6 +189,12 @@ struct appl_context : public appl_object
                 class appl_event_mgr * * const
                     r_event_mgr) const;
 
+        virtual
+        enum appl_status
+            v_netdevice_mgr(
+                class appl_netdevice_mgr * * const
+                    r_netdevice_mgr) const;
+
 #if defined APPL_DEBUG
         virtual
         enum appl_status

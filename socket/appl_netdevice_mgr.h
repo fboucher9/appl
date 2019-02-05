@@ -5,45 +5,35 @@
 */
 
 /* Reverse include guard */
-enum guard_appl_netdevice_std_h
+enum guard_appl_netdevice_mgr_h
 {
-    inc_appl_netdevice_std_h = 1
+    inc_appl_netdevice_mgr_h = 1
         /* Header file dependencies */
-        + inc_appl_status_h
-        + inc_appl_netdevice_mgr_h
+        + inc_appl_object_h
 
-}; /* enum guard_appl_netdevice_std_h */
+}; /* enum guard_appl_netdevice_mgr_h */
 
 /* Included. */
-#define INC_APPL_NETDEVICE_STD_H
 
-/* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
-
-/* Assert configuration */
-#if ! defined APPL_OS_LINUX
-#error include only from linux build
-#endif /* #if ! defined APPL_OS_LINUX */
-
+/* Predefine */
 struct appl_context;
 
+/* Predefine */
 struct appl_netdevice_descriptor;
 
 //
 //
 //
-class appl_netdevice_std : public appl_netdevice_mgr
+class appl_netdevice_mgr : public appl_object
 {
     public:
 
-        appl_netdevice_std(
+        appl_netdevice_mgr(
             struct appl_context * const
                 p_context);
 
         virtual
-        ~appl_netdevice_std();
+        ~appl_netdevice_mgr();
 
         enum appl_status
             f_init(void);
@@ -51,17 +41,6 @@ class appl_netdevice_std : public appl_netdevice_mgr
         virtual
         appl_size_t
             v_cleanup(void);
-
-    protected:
-
-    private:
-
-        appl_netdevice_std(
-            class appl_netdevice_std const & r);
-
-        class appl_netdevice_std &
-            operator =(
-                class appl_netdevice_std const & r);
 
         virtual
         enum appl_status
@@ -75,6 +54,15 @@ class appl_netdevice_std : public appl_netdevice_mgr
                         p_netdevice_descriptor),
                 void * p_callback_context);
 
-}; // class appl_netdevice_std
+    protected:
 
-/* end-of-file: appl_netdevice_std.h */
+    private:
+
+        appl_netdevice_mgr(
+            class appl_netdevice_mgr const & r);
+
+        class appl_netdevice_mgr &
+            operator =(
+                class appl_netdevice_mgr const & r);
+
+}; // class appl_netdevice_mgr
