@@ -483,11 +483,17 @@ enum appl_status
                             a_address)))
                 {
                     // do filter...
-
-                    (*p_callback)(
-                        p_callback_context,
-                        &(
-                            o_descriptor));
+                    if (
+                        appl_netdevice_mgr::s_compare_filter(
+                            &(
+                                o_descriptor),
+                            p_netdevice_filter))
+                    {
+                        (*p_callback)(
+                            p_callback_context,
+                            &(
+                                o_descriptor));
+                    }
                 }
             }
 

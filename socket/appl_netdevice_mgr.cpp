@@ -16,6 +16,8 @@
 
 #include <appl_unused.h>
 
+#include <appl_buf.h>
+
 //
 //
 //
@@ -79,5 +81,155 @@ enum appl_status
         appl_raise_not_implemented();
 
 } // v_enumerate()
+
+//
+//
+//
+bool
+    appl_netdevice_mgr::s_compare_filter(
+        struct appl_netdevice_descriptor const * const
+            p_netdevice_descriptor,
+        struct appl_netdevice_descriptor const * const
+            p_netdevice_filter)
+{
+    bool
+        b_result;
+
+    b_result =
+        true;
+
+    if (
+        APPL_NETDEVICE_FLAGS_TYPE
+        & p_netdevice_filter->i_flags)
+    {
+        if (
+            APPL_NETDEVICE_FLAGS_TYPE
+            & p_netdevice_descriptor->i_flags)
+        {
+            if (
+                p_netdevice_filter->e_type
+                != p_netdevice_descriptor->e_type)
+            {
+                b_result =
+                    false;
+            }
+        }
+        else
+        {
+            b_result =
+                false;
+        }
+    }
+
+    if (
+        APPL_NETDEVICE_FLAGS_INDEX
+        & p_netdevice_filter->i_flags)
+    {
+        if (
+            APPL_NETDEVICE_FLAGS_INDEX
+            & p_netdevice_descriptor->i_flags)
+        {
+            if (
+                p_netdevice_filter->i_index
+                != p_netdevice_descriptor->i_index)
+            {
+                b_result =
+                    false;
+            }
+        }
+        else
+        {
+            b_result =
+                false;
+        }
+    }
+
+    if (
+        APPL_NETDEVICE_FLAGS_FAMILY
+        & p_netdevice_filter->i_flags)
+    {
+        if (
+            APPL_NETDEVICE_FLAGS_FAMILY
+            & p_netdevice_descriptor->i_flags)
+        {
+            if (
+                p_netdevice_filter->e_family
+                != p_netdevice_descriptor->e_family)
+            {
+                b_result =
+                    false;
+            }
+        }
+        else
+        {
+            b_result =
+                false;
+        }
+    }
+
+    if (
+        APPL_NETDEVICE_FLAGS_ADDRESS
+        & p_netdevice_filter->i_flags)
+    {
+        if (
+            APPL_NETDEVICE_FLAGS_ADDRESS
+            & p_netdevice_descriptor->i_flags)
+        {
+            if (
+                0
+                == appl_buf_compare(
+                    p_netdevice_filter->p_address_min,
+                    p_netdevice_filter->p_address_max,
+                    p_netdevice_descriptor->p_address_min,
+                    p_netdevice_descriptor->p_address_max))
+            {
+            }
+            else
+            {
+                b_result =
+                    false;
+            }
+        }
+        else
+        {
+            b_result =
+                false;
+        }
+    }
+
+    if (
+        APPL_NETDEVICE_FLAGS_NAME
+        & p_netdevice_filter->i_flags)
+    {
+        if (
+            APPL_NETDEVICE_FLAGS_NAME
+            & p_netdevice_descriptor->i_flags)
+        {
+            if (
+                0
+                == appl_buf_compare(
+                    p_netdevice_filter->p_name_min,
+                    p_netdevice_filter->p_name_max,
+                    p_netdevice_descriptor->p_name_min,
+                    p_netdevice_descriptor->p_name_max))
+            {
+            }
+            else
+            {
+                b_result =
+                    false;
+            }
+        }
+        else
+        {
+            b_result =
+                false;
+        }
+    }
+
+    return
+        b_result;
+
+} // s_compare_filter()
 
 /* end-of-file: appl_netdevice_mgr.cpp */

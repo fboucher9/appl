@@ -56,6 +56,14 @@ class appl_netdevice_mgr : public appl_object
 
     protected:
 
+        static
+        bool
+            s_compare_filter(
+                struct appl_netdevice_descriptor const * const
+                    p_netdevice_descriptor,
+                struct appl_netdevice_descriptor const * const
+                    p_netdevice_filter);
+
     private:
 
         appl_netdevice_mgr(

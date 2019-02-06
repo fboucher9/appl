@@ -16,6 +16,8 @@
 
 #include <appl_convert.h>
 
+#include <appl_address_family.h>
+
 #include <stdio.h>
 
 //
@@ -110,7 +112,10 @@ void
         o_netdevice_filter;
 
     o_netdevice_filter.i_flags =
-        0u;
+        APPL_NETDEVICE_FLAGS_FAMILY;
+
+    o_netdevice_filter.e_family =
+        appl_address_family_inet6;
 
     e_status =
         appl_netdevice_enumerate(
