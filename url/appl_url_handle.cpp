@@ -8,7 +8,7 @@
 
 #include <appl_url_handle.h>
 
-#include <appl_url_service.h>
+#include <url/appl_url_service.h>
 
 //
 //  Function: appl_url_create()
