@@ -54,6 +54,10 @@ appl_base-deps := \
     appl_coverage.cpp \
     appl_crc16.cpp \
     appl_crc32.cpp \
+    appl_url_handle.cpp \
+    appl_url_service.cpp \
+    appl_url.cpp \
+    appl_url_std.cpp \
     debug/appl_debug.cpp \
     debug/appl_debug_handle.cpp \
     debug/appl_debug_std.cpp \
