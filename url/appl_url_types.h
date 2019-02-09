@@ -37,7 +37,10 @@ enum appl_url_component_type
     appl_url_component_type_quote = 6,
 
     /* Percent-encoded data after hash */
-    appl_url_component_type_fragment = 7
+    appl_url_component_type_fragment = 7,
+
+    /* Number of types */
+    appl_url_component_type_max
 
 }; /* enum appl_url_component_type */
 

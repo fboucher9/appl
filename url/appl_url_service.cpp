@@ -276,13 +276,16 @@ enum appl_status
         void * const
             p_handle)
 {
-    appl_unused(
-        p_url,
-        e_component_type,
-        p_handle);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_url->v_remove_component(
+            e_component_type,
+            p_handle);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_remove_component()
 
@@ -302,15 +305,18 @@ enum appl_status
         void * * const
             r_handle)
 {
-    appl_unused(
-        p_url,
-        e_component_type,
-        r_buf_min,
-        r_buf_max,
-        r_handle);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_url->v_get_component(
+            e_component_type,
+            r_buf_min,
+            r_buf_max,
+            r_handle);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_get_component()
 
@@ -330,15 +336,18 @@ enum appl_status
         void * * const
             r_handle)
 {
-    appl_unused(
-        p_url,
-        e_component_type,
-        r_buf_min,
-        r_buf_max,
-        r_handle);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_url->v_next_component(
+            e_component_type,
+            r_buf_min,
+            r_buf_max,
+            r_handle);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_next_component()
 
@@ -352,12 +361,15 @@ enum appl_status
         unsigned long int * const
             r_flags)
 {
-    appl_unused(
-        p_url,
-        r_flags);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_url->v_get_flags(
+            r_flags);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_get_flags()
 
@@ -371,12 +383,15 @@ enum appl_status
         unsigned long int const
             i_flags)
 {
-    appl_unused(
-        p_url,
-        i_flags);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_url->v_set_flags(
+            i_flags);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_set_flags()
 
