@@ -42,7 +42,7 @@ void
         i_crc16_result =
             appl_crc16(
                 g_crc_vector,
-                (unsigned long int)(
+                static_cast<unsigned long int>(
                     sizeof(
                         g_crc_vector)));
 
@@ -57,7 +57,7 @@ void
         i_crc32_result =
             appl_crc32(
                 g_crc_vector,
-                (unsigned long int)(
+                static_cast<unsigned long int>(
                     sizeof(
                         g_crc_vector)));
 

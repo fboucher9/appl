@@ -86,7 +86,7 @@ void
 
     // Test of heap base class
     {
-        class appl_heap *
+        struct appl_heap *
             p_heap;
 
         printf("heap base test {...\n");

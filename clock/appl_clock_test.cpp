@@ -77,7 +77,7 @@ unsigned long int
 
     struct appl_clock_test_context * const
         p_clock_test_context =
-        (struct appl_clock_test_context *)(
+        static_cast<struct appl_clock_test_context *>(
             p_void);
 
     appl_ull_t
@@ -129,7 +129,7 @@ unsigned long int
 
     struct appl_clock_test_context * const
         p_clock_test_context =
-        (struct appl_clock_test_context *)(
+        static_cast<struct appl_clock_test_context *>(
             p_void);
 
     enum appl_status

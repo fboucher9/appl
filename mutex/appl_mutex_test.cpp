@@ -62,13 +62,27 @@ void
     struct appl_mutex *
         p_mutex;
 
+    struct appl_mutex * * const
+        r_mutex_null =
+        static_cast<struct appl_mutex * *>(
+            0);
+
+    struct appl_mutex * const
+        p_mutex_null =
+        static_cast<struct appl_mutex *>(
+            0);
+
+    struct appl_mutex const * const
+        pc_mutex_null =
+        static_cast<struct appl_mutex const *>(
+            0);
+
     e_status =
         appl_mutex_create(
             p_context,
             &(
                 o_mutex_descriptor),
-            (struct appl_mutex * *)(
-                0));
+            r_mutex_null);
 
     if (
         appl_status_ok
@@ -148,8 +162,7 @@ void
 
         p_object =
             appl_mutex_parent(
-                (struct appl_mutex *)(
-                    0));
+                p_mutex_null);
 
         p_object =
             appl_mutex_parent(
@@ -160,8 +173,7 @@ void
 
         pc_object =
             appl_mutex_const_parent(
-                (struct appl_mutex *)(
-                    0));
+                pc_mutex_null);
 
         pc_object =
             appl_mutex_const_parent(
@@ -172,8 +184,7 @@ void
 
         e_status =
             appl_mutex_lock(
-                (struct appl_mutex *)(
-                    0));
+                p_mutex_null);
 
         if (
             appl_status_ok
@@ -194,8 +205,7 @@ void
         {
             e_status =
                 appl_mutex_unlock(
-                    (struct appl_mutex *)(
-                        0));
+                    p_mutex_null);
 
             if (
                 appl_status_ok
@@ -219,25 +229,21 @@ void
 
         e_status =
             appl_mutex_sync(
-                (struct appl_mutex *)(
-                    0),
+                p_mutex_null,
                 &(
                     appl_mutex_test_sync_callback),
-                (void *)(
-                    0));
+                0);
 
         e_status =
             appl_mutex_sync(
                 p_mutex,
                 &(
                     appl_mutex_test_sync_callback),
-                (void *)(
-                    0));
+                0);
 
         e_status =
             appl_mutex_destroy(
-                (struct appl_mutex *)(
-                    0));
+                p_mutex_null);
 
         if (
             appl_status_ok

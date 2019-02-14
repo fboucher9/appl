@@ -10,6 +10,7 @@ enum guard_appl_url_std_h
     inc_appl_url_std_h = 1
         /* Header file dependencies */
         + inc_appl_url_h
+        + inc_appl_list_h
 }; /* enum guard_appl_url_std_h */
 
 /* Included. */
@@ -39,6 +40,21 @@ class appl_url_std : public appl_url
     protected:
 
     private:
+
+        // --
+
+        struct appl_list
+            m_components[8u];
+
+        // --
+
+        unsigned long int
+            m_flags;
+
+        unsigned long int
+            ul_padding[1u];
+
+        // --
 
         appl_url_std(
             class appl_url_std const & r);

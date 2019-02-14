@@ -120,7 +120,7 @@ void
         appl_buf_print_number(
             a_buf,
             a_buf + sizeof(a_buf),
-            -12345u,
+            -12345,
             0,
             0);
 
@@ -134,7 +134,7 @@ void
         appl_buf_print_number(
             a_buf,
             a_buf + sizeof(a_buf),
-            -12345u,
+            -12345,
             appl_buf_print_flag_space,
             10);
 
@@ -148,7 +148,7 @@ void
         appl_buf_print_number(
             a_buf,
             a_buf + sizeof(a_buf),
-            -12345u,
+            -12345,
             appl_buf_print_flag_plus,
             10);
 

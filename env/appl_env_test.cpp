@@ -42,10 +42,10 @@ appl_env_test_query_cb(
     appl_unused(
         p_query_context);
     printf("value=[%.*s]\n",
-        (int)(appl_buf_len(
+        static_cast<int>(appl_buf_len(
                 p_value_min,
                 p_value_max)),
-        (char const *)(p_value_min));
+        reinterpret_cast<char const *>(p_value_min));
 
 } // appl_env_test_query_cb()
 
@@ -159,7 +159,7 @@ appl_env_test_1(
             a_value + sizeof(a_value));
 
     {
-        class appl_env *
+        struct appl_env *
             p_env;
 
         e_status =

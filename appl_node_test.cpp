@@ -256,7 +256,7 @@ void
             e_status =
                 appl_letter_node::s_create(
                     p_context,
-                    (char)(
+                    static_cast<char>(
                         'a' + i),
                     &(
                         a_letter[i]));
@@ -311,9 +311,6 @@ void
 
             i++;
         }
-
-        appl_unused(
-            e_status);
     }
 
     {

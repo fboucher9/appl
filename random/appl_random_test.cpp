@@ -72,7 +72,8 @@ appl_random_test_1(
             appl_status_ok
             == e_status)
         {
-            printf("random: seed=[%ld]\n", (signed long int)(i_value));
+            printf("random: seed=[%ld]\n",
+                static_cast<signed long int>(i_value));
 
             o_random2_descriptor.e_type =
                 appl_random_type_pseudo;
@@ -104,7 +105,7 @@ appl_random_test_1(
                     == e_status)
                 {
                     printf("random: value=[%ld/20]\n",
-                        (signed long int)(i_value));
+                        static_cast<signed long int>(i_value));
 
 #if 1
                     /* Do a verification of randomness */
@@ -147,8 +148,8 @@ appl_random_test_1(
                         for (i=0; i<31u; i++)
                         {
                             printf("random: bit count %ld = %ld\n",
-                                (signed long int)(i),
-                                (signed long int)(a_count[i]));
+                                static_cast<signed long int>(i),
+                                static_cast<signed long int>(a_count[i]));
                         }
                     }
 #endif
@@ -184,8 +185,8 @@ appl_random_test_1(
                         for (i=0; i<6u; i++)
                         {
                             printf("random: face count %ld = %ld\n",
-                                (signed long int)(i),
-                                (signed long int)(a_count[i]));
+                                static_cast<signed long int>(i),
+                                static_cast<signed long int>(a_count[i]));
                         }
                     }
 #endif

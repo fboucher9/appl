@@ -707,7 +707,7 @@ void
 
     struct appl_context * const
         p_context =
-        (struct appl_context *)(
+        static_cast<struct appl_context *>(
             p_thread_context);
 
     struct appl_socket *
@@ -807,7 +807,7 @@ void
 {
     struct appl_context * const
         p_context =
-        (struct appl_context *)(
+        static_cast<struct appl_context *>(
             p_thread_context);
 
     appl_socket_test_service::s_print_msg("client thread enter ...\n");
@@ -2270,13 +2270,13 @@ void
 
                                                 printf(
                                                     "[%.*s]:%u -> {%.*s}\n",
-                                                    (int)(appl_buf_len(
+                                                    static_cast<int>(appl_buf_len(
                                                             a_remote_name,
                                                             p_remote_name_cur)),
                                                     a_remote_name,
-                                                    (unsigned int)(
+                                                    static_cast<unsigned int>(
                                                         i_remote_port),
-                                                    (int)(i_count),
+                                                    static_cast<int>(i_count),
                                                     a_result);
                                             }
                                             else

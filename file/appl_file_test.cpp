@@ -145,7 +145,7 @@ void
             -1;
 
         o_file_descriptor.e_type =
-            (enum appl_file_type)(
+            static_cast<enum appl_file_type>(
                 i_invalid_file_type);
 
         e_status =
@@ -322,7 +322,7 @@ void
             33;
 
         o_file_descriptor.e_mode =
-            (enum appl_file_mode)(
+            static_cast<enum appl_file_mode>(
                 i_invalid_file_mode);
 
         o_file_descriptor.p_name_min =

@@ -501,6 +501,9 @@ enum appl_status
                 p_ifaddrs_iterator->ifa_next;
         }
 
+        e_status =
+            appl_status_ok;
+
         freeifaddrs(
             p_ifaddrs_list);
     }

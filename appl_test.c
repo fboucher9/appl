@@ -83,6 +83,8 @@
 
 #include <socket/appl_netdevice_test.h>
 
+#include <url/appl_url_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -2634,6 +2636,13 @@ static unsigned char const g_ref_netdevice[] =
     'e'
 };
 
+static unsigned char const g_ref_url[] =
+{
+    'u',
+    'r',
+    'l'
+};
+
 struct appl_test_command
 {
     unsigned char const *
@@ -2844,6 +2853,11 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_netdevice,
         g_ref_netdevice + sizeof(g_ref_netdevice),
         & appl_netdevice_test_1
+    },
+    {
+        g_ref_url,
+        g_ref_url + sizeof(g_ref_url),
+        & appl_url_test_1
     }
 };
 

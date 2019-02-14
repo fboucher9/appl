@@ -19,6 +19,8 @@ Description:
 
 #include <url/appl_url.h>
 
+#include <appl_list.h>
+
 #include <url/appl_url_std.h>
 
 #include <appl_unused.h>

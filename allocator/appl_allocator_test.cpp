@@ -38,7 +38,7 @@ appl_allocator_test_alloc_cb(
 
     class appl_allocator_std *
         p_allocator_std =
-        (struct appl_allocator_std *)(
+        static_cast<class appl_allocator_std *>(
             p_context);
 
     struct appl_allocator * const
@@ -206,7 +206,7 @@ void
     }
 
     {
-        class appl_allocator *
+        struct appl_allocator *
             p_allocator_dummy;
 
         e_status =

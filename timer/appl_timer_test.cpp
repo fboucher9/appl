@@ -23,7 +23,7 @@ appl_timer_test_event_cb(
     void * const
         p_timer_context)
 {
-    printf("event [%s]\n", (char *)(p_timer_context));
+    printf("event [%s]\n", static_cast<char *>(p_timer_context));
 }
 
 /*
@@ -85,7 +85,7 @@ appl_timer_test_1(
                         appl_timer_test_event_cb);
 
                 o_timer_descriptor.p_timer_context =
-                    (void *)(
+                    static_cast<void *>(
                         g_event_A);
 
                 printf("schedule [A]\n");

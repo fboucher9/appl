@@ -18,6 +18,8 @@
 
 #include <appl_heap_handle.h>
 
+#include <appl_convert.h>
+
 #include <stdio.h>
 
 /*
@@ -84,9 +86,12 @@ appl_options_test_1(
                 == e_status)
             {
                 printf("[%ld] [%.*s]\n",
-                    (signed long int)(argi),
-                    (int)(p_buf_max - p_buf_min),
-                    p_buf_min);
+                    appl_convert::to_long(
+                        argi),
+                    appl_convert::to_int(
+                        p_buf_max - p_buf_min),
+                    appl_convert::to_char_ptr(
+                        p_buf_min));
             }
 
             argi ++;

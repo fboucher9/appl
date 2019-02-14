@@ -37,7 +37,7 @@ void
 {
     struct appl_context * const
         p_context =
-        (struct appl_context *)(
+        static_cast<struct appl_context *>(
             p_thread_context);
 
     appl_clock_delay(
