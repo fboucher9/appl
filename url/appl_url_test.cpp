@@ -60,7 +60,7 @@ void
             'p'
         };
 
-        void *
+        struct appl_url_component *
             p_handle;
 
 #if defined TEST_VERBOSE
@@ -93,7 +93,8 @@ void
 #if defined TEST_VERBOSE
             printf(" -> success\n");
             printf(" -> handle = %p\n",
-                p_handle);
+                static_cast<void *>(
+                    p_handle));
             printf("get component:\n");
 #endif /* #if defined TEST_VERBOSE */
 
@@ -115,7 +116,8 @@ void
 #if defined TEST_VERBOSE
                 printf(" -> success\n");
                 printf(" -> handle = %p\n",
-                    p_handle);
+                    static_cast<void *>(
+                        p_handle));
                 printf(" -> buf = [%.*s]\n",
                     static_cast<int>(
                         appl_buf_len(

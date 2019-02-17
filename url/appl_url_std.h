@@ -92,7 +92,7 @@ class appl_url_std : public appl_url
                     p_buf_min,
                 unsigned char const * const
                     p_buf_max,
-                void * * const
+                struct appl_url_component * * const
                     r_handle);
 
         virtual
@@ -100,7 +100,7 @@ class appl_url_std : public appl_url
             v_remove_component(
                 signed short int const
                     e_component_type,
-                void * const
+                struct appl_url_component * const
                     p_handle);
 
         virtual
@@ -112,7 +112,7 @@ class appl_url_std : public appl_url
                     r_buf_min,
                 unsigned char const * * const
                     r_buf_max,
-                void * * const
+                struct appl_url_component * * const
                     r_handle) const;
 
         virtual
@@ -124,7 +124,7 @@ class appl_url_std : public appl_url
                     r_buf_min,
                 unsigned char const * * const
                     r_buf_max,
-                void * * const
+                struct appl_url_component * * const
                     r_handle) const;
 
         virtual

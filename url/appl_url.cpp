@@ -160,7 +160,7 @@ enum appl_status
             p_buf_min,
         unsigned char const * const
             p_buf_max,
-        void * * const
+        struct appl_url_component * * const
             r_handle)
 {
     appl_unused(
@@ -181,7 +181,7 @@ enum appl_status
     appl_url::v_remove_component(
         signed short int const
             e_component_type,
-        void * const
+        struct appl_url_component * const
             p_handle)
 {
     appl_unused(
@@ -204,7 +204,7 @@ enum appl_status
             r_buf_min,
         unsigned char const * * const
             r_buf_max,
-        void * * const
+        struct appl_url_component * * const
             r_handle) const
 {
     appl_unused(
@@ -229,7 +229,7 @@ enum appl_status
             r_buf_min,
         unsigned char const * * const
             r_buf_max,
-        void * * const
+        struct appl_url_component * * const
             r_handle) const
 {
     appl_unused(
