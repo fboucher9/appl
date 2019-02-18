@@ -18,6 +18,9 @@ Description:
 */
 enum appl_url_component_type
 {
+    /* Minimum range */
+    appl_url_component_type_min = 0,
+
     /* Leading component */
     appl_url_component_type_scheme = 1,
 
@@ -34,7 +37,7 @@ enum appl_url_component_type
     appl_url_component_type_path = 5,
 
     /* Percent-encoded data after question mark */
-    appl_url_component_type_quote = 6,
+    appl_url_component_type_query = 6,
 
     /* Percent-encoded data after hash */
     appl_url_component_type_fragment = 7,

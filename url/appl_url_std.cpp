@@ -26,6 +26,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_convert.h>
+
 #include <appl_unused.h>
 
 //
@@ -188,6 +190,98 @@ s_find_component(
     struct appl_buf * const
         r_component)
 {
+    enum appl_status
+        e_status;
+
+    struct appl_buf
+        o_component;
+
+    unsigned char
+        c_sep;
+
+    o_component.o_min.pc_uchar =
+        p_iterator->o_min.pc_uchar;
+
+    o_component.o_max.pc_uchar =
+        p_iterator->o_min.pc_uchar;
+
+    c_sep =
+        '\000';
+
+    bool
+        b_continue;
+
+    b_continue =
+        true;
+
+    while (
+        b_continue
+        && (
+            p_iterator->o_min.pc_uchar
+            != p_iterator->o_max.pc_uchar))
+    {
+        unsigned char const
+            c_data =
+            *(
+                p_iterator->o_min.pc_uchar);
+
+        o_component.o_max.pc_uchar =
+            p_iterator->o_min.pc_uchar;
+
+        p_iterator->o_min.pc_uchar ++;
+
+        unsigned char const *
+            p_filter_it;
+
+        p_filter_it =
+            p_filter->o_min.pc_uchar;
+
+        while (
+            b_continue
+            && (
+                p_filter_it
+                != p_filter->o_max.pc_uchar))
+        {
+            if (
+                c_data
+                == *(
+                    p_filter_it))
+            {
+                c_sep =
+                    *(
+                        p_filter_it);
+
+                b_continue =
+                    false;
+            }
+            else
+            {
+                p_filter_it ++;
+            }
+        }
+    }
+
+    if (
+        b_continue)
+    {
+        o_component.o_max.pc_uchar =
+            p_iterator->o_min.pc_uchar;
+    }
+
+    *(
+        r_component) =
+        o_component;
+
+    *(
+        r_sep) =
+        c_sep;
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
 } // s_find_component()
 
 //
@@ -210,11 +304,26 @@ enum appl_status
         '#'
     };
 
+    static unsigned char const a_path_filter[] =
+    {
+        '/',
+        '?',
+        '#'
+    };
+
+    static unsigned char const a_query_filter[] =
+    {
+        '#'
+    };
+
     enum appl_status
         e_status;
 
     unsigned char
-        c_sep;
+        c_sep_before;
+
+    unsigned char
+        c_sep_after;
 
     struct appl_buf
         o_input_iterator;
@@ -225,38 +334,204 @@ enum appl_status
     o_input_iterator.o_max.pc_uchar =
         p_input_max;
 
-    struct appl_buf
-        o_component;
+    c_sep_before =
+        '\000';
 
-    struct appl_buf
-        o_scheme_filter;
+    bool
+        b_more_component;
 
-    o_scheme_filter.o_min.pc_uchar =
-        a_scheme_filter;
+    b_more_component =
+        true;
 
-    o_scheme_filter.o_max.pc_uchar =
-        a_scheme_filter + sizeof(a_scheme_filter);
+    while (
+        (
+            appl_status_ok
+            == e_status)
+        && b_more_component)
+    {
+        struct appl_buf
+            o_filter;
 
-    e_status =
-        s_find_component(
-            &(
-                o_input_iterator),
-            &(
-                o_scheme_filter),
-            &(
-                c_sep),
-            &(
-                o_component));
+        if (
+            '\000'
+            == c_sep_before)
+        {
+            o_filter.o_min.pc_uchar =
+                a_scheme_filter;
+
+            o_filter.o_max.pc_uchar =
+                a_scheme_filter + sizeof(a_scheme_filter);
+        }
+        else if (
+            (
+                ':'
+                == c_sep_before)
+            || (
+                '/'
+                == c_sep_before))
+        {
+            o_filter.o_min.pc_uchar =
+                a_path_filter;
+
+            o_filter.o_max.pc_uchar =
+                a_path_filter + sizeof(a_path_filter);
+        }
+        else if (
+            '?'
+            == c_sep_before)
+        {
+            o_filter.o_min.pc_uchar =
+                a_query_filter;
+
+            o_filter.o_max.pc_uchar =
+                a_query_filter + sizeof(a_query_filter);
+        }
+        else if (
+            '#'
+            == c_sep_before)
+        {
+            o_filter.o_min.pc_uchar =
+                0;
+
+            o_filter.o_max.pc_uchar =
+                0;
+        }
+        else
+        {
+            o_filter.o_min.pc_uchar =
+                0;
+
+            o_filter.o_max.pc_uchar =
+                0;
+        }
+
+        struct appl_buf
+            o_component;
+
+        c_sep_after =
+            '\000';
+
+        e_status =
+            s_find_component(
+                &(
+                    o_input_iterator),
+                &(
+                    o_filter),
+                &(
+                    c_sep_after),
+                &(
+                    o_component));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            if (
+                (
+                    '\000'
+                    == c_sep_before)
+                && (
+                    ':'
+                    == c_sep_after))
+            {
+                struct appl_url_component *
+                    p_scheme_component;
+
+                // Store this component as scheme
+                e_status =
+                    v_add_component(
+                        appl_url_component_type_scheme,
+                        o_component.o_min.pc_uchar,
+                        o_component.o_max.pc_uchar,
+                        &(
+                            p_scheme_component));
+            }
+            else if (
+                (
+                    '\000'
+                    == c_sep_before)
+                || (
+                    ':'
+                    == c_sep_before)
+                || (
+                    '/'
+                    == c_sep_before))
+            {
+                struct appl_url_component *
+                    p_path_component;
+
+                // Store this as path
+                e_status =
+                    v_add_component(
+                        appl_url_component_type_path,
+                        o_component.o_min.pc_uchar,
+                        o_component.o_max.pc_uchar,
+                        &(
+                            p_path_component));
+            }
+            else if (
+                '?'
+                == c_sep_before)
+            {
+                struct appl_url_component *
+                    p_query_component;
+
+                // Query
+                e_status =
+                    v_add_component(
+                        appl_url_component_type_query,
+                        o_component.o_min.pc_uchar,
+                        o_component.o_max.pc_uchar,
+                        &(
+                            p_query_component));
+            }
+            else if (
+                '#'
+                == c_sep_before)
+            {
+                struct appl_url_component *
+                    p_fragment_component;
+
+                // Store rest as fragment
+                e_status =
+                    v_add_component(
+                        appl_url_component_type_fragment,
+                        o_component.o_min.pc_uchar,
+                        o_component.o_max.pc_uchar,
+                        &(
+                            p_fragment_component));
+            }
+            else
+            {
+                // What to do?
+                b_more_component =
+                    false;
+            }
+
+            if (
+                '\000'
+                != c_sep_after)
+            {
+                c_sep_before =
+                    c_sep_after;
+            }
+            else
+            {
+                b_more_component =
+                    false;
+            }
+        }
+    }
 
     if (
         appl_status_ok
         == e_status)
     {
-        appl_unused(
-            r_input_count);
-
-        e_status =
-            appl_raise_not_implemented();
+        *(
+            r_input_count) =
+            appl_convert::to_ulong(
+                o_input_iterator.o_min.pc_uchar
+                - p_input_min);
     }
 
     return
