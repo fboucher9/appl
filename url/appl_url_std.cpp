@@ -343,6 +343,9 @@ enum appl_status
     b_more_component =
         true;
 
+    e_status =
+        appl_status_ok;
+
     while (
         (
             appl_status_ok
@@ -529,9 +532,9 @@ enum appl_status
     {
         *(
             r_input_count) =
-            appl_convert::to_ulong(
-                o_input_iterator.o_min.pc_uchar
-                - p_input_min);
+            appl_buf_len(
+                p_input_min,
+                o_input_iterator.o_min.pc_uchar);
     }
 
     return
