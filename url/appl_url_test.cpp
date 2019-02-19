@@ -324,6 +324,21 @@ void
         struct appl_url const * const
             p_url)
 {
+    unsigned long int
+        i_flags;
+
+    if (
+        appl_status_ok
+        == appl_url_get_flags(
+            p_url,
+            &(
+                i_flags)))
+    {
+        printf("%-40s: %lu\n",
+            "flags",
+            i_flags);
+    }
+
     appl_url_test_service::s_dump_component(
         p_url,
         appl_url_component_type_scheme);

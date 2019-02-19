@@ -112,68 +112,64 @@ appl_size_t
     appl_url_std::v_cleanup(void)
 {
     // Free all components
-    unsigned int
-        i;
-
-    union appl_url_component_ptr
-        o_component_ptr;
-
-    struct appl_context * const
-        p_context =
-        get_context();
-
-    struct appl_allocator * const
-        p_allocator =
-        appl_context_get_allocator(
-            p_context);
-
-    for (
-        i=0u;
-        i<8u;
-        i++)
-    {
-        while (
-            m_components[i].o_next.p_node
-            != (m_components + i))
-        {
-            o_component_ptr.p_list =
-                m_components[i].o_next.p_node;
-
-            appl_list_join(
-                o_component_ptr.p_list,
-                o_component_ptr.p_list);
-
-            appl_size_t const
-                i_buf_len =
-                appl_buf_len(
-                    o_component_ptr.p_component->p_buf_min,
-                    o_component_ptr.p_component->p_buf_max);
-
-            if (
-                i_buf_len)
-            {
-                appl_heap_free(
-                    p_context,
-                    i_buf_len,
-                    o_component_ptr.p_component->p_buf_min);
-            }
-
-            o_component_ptr.p_component->p_buf_min =
-                0;
-
-            o_component_ptr.p_component->p_buf_max =
-                0;
-
-            appl_allocator_free_structure(
-                p_allocator,
-                o_component_ptr.p_component);
-        }
-    }
+    f_cleanup_all_component_lists();
 
     return
         sizeof(class appl_url_std);
 
 } // v_cleanup()
+
+
+//
+//
+//
+void
+    appl_url_std::f_cleanup_all_component_lists(void)
+{
+    signed short int
+        i;
+
+    for (
+        i = appl_url_component_type_min;
+        i < appl_url_component_type_max;
+        i ++)
+    {
+        f_cleanup_component_list(
+            i);
+    }
+
+} // f_cleanup_component_list()
+
+
+//
+//
+//
+void
+appl_url_std::f_cleanup_component_list(
+    signed short int const
+        e_component_type)
+{
+    struct appl_list * const
+        p_component_list =
+        m_components + e_component_type;
+
+    while (
+        p_component_list->o_next.p_node
+        != p_component_list)
+    {
+        union appl_url_component_ptr
+            o_component_ptr;
+
+        o_component_ptr.p_list =
+            p_component_list->o_next.p_node;
+
+        appl_url_std::v_remove_component(
+            e_component_type,
+            o_component_ptr.p_component);
+    }
+
+} // f_cleanup_component_list()
+
 
 //
 //
@@ -225,9 +221,6 @@ s_find_component(
             *(
                 p_iterator->o_min.pc_uchar);
 
-        o_component.o_max.pc_uchar =
-            p_iterator->o_min.pc_uchar;
-
         p_iterator->o_min.pc_uchar ++;
 
         unsigned char const *
@@ -259,13 +252,13 @@ s_find_component(
                 p_filter_it ++;
             }
         }
-    }
 
-    if (
-        b_continue)
-    {
-        o_component.o_max.pc_uchar =
-            p_iterator->o_min.pc_uchar;
+        if (
+            b_continue)
+        {
+            o_component.o_max.pc_uchar =
+                p_iterator->o_min.pc_uchar;
+        }
     }
 
     *(
@@ -460,17 +453,28 @@ enum appl_status
                     '/'
                     == c_sep_before))
             {
-                struct appl_url_component *
-                    p_path_component;
+                if (
+                    (
+                        o_component.o_min.pc_uchar
+                        != o_component.o_max.pc_uchar)
+                    || (
+                        (
+                            '/' == c_sep_before)
+                        || (
+                            '/' == c_sep_after)))
+                {
+                    struct appl_url_component *
+                        p_path_component;
 
-                // Store this as path
-                e_status =
-                    v_add_component(
-                        appl_url_component_type_path,
-                        o_component.o_min.pc_uchar,
-                        o_component.o_max.pc_uchar,
-                        &(
-                            p_path_component));
+                    // Store this as path
+                    e_status =
+                        v_add_component(
+                            appl_url_component_type_path,
+                            o_component.o_min.pc_uchar,
+                            o_component.o_max.pc_uchar,
+                            &(
+                                p_path_component));
+                }
             }
             else if (
                 '?'
@@ -524,6 +528,99 @@ enum appl_status
                     false;
             }
         }
+    }
+
+    // Post processing...
+
+    struct appl_url_component *
+        p_component;
+
+    unsigned char const *
+        p_buf_min;
+
+    unsigned char const *
+        p_buf_max;
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        // Detect leading empty paths
+        // Clear all flags
+        m_flags =
+            0;
+
+        if (
+            (
+                appl_status_ok
+                == v_get_component(
+                    appl_url_component_type_path,
+                    &(
+                        p_buf_min),
+                    &(
+                        p_buf_max),
+                    &(
+                        p_component)))
+            && (
+                p_buf_min
+                == p_buf_max))
+        {
+            if (
+                appl_status_ok
+                == v_remove_component(
+                    appl_url_component_type_path,
+                    p_component))
+            {
+                m_flags |=
+                    APPL_URL_FLAG_ABSOLUTE;
+            }
+        }
+    }
+
+    if (
+        (
+            appl_status_ok
+            == e_status)
+        && (
+            APPL_URL_FLAG_ABSOLUTE
+            & m_flags))
+    {
+        if (
+            (
+                appl_status_ok
+                == v_get_component(
+                    appl_url_component_type_path,
+                    &(
+                        p_buf_min),
+                    &(
+                        p_buf_max),
+                    &(
+                        p_component)))
+            && (
+                p_buf_min
+                == p_buf_max))
+        {
+            if (
+                appl_status_ok
+                == v_remove_component(
+                    appl_url_component_type_path,
+                    p_component))
+            {
+                m_flags |=
+                    APPL_URL_FLAG_AUTHORITY;
+            }
+        }
+    }
+
+    if (
+        (
+            appl_status_ok
+            == e_status)
+        && (
+            APPL_URL_FLAG_AUTHORITY
+            & m_flags))
+    {
+        // Decode of authority, to split into userinfo, host and port
     }
 
     if (
@@ -582,8 +679,8 @@ enum appl_status
         e_status;
 
     if (
-        ((e_component_type + 0) > 0)
-        && ((e_component_type + 0) < 8))
+        (e_component_type > appl_url_component_type_min)
+        && (e_component_type < appl_url_component_type_max))
     {
         struct appl_context * const
             p_context =
@@ -615,7 +712,7 @@ enum appl_status
             p_component->p_buf_min =
                 0;
 
-            p_component->p_buf_min =
+            p_component->p_buf_max =
                 0;
 
             appl_size_t const
@@ -708,8 +805,8 @@ enum appl_status
         e_status;
 
     if (
-        ((e_component_type + 0) > 0)
-        && ((e_component_type + 0) < 8))
+        (e_component_type > appl_url_component_type_min)
+        && (e_component_type < appl_url_component_type_max))
     {
         struct appl_context * const
             p_context =
@@ -800,8 +897,8 @@ enum appl_status
         o_component_ptr;
 
     if (
-        ((e_component_type + 0) > 0)
-        && ((e_component_type + 0) < 8))
+        (e_component_type > appl_url_component_type_min)
+        && (e_component_type < appl_url_component_type_max))
     {
         o_component_ptr.p_list =
             m_components[e_component_type].o_next.p_node;
@@ -864,8 +961,8 @@ enum appl_status
         e_status;
 
     if (
-        ((e_component_type + 0) > 0)
-        && ((e_component_type + 0) < 8))
+        (e_component_type > appl_url_component_type_min)
+        && (e_component_type < appl_url_component_type_max))
     {
         union appl_url_component_ptr
             o_component_ptr;

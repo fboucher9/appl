@@ -63,6 +63,14 @@ class appl_url_std : public appl_url
             operator =(
                 class appl_url_std const & r);
 
+        void
+            f_cleanup_all_component_lists(void);
+
+        void
+            f_cleanup_component_list(
+                signed short int const
+                    e_component_type);
+
         virtual
         enum appl_status
             v_decoder(
