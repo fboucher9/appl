@@ -77,7 +77,8 @@ enum appl_status
     i_result =
         RtlCaptureStackBackTrace(
             0,
-            i_count_max,
+            static_cast<DWORD>(
+                i_count_max),
             o_backtrace_ptr.ppv,
             NULL);
 
