@@ -203,6 +203,22 @@ appl_buf_compare(
     unsigned char const * const
         p_right_max);
 
+/* find minimum value */
+unsigned char
+appl_buf_min_value(
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max);
+
+/* find maximum value */
+unsigned char
+appl_buf_max_value(
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max);
+
 #if 0
 /* buf compare */
 signed int

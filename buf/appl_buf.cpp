@@ -514,6 +514,96 @@ appl_buf_case_compare(
 /*
 
 */
+unsigned char
+appl_buf_min_value(
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max)
+{
+    unsigned char
+        c_min;
+
+    unsigned char const *
+        p_buf_it;
+
+    c_min =
+        255;
+
+    p_buf_it =
+        p_buf_min;
+
+    while (
+        p_buf_it
+        != p_buf_max)
+    {
+        unsigned char const
+            c_data =
+            *(
+                p_buf_it);
+
+        if (
+            c_min > c_data)
+        {
+            c_min = c_data;
+        }
+
+        p_buf_it ++;
+    }
+
+    return
+        c_min;
+
+} /* appl_buf_min_value() */
+
+/*
+
+*/
+unsigned char
+appl_buf_max_value(
+    unsigned char const * const
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max)
+{
+    unsigned char
+        c_max;
+
+    unsigned char const *
+        p_buf_it;
+
+    c_max =
+        255;
+
+    p_buf_it =
+        p_buf_min;
+
+    while (
+        p_buf_it
+        != p_buf_max)
+    {
+        unsigned char const
+            c_data =
+            *(
+                p_buf_it);
+
+        if (
+            c_max > c_data)
+        {
+            c_max = c_data;
+        }
+
+        p_buf_it ++;
+    }
+
+    return
+        c_max;
+
+} /* appl_buf_max_value() */
+
+/*
+
+*/
 static
 unsigned int
 build_digits(
