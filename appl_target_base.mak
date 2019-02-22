@@ -37,6 +37,7 @@ appl_base-deps := \
     backtrace/appl_backtrace_impl.cpp \
     buf/appl_buf.cpp \
     buf/appl_buf0.cpp \
+    buf/appl_buf_filter.cpp \
     chunk/appl_chunk_handle.cpp \
     chunk/appl_chunk_service.cpp \
     chunk/appl_chunk_std.cpp \

@@ -8,7 +8,11 @@
 
 #include <appl_buf.h>
 
+#include <appl_buf_filter.h>
+
 #include <appl_unused.h>
+
+#include <stdio.h>
 
 //
 //
@@ -253,6 +257,101 @@ void
             s_buf + sizeof(s_buf),
             &(i_value),
             0);
+    }
+
+    {
+        static unsigned char const s_values[] =
+        {
+            'c',
+            'd',
+            'e',
+            'a',
+            'b'
+        };
+
+        appl_buf_min_value(
+            s_values,
+            s_values + sizeof(s_values));
+
+        appl_buf_max_value(
+            s_values,
+            s_values + sizeof(s_values));
+    }
+
+    {
+        static unsigned char const s_filter1[] =
+        {
+            'a',
+            0x02u
+        };
+
+        struct appl_buf
+            o_buf_filter;
+
+        o_buf_filter.o_min.pc_uchar =
+            s_filter1;
+
+        o_buf_filter.o_max.pc_uchar =
+            s_filter1 + sizeof(s_filter1);
+
+        char
+            b_result;
+
+        b_result =
+            appl_buf_filter_test(
+                &(
+                    o_buf_filter),
+                'a');
+
+        printf(
+            "filter test a = %d\n",
+            static_cast<int>(
+                b_result));
+
+        b_result =
+            appl_buf_filter_test(
+                &(
+                    o_buf_filter),
+                'b');
+
+        printf(
+            "filter test b = %d\n",
+            static_cast<int>(
+                b_result));
+
+        b_result =
+            appl_buf_filter_test(
+                &(
+                    o_buf_filter),
+                'c');
+
+        printf(
+            "filter test c = %d\n",
+            static_cast<int>(
+                b_result));
+
+        b_result =
+            appl_buf_filter_test(
+                &(
+                    o_buf_filter),
+                ' ');
+
+        printf(
+            "filter test sp = %d\n",
+            static_cast<int>(
+                b_result));
+
+        b_result =
+            appl_buf_filter_test(
+                &(
+                    o_buf_filter),
+                0xa2u);
+
+        printf(
+            "filter test a2 = %d\n",
+            static_cast<int>(
+                b_result));
+
     }
 
 } // appl_buf_test_1()
