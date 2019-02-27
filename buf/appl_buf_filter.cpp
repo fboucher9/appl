@@ -192,6 +192,11 @@ appl_buf_filter_convert_list(
     p_buf_filter->o_min.p_uchar[0u] =
         c_input_min;
 
+    appl_buf_fill(
+        p_buf_filter->o_min.p_uchar + 1u,
+        p_buf_filter->o_max.p_uchar,
+        0u);
+
     unsigned char const *
         p_input_iterator;
 
@@ -541,7 +546,7 @@ void
 
     while (
         c_range_it
-        < p_range->c_range_end)
+        <= p_range->c_range_end)
     {
         appl_buf_filter_write(
             p_buf_filter,

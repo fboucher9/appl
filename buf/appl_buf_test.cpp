@@ -354,6 +354,122 @@ void
 
     }
 
+    {
+        static unsigned char const s_list[] =
+        {
+            'a',
+            'c',
+            'e'
+        };
+
+        struct appl_buf
+            o_ref_list;
+
+        o_ref_list.o_min.pc_uchar =
+            s_list;
+
+        o_ref_list.o_max.pc_uchar =
+            s_list + sizeof(s_list);
+
+        unsigned long int
+            i_length;
+
+        i_length =
+            appl_buf_filter_get_list_length(
+                &(
+                    o_ref_list));
+
+        if (
+            2
+            == i_length)
+        {
+            unsigned char
+                a_filter[2u];
+
+            struct appl_buf
+                o_filter;
+
+            o_filter.o_min.p_uchar =
+                a_filter;
+
+            o_filter.o_max.p_uchar =
+                a_filter + sizeof(a_filter);
+
+            appl_buf_filter_convert_list(
+                &(
+                    o_filter),
+                &(
+                    o_ref_list));
+
+            printf(
+                "convert list -> %02hx %02hx\n",
+                static_cast<unsigned short int>(
+                    a_filter[0u]),
+                static_cast<unsigned short int>(
+                    a_filter[1u]));
+        }
+    }
+
+    {
+        static unsigned char const s_ref_class[] =
+        {
+            'c',
+            '-',
+            'g',
+            'm',
+            '-',
+            'l'
+        };
+
+        struct appl_buf
+            o_ref_class;
+
+        o_ref_class.o_min.pc_uchar =
+            s_ref_class;
+
+        o_ref_class.o_max.pc_uchar =
+            s_ref_class + sizeof(s_ref_class);
+
+        unsigned long int
+            i_length;
+
+        i_length =
+            appl_buf_filter_get_class_length(
+                &(
+                    o_ref_class));
+
+        if (
+            3ul
+            == i_length)
+        {
+            unsigned char
+                a_filter[3u];
+
+            struct appl_buf
+                o_filter;
+
+            o_filter.o_min.p_uchar =
+                a_filter;
+
+            o_filter.o_max.p_uchar =
+                a_filter + sizeof(a_filter);
+
+            appl_buf_filter_convert_class(
+                &(
+                    o_filter),
+                &(
+                    o_ref_class));
+
+            printf("convert class -> \'%c\' %02hx %02hx\n",
+                static_cast<char>(
+                    a_filter[0u]),
+                static_cast<unsigned short int>(
+                    a_filter[1u]),
+                static_cast<unsigned short int>(
+                    a_filter[2u]));
+        }
+    }
+
 } // appl_buf_test_1()
 
 /* end-of-file: appl_buf_test.cpp */
