@@ -37,17 +37,31 @@ appl_buf_filter_test(
 
 /* Calculate length in bytes of filter given a list of characters */
 unsigned long int
-appl_buf_filter_get_build_length(
+appl_buf_filter_get_list_length(
     struct appl_buf const * const
         p_input);
 
 /* Generate a filter given a list of characters */
 void
-appl_buf_filter_build(
+appl_buf_filter_convert_list(
     struct appl_buf * const
         p_buf_filter,
     struct appl_buf const * const
         p_input);
+
+/* Calculate length in bytes of filter given a class of characters */
+unsigned long int
+appl_buf_filter_get_class_length(
+    struct appl_buf const * const
+        p_input_class);
+
+/* Generate a filter given a class of characters */
+void
+appl_buf_filter_convert_class(
+    struct appl_buf * const
+        p_buf_filter,
+    struct appl_buf const * const
+        p_input_class);
 
 #if defined __cplusplus
 } /* extern "C" */
