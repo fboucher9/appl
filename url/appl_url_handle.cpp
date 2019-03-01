@@ -113,6 +113,39 @@ enum appl_status
 } // appl_url_decoder()
 
 //
+//  Function: appl_url_encoder_length()
+//
+//  Description:
+//      Calculate length in bytes required for appl_url_encoder().
+//
+//  Parameters:
+//      p_url
+//          Pointer to appl_url object.
+//      r_output_count
+//          Returned number of bytes for output URL.
+//
+//  Returns: Status code.
+//
+//  Comments:
+//      -   Length returned may be greater than the output length returned
+//          by appl_url_encoder() function.
+//      -   This is a C entry point, dispatch to a C++ function.
+//
+enum appl_status
+    appl_url_encoder_length(
+        struct appl_url const * const
+            p_url,
+        unsigned long int * const
+            r_output_count)
+{
+    return
+        appl_url_service::s_encoder_length(
+            p_url,
+            r_output_count);
+
+} // appl_url_encoder_length()
+
+//
 //  Function: appl_url_encoder()
 //
 //  Description:

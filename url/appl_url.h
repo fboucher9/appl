@@ -41,6 +41,12 @@ struct appl_url : public appl_object
 
         virtual
         enum appl_status
+            v_encoder_length(
+                unsigned long int * const
+                    r_output_count) const;
+
+        virtual
+        enum appl_status
             v_encoder(
                 unsigned char * const
                     p_output_min,

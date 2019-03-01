@@ -30,6 +30,68 @@
 
 #include <appl_unused.h>
 
+union write_context_ptr
+{
+    void *
+        p_write_context;
+
+    unsigned long int *
+        p_length;
+
+    struct appl_buf *
+        p_buf;
+
+};
+
+//
+//
+//
+static
+void
+    length_callback(
+        void * const
+            p_write_context,
+        unsigned char const
+            c_data)
+{
+    appl_unused(
+        c_data);
+
+    union write_context_ptr
+        o_write_context_ptr;
+
+    o_write_context_ptr.p_write_context =
+        p_write_context;
+
+    (*o_write_context_ptr.p_length) ++;
+
+} // length_callback()
+
+//
+//
+//
+static
+void
+    convert_callback(
+        void * const
+            p_write_context,
+        unsigned char const
+            c_data)
+{
+    union write_context_ptr
+        o_write_context_ptr;
+
+    o_write_context_ptr.p_write_context =
+        p_write_context;
+
+    o_write_context_ptr.p_buf->o_min.p_uchar =
+        appl_buf_write(
+            o_write_context_ptr.p_buf->o_min.p_uchar,
+            o_write_context_ptr.p_buf->o_max.p_uchar,
+            c_data);
+
+} // convert_callback()
+
 //
 //
 //
@@ -642,6 +704,225 @@ enum appl_status
 //
 //
 //
+void
+    appl_url_std::f_encoder_add_component(
+        struct appl_url_component const * const
+            p_component,
+        bool const
+            b_apply_percent,
+        void (* const p_write_callback)(
+            void * const
+                p_write_context,
+            unsigned char const
+                c_data),
+        void * const
+            p_write_context) const
+{
+    unsigned char const *
+        p_buf_it;
+
+    appl_unused(
+        b_apply_percent);
+
+    p_buf_it =
+        p_component->p_buf_min;
+
+    while (
+        p_buf_it
+        < p_component->p_buf_max)
+    {
+        unsigned char const
+            c_data =
+            *(
+                p_buf_it);
+
+        (*p_write_callback)(
+            p_write_context,
+            c_data);
+
+        p_buf_it ++;
+    }
+
+} // f_encoder_add_component()
+
+//
+//
+//
+void
+    appl_url_std::f_encoder_run(
+        void (* const p_write_callback)(
+            void * const
+                p_write_context,
+            unsigned char const
+                c_data),
+        void * const
+            p_write_context) const
+{
+    union appl_url_component_ptr
+        o_url_component_ptr;
+
+    // Do scheme
+    {
+        struct appl_list const * const
+            p_component_list =
+            m_components + appl_url_component_type_scheme;
+
+        o_url_component_ptr.p_list =
+            p_component_list->o_next.p_node;
+
+        if (
+            o_url_component_ptr.p_list
+            != p_component_list)
+        {
+            f_encoder_add_component(
+                o_url_component_ptr.p_component,
+                false,
+                p_write_callback,
+                p_write_context);
+
+            (*p_write_callback)(
+                p_write_context,
+                ':');
+        }
+    }
+
+    // Path
+    {
+        // Authority
+        if (
+            APPL_URL_FLAG_AUTHORITY
+            & m_flags)
+        {
+            (*p_write_callback)(
+                p_write_context,
+                '/');
+
+            (*p_write_callback)(
+                p_write_context,
+                '/');
+        }
+
+#if 0
+        // Absolute
+        if (
+            APPL_URL_FLAG_ABSOLUTE
+            & m_flags)
+        {
+            (*p_write_callback)(
+                p_write_context,
+                '/');
+        }
+#endif
+
+        struct appl_list const * const
+            p_component_list =
+            m_components + appl_url_component_type_path;
+
+        o_url_component_ptr.p_list =
+            p_component_list->o_next.p_node;
+
+        while (
+            o_url_component_ptr.p_list
+            != p_component_list)
+        {
+            f_encoder_add_component(
+                o_url_component_ptr.p_component,
+                false,
+                p_write_callback,
+                p_write_context);
+
+            o_url_component_ptr.p_list =
+                o_url_component_ptr.p_list->o_next.p_node;
+
+            if (
+                o_url_component_ptr.p_list
+                != p_component_list)
+            {
+                (*p_write_callback)(
+                    p_write_context,
+                    '/');
+            }
+        }
+    }
+
+    // Query
+    {
+        struct appl_list const * const
+            p_component_list =
+            m_components + appl_url_component_type_query;
+
+        o_url_component_ptr.p_list =
+            p_component_list->o_next.p_node;
+
+        if (
+            o_url_component_ptr.p_list
+            != p_component_list)
+        {
+            (*p_write_callback)(
+                p_write_context,
+                '?');
+
+            f_encoder_add_component(
+                o_url_component_ptr.p_component,
+                false,
+                p_write_callback,
+                p_write_context);
+        }
+    }
+
+    // Fragment
+    {
+        struct appl_list const * const
+            p_component_list =
+            m_components + appl_url_component_type_fragment;
+
+        o_url_component_ptr.p_list =
+            p_component_list->o_next.p_node;
+
+        if (
+            o_url_component_ptr.p_list
+            != p_component_list)
+        {
+            (*p_write_callback)(
+                p_write_context,
+                '#');
+
+            f_encoder_add_component(
+                o_url_component_ptr.p_component,
+                false,
+                p_write_callback,
+                p_write_context);
+        }
+    }
+}
+
+//
+//
+//
+enum appl_status
+    appl_url_std::v_encoder_length(
+        unsigned long int * const
+            r_output_count) const
+{
+    enum appl_status
+        e_status;
+
+    f_encoder_run(
+        &(
+            length_callback),
+        r_output_count);
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // v_encoder_length()
+
+//
+//
+//
 enum appl_status
     appl_url_std::v_encoder(
         unsigned char * const
@@ -651,13 +932,29 @@ enum appl_status
         unsigned long int * const
             r_output_count) const
 {
-    appl_unused(
-        p_output_min,
-        p_output_max,
-        r_output_count);
+    struct appl_buf
+        o_output_buf;
+
+    o_output_buf.o_min.p_uchar =
+        p_output_min;
+
+    o_output_buf.o_max.p_uchar =
+        p_output_max;
+
+    f_encoder_run(
+        &(
+            convert_callback),
+        &(
+            o_output_buf));
+
+    *(
+        r_output_count) =
+        appl_buf_len(
+            p_output_min,
+            o_output_buf.o_min.pc_uchar);
 
     return
-        appl_raise_not_implemented();
+        appl_status_ok;
 
 } // v_encoder()
 

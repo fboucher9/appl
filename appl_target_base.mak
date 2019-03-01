@@ -188,6 +188,7 @@ appl_base-deps := \
     url/appl_url_service.cpp \
     url/appl_url.cpp \
     url/appl_url_std.cpp \
+    url/appl_percent.cpp \
     appl_validate.cpp \
     xlib/appl_xlib.cpp \
     xlib/appl_xlib_std.cpp \

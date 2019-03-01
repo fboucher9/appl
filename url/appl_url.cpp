@@ -94,6 +94,34 @@ enum appl_status
 } // v_decoder()
 
 //
+//  Function: v_encoder_length()
+//
+//  Description:
+//      Default implementation of v_encoder_length().
+//
+//  Parameters:
+//      r_output_count
+//          Length in bytes of output buffer for v_encoder().
+//
+//  Returns: Status code.
+//
+//  Comments:
+//      -   This function should never be called.
+//
+enum appl_status
+    appl_url::v_encoder_length(
+        unsigned long int * const
+            r_output_count) const
+{
+    appl_unused(
+        r_output_count);
+
+    return
+        appl_raise_not_implemented();
+
+} // v_encoder_length()
+
+//
 //  Function: v_encoder()
 //
 //  Description:

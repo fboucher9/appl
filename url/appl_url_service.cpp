@@ -107,21 +107,15 @@ enum appl_status
         struct appl_url * const
             p_url)
 {
-    enum appl_status
-        e_status;
-
     struct appl_allocator * const
         p_allocator =
         appl_context_get_allocator(
             p_url->get_context());
 
-    e_status =
+    return
         appl_delete(
             p_allocator,
             p_url);
-
-    return
-        e_status;
 
 } // s_destroy()
 
@@ -157,19 +151,43 @@ enum appl_status
         unsigned long int * const
             r_input_count)
 {
-    enum appl_status
-        e_status;
-
-    e_status =
+    return
         p_url->v_decoder(
             p_input_min,
             p_input_max,
             r_input_count);
 
-    return
-        e_status;
-
 } // s_decoder()
+
+//
+//  Function: s_encoder_length()
+//
+//  Description:
+//      C++ thunk for appl_url_encoder_length() function.
+//
+//  Parameters:
+//      p_url
+//          Pointer to appl_url object.
+//      r_output_count
+//          Returned number of bytes for output URL.
+//
+//  Returns: Status code.
+//
+//  Comments:
+//      -   Dispatch call to appl_url virtual method.
+//
+enum appl_status
+    appl_url_service::s_encoder_length(
+        struct appl_url const * const
+            p_url,
+        unsigned long int * const
+            r_output_count)
+{
+    return
+        p_url->v_encoder_length(
+            r_output_count);
+
+} // s_encoder_length()
 
 //
 //  Function: s_encoder()
@@ -203,17 +221,11 @@ enum appl_status
         unsigned long int * const
             r_output_count)
 {
-    enum appl_status
-        e_status;
-
-    e_status =
+    return
         p_url->v_encoder(
             p_output_min,
             p_output_max,
             r_output_count);
-
-    return
-        e_status;
 
 } // s_encoder()
 
@@ -251,18 +263,12 @@ enum appl_status
         struct appl_url_component * * const
             r_handle)
 {
-    enum appl_status
-        e_status;
-
-    e_status =
+    return
         p_url->v_add_component(
             e_component_type,
             p_buf_min,
             p_buf_max,
             r_handle);
-
-    return
-        e_status;
 
 } // s_add_component()
 
@@ -278,16 +284,10 @@ enum appl_status
         struct appl_url_component * const
             p_handle)
 {
-    enum appl_status
-        e_status;
-
-    e_status =
+    return
         p_url->v_remove_component(
             e_component_type,
             p_handle);
-
-    return
-        e_status;
 
 } // s_remove_component()
 
@@ -307,18 +307,12 @@ enum appl_status
         struct appl_url_component * * const
             r_handle)
 {
-    enum appl_status
-        e_status;
-
-    e_status =
+    return
         p_url->v_get_component(
             e_component_type,
             r_buf_min,
             r_buf_max,
             r_handle);
-
-    return
-        e_status;
 
 } // s_get_component()
 
@@ -338,18 +332,12 @@ enum appl_status
         struct appl_url_component * * const
             r_handle)
 {
-    enum appl_status
-        e_status;
-
-    e_status =
+    return
         p_url->v_next_component(
             e_component_type,
             r_buf_min,
             r_buf_max,
             r_handle);
-
-    return
-        e_status;
 
 } // s_next_component()
 
@@ -363,15 +351,9 @@ enum appl_status
         unsigned long int * const
             r_flags)
 {
-    enum appl_status
-        e_status;
-
-    e_status =
+    return
         p_url->v_get_flags(
             r_flags);
-
-    return
-        e_status;
 
 } // s_get_flags()
 
@@ -385,15 +367,9 @@ enum appl_status
         unsigned long int const
             i_flags)
 {
-    enum appl_status
-        e_status;
-
-    e_status =
+    return
         p_url->v_set_flags(
             i_flags);
-
-    return
-        e_status;
 
 } // s_set_flags()
 

@@ -20,6 +20,18 @@ struct appl_buf;
 extern "C" {
 #endif /* #if defined __cplusplus */
 
+void
+    appl_percent_decoder_run(
+        struct appl_buf * const
+            p_input_iterator,
+        void (* p_write_callback)(
+            void * const
+                p_write_context,
+            unsigned char const
+                c_data),
+        void * const
+            p_write_context);
+
 unsigned long int
     appl_percent_decoder_length(
         struct appl_buf const * const
@@ -31,6 +43,20 @@ void
             p_input_iterator,
         struct appl_buf * const
             p_output_iterator);
+
+void
+    appl_percent_encoder_run(
+        struct appl_buf * const
+            p_input_iterator,
+        struct appl_buf const * const
+            p_filter,
+        void (* p_write_callback)(
+            void * const
+                p_write_context,
+            unsigned char const
+                c_data),
+        void * const
+            p_write_context);
 
 unsigned long int
     appl_percent_encoder_length(

@@ -573,7 +573,7 @@ appl_buf_max_value(
         p_buf_it;
 
     c_max =
-        255;
+        0u;
 
     p_buf_it =
         p_buf_min;
@@ -588,7 +588,7 @@ appl_buf_max_value(
                 p_buf_it);
 
         if (
-            c_max > c_data)
+            c_max < c_data)
         {
             c_max = c_data;
         }

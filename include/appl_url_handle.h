@@ -44,6 +44,13 @@ enum appl_status
             r_input_count);
 
 enum appl_status
+    appl_url_encoder_length(
+        struct appl_url const * const
+            p_url,
+        unsigned long int * const
+            r_output_count);
+
+enum appl_status
     appl_url_encoder(
         struct appl_url const * const
             p_url,

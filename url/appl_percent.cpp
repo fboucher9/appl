@@ -16,12 +16,87 @@
 
 #include <appl_unused.h>
 
+union write_context_ptr
+{
+    void *
+        p_write_context;
+
+    unsigned long int *
+        p_length;
+
+    struct appl_buf *
+        p_buf;
+
+};
+
+//
+//
+//
+static
+void
+    length_callback(
+        void * const
+            p_write_context,
+        unsigned char const
+            c_data)
+{
+    appl_unused(
+        c_data);
+
+    union write_context_ptr
+        o_write_context_ptr;
+
+    o_write_context_ptr.p_write_context =
+        p_write_context;
+
+    (*o_write_context_ptr.p_length) ++;
+
+} // length_callback()
+
+//
+//
+//
+static
+void
+convert_callback(
+    void * const
+        p_write_context,
+    unsigned char const
+        c_data)
+{
+    union write_context_ptr
+        o_write_context_ptr;
+
+    o_write_context_ptr.p_write_context =
+        p_write_context;
+
+    o_write_context_ptr.p_buf->o_min.p_uchar =
+        appl_buf_write(
+            o_write_context_ptr.p_buf->o_min.p_uchar,
+            o_write_context_ptr.p_buf->o_max.p_uchar,
+            c_data);
+
+} // convert_callback()
+
 //
 //
 //
 class appl_percent_service
 {
     public:
+
+        static
+        void
+            s_decoder_run(
+                struct appl_buf * const
+                    p_input_iterator,
+                void (* p_write_callback)(
+                    void * const
+                        p_write_context,
+                    unsigned char const
+                        c_data),
+                void * const
+                    p_write_context);
 
         static
         unsigned long int
@@ -36,6 +111,21 @@ class appl_percent_service
                     p_input_iterator,
                 struct appl_buf * const
                     p_output_iterator);
+
+        static
+        void
+            s_encoder_run(
+                struct appl_buf * const
+                    p_input_iterator,
+                struct appl_buf const * const
+                    p_filter,
+                void (* p_write_callback)(
+                    void * const
+                        p_write_context,
+                    unsigned char const
+                        c_data),
+                void * const
+                    p_write_context);
 
         static
         unsigned long int
@@ -80,72 +170,21 @@ class appl_percent_service
 //
 //
 //
-unsigned long int
-    appl_percent_service::s_decoder_length(
-        struct appl_buf const * const
-            p_input)
-{
-    unsigned long int
-        i_length;
-
-    i_length =
-        0ul;
-
-    unsigned char const *
-        p_input_iterator;
-
-    p_input_iterator =
-        p_input->o_min.pc_uchar;
-
-    while (
-        p_input_iterator
-        < p_input->o_max.pc_uchar)
-    {
-        unsigned char const
-            c_data =
-            *(
-                p_input_iterator);
-
-        if (
-            (
-                '%'
-                == c_data)
-            && (
-               (p_input_iterator + 2u)
-               < p_input->o_max.pc_uchar))
-        {
-            i_length ++;
-            p_input_iterator += 3u;
-        }
-        else
-        {
-            i_length ++;
-            p_input_iterator ++;
-        }
-    }
-
-    return
-        i_length;
-
-} // s_decoder_length()
-
-//
-//
-//
 void
-    appl_percent_service::s_decoder_convert(
+    appl_percent_service::s_decoder_run(
         struct appl_buf * const
             p_input_iterator,
-        struct appl_buf * const
-            p_output_iterator)
+        void (* p_write_callback)(
+            void * const
+                p_write_context,
+            unsigned char const
+                c_data),
+        void * const
+            p_write_context)
 {
     while (
-        (
-            p_input_iterator->o_min.pc_uchar
-            < p_input_iterator->o_max.pc_uchar)
-        && (
-            p_output_iterator->o_min.pc_uchar
-            < p_output_iterator->o_max.pc_uchar))
+        p_input_iterator->o_min.pc_uchar
+        < p_input_iterator->o_max.pc_uchar)
     {
         unsigned char const
             c_data =
@@ -180,31 +219,145 @@ void
                 appl_percent_service::s_ascii_to_hex(
                     c_nibble_low);
 
-            *(
-                p_output_iterator->o_min.p_uchar) =
+            (*p_write_callback)(
+                p_write_context,
                 appl_convert::to_uchar(
                     (
                         i_hexdigit_low & 0x0Fu)
                     + (
                         (
                             i_hexdigit_high & 0x0Fu)
-                        << 4u));
+                        << 4u)));
 
             p_input_iterator->o_min.pc_uchar += 3u;
         }
         else
         {
-            *(
-                p_output_iterator->o_min.p_uchar) =
-                c_data;
+            (*p_write_callback)(
+                p_write_context,
+                c_data);
 
             p_input_iterator->o_min.pc_uchar ++;
         }
-
-        p_output_iterator->o_min.pc_uchar ++;
     }
+}
+
+//
+//
+//
+unsigned long int
+    appl_percent_service::s_decoder_length(
+        struct appl_buf const * const
+            p_input)
+{
+    struct appl_buf
+        o_input_iterator;
+
+    o_input_iterator =
+        *(
+            p_input);
+
+    unsigned long int
+        i_length;
+
+    i_length =
+        0ul;
+
+    appl_percent_service::s_decoder_run(
+        &(
+            o_input_iterator),
+        &(
+            length_callback),
+        &(
+            i_length));
+
+    return
+        i_length;
+
+} // s_decoder_length()
+
+//
+//
+//
+void
+    appl_percent_service::s_decoder_convert(
+        struct appl_buf * const
+            p_input_iterator,
+        struct appl_buf * const
+            p_output_iterator)
+{
+    appl_percent_service::s_decoder_run(
+        p_input_iterator,
+        &(
+            convert_callback),
+        p_output_iterator);
 
 } // s_decoder_convert()
+
+//
+//
+//
+void
+    appl_percent_service::s_encoder_run(
+        struct appl_buf * const
+            p_input_iterator,
+        struct appl_buf const * const
+            p_filter,
+        void (* p_write_callback)(
+            void * const
+                p_write_context,
+            unsigned char const
+                c_data),
+        void * const
+            p_write_context)
+{
+    while (
+        p_input_iterator->o_min.pc_uchar
+        < p_input_iterator->o_max.pc_uchar)
+    {
+        unsigned char const
+            c_data =
+            *(
+                p_input_iterator->o_min.pc_uchar);
+
+        p_input_iterator->o_min.pc_uchar ++;
+
+        if (
+            appl_percent_service::s_test_filter(
+                p_filter,
+                c_data))
+        {
+            (*p_write_callback)(
+                p_write_context,
+                c_data);
+        }
+        else
+        {
+            unsigned char const
+                c_nibble_high =
+                appl_percent_service::s_hex_to_ascii(
+                    (c_data >> 4u) & 0x0Fu);
+
+            unsigned char const
+                c_nibble_low =
+                appl_percent_service::s_hex_to_ascii(
+                    (c_data >> 0u) & 0x0Fu);
+
+            (*p_write_callback)(
+                p_write_context,
+                '%');
+
+            (*p_write_callback)(
+                p_write_context,
+                c_nibble_high);
+
+            (*p_write_callback)(
+                p_write_context,
+                c_nibble_low);
+        }
+    }
+
+} // s_encoder_run()
 
 //
 //
@@ -216,39 +369,27 @@ unsigned long int
         struct appl_buf const * const
             p_filter)
 {
+    struct appl_buf
+        o_input_iterator;
+
+    o_input_iterator =
+        *(
+            p_input);
+
     unsigned long int
         i_length;
 
     i_length =
         0u;
 
-    unsigned char const *
-        p_input_iterator;
-
-    p_input_iterator =
-        p_input->o_min.pc_uchar;
-
-    while (
-        p_input_iterator
-        < p_input->o_max.pc_uchar)
-    {
-        unsigned char const
-            c_data =
-            *(
-                p_input_iterator);
-
-        if (
-            appl_percent_service::s_test_filter(
-                p_filter,
-                c_data))
-        {
-            i_length ++;
-        }
-        else
-        {
-            i_length += 3u;
-        }
-    }
+    appl_percent_service::s_encoder_run(
+        &(
+            o_input_iterator),
+        p_filter,
+        &(
+            length_callback),
+        &(
+            i_length));
 
     return
         i_length;
@@ -267,78 +408,14 @@ void
         struct appl_buf * const
             p_output_iterator)
 {
-    appl_unused(
+    appl_percent_service::s_encoder_run(
         p_input_iterator,
         p_filter,
+        &(
+            convert_callback),
         p_output_iterator);
 
 } // s_encoder_convert()
-
-//
-//
-//
-unsigned long int
-    appl_percent_decoder_length(
-        struct appl_buf const * const
-            p_input)
-{
-    return
-        appl_percent_service::s_decoder_length(
-            p_input);
-
-} // appl_percent_decoder_length()
-
-//
-//
-//
-void
-    appl_percent_decoder_convert(
-        struct appl_buf * const
-            p_input_iterator,
-        struct appl_buf * const
-            p_output_iterator)
-{
-    appl_percent_service::s_decoder_convert(
-        p_input_iterator,
-        p_output_iterator);
-
-} // appl_percent_decoder_convert()
-
-//
-//
-//
-unsigned long int
-    appl_percent_encoder_length(
-        struct appl_buf const * const
-            p_input,
-        struct appl_buf const * const
-            p_filter)
-{
-    return
-        appl_percent_service::s_encoder_length(
-            p_input,
-            p_filter);
-
-} // appl_percent_encoder_length()
-
-//
-//
-//
-void
-    appl_percent_encoder_convert(
-        struct appl_buf * const
-            p_input_iterator,
-        struct appl_buf const * const
-            p_filter,
-        struct appl_buf * const
-            p_output_iterator)
-{
-    appl_percent_service::s_encoder_convert(
-        p_input_iterator,
-        p_filter,
-        p_output_iterator);
-
-} // appl_percent_encoder_convert()
 
 //
 //
@@ -454,5 +531,141 @@ bool
         b_result;
 
 } // s_test_filter()
+
+//
+//
+//
+void
+    appl_percent_decoder_run(
+        struct appl_buf * const
+            p_input_iterator,
+        void (* p_write_callback)(
+            void * const
+                p_write_context,
+            unsigned char const
+                c_data),
+        void * const
+            p_write_context)
+{
+    appl_percent_service::s_decoder_run(
+        p_input_iterator,
+        p_write_callback,
+        p_write_context);
+
+} // appl_percent_decoder_run()
+
+//
+//
+//
+unsigned long int
+    appl_percent_decoder_length(
+        struct appl_buf const * const
+            p_input)
+{
+    return
+        appl_percent_service::s_decoder_length(
+            p_input);
+
+} // appl_percent_decoder_length()
+
+//
+//
+//
+void
+    appl_percent_decoder_convert(
+        struct appl_buf * const
+            p_input_iterator,
+        struct appl_buf * const
+            p_output_iterator)
+{
+    appl_percent_service::s_decoder_convert(
+        p_input_iterator,
+        p_output_iterator);
+
+} // appl_percent_decoder_convert()
+
+//
+//  Function: appl_percent_encoder_run()
+//
+//  Description:
+//      Scan the input buffer and do percent encoding on characters that do
+//      not match the filter.  Then feed each output character to callback
+//      function.
+//
+//  Parameters:
+//      p_input_iterator
+//          Pointer to input buffer, this buffer will be iterated, so min
+//          is advanced to end of input buffer.
+//      p_filter
+//          Pointer to filter buffer.  Characters that match the filter are
+//          stored directly into output buffer without any encoding, all
+//          other characters are percent encoded.
+//      p_write_callback
+//          Pointer to callback function.  Each output character of percent
+//          encoding process is fed to this function.
+//      p_write_context
+//          Context for callback function.
+//
+//  Returns: none.
+//
+//  Comments: none.
+//
+void
+    appl_percent_encoder_run(
+        struct appl_buf * const
+            p_input_iterator,
+        struct appl_buf const * const
+            p_filter,
+        void (* p_write_callback)(
+            void * const
+                p_write_context,
+            unsigned char const
+                c_data),
+        void * const
+            p_write_context)
+{
+    appl_percent_service::s_encoder_run(
+        p_input_iterator,
+        p_filter,
+        p_write_callback,
+        p_write_context);
+
+} // appl_percent_encoder_run()
+
+//
+//
+//
+unsigned long int
+    appl_percent_encoder_length(
+        struct appl_buf const * const
+            p_input,
+        struct appl_buf const * const
+            p_filter)
+{
+    return
+        appl_percent_service::s_encoder_length(
+            p_input,
+            p_filter);
+
+} // appl_percent_encoder_length()
+
+//
+//
+//
+void
+    appl_percent_encoder_convert(
+        struct appl_buf * const
+            p_input_iterator,
+        struct appl_buf const * const
+            p_filter,
+        struct appl_buf * const
+            p_output_iterator)
+{
+    appl_percent_service::s_encoder_convert(
+        p_input_iterator,
+        p_filter,
+        p_output_iterator);
+
+} // appl_percent_encoder_convert()
 
 /* end-of-file: appl_percent.cpp */

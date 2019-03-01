@@ -269,13 +269,43 @@ void
             'b'
         };
 
-        appl_buf_min_value(
-            s_values,
-            s_values + sizeof(s_values));
+        {
+            unsigned char
+                c_min_value;
 
-        appl_buf_max_value(
-            s_values,
-            s_values + sizeof(s_values));
+            c_min_value =
+                appl_buf_min_value(
+                    s_values,
+                    s_values + sizeof(s_values));
+
+            if (
+                'a' == c_min_value)
+            {
+            }
+            else
+            {
+                printf("!!! ERROR !!!\n");
+            }
+        }
+
+        {
+            unsigned char
+                c_max_value;
+
+            c_max_value =
+                appl_buf_max_value(
+                    s_values,
+                    s_values + sizeof(s_values));
+
+            if (
+                'e' == c_max_value)
+            {
+            }
+            else
+            {
+                printf("!!! ERROR !!!\n");
+            }
+        }
     }
 
     {
@@ -357,9 +387,13 @@ void
     {
         static unsigned char const s_list[] =
         {
-            'a',
             'c',
-            'e'
+            'd',
+            'e',
+            'f',
+            'g',
+            'm',
+            'l'
         };
 
         struct appl_buf
@@ -380,11 +414,11 @@ void
                     o_ref_list));
 
         if (
-            2
+            3ul
             == i_length)
         {
             unsigned char
-                a_filter[2u];
+                a_filter[3u];
 
             struct appl_buf
                 o_filter;
@@ -402,11 +436,13 @@ void
                     o_ref_list));
 
             printf(
-                "convert list -> %02hx %02hx\n",
+                "convert list -> \'%c\' %02hx %02hx\n",
                 static_cast<unsigned short int>(
                     a_filter[0u]),
                 static_cast<unsigned short int>(
-                    a_filter[1u]));
+                    a_filter[1u]),
+                static_cast<unsigned short int>(
+                    a_filter[2u]));
         }
     }
 

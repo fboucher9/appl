@@ -16,6 +16,9 @@ enum guard_appl_url_std_h
 /* Included. */
 #define INC_APPL_URL_STD_H
 
+/* Predefine */
+struct appl_url_component;
+
 //
 //
 //
@@ -83,6 +86,12 @@ class appl_url_std : public appl_url
 
         virtual
         enum appl_status
+            v_encoder_length(
+                unsigned long int * const
+                    r_output_count) const;
+
+        virtual
+        enum appl_status
             v_encoder(
                 unsigned char * const
                     p_output_min,
@@ -146,6 +155,30 @@ class appl_url_std : public appl_url
             v_set_flags(
                 unsigned long int const
                     i_flags);
+
+        void
+            f_encoder_add_component(
+                struct appl_url_component const * const
+                    p_component,
+                bool const
+                    b_apply_percent,
+                void (* const p_write_callback)(
+                    void * const
+                        p_write_context,
+                    unsigned char const
+                        c_data),
+                void * const
+                    p_write_context) const;
+
+        void
+            f_encoder_run(
+                void (* const p_write_callback)(
+                    void * const
+                        p_write_context,
+                    unsigned char const
+                        c_data),
+                void * const
+                    p_write_context) const;
 
 }; // class appl_url_std
 

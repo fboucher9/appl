@@ -48,6 +48,14 @@ class appl_url_service
 
         static
         enum appl_status
+            s_encoder_length(
+                struct appl_url const * const
+                    p_url,
+                unsigned long int * const
+                    r_output_count);
+
+        static
+        enum appl_status
             s_encoder(
                 struct appl_url const * const
                     p_url,
