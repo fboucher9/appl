@@ -2,6 +2,13 @@
 
 /*
 
+Installation:
+    gcc -I. -Iinclude \
+        url/appl_percent_main.c \
+        url/appl_percent.cpp \
+        buf/appl_buf.cpp \
+        buf/appl_buf_filter.cpp
+
 */
 
 #include <stdio.h>
@@ -189,3 +196,4 @@ int
         0;
 
 }
+

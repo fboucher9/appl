@@ -156,6 +156,23 @@ class appl_url_std : public appl_url
                 unsigned long int const
                     i_flags);
 
+        enum appl_status
+            f_decoder_pass_1(
+                struct appl_buf * const
+                    p_input_iterator);
+
+        void
+            f_decoder_pass_2(void);
+
+        void
+            f_detect_absolute_prefix(void);
+
+        void
+            f_detect_authority_prefix(void);
+
+        void
+            f_detect_authority_fields(void);
+
         void
             f_encoder_add_component(
                 struct appl_url_component const * const

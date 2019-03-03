@@ -343,13 +343,9 @@ s_find_component(
 //
 //
 enum appl_status
-    appl_url_std::v_decoder(
-        unsigned char const * const
-            p_input_min,
-        unsigned char const * const
-            p_input_max,
-        unsigned long int * const
-            r_input_count)
+    appl_url_std::f_decoder_pass_1(
+        struct appl_buf * const
+            p_input_iterator)
 {
     static unsigned char const a_scheme_filter[] =
     {
@@ -379,15 +375,6 @@ enum appl_status
 
     unsigned char
         c_sep_after;
-
-    struct appl_buf
-        o_input_iterator;
-
-    o_input_iterator.o_min.pc_uchar =
-        p_input_min;
-
-    o_input_iterator.o_max.pc_uchar =
-        p_input_max;
 
     c_sep_before =
         '\000';
@@ -471,8 +458,7 @@ enum appl_status
 
         e_status =
             s_find_component(
-                &(
-                    o_input_iterator),
+                p_input_iterator,
                 &(
                     o_filter),
                 &(
@@ -592,8 +578,17 @@ enum appl_status
         }
     }
 
-    // Post processing...
+    return
+        e_status;
 
+} // f_decoder_pass_1()
+
+//
+//
+//
+void
+    appl_url_std::f_detect_absolute_prefix(void)
+{
     struct appl_url_component *
         p_component;
 
@@ -604,49 +599,51 @@ enum appl_status
         p_buf_max;
 
     if (
-        appl_status_ok
-        == e_status)
-    {
-        // Detect leading empty paths
-        // Clear all flags
-        m_flags =
-            0;
-
-        if (
-            (
-                appl_status_ok
-                == v_get_component(
-                    appl_url_component_type_path,
-                    &(
-                        p_buf_min),
-                    &(
-                        p_buf_max),
-                    &(
-                        p_component)))
-            && (
-                p_buf_min
-                == p_buf_max))
-        {
-            if (
-                appl_status_ok
-                == v_remove_component(
-                    appl_url_component_type_path,
-                    p_component))
-            {
-                m_flags |=
-                    APPL_URL_FLAG_ABSOLUTE;
-            }
-        }
-    }
-
-    if (
         (
             appl_status_ok
-            == e_status)
+            == v_get_component(
+                appl_url_component_type_path,
+                &(
+                    p_buf_min),
+                &(
+                    p_buf_max),
+                &(
+                    p_component)))
         && (
-            APPL_URL_FLAG_ABSOLUTE
-            & m_flags))
+            p_buf_min
+            == p_buf_max))
     {
+        if (
+            appl_status_ok
+            == v_remove_component(
+                appl_url_component_type_path,
+                p_component))
+        {
+            m_flags |=
+                APPL_URL_FLAG_ABSOLUTE;
+        }
+    }
+}
+
+//
+//
+//
+void
+    appl_url_std::f_detect_authority_prefix(void)
+{
+    if (
+        APPL_URL_FLAG_ABSOLUTE
+        & m_flags)
+    {
+        struct appl_url_component *
+            p_component;
+
+        unsigned char const *
+            p_buf_min;
+
+        unsigned char const *
+            p_buf_max;
+
         if (
             (
                 appl_status_ok
@@ -674,21 +671,276 @@ enum appl_status
         }
     }
 
+} // f_detect_authority_prefix()
+
+//
+//
+//
+void
+    appl_url_std::f_detect_authority_fields(void)
+{
     if (
-        (
-            appl_status_ok
-            == e_status)
-        && (
-            APPL_URL_FLAG_AUTHORITY
-            & m_flags))
+        APPL_URL_FLAG_AUTHORITY
+        & m_flags)
     {
+        struct appl_url_component *
+            p_component;
+
+        unsigned char const *
+            p_buf_min;
+
+        unsigned char const *
+            p_buf_max;
+
         // Decode of authority, to split into userinfo, host and port
+
+        // get first path element
+        if (
+            appl_status_ok
+            == v_get_component(
+                appl_url_component_type_path,
+                &(
+                    p_buf_min),
+                &(
+                    p_buf_max),
+                &(
+                    p_component)))
+        {
+            // parse of element
+            // look for @ symbol
+            unsigned char const *
+                p_buf_it;
+
+            p_buf_it =
+                p_buf_min;
+
+            while (
+                (
+                    p_buf_it
+                    < p_buf_max)
+                && (
+                    '@'
+                    != *(p_buf_it)))
+            {
+                p_buf_it ++;
+            }
+
+            unsigned char const *
+                p_hostinfo_min;
+
+            unsigned char const *
+                p_hostinfo_max;
+
+            if (
+                (
+                    p_buf_it
+                    < p_buf_max)
+                && (
+                    '@'
+                    == *(p_buf_it)))
+            {
+                // Decode of userinfo
+                unsigned char const *
+                    p_userinfo_it;
+
+                unsigned char const *
+                    p_section_min;
+
+                unsigned char const *
+                    p_section_max;
+
+                p_userinfo_it =
+                    p_buf_min;
+
+                p_section_min =
+                    p_buf_min;
+
+                p_section_max =
+                    p_buf_min;
+
+                while (
+                    p_userinfo_it
+                    < p_buf_it)
+                {
+                    if (
+                        ':'
+                        == *p_userinfo_it)
+                    {
+                        struct appl_url_component *
+                            p_userinfo_component;
+
+                        v_add_component(
+                            appl_url_component_type_userinfo,
+                            p_section_min,
+                            p_section_max,
+                            &(
+                                p_userinfo_component));
+
+                        p_userinfo_it ++;
+
+                        p_section_min =
+                            p_userinfo_it;
+
+                        p_section_max =
+                            p_userinfo_it;
+                    }
+                    else
+                    {
+                        p_userinfo_it ++;
+
+                        p_section_max =
+                            p_userinfo_it;
+                    }
+                }
+
+                {
+                    struct appl_url_component *
+                        p_userinfo_component;
+
+                    v_add_component(
+                        appl_url_component_type_userinfo,
+                        p_section_min,
+                        p_section_max,
+                        &(
+                            p_userinfo_component));
+                }
+
+                // Skip '@' symbol
+                p_buf_it ++;
+
+                // Find hostinfo
+                p_hostinfo_min =
+                    p_buf_it;
+
+                p_hostinfo_max =
+                    p_buf_max;
+            }
+            else
+            {
+                // Find hostinfo
+                p_hostinfo_min =
+                    p_buf_min;
+
+                p_hostinfo_max =
+                    p_buf_max;
+            }
+
+            unsigned char const *
+                p_hostinfo_it;
+
+            p_hostinfo_it =
+                p_hostinfo_min;
+
+            while (
+                (
+                    p_hostinfo_it
+                    < p_hostinfo_max)
+                && (
+                    ':'
+                    != *p_hostinfo_it))
+            {
+                p_hostinfo_it ++;
+            }
+
+            // Add host info
+            {
+                struct appl_url_component *
+                    p_host_component;
+
+                v_add_component(
+                    appl_url_component_type_host,
+                    p_hostinfo_min,
+                    p_hostinfo_it,
+                    &(
+                        p_host_component));
+            }
+
+            // Add port info
+            if (
+                (
+                    p_hostinfo_it
+                    < p_hostinfo_max)
+                && (
+                    ':'
+                    == *p_hostinfo_it))
+            {
+                p_hostinfo_it ++;
+
+                struct appl_url_component *
+                    p_port_component;
+
+                v_add_component(
+                    appl_url_component_type_port,
+                    p_hostinfo_it,
+                    p_hostinfo_max,
+                    &(
+                        p_port_component));
+            }
+
+            // remove it
+            v_remove_component(
+                appl_url_component_type_path,
+                p_component);
+        }
     }
+
+} // f_detect_authority_fields()
+
+//
+//
+//
+void
+    appl_url_std::f_decoder_pass_2(void)
+{
+    // Post processing...
+    // Detect leading empty paths
+    // Clear all flags
+    m_flags =
+        0;
+
+    f_detect_absolute_prefix();
+
+    f_detect_authority_prefix();
+
+    f_detect_authority_fields();
+
+} // f_decoder_pass_2()
+
+//
+//
+//
+enum appl_status
+    appl_url_std::v_decoder(
+        unsigned char const * const
+            p_input_min,
+        unsigned char const * const
+            p_input_max,
+        unsigned long int * const
+            r_input_count)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_buf
+        o_input_iterator;
+
+    o_input_iterator.o_min.pc_uchar =
+        p_input_min;
+
+    o_input_iterator.o_max.pc_uchar =
+        p_input_max;
+
+    e_status =
+        f_decoder_pass_1(
+            &(
+                o_input_iterator));
 
     if (
         appl_status_ok
         == e_status)
     {
+        f_decoder_pass_2();
+
         *(
             r_input_count) =
             appl_buf_len(
@@ -801,10 +1053,8 @@ void
                 p_write_context,
                 '/');
         }
-
-#if 0
         // Absolute
-        if (
+        else if (
             APPL_URL_FLAG_ABSOLUTE
             & m_flags)
         {
@@ -812,7 +1062,6 @@ void
                 p_write_context,
                 '/');
         }
-#endif
 
         struct appl_list const * const
             p_component_list =
@@ -907,10 +1156,21 @@ enum appl_status
     enum appl_status
         e_status;
 
+    unsigned long int
+        i_length;
+
+    i_length =
+        0ul;
+
     f_encoder_run(
         &(
             length_callback),
-        r_output_count);
+        &(
+            i_length));
+
+    *(
+        r_output_count) =
+        i_length;
 
     e_status =
         appl_status_ok;
