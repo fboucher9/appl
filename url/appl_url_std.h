@@ -157,12 +157,24 @@ class appl_url_std : public appl_url
                     i_flags);
 
         enum appl_status
+            f_set_component_buf(
+                struct appl_url_component * const
+                    p_component,
+                unsigned char const * const
+                    p_buf_min,
+                unsigned char const * const
+                    p_buf_max);
+
+        enum appl_status
             f_decoder_pass_1(
                 struct appl_buf * const
                     p_input_iterator);
 
         void
             f_decoder_pass_2(void);
+
+        void
+            f_decoder_pass_3(void);
 
         void
             f_detect_absolute_prefix(void);
@@ -172,6 +184,16 @@ class appl_url_std : public appl_url
 
         void
             f_detect_authority_fields(void);
+
+        void
+            f_percent_decode_component(
+                struct appl_url_component * const
+                    p_component);
+
+        void
+            f_percent_decode_component_list(
+                enum appl_url_component_type const
+                    e_component_type);
 
         void
             f_encoder_add_component(

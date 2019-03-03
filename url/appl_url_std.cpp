@@ -14,9 +14,9 @@
 
 #include <appl_list.h>
 
-#include <url/appl_url_std.h>
-
 #include <appl_url_types.h>
+
+#include <url/appl_url_std.h>
 
 #include <appl_context_handle.h>
 
@@ -29,6 +29,8 @@
 #include <appl_convert.h>
 
 #include <appl_unused.h>
+
+#include <url/appl_percent.h>
 
 union write_context_ptr
 {
@@ -338,6 +340,104 @@ s_find_component(
         e_status;
 
 } // s_find_component()
+
+//
+//
+//
+enum appl_status
+    appl_url_std::f_set_component_buf(
+        struct appl_url_component * const
+            p_component,
+        unsigned char const * const
+            p_buf_min,
+        unsigned char const * const
+            p_buf_max)
+{
+    enum appl_status
+        e_status;
+
+    appl_size_t const
+        i_old_len =
+        appl_buf_len(
+            p_component->p_buf_min,
+            p_component->p_buf_max);
+
+    appl_size_t const
+        i_new_len =
+        appl_buf_len(
+            p_buf_min,
+            p_buf_max);
+
+    if (
+        i_new_len)
+    {
+        union appl_buf_ptr
+            o_placement;
+
+        e_status =
+            appl_heap_alloc(
+                m_context,
+                i_new_len,
+                &(
+                    o_placement.p_void));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            appl_buf_copy(
+                o_placement.p_uchar,
+                o_placement.p_uchar + i_new_len,
+                p_buf_min,
+                p_buf_max);
+
+            if (
+                i_old_len)
+            {
+                appl_heap_free(
+                    m_context,
+                    i_old_len,
+                    p_component->p_buf_min);
+
+                p_component->p_buf_min =
+                    0;
+
+                p_component->p_buf_max =
+                    0;
+            }
+
+            p_component->p_buf_min =
+                o_placement.p_uchar;
+
+            p_component->p_buf_max =
+                o_placement.p_uchar + i_new_len;
+        }
+    }
+    else
+    {
+        if (
+            i_old_len)
+        {
+            appl_heap_free(
+                m_context,
+                i_old_len,
+                p_component->p_buf_min);
+
+            p_component->p_buf_min =
+                0;
+
+            p_component->p_buf_max =
+                0;
+        }
+
+        e_status =
+            appl_status_ok;
+    }
+
+    return
+        e_status;
+
+} // f_set_component_buf()
 
 //
 //
@@ -909,6 +1009,137 @@ void
 //
 //
 //
+void
+    appl_url_std::f_percent_decode_component(
+        struct appl_url_component * const
+            p_component)
+{
+    struct appl_buf
+        o_input_buf;
+
+    o_input_buf.o_min.p_uchar =
+        p_component->p_buf_min;
+
+    o_input_buf.o_max.p_uchar =
+        p_component->p_buf_max;
+
+    unsigned long int
+        i_length;
+
+    i_length =
+        appl_percent_decoder_length(
+            &(
+                o_input_buf));
+
+    if (
+        i_length)
+    {
+        union appl_buf_ptr
+            o_placement;
+
+        if (
+            appl_status_ok
+            == appl_heap_alloc(
+                m_context,
+                i_length,
+                &(
+                    o_placement.p_void)))
+        {
+            struct appl_buf
+                o_output_buf;
+
+            o_output_buf.o_min.p_uchar =
+                o_placement.p_uchar;
+
+            o_output_buf.o_max.p_uchar =
+                o_placement.p_uchar
+                + i_length;
+
+            appl_percent_decoder_convert(
+                &(
+                    o_input_buf),
+                &(
+                    o_output_buf));
+
+            // Replace component buffer
+            f_set_component_buf(
+                p_component,
+                o_placement.pc_uchar,
+                o_output_buf.o_min.pc_uchar);
+
+            appl_heap_free(
+                m_context,
+                i_length,
+                o_placement.p_void);
+        }
+    }
+
+} // f_percent_decode_component()
+
+//
+//
+//
+void
+    appl_url_std::f_percent_decode_component_list(
+        enum appl_url_component_type const
+            e_component_type)
+{
+    struct appl_list *
+        p_component_list;
+
+    p_component_list =
+        m_components + e_component_type;
+
+    union appl_url_component_ptr
+        o_url_component_ptr;
+
+    o_url_component_ptr.p_list =
+        p_component_list->o_next.p_node;
+
+    while (
+        o_url_component_ptr.p_list
+        != p_component_list)
+    {
+        f_percent_decode_component(
+            o_url_component_ptr.p_component);
+
+        o_url_component_ptr.p_list =
+            o_url_component_ptr.p_list->o_next.p_node;
+    }
+
+} // f_percent_decode_component_list()
+
+//
+//
+//
+void
+    appl_url_std::f_decoder_pass_3(void)
+{
+    // Do percent decode of each segment
+    f_percent_decode_component_list(
+        appl_url_component_type_scheme);
+
+    f_percent_decode_component_list(
+        appl_url_component_type_userinfo);
+
+    f_percent_decode_component_list(
+        appl_url_component_type_host);
+
+    f_percent_decode_component_list(
+        appl_url_component_type_port);
+
+    f_percent_decode_component_list(
+        appl_url_component_type_path);
+
+    // Do not decode query
+
+    // Do not decode fragment
+
+} // f_decoder_pass_3()
+
+//
+//
+//
 enum appl_status
     appl_url_std::v_decoder(
         unsigned char const * const
@@ -940,6 +1171,8 @@ enum appl_status
         == e_status)
     {
         f_decoder_pass_2();
+
+        f_decoder_pass_3();
 
         *(
             r_input_count) =
@@ -1272,43 +1505,11 @@ enum appl_status
             p_component->p_buf_max =
                 0;
 
-            appl_size_t const
-                i_buf_len =
-                appl_buf_len(
+            e_status =
+                f_set_component_buf(
+                    p_component,
                     p_buf_min,
                     p_buf_max);
-
-            if (
-                i_buf_len)
-            {
-                // copy buffer
-                union appl_buf_ptr
-                    o_buf_ptr;
-
-                e_status =
-                    appl_heap_alloc(
-                        p_context,
-                        i_buf_len,
-                        &(
-                            o_buf_ptr.p_void));
-
-                if (
-                    appl_status_ok
-                    == e_status)
-                {
-                    p_component->p_buf_min =
-                        o_buf_ptr.p_uchar;
-
-                    p_component->p_buf_max =
-                        o_buf_ptr.p_uchar + i_buf_len;
-
-                    appl_buf_copy(
-                        p_component->p_buf_min,
-                        p_component->p_buf_max,
-                        p_buf_min,
-                        p_buf_max);
-                }
-            }
 
             if (
                 appl_status_ok

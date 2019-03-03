@@ -11,6 +11,8 @@ Description:
 
 #include <appl_status.h>
 
+#include <appl_url_types.h>
+
 #include <url/appl_url_service.h>
 
 #include <appl_types.h>

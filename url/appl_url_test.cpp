@@ -623,7 +623,7 @@ void
 {
     appl_url_test_service::s_decoder0(
         p_context,
-        "http://felix:boucher@google.ca:port/maps?q#f1");
+        "ht%21tp://fel%21ix:bou%21cher@goo%21gle.ca:po%21rt/ma%21ps?q%21uery#f%211");
 
     appl_url_test_service::s_decoder0(
         p_context,
