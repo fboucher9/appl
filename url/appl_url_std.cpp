@@ -1186,6 +1186,43 @@ enum appl_status
 
 } // v_decoder()
 
+/* A-Za-z0-9-._~ */
+#if 0
+static unsigned char const s_filter_unreserved[] =
+{
+    0x2du,
+    0xfbu,
+    0x1fu,
+    0xf0u,
+    0xffu,
+    0xffu,
+    0x3fu,
+    0xf4u,
+    0xffu,
+    0xffu,
+    0x3fu,
+    0x02u
+};
+#endif
+
+/* unreserved !$& squot ()*+,;= */
+static unsigned char const s_filter_unreserved2[] =
+{
+    0x21u,
+    0xe9u,
+    0xbfu,
+    0xffu,
+    0x15u,
+    0xffu,
+    0xffu,
+    0xffu,
+    0x43u,
+    0xffu,
+    0xffu,
+    0xffu,
+    0x23u
+};
+
 //
 //
 //
@@ -1206,26 +1243,55 @@ void
     unsigned char const *
         p_buf_it;
 
-    appl_unused(
-        b_apply_percent);
-
-    p_buf_it =
-        p_component->p_buf_min;
-
-    while (
-        p_buf_it
-        < p_component->p_buf_max)
+    if (
+        b_apply_percent)
     {
-        unsigned char const
-            c_data =
-            *(
-                p_buf_it);
+        struct appl_buf
+            o_input;
 
-        (*p_write_callback)(
-            p_write_context,
-            c_data);
+        o_input.o_min.pc_uchar =
+            p_component->p_buf_min;
 
-        p_buf_it ++;
+        o_input.o_max.pc_uchar =
+            p_component->p_buf_max;
+
+        struct appl_buf
+            o_filter;
+
+        o_filter.o_min.pc_uchar =
+            s_filter_unreserved2;
+
+        o_filter.o_max.pc_uchar =
+            s_filter_unreserved2 + sizeof(s_filter_unreserved2);
+
+        appl_percent_encoder_run(
+            &(
+                o_input),
+            &(
+                o_filter),
+            p_write_callback,
+            p_write_context);
+    }
+    else
+    {
+        p_buf_it =
+            p_component->p_buf_min;
+
+        while (
+            p_buf_it
+            < p_component->p_buf_max)
+        {
+            unsigned char const
+                c_data =
+                *(
+                    p_buf_it);
+
+            (*p_write_callback)(
+                p_write_context,
+                c_data);
+
+            p_buf_it ++;
+        }
     }
 
 } // f_encoder_add_component()
@@ -1261,7 +1327,7 @@ void
         {
             f_encoder_add_component(
                 o_url_component_ptr.p_component,
-                false,
+                true,
                 p_write_callback,
                 p_write_context);
 
@@ -1285,6 +1351,110 @@ void
             (*p_write_callback)(
                 p_write_context,
                 '/');
+
+            struct appl_list const * const
+                p_userinfo_list =
+                m_components + appl_url_component_type_userinfo;
+
+            o_url_component_ptr.p_list =
+                p_userinfo_list->o_next.p_node;
+
+            if (
+                o_url_component_ptr.p_list
+                != p_userinfo_list)
+            {
+                while (
+                    o_url_component_ptr.p_list
+                    != p_userinfo_list)
+                {
+                    f_encoder_add_component(
+                        o_url_component_ptr.p_component,
+                        true,
+                        p_write_callback,
+                        p_write_context);
+
+                    o_url_component_ptr.p_list =
+                        o_url_component_ptr.p_list->o_next.p_node;
+
+                    if (
+                        o_url_component_ptr.p_list
+                        != p_userinfo_list)
+                    {
+                        (*p_write_callback)(
+                            p_write_context,
+                            ':');
+                    }
+                }
+
+                (*p_write_callback)(
+                    p_write_context,
+                    '@');
+            }
+
+            // Host
+            {
+                struct appl_list const * const
+                    p_component_list =
+                    m_components + appl_url_component_type_host;
+
+                o_url_component_ptr.p_list =
+                    p_component_list->o_next.p_node;
+
+                if (
+                    o_url_component_ptr.p_list
+                    != p_component_list)
+                {
+                    f_encoder_add_component(
+                        o_url_component_ptr.p_component,
+                        true,
+                        p_write_callback,
+                        p_write_context);
+                }
+            }
+
+            // Port
+            {
+                struct appl_list const * const
+                    p_component_list =
+                    m_components + appl_url_component_type_port;
+
+                o_url_component_ptr.p_list =
+                    p_component_list->o_next.p_node;
+
+                if (
+                    o_url_component_ptr.p_list
+                    != p_component_list)
+                {
+                    (*p_write_callback)(
+                        p_write_context,
+                        ':');
+
+                    f_encoder_add_component(
+                        o_url_component_ptr.p_component,
+                        true,
+                        p_write_callback,
+                        p_write_context);
+                }
+            }
+
+            // Detect if path is not empty
+            {
+                struct appl_list const * const
+                    p_component_list =
+                    m_components + appl_url_component_type_path;
+
+                o_url_component_ptr.p_list =
+                    p_component_list->o_next.p_node;
+
+                if (
+                    o_url_component_ptr.p_list
+                    != p_component_list)
+                {
+                    (*p_write_callback)(
+                        p_write_context,
+                        '/');
+                }
+            }
         }
         // Absolute
         else if (
@@ -1309,7 +1479,7 @@ void
         {
             f_encoder_add_component(
                 o_url_component_ptr.p_component,
-                false,
+                true,
                 p_write_callback,
                 p_write_context);
 

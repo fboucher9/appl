@@ -5,8 +5,8 @@
 Installation:
     gcc -I. -Iinclude
         buf/appl_buf_filter_main.c
-        buf/appl_buf_filter.c
-        buf/appl_buf.c
+        buf/appl_buf_filter.cpp
+        buf/appl_buf.cpp
 
 Usage:
     ./a.out class a-c1-3
