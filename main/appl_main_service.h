@@ -40,7 +40,9 @@ class appl_main_service
                 struct appl_context * const
                     p_context,
                 struct appl_options const * const
-                    p_options));
+                    p_options,
+                unsigned long int const
+                    i_shift));
 
     protected:
 

@@ -17,20 +17,44 @@ Installation:
 
 #include <stdlib.h>
 
+#include <appl.h>
+
 #include <url/appl_percent.h>
 
-#include <appl_buf.h>
-
 static
-void
+enum appl_status
     dispatch_enc(
-        int const
-            argc,
-        char const * const * const
-            argv)
+        struct appl_context * const
+            p_context,
+        struct appl_options const * const
+            p_options,
+        unsigned long int const
+            i_shift)
 {
+    enum appl_status
+        e_status;
+
+    unsigned char const *
+        p_arg_min;
+
+    unsigned char const *
+        p_arg_max;
+
+    (void)(
+        p_context);
+
+    e_status =
+        appl_options_get(
+            p_options,
+            i_shift + 1ul,
+            &(
+                p_arg_min),
+            &(
+                p_arg_max));
+
     if (
-        argc > 1)
+        appl_status_ok
+        == e_status)
     {
         static unsigned char s_filter[] =
         {
@@ -60,11 +84,11 @@ void
         o_filter.o_max.pc_uchar =
             s_filter + sizeof(s_filter);
 
-        o_input.o_min.pc_char =
-            argv[1u];
+        o_input.o_min.pc_uchar =
+            p_arg_min;
 
-        o_input.o_max.pc_char =
-            argv[1u] + strlen(argv[1u]);
+        o_input.o_max.pc_uchar =
+            p_arg_max;
 
         i_length =
             appl_percent_encoder_length(
@@ -97,19 +121,52 @@ void
                     s_output));
 
         }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
     }
+
+    return
+        e_status;
+
 }
 
 static
-void
+enum appl_status
     dispatch_dec(
-        int const
-            argc,
-        char const * const * const
-            argv)
+        struct appl_context * const
+            p_context,
+        struct appl_options const * const
+            p_options,
+        unsigned long int const
+            i_shift)
 {
+    enum appl_status
+        e_status;
+
+    unsigned char const *
+        p_arg_min;
+
+    unsigned char const *
+        p_arg_max;
+
+    (void)(
+        p_context);
+
+    e_status =
+        appl_options_get(
+            p_options,
+            i_shift + 1ul,
+            &(
+                p_arg_min),
+            &(
+                p_arg_max));
+
     if (
-        argc > 1)
+        appl_status_ok
+        == e_status)
     {
         struct appl_buf
             o_input;
@@ -123,10 +180,10 @@ void
         static unsigned char s_output[4096u];
 
         o_input.o_min.pc_uchar =
-            argv[1u];
+            p_arg_min;
 
         o_input.o_max.pc_uchar =
-            argv[1u] + strlen(argv[1u]);
+            p_arg_max;
 
         i_length =
             appl_percent_decoder_length(
@@ -157,43 +214,109 @@ void
                 (char const *)(
                     s_output));
         }
-    }
-}
-
-int
-    main(
-        int const
-            argc,
-        char const * const * const
-            argv)
-{
-    if (
-        argc > 1)
-    {
-        if (
-            0
-            == strcmp(
-                argv[1u],
-                "enc"))
+        else
         {
-            dispatch_enc(
-                argc - 1,
-                argv + 1);
-        }
-        else if (
-            0
-            == strcmp(
-                argv[1u],
-                "dec"))
-        {
-            dispatch_dec(
-                argc - 1,
-                argv + 1);
+            e_status =
+                appl_status_fail;
         }
     }
 
     return
-        0;
+        e_status;
+
+}
+
+enum appl_status
+    appl_percent_main(
+        struct appl_context * const
+            p_context,
+        struct appl_options const * const
+            p_options,
+        unsigned long int const
+            i_shift);
+
+enum appl_status
+    appl_percent_main(
+        struct appl_context * const
+            p_context,
+        struct appl_options const * const
+            p_options,
+        unsigned long int const
+            i_shift)
+{
+    enum appl_status
+        e_status;
+
+    unsigned char const *
+        p_arg_min;
+
+    unsigned char const *
+        p_arg_max;
+
+    e_status =
+        appl_options_get(
+            p_options,
+            i_shift + 1ul,
+            &(
+                p_arg_min),
+            &(
+                p_arg_max));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        static unsigned char const s_ref_enc[] =
+        {
+            'e',
+            'n',
+            'c'
+        };
+
+        static unsigned char const s_ref_dec[] =
+        {
+            'd',
+            'e',
+            'c'
+        };
+
+        if (
+            0
+            == appl_buf_compare(
+                p_arg_min,
+                p_arg_max,
+                s_ref_enc,
+                s_ref_enc + sizeof(s_ref_enc)))
+        {
+            e_status =
+                dispatch_enc(
+                    p_context,
+                    p_options,
+                    i_shift + 1ul);
+        }
+        else if (
+            0
+            == appl_buf_compare(
+                p_arg_min,
+                p_arg_max,
+                s_ref_dec,
+                s_ref_dec + sizeof(s_ref_dec)))
+        {
+            e_status =
+                dispatch_dec(
+                    p_context,
+                    p_options,
+                    i_shift + 1ul);
+        }
+        else
+        {
+            e_status =
+                appl_status_invalid_param;
+        }
+    }
+
+    return
+        e_status;
 
 }
 

@@ -55,6 +55,7 @@ test_appl-deps = \
     socket/appl_netdevice_test.cpp \
     buf/appl_buf_test.cpp \
     url/appl_url_test.cpp \
+    url/appl_percent_main.c \
     $(appl_base-deps)
 
 # List of libraries required to link test application

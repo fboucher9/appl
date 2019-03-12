@@ -56,4 +56,4 @@ tags
 
 # Project specific
 *.bin
-test_appl
+test_*

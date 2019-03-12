@@ -3189,19 +3189,100 @@ enum appl_status
 
 }
 
+enum appl_status
+    appl_percent_main(
+        struct appl_context * const
+            p_context,
+        struct appl_options const * const
+            p_options,
+        unsigned long int const
+            i_shift);
+
 static
 enum appl_status
 appl_test_main(
     struct appl_context * const
         p_context,
     struct appl_options const * const
-        p_options)
+        p_options,
+    unsigned long int const
+        i_shift)
 {
     enum appl_status
         e_status;
 
     unsigned long int
         i_count;
+
+    /* Dispatch using argv[0] */
+    {
+        unsigned char const *
+            p_cmd_min;
+
+        unsigned char const *
+            p_cmd_max;
+
+        if (
+            appl_status_ok
+            == appl_options_get(
+                p_options,
+                i_shift + 0ul,
+                &(
+                    p_cmd_min),
+                &(
+                    p_cmd_max)))
+        {
+            static unsigned char const s_ref_percent[] =
+            {
+                't',
+                'e',
+                's',
+                't',
+                '_',
+                'p',
+                'e',
+                'r',
+                'c',
+                'e',
+                'n',
+                't'
+            };
+
+            unsigned char const *
+                p_cmd_it;
+
+            p_cmd_it =
+                p_cmd_min;
+
+            while (
+                p_cmd_it
+                < p_cmd_max)
+            {
+                if (
+                    '/'
+                    == *(p_cmd_it ++))
+                {
+                    p_cmd_min =
+                        p_cmd_it;
+                }
+            }
+
+            if (
+                0
+                == appl_buf_compare(
+                    p_cmd_min,
+                    p_cmd_max,
+                    s_ref_percent,
+                    s_ref_percent + sizeof(s_ref_percent)))
+            {
+                return
+                    appl_percent_main(
+                        p_context,
+                        p_options,
+                        i_shift);
+            }
+        }
+    }
 
     /* Print the argument list */
     appl_options_test_1(
