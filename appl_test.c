@@ -3248,6 +3248,31 @@ appl_test_main(
                 't'
             };
 
+            static unsigned char const s_ref_file[] =
+            {
+                't',
+                'e',
+                's',
+                't',
+                '_',
+                'f',
+                'i',
+                'l',
+                'e'
+            };
+
+            static unsigned char const s_ref_crc[] =
+            {
+                't',
+                'e',
+                's',
+                't',
+                '_',
+                'c',
+                'r',
+                'c'
+            };
+
             unsigned char const *
                 p_cmd_it;
 
@@ -3277,6 +3302,34 @@ appl_test_main(
             {
                 return
                     appl_percent_main(
+                        p_context,
+                        p_options,
+                        i_shift);
+            }
+            else if (
+                0
+                == appl_buf_compare(
+                    p_cmd_min,
+                    p_cmd_max,
+                    s_ref_file,
+                    s_ref_file + sizeof(s_ref_file)))
+            {
+                return
+                    appl_file_main(
+                        p_context,
+                        p_options,
+                        i_shift);
+            }
+            else if (
+                0
+                == appl_buf_compare(
+                    p_cmd_min,
+                    p_cmd_max,
+                    s_ref_crc,
+                    s_ref_crc + sizeof(s_ref_crc)))
+            {
+                return
+                    appl_crc_main(
                         p_context,
                         p_options,
                         i_shift);

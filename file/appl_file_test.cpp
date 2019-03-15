@@ -12,6 +12,131 @@
 
 #include <file/appl_file_node.h>
 
+#include <appl_unused.h>
+
+//
+//
+//
+enum appl_status
+    appl_file_main(
+        struct appl_context * const
+            p_context,
+        struct appl_options const * const
+            p_options,
+        unsigned long int const
+            i_shift)
+{
+    enum appl_status
+        e_status;
+
+    appl_unused(
+        p_options,
+        i_shift);
+
+    // Do cat of stdin towards stdout
+
+    // Open stdin
+    struct appl_file_descriptor
+        o_file_descriptor;
+
+    o_file_descriptor.e_type =
+        appl_file_type_stdin;
+
+    struct appl_file *
+        p_file_stdin;
+
+    e_status =
+        appl_file_create(
+            p_context,
+            &(
+                o_file_descriptor),
+            &(
+                p_file_stdin));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        // Open stdout
+        o_file_descriptor.e_type =
+            appl_file_type_stdout;
+
+        struct appl_file *
+            p_file_stdout;
+
+        e_status =
+            appl_file_create(
+                p_context,
+                &(
+                    o_file_descriptor),
+                &(
+                    p_file_stdout));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            bool
+                b_continue;
+
+            b_continue =
+                true;
+
+            while (
+                b_continue)
+            {
+                static unsigned char s_buf[1024u];
+
+                unsigned long int
+                    i_count;
+
+                // Read from stdin
+                if (
+                    appl_status_ok
+                    == appl_file_read(
+                        p_file_stdin,
+                        s_buf,
+                        s_buf + sizeof(s_buf),
+                        &(
+                            i_count)))
+                {
+                    // Write to stdout
+                    if (
+                        appl_status_ok
+                        == appl_file_write(
+                            p_file_stdout,
+                            s_buf,
+                            s_buf + i_count,
+                            &(
+                                i_count)))
+                    {
+                    }
+                    else
+                    {
+                        b_continue =
+                            false;
+                    }
+                }
+                else
+                {
+                    b_continue =
+                        false;
+                }
+            }
+
+            appl_file_destroy(
+                p_file_stdout);
+        }
+
+        appl_file_destroy(
+            p_file_stdin);
+    }
+
+    return
+        e_status;
+
+} // appl_file_main()
+
 //
 //
 //

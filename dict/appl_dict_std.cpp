@@ -399,7 +399,7 @@ unsigned long int
     return
         appl_crc16(
             o_key_ptr.pc_uchar,
-            i_key_len);
+            o_key_ptr.pc_uchar + i_key_len);
 
 } // s_index()
 

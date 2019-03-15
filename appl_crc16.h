@@ -16,9 +16,8 @@ Group of functions and definitions related to 16-bit crc.
 /* Reverse include guard */
 enum guard_appl_crc16_h
 {
-    inc_appl_crc16_h =
+    inc_appl_crc16_h = 1
         /* Header file dependencies */
-        1
 };
 
 #if defined __cplusplus
@@ -34,12 +33,41 @@ used by usb packets.
 */
 unsigned short int
 appl_crc16(
-    /** Pointer to buffer */
+    /** Pointer to start of buffer */
     unsigned char const * const
-        p_buf,
-    /** Length in bytes of buffer */
-    unsigned long int const
-        i_buf_len);
+        p_buf_min,
+    /** Pointer to end of buffer */
+    unsigned char const * const
+        p_buf_max);
+
+/*
+
+*/
+struct appl_crc16_context
+{
+    unsigned short int
+        a_private[4u];
+
+}; /* struct appl_crc16_context */
+
+void
+    appl_crc16_init(
+        struct appl_crc16_context * const
+            p_crc16_context);
+
+void
+    appl_crc16_write(
+        struct appl_crc16_context * const
+            p_crc16_context,
+        unsigned char const * const
+            p_buf_min,
+        unsigned char const * const
+            p_buf_max);
+
+unsigned short int
+    appl_crc16_result(
+        struct appl_crc16_context * const
+            p_crc16_context);
 
 #if defined __cplusplus
 } /* extern "C" */

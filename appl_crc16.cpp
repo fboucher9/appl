@@ -12,9 +12,69 @@
 unsigned short int
 appl_crc16(
     unsigned char const * const
-        p_buf,
-    unsigned long int const
-        i_buf_len)
+        p_buf_min,
+    unsigned char const * const
+        p_buf_max)
+{
+    unsigned short int
+        i_crc16;
+
+    struct appl_crc16_context
+        o_crc16_context;
+
+    appl_crc16_init(
+        &(
+            o_crc16_context));
+
+    appl_crc16_write(
+        &(
+            o_crc16_context),
+        p_buf_min,
+        p_buf_max);
+
+    i_crc16 =
+        appl_crc16_result(
+            &(
+                o_crc16_context));
+
+    return
+        i_crc16;
+
+} /* appl_crc16() */
+
+/*
+
+*/
+void
+    appl_crc16_init(
+        struct appl_crc16_context * const
+            p_crc16_context)
+{
+    p_crc16_context->a_private[0u] =
+        0xFFFFu;
+
+    p_crc16_context->a_private[1u] =
+        0u;
+
+    p_crc16_context->a_private[2u] =
+        0u;
+
+    p_crc16_context->a_private[3u] =
+        0u;
+
+} /* appl_crc16_init() */
+
+/*
+
+*/
+void
+    appl_crc16_write(
+        struct appl_crc16_context * const
+            p_crc16_context,
+        unsigned char const * const
+            p_buf_min,
+        unsigned char const * const
+            p_buf_max)
 {
     static unsigned short int const a_crc16_table[256] =
     {
@@ -58,20 +118,15 @@ appl_crc16(
     unsigned char const *
         p_buf_iterator;
 
-    unsigned char const *
-        p_buf_end;
-
     i_crc16 =
-        0xFFFF;
+        p_crc16_context->a_private[0u];
 
     p_buf_iterator =
-        p_buf;
-
-    p_buf_end =
-        p_buf + i_buf_len;
+        p_buf_min;
 
     while (
-        p_buf_iterator != p_buf_end)
+        p_buf_iterator
+        != p_buf_max)
     {
         i_crc16 =
             static_cast<unsigned short int>(
@@ -87,9 +142,22 @@ appl_crc16(
         p_buf_iterator ++;
     }
 
-    return
+    p_crc16_context->a_private[0u] =
         i_crc16;
 
-} /* appl_crc16() */
+} /* appl_crc16_write() */
+
+/*
+
+*/
+unsigned short int
+    appl_crc16_result(
+        struct appl_crc16_context * const
+            p_crc16_context)
+{
+    return
+        p_crc16_context->a_private[0u];
+
+} /* appl_crc16_result() */
 
 /* end-of-file: appl_crc16.cpp */

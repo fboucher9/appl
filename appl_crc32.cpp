@@ -12,9 +12,63 @@
 unsigned long int
     appl_crc32(
         unsigned char const * const
-            p_data,
-        unsigned long int const
-            i_data_len)
+            p_data_min,
+        unsigned char const * const
+            p_data_max)
+{
+    unsigned long int
+        i_crc32_value;
+
+    struct appl_crc32_context
+        o_crc32_context;
+
+    appl_crc32_init(
+        &(
+            o_crc32_context));
+
+    appl_crc32_write(
+        &(
+            o_crc32_context),
+        p_data_min,
+        p_data_max);
+
+    i_crc32_value =
+        appl_crc32_result(
+            &(
+                o_crc32_context));
+
+    return
+        i_crc32_value;
+
+} /* appl_crc32() */
+
+/*
+
+*/
+void
+    appl_crc32_init(
+        struct appl_crc32_context * const
+            p_crc32_context)
+{
+    p_crc32_context->a_private[0u] =
+        0xFFFFFFFFul;
+
+    p_crc32_context->a_private[1u] =
+        0ul;
+
+} /* appl_crc32_init() */
+
+/*
+
+*/
+void
+    appl_crc32_write(
+        struct appl_crc32_context * const
+            p_crc32_context,
+        unsigned char const * const
+            p_data_min,
+        unsigned char const * const
+            p_data_max)
 {
     /* CRC32 lookup table for polynomial 0x04c11db7 */
     static unsigned long int a_crc32_table[256u] =
@@ -88,24 +142,18 @@ unsigned long int
     unsigned char const *
         p_data_iterator;
 
-    unsigned char const *
-        p_data_end;
-
     unsigned long int
         i_crc32_value;
 
     p_data_iterator =
-        p_data;
-
-    p_data_end =
-        p_data + i_data_len;
+        p_data_min;
 
     i_crc32_value =
-        0xFFFFFFFFul;
+        p_crc32_context->a_private[0u];
 
     while (
         p_data_iterator
-        < p_data_end)
+        < p_data_max)
     {
         i_crc32_value =
             (
@@ -121,9 +169,22 @@ unsigned long int
         p_data_iterator ++;
     }
 
-    return
+    p_crc32_context->a_private[0u] =
         i_crc32_value;
 
-} /* appl_crc32() */
+} /* appl_crc32_write() */
+
+/*
+
+*/
+unsigned long int
+    appl_crc32_result(
+        struct appl_crc32_context const * const
+            p_crc32_context)
+{
+    return
+        p_crc32_context->a_private[0u];
+
+} /* appl_crc32_result() */
 
 /* end-of-file: appl_crc32.cpp */
