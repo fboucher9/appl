@@ -22,7 +22,16 @@ extern "C" {
 #endif /* #if defined __cplusplus */
 
 enum appl_status
-    appl_crc_main(
+    appl_crc16_main(
+        struct appl_context * const
+            p_context,
+        struct appl_options const * const
+            p_options,
+        unsigned long int const
+            i_shift);
+
+enum appl_status
+    appl_crc32_main(
         struct appl_context * const
             p_context,
         struct appl_options const * const

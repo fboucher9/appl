@@ -85,6 +85,8 @@
 
 #include <url/appl_url_test.h>
 
+#include <clock/appl_clock_main.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
@@ -3261,7 +3263,7 @@ appl_test_main(
                 'e'
             };
 
-            static unsigned char const s_ref_crc[] =
+            static unsigned char const s_ref_crc16[] =
             {
                 't',
                 'e',
@@ -3270,7 +3272,37 @@ appl_test_main(
                 '_',
                 'c',
                 'r',
-                'c'
+                'c',
+                '1',
+                '6'
+            };
+
+            static unsigned char const s_ref_crc32[] =
+            {
+                't',
+                'e',
+                's',
+                't',
+                '_',
+                'c',
+                'r',
+                'c',
+                '3',
+                '2'
+            };
+
+            static unsigned char const s_ref_clock[] =
+            {
+                't',
+                'e',
+                's',
+                't',
+                '_',
+                'c',
+                'l',
+                'o',
+                'c',
+                'k'
             };
 
             unsigned char const *
@@ -3325,11 +3357,39 @@ appl_test_main(
                 == appl_buf_compare(
                     p_cmd_min,
                     p_cmd_max,
-                    s_ref_crc,
-                    s_ref_crc + sizeof(s_ref_crc)))
+                    s_ref_crc16,
+                    s_ref_crc16 + sizeof(s_ref_crc16)))
             {
                 return
-                    appl_crc_main(
+                    appl_crc16_main(
+                        p_context,
+                        p_options,
+                        i_shift);
+            }
+            else if (
+                0
+                == appl_buf_compare(
+                    p_cmd_min,
+                    p_cmd_max,
+                    s_ref_crc32,
+                    s_ref_crc32 + sizeof(s_ref_crc32)))
+            {
+                return
+                    appl_crc32_main(
+                        p_context,
+                        p_options,
+                        i_shift);
+            }
+            else if (
+                0
+                == appl_buf_compare(
+                    p_cmd_min,
+                    p_cmd_max,
+                    s_ref_clock,
+                    s_ref_clock + sizeof(s_ref_clock)))
+            {
+                return
+                    appl_clock_main(
                         p_context,
                         p_options,
                         i_shift);
