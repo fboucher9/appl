@@ -191,10 +191,14 @@ void
                 o_options_std_node_ptr.p_options_std_node->p_buf_min,
                 o_options_std_node_ptr.p_options_std_node->p_buf_max);
 
-        appl_heap_free_structure_array(
-            m_context,
-            i_buf_len,
-            o_options_std_node_ptr.p_options_std_node->p_buf_min);
+        if (
+            i_buf_len)
+        {
+            appl_heap_free_structure_array(
+                m_context,
+                i_buf_len,
+                o_options_std_node_ptr.p_options_std_node->p_buf_min);
+        }
 
         appl_heap_free_structure(
             m_context,
@@ -728,27 +732,47 @@ enum appl_status
                 p_buf_min,
                 p_buf_max);
 
-        e_status =
-            appl_heap_alloc_structure_array(
-                m_context,
-                i_buf_len,
-                &(
-                    p_options_std_node->p_buf_min));
+        if (
+            i_buf_len)
+        {
+            e_status =
+                appl_heap_alloc_structure_array(
+                    m_context,
+                    i_buf_len,
+                    &(
+                        p_options_std_node->p_buf_min));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                p_options_std_node->p_buf_max =
+                    p_options_std_node->p_buf_min
+                    + i_buf_len;
+
+                appl_buf_copy(
+                    p_options_std_node->p_buf_min,
+                    p_options_std_node->p_buf_max,
+                    p_buf_min,
+                    p_buf_max);
+            }
+        }
+        else
+        {
+            p_options_std_node->p_buf_min =
+                0;
+
+            p_options_std_node->p_buf_max =
+                0;
+
+            e_status =
+                appl_status_ok;
+        }
 
         if (
             appl_status_ok
             == e_status)
         {
-            p_options_std_node->p_buf_max =
-                p_options_std_node->p_buf_min
-                + i_buf_len;
-
-            appl_buf_copy(
-                p_options_std_node->p_buf_min,
-                p_options_std_node->p_buf_max,
-                p_buf_min,
-                p_buf_max);
-
             appl_list_join(
                 &(
                     p_options_std_node->o_list),
