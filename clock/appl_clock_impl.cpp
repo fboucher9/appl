@@ -51,11 +51,10 @@ appl_math_muldiv(
         i_value;
 
     return
-        appl_convert::to_ulong(
-            (
-                ll_value
-                * i_mul)
-            / i_div);
+        (
+            ll_value
+            * i_mul)
+        / i_div;
 
 } // appl_math_muldiv()
 #endif /* #if defined APPL_OS_LINUX */
