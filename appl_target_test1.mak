@@ -34,6 +34,7 @@ test_appl-deps = \
     event/appl_event_test.cpp \
     backtrace/appl_backtrace_test.cpp \
     env/appl_env_test.cpp \
+    env/appl_env_main.cpp \
     heap/appl_heap_test.cpp \
     appl_coverage_test.cpp \
     object/appl_object_test.cpp \

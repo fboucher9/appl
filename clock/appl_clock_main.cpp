@@ -20,7 +20,7 @@
 
 #include <appl_buf.h>
 
-#include <stdio.h>
+#include <appl_test.h>
 
 //
 //
@@ -128,21 +128,36 @@ enum appl_status
                             &(
                                 i_time_count)))
                     {
-                        printf("%08lx%08lx",
-                            appl_convert::to_ulong(
-                                i_time_count >> 32u),
-                            appl_convert::to_ulong(
-                                i_time_count >> 0u));
+                        appl_print_number(
+                            appl_convert::to_signed(
+                                appl_convert::to_ulong(
+                                    i_time_count >> 32u)),
+                            appl_buf_print_flag_hex
+                            | appl_buf_print_flag_zero
+                            | appl_buf_print_flag_unsigned,
+                            8u);
+
+                        appl_print_number(
+                            appl_convert::to_signed(
+                                appl_convert::to_ulong(
+                                    i_time_count >> 0u)),
+                            appl_buf_print_flag_hex
+                            | appl_buf_print_flag_zero
+                            | appl_buf_print_flag_unsigned,
+                            8u);
 
                         if (
                             b_time_prev)
                         {
-                            printf(" %+ld",
+                            appl_print0(" ");
+                            appl_print_number(
                                 appl_convert::to_long(
-                                    i_time_count - i_time_prev));
+                                    i_time_count - i_time_prev),
+                                appl_buf_print_flag_plus,
+                                0u);
                         }
 
-                        printf("\n");
+                        appl_print0("\n");
 
                         i_time_prev =
                             i_time_count;

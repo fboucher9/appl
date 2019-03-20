@@ -87,12 +87,15 @@
 
 #include <clock/appl_clock_main.h>
 
+#include <env/appl_env_main.h>
+
+#include <appl_test.h>
+
 void
 appl_thread_cache_test(
     struct appl_context * const
         p_context);
 
-static
 void
 appl_print(
     unsigned char const * const
@@ -100,17 +103,46 @@ appl_print(
     unsigned char const * const
         p_buf_max)
 {
-    fwrite(
-        p_buf_min,
-        1,
-        (unsigned long int)(
-            p_buf_max
-            - p_buf_min),
-        stdout);
+    enum appl_status
+        e_status;
 
+    unsigned char const *
+        p_buf_iterator;
+
+    p_buf_iterator =
+        p_buf_min;
+
+    e_status =
+        appl_status_ok;
+
+    while (
+        (
+            appl_status_ok
+            == e_status)
+        && (
+            p_buf_iterator
+            < p_buf_max))
+    {
+        unsigned long int
+            i_count;
+
+        e_status =
+            appl_file_write(
+                g_test_stdout,
+                p_buf_iterator,
+                p_buf_max,
+                &(
+                    i_count));
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            p_buf_iterator +=
+                i_count;
+        }
+    }
 }
 
-static
 void
 appl_print0(
     char const * const
@@ -127,7 +159,6 @@ appl_print0(
 
 }
 
-static
 void
 appl_print_number(
     signed long int const
@@ -1205,12 +1236,14 @@ appl_test_socket_process_client(
             struct appl_thread_descriptor
                 o_thread_descriptor;
 
-            memset(
-                &(
-                    o_thread_descriptor),
-                0,
-                sizeof(
-                    o_thread_descriptor));
+            appl_buf_fill(
+                (unsigned char *)(
+                    &(
+                        o_thread_descriptor)),
+                (unsigned char *)(
+                    &(
+                        o_thread_descriptor) + 1u),
+                0);
 
             o_thread_descriptor.b_callback =
                 1;
@@ -2039,12 +2072,39 @@ appl_test_tree_dump(
                 p_tree_node);
 
         /* Print node */
-        printf(
-            "%.*s (%u/%u) %s\n",
-            (int)(i_level),
-            "----------",
+        {
+            static unsigned char const s_level[] =
+            {
+                '-',
+                '-',
+                '-',
+                '-',
+                '-',
+                '-',
+                '-',
+                '-',
+                '-',
+                '-'
+            };
+            appl_print(
+                s_level,
+                s_level + i_level);
+        }
+        appl_print0(
+            " (");
+        appl_print_number(
             p_test_tree_node->o_tree_node.i_count,
+            0,
+            0);
+        appl_print0(
+            "/");
+        appl_print_number(
             p_test_tree_node->o_tree_node.i_height,
+            0,
+            0);
+        appl_print0(
+            ") ");
+        appl_print0(
             p_test_tree_node->p_value);
 
         /* Print children */
@@ -2895,12 +2955,13 @@ enum appl_status
             p_test_command =
                 g_test_commands + i_test_command_iterator;
 
-            printf(
-                "run command [%.*s]\n",
-                (int)(p_test_command->p_name_max
-                    - p_test_command->p_name_min),
-                (char const *)(
-                    p_test_command->p_name_min));
+            appl_print0(
+                "run command [");
+            appl_print(
+                p_test_command->p_name_min,
+                p_test_command->p_name_max);
+            appl_print0(
+                "]\n");
 
             (*(p_test_command->p_function))(
                 p_context);
@@ -3200,202 +3261,199 @@ enum appl_status
         unsigned long int const
             i_shift);
 
+struct appl_file *
+g_test_stdin;
+
+struct appl_file *
+g_test_stdout;
+
+struct appl_file *
+g_test_stderr;
+
 static
 enum appl_status
-appl_test_main(
-    struct appl_context * const
-        p_context,
-    struct appl_options const * const
-        p_options,
-    unsigned long int const
-        i_shift)
+    init_standard_input_file(
+        struct appl_context * const
+            p_context)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_file_descriptor
+        o_file_descriptor;
+
+    o_file_descriptor.e_type =
+        appl_file_type_stdin;
+
+    e_status =
+        appl_file_create(
+            p_context,
+            &(
+                o_file_descriptor),
+            &(
+                g_test_stdin));
+
+    return
+        e_status;
+
+}
+
+static
+void
+    cleanup_standard_input_file(void)
+{
+    appl_file_destroy(
+        g_test_stdin);
+}
+
+static
+enum appl_status
+    init_standard_output_file(
+        struct appl_context * const
+            p_context)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_file_descriptor
+        o_file_descriptor;
+
+    o_file_descriptor.e_type =
+        appl_file_type_stdout;
+
+    e_status =
+        appl_file_create(
+            p_context,
+            &(
+                o_file_descriptor),
+            &(
+                g_test_stdout));
+
+    return
+        e_status;
+
+}
+
+static
+void
+    cleanup_standard_output_file(void)
+{
+    appl_file_destroy(
+        g_test_stdout);
+}
+
+static
+enum appl_status
+    init_standard_error_file(
+        struct appl_context * const
+            p_context)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_file_descriptor
+        o_file_descriptor;
+
+    o_file_descriptor.e_type =
+        appl_file_type_stderr;
+
+    e_status =
+        appl_file_create(
+            p_context,
+            &(
+                o_file_descriptor),
+            &(
+                g_test_stderr));
+
+    return
+        e_status;
+
+}
+
+static
+void
+    cleanup_standard_error_file(void)
+{
+    appl_file_destroy(
+        g_test_stderr);
+}
+
+static
+enum appl_status
+    init_standard_files(
+        struct appl_context * const
+            p_context)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        init_standard_input_file(
+            p_context);
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            init_standard_output_file(
+                p_context);
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            e_status =
+                init_standard_error_file(
+                    p_context);
+
+            if (
+                appl_status_ok
+                != e_status)
+            {
+                cleanup_standard_output_file();
+            }
+        }
+
+        if (
+            appl_status_ok
+            != e_status)
+        {
+            cleanup_standard_input_file();
+        }
+    }
+
+    return
+        e_status;
+
+}
+
+static
+void
+    cleanup_standard_files(void)
+{
+    cleanup_standard_error_file();
+
+    cleanup_standard_output_file();
+
+    cleanup_standard_input_file();
+}
+
+static
+enum appl_status
+    appl_test_main_1(
+        struct appl_context * const
+            p_context,
+        struct appl_options const * const
+            p_options,
+        unsigned long int const
+            i_shift)
 {
     enum appl_status
         e_status;
 
     unsigned long int
         i_count;
-
-    /* Dispatch using argv[0] */
-    {
-        unsigned char const *
-            p_cmd_min;
-
-        unsigned char const *
-            p_cmd_max;
-
-        if (
-            appl_status_ok
-            == appl_options_get(
-                p_options,
-                i_shift + 0ul,
-                &(
-                    p_cmd_min),
-                &(
-                    p_cmd_max)))
-        {
-            static unsigned char const s_ref_percent[] =
-            {
-                't',
-                'e',
-                's',
-                't',
-                '_',
-                'p',
-                'e',
-                'r',
-                'c',
-                'e',
-                'n',
-                't'
-            };
-
-            static unsigned char const s_ref_file[] =
-            {
-                't',
-                'e',
-                's',
-                't',
-                '_',
-                'f',
-                'i',
-                'l',
-                'e'
-            };
-
-            static unsigned char const s_ref_crc16[] =
-            {
-                't',
-                'e',
-                's',
-                't',
-                '_',
-                'c',
-                'r',
-                'c',
-                '1',
-                '6'
-            };
-
-            static unsigned char const s_ref_crc32[] =
-            {
-                't',
-                'e',
-                's',
-                't',
-                '_',
-                'c',
-                'r',
-                'c',
-                '3',
-                '2'
-            };
-
-            static unsigned char const s_ref_clock[] =
-            {
-                't',
-                'e',
-                's',
-                't',
-                '_',
-                'c',
-                'l',
-                'o',
-                'c',
-                'k'
-            };
-
-            unsigned char const *
-                p_cmd_it;
-
-            p_cmd_it =
-                p_cmd_min;
-
-            while (
-                p_cmd_it
-                < p_cmd_max)
-            {
-                if (
-                    '/'
-                    == *(p_cmd_it ++))
-                {
-                    p_cmd_min =
-                        p_cmd_it;
-                }
-            }
-
-            if (
-                0
-                == appl_buf_compare(
-                    p_cmd_min,
-                    p_cmd_max,
-                    s_ref_percent,
-                    s_ref_percent + sizeof(s_ref_percent)))
-            {
-                return
-                    appl_percent_main(
-                        p_context,
-                        p_options,
-                        i_shift);
-            }
-            else if (
-                0
-                == appl_buf_compare(
-                    p_cmd_min,
-                    p_cmd_max,
-                    s_ref_file,
-                    s_ref_file + sizeof(s_ref_file)))
-            {
-                return
-                    appl_file_main(
-                        p_context,
-                        p_options,
-                        i_shift);
-            }
-            else if (
-                0
-                == appl_buf_compare(
-                    p_cmd_min,
-                    p_cmd_max,
-                    s_ref_crc16,
-                    s_ref_crc16 + sizeof(s_ref_crc16)))
-            {
-                return
-                    appl_crc16_main(
-                        p_context,
-                        p_options,
-                        i_shift);
-            }
-            else if (
-                0
-                == appl_buf_compare(
-                    p_cmd_min,
-                    p_cmd_max,
-                    s_ref_crc32,
-                    s_ref_crc32 + sizeof(s_ref_crc32)))
-            {
-                return
-                    appl_crc32_main(
-                        p_context,
-                        p_options,
-                        i_shift);
-            }
-            else if (
-                0
-                == appl_buf_compare(
-                    p_cmd_min,
-                    p_cmd_max,
-                    s_ref_clock,
-                    s_ref_clock + sizeof(s_ref_clock)))
-            {
-                return
-                    appl_clock_main(
-                        p_context,
-                        p_options,
-                        i_shift);
-            }
-        }
-    }
 
     /* Print the argument list */
     appl_options_test_1(
@@ -3412,7 +3470,7 @@ appl_test_main(
         == e_status)
     {
         if (
-            1ul
+            i_shift + 1ul
             >= i_count)
         {
             e_status =
@@ -3426,7 +3484,7 @@ appl_test_main(
                 i_index;
 
             i_index =
-                1ul;
+                i_shift + 1ul;
 
             while (
                 (
@@ -3483,12 +3541,13 @@ appl_test_main(
                                 p_test_command->p_name_min,
                                 p_test_command->p_name_max))
                         {
-                            printf(
-                                "run command [%.*s]\n",
-                                (int)(p_test_command->p_name_max
-                                    - p_test_command->p_name_min),
-                                (char const *)(
-                                    p_test_command->p_name_min));
+                            appl_print0(
+                                "run command [");
+                            appl_print(
+                                p_test_command->p_name_min,
+                                p_test_command->p_name_max);
+                            appl_print0(
+                                "]\n");
 
                             b_found =
                                 1;
@@ -3536,6 +3595,277 @@ appl_test_main(
                 }
             }
         }
+    }
+
+    return
+        e_status;
+
+}
+
+static
+enum appl_status
+    appl_test_main_0(
+        struct appl_context * const
+            p_context,
+        struct appl_options const * const
+            p_options,
+        unsigned long int const
+            i_shift)
+{
+    enum appl_status
+        e_status;
+
+    /* Dispatch using argv[0] */
+    unsigned char const *
+        p_cmd_min;
+
+    unsigned char const *
+        p_cmd_max;
+
+    e_status =
+        appl_options_get(
+            p_options,
+            i_shift + 0ul,
+            &(
+                p_cmd_min),
+            &(
+                p_cmd_max));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        static unsigned char const s_ref_percent[] =
+        {
+            't',
+            'e',
+            's',
+            't',
+            '_',
+            'p',
+            'e',
+            'r',
+            'c',
+            'e',
+            'n',
+            't'
+        };
+
+        static unsigned char const s_ref_file[] =
+        {
+            't',
+            'e',
+            's',
+            't',
+            '_',
+            'f',
+            'i',
+            'l',
+            'e'
+        };
+
+        static unsigned char const s_ref_crc16[] =
+        {
+            't',
+            'e',
+            's',
+            't',
+            '_',
+            'c',
+            'r',
+            'c',
+            '1',
+            '6'
+        };
+
+        static unsigned char const s_ref_crc32[] =
+        {
+            't',
+            'e',
+            's',
+            't',
+            '_',
+            'c',
+            'r',
+            'c',
+            '3',
+            '2'
+        };
+
+        static unsigned char const s_ref_clock[] =
+        {
+            't',
+            'e',
+            's',
+            't',
+            '_',
+            'c',
+            'l',
+            'o',
+            'c',
+            'k'
+        };
+
+        static unsigned char const s_ref_env[] =
+        {
+            't',
+            'e',
+            's',
+            't',
+            '_',
+            'e',
+            'n',
+            'v'
+        };
+
+        unsigned char const *
+            p_cmd_it;
+
+        p_cmd_it =
+            p_cmd_min;
+
+        while (
+            p_cmd_it
+            < p_cmd_max)
+        {
+            if (
+                '/'
+                == *(p_cmd_it ++))
+            {
+                p_cmd_min =
+                    p_cmd_it;
+            }
+        }
+
+        if (
+            0
+            == appl_buf_compare(
+                p_cmd_min,
+                p_cmd_max,
+                s_ref_percent,
+                s_ref_percent + sizeof(s_ref_percent)))
+        {
+            e_status =
+                appl_percent_main(
+                    p_context,
+                    p_options,
+                    i_shift);
+        }
+        else if (
+            0
+            == appl_buf_compare(
+                p_cmd_min,
+                p_cmd_max,
+                s_ref_file,
+                s_ref_file + sizeof(s_ref_file)))
+        {
+            e_status =
+                appl_file_main(
+                    p_context,
+                    p_options,
+                    i_shift);
+        }
+        else if (
+            0
+            == appl_buf_compare(
+                p_cmd_min,
+                p_cmd_max,
+                s_ref_crc16,
+                s_ref_crc16 + sizeof(s_ref_crc16)))
+        {
+            e_status =
+                appl_crc16_main(
+                    p_context,
+                    p_options,
+                    i_shift);
+        }
+        else if (
+            0
+            == appl_buf_compare(
+                p_cmd_min,
+                p_cmd_max,
+                s_ref_crc32,
+                s_ref_crc32 + sizeof(s_ref_crc32)))
+        {
+            e_status =
+                appl_crc32_main(
+                    p_context,
+                    p_options,
+                    i_shift);
+        }
+        else if (
+            0
+            == appl_buf_compare(
+                p_cmd_min,
+                p_cmd_max,
+                s_ref_clock,
+                s_ref_clock + sizeof(s_ref_clock)))
+        {
+            e_status =
+                appl_clock_main(
+                    p_context,
+                    p_options,
+                    i_shift);
+        }
+        else if (
+            0
+            == appl_buf_compare(
+                p_cmd_min,
+                p_cmd_max,
+                s_ref_env,
+                s_ref_env + sizeof(s_ref_env)))
+        {
+            e_status =
+                appl_env_main(
+                    p_context,
+                    p_options,
+                    i_shift);
+        }
+        else
+        {
+            e_status =
+                appl_test_main_1(
+                    p_context,
+                    p_options,
+                    i_shift);
+        }
+    }
+
+    return
+        e_status;
+
+}
+
+static
+enum appl_status
+appl_test_main(
+    struct appl_context * const
+        p_context,
+    struct appl_options const * const
+        p_options,
+    unsigned long int const
+        i_shift)
+{
+    enum appl_status
+        e_status;
+
+    /* Create basic objects for testing */
+    e_status =
+        init_standard_files(
+            p_context);
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_test_main_0(
+                p_context,
+                p_options,
+                i_shift);
+
+
+        cleanup_standard_files();
     }
 
     return
