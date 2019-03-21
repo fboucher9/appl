@@ -24,7 +24,11 @@
 
 #include <appl_heap_handle.h>
 
-#include <stdio.h>
+#include <appl_test.h>
+
+#include <env/appl_env_main.h>
+
+#include <appl_options_handle.h>
 
 //
 //
@@ -41,12 +45,13 @@ appl_env_test_query_cb(
 {
     appl_unused(
         p_query_context);
-    printf("value=[%.*s]\n",
-        static_cast<int>(appl_buf_len(
-                p_value_min,
-                p_value_max)),
-        reinterpret_cast<char const *>(p_value_min));
-
+    appl_print0(
+        "value=[");
+    appl_print(
+        p_value_min,
+        p_value_max);
+    appl_print0(
+        "]\n");
 } // appl_env_test_query_cb()
 
 //
@@ -195,6 +200,95 @@ appl_env_test_1(
                 p_env);
         }
 
+    }
+
+    /* Coverage of appl_env_main() */
+    {
+        struct appl_options *
+            p_options;
+
+        e_status =
+            appl_options_create(
+                p_context,
+                &(
+                    p_options));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            unsigned long int
+                i_count;
+
+            char
+                b_ready;
+
+            static unsigned char const s_main_args[] =
+            {
+                't',
+                'e',
+                's',
+                't',
+                '_',
+                'e',
+                'n',
+                'v',
+                ' ',
+                'g',
+                'e',
+                't',
+                ' ',
+                'H',
+                'O',
+                'M',
+                'E',
+                ' ',
+                's',
+                'e',
+                't',
+                ' ',
+                't',
+                'e',
+                's',
+                't',
+                ' ',
+                'v',
+                'a',
+                'l',
+                'u',
+                'e',
+                ' ',
+                'w',
+                'h',
+                'a',
+                't',
+                '\n'
+            };
+
+            e_status =
+                appl_options_write(
+                    p_options,
+                    s_main_args,
+                    s_main_args + sizeof(s_main_args),
+                    &(
+                        i_count),
+                    &(
+                        b_ready));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_env_main(
+                        p_context,
+                        p_options,
+                        0u);
+            }
+
+            appl_options_destroy(
+                p_options);
+        }
     }
 
 } // appl_env_test_1()

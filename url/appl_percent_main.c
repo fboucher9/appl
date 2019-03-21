@@ -19,6 +19,8 @@ Installation:
 
 #include <appl.h>
 
+#include <url/appl_percent_main.h>
+
 #include <url/appl_percent.h>
 
 static
@@ -225,15 +227,6 @@ enum appl_status
         e_status;
 
 }
-
-enum appl_status
-    appl_percent_main(
-        struct appl_context * const
-            p_context,
-        struct appl_options const * const
-            p_options,
-        unsigned long int const
-            i_shift);
 
 enum appl_status
     appl_percent_main(

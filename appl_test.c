@@ -85,6 +85,10 @@
 
 #include <url/appl_url_test.h>
 
+#include <url/appl_percent_test.h>
+
+#include <url/appl_percent_main.h>
+
 #include <clock/appl_clock_main.h>
 
 #include <env/appl_env_main.h>
@@ -181,6 +185,44 @@ appl_print_number(
             i_width));
 }
 
+void
+appl_print_ld(
+    signed long int const
+        i_value)
+{
+    appl_print_number(
+        i_value,
+        0,
+        0u);
+}
+
+void
+appl_print_lu(
+    unsigned long int const
+        i_value)
+{
+    appl_print_number(
+        (signed long int)(
+            i_value),
+        appl_buf_print_flag_unsigned,
+        0u);
+}
+
+void
+appl_print_08lx(
+    unsigned long int const
+        i_value)
+{
+    appl_print_number(
+        (signed long int)(
+            i_value),
+        appl_buf_print_flag_unsigned
+        | appl_buf_print_flag_hex
+        | appl_buf_print_flag_zero,
+        8u);
+}
+
+
 static
 void
 appl_test_sleep_msec(
@@ -218,19 +260,14 @@ appl_test_sleep_msec(
 
     appl_print0(
         "sleep ");
-    appl_print_number(
-        (signed long int)(
-            i_msec_count),
-        0,
-        0);
+    appl_print_lu(
+        i_msec_count);
     appl_print0(
         " msec took ");
-    appl_print_number(
+    appl_print_ld(
         (signed long int)(
             i_time_after
-            - i_time_before),
-        0,
-        0);
+            - i_time_before));
     appl_print0(
         " msec\n");
 
@@ -810,6 +847,7 @@ appl_test_print_number(
     appl_print0("]\n");
 }
 
+
 static void appl_test_thread(
     struct appl_context * const
         p_context)
@@ -1069,7 +1107,7 @@ appl_test_socket_handshake(
             == e_status)
         {
             appl_print0("sent ");
-            appl_print_number((signed long int)(i_count), 0, 0);
+            appl_print_lu(i_count);
             appl_print0(" bytes\n");
         }
         else
@@ -1474,11 +1512,7 @@ appl_test_socket(
                 == e_status)
             {
                 appl_print0("port=[");
-                appl_print_number(
-                    (signed long int)(
-                        i_port),
-                    0,
-                    0);
+                appl_print_lu(i_port);
                 appl_print0("]\n");
             }
         }
@@ -1741,7 +1775,7 @@ appl_test_property(
                 == e_status)
             {
                 appl_print0("property 1=[");
-                appl_print_number((signed long int)(u_value), appl_buf_print_flag_unsigned, 0);
+                appl_print_lu(u_value);
                 appl_print0("]\n");
             }
             else
@@ -1766,7 +1800,7 @@ appl_test_property(
                 == e_status)
             {
                 appl_print0("property 2=[");
-                appl_print_number(i_value, 0, 0);
+                appl_print_ld(i_value);
                 appl_print0("]\n");
             }
             else
@@ -2092,16 +2126,12 @@ appl_test_tree_dump(
         }
         appl_print0(
             " (");
-        appl_print_number(
-            p_test_tree_node->o_tree_node.i_count,
-            0,
-            0);
+        appl_print_ld(
+            p_test_tree_node->o_tree_node.i_count);
         appl_print0(
             "/");
-        appl_print_number(
-            p_test_tree_node->o_tree_node.i_height,
-            0,
-            0);
+        appl_print_ld(
+            p_test_tree_node->o_tree_node.i_height);
         appl_print0(
             ") ");
         appl_print0(
@@ -2705,6 +2735,17 @@ static unsigned char const g_ref_url[] =
     'l'
 };
 
+static unsigned char const g_ref_percent[] =
+{
+    'p',
+    'e',
+    'r',
+    'c',
+    'e',
+    'n',
+    't'
+};
+
 struct appl_test_command
 {
     unsigned char const *
@@ -2920,6 +2961,11 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_url,
         g_ref_url + sizeof(g_ref_url),
         & appl_url_test_1
+    },
+    {
+        g_ref_percent,
+        g_ref_percent + sizeof(g_ref_percent),
+        & appl_percent_test_1
     }
 };
 
@@ -3024,11 +3070,9 @@ enum appl_status
                     *(
                         p_cur);
 
-                appl_print_number(
-                    (signed long int)(
-                        c_value),
-                    0,
-                    0);
+                appl_print_lu(
+                    (unsigned long int)(
+                        c_value));
                 appl_print0("\n");
 
                 p_cur ++;
@@ -3251,15 +3295,6 @@ enum appl_status
         e_status;
 
 }
-
-enum appl_status
-    appl_percent_main(
-        struct appl_context * const
-            p_context,
-        struct appl_options const * const
-            p_options,
-        unsigned long int const
-            i_shift);
 
 struct appl_file *
 g_test_stdin;

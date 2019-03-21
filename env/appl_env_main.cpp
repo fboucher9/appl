@@ -21,6 +21,155 @@
 //
 //
 //
+static
+void
+    appl_env_main_get_cb(
+        void * const
+            p_query_context,
+        unsigned char const * const
+            p_value_min,
+        unsigned char const * const
+            p_value_max)
+{
+    appl_unused(
+        p_query_context);
+
+    appl_print(
+        p_value_min,
+        p_value_max);
+}
+
+//
+//
+//
+static
+enum appl_status
+    appl_env_main_get(
+        struct appl_context * const
+            p_context,
+        struct appl_options const * const
+            p_options,
+        unsigned long int const
+            i_shift)
+{
+    enum appl_status
+        e_status;
+
+    unsigned char const *
+        p_name_min;
+
+    unsigned char const *
+        p_name_max;
+
+    e_status =
+        appl_options_get(
+            p_options,
+            i_shift + 1u,
+            &(
+                p_name_min),
+            &(
+                p_name_max));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        appl_print(
+            p_name_min,
+            p_name_max);
+
+        appl_print0(
+            "=");
+
+        e_status =
+            appl_env_query(
+                p_context,
+                p_name_min,
+                p_name_max,
+                appl_env_main_get_cb,
+                0);
+
+        appl_print0(
+            "\n");
+    }
+
+    return
+        e_status;
+
+} // appl_env_main_get()
+
+//
+//
+//
+static
+enum appl_status
+    appl_env_main_set(
+        struct appl_context * const
+            p_context,
+        struct appl_options const * const
+            p_options,
+        unsigned long int const
+            i_shift)
+{
+    enum appl_status
+        e_status;
+
+    unsigned char const *
+        p_name_min;
+
+    unsigned char const *
+        p_name_max;
+
+    e_status =
+        appl_options_get(
+            p_options,
+            i_shift + 1u,
+            &(
+                p_name_min),
+            &(
+                p_name_max));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        unsigned char const *
+            p_value_min;
+
+        unsigned char const *
+            p_value_max;
+
+        e_status =
+            appl_options_get(
+                p_options,
+                i_shift + 2u,
+                &(
+                    p_value_min),
+                &(
+                    p_value_max));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            e_status =
+                appl_env_set(
+                    p_context,
+                    p_name_min,
+                    p_name_max,
+                    p_value_min,
+                    p_value_max);
+        }
+    }
+
+    return
+        e_status;
+
+} // appl_env_main_set()
+
+//
+//
+//
 enum appl_status
     appl_env_main(
         struct appl_context * const
@@ -38,8 +187,6 @@ enum appl_status
 
     appl_unused(
         p_context);
-
-    appl_print0("env main\n");
 
     e_status =
         appl_options_count(
@@ -111,6 +258,19 @@ enum appl_status
                         i_options_index + 1ul
                         < i_options_count))
                 {
+                    e_status =
+                        appl_env_main_get(
+                            p_context,
+                            p_options,
+                            i_options_index);
+
+                    if (
+                        appl_status_ok
+                        == e_status)
+                    {
+                        i_options_index +=
+                            2u;
+                    }
                 }
                 else if (
                     (
@@ -124,9 +284,24 @@ enum appl_status
                         i_options_index + 2ul
                         < i_options_count))
                 {
+                    e_status =
+                        appl_env_main_set(
+                            p_context,
+                            p_options,
+                            i_options_index);
+
+                    if (
+                        appl_status_ok
+                        == e_status)
+                    {
+                        i_options_index +=
+                            3u;
+                    }
                 }
                 else
                 {
+                    e_status =
+                        appl_raise_invalid_param();
                 }
             }
         }

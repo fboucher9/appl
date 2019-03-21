@@ -128,23 +128,13 @@ enum appl_status
                             &(
                                 i_time_count)))
                     {
-                        appl_print_number(
-                            appl_convert::to_signed(
-                                appl_convert::to_ulong(
-                                    i_time_count >> 32u)),
-                            appl_buf_print_flag_hex
-                            | appl_buf_print_flag_zero
-                            | appl_buf_print_flag_unsigned,
-                            8u);
+                        appl_print_08lx(
+                            appl_convert::to_ulong(
+                                i_time_count >> 32u));
 
-                        appl_print_number(
-                            appl_convert::to_signed(
-                                appl_convert::to_ulong(
-                                    i_time_count >> 0u)),
-                            appl_buf_print_flag_hex
-                            | appl_buf_print_flag_zero
-                            | appl_buf_print_flag_unsigned,
-                            8u);
+                        appl_print_08lx(
+                            appl_convert::to_ulong(
+                                i_time_count >> 0u));
 
                         if (
                             b_time_prev)

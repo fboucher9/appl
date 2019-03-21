@@ -58,6 +58,7 @@ test_appl-deps = \
     buf/appl_buf_test.cpp \
     url/appl_url_test.cpp \
     url/appl_percent_main.c \
+    url/appl_percent_test.cpp \
     $(appl_base-deps)
 
 # List of libraries required to link test application

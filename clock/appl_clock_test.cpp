@@ -27,7 +27,15 @@
 
 #include <appl_coverage_test.h>
 
-#include <stdio.h>
+#include <clock/appl_clock_main.h>
+
+#include <appl_test.h>
+
+#include <appl_convert.h>
+
+#include <appl_buf.h>
+
+#include <appl_options_handle.h>
 
 struct appl_clock_test_context
 {
@@ -173,7 +181,7 @@ void
         struct appl_clock_test_context * const
             p_clock_test_context)
 {
-    printf("clock test automatic #1 ...\n");
+    appl_print0("clock test automatic #1 ...\n");
 
     appl_ull_t
         i_clock_value;
@@ -189,13 +197,14 @@ void
     bool const b_result =
         (appl_status_ok == e_status);
 
-    printf("clock test result %s\n", b_result ? "PASS" : "FAIL");
+    appl_print0("clock test result ");
+    appl_print0(b_result ? "PASS" : "FAIL");
 
     p_clock_test_context->i_pass_count += b_result;
     p_clock_test_context->i_fail_count += !b_result;
     p_clock_test_context->i_total_count ++;
 
-    printf("... done\n");
+    appl_print0("\n... done\n");
 }
 
 static
@@ -204,7 +213,7 @@ void
         struct appl_clock_test_context * const
             p_clock_test_context)
 {
-    printf("clock test automatic #2 ...\n");
+    appl_print0("clock test automatic #2 ...\n");
 
     appl_ull_t
         i_clock_value;
@@ -220,13 +229,14 @@ void
     bool const b_result =
         (appl_status_ok != e_status);
 
-    printf("clock test result %s\n", b_result ? "PASS" : "FAIL");
+    appl_print0("clock test result ");
+    appl_print0(b_result ? "PASS" : "FAIL");
 
     p_clock_test_context->i_pass_count += b_result;
     p_clock_test_context->i_fail_count += !b_result;
     p_clock_test_context->i_total_count ++;
 
-    printf("... done\n");
+    appl_print0("\n... done\n");
 }
 
 static
@@ -235,7 +245,7 @@ void
         struct appl_clock_test_context * const
             p_clock_test_context)
 {
-    printf("clock test automatic #3 ...\n");
+    appl_print0("clock test automatic #3 ...\n");
 
     enum appl_status const
         e_status =
@@ -247,13 +257,14 @@ void
     bool const b_result =
         (appl_status_ok == e_status);
 
-    printf("clock test result %s\n", b_result ? "PASS" : "FAIL");
+    appl_print0("clock test result ");
+    appl_print0(b_result ? "PASS" : "FAIL");
 
     p_clock_test_context->i_pass_count += b_result;
     p_clock_test_context->i_fail_count += !b_result;
     p_clock_test_context->i_total_count ++;
 
-    printf("... done\n");
+    appl_print0("\n... done\n");
 }
 
 static
@@ -262,7 +273,7 @@ void
         struct appl_clock_test_context * const
             p_clock_test_context)
 {
-    printf("clock test automatic #4 ...\n");
+    appl_print0("clock test automatic #4 ...\n");
     enum appl_status const
         e_status =
         appl_clock_delay(
@@ -273,13 +284,14 @@ void
     bool const b_result =
         (appl_status_ok != e_status);
 
-    printf("clock test result %s\n", b_result ? "PASS" : "FAIL");
+    appl_print0("clock test result ");
+    appl_print0(b_result ? "PASS" : "FAIL");
 
     p_clock_test_context->i_pass_count += b_result;
     p_clock_test_context->i_fail_count += !b_result;
     p_clock_test_context->i_total_count ++;
 
-    printf("... done\n");
+    appl_print0("\n... done\n");
 }
 
 /*
@@ -290,7 +302,7 @@ void
         struct appl_context * const
             p_context)
 {
-    printf("=== appl_clock_test_1 ===\n");
+    appl_print0("=== appl_clock_test_1 ===\n");
 
     struct appl_clock_test_context
         o_clock_test_context;
@@ -389,13 +401,20 @@ void
         &(
             o_clock_test_context));
 
-    printf("clock test results: pass=%lu fail=%lu warn=%lu total=%lu\n",
-        o_clock_test_context.i_pass_count,
-        o_clock_test_context.i_fail_count,
-        o_clock_test_context.i_warn_count,
+    appl_print0("clock test results: pass=");
+    appl_print_lu(
+        o_clock_test_context.i_pass_count);
+    appl_print0(" fail=");
+    appl_print_lu(
+        o_clock_test_context.i_fail_count);
+    appl_print0(" warn=");
+    appl_print_lu(
+        o_clock_test_context.i_warn_count);
+    appl_print0(" total=");
+    appl_print_lu(
         o_clock_test_context.i_total_count);
 
-    printf("^^^ appl_clock_test_1 ^^^\n");
+    appl_print0("\n^^^ appl_clock_test_1 ^^^\n");
 
 #if defined __cplusplus
     // base class
@@ -436,6 +455,142 @@ void
         }
     }
 #endif /* #if defined __cplusplus */
+
+    /* Coverage of appl_clock_main() */
+    {
+        enum appl_status
+            e_status;
+
+        struct appl_options *
+            p_options;
+
+        e_status =
+            appl_options_create(
+                p_context,
+                &(
+                    p_options));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            static unsigned char const s_arg0[] =
+            {
+                't',
+                'e',
+                's',
+                't',
+                '_',
+                'c',
+                'l',
+                'o',
+                'c',
+                'k'
+            };
+
+            static unsigned char const s_arg1[] =
+            {
+                'f',
+                '1',
+                '0',
+                '0',
+                '0'
+            };
+
+            static unsigned char const s_arg2[] =
+            {
+                'r'
+            };
+
+            static unsigned char const s_arg3[] =
+            {
+                'd',
+                '1',
+                '0',
+                '0'
+            };
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_options_append_argument(
+                        p_options,
+                        s_arg0,
+                        s_arg0 + sizeof(s_arg0));
+            }
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_options_append_argument(
+                        p_options,
+                        s_arg1,
+                        s_arg1 + sizeof(s_arg1));
+            }
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_options_append_argument(
+                        p_options,
+                        s_arg2,
+                        s_arg2 + sizeof(s_arg2));
+            }
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_options_append_argument(
+                        p_options,
+                        s_arg3,
+                        s_arg3 + sizeof(s_arg3));
+            }
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_options_append_argument(
+                        p_options,
+                        s_arg2,
+                        s_arg2 + sizeof(s_arg2));
+            }
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_clock_main(
+                        p_context,
+                        p_options,
+                        0u);
+            }
+
+            appl_options_destroy(
+                p_options);
+        }
+
+        if (
+            appl_status_ok
+            != e_status)
+        {
+            appl_print0("FAILED appl_clock_main test\n");
+        }
+        else
+        {
+            appl_print0("passed appl_clock_main test\n");
+        }
+    }
 
 } /* appl_clock_test_1() */
 

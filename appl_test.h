@@ -44,6 +44,21 @@ appl_print_number(
     unsigned int const
         i_width);
 
+void
+appl_print_ld(
+    signed long int const
+        i_value);
+
+void
+appl_print_lu(
+    unsigned long int const
+        i_value);
+
+void
+appl_print_08lx(
+    unsigned long int const
+        i_value);
+
 #if defined __cplusplus
 } /* extern "C" */
 #endif /* #if defined __cplusplus */
