@@ -93,6 +93,8 @@
 
 #include <env/appl_env_main.h>
 
+#include <socket/appl_netdevice_main.h>
+
 #include <appl_test.h>
 
 void
@@ -3753,6 +3755,21 @@ enum appl_status
             'v'
         };
 
+        static unsigned char const s_ref_netdev[] =
+        {
+            't',
+            'e',
+            's',
+            't',
+            '_',
+            'n',
+            'e',
+            't',
+            'd',
+            'e',
+            'v'
+        };
+
         unsigned char const *
             p_cmd_it;
 
@@ -3852,6 +3869,20 @@ enum appl_status
         {
             e_status =
                 appl_env_main(
+                    p_context,
+                    p_options,
+                    i_shift);
+        }
+        else if (
+            0
+            == appl_buf_compare(
+                p_cmd_min,
+                p_cmd_max,
+                s_ref_netdev,
+                s_ref_netdev + sizeof(s_ref_netdev)))
+        {
+            e_status =
+                appl_netdevice_main(
                     p_context,
                     p_options,
                     i_shift);

@@ -55,6 +55,7 @@ test_appl-deps = \
     property/appl_property_test.cpp \
     socket/appl_socket_test.cpp \
     socket/appl_netdevice_test.cpp \
+    socket/appl_netdevice_main.cpp \
     buf/appl_buf_test.cpp \
     url/appl_url_test.cpp \
     url/appl_percent_main.c \
