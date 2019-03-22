@@ -113,11 +113,11 @@ appl_percent_test_1(
 {
     appl_percent_test_service::s_main(
         p_context,
-        "test_percent dec %21\n");
+        "test_percent dec a%21%2a%2A%gg\n");
 
     appl_percent_test_service::s_main(
         p_context,
-        "test_percent enc !\n");
+        "test_percent enc a!\n");
 
 } // appl_percent_test_1()
 
