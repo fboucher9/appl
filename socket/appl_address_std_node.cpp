@@ -155,6 +155,9 @@ enum appl_status
     struct appl_address_descriptor
         o_address_descriptor;
 
+    o_address_descriptor.i_flags =
+        0u;
+
     if (
         appl_status_ok
         == appl_address_property_get_name(
@@ -164,13 +167,8 @@ enum appl_status
             &(
                 o_address_descriptor.p_name_max)))
     {
-        o_address_descriptor.b_name =
-            1;
-    }
-    else
-    {
-        o_address_descriptor.b_name =
-            0;
+        o_address_descriptor.i_flags |=
+            APPL_ADDRESS_FLAG_NAME;
     }
 
     if (
@@ -180,13 +178,8 @@ enum appl_status
             &(
                 o_address_descriptor.i_port)))
     {
-        o_address_descriptor.b_port =
-            1;
-    }
-    else
-    {
-        o_address_descriptor.b_port =
-            0;
+        o_address_descriptor.i_flags |=
+            APPL_ADDRESS_FLAG_PORT;
     }
 
     if (
@@ -196,13 +189,8 @@ enum appl_status
             &(
                 o_address_descriptor.e_family)))
     {
-        o_address_descriptor.b_family =
-            1;
-    }
-    else
-    {
-        o_address_descriptor.b_family =
-            0;
+        o_address_descriptor.i_flags |=
+            APPL_ADDRESS_FLAG_FAMILY;
     }
 
     memset(
@@ -213,8 +201,10 @@ enum appl_status
             m_sockaddr));
 
     if (
-        o_address_descriptor.b_port
-        || o_address_descriptor.b_name)
+        o_address_descriptor.i_flags
+        & (
+            APPL_ADDRESS_FLAG_PORT
+            | APPL_ADDRESS_FLAG_NAME))
     {
         // Do getaddrinfo...
         unsigned char
@@ -224,7 +214,7 @@ enum appl_status
             o_port_ptr;
 
         if (
-            o_address_descriptor.b_port)
+            o_address_descriptor.i_flags & APPL_ADDRESS_FLAG_PORT)
         {
             unsigned char *
                 p_port_end;
@@ -257,7 +247,7 @@ enum appl_status
             o_name_ptr;
 
         if (
-            o_address_descriptor.b_name)
+            o_address_descriptor.i_flags & APPL_ADDRESS_FLAG_NAME)
         {
             unsigned long int
                 i_name_len;
@@ -325,7 +315,7 @@ enum appl_status
         }
 
         if (
-            o_address_descriptor.b_family)
+            o_address_descriptor.i_flags & APPL_ADDRESS_FLAG_FAMILY)
         {
             if (
                 appl_address_family_inet

@@ -64,6 +64,13 @@ appl_address_property_set_family(
         e_family);
 
 enum appl_status
+appl_address_property_set_index(
+    struct appl_address_property * const
+        p_property,
+    unsigned int const
+        i_index);
+
+enum appl_status
 appl_address_property_get_name(
     struct appl_address_property const * const
         p_property,
@@ -85,6 +92,13 @@ appl_address_property_get_family(
         p_property,
     int * const
         r_family);
+
+enum appl_status
+appl_address_property_get_index(
+    struct appl_address_property const * const
+        p_property,
+    unsigned int * const
+        r_index);
 
 #if defined __cplusplus
 } /* extern "C" */

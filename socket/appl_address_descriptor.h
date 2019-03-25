@@ -10,7 +10,29 @@ enum guard_appl_address_descriptor_h
     inc_appl_address_descriptor_h = 1
 };
 
+/* Included. */
+#define INC_APPL_ADDRESS_DESCRIPTOR_H
+
+/* Flags for descriptor */
+
+/* Flag to select p_name_min and p_name_max fields */
+#define APPL_ADDRESS_FLAG_NAME (1u << 0u)
+
+/* Flag to select i_port field */
+#define APPL_ADDRESS_FLAG_PORT (1u << 1u)
+
+/* Flag to select e_family field */
+#define APPL_ADDRESS_FLAG_FAMILY (1u << 2u)
+
+/* Flag to select i_index */
+#define APPL_ADDRESS_FLAG_INDEX (1u << 3u)
+
 /*
+
+Structure: appl_address_descriptor
+
+Description:
+    Descriptor for initialization of appl_address object.
 
 */
 struct appl_address_descriptor
@@ -27,18 +49,15 @@ struct appl_address_descriptor
         e_family;
 
     unsigned short int
+        i_flags;
+
+    unsigned short int
+        i_index;
+
+    unsigned short int
         i_port;
 
-    unsigned char
-        b_name;
-
-    unsigned char
-        b_port;
-
-    unsigned char
-        b_family;
-
-#define PADDING (5 + APPL_SIZEOF_INT)
+#define PADDING (6 + APPL_SIZEOF_INT)
 #include <appl_padding.h>
 
 }; /* struct appl_address_descriptor */
