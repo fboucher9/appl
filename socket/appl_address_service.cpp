@@ -256,4 +256,20 @@ appl_address_service::s_get_family(
 
 } // s_get_family()
 
+//
+//
+//
+enum appl_status
+appl_address_service::s_get_index(
+    struct appl_address const * const
+        p_address,
+    unsigned int * const
+        r_index)
+{
+    return
+        p_address->v_get_index(
+            r_index);
+
+} // s_get_index()
+
 /* end-of-file: appl_address_service.cpp */

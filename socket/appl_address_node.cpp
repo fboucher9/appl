@@ -30,7 +30,7 @@ enum appl_status
     appl_unused(
         r_name_len);
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 } // v_get_name_len()
 
 //
@@ -50,7 +50,7 @@ enum appl_status
         p_name_max,
         r_name_cur);
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 } // v_get_name()
 
 //
@@ -64,7 +64,7 @@ enum appl_status
     appl_unused(
         r_port);
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 } // v_get_port()
 
 //
@@ -78,8 +78,22 @@ enum appl_status
     appl_unused(
         r_family);
     return
-        appl_status_not_implemented;
+        appl_raise_not_implemented();
 } // v_get_family()
+
+//
+//
+//
+enum appl_status
+    appl_address::v_get_index(
+        unsigned int * const
+            r_index) const
+{
+    appl_unused(
+        r_index);
+    return
+        appl_raise_not_implemented();
+} // v_get_index()
 
 //
 //  Function: appl_address()

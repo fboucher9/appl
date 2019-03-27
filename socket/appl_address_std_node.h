@@ -96,7 +96,10 @@ class appl_address_std_node : public appl_address
         unsigned long int
             m_sockaddr_len;
 
-#define PADDING (APPL_SIZEOF_LONG)
+        unsigned int
+            m_index;
+
+#define PADDING (APPL_SIZEOF_LONG + APPL_SIZEOF_INT)
 #include <appl_padding.h>
 
         // --
@@ -189,6 +192,12 @@ class appl_address_std_node : public appl_address
             v_get_family(
                 int * const
                     r_family) const;
+
+        virtual
+        enum appl_status
+            v_get_index(
+                unsigned int * const
+                    r_index) const;
 
 }; // class appl_address_std_node
 

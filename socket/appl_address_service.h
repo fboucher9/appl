@@ -114,6 +114,15 @@ class appl_address_service
             int * const
                 r_family);
 
+        // Get index
+        static
+        enum appl_status
+        s_get_index(
+            struct appl_address const * const
+                p_address,
+            unsigned int * const
+                r_index);
+
 }; // class appl_address_service
 
 /* end-of-file: appl_address_service.h */

@@ -71,6 +71,12 @@ struct appl_address : public appl_object
                 int * const
                     r_family) const;
 
+        virtual
+        enum appl_status
+            v_get_index(
+                unsigned int * const
+                    r_index) const;
+
     protected:
 
     private:

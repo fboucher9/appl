@@ -43,7 +43,7 @@ Description:
 
 #include <appl_buf.h>
 
-#include <socket/appl_address_descriptor.h>
+#include <appl_address_descriptor.h>
 
 #include <property/appl_property_types.h>
 
@@ -130,7 +130,8 @@ appl_address_std_node::appl_address_std_node(
     appl_address(
         p_context),
     m_sockaddr(),
-    m_sockaddr_len()
+    m_sockaddr_len(),
+    m_index()
 {
 }
 
@@ -191,6 +192,17 @@ enum appl_status
     {
         o_address_descriptor.i_flags |=
             APPL_ADDRESS_FLAG_FAMILY;
+    }
+
+    if (
+        appl_status_ok
+        == appl_address_property_get_index(
+            p_property,
+            &(
+                o_address_descriptor.i_index)))
+    {
+        o_address_descriptor.i_flags |=
+            APPL_ADDRESS_FLAG_INDEX;
     }
 
     memset(
@@ -393,6 +405,13 @@ enum appl_status
         /* This is an empty address */
         e_status =
             appl_status_ok;
+    }
+
+    if (
+        APPL_ADDRESS_FLAG_INDEX & o_address_descriptor.i_flags)
+    {
+        m_index =
+            o_address_descriptor.i_index;
     }
 
     return
@@ -672,5 +691,28 @@ enum appl_status
         e_status;
 
 } // v_get_family()
+
+//
+//
+//
+enum appl_status
+    appl_address_std_node::v_get_index(
+        unsigned int * const
+            r_index) const
+{
+    enum appl_status
+        e_status;
+
+    *(
+        r_index) =
+        m_index;
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // v_get_index()
 
 /* end-of-file: appl_address_std_node.cpp */

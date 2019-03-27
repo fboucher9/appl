@@ -78,6 +78,13 @@ appl_address_get_family(
     int * const
         r_family);
 
+enum appl_status
+appl_address_get_index(
+    struct appl_address const * const
+        p_address,
+    unsigned int * const
+        r_index);
+
 #if defined(__cplusplus)
 } /* extern "C" */
 #endif /* #if defined(__cplusplus) */

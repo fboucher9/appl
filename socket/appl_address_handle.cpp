@@ -142,4 +142,21 @@ appl_address_get_family(
 
 } /* appl_address_get_family() */
 
+/*
+
+*/
+enum appl_status
+appl_address_get_index(
+    struct appl_address const * const
+        p_address,
+    unsigned int * const
+        r_index)
+{
+    return
+        appl_address_service::s_get_index(
+            p_address,
+            r_index);
+
+} /* appl_address_get_index() */
+
 /* end-of-file: appl_address_handle.cpp */

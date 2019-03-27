@@ -48,16 +48,16 @@ struct appl_address_descriptor
     int
         e_family;
 
+    unsigned int
+        i_index;
+
     unsigned short int
         i_flags;
 
     unsigned short int
-        i_index;
-
-    unsigned short int
         i_port;
 
-#define PADDING (6 + APPL_SIZEOF_INT)
+#define PADDING (4 + 2*APPL_SIZEOF_INT)
 #include <appl_padding.h>
 
 }; /* struct appl_address_descriptor */
