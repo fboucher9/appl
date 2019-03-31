@@ -38,6 +38,7 @@ appl_base-deps := \
     buf/appl_buf.cpp \
     buf/appl_buf0.cpp \
     buf/appl_buf_filter.cpp \
+    buf/appl_buf_iterator.cpp \
     chunk/appl_chunk_handle.cpp \
     chunk/appl_chunk_service.cpp \
     chunk/appl_chunk_std.cpp \
