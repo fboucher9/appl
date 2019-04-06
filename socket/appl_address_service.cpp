@@ -272,4 +272,49 @@ appl_address_service::s_get_index(
 
 } // s_get_index()
 
+//
+//
+//
+enum appl_status
+appl_address_service::s_resolve(
+    struct appl_context * const
+        p_context,
+    struct appl_address_descriptor const * const
+        p_address_descriptor,
+    void (* p_callback)(
+        void * const
+            p_callback_context,
+        struct appl_address_descriptor const * const
+            p_address_descriptor),
+    void * const
+        p_callback_context)
+{
+    enum appl_status
+        e_status;
+
+    // Use the C++ context object to query socket manager
+    class appl_socket_mgr *
+        p_socket_mgr;
+
+    e_status =
+        p_context->v_socket_mgr(
+            &(
+                p_socket_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_socket_mgr->v_resolve(
+                p_address_descriptor,
+                p_callback,
+                p_callback_context);
+    }
+
+    return
+        e_status;
+
+} // s_resolve()
+
 /* end-of-file: appl_address_service.cpp */

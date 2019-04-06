@@ -79,6 +79,19 @@ class appl_socket_mgr : public appl_object
                 unsigned long int const
                     i_wait_count);
 
+        virtual
+        enum appl_status
+            v_resolve(
+                struct appl_address_descriptor const * const
+                    p_address_descriptor,
+                void (* p_callback)(
+                    void * const
+                        p_callback_context,
+                    struct appl_address_descriptor const * const
+                        p_address_descriptor),
+                void * const
+                    p_callback_context);
+
     protected:
 
     private:

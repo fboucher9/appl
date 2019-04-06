@@ -95,6 +95,8 @@
 
 #include <socket/appl_netdevice_main.h>
 
+#include <socket/appl_address_main.h>
+
 #include <appl_test.h>
 
 void
@@ -3770,6 +3772,22 @@ enum appl_status
             'v'
         };
 
+        static unsigned char const s_ref_address[] =
+        {
+            't',
+            'e',
+            's',
+            't',
+            '_',
+            'a',
+            'd',
+            'd',
+            'r',
+            'e',
+            's',
+            's'
+        };
+
         unsigned char const *
             p_cmd_it;
 
@@ -3883,6 +3901,20 @@ enum appl_status
         {
             e_status =
                 appl_netdevice_main(
+                    p_context,
+                    p_options,
+                    i_shift);
+        }
+        else if (
+            0
+            == appl_buf_compare(
+                p_cmd_min,
+                p_cmd_max,
+                s_ref_address,
+                s_ref_address + sizeof(s_ref_address)))
+        {
+            e_status =
+                appl_address_main(
                     p_context,
                     p_options,
                     i_shift);

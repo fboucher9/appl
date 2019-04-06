@@ -12,6 +12,10 @@
 
 #include <poll.h>
 
+#include <netdb.h>
+
+#include <string.h>
+
 #include <appl_status.h>
 
 #include <appl_types.h>
@@ -41,6 +45,16 @@
 #include <appl_heap_handle.h>
 
 #include <context/appl_context.h>
+
+#include <appl_buf.h>
+
+#include <appl_buf0.h>
+
+#include <appl_address_descriptor.h>
+
+#include <appl_unused.h>
+
+#include <appl_buf_iterator.h>
 
 //
 //
@@ -426,6 +440,207 @@ enum appl_status
         e_status;
 
 } // v_poll()
+
+//
+//
+//
+enum appl_status
+    appl_socket_std_mgr::v_resolve(
+        struct appl_address_descriptor const * const
+            p_address_descriptor,
+        void (* p_callback)(
+            void * const
+                p_callback_context,
+            struct appl_address_descriptor const * const
+                p_address_descriptor),
+        void * const
+            p_callback_context)
+{
+    enum appl_status
+        e_status;
+
+    union appl_buf_ptr
+        o_name_ptr;
+
+    e_status =
+        appl_buf0_create(
+            m_context,
+            p_address_descriptor->p_name_min,
+            p_address_descriptor->p_name_max,
+            &(
+                o_name_ptr.p_uchar));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        struct addrinfo
+            o_hints;
+
+        struct addrinfo *
+            p_addrinfo_list;
+
+        unsigned char
+            a_service[6u];
+
+        struct appl_buf
+            o_service_it;
+
+        o_service_it.o_min.p_uchar =
+            a_service;
+
+        o_service_it.o_max.p_uchar =
+            a_service + sizeof(a_service);
+
+        if (
+            appl_buf_iterator_print_number(
+                &(
+                    o_service_it),
+                p_address_descriptor->i_port,
+                0,
+                0))
+        {
+            if (
+                appl_buf_iterator_write(
+                    &(
+                        o_service_it),
+                    '\000'))
+            {
+                union appl_buf_ptr
+                    o_hints_ptr;
+
+                o_hints_ptr.p_void =
+                    &(
+                        o_hints);
+
+                appl_buf_zero(
+                    o_hints_ptr.p_uchar,
+                    o_hints_ptr.p_uchar + sizeof(o_hints));
+
+                /* Set hints flags */
+                o_hints.ai_socktype =
+                    SOCK_STREAM;
+
+                /* Set hints family */
+
+                int
+                    i_result;
+
+                union appl_buf_ptr
+                    o_service_ptr;
+
+                o_service_ptr.p_uchar =
+                    a_service;
+
+                i_result =
+                    getaddrinfo(
+                        o_name_ptr.pc_char,
+                        o_service_ptr.pc_char,
+                        &(
+                            o_hints),
+                        &(
+                            p_addrinfo_list));
+
+                if (
+                    0
+                    == i_result)
+                {
+                    struct addrinfo *
+                        p_addrinfo_iterator;
+
+                    p_addrinfo_iterator =
+                        p_addrinfo_list;
+
+                    while (
+                        p_addrinfo_iterator)
+                    {
+                        /* Use getnameinfo */
+                        int
+                            i_getnameinfo_result;
+
+                        unsigned char
+                            a_nameinfo_host[64u];
+
+                        unsigned char
+                            a_nameinfo_serv[16u];
+
+                        i_getnameinfo_result =
+                            getnameinfo(
+                                p_addrinfo_iterator->ai_addr,
+                                p_addrinfo_iterator->ai_addrlen,
+                                appl_convert::to_char_ptr(
+                                    a_nameinfo_host),
+                                sizeof(a_nameinfo_host),
+                                appl_convert::to_char_ptr(
+                                    a_nameinfo_serv),
+                                sizeof(a_nameinfo_serv),
+                                NI_NUMERICHOST | NI_NUMERICSERV);
+
+                        if (
+                            0
+                            == i_getnameinfo_result)
+                        {
+                            /* Convert addrinfo to an address descriptor */
+                            struct appl_address_descriptor
+                                o_address_descriptor;
+
+                            o_address_descriptor.i_flags =
+                                0u;
+
+                            o_address_descriptor.p_name_min =
+                                a_nameinfo_host;
+
+                            o_address_descriptor.p_name_max =
+                                a_nameinfo_host
+                                + appl_buf0_len(
+                                    a_nameinfo_host);
+
+                            o_address_descriptor.i_flags |=
+                                APPL_ADDRESS_FLAG_NAME;
+
+                            (*p_callback)(
+                                p_callback_context,
+                                &(
+                                    o_address_descriptor));
+                        }
+
+                        p_addrinfo_iterator =
+                            p_addrinfo_iterator->ai_next;
+                    }
+
+                    freeaddrinfo(
+                        p_addrinfo_list);
+
+                    e_status =
+                        appl_status_ok;
+                }
+                else
+                {
+                    e_status =
+                        appl_raise_fail();
+                }
+            }
+            else
+            {
+                e_status =
+                    appl_raise_fail();
+            }
+        }
+        else
+        {
+            e_status =
+                appl_raise_fail();
+        }
+
+        appl_buf0_destroy(
+            m_context,
+            o_name_ptr.p_uchar);
+    }
+
+    return
+        e_status;
+
+} // v_resolve()
 
 #endif /* #if defined APPL_OS_LINUX */
 

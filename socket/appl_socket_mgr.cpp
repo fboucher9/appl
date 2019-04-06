@@ -188,6 +188,37 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_socket_mgr::v_resolve(
+        struct appl_address_descriptor const * const
+            p_address_descriptor,
+        void (* p_callback)(
+            void * const
+                p_callback_context,
+            struct appl_address_descriptor const * const
+                p_address_descriptor),
+        void * const
+            p_callback_context)
+{
+    enum appl_status
+        e_status;
+
+    appl_unused(
+        p_address_descriptor,
+        p_callback,
+        p_callback_context);
+
+    e_status =
+        appl_raise_not_implemented();
+
+    return
+        e_status;
+
+} // v_resolve()
+
+//
+//
+//
 appl_socket_mgr::appl_socket_mgr(
     struct appl_context * const
         p_context) :

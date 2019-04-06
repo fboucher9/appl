@@ -8,6 +8,7 @@
 enum guard_appl_address_descriptor_h
 {
     inc_appl_address_descriptor_h = 1
+        + inc_appl_types_h
 };
 
 /* Included. */

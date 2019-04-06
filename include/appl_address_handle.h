@@ -18,6 +18,8 @@ struct appl_address;
 
 struct appl_address_property;
 
+struct appl_address_descriptor;
+
 #if defined(__cplusplus)
 extern "C" {
 #endif /* #if defined(__cplusplus) */
@@ -84,6 +86,20 @@ appl_address_get_index(
         p_address,
     unsigned int * const
         r_index);
+
+enum appl_status
+appl_address_resolve(
+    struct appl_context * const
+        p_context,
+    struct appl_address_descriptor const * const
+        p_address_descriptor,
+    void (* p_callback)(
+        void * const
+            p_callback_context,
+        struct appl_address_descriptor const * const
+            p_address_descriptor),
+    void * const
+        p_callback_context);
 
 #if defined(__cplusplus)
 } /* extern "C" */

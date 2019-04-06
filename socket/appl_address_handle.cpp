@@ -159,4 +159,30 @@ appl_address_get_index(
 
 } /* appl_address_get_index() */
 
+/*
+
+*/
+enum appl_status
+appl_address_resolve(
+    struct appl_context * const
+        p_context,
+    struct appl_address_descriptor const * const
+        p_address_descriptor,
+    void (* p_callback)(
+        void * const
+            p_callback_context,
+        struct appl_address_descriptor const * const
+            p_address_descriptor),
+    void * const
+        p_callback_context)
+{
+    return
+        appl_address_service::s_resolve(
+            p_context,
+            p_address_descriptor,
+            p_callback,
+            p_callback_context);
+
+} /* appl_address_resolve() */
+
 /* end-of-file: appl_address_handle.cpp */
