@@ -52,6 +52,8 @@
 
 #include <appl_address_descriptor.h>
 
+#include <appl_address_family.h>
+
 #include <appl_unused.h>
 
 #include <appl_buf_iterator.h>
@@ -462,179 +464,285 @@ enum appl_status
     union appl_buf_ptr
         o_name_ptr;
 
-    e_status =
-        appl_buf0_create(
-            m_context,
-            p_address_descriptor->p_name_min,
-            p_address_descriptor->p_name_max,
-            &(
-                o_name_ptr.p_uchar));
+    if (
+        APPL_ADDRESS_FLAG_NAME & p_address_descriptor->i_flags)
+    {
+        e_status =
+            appl_buf0_create(
+                m_context,
+                p_address_descriptor->p_name_min,
+                p_address_descriptor->p_name_max,
+                &(
+                    o_name_ptr.p_uchar));
+    }
+    else
+    {
+        o_name_ptr.p_void =
+            0;
+
+        e_status =
+            appl_status_ok;
+    }
 
     if (
         appl_status_ok
         == e_status)
     {
-        struct addrinfo
-            o_hints;
-
-        struct addrinfo *
-            p_addrinfo_list;
+        union appl_buf_ptr
+            o_service_ptr;
 
         unsigned char
             a_service[6u];
 
-        struct appl_buf
-            o_service_it;
-
-        o_service_it.o_min.p_uchar =
-            a_service;
-
-        o_service_it.o_max.p_uchar =
-            a_service + sizeof(a_service);
-
         if (
-            appl_buf_iterator_print_number(
-                &(
-                    o_service_it),
-                p_address_descriptor->i_port,
-                0,
-                0))
+            APPL_ADDRESS_FLAG_PORT & p_address_descriptor->i_flags)
         {
+            struct appl_buf
+                o_service_it;
+
+            o_service_it.o_min.p_uchar =
+                a_service;
+
+            o_service_it.o_max.p_uchar =
+                a_service + sizeof(a_service);
+
             if (
-                appl_buf_iterator_write(
+                appl_buf_iterator_print_number(
                     &(
                         o_service_it),
-                    '\000'))
+                    p_address_descriptor->i_port,
+                    0,
+                    0))
             {
-                union appl_buf_ptr
-                    o_hints_ptr;
-
-                o_hints_ptr.p_void =
-                    &(
-                        o_hints);
-
-                appl_buf_zero(
-                    o_hints_ptr.p_uchar,
-                    o_hints_ptr.p_uchar + sizeof(o_hints));
-
-                /* Set hints flags */
-                o_hints.ai_socktype =
-                    SOCK_STREAM;
-
-                /* Set hints family */
-
-                int
-                    i_result;
-
-                union appl_buf_ptr
-                    o_service_ptr;
-
-                o_service_ptr.p_uchar =
-                    a_service;
-
-                i_result =
-                    getaddrinfo(
-                        o_name_ptr.pc_char,
-                        o_service_ptr.pc_char,
-                        &(
-                            o_hints),
-                        &(
-                            p_addrinfo_list));
-
                 if (
-                    0
-                    == i_result)
+                    appl_buf_iterator_write(
+                        &(
+                            o_service_it),
+                        '\000'))
                 {
-                    struct addrinfo *
-                        p_addrinfo_iterator;
-
-                    p_addrinfo_iterator =
-                        p_addrinfo_list;
-
-                    while (
-                        p_addrinfo_iterator)
-                    {
-                        /* Use getnameinfo */
-                        int
-                            i_getnameinfo_result;
-
-                        unsigned char
-                            a_nameinfo_host[64u];
-
-                        unsigned char
-                            a_nameinfo_serv[16u];
-
-                        i_getnameinfo_result =
-                            getnameinfo(
-                                p_addrinfo_iterator->ai_addr,
-                                p_addrinfo_iterator->ai_addrlen,
-                                appl_convert::to_char_ptr(
-                                    a_nameinfo_host),
-                                sizeof(a_nameinfo_host),
-                                appl_convert::to_char_ptr(
-                                    a_nameinfo_serv),
-                                sizeof(a_nameinfo_serv),
-                                NI_NUMERICHOST | NI_NUMERICSERV);
-
-                        if (
-                            0
-                            == i_getnameinfo_result)
-                        {
-                            /* Convert addrinfo to an address descriptor */
-                            struct appl_address_descriptor
-                                o_address_descriptor;
-
-                            o_address_descriptor.i_flags =
-                                0u;
-
-                            o_address_descriptor.p_name_min =
-                                a_nameinfo_host;
-
-                            o_address_descriptor.p_name_max =
-                                a_nameinfo_host
-                                + appl_buf0_len(
-                                    a_nameinfo_host);
-
-                            o_address_descriptor.i_flags |=
-                                APPL_ADDRESS_FLAG_NAME;
-
-                            (*p_callback)(
-                                p_callback_context,
-                                &(
-                                    o_address_descriptor));
-                        }
-
-                        p_addrinfo_iterator =
-                            p_addrinfo_iterator->ai_next;
-                    }
-
-                    freeaddrinfo(
-                        p_addrinfo_list);
+                    o_service_ptr.p_uchar =
+                        a_service;
 
                     e_status =
                         appl_status_ok;
                 }
                 else
                 {
+                    o_service_ptr.p_void =
+                        0;
+
                     e_status =
                         appl_raise_fail();
                 }
             }
             else
             {
+                o_service_ptr.p_void =
+                    0;
+
                 e_status =
                     appl_raise_fail();
             }
         }
         else
         {
+            o_service_ptr.p_void =
+                0;
+
             e_status =
-                appl_raise_fail();
+                appl_status_ok;
         }
 
-        appl_buf0_destroy(
-            m_context,
-            o_name_ptr.p_uchar);
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            struct addrinfo
+                o_hints;
+
+            struct addrinfo *
+                p_addrinfo_list;
+
+            union appl_buf_ptr
+                o_hints_ptr;
+
+            o_hints_ptr.p_void =
+                &(
+                    o_hints);
+
+            appl_buf_zero(
+                o_hints_ptr.p_uchar,
+                o_hints_ptr.p_uchar + sizeof(o_hints));
+
+            /* Set hints flags */
+            o_hints.ai_socktype =
+                SOCK_STREAM;
+
+            /* Set hints family */
+            if (
+                APPL_ADDRESS_FLAG_FAMILY
+                & p_address_descriptor->i_flags)
+            {
+                if (
+                    appl_address_family_inet
+                    == p_address_descriptor->e_family)
+                {
+                    o_hints.ai_family =
+                        AF_INET;
+                }
+                else if (
+                    appl_address_family_inet6
+                    == p_address_descriptor->e_family)
+                {
+                    o_hints.ai_family =
+                        AF_INET6;
+                }
+            }
+
+            int
+                i_result;
+
+            i_result =
+                getaddrinfo(
+                    o_name_ptr.pc_char,
+                    o_service_ptr.pc_char,
+                    &(
+                        o_hints),
+                    &(
+                        p_addrinfo_list));
+
+            if (
+                0
+                == i_result)
+            {
+                struct addrinfo *
+                    p_addrinfo_iterator;
+
+                p_addrinfo_iterator =
+                    p_addrinfo_list;
+
+                while (
+                    p_addrinfo_iterator)
+                {
+                    /* Use getnameinfo */
+                    int
+                        i_getnameinfo_result;
+
+                    unsigned char
+                        a_nameinfo_host[64u];
+
+                    unsigned char
+                        a_nameinfo_serv[16u];
+
+                    i_getnameinfo_result =
+                        getnameinfo(
+                            p_addrinfo_iterator->ai_addr,
+                            p_addrinfo_iterator->ai_addrlen,
+                            appl_convert::to_char_ptr(
+                                a_nameinfo_host),
+                            sizeof(a_nameinfo_host),
+                            appl_convert::to_char_ptr(
+                                a_nameinfo_serv),
+                            sizeof(a_nameinfo_serv),
+                            NI_NUMERICHOST | NI_NUMERICSERV);
+
+                    if (
+                        0
+                        == i_getnameinfo_result)
+                    {
+                        /* Convert addrinfo to an address descriptor */
+                        struct appl_address_descriptor
+                            o_address_descriptor;
+
+                        o_address_descriptor.i_flags =
+                            0u;
+
+                        o_address_descriptor.p_name_min =
+                            a_nameinfo_host;
+
+                        o_address_descriptor.p_name_max =
+                            a_nameinfo_host
+                            + appl_buf0_len(
+                                a_nameinfo_host);
+
+                        o_address_descriptor.i_flags |=
+                            APPL_ADDRESS_FLAG_NAME;
+
+                        signed long int
+                            i_value;
+
+                        i_value =
+                            0;
+
+                        appl_buf_scan_number(
+                            a_nameinfo_serv,
+                            a_nameinfo_serv + appl_buf0_len(
+                                a_nameinfo_serv),
+                            &(
+                                i_value),
+                            0);
+
+                        if (
+                            i_value)
+                        {
+                            o_address_descriptor.i_flags |=
+                                APPL_ADDRESS_FLAG_PORT;
+
+                            o_address_descriptor.i_port =
+                                appl_convert::to_ushort(
+                                    appl_convert::to_unsigned(
+                                        i_value));
+                        }
+
+                        if (
+                            AF_INET
+                            == p_addrinfo_iterator->ai_family)
+                        {
+                            o_address_descriptor.i_flags |=
+                                APPL_ADDRESS_FLAG_FAMILY;
+
+                            o_address_descriptor.e_family =
+                                appl_address_family_inet;
+                        }
+                        else if (
+                            AF_INET6
+                            == p_addrinfo_iterator->ai_family)
+                        {
+                            o_address_descriptor.i_flags |=
+                                APPL_ADDRESS_FLAG_FAMILY;
+
+                            o_address_descriptor.e_family =
+                                appl_address_family_inet6;
+                        }
+
+                        (*p_callback)(
+                            p_callback_context,
+                            &(
+                                o_address_descriptor));
+                    }
+
+                    p_addrinfo_iterator =
+                        p_addrinfo_iterator->ai_next;
+                }
+
+                freeaddrinfo(
+                    p_addrinfo_list);
+
+                e_status =
+                    appl_status_ok;
+            }
+        }
+
+        if (
+            o_name_ptr.p_uchar)
+        {
+            appl_buf0_destroy(
+                m_context,
+                o_name_ptr.p_uchar);
+
+            o_name_ptr.p_uchar =
+                0;
+        }
     }
 
     return

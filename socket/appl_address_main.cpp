@@ -52,6 +52,15 @@ void
 
     appl_print0(
         "]\n");
+
+    appl_print0(
+        "family=[");
+
+    appl_print_ld(
+        p_address_descriptor->e_family);
+
+    appl_print0(
+        "]\n");
 }
 
 //
