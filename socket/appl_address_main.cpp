@@ -20,6 +20,12 @@
 
 #include <appl_options_handle.h>
 
+#include <appl_buf.h>
+
+#include <appl_address_family.h>
+
+#include <appl_convert.h>
+
 static
 void
     test_address_resolve_callback(
@@ -34,33 +40,62 @@ void
     appl_print0(
         "resolve callback:\n");
 
-    appl_print0(
-        "name=[");
+    if (
+        p_address_descriptor->i_flags
+        & APPL_ADDRESS_FLAG_NAME)
+    {
+        appl_print0(
+            "name=[");
 
-    appl_print(
-        p_address_descriptor->p_name_min,
-        p_address_descriptor->p_name_max);
+        appl_print(
+            p_address_descriptor->p_name_min,
+            p_address_descriptor->p_name_max);
 
-    appl_print0(
-        "]\n");
+        appl_print0(
+            "]\n");
+    }
 
-    appl_print0(
-        "port=[");
+    if (
+        p_address_descriptor->i_flags
+        & APPL_ADDRESS_FLAG_PORT)
+    {
+        appl_print0(
+            "port=[");
 
-    appl_print_lu(
-        p_address_descriptor->i_port);
+        appl_print_lu(
+            p_address_descriptor->i_port);
 
-    appl_print0(
-        "]\n");
+        appl_print0(
+            "]\n");
+    }
 
-    appl_print0(
-        "family=[");
+    if (
+        p_address_descriptor->i_flags
+        & APPL_ADDRESS_FLAG_FAMILY)
+    {
+        appl_print0(
+            "family=[");
 
-    appl_print_ld(
-        p_address_descriptor->e_family);
+        appl_print_ld(
+            p_address_descriptor->e_family);
 
-    appl_print0(
-        "]\n");
+        appl_print0(
+            "]\n");
+    }
+
+    if (
+        p_address_descriptor->i_flags
+        & APPL_ADDRESS_FLAG_INDEX)
+    {
+        appl_print0(
+            "index=[");
+
+        appl_print_lu(
+            p_address_descriptor->i_index);
+
+        appl_print0(
+            "]\n");
+    }
 }
 
 //
@@ -78,55 +113,176 @@ enum appl_status
     enum appl_status
         e_status;
 
+    struct appl_address_descriptor
+        o_address_descriptor;
+
     // resolve address and create an address object
     // p_options[i_shift + 0] = test-address
     // p_options[i_shift + 1] = host
     // p_options[i_shift + 2] = port
 
-    unsigned char const *
-        p_host_min;
+    o_address_descriptor.i_flags =
+        0u;
 
-    unsigned char const *
-        p_host_max;
+    {
+        unsigned long int
+            i_iterator;
+
+        i_iterator =
+            i_shift + 1ul;
+
+        unsigned char const *
+            p_option_min;
+
+        unsigned char const *
+            p_option_max;
+
+        bool
+            b_more_options;
+
+        b_more_options =
+            true;
+
+        while (
+            b_more_options)
+        {
+            if (
+                appl_status_ok
+                == appl_options_get(
+                    p_options,
+                    i_iterator,
+                    &(
+                        p_option_min),
+                    &(
+                        p_option_max)))
+            {
+                i_iterator ++;
+
+                static unsigned char const s_ref_inet[] =
+                {
+                    '-',
+                    '4'
+                };
+
+                static unsigned char const s_ref_inet6[] =
+                {
+                    '-',
+                    '6'
+                };
+
+                static unsigned char const s_ref_port[] =
+                {
+                    '-',
+                    'p'
+                };
+
+                if (
+                    0
+                    == appl_buf_compare(
+                        p_option_min,
+                        p_option_max,
+                        s_ref_inet,
+                        s_ref_inet + sizeof(s_ref_inet)))
+                {
+                    o_address_descriptor.i_flags |=
+                        APPL_ADDRESS_FLAG_FAMILY;
+
+                    o_address_descriptor.e_family =
+                        appl_address_family_inet;
+                }
+                else if (
+                    0
+                    == appl_buf_compare(
+                        p_option_min,
+                        p_option_max,
+                        s_ref_inet6,
+                        s_ref_inet6 + sizeof(s_ref_inet6)))
+                {
+                    o_address_descriptor.i_flags |=
+                        APPL_ADDRESS_FLAG_FAMILY;
+
+                    o_address_descriptor.e_family =
+                        appl_address_family_inet6;
+                }
+                else if (
+                    0
+                    == appl_buf_compare(
+                        p_option_min,
+                        p_option_max,
+                        s_ref_port,
+                        s_ref_port + sizeof(s_ref_port)))
+                {
+                    if (
+                        appl_status_ok
+                        == appl_options_get(
+                            p_options,
+                            i_iterator,
+                            &(
+                                p_option_min),
+                            &(
+                                p_option_max)))
+                    {
+                        i_iterator ++;
+
+                        signed long int
+                            i_value;
+
+                        i_value =
+                            0l;
+
+                        appl_buf_scan_number(
+                            p_option_min,
+                            p_option_max,
+                            &(
+                                i_value),
+                            0);
+
+                        if (
+                            i_value)
+                        {
+                            o_address_descriptor.i_flags |=
+                                APPL_ADDRESS_FLAG_PORT;
+
+                            o_address_descriptor.i_port =
+                                appl_convert::to_ushort(
+                                    appl_convert::to_unsigned(
+                                        i_value));
+                        }
+                    }
+                    else
+                    {
+                        b_more_options =
+                            false;
+                    }
+                }
+                else
+                {
+                    o_address_descriptor.i_flags |=
+                        APPL_ADDRESS_FLAG_NAME;
+
+                    o_address_descriptor.p_name_min =
+                        p_option_min;
+
+                    o_address_descriptor.p_name_max =
+                        p_option_max;
+                }
+            }
+            else
+            {
+                b_more_options =
+                    false;
+            }
+        }
+    }
 
     e_status =
-        appl_options_get(
-            p_options,
-            i_shift + 1ul,
+        appl_address_resolve(
+            p_context,
             &(
-                p_host_min),
+                o_address_descriptor),
             &(
-                p_host_max));
-
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        struct appl_address_descriptor
-            o_address_descriptor;
-
-        o_address_descriptor.i_flags =
-            APPL_ADDRESS_FLAG_NAME
-            | APPL_ADDRESS_FLAG_PORT;
-
-        o_address_descriptor.p_name_min =
-            p_host_min;
-
-        o_address_descriptor.p_name_max =
-            p_host_max;
-
-        o_address_descriptor.i_port =
-            1234u;
-
-        e_status =
-            appl_address_resolve(
-                p_context,
-                &(
-                    o_address_descriptor),
-                &(
-                    test_address_resolve_callback),
-                0);
-    }
+                test_address_resolve_callback),
+            0);
 
     return
         e_status;

@@ -715,6 +715,38 @@ enum appl_status
                                 appl_address_family_inet6;
                         }
 
+                        /* Check if there's an index */
+                        if (
+                            AF_INET6
+                            == p_addrinfo_iterator->ai_family)
+                        {
+                            union appl_sockaddr_ptr
+                            {
+                                struct sockaddr const *
+                                    pc_sockaddr;
+
+                                struct sockaddr_in const *
+                                    pc_sockaddr_in;
+
+                                struct sockaddr_in6 const *
+                                    pc_sockaddr_in6;
+                            } o_sockaddr_ptr;
+
+                            o_sockaddr_ptr.pc_sockaddr =
+                                p_addrinfo_iterator->ai_addr;
+
+                            if (
+                                o_sockaddr_ptr.pc_sockaddr_in6->sin6_scope_id)
+                            {
+                                o_address_descriptor.i_flags |=
+                                    APPL_ADDRESS_FLAG_INDEX;
+
+                                o_address_descriptor.i_index =
+                                    appl_convert::to_uint(
+                                        o_sockaddr_ptr.pc_sockaddr_in6->sin6_scope_id);
+                            }
+                        }
+
                         (*p_callback)(
                             p_callback_context,
                             &(
