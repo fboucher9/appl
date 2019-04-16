@@ -40,6 +40,13 @@ class appl_download_mgr : public appl_object
         virtual
         ~appl_download_mgr();
 
+        enum appl_status
+            f_init(void);
+
+        virtual
+        appl_size_t
+            v_cleanup(void);
+
         virtual
         enum appl_status
             v_create_node(

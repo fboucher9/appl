@@ -12,6 +12,16 @@
 
 #include <socket/appl_download_service.h>
 
+#include <appl_object.h>
+
+#include <context/appl_context.h>
+
+#include <socket/appl_download_mgr.h>
+
+#include <appl_node.h>
+
+#include <socket/appl_download_node.h>
+
 #include <appl_unused.h>
 
 //
@@ -26,13 +36,29 @@ enum appl_status
         struct appl_download * * const
             r_handle)
 {
-    appl_unused(
-        p_context,
-        p_descriptor,
-        r_handle);
+    enum appl_status
+        e_status;
+
+    class appl_download_mgr *
+        p_download_mgr;
+
+    e_status =
+        p_context->v_download_mgr(
+            &(
+                p_download_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_download_mgr->v_create_node(
+                p_descriptor,
+                r_handle);
+    }
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_create()
 
@@ -44,11 +70,32 @@ enum appl_status
         struct appl_download * const
             p_handle)
 {
-    appl_unused(
-        p_handle);
+    enum appl_status
+        e_status;
+
+    struct appl_context * const
+        p_context =
+        p_handle->get_context();
+
+    class appl_download_mgr *
+        p_download_mgr;
+
+    e_status =
+        p_context->v_download_mgr(
+            &(
+                p_download_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_download_mgr->v_destroy_node(
+                p_handle);
+    }
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_destroy()
 

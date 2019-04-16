@@ -40,6 +40,34 @@ appl_download::~appl_download()
 //
 //
 enum appl_status
+    appl_download::f_init(
+        struct appl_download_descriptor const * const
+            p_descriptor)
+{
+    appl_unused(
+        p_descriptor);
+
+    return
+        appl_status_ok;
+
+} // f_init()
+
+//
+//
+//
+appl_size_t
+    appl_download::v_cleanup(void)
+{
+    return
+        sizeof(
+            struct appl_download);
+
+} // v_cleanup()
+
+//
+//
+//
+enum appl_status
     appl_download::v_cancel(void)
 {
     return

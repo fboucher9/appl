@@ -160,8 +160,8 @@ class appl_context_std : public appl_context
         class appl_netdevice_mgr *
             m_netdevice_mgr;
 
-        void *
-            z_netdevice_mgr[1u];
+        class appl_download_mgr *
+            m_download_mgr;
 
         /* -- */
 
@@ -246,7 +246,10 @@ class appl_context_std : public appl_context
         bool
             b_init_netdevice_mgr;
 
-#define PADDING (3)
+        bool
+            b_init_download_mgr;
+
+#define PADDING (4)
 #include <appl_padding.h>
 
         /* -- */
@@ -388,6 +391,12 @@ class appl_context_std : public appl_context
         void
             cleanup_netdevice_mgr(void);
 
+        enum appl_status
+            init_download_mgr(void);
+
+        void
+            cleanup_download_mgr(void);
+
         static
         void
             s_bootstrap(void);
@@ -501,6 +510,12 @@ class appl_context_std : public appl_context
             v_netdevice_mgr(
                 class appl_netdevice_mgr * * const
                     r_netdevice_mgr) const;
+
+        virtual
+        enum appl_status
+            v_download_mgr(
+                class appl_download_mgr * * const
+                    r_download_mgr) const;
 
 #if defined APPL_DEBUG
         virtual

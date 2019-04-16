@@ -30,6 +30,15 @@ struct appl_download : public appl_node
         virtual
         ~appl_download();
 
+        enum appl_status
+            f_init(
+                struct appl_download_descriptor const * const
+                    p_descriptor);
+
+        virtual
+        appl_size_t
+            v_cleanup(void);
+
         virtual
         enum appl_status
             v_cancel(void);

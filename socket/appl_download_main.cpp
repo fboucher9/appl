@@ -238,8 +238,8 @@ enum appl_status
 
         /* Wait for download to complete */
         while (
-            appl_status_ok
-            != appl_download_wait(
+            appl_status_timeout
+            == appl_download_wait(
                 p_download,
                 1000ul,
                 &(

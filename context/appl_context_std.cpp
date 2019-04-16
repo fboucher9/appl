@@ -182,6 +182,8 @@
 
 #include <backtrace/appl_backtrace_std.h>
 
+#include <socket/appl_download_mgr.h>
+
 #include <appl_once.h>
 
 #include <appl_convert.h>
@@ -1539,6 +1541,58 @@ void
 //
 //
 //
+enum appl_status
+    appl_context_std::init_download_mgr(void)
+{
+    enum appl_status
+        e_status;
+
+#if defined APPL_DEBUG
+    appl_debug_impl::s_validate(
+        !b_init_download_mgr,
+        "download_mgr already initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+    e_status =
+        appl_new(
+            m_allocator,
+            &(
+                m_download_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        b_init_download_mgr =
+            true;
+    }
+
+    return
+        e_status;
+
+} // init_download_mgr()
+
+//
+//
+//
+void
+    appl_context_std::cleanup_download_mgr(void)
+{
+    if (
+        b_init_download_mgr)
+    {
+        appl_delete(
+            m_allocator,
+            m_download_mgr);
+
+        b_init_download_mgr =
+            false;
+    }
+} // cleanup_download_mgr()
+
+//
+//
+//
 void
     appl_context_std::s_bootstrap(void)
 {
@@ -1640,6 +1694,7 @@ appl_context_std::appl_context_std(
     , m_event_mgr()
     , m_socket_mgr()
     , m_netdevice_mgr()
+    , m_download_mgr()
 #if defined APPL_DEBUG
     , m_heap_dbg()
     , m_debug()
@@ -1667,6 +1722,7 @@ appl_context_std::appl_context_std(
 #endif /* #if defined APPL_HAVE_XLIB */
     , b_init_backtrace()
     , b_init_netdevice_mgr()
+    , b_init_download_mgr()
 {
     appl_unused(
         p_context);
@@ -1751,6 +1807,10 @@ appl_context_std::g_init_cleanup_items[] =
     {
         & appl_context_std::init_timer_mgr,
         & appl_context_std::cleanup_timer_mgr
+    },
+    {
+        & appl_context_std::init_download_mgr,
+        & appl_context_std::cleanup_download_mgr
     }
 #if defined APPL_HAVE_XLIB
     , {
@@ -2503,6 +2563,43 @@ enum appl_status
         e_status;
 
 } // v_netdevice_mgr()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_download_mgr(
+        class appl_download_mgr * * const
+            r_download_mgr) const
+{
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_download_mgr)
+    {
+        *(
+            r_download_mgr) =
+            m_download_mgr;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "download_mgr not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // v_download_mgr()
 
 //
 //
