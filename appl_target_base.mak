@@ -65,6 +65,10 @@ appl_base-deps := \
     dict/appl_dict_service.cpp \
     dict/appl_dict.cpp \
     dict/appl_dict_std.cpp \
+    socket/appl_download_handle.cpp \
+    socket/appl_download_service.cpp \
+    socket/appl_download_mgr.cpp \
+    socket/appl_download_node.cpp \
     env/appl_env.cpp \
     env/appl_env_handle.cpp \
     env/appl_env_service.cpp \

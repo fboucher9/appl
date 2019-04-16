@@ -97,6 +97,8 @@
 
 #include <socket/appl_address_main.h>
 
+#include <socket/appl_download_main.h>
+
 #include <appl_test.h>
 
 void
@@ -3788,6 +3790,23 @@ enum appl_status
             's'
         };
 
+        static unsigned char const s_ref_download[] =
+        {
+            't',
+            'e',
+            's',
+            't',
+            '_',
+            'd',
+            'o',
+            'w',
+            'n',
+            'l',
+            'o',
+            'a',
+            'd'
+        };
+
         unsigned char const *
             p_cmd_it;
 
@@ -3915,6 +3934,20 @@ enum appl_status
         {
             e_status =
                 appl_address_main(
+                    p_context,
+                    p_options,
+                    i_shift);
+        }
+        else if (
+            0
+            == appl_buf_compare(
+                p_cmd_min,
+                p_cmd_max,
+                s_ref_download,
+                s_ref_download + sizeof(s_ref_download)))
+        {
+            e_status =
+                appl_download_main(
                     p_context,
                     p_options,
                     i_shift);

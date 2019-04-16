@@ -1,0 +1,58 @@
+/* See LICENSE for license details */
+
+/*
+
+*/
+
+/* Included. */
+#define INC_APPL_DOWNLOAD_NODE_H
+
+/* Reverse include guard */
+enum guard_appl_download_node_h
+{
+    inc_appl_download_node_h = 1
+        /* Header file dependency */
+        + inc_appl_node_h
+        + inc_appl_download_handle_h
+};
+
+//
+//
+//
+struct appl_download : public appl_node
+{
+    public:
+
+        appl_download(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_download();
+
+        virtual
+        enum appl_status
+            v_cancel(void);
+
+        virtual
+        enum appl_status
+            v_wait(
+                unsigned long int const
+                    i_timeout_msec,
+                enum appl_download_status * const
+                    r_status);
+
+    protected:
+
+    private:
+
+        appl_download(
+            struct appl_download const & r);
+
+        struct appl_download &
+            operator =(
+                struct appl_download const & r);
+
+}; // struct appl_download
+
+/* end-of-file: appl_download_node.h */
