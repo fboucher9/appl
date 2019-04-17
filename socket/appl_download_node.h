@@ -55,12 +55,60 @@ struct appl_download : public appl_node
 
     private:
 
+        struct appl_download_descriptor
+            m_descriptor;
+
+        // --
+
+        struct appl_thread *
+            m_thread;
+
+        struct appl_mutex *
+            m_mutex;
+
+        // --
+
+        struct appl_event *
+            m_event;
+
+        enum appl_download_status
+            m_status;
+
+        bool
+            m_thread_created;
+
+        bool
+            m_mutex_created;
+
+        bool
+            m_event_created;
+
+        bool
+            m_kill;
+
+#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_INT + 4)
+#include <appl_padding.h>
+
+        // --
+
         appl_download(
             struct appl_download const & r);
 
         struct appl_download &
             operator =(
                 struct appl_download const & r);
+
+        static
+        void
+            s_thread_entry(
+                void * const
+                    p_thread_context);
+
+        void
+            f_thread_handler(void);
+
+        enum appl_status
+            f_cancel(void);
 
 }; // struct appl_download
 

@@ -107,11 +107,14 @@ enum appl_status
         struct appl_download * const
             p_handle)
 {
-    appl_unused(
-        p_handle);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_handle->v_cancel();
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_cancel()
 
@@ -127,13 +130,16 @@ enum appl_status
         enum appl_download_status * const
             r_status)
 {
-    appl_unused(
-        p_handle,
-        i_timeout_msec,
-        r_status);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_handle->v_wait(
+            i_timeout_msec,
+            r_status);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_wait()
 

@@ -233,18 +233,35 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
+        unsigned int
+            i_timeout;
+
         enum appl_download_status
             e_download_status;
+
+        i_timeout = 5u;
 
         /* Wait for download to complete */
         while (
             appl_status_timeout
             == appl_download_wait(
                 p_download,
-                1000ul,
+                600ul,
                 &(
                     e_download_status)))
         {
+            if (
+                i_timeout)
+            {
+                i_timeout --;
+            }
+            if (
+                0
+                == i_timeout)
+            {
+                appl_download_cancel(
+                    p_download);
+            }
         }
 
         appl_download_destroy(
