@@ -23,7 +23,7 @@ struct appl_context;
 
 struct appl_thread;
 
-struct appl_thread_property;
+struct appl_thread_descriptor;
 
 //
 //
@@ -42,8 +42,6 @@ class appl_thread_mgr : public appl_object
         virtual
         enum appl_status
             v_create_node(
-                struct appl_thread_property const * const
-                    p_thread_property,
                 struct appl_thread_descriptor const * const
                     p_thread_descriptor,
                 struct appl_thread * * const

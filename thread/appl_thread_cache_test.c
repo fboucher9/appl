@@ -61,17 +61,11 @@ appl_thread_cache_test(
     enum appl_status
         e_status;
 
-    struct appl_thread_property *
-        p_thread_property;
-
     struct appl_thread_descriptor
         o_thread_descriptor;
 
     static struct test_thread_cache_data
         o_test_data;
-
-    union appl_buf_ptr
-        o_ptr;
 
     o_test_data.p_context =
         p_context;
@@ -79,14 +73,9 @@ appl_thread_cache_test(
     o_test_data.p_thread_cache =
         0;
 
-    o_ptr.p_void =
+    appl_thread_descriptor_init(
         &(
-            o_thread_descriptor);
-
-    appl_buf_fill(
-        o_ptr.p_uchar,
-        o_ptr.p_uchar + sizeof(o_thread_descriptor),
-        0);
+            o_thread_descriptor));
 
     o_thread_descriptor.b_callback =
         1;
@@ -99,20 +88,10 @@ appl_thread_cache_test(
         &(
             o_test_data);
 
-    e_status =
-        appl_thread_property_create(
-            p_context,
-            &(
-                p_thread_property));
-
-    if (
-        appl_status_ok
-        == e_status)
     {
         e_status =
             appl_thread_cache_create(
                 p_context,
-                p_thread_property,
                 &(
                     o_thread_descriptor),
                 &(
@@ -128,9 +107,6 @@ appl_thread_cache_test(
                 1000ul);
 
         }
-
-        appl_thread_property_destroy(
-            p_thread_property);
     }
 
 } /* appl_thread_cache_test() */

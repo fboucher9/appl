@@ -54,7 +54,7 @@ Comments:
 
 #include <appl_buf.h>
 
-struct appl_thread_property;
+struct appl_thread_descriptor;
 
 class appl_thread_cache_mgr;
 
@@ -67,9 +67,6 @@ struct appl_thread_cache_descriptor
 {
     class appl_thread_cache_mgr *
         p_thread_cache_mgr;
-
-    struct appl_thread_property const *
-        p_thread_property;
 
 }; /* struct appl_thread_cache_descriptor */
 
@@ -186,17 +183,9 @@ struct appl_thread_cache : public appl_thread
             struct appl_thread_descriptor
                 o_thread_descriptor;
 
-            union appl_buf_ptr
-                o_thread_descriptor_ptr;
-
-            o_thread_descriptor_ptr.p_void =
+            appl_thread_descriptor_init(
                 &(
-                    o_thread_descriptor);
-
-            appl_buf_fill(
-                o_thread_descriptor_ptr.p_uchar,
-                o_thread_descriptor_ptr.p_uchar + sizeof(o_thread_descriptor),
-                0);
+                    o_thread_descriptor));
 
             o_thread_descriptor.b_callback =
                 1;
@@ -255,7 +244,6 @@ struct appl_thread_cache : public appl_thread
                     {
                         e_status =
                             p_thread_mgr->v_create_node(
-                                p_thread_cache_descriptor->p_thread_property,
                                 &(
                                     o_thread_descriptor),
                                 &(
@@ -502,8 +490,6 @@ class appl_thread_cache_node : public appl_node
                     p_allocator,
                 class appl_thread_cache_mgr * const
                     p_thread_cache_mgr,
-                struct appl_thread_property const * const
-                    p_thread_property,
                 class appl_thread_cache_node * * const
                     r_instance)
         {
@@ -515,9 +501,6 @@ class appl_thread_cache_node : public appl_node
 
             o_thread_cache_descriptor.p_thread_cache_mgr =
                 p_thread_cache_mgr;
-
-            o_thread_cache_descriptor.p_thread_property =
-                p_thread_property;
 
             e_status =
                 appl_new(
@@ -721,8 +704,6 @@ class appl_thread_cache_mgr : public appl_object
 
         enum appl_status
             f_create_node(
-                struct appl_thread_property const * const
-                    p_thread_property,
                 struct appl_thread_descriptor const * const
                     p_thread_descriptor,
                 struct appl_thread_cache * * const
@@ -754,7 +735,6 @@ class appl_thread_cache_mgr : public appl_object
                     appl_thread_cache_node::s_create_instance(
                         m_context->v_allocator(),
                         this,
-                        p_thread_property,
                         &(
                             o_thread_cache_node_ptr.p_thread_cache_node));
             }
@@ -1248,8 +1228,6 @@ class appl_thread_cache_service
             s_create(
                 struct appl_context * const
                     p_context,
-                struct appl_thread_property const * const
-                    p_thread_property,
                 struct appl_thread_descriptor const * const
                     p_thread_descriptor,
                 struct appl_thread_cache * * const
@@ -1272,7 +1250,6 @@ class appl_thread_cache_service
             {
                 e_status =
                     p_thread_cache_mgr->f_create_node(
-                        p_thread_property,
                         p_thread_descriptor,
                         r_thread_cache);
             }
@@ -1343,8 +1320,6 @@ enum appl_status
     appl_thread_cache_create(
         struct appl_context * const
             p_context,
-        struct appl_thread_property const * const
-            p_thread_property,
         struct appl_thread_descriptor const * const
             p_thread_descriptor,
         struct appl_thread_cache * * const
@@ -1353,7 +1328,6 @@ enum appl_status
     return
         appl_thread_cache_service::s_create(
             p_context,
-            p_thread_property,
             p_thread_descriptor,
             r_thread_cache);
 

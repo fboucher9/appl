@@ -19,7 +19,7 @@ enum guard_appl_thread_std_node_h
 
 struct appl_context;
 
-struct appl_thread_property;
+struct appl_thread_descriptor;
 
 #if !defined(__cplusplus)
 #error use C++ compiler
@@ -43,8 +43,6 @@ class appl_thread_std_node : public appl_thread
             s_create(
                 struct appl_allocator * const
                     p_allocator,
-                struct appl_thread_property const * const
-                    p_thread_property,
                 struct appl_thread_descriptor const * const
                     p_thread_descriptor,
                 struct appl_thread * * const

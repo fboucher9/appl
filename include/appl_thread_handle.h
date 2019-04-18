@@ -16,8 +16,6 @@ struct appl_object;
 
 struct appl_thread;
 
-struct appl_thread_property;
-
 struct appl_thread_descriptor;
 
 struct appl_object;
@@ -30,8 +28,6 @@ enum appl_status
 appl_thread_create(
     struct appl_context * const
         p_context,
-    struct appl_thread_property const * const
-        p_thread_property,
     struct appl_thread_descriptor const * const
         p_thread_descriptor,
     struct appl_thread * * const

@@ -867,9 +867,6 @@ static void appl_test_thread(
     struct appl_queue *
         p_queue;
 
-    struct appl_thread_property *
-        p_property;
-
     struct appl_queue_descriptor
         o_queue_descriptor;
 
@@ -907,11 +904,6 @@ static void appl_test_thread(
         o_test_thread_context.b_kill =
             0;
 
-        appl_thread_property_create(
-            p_context,
-            &(
-                p_property));
-
         o_thread_descriptor.b_callback =
             1;
 
@@ -926,7 +918,6 @@ static void appl_test_thread(
         e_status =
             appl_thread_create(
                 p_context,
-                p_property,
                 &(
                     o_thread_descriptor),
                 &(
@@ -992,9 +983,6 @@ static void appl_test_thread(
             appl_thread_destroy(
                 p_thread);
         }
-
-        appl_thread_property_destroy(
-            p_property);
 
         appl_queue_destroy(
             p_queue);
@@ -1252,9 +1240,6 @@ appl_test_socket_process_client(
             b_free_connection_context;
 
         /* create a thread for client */
-        struct appl_thread_property *
-            p_thread_property;
-
         b_free_connection_context =
             1;
 
@@ -1267,27 +1252,13 @@ appl_test_socket_process_client(
         p_test_socket_connection_context->p_remote_address =
             p_remote_address;
 
-        e_status =
-            appl_thread_property_create(
-                p_context,
-                &(
-                    p_thread_property));
-
-        if (
-            appl_status_ok
-            == e_status)
         {
             struct appl_thread_descriptor
                 o_thread_descriptor;
 
-            appl_buf_fill(
-                (unsigned char *)(
-                    &(
-                        o_thread_descriptor)),
-                (unsigned char *)(
-                    &(
-                        o_thread_descriptor) + 1u),
-                0);
+            appl_thread_descriptor_init(
+                &(
+                    o_thread_descriptor));
 
             o_thread_descriptor.b_callback =
                 1;
@@ -1302,7 +1273,6 @@ appl_test_socket_process_client(
             e_status =
                 appl_thread_create(
                     p_context,
-                    p_thread_property,
                     &(
                         o_thread_descriptor),
                     &(
@@ -1322,9 +1292,6 @@ appl_test_socket_process_client(
                         p_test_socket_connection_context->p_thread);
                 }
             }
-
-            appl_thread_property_destroy(
-                p_thread_property);
         }
 
         if (

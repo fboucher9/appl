@@ -24,8 +24,6 @@
 
 #include <appl_thread_descriptor.h>
 
-#include <appl_thread_property.h>
-
 #include <thread/appl_thread_node.h>
 
 #include <thread/appl_thread_impl.h>
@@ -41,9 +39,6 @@
 */
 struct appl_thread_std_node_descriptor
 {
-    struct appl_thread_property const *
-        p_thread_property;
-
     struct appl_thread_descriptor const *
         p_thread_descriptor;
 
@@ -56,8 +51,6 @@ enum appl_status
     appl_thread_std_node::s_create(
         struct appl_allocator * const
             p_allocator,
-        struct appl_thread_property const * const
-            p_thread_property,
         struct appl_thread_descriptor const * const
             p_thread_descriptor,
         struct appl_thread * * const
@@ -71,9 +64,6 @@ enum appl_status
 
     struct appl_thread_std_node_descriptor
         o_thread_std_node_descriptor;
-
-    o_thread_std_node_descriptor.p_thread_property =
-        p_thread_property;
 
     o_thread_std_node_descriptor.p_thread_descriptor =
         p_thread_descriptor;
@@ -172,7 +162,6 @@ enum appl_status
 
     e_status =
         m_thread_impl.f_init(
-            p_thread_std_node_property->p_thread_property,
             p_thread_std_node_property->p_thread_descriptor);
 
     return
@@ -212,8 +201,6 @@ enum appl_status
     appl_thread_std_node_create(
         struct appl_allocator * const
             p_allocator,
-        struct appl_thread_property const * const
-            p_thread_property,
         struct appl_thread_descriptor const * const
             p_thread_descriptor,
         struct appl_thread * * const
@@ -226,8 +213,6 @@ enum appl_status
     appl_thread_std_node_create(
         struct appl_allocator * const
             p_allocator,
-        struct appl_thread_property const * const
-            p_thread_property,
         struct appl_thread_descriptor const * const
             p_thread_descriptor,
         struct appl_thread * * const
@@ -236,7 +221,6 @@ enum appl_status
     return
         appl_thread_std_node::s_create(
             p_allocator,
-            p_thread_property,
             p_thread_descriptor,
             r_thread);
 

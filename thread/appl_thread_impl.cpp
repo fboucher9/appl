@@ -47,16 +47,11 @@ appl_thread_impl::~appl_thread_impl()
 //
 enum appl_status
     appl_thread_impl::f_init(
-        struct appl_thread_property const * const
-            p_thread_property,
         struct appl_thread_descriptor const * const
             p_thread_descriptor)
 {
     enum appl_status
         e_status;
-
-    appl_unused(
-        p_thread_property);
 
     m_descriptor =
         *(
@@ -81,7 +76,6 @@ enum appl_status
     {
         e_status =
             appl_status_ok;
-
     }
     else
     {

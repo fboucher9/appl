@@ -110,6 +110,9 @@ struct appl_download : public appl_node
         enum appl_status
             f_cancel(void);
 
+        enum appl_status
+            f_start_thread(void);
+
 }; // struct appl_download
 
 /* end-of-file: appl_download_node.h */

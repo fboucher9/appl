@@ -85,4 +85,17 @@ struct appl_thread_descriptor
 
 }; /* struct appl_thread_descriptor */
 
+#if defined __cplusplus
+extern "C" {
+#endif /* #if defined __cplusplus */
+
+void
+appl_thread_descriptor_init(
+    struct appl_thread_descriptor * const
+        p_thread_descriptor);
+
+#if defined __cplusplus
+} /* extern "C" */
+#endif /* #if defined __cplusplus */
+
 /* end-of-file: appl_thread_descriptor.h */

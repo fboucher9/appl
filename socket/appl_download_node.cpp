@@ -125,86 +125,8 @@ enum appl_status
             m_event_created =
                 true;
 
-            struct appl_thread_property *
-                p_thread_property;
-
             e_status =
-                appl_thread_property_create(
-                    m_context,
-                    &(
-                        p_thread_property));
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-                /* Create a thread for connect and download operation */
-                struct appl_thread_descriptor
-                    o_thread_descriptor;
-
-                o_thread_descriptor.b_callback =
-                    1;
-
-                o_thread_descriptor.b_name =
-                    0;
-
-                o_thread_descriptor.b_stack =
-                    0;
-
-                o_thread_descriptor.b_scheduling =
-                    0;
-
-                o_thread_descriptor.uc_reserved[0u] =
-                    0;
-
-                o_thread_descriptor.uc_reserved[1u] =
-                    0;
-
-                o_thread_descriptor.uc_reserved[2u] =
-                    0;
-
-                o_thread_descriptor.uc_reserved[3u] =
-                    0;
-
-                o_thread_descriptor.o_callback.p_entry =
-                    &(
-                        appl_download::s_thread_entry);
-
-                union appl_download_ptr
-                    o_download_ptr;
-
-                o_download_ptr.p_this =
-                    this;
-
-                o_thread_descriptor.o_callback.p_context =
-                    o_download_ptr.p_void;
-
-                appl_mutex_lock(
-                    m_mutex);
-
-                e_status =
-                    appl_thread_create(
-                        m_context,
-                        p_thread_property,
-                        &(
-                            o_thread_descriptor),
-                        &(
-                            m_thread));
-
-                if (
-                    appl_status_ok
-                    == e_status)
-                {
-                    m_thread_created =
-                        true;
-                }
-
-                appl_mutex_unlock(
-                    m_mutex);
-
-                appl_thread_property_destroy(
-                    p_thread_property);
-            }
+                f_start_thread();
 
             if (
                 appl_status_ok
@@ -527,5 +449,65 @@ enum appl_status
         appl_status_ok;
 
 } // f_cancel()
+
+//
+//
+//
+enum appl_status
+    appl_download::f_start_thread(void)
+{
+    enum appl_status
+        e_status;
+
+    /* Create a thread for connect and download operation */
+    struct appl_thread_descriptor
+        o_thread_descriptor;
+
+    appl_thread_descriptor_init(
+        &(
+            o_thread_descriptor));
+
+    o_thread_descriptor.b_callback =
+        1;
+
+    o_thread_descriptor.o_callback.p_entry =
+        &(
+            appl_download::s_thread_entry);
+
+    union appl_download_ptr
+        o_download_ptr;
+
+    o_download_ptr.p_this =
+        this;
+
+    o_thread_descriptor.o_callback.p_context =
+        o_download_ptr.p_void;
+
+    appl_mutex_lock(
+        m_mutex);
+
+    e_status =
+        appl_thread_create(
+            m_context,
+            &(
+                o_thread_descriptor),
+            &(
+                m_thread));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        m_thread_created =
+            true;
+    }
+
+    appl_mutex_unlock(
+        m_mutex);
+
+    return
+        e_status;
+
+} // f_start_thread()
 
 /* end-of-file: appl_download_node.cpp */

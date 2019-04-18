@@ -75,7 +75,6 @@ void
         {
             p_thread_mgr->v_create_node(
                 0,
-                0,
                 0);
 
             p_thread_mgr->v_destroy_node(
@@ -161,17 +160,12 @@ void
             struct appl_thread_descriptor
                 o_thread_descriptor;
 
+            appl_thread_descriptor_init(
+                &(
+                    o_thread_descriptor));
+
             o_thread_descriptor.b_callback =
                 1;
-
-            o_thread_descriptor.b_name =
-                0;
-
-            o_thread_descriptor.b_stack =
-                0;
-
-            o_thread_descriptor.b_scheduling =
-                0;
 
             o_thread_descriptor.o_callback.p_entry =
                 & appl_thread_test_1_callback;
@@ -182,7 +176,6 @@ void
             e_status =
                 appl_thread_create(
                     p_context,
-                    p_thread_property,
                     &(
                         o_thread_descriptor),
                     &(

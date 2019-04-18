@@ -376,62 +376,39 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_thread_property *
-        p_thread_property;
+    struct appl_thread *
+        p_thread_node;
+
+    struct appl_thread_descriptor
+        o_thread_descriptor;
+
+    appl_thread_descriptor_init(
+        &(
+            o_thread_descriptor));
+
+    o_thread_descriptor.b_callback =
+        1;
+
+    o_thread_descriptor.o_callback.p_entry =
+        p_thread_callback;
+
+    o_thread_descriptor.o_callback.p_context =
+        p_thread_context;
 
     e_status =
-        appl_thread_property_create(
+        appl_thread_create(
             p_context,
             &(
-                p_thread_property));
+                o_thread_descriptor),
+            &(
+                p_thread_node));
 
     if (
         appl_status_ok
         == e_status)
     {
-        struct appl_thread *
+        *(r_instance) =
             p_thread_node;
-
-        struct appl_thread_descriptor
-            o_thread_descriptor;
-
-        o_thread_descriptor.b_callback =
-            1;
-
-        o_thread_descriptor.b_name =
-            0;
-
-        o_thread_descriptor.b_stack =
-            0;
-
-        o_thread_descriptor.b_scheduling =
-            0;
-
-        o_thread_descriptor.o_callback.p_entry =
-            p_thread_callback;
-
-        o_thread_descriptor.o_callback.p_context =
-            p_thread_context;
-
-        e_status =
-            appl_thread_create(
-                p_context,
-                p_thread_property,
-                &(
-                    o_thread_descriptor),
-                &(
-                    p_thread_node));
-
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            *(r_instance) =
-                p_thread_node;
-        }
-
-        appl_thread_property_destroy(
-            p_thread_property);
     }
 
     return

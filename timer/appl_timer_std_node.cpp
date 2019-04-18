@@ -24,8 +24,6 @@
 
 #include <appl_property_handle.h>
 
-#include <appl_thread_property.h>
-
 #include <appl_thread_handle.h>
 
 #include <appl_event_handle.h>
@@ -182,33 +180,13 @@ enum appl_status
             == e_status)
         {
             // Initialize thread
-            struct appl_thread_property *
-                p_thread_property;
-
-            e_status =
-                appl_thread_property_create(
-                    m_context,
-                    &(
-                        p_thread_property));
-
-            if (
-                appl_status_ok
-                == e_status)
             {
                 struct appl_thread_descriptor
                     o_thread_descriptor;
 
-                union appl_buf_ptr
-                    o_ptr;
-
-                o_ptr.p_void =
+                appl_thread_descriptor_init(
                     &(
-                        o_thread_descriptor);
-
-                appl_buf_fill(
-                    o_ptr.p_uchar,
-                    o_ptr.p_uchar + sizeof(o_thread_descriptor),
-                    0);
+                        o_thread_descriptor));
 
                 o_thread_descriptor.b_callback =
                     1;
@@ -223,7 +201,6 @@ enum appl_status
                 e_status =
                     appl_thread_create(
                         m_context,
-                        p_thread_property,
                         &(
                             o_thread_descriptor),
                         &(
@@ -235,9 +212,6 @@ enum appl_status
                 {
                     // etc.
                 }
-
-                appl_thread_property_destroy(
-                    p_thread_property);
             }
 
             if (

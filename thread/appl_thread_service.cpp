@@ -34,8 +34,6 @@ enum appl_status
 appl_thread_service::s_create(
     struct appl_context * const
         p_context,
-    struct appl_thread_property const * const
-        p_thread_property,
     struct appl_thread_descriptor const * const
         p_thread_descriptor,
     struct appl_thread * * const
@@ -61,7 +59,6 @@ appl_thread_service::s_create(
 
         e_status =
             p_thread_mgr->v_create_node(
-                p_thread_property,
                 p_thread_descriptor,
                 &(
                     p_thread_node));
