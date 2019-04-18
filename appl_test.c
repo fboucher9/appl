@@ -904,16 +904,13 @@ static void appl_test_thread(
         o_test_thread_context.b_kill =
             0;
 
-        o_thread_descriptor.b_callback =
-            1;
-
-        o_thread_descriptor.o_callback.p_entry =
+        appl_thread_descriptor_set_callback(
             &(
-                appl_test_thread_entry);
-
-        o_thread_descriptor.o_callback.p_context =
+                o_thread_descriptor),
             &(
-                o_test_thread_context);
+                appl_test_thread_entry),
+            &(
+                o_test_thread_context));
 
         e_status =
             appl_thread_create(
@@ -1260,15 +1257,12 @@ appl_test_socket_process_client(
                 &(
                     o_thread_descriptor));
 
-            o_thread_descriptor.b_callback =
-                1;
-
-            o_thread_descriptor.o_callback.p_entry =
+            appl_thread_descriptor_set_callback(
                 &(
-                    appl_test_socket_connection_thread_entry);
-
-            o_thread_descriptor.o_callback.p_context =
-                p_test_socket_connection_context;
+                    o_thread_descriptor),
+                &(
+                    appl_test_socket_connection_thread_entry),
+                p_test_socket_connection_context);
 
             e_status =
                 appl_thread_create(

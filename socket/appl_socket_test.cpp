@@ -386,14 +386,11 @@ enum appl_status
         &(
             o_thread_descriptor));
 
-    o_thread_descriptor.b_callback =
-        1;
-
-    o_thread_descriptor.o_callback.p_entry =
-        p_thread_callback;
-
-    o_thread_descriptor.o_callback.p_context =
-        p_thread_context;
+    appl_thread_descriptor_set_callback(
+        &(
+            o_thread_descriptor),
+        p_thread_callback,
+        p_thread_context);
 
     e_status =
         appl_thread_create(

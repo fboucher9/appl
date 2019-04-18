@@ -164,14 +164,11 @@ void
                 &(
                     o_thread_descriptor));
 
-            o_thread_descriptor.b_callback =
-                1;
-
-            o_thread_descriptor.o_callback.p_entry =
-                & appl_thread_test_1_callback;
-
-            o_thread_descriptor.o_callback.p_context =
-                p_context;
+            appl_thread_descriptor_set_callback(
+                &(
+                    o_thread_descriptor),
+                & appl_thread_test_1_callback,
+                p_context);
 
             e_status =
                 appl_thread_create(

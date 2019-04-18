@@ -188,15 +188,12 @@ enum appl_status
                     &(
                         o_thread_descriptor));
 
-                o_thread_descriptor.b_callback =
-                    1;
-
-                o_thread_descriptor.o_callback.p_entry =
+                appl_thread_descriptor_set_callback(
+                    &(
+                        o_thread_descriptor),
                     (&
-                        appl_timer_std_node::s_worker);
-
-                o_thread_descriptor.o_callback.p_context =
-                    this;
+                        appl_timer_std_node::s_worker),
+                    this);
 
                 e_status =
                     appl_thread_create(

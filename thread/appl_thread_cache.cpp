@@ -187,15 +187,12 @@ struct appl_thread_cache : public appl_thread
                 &(
                     o_thread_descriptor));
 
-            o_thread_descriptor.b_callback =
-                1;
-
-            o_thread_descriptor.o_callback.p_entry =
+            appl_thread_descriptor_set_callback(
                 &(
-                    appl_thread_cache::s_task);
-
-            o_thread_descriptor.o_callback.p_context =
-                o_thread_cache_ptr.p_thread_context;
+                    o_thread_descriptor),
+                &(
+                    appl_thread_cache::s_task),
+                o_thread_cache_ptr.p_thread_context);
 
             class appl_thread_mgr *
                 p_thread_mgr;

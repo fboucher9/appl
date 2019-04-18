@@ -467,21 +467,12 @@ enum appl_status
         &(
             o_thread_descriptor));
 
-    o_thread_descriptor.b_callback =
-        1;
-
-    o_thread_descriptor.o_callback.p_entry =
+    appl_thread_descriptor_set_callback(
         &(
-            appl_download::s_thread_entry);
-
-    union appl_download_ptr
-        o_download_ptr;
-
-    o_download_ptr.p_this =
-        this;
-
-    o_thread_descriptor.o_callback.p_context =
-        o_download_ptr.p_void;
+            o_thread_descriptor),
+        &(
+            appl_download::s_thread_entry),
+        this);
 
     appl_mutex_lock(
         m_mutex);

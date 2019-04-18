@@ -94,6 +94,16 @@ appl_thread_descriptor_init(
     struct appl_thread_descriptor * const
         p_thread_descriptor);
 
+void
+appl_thread_descriptor_set_callback(
+    struct appl_thread_descriptor * const
+        p_thread_descriptor,
+    void (* const p_entry)(
+        void * const
+            p_thread_context),
+    void * const
+        p_context);
+
 #if defined __cplusplus
 } /* extern "C" */
 #endif /* #if defined __cplusplus */

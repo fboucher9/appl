@@ -77,16 +77,13 @@ appl_thread_cache_test(
         &(
             o_thread_descriptor));
 
-    o_thread_descriptor.b_callback =
-        1;
-
-    o_thread_descriptor.o_callback.p_entry =
+    appl_thread_descriptor_set_callback(
         &(
-            test_thread_cache_entry);
-
-    o_thread_descriptor.o_callback.p_context =
+            o_thread_descriptor),
         &(
-            o_test_data);
+            test_thread_cache_entry),
+        &(
+            o_test_data));
 
     {
         e_status =

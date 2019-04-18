@@ -10,32 +10,6 @@
 
 #include <thread/appl_thread_service.h>
 
-#include <appl_types.h>
-
-#include <appl_thread_descriptor.h>
-
-/*
-
-*/
-void
-appl_thread_descriptor_init(
-    struct appl_thread_descriptor * const
-        p_thread_descriptor)
-{
-    p_thread_descriptor->b_callback =
-        0;
-
-    p_thread_descriptor->b_name =
-        0;
-
-    p_thread_descriptor->b_stack =
-        0;
-
-    p_thread_descriptor->b_scheduling =
-        0;
-
-} /* appl_thread_descriptor_init() */
-
 /*
 
 */

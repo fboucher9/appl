@@ -177,6 +177,7 @@ appl_base-deps := \
     thread/appl_thread_impl.cpp \
     thread/appl_thread_cache.cpp \
     thread/appl_thread_handle.cpp \
+    thread/appl_thread_descriptor.cpp \
     thread/appl_thread_mgr.cpp \
     thread/appl_thread_node.cpp \
     thread/appl_thread_property.cpp \
