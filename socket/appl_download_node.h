@@ -71,6 +71,11 @@ struct appl_download : public appl_node
         struct appl_event *
             m_event;
 
+        struct appl_socket *
+            m_socket;
+
+        // --
+
         enum appl_download_status
             m_status;
 
@@ -84,9 +89,12 @@ struct appl_download : public appl_node
             m_event_created;
 
         bool
+            m_socket_created;
+
+        bool
             m_kill;
 
-#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_INT + 4)
+#define PADDING (APPL_SIZEOF_INT + 5)
 #include <appl_padding.h>
 
         // --
@@ -112,6 +120,12 @@ struct appl_download : public appl_node
 
         enum appl_status
             f_start_thread(void);
+
+        enum appl_status
+            f_create_socket(void);
+
+        void
+            f_destroy_socket(void);
 
 }; // struct appl_download
 

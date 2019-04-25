@@ -306,6 +306,7 @@ enum appl_status
             sizeof(
                 o_hints));
 
+#if 0
 #if defined APPL_OS_LINUX
         o_hints.ai_flags |=
             AI_V4MAPPED;
@@ -315,6 +316,7 @@ enum appl_status
         o_hints.ai_flags |=
             AI_ADDRCONFIG;
 #endif /* #if defined APPL_OS_LINUX */
+#endif
 
         if (
             o_name_ptr.pc_char)
