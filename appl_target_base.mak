@@ -69,6 +69,7 @@ appl_base-deps := \
     socket/appl_download_service.cpp \
     socket/appl_download_mgr.cpp \
     socket/appl_download_node.cpp \
+    socket/appl_http_decoder.cpp \
     env/appl_env.cpp \
     env/appl_env_handle.cpp \
     env/appl_env_service.cpp \
