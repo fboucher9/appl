@@ -36,6 +36,10 @@
 
 #include <appl_socket_handle.h>
 
+#include <appl_buf.h>
+
+#include <socket/appl_http_decoder.h>
+
 #if defined APPL_DEBUG
 #include <debug/appl_debug_impl.h>
 #endif /* #if defined APPL_DEBUG */
@@ -322,6 +326,7 @@ void
 #endif /* #if defined APPL_DEBUG */
 
     // Do connection
+    // Wait for connection
     e_status =
         f_create_socket();
 
@@ -329,11 +334,112 @@ void
         appl_status_ok
         == e_status)
     {
-        // Wait for connection
-
         // Send GET request
+        // GET URL HTTP/1.1
+        unsigned char
+            a_packet[1600u];
 
-        // Wait for GET reponse
+        static unsigned char const s_get_request[] =
+        {
+            'H',
+            'E',
+            'A',
+            'D',
+            ' ',
+            '/',
+            ' ',
+            'H',
+            'T',
+            'T',
+            'P',
+            '/',
+            '1',
+            '.',
+            '1',
+            '\r',
+            '\n',
+            '\r',
+            '\n'
+        };
+
+        unsigned char *
+            p_packet_iterator;
+
+        p_packet_iterator =
+            appl_buf_copy(
+                a_packet,
+                a_packet + sizeof(a_packet),
+                s_get_request,
+                s_get_request + sizeof(s_get_request));
+
+        unsigned long int
+            i_count;
+
+        e_status =
+            appl_socket_send(
+                m_socket,
+                a_packet,
+                p_packet_iterator,
+                &(
+                    i_count));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            // Wait for GET reponse
+            e_status =
+                appl_socket_recv(
+                    m_socket,
+                    a_packet,
+                    a_packet + sizeof(a_packet),
+                    &(
+                        i_count));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                // Use http decoder on buffer...
+                {
+                    struct appl_http_decoder *
+                        p_http_decoder;
+
+                    struct appl_http_decoder_descriptor
+                        o_http_decoder_descriptor;
+
+                    e_status =
+                        appl_http_decoder_create(
+                            m_context,
+                            &(
+                                o_http_decoder_descriptor),
+                            &(
+                                p_http_decoder));
+
+                    if (
+                        appl_status_ok
+                        == e_status)
+                    {
+                        appl_http_decoder_write(
+                            p_http_decoder,
+                            a_packet,
+                            a_packet + i_count);
+
+                        appl_http_decoder_destroy(
+                            p_http_decoder);
+                    }
+                }
+
+#if defined APPL_DEBUG
+                if (0)
+                {
+                    appl_debug_impl::s_print(
+                        a_packet,
+                        a_packet + i_count);
+                }
+#endif /* #if defined APPL_DEBUG */
+            }
+        }
 
         b_continue =
             true;

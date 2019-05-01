@@ -124,6 +124,13 @@ struct appl_http_decoder : public appl_object
                 unsigned char * * const
                     r_buf_max);
 
+        void
+            f_flush_release(
+                unsigned char * const
+                    p_buf_min,
+                unsigned char * const
+                    p_buf_max);
+
 }; // struct appl_http_decoder
 
 //
@@ -270,6 +277,7 @@ enum appl_http_decoder_function
     http_header_line_crlf,
     http_header_line_crlf_cr,
     http_header_line_lws,
+    http_body,
     http_error
 };
 
@@ -410,12 +418,9 @@ enum appl_status
                 }
 #endif /* #if defined APPL_DEBUG */
 
-                appl_heap_free(
-                    m_context,
-                    appl_buf_len(
-                        p_line_min,
-                        p_line_max),
-                    p_line_min);
+                f_flush_release(
+                    p_line_min,
+                    p_line_max);
             }
 
             // Switch to header mode
@@ -453,6 +458,10 @@ enum appl_status
         }
         else
         {
+            e_status =
+                f_store_char(
+                    c_data);
+
             m_function =
                 http_header_line;
         }
@@ -477,13 +486,61 @@ enum appl_status
                 == c_data))
         {
             // Continue previous header
+            e_status =
+                f_store_char(
+                    c_data);
+
             m_function =
                 http_header_line_lws;
         }
         else
         {
             // Flush of previous header
+            unsigned char *
+                p_line_min;
+
+            unsigned char *
+                p_line_max;
+
+            e_status =
+                f_flush(
+                    &(
+                        p_line_min),
+                    &(
+                        p_line_max));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+#if defined APPL_DEBUG
+                if (1)
+                {
+                    appl_debug_print0(
+                        m_context,
+                        "header=[");
+
+                    appl_debug_print(
+                        m_context,
+                        p_line_min,
+                        p_line_max);
+
+                    appl_debug_print0(
+                        m_context,
+                        "]\n");
+                }
+#endif /* #if defined APPL_DEBUG */
+
+                f_flush_release(
+                    p_line_min,
+                    p_line_max);
+            }
+
             // Start a new header
+            e_status =
+                f_store_char(
+                    c_data);
+
             m_function =
                 http_header_line;
         }
@@ -498,7 +555,15 @@ enum appl_status
         {
             // Flush of header
 
+#if defined APPL_DEBUG
+            appl_debug_print0(
+                m_context,
+                "<<end of headers>>\n");
+#endif /* #if defined APPL_DEBUG */
+
             // Switch to body mode
+            m_function =
+                http_body;
         }
         else
         {
@@ -517,6 +582,9 @@ enum appl_status
         }
         else
         {
+            e_status =
+                f_store_char(
+                    c_data);
         }
     }
     else if (
@@ -550,14 +618,45 @@ enum appl_status
                 '\t'
                 == c_data))
         {
+            e_status =
+                f_store_char(
+                    c_data);
+
             m_function =
                 http_header_line_lws;
         }
         else
         {
+            e_status =
+                f_store_char(
+                    c_data);
+
             m_function =
                 http_header_line;
         }
+    }
+    else if (
+        http_error
+        == m_function)
+    {
+#if defined APPL_DEBUG
+        appl_debug_print0(
+            m_context,
+            "error!\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
+    else if (
+        http_body
+        == m_function)
+    {
+#if defined APPL_DEBUG
+        appl_debug_print0(
+            m_context,
+            ".");
+#endif /* #if defined APPL_DEBUG */
     }
     else
     {
@@ -667,6 +766,25 @@ enum appl_status
         e_status;
 
 } // f_flush()
+
+//
+//
+//
+void
+    appl_http_decoder::f_flush_release(
+        unsigned char * const
+            p_line_min,
+        unsigned char * const
+            p_line_max)
+{
+    appl_heap_free(
+        m_context,
+        appl_buf_len(
+            p_line_min,
+            p_line_max),
+        p_line_min);
+
+} // f_flush_release()
 
 //
 //
