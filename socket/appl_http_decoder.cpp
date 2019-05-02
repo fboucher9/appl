@@ -80,7 +80,7 @@ struct appl_http_decoder : public appl_object
             m_content_length;
 
         unsigned long int
-            m_chunk_length;
+            m_chunk_size;
 
         // --
 
@@ -95,8 +95,11 @@ struct appl_http_decoder : public appl_object
         bool
             m_chunk_created;
 
+        bool
+            m_chunked_transfer_coding;
+
         unsigned char
-            uc_padding[7u];
+            uc_padding[6u];
 
         // --
 
@@ -131,6 +134,9 @@ struct appl_http_decoder : public appl_object
                 unsigned char * const
                     p_buf_max);
 
+        enum appl_status
+            f_flush_header(void);
+
 }; // struct appl_http_decoder
 
 //
@@ -144,9 +150,10 @@ appl_http_decoder::appl_http_decoder(
     m_descriptor(),
     m_chunk(),
     m_content_length(),
-    m_chunk_length(),
+    m_chunk_size(),
     m_function(),
-    m_chunk_created()
+    m_chunk_created(),
+    m_chunked_transfer_coding()
 {
 }
 
@@ -197,6 +204,9 @@ enum appl_status
 appl_size_t
     appl_http_decoder::v_cleanup(void)
 {
+    // Do flush of body?
+    f_flush_header();
+
     if (
         m_chunk_created)
     {
@@ -383,45 +393,7 @@ enum appl_status
             == c_data)
         {
             // Flush the start line
-            unsigned char *
-                p_line_min;
-
-            unsigned char *
-                p_line_max;
-
-            e_status =
-                f_flush(
-                    &(
-                        p_line_min),
-                    &(
-                        p_line_max));
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-#if defined APPL_DEBUG
-                if (1)
-                {
-                    appl_debug_print0(
-                        m_context,
-                        "start_line=[");
-
-                    appl_debug_print(
-                        m_context,
-                        p_line_min,
-                        p_line_max);
-
-                    appl_debug_print0(
-                        m_context,
-                        "]\n");
-                }
-#endif /* #if defined APPL_DEBUG */
-
-                f_flush_release(
-                    p_line_min,
-                    p_line_max);
-            }
+            f_flush_header();
 
             // Switch to header mode
             m_function =
@@ -474,6 +446,8 @@ enum appl_status
             '\r'
             == c_data)
         {
+            f_flush_header();
+
             m_function =
                 http_header_line_crlf_cr;
         }
@@ -496,45 +470,7 @@ enum appl_status
         else
         {
             // Flush of previous header
-            unsigned char *
-                p_line_min;
-
-            unsigned char *
-                p_line_max;
-
-            e_status =
-                f_flush(
-                    &(
-                        p_line_min),
-                    &(
-                        p_line_max));
-
-            if (
-                appl_status_ok
-                == e_status)
-            {
-#if defined APPL_DEBUG
-                if (1)
-                {
-                    appl_debug_print0(
-                        m_context,
-                        "header=[");
-
-                    appl_debug_print(
-                        m_context,
-                        p_line_min,
-                        p_line_max);
-
-                    appl_debug_print0(
-                        m_context,
-                        "]\n");
-                }
-#endif /* #if defined APPL_DEBUG */
-
-                f_flush_release(
-                    p_line_min,
-                    p_line_max);
-            }
+            f_flush_header();
 
             // Start a new header
             e_status =
@@ -554,6 +490,7 @@ enum appl_status
             == c_data)
         {
             // Flush of header
+
 
 #if defined APPL_DEBUG
             appl_debug_print0(
@@ -657,6 +594,10 @@ enum appl_status
             m_context,
             ".");
 #endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            f_store_char(
+                c_data);
     }
     else
     {
@@ -785,6 +726,56 @@ void
         p_line_min);
 
 } // f_flush_release()
+
+//
+//
+//
+enum appl_status
+    appl_http_decoder::f_flush_header(void)
+{
+    enum appl_status
+        e_status;
+
+    unsigned char *
+        p_line_min;
+
+    unsigned char *
+        p_line_max;
+
+    e_status =
+        f_flush(
+            &(
+                p_line_min),
+            &(
+                p_line_max));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+#if defined APPL_DEBUG
+        appl_debug_print0(
+            m_context,
+            "header=[");
+        appl_debug_print(
+            m_context,
+            p_line_min,
+            p_line_max);
+        appl_debug_print0(
+            m_context,
+            "]\n");
+#endif /* #if defined APPL_DEBUG */
+
+        f_flush_release(
+            p_line_min,
+            p_line_max);
+    }
+
+    return
+        e_status;
+
+}
+
 
 //
 //

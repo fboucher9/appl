@@ -341,10 +341,9 @@ void
 
         static unsigned char const s_get_request[] =
         {
-            'H',
+            'G',
             'E',
-            'A',
-            'D',
+            'T',
             ' ',
             '/',
             ' ',
