@@ -10,7 +10,9 @@
 
 #include <appl_object.h>
 
-#include <timer/appl_timer.h>
+#include <appl_node.h>
+
+#include <timer/appl_timer_node.h>
 
 #include <appl_unused.h>
 
@@ -18,7 +20,7 @@
 //
 //
 enum appl_status
-    appl_timer::v_schedule(
+    appl_timer_node::v_schedule(
         struct appl_timer_descriptor const * const
             p_timer_descriptor)
 {
@@ -33,10 +35,10 @@ enum appl_status
 //
 //
 //
-appl_timer::appl_timer(
+appl_timer_node::appl_timer_node(
     struct appl_context * const
         p_context) :
-    appl_object(
+    appl_node(
         p_context)
 {
 }
@@ -44,8 +46,8 @@ appl_timer::appl_timer(
 //
 //
 //
-appl_timer::~appl_timer()
+appl_timer_node::~appl_timer_node()
 {
 }
 
-/* end-of-file: appl_timer.cpp */
+/* end-of-file: appl_timer_node.cpp */

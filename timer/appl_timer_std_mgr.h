@@ -65,15 +65,15 @@ class appl_timer_std_mgr : public appl_timer_mgr
 
         virtual
         enum appl_status
-            v_create_node(
-                struct appl_timer * * const
-                    r_timer);
+            v_create_group(
+                struct appl_timer_group * * const
+                    r_timer_group);
 
         virtual
         enum appl_status
-            v_destroy_node(
-                struct appl_timer * const
-                    p_timer);
+            v_destroy_group(
+                struct appl_timer_group * const
+                    p_timer_group);
 
 }; // class appl_timer_std_mgr
 

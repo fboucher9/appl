@@ -188,8 +188,10 @@ appl_base-deps := \
     timer/appl_timer_handle.cpp \
     timer/appl_timer_service.cpp \
     timer/appl_timer_mgr.cpp \
-    timer/appl_timer.cpp \
+    timer/appl_timer_group.cpp \
+    timer/appl_timer_node.cpp \
     timer/appl_timer_std_mgr.cpp \
+    timer/appl_timer_std_group.cpp \
     timer/appl_timer_std_node.cpp \
     url/appl_url_handle.cpp \
     url/appl_url_service.cpp \

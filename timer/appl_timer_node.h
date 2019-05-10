@@ -5,11 +5,11 @@
 */
 
 /* Reverse include guard */
-enum guard_appl_timer_h
+enum guard_appl_timer_node_h
 {
-    inc_appl_timer_h =
+    inc_appl_timer_node_h =
         /* Header file dependency */
-        inc_appl_object_h
+        inc_appl_node_h
 };
 
 struct appl_timer_descriptor;
@@ -22,16 +22,16 @@ struct appl_timer_descriptor;
 //
 //
 //
-struct appl_timer : public appl_object
+struct appl_timer_node : public appl_node
 {
     public:
 
-        appl_timer(
+        appl_timer_node(
             struct appl_context * const
                 p_context);
 
         virtual
-        ~appl_timer();
+        ~appl_timer_node();
 
         virtual
         enum appl_status
@@ -43,13 +43,13 @@ struct appl_timer : public appl_object
 
     private:
 
-        appl_timer(
-            struct appl_timer const & r);
+        appl_timer_node(
+            struct appl_timer_node const & r);
 
-        struct appl_timer &
+        struct appl_timer_node &
             operator =(
-                struct appl_timer const & r);
+                struct appl_timer_node const & r);
 
-}; // struct appl_timer
+}; // struct appl_timer_node
 
-/* end-of-file: appl_timer.h */
+/* end-of-file: appl_timer_node.h */

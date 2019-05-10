@@ -34,31 +34,31 @@
 //
 //
 enum appl_status
-    appl_timer_std_mgr::s_create(
+    appl_timer_std_group::s_create(
         struct appl_allocator * const
             p_allocator,
-        class appl_timer_mgr * * const
-            r_timer_mgr)
+        class appl_timer_group * * const
+            r_timer_group)
 {
     enum appl_status
         e_status;
 
-    class appl_timer_std_mgr *
-        p_timer_std_mgr;
+    class appl_timer_std_group *
+        p_timer_std_group;
 
     e_status =
         appl_new(
             p_allocator,
             &(
-                p_timer_std_mgr));
+                p_timer_std_group));
 
     if (
         appl_status_ok
         == e_status)
     {
         *(
-            r_timer_mgr) =
-            p_timer_std_mgr;
+            r_timer_group) =
+            p_timer_std_group;
     }
 
     return
@@ -69,10 +69,33 @@ enum appl_status
 //
 //
 //
-appl_timer_std_mgr::appl_timer_std_mgr(
+enum appl_status
+    appl_timer_std_group::s_destroy(
+        struct appl_allocator * const
+            p_allocator,
+        struct appl_timer_group * const
+            p_timer_group)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_delete(
+            p_allocator,
+            p_timer_group);
+
+    return
+        e_status;
+
+} // s_destroy()
+
+//
+//
+//
+appl_timer_std_group::appl_timer_std_group(
     struct appl_context * const
         p_context) :
-    appl_timer_mgr(
+    appl_timer_group(
         p_context)
 {
 }
@@ -80,7 +103,7 @@ appl_timer_std_mgr::appl_timer_std_mgr(
 //
 //
 //
-appl_timer_std_mgr::~appl_timer_std_mgr()
+appl_timer_std_group::~appl_timer_std_group()
 {
 }
 
@@ -88,7 +111,7 @@ appl_timer_std_mgr::~appl_timer_std_mgr()
 //
 //
 enum appl_status
-    appl_timer_std_mgr::f_init(void)
+    appl_timer_std_group::f_init(void)
 {
     return
         appl_status_ok;
@@ -99,19 +122,19 @@ enum appl_status
 //
 //
 appl_size_t
-    appl_timer_std_mgr::v_cleanup(void)
+    appl_timer_std_group::v_cleanup(void)
 {
     return
-        sizeof(class appl_timer_std_mgr);
+        sizeof(class appl_timer_std_group);
 } // v_cleanup()
 
 //
 //
 //
 enum appl_status
-    appl_timer_std_mgr::v_create_group(
-        struct appl_timer_group * * const
-            r_timer_group)
+    appl_timer_std_group::v_create_node(
+        struct appl_timer_node * * const
+            r_timer_node)
 {
     struct appl_context * const
         p_context =
@@ -123,19 +146,20 @@ enum appl_status
             p_context);
 
     return
-        appl_timer_std_group::s_create(
+        appl_timer_std_node::s_create(
             p_allocator,
-            r_timer_group);
+            this,
+            r_timer_node);
 
-} // v_create_group()
+} // v_create_node()
 
 //
 //
 //
 enum appl_status
-    appl_timer_std_mgr::v_destroy_group(
-        struct appl_timer_group * const
-            p_timer_group)
+    appl_timer_std_group::v_destroy_node(
+        struct appl_timer_node * const
+            p_timer_node)
 {
     struct appl_context * const
         p_context =
@@ -147,10 +171,10 @@ enum appl_status
             p_context);
 
     return
-        appl_timer_std_group::s_destroy(
+        appl_timer_std_node::s_destroy(
             p_allocator,
-            p_timer_group);
+            p_timer_node);
 
-} // v_destroy_group()
+} // v_destroy_node()
 
-/* end-of-file: appl_timer_std_mgr.cpp */
+/* end-of-file: appl_timer_std_group.cpp */

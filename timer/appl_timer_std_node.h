@@ -9,7 +9,7 @@ enum guard_appl_timer_std_node_h
 {
     inc_appl_timer_std_node_h =
         /* Header file dependency */
-        inc_appl_timer_h
+        inc_appl_timer_node_h
 };
 
 /* Predefine */
@@ -23,8 +23,10 @@ struct appl_timer_descriptor;
 //
 //
 //
-class appl_timer_std_node : public appl_timer
+class appl_timer_std_node : public appl_timer_node
 {
+    friend class appl_timer_std_group;
+
     public:
 
         static
@@ -32,16 +34,18 @@ class appl_timer_std_node : public appl_timer
             s_create(
                 struct appl_allocator * const
                     p_allocator,
-                struct appl_timer * * const
-                    r_timer);
+                class appl_timer_std_group * const
+                    p_timer_std_group,
+                struct appl_timer_node * * const
+                    r_timer_node);
 
         static
         enum appl_status
             s_destroy(
                 struct appl_allocator * const
                     p_allocator,
-                struct appl_timer * const
-                    p_timer);
+                struct appl_timer_node * const
+                    p_timer_node);
 
         appl_timer_std_node(
             struct appl_context * const
@@ -57,26 +61,8 @@ class appl_timer_std_node : public appl_timer
 
     private:
 
-        struct appl_list
-            m_used_list;
-
-        struct appl_list
-            m_free_list;
-
-        struct appl_thread *
-            m_thread;
-
-        struct appl_mutex *
-            m_lock;
-
-        struct appl_event *
-            m_event;
-
-        signed long int volatile
-            m_thread_kill;
-
-        signed long int volatile
-            m_thread_killed;
+        class appl_timer_std_group *
+            m_timer_group;
 
         appl_timer_std_node(
             class appl_timer_std_node const & r);
@@ -94,18 +80,6 @@ class appl_timer_std_node : public appl_timer
             v_schedule(
                 struct appl_timer_descriptor const * const
                     p_timer_descriptor);
-
-        static
-        void
-            s_worker(
-                void * const
-                    p_thread_context);
-
-        void
-            f_worker(void);
-
-        appl_ull_t
-            f_read_clock(void);
 
 }; // class appl_timer_std_node
 
