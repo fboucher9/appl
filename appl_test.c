@@ -99,6 +99,8 @@
 
 #include <socket/appl_download_main.h>
 
+#include <random/appl_random_main.h>
+
 #include <appl_test.h>
 
 void
@@ -3768,8 +3770,91 @@ enum appl_status
             'd'
         };
 
+        static unsigned char const s_ref_random[] =
+        {
+            't',
+            'e',
+            's',
+            't',
+            '_',
+            'r',
+            'a',
+            'n',
+            'd',
+            'o',
+            'm'
+        };
+
+        static struct appl_test_dispatch_child
+        {
+            unsigned char const * p_name_min;
+            unsigned char const * p_name_max;
+            enum appl_status (* p_function)(
+                struct appl_context * const p_context,
+                struct appl_options const * const p_options,
+                unsigned long int const i_shift);
+        } const g_dispatch_table[] =
+        {
+            {
+                s_ref_percent,
+                s_ref_percent + sizeof(s_ref_percent),
+                & appl_percent_main
+            },
+            {
+                s_ref_file,
+                s_ref_file + sizeof(s_ref_file),
+                & appl_file_main
+            },
+            {
+                s_ref_crc16,
+                s_ref_crc16 + sizeof(s_ref_crc16),
+                & appl_crc16_main
+            },
+            {
+                s_ref_crc32,
+                s_ref_crc32 + sizeof(s_ref_crc32),
+                & appl_crc32_main
+            },
+            {
+                s_ref_clock,
+                s_ref_clock + sizeof(s_ref_clock),
+                & appl_clock_main
+            },
+            {
+                s_ref_env,
+                s_ref_env + sizeof(s_ref_env),
+                & appl_env_main
+            },
+            {
+                s_ref_netdev,
+                s_ref_netdev + sizeof(s_ref_netdev),
+                appl_netdevice_main
+            },
+            {
+                s_ref_address,
+                s_ref_address + sizeof(s_ref_address),
+                & appl_address_main
+            },
+            {
+                s_ref_download,
+                s_ref_download + sizeof(s_ref_download),
+                & appl_download_main
+            },
+            {
+                s_ref_random,
+                s_ref_random + sizeof(s_ref_random),
+                & appl_random_main
+            }
+        };
+
         unsigned char const *
             p_cmd_it;
+
+        char
+            b_found;
+
+        unsigned int
+            i_dispatch_iterator;
 
         p_cmd_it =
             p_cmd_min;
@@ -3787,133 +3872,46 @@ enum appl_status
             }
         }
 
-        if (
-            0
-            == appl_buf_compare(
-                p_cmd_min,
-                p_cmd_max,
-                s_ref_percent,
-                s_ref_percent + sizeof(s_ref_percent)))
+        i_dispatch_iterator =
+            0u;
+
+        b_found =
+            0;
+
+        while (
+            !(
+                b_found)
+            && (
+                i_dispatch_iterator
+                < sizeof(g_dispatch_table) / sizeof(g_dispatch_table[0u])))
         {
-            e_status =
-                appl_percent_main(
-                    p_context,
-                    p_options,
-                    i_shift);
+            struct appl_test_dispatch_child const * const p_dispatch_node =
+                g_dispatch_table + i_dispatch_iterator;
+
+            if (
+                0
+                == appl_buf_compare(
+                    p_cmd_min,
+                    p_cmd_max,
+                    p_dispatch_node->p_name_min,
+                    p_dispatch_node->p_name_max))
+            {
+                e_status =
+                    (*(p_dispatch_node->p_function))(
+                        p_context,
+                        p_options,
+                        i_shift);
+
+                b_found =
+                    1;
+            }
+            else
+            {
+                i_dispatch_iterator ++;
+            }
         }
-        else if (
-            0
-            == appl_buf_compare(
-                p_cmd_min,
-                p_cmd_max,
-                s_ref_file,
-                s_ref_file + sizeof(s_ref_file)))
-        {
-            e_status =
-                appl_file_main(
-                    p_context,
-                    p_options,
-                    i_shift);
-        }
-        else if (
-            0
-            == appl_buf_compare(
-                p_cmd_min,
-                p_cmd_max,
-                s_ref_crc16,
-                s_ref_crc16 + sizeof(s_ref_crc16)))
-        {
-            e_status =
-                appl_crc16_main(
-                    p_context,
-                    p_options,
-                    i_shift);
-        }
-        else if (
-            0
-            == appl_buf_compare(
-                p_cmd_min,
-                p_cmd_max,
-                s_ref_crc32,
-                s_ref_crc32 + sizeof(s_ref_crc32)))
-        {
-            e_status =
-                appl_crc32_main(
-                    p_context,
-                    p_options,
-                    i_shift);
-        }
-        else if (
-            0
-            == appl_buf_compare(
-                p_cmd_min,
-                p_cmd_max,
-                s_ref_clock,
-                s_ref_clock + sizeof(s_ref_clock)))
-        {
-            e_status =
-                appl_clock_main(
-                    p_context,
-                    p_options,
-                    i_shift);
-        }
-        else if (
-            0
-            == appl_buf_compare(
-                p_cmd_min,
-                p_cmd_max,
-                s_ref_env,
-                s_ref_env + sizeof(s_ref_env)))
-        {
-            e_status =
-                appl_env_main(
-                    p_context,
-                    p_options,
-                    i_shift);
-        }
-        else if (
-            0
-            == appl_buf_compare(
-                p_cmd_min,
-                p_cmd_max,
-                s_ref_netdev,
-                s_ref_netdev + sizeof(s_ref_netdev)))
-        {
-            e_status =
-                appl_netdevice_main(
-                    p_context,
-                    p_options,
-                    i_shift);
-        }
-        else if (
-            0
-            == appl_buf_compare(
-                p_cmd_min,
-                p_cmd_max,
-                s_ref_address,
-                s_ref_address + sizeof(s_ref_address)))
-        {
-            e_status =
-                appl_address_main(
-                    p_context,
-                    p_options,
-                    i_shift);
-        }
-        else if (
-            0
-            == appl_buf_compare(
-                p_cmd_min,
-                p_cmd_max,
-                s_ref_download,
-                s_ref_download + sizeof(s_ref_download)))
-        {
-            e_status =
-                appl_download_main(
-                    p_context,
-                    p_options,
-                    i_shift);
-        }
-        else
+
+        if (!b_found)
         {
             e_status =
                 appl_test_main_1(

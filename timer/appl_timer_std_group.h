@@ -23,11 +23,16 @@ struct appl_timer_node;
 #error use c++ compiler
 #endif /* #if ! defined __cplusplus */
 
+// Predefine
+class appl_timer_std_node;
+
 //
 //
 //
 class appl_timer_std_group : public appl_timer_group
 {
+    friend class appl_timer_std_node;
+
     public:
 
         static

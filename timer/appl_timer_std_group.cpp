@@ -8,6 +8,8 @@
 
 #include <appl_types.h>
 
+#include <appl_timer_handle.h>
+
 #include <appl_object.h>
 
 #include <appl_node.h>

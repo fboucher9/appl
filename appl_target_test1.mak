@@ -62,6 +62,7 @@ test_appl-deps = \
     url/appl_percent_test.cpp \
     socket/appl_address_main.cpp \
     socket/appl_download_main.cpp \
+    random/appl_random_main.cpp \
     $(appl_base-deps)
 
 # List of libraries required to link test application

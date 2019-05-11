@@ -8,6 +8,8 @@
 
 #include <appl_types.h>
 
+#include <appl_timer_handle.h>
+
 #include <appl_object.h>
 
 #include <appl_node.h>
@@ -31,8 +33,6 @@
 #include <appl_event_handle.h>
 
 #include <timer/appl_timer_std_node.h>
-
-#include <appl_timer_handle.h>
 
 #include <appl_context_handle.h>
 
@@ -114,7 +114,9 @@ appl_timer_std_node::appl_timer_std_node(
         p_context) :
     appl_timer_node(
         p_context),
-    m_timer_group()
+    m_descriptor(),
+    m_timer_group(),
+    m_state()
 {
 }
 

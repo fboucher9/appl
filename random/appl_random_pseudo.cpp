@@ -61,6 +61,29 @@ appl_random_pseudo::s_create(
 //
 //
 //
+enum appl_status
+appl_random_pseudo::s_destroy(
+    struct appl_allocator * const
+        p_allocator,
+    struct appl_random * const
+        p_random)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_delete(
+            p_allocator,
+            p_random);
+
+    return
+        e_status;
+
+} // s_destroy()
+
+//
+//
+//
 appl_random_pseudo::appl_random_pseudo(
     struct appl_context * const
         p_context) :
@@ -149,7 +172,7 @@ appl_random_pseudo::v_pick(
             + 12345ul);
 
     i_value |=
-        ((m_seed << 2u) & 0x7FF00000ul);
+        ((m_seed << 2u) & 0xFFF00000ul);
 
     if (
         i_value_max)

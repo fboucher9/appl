@@ -36,6 +36,14 @@ class appl_random_pseudo : public appl_random
             struct appl_random * * const
                 r_random);
 
+        static
+        enum appl_status
+        s_destroy(
+            struct appl_allocator * const
+                p_allocator,
+            struct appl_random * const
+                p_random);
+
         appl_random_pseudo(
             struct appl_context * const
                 p_context);
@@ -47,6 +55,10 @@ class appl_random_pseudo : public appl_random
             f_init(
                 unsigned long int const * const
                     p_seed);
+
+        virtual
+        appl_size_t
+            v_cleanup(void);
 
     protected:
 
@@ -64,10 +76,6 @@ class appl_random_pseudo : public appl_random
         class appl_random_pseudo &
             operator =(
                 class appl_random_pseudo const & r);
-
-        virtual
-        appl_size_t
-        v_cleanup(void);
 
         virtual
         enum appl_status
