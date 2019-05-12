@@ -16,6 +16,10 @@
 
 #include <appl_unused.h>
 
+#include <appl_buf.h>
+
+#include <appl_convert.h>
+
 //
 //
 //
@@ -66,7 +70,7 @@ enum appl_status
             o_random_descriptor;
 
         o_random_descriptor.i_seed =
-            666u;
+            0u;
 
         if (
             'p' == *(p_arg_min))
@@ -78,6 +82,31 @@ enum appl_status
         {
             o_random_descriptor.e_type =
                 appl_random_type_crypto;
+        }
+
+        if (
+            appl_status_ok
+            == appl_options_get(
+                p_options,
+                i_shift + 2ul,
+                &(
+                    p_arg_min),
+                &(
+                    p_arg_max)))
+        {
+            signed long int
+                i_number;
+
+            appl_buf_scan_number(
+                p_arg_min,
+                p_arg_max,
+                &(
+                    i_number),
+                0);
+
+            o_random_descriptor.i_seed =
+                appl_convert::to_unsigned(
+                    i_number);
         }
 
         e_status =
