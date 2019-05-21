@@ -39,7 +39,7 @@ enum appl_status
     appl_timer_std_group::s_create(
         struct appl_allocator * const
             p_allocator,
-        class appl_timer_group * * const
+        struct appl_timer_group * * const
             r_timer_group)
 {
     enum appl_status

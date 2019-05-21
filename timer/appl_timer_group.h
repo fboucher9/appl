@@ -18,7 +18,7 @@ struct appl_timer_node;
 //
 //
 //
-class appl_timer_group : public appl_object
+struct appl_timer_group : public appl_object
 {
     public:
 
@@ -46,12 +46,12 @@ class appl_timer_group : public appl_object
     private:
 
         appl_timer_group(
-            class appl_timer_group const & r);
+            struct appl_timer_group const & r);
 
-        class appl_timer_group &
+        struct appl_timer_group &
             operator =(
-                class appl_timer_group const & r);
+                struct appl_timer_group const & r);
 
-}; // class appl_timer_group
+}; // struct appl_timer_group
 
 /* end-of-file: appl_timer_group.h */

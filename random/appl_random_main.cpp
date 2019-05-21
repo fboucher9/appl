@@ -53,15 +53,18 @@ enum appl_status
     unsigned char const *
         p_arg_max;
 
-    if (
-        appl_status_ok
-        == appl_options_get(
+    e_status =
+        appl_options_get(
             p_options,
             i_shift + 1ul,
             &(
                 p_arg_min),
             &(
-                p_arg_max)))
+                p_arg_max));
+
+    if (
+        appl_status_ok
+        == e_status)
     {
         struct appl_random *
             p_random;

@@ -18,6 +18,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_types.h>
+
 #include <stdio.h>
 
 enum appl_status
@@ -111,7 +113,7 @@ enum appl_status
             while (!feof(stdin))
             {
                 static unsigned char a_chunk[1024u];
-                unsigned long int i_chunk_length;
+                appl_size_t i_chunk_length;
 
                 i_chunk_length =
                     fread(
@@ -245,7 +247,7 @@ enum appl_status
             while (!feof(stdin))
             {
                 static unsigned char a_chunk[1024u];
-                unsigned long int i_chunk_length;
+                appl_size_t i_chunk_length;
 
                 i_chunk_length =
                     fread(

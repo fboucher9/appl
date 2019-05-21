@@ -430,7 +430,7 @@ void
                 }
 
 #if defined APPL_DEBUG
-                if (0)
+                if ((0))
                 {
                     appl_debug_impl::s_print(
                         a_packet,

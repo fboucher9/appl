@@ -512,8 +512,9 @@ appl_netdevice_main(
                         0);
 
                     o_netdevice_filter.i_index =
-                        appl_convert::to_int(
-                            i_number);
+                        appl_convert::to_uint(
+                            appl_convert::to_unsigned(
+                                i_number));
                 }
                 else
                 {
