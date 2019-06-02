@@ -3965,15 +3965,44 @@ appl_test_main(
 
 int
 main(
-    int argc,
-    char** argv)
+    int const
+        argc,
+    char const * const * const
+        argv)
 {
-    return
+    int
+        i_main_result;
+
+    struct appl_main_descriptor
+        o_main_descriptor;
+
+    appl_main_descriptor_init(
+        &(
+            o_main_descriptor));
+
+    appl_main_descriptor_set_arg_vector(
+        &(
+            o_main_descriptor),
+        argv,
+        argv + argc);
+
+    appl_main_descriptor_set_callback(
+        &(
+            o_main_descriptor),
+        &(
+            appl_test_main));
+
+    i_main_result =
         appl_main(
-            argc,
-            argv,
             &(
-                appl_test_main));
+                o_main_descriptor));
+
+    appl_main_descriptor_cleanup(
+        &(
+            o_main_descriptor));
+
+    return
+        i_main_result;
 }
 
 #else /* #if defined APPL_BUILD_EXE */

@@ -590,9 +590,12 @@ enum appl_status
         == m_function)
     {
 #if defined APPL_DEBUG
-        appl_debug_print0(
-            m_context,
-            ".");
+        if ((0))
+        {
+            appl_debug_print0(
+                m_context,
+                ".");
+        }
 #endif /* #if defined APPL_DEBUG */
 
         e_status =

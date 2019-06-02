@@ -6,6 +6,8 @@
 
 #include <appl_status.h>
 
+#include <appl_main.h>
+
 #include <main/appl_main_service.h>
 
 #include <appl_context_handle.h>
@@ -17,6 +19,75 @@
 #include <appl_buf0.h>
 
 #include <appl_convert.h>
+
+#include <appl_unused.h>
+
+//
+//
+//
+void
+    appl_main_service::s_init(
+        struct appl_main_descriptor * const
+            p_main_descriptor)
+{
+    p_main_descriptor->p_arg_vector_min =
+        0;
+
+    p_main_descriptor->p_arg_vector_max =
+        0;
+
+    p_main_descriptor->p_main_callback =
+        0;
+
+} // s_init()
+
+//
+//
+//
+void
+    appl_main_service::s_cleanup(
+        struct appl_main_descriptor * const
+            p_main_descriptor)
+{
+    appl_unused(
+        p_main_descriptor);
+
+} // s_cleanup()
+
+//
+//
+//
+void
+    appl_main_service::s_set_arg_vector(
+        struct appl_main_descriptor * const
+            p_main_descriptor,
+        char const * const * const
+            p_arg_vector_min,
+        char const * const * const
+            p_arg_vector_max)
+{
+    p_main_descriptor->p_arg_vector_min =
+        p_arg_vector_min;
+
+    p_main_descriptor->p_arg_vector_max =
+        p_arg_vector_max;
+
+} // s_set_arg_vector()
+
+//
+//
+//
+void
+    appl_main_service::s_set_callback(
+        struct appl_main_descriptor * const
+            p_main_descriptor,
+        appl_main_callback * const
+            p_main_callback)
+{
+    p_main_descriptor->p_main_callback =
+        p_main_callback;
+
+} // s_set_callback()
 
 //
 //
@@ -117,18 +188,8 @@ init_options(
 //
 int
 appl_main_service::s_main(
-    int const
-        i_arg_count,
-    char * * const
-        p_arg_vector,
-    enum appl_status (*
-        p_main_callback)(
-        struct appl_context * const
-            p_context,
-        struct appl_options const * const
-            p_options,
-        unsigned long int const
-            i_shift))
+    struct appl_main_descriptor const * const
+        p_main_descriptor)
 {
     int
         i_main_result;
@@ -157,9 +218,9 @@ appl_main_service::s_main(
             init_options(
                 p_context,
                 appl_convert::to_uchar_ptr_table(
-                    p_arg_vector),
+                    p_main_descriptor->p_arg_vector_min),
                 appl_convert::to_uchar_ptr_table(
-                    p_arg_vector + i_arg_count),
+                    p_main_descriptor->p_arg_vector_max),
                 &(
                     p_options));
 
@@ -169,7 +230,7 @@ appl_main_service::s_main(
         {
             /* Dispatch */
             e_status =
-                (*p_main_callback)(
+                (*p_main_descriptor->p_main_callback)(
                     p_context,
                     p_options,
                     0ul);
