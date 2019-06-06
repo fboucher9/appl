@@ -64,8 +64,8 @@ appl_refcount::f_init(void)
 //
 //
 //
-void
-    appl_refcount::f_acquire(void)
+enum appl_status
+    appl_refcount::v_acquire(void)
 {
     appl_mutex_lock(
         m_mutex);
@@ -75,14 +75,20 @@ void
     appl_mutex_unlock(
         m_mutex);
 
-} // f_acquire()
+    return
+        appl_status_ok;
+
+} // v_acquire()
 
 //
 //
 //
-bool
-    appl_refcount::f_release(void)
+enum appl_status
+    appl_refcount::v_release(void)
 {
+    enum appl_status
+        e_status;
+
     bool
         b_destroy;
 
@@ -116,10 +122,18 @@ bool
     appl_mutex_unlock(
         m_mutex);
 
-    return
-        b_destroy;
+    if (
+        b_destroy)
+    {
+    }
 
-} // f_release()
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // v_release()
 
 //
 //

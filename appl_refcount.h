@@ -73,7 +73,7 @@ enum guard_appl_refcount_h
 struct appl_mutex;
 
 /* Predefine */
-class appl_refcount;
+struct appl_refcount;
 
 /* Assert compiler */
 #if ! defined __cplusplus
@@ -83,7 +83,7 @@ class appl_refcount;
 //
 //
 //
-class appl_refcount : public appl_object
+struct appl_refcount : public appl_object
 {
     public:
 
@@ -97,11 +97,17 @@ class appl_refcount : public appl_object
         enum appl_status
             f_init(void);
 
-        void
-            f_acquire(void);
+        virtual
+        appl_size_t
+            v_cleanup(void);
 
-        bool
-            f_release(void);
+        virtual
+        enum appl_status
+            v_acquire(void);
+
+        virtual
+        enum appl_status
+            v_release(void);
 
     protected:
 
@@ -121,16 +127,12 @@ class appl_refcount : public appl_object
     private:
 
         appl_refcount(
-            class appl_refcount const & r);
+            struct appl_refcount const & r);
 
-        class appl_refcount &
+        struct appl_refcount &
             operator =(
-                class appl_refcount const & r);
+                struct appl_refcount const & r);
 
-        virtual
-        appl_size_t
-            v_cleanup(void);
-
-}; // class appl_refcount
+}; // struct appl_refcount
 
 /* end-of-file: appl_refcount.h */

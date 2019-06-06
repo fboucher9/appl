@@ -82,6 +82,7 @@ appl_base-deps := \
     event/appl_event_std_mgr.cpp \
     event/appl_event_std_node.cpp \
     event/appl_event_impl.cpp \
+    file/appl_file_descriptor.cpp \
     file/appl_file_handle.cpp \
     file/appl_file_mgr.cpp \
     file/appl_file_node.cpp \
@@ -140,6 +141,8 @@ appl_base-deps := \
     options/appl_options_handle.cpp \
     options/appl_options_service.cpp \
     appl_refcount.cpp \
+    appl_refcount_handle.cpp \
+    appl_refcount_service.cpp \
     pool/appl_pool.cpp \
     pool/appl_pool_std.cpp \
     pool/appl_pool_mgr.cpp \

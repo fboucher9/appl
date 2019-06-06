@@ -7,8 +7,8 @@
 /* Reverse include guard */
 enum guard_appl_file_descriptor_h
 {
-    inc_appl_file_descriptor_h =
-        1
+    inc_appl_file_descriptor_h = 1
+        + inc_appl_status_h
 };
 
 /*
@@ -41,30 +41,49 @@ enum appl_file_mode
 
 }; /* enum appl_file_mode */
 
-/*
+struct appl_file_descriptor;
 
-*/
-struct appl_file_descriptor
-{
-    unsigned char const *
-        p_name_min;
+#if defined __cplusplus
+extern "C" {
+#endif /* #if defined __cplusplus */
 
-    unsigned char const *
-        p_name_max;
+enum appl_status
+appl_file_descriptor_create(
+    struct appl_context * const
+        p_context,
+    struct appl_file_descriptor * * const
+        r_file_descriptor);
 
-    /* -- */
+enum appl_status
+appl_file_descriptor_destroy(
+    struct appl_file_descriptor * const
+        p_file_descriptor);
 
-    enum appl_file_type
-        e_type;
+enum appl_status
+appl_file_descriptor_set_type(
+    struct appl_file_descriptor * const
+        p_file_descriptor,
+    enum appl_file_type const
+        e_type);
 
-    enum appl_file_mode
-        e_mode;
+enum appl_status
+appl_file_descriptor_set_mode(
+    struct appl_file_descriptor * const
+        p_file_descriptor,
+    enum appl_file_mode const
+        e_mode);
 
-#define PADDING (APPL_SIZEOF_INT*2)
-#include <appl_padding.h>
+enum appl_status
+appl_file_descriptor_set_name(
+    struct appl_file_descriptor * const
+        p_file_descriptor,
+    unsigned char const * const
+        p_name_min,
+    unsigned char const * const
+        p_name_max);
 
-    /* -- */
-
-}; /* struct appl_file_descriptor */
+#if defined __cplusplus
+} /* extern "C" */
+#endif /* #if defined __cplusplus */
 
 /* end-of-file: appl_file_descriptor.h */

@@ -469,56 +469,66 @@ appl_test_file_stdout(
     enum appl_status
         e_status;
 
-    struct appl_file_descriptor
-        o_file_descriptor;
-
-    o_file_descriptor.p_name_min =
-        (unsigned char const *)(
-            0);
-
-    o_file_descriptor.p_name_max =
-        (unsigned char const *)(
-            0);
-
-    o_file_descriptor.e_type =
-        appl_file_type_stdout;
+    struct appl_file_descriptor *
+        p_file_descriptor;
 
     e_status =
-        appl_file_create(
+        appl_file_descriptor_create(
             p_context,
             &(
-                o_file_descriptor),
-            &(
-                p_file));
+                p_file_descriptor));
 
     if (
         appl_status_ok
         == e_status)
     {
-        static unsigned char const g_msg[] =
-        {
-            's',
-            't',
-            'd',
-            'o',
-            'u',
-            't',
-            '\n'
-        };
+        appl_file_descriptor_set_type(
+            p_file_descriptor,
+            appl_file_type_stdout);
 
-        unsigned long int
-            i_count;
+        appl_file_descriptor_set_mode(
+            p_file_descriptor,
+            appl_file_mode_write);
 
         e_status =
-            appl_file_write(
-                p_file,
-                g_msg,
-                g_msg + sizeof(g_msg),
+            appl_file_create(
+                p_context,
+                p_file_descriptor,
                 &(
-                    i_count));
+                    p_file));
 
-        appl_file_destroy(
-            p_file);
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            static unsigned char const g_msg[] =
+            {
+                's',
+                't',
+                'd',
+                'o',
+                'u',
+                't',
+                '\n'
+            };
+
+            unsigned long int
+                i_count;
+
+            e_status =
+                appl_file_write(
+                    p_file,
+                    g_msg,
+                    g_msg + sizeof(g_msg),
+                    &(
+                        i_count));
+
+            appl_file_destroy(
+                p_file);
+        }
+
+        appl_file_descriptor_destroy(
+            p_file_descriptor);
     }
 
 }
@@ -772,70 +782,85 @@ appl_test_file_stdin(
     struct appl_file *
         p_stdin_file;
 
-    struct appl_file_descriptor
-        o_stdin_file_descriptor;
-
-    o_stdin_file_descriptor.e_type =
-        appl_file_type_stdin;
-
-    o_stdin_file_descriptor.e_mode =
-        appl_file_mode_read;
-
-    appl_print0("line parser (press ctrl+d to stop)\n");
+    struct appl_file_descriptor *
+        p_stdin_file_descriptor;
 
     e_status =
-        appl_file_create(
+        appl_file_descriptor_create(
             p_context,
             &(
-                o_stdin_file_descriptor),
-            &(
-                p_stdin_file));
+                p_stdin_file_descriptor));
 
     if (
         appl_status_ok
         == e_status)
     {
-        char
-            b_more_lines;
+        appl_file_descriptor_set_type(
+            p_stdin_file_descriptor,
+            appl_file_type_stdin);
 
-        b_more_lines =
-            1;
+        appl_file_descriptor_set_mode(
+            p_stdin_file_descriptor,
+            appl_file_mode_read);
 
-        while (
-            (
-                appl_status_ok
-                == e_status)
-            && b_more_lines)
+        appl_print0("line parser (press ctrl+d to stop)\n");
+
+        e_status =
+            appl_file_create(
+                p_context,
+                p_stdin_file_descriptor,
+                &(
+                    p_stdin_file));
+
+        if (
+            appl_status_ok
+            == e_status)
         {
-            struct appl_buf
-                o_line_buf;
+            char
+                b_more_lines;
 
-            e_status =
-                appl_test_line_create(
-                    p_context,
-                    p_stdin_file,
-                    &(
-                        o_line_buf));
+            b_more_lines =
+                1;
 
-            if (
-                appl_status_ok
-                == e_status)
+            while (
+                (
+                    appl_status_ok
+                    == e_status)
+                && b_more_lines)
             {
-                /* Split line into words */
-                appl_test_line_decoder(
-                    p_context,
-                    &(
-                        o_line_buf));
+                struct appl_buf
+                    o_line_buf;
 
-                appl_test_line_destroy(
-                    p_context,
-                    &(
-                        o_line_buf));
+                e_status =
+                    appl_test_line_create(
+                        p_context,
+                        p_stdin_file,
+                        &(
+                            o_line_buf));
+
+                if (
+                    appl_status_ok
+                    == e_status)
+                {
+                    /* Split line into words */
+                    appl_test_line_decoder(
+                        p_context,
+                        &(
+                            o_line_buf));
+
+                    appl_test_line_destroy(
+                        p_context,
+                        &(
+                            o_line_buf));
+                }
             }
+
+            appl_file_destroy(
+                p_stdin_file);
         }
 
-        appl_file_destroy(
-            p_stdin_file);
+        appl_file_descriptor_destroy(
+            p_stdin_file_descriptor);
     }
 
 } /* appl_test_file_stdin() */
@@ -3151,35 +3176,50 @@ enum appl_status
         struct appl_file *
             p_file;
 
-        struct appl_file_descriptor
-            o_file_descriptor;
-
-        o_file_descriptor.e_type =
-            appl_file_type_stdin;
-
-        o_file_descriptor.e_mode =
-            appl_file_mode_read;
-
-        appl_print0("test prompt (press ctrl+d to stop)\n");
+        struct appl_file_descriptor *
+            p_file_descriptor;
 
         e_status =
-            appl_file_create(
+            appl_file_descriptor_create(
                 p_context,
                 &(
-                    o_file_descriptor),
-                &(
-                    p_file));
+                    p_file_descriptor));
 
         if (
             appl_status_ok
             == e_status)
         {
-            appl_test_prompt(
-                p_context,
-                p_file);
+            appl_file_descriptor_set_type(
+                p_file_descriptor,
+                appl_file_type_stdin);
 
-            appl_file_destroy(
-                p_file);
+            appl_file_descriptor_set_mode(
+                p_file_descriptor,
+                appl_file_mode_read);
+
+            appl_print0("test prompt (press ctrl+d to stop)\n");
+
+            e_status =
+                appl_file_create(
+                    p_context,
+                    p_file_descriptor,
+                    &(
+                        p_file));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                appl_test_prompt(
+                    p_context,
+                    p_file);
+
+                appl_file_destroy(
+                    p_file);
+            }
+
+            appl_file_descriptor_destroy(
+                p_file_descriptor);
         }
     }
 
@@ -3283,19 +3323,33 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_file_descriptor
-        o_file_descriptor;
-
-    o_file_descriptor.e_type =
-        appl_file_type_stdin;
+    struct appl_file_descriptor *
+        p_file_descriptor;
 
     e_status =
-        appl_file_create(
+        appl_file_descriptor_create(
             p_context,
             &(
-                o_file_descriptor),
-            &(
-                g_test_stdin));
+                p_file_descriptor));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        appl_file_descriptor_set_type(
+            p_file_descriptor,
+            appl_file_type_stdin);
+
+        e_status =
+            appl_file_create(
+                p_context,
+                p_file_descriptor,
+                &(
+                    g_test_stdin));
+
+        appl_file_descriptor_destroy(
+            p_file_descriptor);
+    }
 
     return
         e_status;
@@ -3319,19 +3373,37 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_file_descriptor
-        o_file_descriptor;
-
-    o_file_descriptor.e_type =
-        appl_file_type_stdout;
+    struct appl_file_descriptor *
+        p_file_descriptor;
 
     e_status =
-        appl_file_create(
+        appl_file_descriptor_create(
             p_context,
             &(
-                o_file_descriptor),
-            &(
-                g_test_stdout));
+                p_file_descriptor));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        appl_file_descriptor_set_type(
+            p_file_descriptor,
+            appl_file_type_stdout);
+
+        appl_file_descriptor_set_mode(
+            p_file_descriptor,
+            appl_file_mode_write);
+
+        e_status =
+            appl_file_create(
+                p_context,
+                p_file_descriptor,
+                &(
+                    g_test_stdout));
+
+        appl_file_descriptor_destroy(
+            p_file_descriptor);
+    }
 
     return
         e_status;
@@ -3355,19 +3427,33 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_file_descriptor
-        o_file_descriptor;
-
-    o_file_descriptor.e_type =
-        appl_file_type_stderr;
+    struct appl_file_descriptor *
+        p_file_descriptor;
 
     e_status =
-        appl_file_create(
+        appl_file_descriptor_create(
             p_context,
             &(
-                o_file_descriptor),
-            &(
-                g_test_stderr));
+                p_file_descriptor));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        appl_file_descriptor_set_type(
+            p_file_descriptor,
+            appl_file_type_stderr);
+
+        e_status =
+            appl_file_create(
+                p_context,
+                p_file_descriptor,
+                &(
+                    g_test_stderr));
+
+        appl_file_descriptor_destroy(
+            p_file_descriptor);
+    }
 
     return
         e_status;

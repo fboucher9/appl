@@ -32,6 +32,8 @@
 
 #include <appl_file_descriptor.h>
 
+#include <file/appl_file_std_descriptor.h>
+
 #include <appl_buf0.h>
 
 #include <appl_convert.h>

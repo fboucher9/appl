@@ -36,80 +36,96 @@ enum appl_status
     // Do cat of stdin towards stdout
 
     // Open stdin
-    struct appl_file_descriptor
-        o_file_descriptor;
-
-    o_file_descriptor.e_type =
-        appl_file_type_stdin;
-
-    struct appl_file *
-        p_file_stdin;
+    struct appl_file_descriptor *
+        p_file_descriptor;
 
     e_status =
-        appl_file_create(
+        appl_file_descriptor_create(
             p_context,
             &(
-                o_file_descriptor),
-            &(
-                p_file_stdin));
+                p_file_descriptor));
 
     if (
         appl_status_ok
         == e_status)
     {
-        // Open stdout
-        o_file_descriptor.e_type =
-            appl_file_type_stdout;
+        appl_file_descriptor_set_type(
+            p_file_descriptor,
+            appl_file_type_stdin);
 
         struct appl_file *
-            p_file_stdout;
+            p_file_stdin;
 
         e_status =
             appl_file_create(
                 p_context,
+                p_file_descriptor,
                 &(
-                    o_file_descriptor),
-                &(
-                    p_file_stdout));
+                    p_file_stdin));
 
         if (
             appl_status_ok
             == e_status)
         {
-            bool
-                b_continue;
+            // Open stdout
+            appl_file_descriptor_set_type(
+                p_file_descriptor,
+                appl_file_type_stdout);
 
-            b_continue =
-                true;
+            struct appl_file *
+                p_file_stdout;
 
-            while (
-                b_continue)
+            e_status =
+                appl_file_create(
+                    p_context,
+                    p_file_descriptor,
+                    &(
+                        p_file_stdout));
+
+            if (
+                appl_status_ok
+                == e_status)
             {
-                static unsigned char s_buf[1024u];
+                bool
+                    b_continue;
 
-                unsigned long int
-                    i_count;
+                b_continue =
+                    true;
 
-                // Read from stdin
-                if (
-                    appl_status_ok
-                    == appl_file_read(
-                        p_file_stdin,
-                        s_buf,
-                        s_buf + sizeof(s_buf),
-                        &(
-                            i_count)))
+                while (
+                    b_continue)
                 {
-                    // Write to stdout
+                    static unsigned char s_buf[1024u];
+
+                    unsigned long int
+                        i_count;
+
+                    // Read from stdin
                     if (
                         appl_status_ok
-                        == appl_file_write(
-                            p_file_stdout,
+                        == appl_file_read(
+                            p_file_stdin,
                             s_buf,
-                            s_buf + i_count,
+                            s_buf + sizeof(s_buf),
                             &(
                                 i_count)))
                     {
+                        // Write to stdout
+                        if (
+                            appl_status_ok
+                            == appl_file_write(
+                                p_file_stdout,
+                                s_buf,
+                                s_buf + i_count,
+                                &(
+                                    i_count)))
+                        {
+                        }
+                        else
+                        {
+                            b_continue =
+                                false;
+                        }
                     }
                     else
                     {
@@ -117,19 +133,17 @@ enum appl_status
                             false;
                     }
                 }
-                else
-                {
-                    b_continue =
-                        false;
-                }
+
+                appl_file_destroy(
+                    p_file_stdout);
             }
 
             appl_file_destroy(
-                p_file_stdout);
+                p_file_stdin);
         }
 
-        appl_file_destroy(
-            p_file_stdin);
+        appl_file_descriptor_destroy(
+            p_file_descriptor);
     }
 
     return
@@ -145,25 +159,30 @@ void
         struct appl_context * const
             p_context)
 {
+    struct appl_file_descriptor *
+        p_file_descriptor;
+
+    appl_file_descriptor_create(
+        p_context,
+        &(
+            p_file_descriptor));
+
     // open of stdin
     {
         enum appl_status
             e_status;
 
-        struct appl_file_descriptor
-            o_file_descriptor;
-
         struct appl_file *
             p_file;
 
-        o_file_descriptor.e_type =
-            appl_file_type_stdin;
+        appl_file_descriptor_set_type(
+            p_file_descriptor,
+            appl_file_type_stdin);
 
         e_status =
             appl_file_create(
                 p_context,
-                &(
-                    o_file_descriptor),
+                p_file_descriptor,
                 &(
                     p_file));
 
@@ -183,20 +202,17 @@ void
         enum appl_status
             e_status;
 
-        struct appl_file_descriptor
-            o_file_descriptor;
-
         struct appl_file *
             p_file;
 
-        o_file_descriptor.e_type =
-            appl_file_type_stdout;
+        appl_file_descriptor_set_type(
+            p_file_descriptor,
+            appl_file_type_stdout);
 
         e_status =
             appl_file_create(
                 p_context,
-                &(
-                    o_file_descriptor),
+                p_file_descriptor,
                 &(
                     p_file));
 
@@ -226,20 +242,17 @@ void
         enum appl_status
             e_status;
 
-        struct appl_file_descriptor
-            o_file_descriptor;
-
         struct appl_file *
             p_file;
 
-        o_file_descriptor.e_type =
-            appl_file_type_stderr;
+        appl_file_descriptor_set_type(
+            p_file_descriptor,
+            appl_file_type_stderr);
 
         e_status =
             appl_file_create(
                 p_context,
-                &(
-                    o_file_descriptor),
+                p_file_descriptor,
                 &(
                     p_file));
 
@@ -257,9 +270,6 @@ void
         enum appl_status
             e_status;
 
-        struct appl_file_descriptor
-            o_file_descriptor;
-
         struct appl_file *
             p_file;
 
@@ -269,15 +279,15 @@ void
         i_invalid_file_type =
             -1;
 
-        o_file_descriptor.e_type =
+        appl_file_descriptor_set_type(
+            p_file_descriptor,
             static_cast<enum appl_file_type>(
-                i_invalid_file_type);
+                i_invalid_file_type));
 
         e_status =
             appl_file_create(
                 p_context,
-                &(
-                    o_file_descriptor),
+                p_file_descriptor,
                 &(
                     p_file));
 
@@ -310,26 +320,23 @@ void
         struct appl_file *
             p_file;
 
-        struct appl_file_descriptor
-            o_file_descriptor;
+        appl_file_descriptor_set_type(
+            p_file_descriptor,
+            appl_file_type_disk);
 
-        o_file_descriptor.e_type =
-            appl_file_type_disk;
+        appl_file_descriptor_set_mode(
+            p_file_descriptor,
+            appl_file_mode_read);
 
-        o_file_descriptor.e_mode =
-            appl_file_mode_read;
-
-        o_file_descriptor.p_name_min =
-            g_input_bin_name;
-
-        o_file_descriptor.p_name_max =
-            g_input_bin_name + sizeof(g_input_bin_name);
+        appl_file_descriptor_set_name(
+            p_file_descriptor,
+            g_input_bin_name,
+            g_input_bin_name + sizeof(g_input_bin_name));
 
         e_status =
             appl_file_create(
                 p_context,
-                &(
-                    o_file_descriptor),
+                p_file_descriptor,
                 &(
                     p_file));
 
@@ -384,26 +391,23 @@ void
         struct appl_file *
             p_file;
 
-        struct appl_file_descriptor
-            o_file_descriptor;
+        appl_file_descriptor_set_type(
+            p_file_descriptor,
+            appl_file_type_disk);
 
-        o_file_descriptor.e_type =
-            appl_file_type_disk;
+        appl_file_descriptor_set_mode(
+            p_file_descriptor,
+            appl_file_mode_read);
 
-        o_file_descriptor.e_mode =
-            appl_file_mode_read;
-
-        o_file_descriptor.p_name_min =
-            g_invalid_file_name;
-
-        o_file_descriptor.p_name_max =
-            g_invalid_file_name + sizeof(g_invalid_file_name);
+        appl_file_descriptor_set_name(
+            p_file_descriptor,
+            g_invalid_file_name,
+            g_invalid_file_name + sizeof(g_invalid_file_name));
 
         e_status =
             appl_file_create(
                 p_context,
-                &(
-                    o_file_descriptor),
+                p_file_descriptor,
                 &(
                     p_file));
 
@@ -434,11 +438,9 @@ void
         struct appl_file *
             p_file;
 
-        struct appl_file_descriptor
-            o_file_descriptor;
-
-        o_file_descriptor.e_type =
-            appl_file_type_disk;
+        appl_file_descriptor_set_type(
+            p_file_descriptor,
+            appl_file_type_disk);
 
         int
             i_invalid_file_mode;
@@ -446,21 +448,20 @@ void
         i_invalid_file_mode =
             33;
 
-        o_file_descriptor.e_mode =
+        appl_file_descriptor_set_mode(
+            p_file_descriptor,
             static_cast<enum appl_file_mode>(
-                i_invalid_file_mode);
+                i_invalid_file_mode));
 
-        o_file_descriptor.p_name_min =
-            g_input_bin_name;
-
-        o_file_descriptor.p_name_max =
-            g_input_bin_name + sizeof(g_input_bin_name);
+        appl_file_descriptor_set_name(
+            p_file_descriptor,
+            g_input_bin_name,
+            g_input_bin_name + sizeof(g_input_bin_name));
 
         e_status =
             appl_file_create(
                 p_context,
-                &(
-                    o_file_descriptor),
+                p_file_descriptor,
                 &(
                     p_file));
 
@@ -491,26 +492,23 @@ void
         struct appl_file *
             p_file;
 
-        struct appl_file_descriptor
-            o_file_descriptor;
+        appl_file_descriptor_set_type(
+            p_file_descriptor,
+            appl_file_type_disk);
 
-        o_file_descriptor.e_type =
-            appl_file_type_disk;
+        appl_file_descriptor_set_mode(
+            p_file_descriptor,
+            appl_file_mode_read);
 
-        o_file_descriptor.e_mode =
-            appl_file_mode_read;
-
-        o_file_descriptor.p_name_min =
-            g_input_bin_name;
-
-        o_file_descriptor.p_name_max =
-            g_input_bin_name + sizeof(g_input_bin_name);
+        appl_file_descriptor_set_name(
+            p_file_descriptor,
+            g_input_bin_name,
+            g_input_bin_name + sizeof(g_input_bin_name));
 
         e_status =
             appl_file_create(
                 p_context,
-                &(
-                    o_file_descriptor),
+                p_file_descriptor,
                 &(
                     p_file));
 
@@ -568,26 +566,23 @@ void
         struct appl_file *
             p_file;
 
-        struct appl_file_descriptor
-            o_file_descriptor;
+        appl_file_descriptor_set_type(
+            p_file_descriptor,
+            appl_file_type_disk);
 
-        o_file_descriptor.e_type =
-            appl_file_type_disk;
+        appl_file_descriptor_set_mode(
+            p_file_descriptor,
+            appl_file_mode_write);
 
-        o_file_descriptor.e_mode =
-            appl_file_mode_write;
-
-        o_file_descriptor.p_name_min =
-            g_out007_bin_name;
-
-        o_file_descriptor.p_name_max =
-            g_out007_bin_name + sizeof(g_out007_bin_name);
+        appl_file_descriptor_set_name(
+            p_file_descriptor,
+            g_out007_bin_name,
+            g_out007_bin_name + sizeof(g_out007_bin_name));
 
         e_status =
             appl_file_create(
                 p_context,
-                &(
-                    o_file_descriptor),
+                p_file_descriptor,
                 &(
                     p_file));
 
@@ -645,26 +640,23 @@ void
         struct appl_file *
             p_file;
 
-        struct appl_file_descriptor
-            o_file_descriptor;
+        appl_file_descriptor_set_type(
+            p_file_descriptor,
+            appl_file_type_disk);
 
-        o_file_descriptor.e_type =
-            appl_file_type_disk;
+        appl_file_descriptor_set_mode(
+            p_file_descriptor,
+            appl_file_mode_append);
 
-        o_file_descriptor.e_mode =
-            appl_file_mode_append;
-
-        o_file_descriptor.p_name_min =
-            g_out007_bin_name;
-
-        o_file_descriptor.p_name_max =
-            g_out007_bin_name + sizeof(g_out007_bin_name);
+        appl_file_descriptor_set_name(
+            p_file_descriptor,
+            g_out007_bin_name,
+            g_out007_bin_name + sizeof(g_out007_bin_name));
 
         e_status =
             appl_file_create(
                 p_context,
-                &(
-                    o_file_descriptor),
+                p_file_descriptor,
                 &(
                     p_file));
 
@@ -722,26 +714,23 @@ void
         struct appl_file *
             p_file;
 
-        struct appl_file_descriptor
-            o_file_descriptor;
+        appl_file_descriptor_set_type(
+            p_file_descriptor,
+            appl_file_type_disk);
 
-        o_file_descriptor.e_type =
-            appl_file_type_disk;
+        appl_file_descriptor_set_mode(
+            p_file_descriptor,
+            appl_file_mode_modify);
 
-        o_file_descriptor.e_mode =
-            appl_file_mode_modify;
-
-        o_file_descriptor.p_name_min =
-            g_out007_bin_name;
-
-        o_file_descriptor.p_name_max =
-            g_out007_bin_name + sizeof(g_out007_bin_name);
+        appl_file_descriptor_set_name(
+            p_file_descriptor,
+            g_out007_bin_name,
+            g_out007_bin_name + sizeof(g_out007_bin_name));
 
         e_status =
             appl_file_create(
                 p_context,
-                &(
-                    o_file_descriptor),
+                p_file_descriptor,
                 &(
                     p_file));
 
@@ -845,6 +834,9 @@ void
                 p_file_node);
         }
     }
+
+    appl_file_descriptor_destroy(
+        p_file_descriptor);
 
 } // appl_file_test_1()
 

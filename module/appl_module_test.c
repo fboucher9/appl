@@ -34,46 +34,57 @@ appl_module_test_1(
     struct appl_file *
         p_sink_file;
 
-    struct appl_file_descriptor
-        o_source_file_descriptor;
+    struct appl_file_descriptor *
+        p_source_file_descriptor;
 
-    struct appl_file_descriptor
-        o_sink_file_descriptor;
+    struct appl_file_descriptor *
+        p_sink_file_descriptor;
+
+    appl_file_descriptor_create(
+        p_context,
+        &(
+            p_source_file_descriptor));
+
+    appl_file_descriptor_create(
+        p_context,
+        &(
+            p_sink_file_descriptor));
 
     /* Create a file copy pipeline */
     /* Use push method */
     /* Create sink first */
     /* Create source last */
 
-    o_source_file_descriptor.p_name_min =
-        g_source_file_name;
+    appl_file_descriptor_set_name(
+        p_source_file_descriptor,
+        g_source_file_name,
+        g_source_file_name + (sizeof g_source_file_name));
 
-    o_source_file_descriptor.p_name_max =
-        g_source_file_name + (sizeof g_source_file_name);
+    appl_file_descriptor_set_type(
+        p_source_file_descriptor,
+        appl_file_type_disk);
 
-    o_source_file_descriptor.e_type =
-        appl_file_type_disk;
+    appl_file_descriptor_set_mode(
+        p_source_file_descriptor,
+        appl_file_mode_read);
 
-    o_source_file_descriptor.e_mode =
-        appl_file_mode_read;
+    appl_file_descriptor_set_name(
+        p_sink_file_descriptor,
+        g_sink_file_name,
+        g_sink_file_name + (sizeof g_sink_file_name));
 
-    o_sink_file_descriptor.p_name_min =
-        g_sink_file_name;
+    appl_file_descriptor_set_type(
+        p_sink_file_descriptor,
+        appl_file_type_disk);
 
-    o_sink_file_descriptor.p_name_max =
-        g_sink_file_name + (sizeof g_sink_file_name);
-
-    o_sink_file_descriptor.e_type =
-        appl_file_type_disk;
-
-    o_sink_file_descriptor.e_mode =
-        appl_file_mode_write;
+    appl_file_descriptor_set_mode(
+        p_sink_file_descriptor,
+        appl_file_mode_write);
 
     e_status =
         appl_file_create(
             p_context,
-            &(
-                o_sink_file_descriptor),
+            p_sink_file_descriptor,
             &(
                 p_sink_file));
 
@@ -87,8 +98,7 @@ appl_module_test_1(
         e_status =
             appl_file_create(
                 p_context,
-                &(
-                    o_source_file_descriptor),
+                p_source_file_descriptor,
                 &(
                     p_source_file));
 
@@ -195,6 +205,12 @@ appl_module_test_1(
         appl_file_destroy(
             p_sink_file);
     }
+
+    appl_file_descriptor_destroy(
+        p_sink_file_descriptor);
+
+    appl_file_descriptor_destroy(
+        p_source_file_descriptor);
 
     return
         e_status;
