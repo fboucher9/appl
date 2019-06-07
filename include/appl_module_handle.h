@@ -35,18 +35,21 @@ struct appl_packet;
 */
 struct appl_packet
 {
+    struct appl_module *
+        p_module;
+
     unsigned char *
         p_buf_min;
+
+    /* -- */
 
     unsigned char *
         p_buf_max;
 
-    /* -- */
-
     unsigned long int
         e_type;
 
-#define PADDING (APPL_SIZEOF_LONG)
+#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG)
 #include <appl_padding.h>
 
     /* -- */
@@ -85,6 +88,14 @@ appl_module_pull(
     struct appl_module * const
         p_module,
     struct appl_packet * * const
+        p_packet);
+
+/* Release of buffer back to owner */
+enum appl_status
+appl_module_release(
+    struct appl_module * const
+        p_module,
+    struct appl_packet * const
         p_packet);
 
 /* -- */

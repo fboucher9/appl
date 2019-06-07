@@ -42,6 +42,12 @@ struct appl_module : public appl_object
                 struct appl_packet * * const
                     r_packet);
 
+        virtual
+        enum appl_status
+            v_release(
+                struct appl_packet * const
+                    p_packet);
+
     protected:
 
         appl_module(

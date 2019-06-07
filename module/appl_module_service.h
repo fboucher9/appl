@@ -64,6 +64,14 @@ class appl_module_service
             struct appl_packet * * const
                 r_packet);
 
+        static
+        enum appl_status
+        s_release(
+            struct appl_module * const
+                p_module,
+            struct appl_packet * const
+                p_packet);
+
 }; // class appl_module_service
 
 /* -- */

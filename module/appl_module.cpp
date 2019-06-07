@@ -55,6 +55,22 @@ enum appl_status
 
 }
 
+//
+//
+//
+enum appl_status
+    appl_module::v_release(
+        struct appl_packet * const
+            p_packet)
+{
+    appl_unused(
+        p_packet);
+
+    return
+        appl_raise_not_implemented();
+
+} // v_release()
+
 appl_module::appl_module(
     struct appl_context * const
         p_context) :

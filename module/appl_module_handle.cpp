@@ -56,6 +56,23 @@ appl_module_pull(
 
 }
 
+//
+//
+//
+enum appl_status
+appl_module_release(
+    struct appl_module * const
+        p_module,
+    struct appl_packet * const
+        p_packet)
+{
+    return
+        appl_module_service::s_release(
+            p_module,
+            p_packet);
+
+} // appl_module_release()
+
 enum appl_status
 appl_file_source_module_create(
     struct appl_context * const
