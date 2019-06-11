@@ -22,44 +22,6 @@ struct appl_object;
 /* Predefine */
 struct appl_packet;
 
-#define APPL_PACKET_TYPE_NONE (0ul)
-
-#define APPL_PACKET_TYPE_BINARY (1ul)
-
-#define APPL_PACKET_TYPE_TEXT (2ul)
-
-#define APPL_PACKET_TYPE_FLUSH (3ul)
-
-/*
-
-*/
-struct appl_packet
-{
-    struct appl_module *
-        p_module;
-
-    unsigned char *
-        p_buf_min;
-
-    /* -- */
-
-    unsigned char *
-        p_buf_max;
-
-    unsigned long int
-        e_type;
-
-#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG)
-#include <appl_padding.h>
-
-    /* -- */
-
-    /* timestamps ... */
-
-    /* extensions? */
-
-}; /* struct appl_packet */
-
 #if defined __cplusplus
 extern "C" {
 #endif /* #if defined __cplusplus */

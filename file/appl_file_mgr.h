@@ -38,6 +38,24 @@ class appl_file_mgr : public appl_object
 
         virtual
         enum appl_status
+            v_get_stdin(
+                struct appl_file * * const
+                    r_file_node);
+
+        virtual
+        enum appl_status
+            v_get_stdout(
+                struct appl_file * * const
+                    r_file_node);
+
+        virtual
+        enum appl_status
+            v_get_stderr(
+                struct appl_file * * const
+                    r_file_node);
+
+        virtual
+        enum appl_status
             v_create_node(
                 struct appl_file_descriptor const * const
                     p_file_descriptor,

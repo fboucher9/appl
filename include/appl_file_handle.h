@@ -23,6 +23,27 @@ extern "C" {
 #endif /* #if defined(__cplusplus) */
 
 enum appl_status
+appl_file_get_stdin(
+    struct appl_context * const
+        p_context,
+    struct appl_file * * const
+        r_stdin_file);
+
+enum appl_status
+appl_file_get_stdout(
+    struct appl_context * const
+        p_context,
+    struct appl_file * * const
+        r_stdout_file);
+
+enum appl_status
+appl_file_get_stderr(
+    struct appl_context * const
+        p_context,
+    struct appl_file * * const
+        r_stderr_file);
+
+enum appl_status
 appl_file_create(
     struct appl_context * const
         p_context,

@@ -10,6 +10,57 @@
 
 #include <file/appl_file_service.h>
 
+//
+//
+//
+enum appl_status
+appl_file_get_stdin(
+    struct appl_context * const
+        p_context,
+    struct appl_file * * const
+        r_file)
+{
+    return
+        appl_file_service::s_get_stdin(
+            p_context,
+            r_file);
+
+} // _get_stdin()
+
+//
+//
+//
+enum appl_status
+appl_file_get_stdout(
+    struct appl_context * const
+        p_context,
+    struct appl_file * * const
+        r_file)
+{
+    return
+        appl_file_service::s_get_stdout(
+            p_context,
+            r_file);
+
+} // _get_stdout()
+
+//
+//
+//
+enum appl_status
+appl_file_get_stderr(
+    struct appl_context * const
+        p_context,
+    struct appl_file * * const
+        r_file)
+{
+    return
+        appl_file_service::s_get_stderr(
+            p_context,
+            r_file);
+
+} // _get_stderr()
+
 /*
 
 */

@@ -8,11 +8,15 @@
 
 #include <appl_types.h>
 
+#include <appl_packet_handle.h>
+
 #include <appl_module_handle.h>
 
 #include <appl_object.h>
 
 #include <module/appl_module.h>
+
+#include <module/appl_packet.h>
 
 #include <appl_unused.h>
 
@@ -149,41 +153,46 @@ enum appl_status
         == e_status)
     {
         // Send this chunk to sink
-        struct appl_packet
-            o_packet;
-
-        o_packet.p_buf_min =
-            m_chunk;
-
-        o_packet.p_buf_max =
-            m_chunk + i_count;
-
-        o_packet.e_type =
-            APPL_PACKET_TYPE_BINARY;
+        struct appl_packet *
+            p_packet;
 
         e_status =
-            m_file_source_descriptor.p_sink->v_push(
+            appl_packet_create(
+                m_context,
                 &(
-                    o_packet));
+                    p_packet));
 
         if (
             appl_status_ok
             == e_status)
         {
-            // Send a flush
-            o_packet.p_buf_min =
-                m_chunk;
+            appl_packet_set_module(
+                p_packet,
+                this);
 
-            o_packet.p_buf_max =
-                m_chunk;
+            appl_packet_set_buffer(
+                p_packet,
+                m_chunk,
+                m_chunk + i_count);
 
-            o_packet.e_type =
-                APPL_PACKET_TYPE_FLUSH;
+            appl_packet_set_type(
+                p_packet,
+                APPL_PACKET_TYPE_BINARY);
 
             e_status =
                 m_file_source_descriptor.p_sink->v_push(
-                    &(
-                        o_packet));
+                    p_packet);
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                // Send a flush
+                e_status =
+                    m_file_source_descriptor.p_sink->v_push(
+                        (struct appl_packet *)(
+                            0));
+            }
         }
     }
 
@@ -552,7 +561,8 @@ enum appl_status
             != m_line_buffer)
         {
             struct appl_packet
-                o_packet;
+                o_packet(
+                    m_context);
 
             o_packet.p_buf_min =
                 m_line_buffer;

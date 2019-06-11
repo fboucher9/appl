@@ -33,6 +33,30 @@ class appl_file_service
 
         static
         enum appl_status
+            s_get_stdin(
+                struct appl_context * const
+                    p_context,
+                struct appl_file * * const
+                    r_file);
+
+        static
+        enum appl_status
+            s_get_stdout(
+                struct appl_context * const
+                    p_context,
+                struct appl_file * * const
+                    r_file);
+
+        static
+        enum appl_status
+            s_get_stderr(
+                struct appl_context * const
+                    p_context,
+                struct appl_file * * const
+                    r_file);
+
+        static
+        enum appl_status
             s_create(
                 struct appl_context * const
                     p_context,

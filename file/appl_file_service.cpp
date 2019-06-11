@@ -27,6 +27,111 @@
 //
 //
 enum appl_status
+    appl_file_service::s_get_stdin(
+        struct appl_context * const
+            p_context,
+        struct appl_file * * const
+            r_file)
+{
+    enum appl_status
+        e_status;
+
+    class appl_file_mgr *
+        p_file_mgr;
+
+    e_status =
+        p_context->v_file_mgr(
+            &(
+                p_file_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_file_mgr->v_get_stdin(
+                r_file);
+    }
+
+    return
+        e_status;
+
+} // s_get_stdin()
+
+//
+//
+//
+enum appl_status
+    appl_file_service::s_get_stdout(
+        struct appl_context * const
+            p_context,
+        struct appl_file * * const
+            r_file)
+{
+    enum appl_status
+        e_status;
+
+    class appl_file_mgr *
+        p_file_mgr;
+
+    e_status =
+        p_context->v_file_mgr(
+            &(
+                p_file_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_file_mgr->v_get_stdout(
+                r_file);
+    }
+
+    return
+        e_status;
+
+} // s_get_stdout()
+
+//
+//
+//
+enum appl_status
+    appl_file_service::s_get_stderr(
+        struct appl_context * const
+            p_context,
+        struct appl_file * * const
+            r_file)
+{
+    enum appl_status
+        e_status;
+
+    class appl_file_mgr *
+        p_file_mgr;
+
+    e_status =
+        p_context->v_file_mgr(
+            &(
+                p_file_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_file_mgr->v_get_stderr(
+                r_file);
+    }
+
+    return
+        e_status;
+
+} // s_get_stderr()
+
+//
+//
+//
+enum appl_status
     appl_file_service::s_create(
         struct appl_context * const
             p_context,

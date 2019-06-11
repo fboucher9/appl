@@ -118,6 +118,9 @@ appl_base-deps := \
     module/appl_module_handle.cpp \
     module/appl_module_service.cpp \
     module/appl_module.cpp \
+    module/appl_packet_handle.cpp \
+    module/appl_packet_service.cpp \
+    module/appl_packet.cpp \
     mutex/appl_mutex_handle.cpp \
     mutex/appl_mutex_mgr.cpp \
     mutex/appl_mutex_node.cpp \
