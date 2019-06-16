@@ -24,6 +24,10 @@
 
 #include <appl_thread_descriptor.h>
 
+#include <appl_buf.h>
+
+#include <thread/appl_thread_descriptor_impl.h>
+
 #include <thread/appl_thread_node.h>
 
 #include <thread/appl_thread_impl.h>
@@ -121,7 +125,8 @@ appl_thread_std_node::appl_thread_std_node(
         p_context) :
     appl_thread(
         p_context),
-    m_thread_impl()
+    m_thread_impl(
+        p_context)
 {
 }
 

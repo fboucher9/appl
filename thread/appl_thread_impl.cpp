@@ -22,6 +22,12 @@
 
 #include <appl_thread_descriptor.h>
 
+#include <appl_object.h>
+
+#include <appl_buf.h>
+
+#include <thread/appl_thread_descriptor_impl.h>
+
 #include <thread/appl_thread_impl.h>
 
 #include <appl_unused.h>
@@ -29,8 +35,13 @@
 //
 //
 //
-appl_thread_impl::appl_thread_impl() :
-    m_descriptor(),
+appl_thread_impl::appl_thread_impl(
+    struct appl_context * const
+        p_context) :
+    appl_object(
+        p_context),
+    m_descriptor(
+        p_context),
     m_storage()
 {
 }
@@ -53,9 +64,8 @@ enum appl_status
     enum appl_status
         e_status;
 
-    m_descriptor =
-        *(
-            p_thread_descriptor);
+    m_descriptor.f_copy(
+        p_thread_descriptor);
 
 #if defined APPL_OS_LINUX
     int
@@ -338,8 +348,7 @@ void *
         0
         == i_detach_result)
     {
-        (*(m_descriptor.o_callback.p_entry))(
-            m_descriptor.o_callback.p_context);
+        m_descriptor.f_dispatch();
     }
     else
     {

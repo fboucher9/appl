@@ -113,6 +113,7 @@ appl_base-deps := \
     log/appl_log.cpp \
     log/appl_log_std.cpp \
     log/appl_log_impl.cpp \
+    log/appl_log_client.cpp \
     main/appl_main.cpp \
     main/appl_main_service.cpp \
     module/appl_module_handle.cpp \
@@ -185,6 +186,7 @@ appl_base-deps := \
     thread/appl_thread_cache.cpp \
     thread/appl_thread_handle.cpp \
     thread/appl_thread_descriptor.cpp \
+    thread/appl_thread_descriptor_impl.cpp \
     thread/appl_thread_mgr.cpp \
     thread/appl_thread_node.cpp \
     thread/appl_thread_property.cpp \

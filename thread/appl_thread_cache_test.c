@@ -61,8 +61,8 @@ appl_thread_cache_test(
     enum appl_status
         e_status;
 
-    struct appl_thread_descriptor
-        o_thread_descriptor;
+    struct appl_thread_descriptor *
+        p_thread_descriptor;
 
     static struct test_thread_cache_data
         o_test_data;
@@ -73,13 +73,13 @@ appl_thread_cache_test(
     o_test_data.p_thread_cache =
         0;
 
-    appl_thread_descriptor_init(
+    appl_thread_descriptor_create(
+        p_context,
         &(
-            o_thread_descriptor));
+            p_thread_descriptor));
 
     appl_thread_descriptor_set_callback(
-        &(
-            o_thread_descriptor),
+        p_thread_descriptor,
         &(
             test_thread_cache_entry),
         &(
@@ -89,8 +89,7 @@ appl_thread_cache_test(
         e_status =
             appl_thread_cache_create(
                 p_context,
-                &(
-                    o_thread_descriptor),
+                p_thread_descriptor,
                 &(
                     o_test_data.p_thread_cache));
 
@@ -105,6 +104,9 @@ appl_thread_cache_test(
 
         }
     }
+
+    appl_thread_descriptor_destroy(
+        p_thread_descriptor);
 
 } /* appl_thread_cache_test() */
 

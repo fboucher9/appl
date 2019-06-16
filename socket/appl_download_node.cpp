@@ -587,41 +587,49 @@ enum appl_status
         e_status;
 
     /* Create a thread for connect and download operation */
-    struct appl_thread_descriptor
-        o_thread_descriptor;
-
-    appl_thread_descriptor_init(
-        &(
-            o_thread_descriptor));
-
-    appl_thread_descriptor_set_callback(
-        &(
-            o_thread_descriptor),
-        &(
-            appl_download::s_thread_entry),
-        this);
-
-    appl_mutex_lock(
-        m_mutex);
+    struct appl_thread_descriptor *
+        p_thread_descriptor;
 
     e_status =
-        appl_thread_create(
+        appl_thread_descriptor_create(
             m_context,
             &(
-                o_thread_descriptor),
-            &(
-                m_thread));
+                p_thread_descriptor));
 
     if (
         appl_status_ok
         == e_status)
     {
-        m_thread_created =
-            true;
-    }
+        appl_thread_descriptor_set_callback(
+            p_thread_descriptor,
+            &(
+                appl_download::s_thread_entry),
+            this);
 
-    appl_mutex_unlock(
-        m_mutex);
+        appl_mutex_lock(
+            m_mutex);
+
+        e_status =
+            appl_thread_create(
+                m_context,
+                p_thread_descriptor,
+                &(
+                    m_thread));
+
+        appl_thread_descriptor_destroy(
+            p_thread_descriptor);
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            m_thread_created =
+                true;
+        }
+
+        appl_mutex_unlock(
+            m_mutex);
+    }
 
     return
         e_status;

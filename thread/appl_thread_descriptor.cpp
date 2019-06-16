@@ -4,31 +4,67 @@
 
 */
 
+#include <appl_status.h>
+
 #include <appl_types.h>
 
 #include <appl_thread_descriptor.h>
 
-/*
+#include <appl_object.h>
 
-*/
-void
-appl_thread_descriptor_init(
-    struct appl_thread_descriptor * const
-        p_thread_descriptor)
+#include <appl_buf.h>
+
+#include <thread/appl_thread_descriptor_impl.h>
+
+#include <appl_heap_handle.h>
+
+//
+//
+//
+enum appl_status
+    appl_thread_descriptor_create(
+        struct appl_context * const
+            p_context,
+        struct appl_thread_descriptor * * const
+            r_thread_descriptor)
 {
-    p_thread_descriptor->b_callback =
-        0;
+    enum appl_status
+        e_status;
 
-    p_thread_descriptor->b_name =
-        0;
+    e_status =
+        appl_new(
+            p_context,
+            r_thread_descriptor);
 
-    p_thread_descriptor->b_stack =
-        0;
+    return
+        e_status;
 
-    p_thread_descriptor->b_scheduling =
-        0;
+} // _create()
 
-} /* appl_thread_descriptor_init() */
+//
+//
+//
+enum appl_status
+    appl_thread_descriptor_destroy(
+        struct appl_thread_descriptor * const
+            p_thread_descriptor)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_context * const
+        p_context =
+        p_thread_descriptor->get_context();
+
+    e_status =
+        appl_delete(
+            p_context,
+            p_thread_descriptor);
+
+    return
+        e_status;
+
+} // _destroy()
 
 /*
 
@@ -43,15 +79,78 @@ appl_thread_descriptor_set_callback(
     void * const
         p_context)
 {
-    p_thread_descriptor->b_callback =
-        1;
+    struct appl_thread_callback
+        o_callback;
 
-    p_thread_descriptor->o_callback.p_entry =
+    o_callback.p_entry =
         p_entry;
 
-    p_thread_descriptor->o_callback.p_context =
+    o_callback.p_context =
         p_context;
 
+    p_thread_descriptor->f_set_callback(
+        &(
+            o_callback));
+
 } /* appl_thread_descriptor_set_callback() */
+
+//
+//
+//
+void
+    appl_thread_descriptor_set_name(
+        struct appl_thread_descriptor * const
+            p_thread_descriptor,
+        unsigned char const * const
+            p_name_min,
+        unsigned char const * const
+            p_name_max)
+{
+    struct appl_buf
+        o_name;
+
+    o_name.o_min.pc_uchar =
+        p_name_min;
+
+    o_name.o_max.pc_uchar =
+        p_name_max;
+
+    p_thread_descriptor->f_set_name(
+        &(
+            o_name));
+
+} // _set_name()
+
+//
+//
+//
+char
+    appl_thread_descriptor_get_callback(
+        struct appl_thread_descriptor const * const
+            p_thread_descriptor,
+        struct appl_thread_callback * const
+            p_thread_callback)
+{
+    return
+        p_thread_descriptor->f_get_callback(
+            p_thread_callback) ? 1 : 0;
+
+} // _get_callback()
+
+//
+//
+//
+char
+    appl_thread_descriptor_get_name(
+        struct appl_thread_descriptor const * const
+            p_thread_descriptor,
+        struct appl_buf * const
+            p_name)
+{
+    return
+        p_thread_descriptor->f_get_name(
+            p_name) ? 1 : 0;
+
+} // _get_name()
 
 /* end-of-file: appl_thread_descriptor.cpp */

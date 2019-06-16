@@ -15,7 +15,7 @@ enum guard_appl_thread_impl_h
 {
     inc_appl_thread_impl_h =
         /* Header file dependencies */
-        inc_appl_thread_descriptor_h
+        inc_appl_thread_descriptor_impl_h
 };
 
 /* Assert compiler */
@@ -26,11 +26,13 @@ enum guard_appl_thread_impl_h
 //
 //
 //
-class appl_thread_impl
+class appl_thread_impl : public appl_object
 {
     public:
 
-        appl_thread_impl();
+        appl_thread_impl(
+            struct appl_context * const
+                p_context);
 
         ~appl_thread_impl();
 

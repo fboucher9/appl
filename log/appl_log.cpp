@@ -6,15 +6,68 @@
 
 #include <appl_status.h>
 
-#include <appl_log_handle.h>
-
 #include <appl_types.h>
+
+#include <appl_log_handle.h>
 
 #include <appl_object.h>
 
 #include <log/appl_log.h>
 
 #include <appl_unused.h>
+
+//
+//
+//
+enum appl_status
+    appl_log::v_register(
+        void (* const p_callback)(
+            void * const
+                p_callback_context,
+            struct appl_log_record const * const
+                p_log_record),
+        void * const
+            p_callback_context,
+        struct appl_log_client * * const
+            r_client)
+{
+    enum appl_status
+        e_status;
+
+    appl_unused(
+        p_callback,
+        p_callback_context,
+        r_client);
+
+    e_status =
+        appl_raise_not_implemented();
+
+    return
+        e_status;
+
+} // v_register()
+
+//
+//
+//
+enum appl_status
+    appl_log::v_unregister(
+        struct appl_log_client * const
+            p_client)
+{
+    enum appl_status
+        e_status;
+
+    appl_unused(
+        p_client);
+
+    e_status =
+        appl_raise_not_implemented();
+
+    return
+        e_status;
+
+} // v_unregister()
 
 //
 //

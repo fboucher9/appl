@@ -80,8 +80,8 @@ struct appl_thread_cache_task
 
     /* -- */
 
-    struct appl_thread_descriptor
-        o_thread_descriptor;
+    struct appl_thread_callback
+        o_callback;
 
     /* -- */
 
@@ -180,16 +180,16 @@ struct appl_thread_cache : public appl_thread
             o_thread_cache_ptr.p_thread_cache =
                 this;
 
-            struct appl_thread_descriptor
-                o_thread_descriptor;
+            struct appl_thread_descriptor *
+                p_thread_descriptor;
 
-            appl_thread_descriptor_init(
+            appl_thread_descriptor_create(
+                m_context,
                 &(
-                    o_thread_descriptor));
+                    p_thread_descriptor));
 
             appl_thread_descriptor_set_callback(
-                &(
-                    o_thread_descriptor),
+                p_thread_descriptor,
                 &(
                     appl_thread_cache::s_task),
                 o_thread_cache_ptr.p_thread_context);
@@ -241,8 +241,7 @@ struct appl_thread_cache : public appl_thread
                     {
                         e_status =
                             p_thread_mgr->v_create_node(
-                                &(
-                                    o_thread_descriptor),
+                                p_thread_descriptor,
                                 &(
                                     m_thread_handle));
 
@@ -288,6 +287,9 @@ struct appl_thread_cache : public appl_thread
                 }
             }
 
+            appl_thread_descriptor_destroy(
+                p_thread_descriptor);
+
             return
                 e_status;
 
@@ -319,13 +321,10 @@ struct appl_thread_cache : public appl_thread
                 appl_status_ok
                 == e_status)
             {
-                o_thread_cache_task_ptr.p_thread_cache_task->o_thread_descriptor.b_callback =
+                o_thread_cache_task_ptr.p_thread_cache_task->o_callback.p_entry =
                     0;
 
-                o_thread_cache_task_ptr.p_thread_cache_task->o_thread_descriptor.o_callback.p_entry =
-                    0;
-
-                o_thread_cache_task_ptr.p_thread_cache_task->o_thread_descriptor.o_callback.p_context =
+                o_thread_cache_task_ptr.p_thread_cache_task->o_callback.p_context =
                     0;
 
                 o_thread_cache_task_ptr.p_thread_cache_task->b_kill =
@@ -368,9 +367,10 @@ struct appl_thread_cache : public appl_thread
                 appl_status_ok
                 == e_status)
             {
-                o_thread_cache_task_ptr.p_thread_cache_task->o_thread_descriptor =
-                    *(
-                        p_thread_descriptor);
+                appl_thread_descriptor_get_callback(
+                    p_thread_descriptor,
+                    &(
+                        o_thread_cache_task_ptr.p_thread_cache_task->o_callback));
 
                 o_thread_cache_task_ptr.p_thread_cache_task->b_kill =
                     false;
@@ -1102,8 +1102,13 @@ void
             appl_status_ok
             == e_status)
         {
+            struct appl_thread_cache_task const &
+                r_thread_cache_task =
+                *(
+                    o_thread_cache_task_ptr.p_thread_cache_task);
+
             // Check for quit message ...
-            if (o_thread_cache_task_ptr.p_thread_cache_task->b_kill)
+            if (r_thread_cache_task.b_kill)
             {
 #if defined APPL_DEBUG
                 {
@@ -1132,8 +1137,12 @@ void
                 }
 #endif /* #if defined APPL_DEBUG */
 
-                (*(o_thread_cache_task_ptr.p_thread_cache_task->o_thread_descriptor.o_callback.p_entry))(
-                    o_thread_cache_task_ptr.p_thread_cache_task->o_thread_descriptor.o_callback.p_context);
+                struct appl_thread_callback const &
+                    r_callback =
+                    r_thread_cache_task.o_callback;
+
+                (*(r_callback.p_entry))(
+                    r_callback.p_context);
 
 #if defined APPL_DEBUG
                 {

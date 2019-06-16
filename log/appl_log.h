@@ -34,6 +34,25 @@ struct appl_log : public appl_object
 
         virtual
         enum appl_status
+            v_register(
+                void (* const p_callback)(
+                    void * const
+                        p_callback_context,
+                    struct appl_log_record const * const
+                        p_log_record),
+                void * const
+                    p_callback_context,
+                struct appl_log_client * * const
+                    r_client);
+
+        virtual
+        enum appl_status
+            v_unregister(
+                struct appl_log_client * const
+                    p_client);
+
+        virtual
+        enum appl_status
             v_print(
                 enum appl_log_level const
                     e_level,

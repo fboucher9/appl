@@ -28,6 +28,29 @@ class appl_log_service
 
         static
         enum appl_status
+            s_register(
+                struct appl_context * const
+                    p_context,
+                void (* const p_callback)(
+                    void * const
+                        p_callback_context,
+                    struct appl_log_record const * const
+                        p_log_record),
+                void * const
+                    p_callback_context,
+                struct appl_log_client * * const
+                    r_client);
+
+        static
+        enum appl_status
+            s_unregister(
+                struct appl_context * const
+                    p_context,
+                struct appl_log_client * const
+                    p_client);
+
+        static
+        enum appl_status
             s_print(
                 struct appl_context * const
                     p_context,

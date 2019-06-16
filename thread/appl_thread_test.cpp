@@ -157,26 +157,28 @@ void
                         b_detach_state));
             }
 
-            struct appl_thread_descriptor
-                o_thread_descriptor;
+            struct appl_thread_descriptor *
+                p_thread_descriptor;
 
-            appl_thread_descriptor_init(
+            appl_thread_descriptor_create(
+                p_context,
                 &(
-                    o_thread_descriptor));
+                    p_thread_descriptor));
 
             appl_thread_descriptor_set_callback(
-                &(
-                    o_thread_descriptor),
+                p_thread_descriptor,
                 & appl_thread_test_1_callback,
                 p_context);
 
             e_status =
                 appl_thread_create(
                     p_context,
-                    &(
-                        o_thread_descriptor),
+                    p_thread_descriptor,
                     &(
                         p_thread));
+
+            appl_thread_descriptor_destroy(
+                p_thread_descriptor);
 
             if (
                 appl_status_ok

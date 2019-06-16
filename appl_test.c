@@ -900,8 +900,8 @@ static void appl_test_thread(
     struct appl_test_thread_context
         o_test_thread_context;
 
-    struct appl_thread_descriptor
-        o_thread_descriptor;
+    struct appl_thread_descriptor *
+        p_thread_descriptor;
 
     o_queue_descriptor.i_max_count =
         1;
@@ -931,9 +931,13 @@ static void appl_test_thread(
         o_test_thread_context.b_kill =
             0;
 
-        appl_thread_descriptor_set_callback(
+        appl_thread_descriptor_create(
+            p_context,
             &(
-                o_thread_descriptor),
+                p_thread_descriptor));
+
+        appl_thread_descriptor_set_callback(
+            p_thread_descriptor,
             &(
                 appl_test_thread_entry),
             &(
@@ -942,10 +946,12 @@ static void appl_test_thread(
         e_status =
             appl_thread_create(
                 p_context,
-                &(
-                    o_thread_descriptor),
+                p_thread_descriptor,
                 &(
                     p_thread));
+
+        appl_thread_descriptor_destroy(
+            p_thread_descriptor);
 
         if (
             appl_status_ok
@@ -1277,16 +1283,16 @@ appl_test_socket_process_client(
             p_remote_address;
 
         {
-            struct appl_thread_descriptor
-                o_thread_descriptor;
+            struct appl_thread_descriptor *
+                p_thread_descriptor;
 
-            appl_thread_descriptor_init(
+            appl_thread_descriptor_create(
+                p_context,
                 &(
-                    o_thread_descriptor));
+                    p_thread_descriptor));
 
             appl_thread_descriptor_set_callback(
-                &(
-                    o_thread_descriptor),
+                p_thread_descriptor,
                 &(
                     appl_test_socket_connection_thread_entry),
                 p_test_socket_connection_context);
@@ -1294,10 +1300,12 @@ appl_test_socket_process_client(
             e_status =
                 appl_thread_create(
                     p_context,
-                    &(
-                        o_thread_descriptor),
+                    p_thread_descriptor,
                     &(
                         p_test_socket_connection_context->p_thread));
+
+            appl_thread_descriptor_destroy(
+                p_thread_descriptor);
 
             if (
                 appl_status_ok
@@ -2919,12 +2927,12 @@ static struct appl_test_command const g_test_commands[] =
     {
         g_ref_thread,
         g_ref_thread + sizeof(g_ref_thread),
-        & appl_thread_test_1
+        & appl_thread_cache_test
     },
     {
         g_ref_thread,
         g_ref_thread + sizeof(g_ref_thread),
-        & appl_thread_cache_test
+        & appl_thread_test_1
     },
     {
         g_ref_string,
