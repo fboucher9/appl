@@ -20,6 +20,10 @@
 
 #include <appl_allocator_handle.h>
 
+static __thread char const * g_appl_stack_table[64u];
+
+static unsigned int __thread g_appl_stack_index = 0u;
+
 //
 //
 //
@@ -116,5 +120,41 @@ enum appl_status
         e_status;
 
 } // v_print()
+
+//
+//
+//
+enum appl_status
+    appl_log_std::v_enter(
+        char const * const
+            p_function0)
+{
+#if defined APPL_DEBUG
+    /* tracing code here.. */
+#endif /* #if defined APPL_DEBUG */
+
+    g_appl_stack_table[g_appl_stack_index ++] = p_function0;
+
+    return
+        appl_status_ok;
+
+} // v_enter()
+
+//
+//
+//
+enum appl_status
+    appl_log_std::v_leave(void)
+{
+#if defined APPL_DEBUG
+    /* tracing code here... */
+#endif /* #if defined APPL_DEBUG */
+
+    g_appl_stack_index --;
+
+    return
+        appl_status_ok;
+
+} // v_leave()
 
 /* end-of-file: appl_log_std.cpp */

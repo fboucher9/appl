@@ -61,6 +61,16 @@ struct appl_log : public appl_object
                 unsigned char const * const
                     p_message_max);
 
+        virtual
+        enum appl_status
+            v_enter(
+                char const * const
+                    p_function0);
+
+        virtual
+        enum appl_status
+            v_leave(void);
+
     protected:
 
     private:

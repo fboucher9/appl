@@ -25,7 +25,9 @@ enum appl_log_level
 
     appl_log_level_warning = 2,
 
-    appl_log_level_info = 3
+    appl_log_level_info = 3,
+
+    appl_log_level_trace = 4
 
 };
 
@@ -50,7 +52,7 @@ struct appl_log_record
         i_parameter_count;
 
     unsigned char
-        a_parameter_type[3u];
+        uc_padding[3u];
 
     /* -- */
 
@@ -64,7 +66,7 @@ struct appl_log_record
 
     /* -- */
 
-    void *
+    char const *
         a_backtrace[4u];
 
     /* -- */
@@ -116,6 +118,18 @@ enum appl_status
             p_message_min,
         unsigned char const * const
             p_message_max);
+
+enum appl_status
+    appl_log_enter(
+        struct appl_context * const
+            p_context,
+        char const * const
+            p_function0);
+
+enum appl_status
+    appl_log_leave(
+        struct appl_context * const
+            p_context);
 
 #if defined __cplusplus
 } /* extern "C" */

@@ -61,6 +61,20 @@ class appl_log_service
                 unsigned char const * const
                     p_message_max);
 
+        static
+        enum appl_status
+            s_enter(
+                struct appl_context * const
+                    p_context,
+                char const * const
+                    p_function0);
+
+        static
+        enum appl_status
+            s_leave(
+                struct appl_context * const
+                    p_context);
+
 }; // class appl_log_service
 
 /* end-of-file: appl_log_service.h */

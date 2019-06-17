@@ -78,6 +78,16 @@ class appl_log_std : public appl_log
                 unsigned char const * const
                     p_message_max);
 
+        virtual
+        enum appl_status
+            v_enter(
+                char const * const
+                    p_function0);
+
+        virtual
+        enum appl_status
+            v_leave(void);
+
 }; // class appl_log_std
 
 /* end-of-file: appl_log_std.h */
