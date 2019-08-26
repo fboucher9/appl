@@ -12,6 +12,8 @@
 
 #include <appl_convert.h>
 
+#include <appl_mem.h>
+
 /*
 
 */
@@ -295,24 +297,20 @@ appl_buf_zero(
     unsigned char * const
         p_buf_max)
 {
-    unsigned char *
-        p_buf_it;
+    unsigned long int const
+        i_buf_len =
+        appl_buf_len(
+            p_buf_min,
+            p_buf_max);
 
-    p_buf_it =
-        p_buf_min;
-
-    while (
-        p_buf_it < p_buf_max)
-    {
-        *(
-            p_buf_it) =
-            0u;
-
-        p_buf_it ++;
-    }
+    unsigned long int
+        i_zero_len =
+        appl_mem_zero(
+            p_buf_min,
+            i_buf_len);
 
     return
-        p_buf_it;
+        p_buf_min + i_zero_len;
 
 } /* appl_buf_zero() */
 
@@ -328,24 +326,21 @@ appl_buf_fill(
     unsigned char const
         c_value)
 {
-    unsigned char *
-        p_buf_it;
+    unsigned long int const
+        i_buf_len =
+        appl_buf_len(
+            p_buf_min,
+            p_buf_max);
 
-    p_buf_it =
-        p_buf_min;
-
-    while (
-        p_buf_it < p_buf_max)
-    {
-        *(
-            p_buf_it) =
-            c_value;
-
-        p_buf_it ++;
-    }
+    unsigned long int const
+        i_fill_len =
+        appl_mem_fill(
+            p_buf_min,
+            i_buf_len,
+            c_value);
 
     return
-        p_buf_it;
+        p_buf_min + i_fill_len;
 
 } /* appl_buf_fill() */
 
@@ -363,38 +358,28 @@ appl_buf_copy(
     unsigned char const * const
         p_src_max)
 {
-    unsigned char *
-        p_cur;
+    unsigned long int const
+        i_src_len =
+        appl_buf_len(
+            p_src_min,
+            p_src_max);
 
-    unsigned char const *
-        p_src_it;
+    unsigned long int const
+        i_dst_len =
+        appl_buf_len(
+            p_dst_min,
+            p_dst_max);
 
-    p_cur =
-        p_dst_min;
-
-    p_src_it =
-        p_src_min;
-
-    while (
-        (
-            p_src_it
-            < p_src_max)
-        && (
-            p_cur
-            < p_dst_max))
-    {
-        *(
-            p_cur) =
-            *(
-                p_src_it);
-
-        p_cur ++;
-
-        p_src_it ++;
-    }
+    unsigned long int const
+        i_copy_len =
+        appl_mem_copy(
+            p_dst_min,
+            i_dst_len,
+            p_src_min,
+            i_src_len);
 
     return
-        p_cur;
+        p_dst_min + i_copy_len;
 
 } /* appl_buf_copy() */
 

@@ -17,8 +17,12 @@ enum guard_appl_log_handle_h
         + inc_appl_types_h
 };
 
+/* Predefine */
 struct appl_context;
 
+/*
+
+*/
 enum appl_log_level
 {
     appl_log_level_error = 1,
@@ -29,7 +33,7 @@ enum appl_log_level
 
     appl_log_level_trace = 4
 
-};
+}; /* enum appl_log_level */
 
 /*
 
@@ -40,44 +44,15 @@ struct appl_log_record
         i_level;
 
     unsigned char
-        i_thread_name_length;
-
-    unsigned char
         i_message_length;
 
     unsigned char
-        i_backtrace_count;
-
-    unsigned char
-        i_parameter_count;
-
-    unsigned char
-        uc_padding[3u];
-
-    /* -- */
-
-    appl_ull_t
-        i_timestamp_usec;
-
-    /* -- */
-
-    appl_ull_t
-        a_parameter_value[3u];
-
-    /* -- */
-
-    char const *
-        a_backtrace[4u];
+        uc_padding[6u];
 
     /* -- */
 
     unsigned char
-        a_thread_name[16u];
-
-    /* -- */
-
-    unsigned char
-        a_message[40u];
+        a_message[120u];
 
 }; /* struct appl_log_record */
 
