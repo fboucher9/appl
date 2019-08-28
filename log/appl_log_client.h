@@ -8,7 +8,9 @@
 enum guard_appl_log_client_h
 {
     inc_appl_log_client_h = 1
+        /* Header file dependency */
         + inc_appl_node_h
+        + inc_appl_log_handle_h
 };
 
 /*
@@ -16,11 +18,8 @@ enum guard_appl_log_client_h
 */
 struct appl_log_client_descriptor
 {
-    void (* p_callback)(
-        void * const
-            p_callback_context,
-        struct appl_log_record const * const
-            p_log_record);
+    appl_log_callback *
+        p_callback;
 
     void *
         p_callback_context;
@@ -74,8 +73,12 @@ struct appl_log_client : public appl_node
         virtual
         void
             v_dispatch(
-                struct appl_log_record const * const
-                    p_log_record) const;
+                enum appl_log_level const
+                    e_level,
+                unsigned char const * const
+                    p_message_min,
+                unsigned char const * const
+                    p_message_max) const;
 
     protected:
 

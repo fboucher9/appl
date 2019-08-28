@@ -12,6 +12,8 @@
 
 #include <appl_node.h>
 
+#include <appl_log_handle.h>
+
 #include <log/appl_log_client.h>
 
 #include <appl_heap_handle.h>
@@ -127,15 +129,21 @@ appl_size_t
 //
 void
     appl_log_client::v_dispatch(
-        struct appl_log_record const * const
-            p_log_record) const
+        enum appl_log_level const
+            e_level,
+        unsigned char const * const
+            p_message_min,
+        unsigned char const * const
+            p_message_max) const
 {
     if (
         m_descriptor.p_callback)
     {
         (*(m_descriptor.p_callback))(
             m_descriptor.p_callback_context,
-            p_log_record);
+            e_level,
+            p_message_min,
+            p_message_max);
     }
 
 } // v_dispatch()

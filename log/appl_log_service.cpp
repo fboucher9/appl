@@ -27,11 +27,8 @@ enum appl_status
     appl_log_service::s_register(
         struct appl_context * const
             p_context,
-        void (* const p_callback)(
-            void * const
-                p_callback_context,
-            struct appl_log_record const * const
-                p_log_record),
+        appl_log_callback * const
+            p_callback,
         void * const
             p_callback_context,
         struct appl_log_client * * const
@@ -142,72 +139,5 @@ enum appl_status
         e_status;
 
 } // s_print()
-
-//
-//
-//
-enum appl_status
-    appl_log_service::s_enter(
-        struct appl_context * const
-            p_context,
-        char const * const
-            p_function0)
-{
-    enum appl_status
-        e_status;
-
-    struct appl_log *
-        p_log;
-
-    e_status =
-        p_context->v_log(
-            &(
-                p_log));
-
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        e_status =
-            p_log->v_enter(
-                p_function0);
-    }
-
-    return
-        e_status;
-
-} // s_enter()
-
-//
-//
-//
-enum appl_status
-    appl_log_service::s_leave(
-        struct appl_context * const
-            p_context)
-{
-    enum appl_status
-        e_status;
-
-    struct appl_log *
-        p_log;
-
-    e_status =
-        p_context->v_log(
-            &(
-                p_log));
-
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        e_status =
-            p_log->v_leave();
-    }
-
-    return
-        e_status;
-
-} // s_leave()
 
 /* end-of-file: appl_log_service.cpp */

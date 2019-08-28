@@ -35,28 +35,17 @@ enum appl_log_level
 
 }; /* enum appl_log_level */
 
-/*
-
-*/
-struct appl_log_record
-{
-    unsigned char
-        i_level;
-
-    unsigned char
-        i_message_length;
-
-    unsigned char
-        uc_padding[6u];
-
-    /* -- */
-
-    unsigned char
-        a_message[120u];
-
-}; /* struct appl_log_record */
-
 struct appl_log_client;
+
+typedef void (appl_log_callback)(
+    void * const
+        p_callback_context,
+    enum appl_log_level const
+        e_level,
+    unsigned char const * const
+        p_message_min,
+    unsigned char const * const
+        p_message_max);
 
 #if defined __cplusplus
 extern "C" {
@@ -66,11 +55,8 @@ enum appl_status
     appl_log_register(
         struct appl_context * const
             p_context,
-        void (* const p_callback)(
-            void * const
-                p_callback_context,
-            struct appl_log_record const * const
-                p_log_record),
+        appl_log_callback * const
+            p_callback,
         void * const
             p_callback_context,
         struct appl_log_client * * const
@@ -93,18 +79,6 @@ enum appl_status
             p_message_min,
         unsigned char const * const
             p_message_max);
-
-enum appl_status
-    appl_log_enter(
-        struct appl_context * const
-            p_context,
-        char const * const
-            p_function0);
-
-enum appl_status
-    appl_log_leave(
-        struct appl_context * const
-            p_context);
 
 #if defined __cplusplus
 } /* extern "C" */

@@ -35,11 +35,8 @@ struct appl_log : public appl_object
         virtual
         enum appl_status
             v_register(
-                void (* const p_callback)(
-                    void * const
-                        p_callback_context,
-                    struct appl_log_record const * const
-                        p_log_record),
+                appl_log_callback * const
+                    p_callback,
                 void * const
                     p_callback_context,
                 struct appl_log_client * * const
@@ -60,16 +57,6 @@ struct appl_log : public appl_object
                     p_message_min,
                 unsigned char const * const
                     p_message_max);
-
-        virtual
-        enum appl_status
-            v_enter(
-                char const * const
-                    p_function0);
-
-        virtual
-        enum appl_status
-            v_leave(void);
 
     protected:
 

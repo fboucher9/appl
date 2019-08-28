@@ -19,11 +19,8 @@ enum appl_status
     appl_log_register(
         struct appl_context * const
             p_context,
-        void (* const p_callback)(
-            void * const
-                p_callback_context,
-            struct appl_log_record const * const
-                p_log_record),
+        appl_log_callback * const
+            p_callback,
         void * const
             p_callback_context,
         struct appl_log_client * * const
@@ -77,36 +74,5 @@ enum appl_status
             p_message_max);
 
 } /* appl_log_print() */
-
-//
-//
-//
-enum appl_status
-    appl_log_enter(
-        struct appl_context * const
-            p_context,
-        char const * const
-            p_function0)
-{
-    return
-        appl_log_service::s_enter(
-            p_context,
-            p_function0);
-
-} // appl_log_enter()
-
-//
-//
-//
-enum appl_status
-    appl_log_leave(
-        struct appl_context * const
-            p_context)
-{
-    return
-        appl_log_service::s_leave(
-            p_context);
-
-} // appl_log_leave()
 
 /* end-of-file: appl_log_handle.cpp */

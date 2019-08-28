@@ -21,11 +21,8 @@
 //
 enum appl_status
     appl_log::v_register(
-        void (* const p_callback)(
-            void * const
-                p_callback_context,
-            struct appl_log_record const * const
-                p_log_record),
+        appl_log_callback * const
+            p_callback,
         void * const
             p_callback_context,
         struct appl_log_client * * const
@@ -96,45 +93,6 @@ enum appl_status
         e_status;
 
 } // v_print()
-
-//
-//
-//
-enum appl_status
-    appl_log::v_enter(
-        char const * const
-            p_function0)
-{
-    enum appl_status
-        e_status;
-
-    appl_unused(
-        p_function0);
-
-    e_status =
-        appl_raise_not_implemented();
-
-    return
-        e_status;
-
-} // v_enter()
-
-//
-//
-//
-enum appl_status
-    appl_log::v_leave(void)
-{
-    enum appl_status
-        e_status;
-
-    e_status =
-        appl_raise_not_implemented();
-
-    return
-        e_status;
-
-} // v_leave()
 
 //
 //

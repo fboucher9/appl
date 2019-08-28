@@ -31,11 +31,8 @@ class appl_log_service
             s_register(
                 struct appl_context * const
                     p_context,
-                void (* const p_callback)(
-                    void * const
-                        p_callback_context,
-                    struct appl_log_record const * const
-                        p_log_record),
+                appl_log_callback * const
+                    p_callback,
                 void * const
                     p_callback_context,
                 struct appl_log_client * * const
@@ -60,20 +57,6 @@ class appl_log_service
                     p_message_min,
                 unsigned char const * const
                     p_message_max);
-
-        static
-        enum appl_status
-            s_enter(
-                struct appl_context * const
-                    p_context,
-                char const * const
-                    p_function0);
-
-        static
-        enum appl_status
-            s_leave(
-                struct appl_context * const
-                    p_context);
 
 }; // class appl_log_service
 
