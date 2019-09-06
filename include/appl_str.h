@@ -10,27 +10,48 @@ extern "C" {
 
 unsigned long int
     appl_str_len(
-        struct appl_buf * const
-            p_buf);
+        unsigned char const * const
+            p_buf_min,
+        unsigned char const * const
+            p_buf_max);
 
-void
+unsigned char *
     appl_str_zero(
-        struct appl_buf * const
-            p_buf);
+        unsigned char * const
+            p_buf_min,
+        unsigned char * const
+            p_buf_max);
 
 unsigned char *
     appl_str_fill(
-        struct appl_buf * const
-            p_buf,
+        unsigned char * const
+            p_buf_min,
+        unsigned char * const
+            p_buf_max,
         unsigned char const
             i_value);
 
 unsigned char *
     appl_str_copy(
-        struct appl_buf * const
-            p_dst,
-        struct appl_buf const * const
-            p_src);
+        unsigned char * const
+            p_dst_min,
+        unsigned char * const
+            p_dst_max,
+        unsigned char const * const
+            p_src_min,
+        unsigned char const * const
+            p_src_max);
+
+int
+    appl_str_compare(
+        unsigned char const * const
+            p_left_min,
+        unsigned char const * const
+            p_left_max,
+        unsigned char const * const
+            p_right_min,
+        unsigned char const * const
+            p_right_max);
 
 #if defined __cplusplus
 } /* extern "C" */

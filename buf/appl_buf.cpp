@@ -336,8 +336,8 @@ appl_buf_fill(
         i_fill_len =
         appl_mem_fill(
             p_buf_min,
-            i_buf_len,
-            c_value);
+            c_value,
+            i_buf_len);
 
     return
         p_buf_min + i_fill_len;

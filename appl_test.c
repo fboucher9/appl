@@ -101,6 +101,8 @@
 
 #include <random/appl_random_main.h>
 
+#include <callstack/appl_callstack_test.h>
+
 #include <appl_test.h>
 
 void
@@ -2748,6 +2750,19 @@ static unsigned char const g_ref_percent[] =
     't'
 };
 
+static unsigned char const g_ref_callstack[] =
+{
+    'c',
+    'a',
+    'l',
+    'l',
+    's',
+    't',
+    'a',
+    'c',
+    'k'
+};
+
 struct appl_test_command
 {
     unsigned char const *
@@ -2968,6 +2983,11 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_percent,
         g_ref_percent + sizeof(g_ref_percent),
         & appl_percent_test_1
+    },
+    {
+        g_ref_callstack,
+        g_ref_callstack + sizeof(g_ref_callstack),
+        & appl_callstack_test_1
     }
 };
 
