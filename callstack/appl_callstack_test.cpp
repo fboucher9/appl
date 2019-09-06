@@ -6,7 +6,7 @@
 
 #include <callstack/appl_callstack_test.h>
 
-#include <callstack/appl_callstack_handle.h>
+#include <appl_callstack_handle.h>
 
 #include <appl_test.h>
 
