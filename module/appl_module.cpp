@@ -327,51 +327,74 @@ enum appl_status
         e_status;
 
     if (
-        APPL_PACKET_TYPE_BINARY == p_packet->e_type)
+        p_packet)
     {
-        unsigned char *
-            p_buf_iterator;
-
-        p_buf_iterator =
-            p_packet->p_buf_min;
-
-        e_status =
-            appl_status_ok;
-
-        while (
-            (
-                appl_status_ok
-                == e_status)
-            && (
-                p_buf_iterator
-                < p_packet->p_buf_max))
+        if (
+            APPL_PACKET_TYPE_BINARY == p_packet->e_type)
         {
-            // Copy data into column cache
-            if (
-                m_count
-                < m_hex_convert_descriptor.i_columns)
+            unsigned char *
+                p_buf_iterator;
+
+            p_buf_iterator =
+                p_packet->p_buf_min;
+
+            e_status =
+                appl_status_ok;
+
+            while (
+                (
+                    appl_status_ok
+                    == e_status)
+                && (
+                    p_buf_iterator
+                    < p_packet->p_buf_max))
             {
-                m_columns[m_count] =
-                    *(
-                        p_buf_iterator);
+                // Copy data into column cache
+                if (
+                    m_count
+                    < m_hex_convert_descriptor.i_columns)
+                {
+                    m_columns[m_count] =
+                        *(
+                            p_buf_iterator);
 
-                p_buf_iterator ++;
+                    p_buf_iterator ++;
 
-                m_count ++;
-            }
+                    m_count ++;
+                }
 
-            // Do flush of column cache
-            if (
-                m_count
-                >= m_hex_convert_descriptor.i_columns)
-            {
-                e_status =
-                    f_flush();
+                // Do flush of column cache
+                if (
+                    m_count
+                    >= m_hex_convert_descriptor.i_columns)
+                {
+                    e_status =
+                        f_flush();
+                }
             }
         }
+        else if (
+            APPL_PACKET_TYPE_FLUSH == p_packet->e_type)
+        {
+            e_status =
+                f_flush();
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    m_hex_convert_descriptor.p_sink->v_push(
+                        p_packet);
+            }
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
     }
-    else if (
-        APPL_PACKET_TYPE_FLUSH == p_packet->e_type)
+    else
     {
         e_status =
             f_flush();
@@ -384,11 +407,6 @@ enum appl_status
                 m_hex_convert_descriptor.p_sink->v_push(
                     p_packet);
         }
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
     }
 
     return
@@ -677,50 +695,58 @@ enum appl_status
     enum appl_status
         e_status;
 
-    unsigned long int
-        i_count;
-
-    unsigned char *
-        p_buf_iterator;
-
-    p_buf_iterator =
-        p_packet->p_buf_min;
-
-    e_status =
-        appl_status_ok;
-
-    while (
-        (
-            appl_status_ok
-            == e_status)
-        && (
-            p_buf_iterator
-            < p_packet->p_buf_max))
+    if (
+        p_packet)
     {
-        // Write buffer to file
-        e_status =
-            m_file_sink_descriptor.p_file->v_write(
-                p_packet->p_buf_min,
-                p_packet->p_buf_max,
-                &(
-                    i_count));
+        unsigned long int
+            i_count;
 
-        if (
-            appl_status_ok
-            == e_status)
+        unsigned char *
+            p_buf_iterator;
+
+        p_buf_iterator =
+            p_packet->p_buf_min;
+
+        e_status =
+            appl_status_ok;
+
+        while (
+            (
+                appl_status_ok
+                == e_status)
+            && (
+                p_buf_iterator
+                < p_packet->p_buf_max))
         {
+            // Write buffer to file
+            e_status =
+                m_file_sink_descriptor.p_file->v_write(
+                    p_packet->p_buf_min,
+                    p_packet->p_buf_max,
+                    &(
+                        i_count));
+
             if (
-                i_count)
+                appl_status_ok
+                == e_status)
             {
-                p_buf_iterator +=
-                    i_count;
-            }
-            else
-            {
-                e_status =
-                    appl_status_fail;
+                if (
+                    i_count)
+                {
+                    p_buf_iterator +=
+                        i_count;
+                }
+                else
+                {
+                    e_status =
+                        appl_status_fail;
+                }
             }
         }
+    }
+    else
+    {
+        // flush
     }
 
     return
