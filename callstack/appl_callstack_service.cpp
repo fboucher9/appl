@@ -20,36 +20,36 @@
 
 #include <appl_convert.h>
 
-static unsigned long int __thread g_frame = 0ul;
+#include <appl_clock_handle.h>
 
-static unsigned char __thread g_stack[4096u];
+#define APPL_CALLSTACK_FRAMES (64u)
 
-union appl_callstack_ptr
-{
-    struct appl_callstack_frame *
-        p_frame;
+#define APPL_CALLSTACK_TEXT_SIZE (4096u)
 
-    unsigned char *
-        p_uchar;
+static unsigned long int __thread g_callstack_index = 0ul;
 
-}; /* union appl_callstack_ptr */
+static unsigned long int __thread g_callstack_stack[APPL_CALLSTACK_FRAMES];
+
+static unsigned long int __thread g_callstack_level = 0ul;
+
+static unsigned char __thread g_callstack_text[APPL_CALLSTACK_TEXT_SIZE];
 
 //
 //
 //
 static
-struct appl_callstack_frame *
-get_frame_handle(void)
+void
+push_frame_index(void)
 {
-    union appl_callstack_ptr
-        o_callstack_ptr;
+    if (
+        g_callstack_level
+        < appl_convert::to_ulong(sizeof(g_callstack_stack)))
+    {
+        g_callstack_stack[g_callstack_level] =
+            g_callstack_index;
+    }
 
-    o_callstack_ptr.p_uchar =
-        g_stack + g_frame;
-
-    return
-        o_callstack_ptr.p_frame;
-
+    g_callstack_level ++;
 }
 
 //
@@ -57,19 +57,19 @@ get_frame_handle(void)
 //
 static
 void
-set_frame_ptr(
-    unsigned char const * const
-        p_copy_result)
+pop_frame_index(void)
 {
     if (
-        (
-            p_copy_result >= g_stack)
-        && (
-            p_copy_result <= g_stack + sizeof(g_stack)))
+        g_callstack_level)
     {
-        g_frame =
-            p_copy_result
-            - g_stack;
+        g_callstack_level --;
+
+        if (
+            g_callstack_level
+            < appl_convert::to_ulong(sizeof(g_callstack_stack)))
+        {
+            g_callstack_index = g_callstack_stack[g_callstack_level];
+        }
     }
 }
 
@@ -78,18 +78,22 @@ set_frame_ptr(
 //
 static
 void
-set_frame_handle(
-    struct appl_callstack_frame * const
-        p_frame)
+set_text_ptr(
+    unsigned char const * const
+        p_copy_result)
 {
-    union appl_callstack_ptr
-        o_callstack_ptr;
-
-    o_callstack_ptr.p_frame =
-        p_frame;
-
-    set_frame_ptr(
-        o_callstack_ptr.p_uchar);
+    if (
+        (
+            p_copy_result >= g_callstack_text)
+        && (
+            p_copy_result <= g_callstack_text + sizeof(g_callstack_text)))
+    {
+        g_callstack_index =
+            appl_convert::to_ulong(
+                appl_convert::to_unsigned(
+                    p_copy_result
+                    - g_callstack_text));
+    }
 }
 
 //
@@ -101,10 +105,10 @@ write_frame_char(
     unsigned char const
         c_data)
 {
-    if (g_frame < sizeof(g_stack))
+    if (g_callstack_index < sizeof(g_callstack_text))
     {
-        g_stack[g_frame] = c_data;
-        g_frame ++;
+        g_callstack_text[g_callstack_index] = c_data;
+        g_callstack_index ++;
     }
 }
 
@@ -122,12 +126,12 @@ write_frame_buffer(
     unsigned char * const
         p_copy_result =
         appl_str_copy(
-            g_stack + g_frame,
-            g_stack + sizeof(g_stack),
+            g_callstack_text + g_callstack_index,
+            g_callstack_text + sizeof(g_callstack_text),
             p_buffer_min,
             p_buffer_max);
 
-    set_frame_ptr(
+    set_text_ptr(
         p_copy_result);
 }
 
@@ -172,43 +176,68 @@ void
     unsigned char const *
         p_print_result =
         appl_buf_print_number(
-            g_stack + g_frame,
-            g_stack + sizeof(g_stack),
+            g_callstack_text + g_callstack_index,
+            g_callstack_text + sizeof(g_callstack_text),
             i_value,
             i_flags,
             i_width);
 
-    set_frame_ptr(
+    set_text_ptr(
         p_print_result);
 }
 
 //
 //
 //
-struct appl_callstack_frame *
+void
     appl_callstack_service::s_enter(
         struct appl_context * const
             p_context,
         char const * const
             p_buffer0)
 {
-    struct appl_callstack_frame * const
-        p_frame =
-        get_frame_handle();
+    push_frame_index();
 
     appl_unused(
         p_context);
 
-    if (g_frame)
+    if (g_callstack_index)
     {
         write_frame_char('\n');
     }
 
+    appl_ull_t
+        i_clock_value;
+
+    if (
+        appl_status_ok
+        == appl_clock_read(
+            p_context,
+            1000ul,
+            &(i_clock_value)))
+    {
+        write_frame_number(
+            appl_convert::to_signed(
+                appl_convert::to_ulong(
+                    i_clock_value / 1000ul)),
+            appl_buf_print_flag_unsigned,
+            0);
+
+        write_frame_char('.');
+
+        write_frame_number(
+            appl_convert::to_signed(
+                appl_convert::to_ulong(
+                    i_clock_value % 1000ul)),
+            appl_buf_print_flag_unsigned
+            | appl_buf_print_flag_zero,
+            3);
+
+        write_frame_char(':');
+    }
+
     write_frame_buffer0(
         p_buffer0);
-
-    return
-        p_frame;
 
 } // s_enter()
 
@@ -325,60 +354,40 @@ void
 void
     appl_callstack_service::s_leave(
         struct appl_context * const
-            p_context,
-        struct appl_callstack_frame * const
-            p_frame)
+            p_context)
 {
     appl_unused(
         p_context);
 
-    set_frame_handle(
-        p_frame);
+    pop_frame_index();
 
 } // s_leave()
 
 //
 //
 //
-unsigned long int
-    appl_callstack_service::s_get_report_length(
-        struct appl_context * const
-            p_context)
-{
-    appl_unused(
-        p_context);
-
-    return
-        g_frame;
-
-} // s_get_report_length()
-
-//
-//
-//
-unsigned char *
-    appl_callstack_service::s_read_report(
+void
+    appl_callstack_service::s_report(
         struct appl_context * const
             p_context,
-        unsigned char * const
-            p_report_min,
-        unsigned char * const
-            p_report_max)
+        void (* p_callback)(
+            void * const
+                p_callback_data,
+            unsigned char const * const
+                p_report_min,
+            unsigned char const * const
+                p_report_max),
+        void * const
+            p_callback_data)
 {
     appl_unused(
         p_context);
 
-    unsigned char * const
-        p_copy_result =
-        appl_str_copy(
-            p_report_min,
-            p_report_max,
-            g_stack,
-            g_stack + g_frame);
+    (*p_callback)(
+        p_callback_data,
+        g_callstack_text,
+        g_callstack_text + g_callstack_index);
 
-    return
-        p_copy_result;
-
-} // s_read_report()
+} // s_report()
 
 /* end-of-file: appl_callstack_service.cpp */

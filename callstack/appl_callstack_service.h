@@ -16,9 +16,6 @@ enum guard_appl_callstack_service_h
 /* Predefine context handle */
 struct appl_context;
 
-/* Predefine callstack handle */
-struct appl_callstack_frame;
-
 /* Assert compiler */
 #if ! defined __cplusplus
 #error use c++ compiler
@@ -32,7 +29,7 @@ class appl_callstack_service
     public:
 
         static
-        struct appl_callstack_frame *
+        void
             s_enter(
                 struct appl_context * const
                     p_context,
@@ -85,25 +82,22 @@ class appl_callstack_service
         void
             s_leave(
                 struct appl_context * const
-                    p_context,
-                struct appl_callstack_frame * const
-                    p_frame);
-
-        static
-        unsigned long int
-            s_get_report_length(
-                struct appl_context * const
                     p_context);
 
         static
-        unsigned char *
-            s_read_report(
+        void
+            s_report(
                 struct appl_context * const
                     p_context,
-                unsigned char * const
-                    p_report_min,
-                unsigned char * const
-                    p_report_max);
+                void (* p_callback)(
+                    void * const
+                        p_callback_data,
+                    unsigned char const * const
+                        p_report_min,
+                    unsigned char const * const
+                        p_report_max),
+                void * const
+                    p_callback_data);
 
 }; // class appl_callstack_service
 

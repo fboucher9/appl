@@ -10,6 +10,27 @@
 
 #include <appl_test.h>
 
+#include <appl_unused.h>
+
+static
+void
+test_callstack_report_cb(
+    void * const
+        p_callback_data,
+    unsigned char const * const
+        p_report_min,
+    unsigned char const * const
+        p_report_max)
+{
+    appl_unused(
+        p_callback_data);
+
+    appl_print(
+        p_report_min,
+        p_report_max);
+
+} // test_callstack_report_cb()
+
 //
 //
 //
@@ -18,13 +39,9 @@ appl_callstack_test_1(
     struct appl_context * const
         p_context)
 {
-    struct appl_callstack_frame *
-        p_frame1;
-
-    p_frame1 =
-        appl_callstack_enter(
-            p_context,
-            "test.level1");
+    appl_callstack_enter(
+        p_context,
+        "test.level1");
 
     appl_callstack_print0(
         p_context,
@@ -38,13 +55,9 @@ appl_callstack_test_1(
         p_context,
         456);
 
-    struct appl_callstack_frame *
-        p_frame2;
-
-    p_frame2 =
-        appl_callstack_enter(
-            p_context,
-            "test.level2");
+    appl_callstack_enter(
+        p_context,
+        "test.level2");
 
     static unsigned char sc_buffer[] =
     {
@@ -62,42 +75,22 @@ appl_callstack_test_1(
         p_context,
         0xdeadbeeful);
 
-    unsigned long int const
-        i_length =
-        appl_callstack_get_report_length(
-            p_context);
+    appl_print0(
+        "vvv callstack report vvv\n");
 
-    if (
-        i_length)
-    {
-        static unsigned char g_report[1024u];
+    appl_callstack_report(
+        p_context,
+        & test_callstack_report_cb,
+        0);
 
-        unsigned char * const
-            p_report_end =
-            appl_callstack_read_report(
-                p_context,
-                g_report,
-                g_report + sizeof(g_report));
-
-        appl_print0(
-            "callstack report [");
-
-        appl_print(
-            g_report,
-            p_report_end);
-
-        appl_print0(
-            "]\n");
-
-    }
+    appl_print0(
+        "\n^^^ callstack report ^^^\n");
 
     appl_callstack_leave(
-        p_context,
-        p_frame2);
+        p_context);
 
     appl_callstack_leave(
-        p_context,
-        p_frame1);
+        p_context);
 
 } // appl_callstack_test_1()
 

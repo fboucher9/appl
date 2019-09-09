@@ -17,14 +17,13 @@ Notes:
             unsigned long int const
                 i_value)
         {
-            unsigned long int const i_frame =
-                appl_callstack_enter("demo function");
+            appl_callstack_enter("demo function");
 
             appl_callstack_print_unsigned(i_value);
 
             appl_callstack_report();
 
-            appl_callstack_leave(i_frame);
+            appl_callstack_leave();
         }
 
     Sample report output:
@@ -46,14 +45,11 @@ enum guard_appl_callstack_h
 /* Predefine context handle */
 struct appl_context;
 
-/* Predefine callstack handle */
-struct appl_callstack_frame;
-
 #if defined __cplusplus
 extern "C" {
 #endif /* #if defined __cplusplus */
 
-struct appl_callstack_frame *
+void
     appl_callstack_enter(
         struct appl_context * const
             p_context,
@@ -100,23 +96,21 @@ void
 void
     appl_callstack_leave(
         struct appl_context * const
-            p_context,
-        struct appl_callstack_frame * const
-            p_frame);
-
-unsigned long int
-    appl_callstack_get_report_length(
-        struct appl_context * const
             p_context);
 
-unsigned char *
-    appl_callstack_read_report(
+void
+    appl_callstack_report(
         struct appl_context * const
             p_context,
-        unsigned char * const
-            p_report_min,
-        unsigned char * const
-            p_report_max);
+        void (* p_callback)(
+            void * const
+                p_callback_data,
+            unsigned char const * const
+                p_report_min,
+            unsigned char const * const
+                p_report_max),
+        void * const
+            p_callback_data);
 
 #if defined __cplusplus
 } /* extern "C" */
