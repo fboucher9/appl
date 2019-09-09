@@ -190,8 +190,7 @@ enum appl_status
                 // Send a flush
                 e_status =
                     m_file_source_descriptor.p_sink->v_push(
-                        (struct appl_packet *)(
-                            0));
+                        0);
             }
         }
     }

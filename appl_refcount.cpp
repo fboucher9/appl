@@ -145,7 +145,7 @@ appl_size_t
         m_mutex);
 
     return
-        sizeof(class appl_refcount);
+        sizeof(struct appl_refcount);
 
 } // v_cleanup()
 

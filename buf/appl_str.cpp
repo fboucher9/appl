@@ -8,6 +8,8 @@
 
 #include <appl_mem.h>
 
+#include <appl_types.h>
+
 #include <appl_convert.h>
 
 //
