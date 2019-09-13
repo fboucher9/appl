@@ -747,6 +747,8 @@ enum appl_status
     else
     {
         // flush
+        e_status =
+            appl_status_ok;
     }
 
     return
