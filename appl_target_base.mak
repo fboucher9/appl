@@ -41,6 +41,10 @@ appl_base-deps := \
     buf/appl_buf_iterator.cpp \
     buf/appl_mem.cpp \
     buf/appl_str.cpp \
+    buf/appl_bits_handle.cpp \
+    buf/appl_bits_service.cpp \
+    buf/appl_bits.cpp \
+    buf/appl_bits_std.cpp \
     callstack/appl_callstack_handle.cpp \
     callstack/appl_callstack_service.cpp \
     chunk/appl_chunk_handle.cpp \
