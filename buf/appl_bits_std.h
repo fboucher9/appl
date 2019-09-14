@@ -9,7 +9,7 @@ enum guard_appl_bits_std_h
 {
     inc_appl_bits_std_h = 1
         /* Header file dependencies */
-        + inc_appl_bits_h
+        + inc_appl_bits_base_h
         + inc_appl_bits_handle_h
 }; /* enum guard_appl_bits_std_h */
 
@@ -21,7 +21,7 @@ enum guard_appl_bits_std_h
 //
 //
 //
-class appl_bits_std : public appl_bits
+class appl_bits_std : public appl_bits_base
 {
     public:
 
@@ -45,39 +45,31 @@ class appl_bits_std : public appl_bits
 
     private:
 
+        /* -- */
+
         struct appl_bits_descriptor
             m_descriptor;
 
         /* -- */
 
-        appl_ull_t
-            i_accum;
-
-        /* -- */
-
-        unsigned char
-            m_count;
-
         char
             b_descriptor;
 
         unsigned char
-            uc_padding[6u];
+            uc_padding[7u];
+
+        /* -- */
 
         virtual
         enum appl_status
-            v_read(
-                unsigned char const
-                    i_count,
-                unsigned long int * const
+            v_consume(
+                unsigned char * const
                     r_value);
 
         virtual
         enum appl_status
-            v_write(
+            v_produce(
                 unsigned char const
-                    i_count,
-                unsigned long int const
                     i_value);
 
 }; // class appl_bits_std

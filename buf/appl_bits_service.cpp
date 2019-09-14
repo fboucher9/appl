@@ -16,6 +16,8 @@
 
 #include <buf/appl_bits_handle.h>
 
+#include <buf/appl_bits_base.h>
+
 #include <buf/appl_bits_std.h>
 
 #include <appl_context_handle.h>

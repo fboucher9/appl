@@ -18,7 +18,7 @@
 
 #include <buf/appl_bits.h>
 
-#include <buf/appl_bits_std.h>
+#include <buf/appl_bits_base.h>
 
 #include <appl_context_handle.h>
 
@@ -27,7 +27,7 @@
 //
 //
 //
-class appl_str_bits : public appl_bits_std
+class appl_str_bits : public appl_bits_base
 {
     public:
 
@@ -61,29 +61,15 @@ class appl_str_bits : public appl_bits_std
             operator =(
                 class appl_str_bits const & r);
 
-        static
+        virtual
         enum appl_status
-            s_consume(
-                void * const
-                    p_callback_context,
+            v_consume(
                 unsigned char * const
                     r_value);
 
-        static
+        virtual
         enum appl_status
-            s_produce(
-                void * const
-                    p_callback_context,
-                unsigned char const
-                    i_value);
-
-        enum appl_status
-            f_consume(
-                unsigned char * const
-                    r_value);
-
-        enum appl_status
-            f_produce(
+            v_produce(
                 unsigned char const
                     i_value);
 
@@ -95,7 +81,7 @@ class appl_str_bits : public appl_bits_std
 appl_str_bits::appl_str_bits(
     struct appl_context * const
         p_context) :
-    appl_bits_std(
+    appl_bits_base(
         p_context),
     m_buf_iterator()
 {
@@ -122,30 +108,8 @@ appl_str_bits::f_init(
     m_buf_iterator =
         p_descriptor->o_buf;
 
-    struct appl_bits_descriptor
-        o_descriptor;
-
-    o_descriptor.p_callback_consume =
-        &(
-            appl_str_bits::s_consume);
-
-    o_descriptor.p_callback_produce =
-        &(
-            appl_str_bits::s_produce);
-
-    o_descriptor.p_callback_context =
-        this;
-
     e_status =
-        appl_bits_std::f_init(
-            &(
-                o_descriptor));
-
-    if (
-        appl_status_ok
-        == e_status)
-    {
-    }
+        appl_status_ok;
 
     return
         e_status;
@@ -158,8 +122,6 @@ appl_str_bits::f_init(
 appl_size_t
     appl_str_bits::v_cleanup(void)
 {
-    appl_bits_std::v_cleanup();
-
     return
         sizeof(
             class appl_str_bits);
@@ -183,51 +145,7 @@ union appl_str_bits_ptr
 //
 //
 enum appl_status
-    appl_str_bits::s_consume(
-        void * const
-            p_callback_context,
-        unsigned char * const
-            r_value)
-{
-    union appl_str_bits_ptr
-        o_str_bits_ptr;
-
-    o_str_bits_ptr.p_callback_context =
-        p_callback_context;
-
-    return
-        o_str_bits_ptr.p_this->f_consume(
-            r_value);
-
-} // s_consume()
-
-//
-//
-//
-enum appl_status
-    appl_str_bits::s_produce(
-        void * const
-            p_callback_context,
-        unsigned char const
-            i_value)
-{
-    union appl_str_bits_ptr
-        o_str_bits_ptr;
-
-    o_str_bits_ptr.p_callback_context =
-        p_callback_context;
-
-    return
-        o_str_bits_ptr.p_this->f_produce(
-            i_value);
-
-} // s_produce()
-
-//
-//
-//
-enum appl_status
-    appl_str_bits::f_consume(
+    appl_str_bits::v_consume(
         unsigned char * const
             r_value)
 {
@@ -257,13 +175,13 @@ enum appl_status
     return
         e_status;
 
-} // f_consume()
+} // v_consume()
 
 //
 //
 //
 enum appl_status
-    appl_str_bits::f_produce(
+    appl_str_bits::v_produce(
         unsigned char const
             i_value)
 {
