@@ -89,8 +89,8 @@ enum appl_status
 
     // Get most significant bits from accumulator
     if (
-        m_count
-        >= i_count)
+        appl_status_ok
+        == e_status)
     {
         unsigned long int const
             i_mask =
@@ -118,14 +118,6 @@ enum appl_status
             r_value) =
             appl_convert::to_ulong(
                 i_value);
-
-        e_status =
-            appl_status_ok;
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
     }
 
     return
@@ -146,12 +138,56 @@ enum appl_status
     enum appl_status
         e_status;
 
-    appl_unused(
-        i_count,
-        i_value);
+    unsigned long int const
+        i_mask =
+        (
+            (
+                1ul
+                << i_count)
+            - 1ul);
+
+    i_accum <<=
+        i_count;
+
+    i_accum |=
+        (
+            i_value
+            & i_mask);
+
+    m_count =
+        appl_convert::to_uchar(
+            appl_convert::to_unsigned(
+                m_count
+                + i_count));
 
     e_status =
-        appl_raise_not_implemented();
+        appl_status_ok;
+
+    while (
+        (
+            appl_status_ok
+            == e_status)
+        && (
+            8u
+            <= m_count))
+    {
+        m_count =
+            appl_convert::to_uchar(
+                m_count
+                - 8u);
+
+        unsigned char const
+            i_produce_value =
+            (
+                (
+                    i_accum
+                    >> m_count)
+                & 0xFFu);
+
+        e_status =
+            v_produce(
+                i_produce_value);
+    }
 
     return
         e_status;

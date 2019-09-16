@@ -103,6 +103,8 @@
 
 #include <callstack/appl_callstack_test.h>
 
+#include <buf/appl_bits_test.h>
+
 #include <appl_test.h>
 
 void
@@ -2763,6 +2765,14 @@ static unsigned char const g_ref_callstack[] =
     'k'
 };
 
+static unsigned char const g_ref_bits[] =
+{
+    'b',
+    'i',
+    't',
+    's'
+};
+
 struct appl_test_command
 {
     unsigned char const *
@@ -2988,6 +2998,11 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_callstack,
         g_ref_callstack + sizeof(g_ref_callstack),
         & appl_callstack_test_1
+    },
+    {
+        g_ref_bits,
+        g_ref_bits + sizeof(g_ref_bits),
+        & appl_bits_test_1
     }
 };
 

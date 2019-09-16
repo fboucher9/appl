@@ -30,8 +30,7 @@ appl_bits_std::appl_bits_std(
         p_context) :
     appl_bits_base(
         p_context),
-    m_descriptor(),
-    b_descriptor()
+    m_descriptor()
 {
 }
 
@@ -57,9 +56,6 @@ appl_bits_std::f_init(
         *(
             p_descriptor);
 
-    b_descriptor =
-        1;
-
     e_status =
         appl_status_ok;
 
@@ -74,9 +70,6 @@ appl_bits_std::f_init(
 appl_size_t
 appl_bits_std::v_cleanup(void)
 {
-    b_descriptor =
-        0;
-
     return
         sizeof(class appl_bits_std);
 
@@ -94,19 +87,10 @@ appl_bits_std::v_consume(
         e_status;
 
     // Load bytes from input buffer
-    if (
-        b_descriptor)
-    {
-        e_status =
-            (*(m_descriptor.p_callback_consume))(
-                m_descriptor.p_callback_context,
-                r_value);
-    }
-    else
-    {
-        e_status =
-            appl_status_fail;
-    }
+    e_status =
+        (*(m_descriptor.p_callback_consume))(
+            m_descriptor.p_callback_context,
+            r_value);
 
     return
         e_status;
@@ -124,11 +108,10 @@ appl_bits_std::v_produce(
     enum appl_status
         e_status;
 
-    appl_unused(
-        i_value);
-
     e_status =
-        appl_raise_not_implemented();
+        (*(m_descriptor.p_callback_produce))(
+            m_descriptor.p_callback_context,
+            i_value);
 
     return
         e_status;

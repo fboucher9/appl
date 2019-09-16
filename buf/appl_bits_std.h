@@ -52,14 +52,6 @@ class appl_bits_std : public appl_bits_base
 
         /* -- */
 
-        char
-            b_descriptor;
-
-        unsigned char
-            uc_padding[7u];
-
-        /* -- */
-
         virtual
         enum appl_status
             v_consume(

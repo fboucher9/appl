@@ -32,6 +32,18 @@ class appl_bits_base : public appl_bits
         virtual
         ~appl_bits_base();
 
+        virtual
+        enum appl_status
+            v_consume(
+                unsigned char * const
+                    r_value);
+
+        virtual
+        enum appl_status
+            v_produce(
+                unsigned char const
+                    i_value);
+
     protected:
 
         /* -- */
@@ -72,18 +84,6 @@ class appl_bits_base : public appl_bits
                 unsigned char const
                     i_count,
                 unsigned long int const
-                    i_value);
-
-        virtual
-        enum appl_status
-            v_consume(
-                unsigned char * const
-                    r_value);
-
-        virtual
-        enum appl_status
-            v_produce(
-                unsigned char const
                     i_value);
 
 }; // class appl_bits_base
