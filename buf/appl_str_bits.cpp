@@ -20,9 +20,9 @@
 
 #include <buf/appl_bits_base.h>
 
-#include <appl_context_handle.h>
+#include <appl_heap_handle.h>
 
-#include <appl_allocator_handle.h>
+#include <appl_unused.h>
 
 //
 //
@@ -47,9 +47,20 @@ class appl_str_bits : public appl_bits_base
         appl_size_t
             v_cleanup(void);
 
+        virtual
+        enum appl_status
+            v_query(
+                struct appl_buf * const
+                    r_buf_used,
+                struct appl_buf * const
+                    r_buf_unused) const;
+
     protected:
 
     private:
+
+        struct appl_buf
+            m_buf_original;
 
         struct appl_buf
             m_buf_iterator;
@@ -83,6 +94,7 @@ appl_str_bits::appl_str_bits(
         p_context) :
     appl_bits_base(
         p_context),
+    m_buf_original(),
     m_buf_iterator()
 {
 }
@@ -104,6 +116,9 @@ appl_str_bits::f_init(
 {
     enum appl_status
         e_status;
+
+    m_buf_original =
+        p_descriptor->o_buf;
 
     m_buf_iterator =
         p_descriptor->o_buf;
@@ -127,6 +142,39 @@ appl_size_t
             class appl_str_bits);
 
 } // v_cleanup()
+
+//
+//
+//
+enum appl_status
+    appl_str_bits::v_query(
+        struct appl_buf * const
+            r_buf_used,
+        struct appl_buf * const
+            r_buf_unused) const
+{
+    enum appl_status
+        e_status;
+
+    r_buf_used->o_min =
+        m_buf_original.o_min;
+
+    r_buf_used->o_max =
+        m_buf_iterator.o_min;
+
+    r_buf_unused->o_min =
+        m_buf_iterator.o_min;
+
+    r_buf_unused->o_max =
+        m_buf_iterator.o_max;
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // v_query()
 
 //
 //
@@ -226,8 +274,30 @@ class appl_str_bits_service
                     p_context,
                 struct appl_str_bits_descriptor const * const
                     p_descriptor,
-                struct appl_bits * * const
+                struct appl_str_bits * * const
                     r_instance);
+
+        static
+        struct appl_bits *
+            s_parent(
+                struct appl_str_bits * const
+                    p_instance);
+
+        static
+        struct appl_bits const *
+            s_const_parent(
+                struct appl_str_bits const * const
+                    p_instance);
+
+        static
+        enum appl_status
+            s_query(
+                struct appl_str_bits const * const
+                    p_instance,
+                struct appl_buf * const
+                    r_buf_used,
+                struct appl_buf * const
+                    r_buf_unused);
 
 }; // class appl_str_bits_service
 
@@ -240,23 +310,18 @@ enum appl_status
             p_context,
         struct appl_str_bits_descriptor const * const
             p_descriptor,
-        struct appl_bits * * const
+        struct appl_str_bits * * const
             r_instance)
 {
     enum appl_status
         e_status;
-
-    struct appl_allocator * const
-        p_allocator =
-        appl_context_get_allocator(
-            p_context);
 
     class appl_str_bits *
         p_str_bits;
 
     e_status =
         appl_new(
-            p_allocator,
+            p_context,
             p_descriptor,
             &(
                 p_str_bits));
@@ -278,13 +343,64 @@ enum appl_status
 //
 //
 //
+struct appl_bits *
+    appl_str_bits_service::s_parent(
+        struct appl_str_bits * const
+            p_instance)
+{
+    return
+        p_instance;
+
+} // s_parent()
+
+//
+//
+//
+struct appl_bits const *
+    appl_str_bits_service::s_const_parent(
+        struct appl_str_bits const * const
+            p_instance)
+{
+    return
+        p_instance;
+
+} // s_const_parent()
+
+//
+//
+//
+enum appl_status
+    appl_str_bits_service::s_query(
+        struct appl_str_bits const * const
+            p_instance,
+        struct appl_buf * const
+            r_buf_used,
+        struct appl_buf * const
+            r_buf_unused)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_instance->v_query(
+            r_buf_used,
+            r_buf_unused);
+
+    return
+        e_status;
+
+} // s_query()
+
+//
+//
+//
 enum appl_status
     appl_str_bits_create(
         struct appl_context * const
             p_context,
         struct appl_str_bits_descriptor const * const
             p_descriptor,
-        struct appl_bits * * const
+        struct appl_str_bits * * const
             r_instance)
 {
     enum appl_status
@@ -300,5 +416,59 @@ enum appl_status
         e_status;
 
 } // appl_str_bits_create()
+
+//
+//
+//
+struct appl_bits *
+    appl_str_bits_parent(
+        struct appl_str_bits * const
+            p_instance)
+{
+    return
+        appl_str_bits_service::s_parent(
+            p_instance);
+
+} // appl_str_bits_parent()
+
+//
+//
+//
+struct appl_bits const *
+    appl_str_bits_const_parent(
+        struct appl_str_bits const * const
+            p_instance)
+{
+    return
+        appl_str_bits_service::s_const_parent(
+            p_instance);
+
+} // appl_str_bits_const_parent()
+
+//
+//
+//
+enum appl_status
+    appl_str_bits_query(
+        struct appl_str_bits const * const
+            p_instance,
+        struct appl_buf * const
+            r_buf_used,
+        struct appl_buf * const
+            r_buf_unused)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_str_bits_service::s_query(
+            p_instance,
+            r_buf_used,
+            r_buf_unused);
+
+    return
+        e_status;
+
+} // appl_str_bits_query()
 
 /* end-of-file: appl_str_bits.cpp */

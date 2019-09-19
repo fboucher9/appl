@@ -20,9 +20,7 @@
 
 #include <buf/appl_bits_std.h>
 
-#include <appl_context_handle.h>
-
-#include <appl_allocator_handle.h>
+#include <appl_heap_handle.h>
 
 //
 //
@@ -39,17 +37,12 @@ enum appl_status
     enum appl_status
         e_status;
 
-    struct appl_allocator * const
-        p_allocator =
-        appl_context_get_allocator(
-            p_context);
-
     class appl_bits_std *
         p_bits_std;
 
     e_status =
         appl_new(
-            p_allocator,
+            p_context,
             p_descriptor,
             &(
                 p_bits_std));
@@ -83,14 +76,9 @@ enum appl_status
         p_context =
         p_bits->get_context();
 
-    struct appl_allocator * const
-        p_allocator =
-        appl_context_get_allocator(
-            p_context);
-
     e_status =
         appl_delete(
-            p_allocator,
+            p_context,
             p_bits);
 
     return

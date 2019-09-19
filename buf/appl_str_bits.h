@@ -35,8 +35,27 @@ enum appl_status
             p_context,
         struct appl_str_bits_descriptor const * const
             p_descriptor,
-        struct appl_bits * * const
+        struct appl_str_bits * * const
             r_instance);
+
+struct appl_bits *
+    appl_str_bits_parent(
+        struct appl_str_bits * const
+            p_instance);
+
+struct appl_bits const *
+    appl_str_bits_const_parent(
+        struct appl_str_bits const * const
+            p_instance);
+
+enum appl_status
+    appl_str_bits_query(
+        struct appl_str_bits const * const
+            p_instance,
+        struct appl_buf * const
+            r_buf_used,
+        struct appl_buf * const
+            r_buf_unused);
 
 #if defined __cplusplus
 } /* extern "C" */

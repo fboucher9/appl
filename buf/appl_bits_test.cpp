@@ -156,13 +156,16 @@ void
         o_str_bits_descriptor.o_buf.o_max.pc_uchar =
             g_str_bits_vector + sizeof(g_str_bits_vector);
 
+        struct appl_str_bits *
+            p_str_bits;
+
         e_status =
             appl_str_bits_create(
                 p_context,
                 &(
                     o_str_bits_descriptor),
                 &(
-                    p_bits));
+                    p_str_bits));
 
         if (
             appl_status_ok
@@ -170,6 +173,10 @@ void
         {
             unsigned long int
                 i_value;
+
+            p_bits =
+                appl_str_bits_parent(
+                    p_str_bits);
 
             e_status =
                 appl_bits_read(
@@ -202,18 +209,35 @@ void
         o_str_bits_descriptor.o_buf.o_max.p_uchar =
             g_str_bits_vector + sizeof(g_str_bits_vector);
 
+        struct appl_str_bits *
+            p_str_bits;
+
         e_status =
             appl_str_bits_create(
                 p_context,
                 &(
                     o_str_bits_descriptor),
                 &(
-                    p_bits));
+                    p_str_bits));
 
         if (
             appl_status_ok
             == e_status)
         {
+            {
+                struct appl_bits const * const
+                    pc_bits =
+                    appl_str_bits_const_parent(
+                        p_str_bits);
+
+                appl_unused(
+                    pc_bits);
+            }
+
+            p_bits =
+                appl_str_bits_parent(
+                    p_str_bits);
+
             e_status =
                 appl_bits_write(
                     p_bits,
@@ -231,6 +255,20 @@ void
                     p_bits,
                     8ul,
                     0ul);
+
+            struct appl_buf
+                o_buf_used;
+
+            struct appl_buf
+                o_buf_unused;
+
+            e_status =
+                appl_str_bits_query(
+                    p_str_bits,
+                    &(
+                        o_buf_used),
+                    &(
+                        o_buf_unused));
 
             appl_bits_destroy(
                 p_bits);
