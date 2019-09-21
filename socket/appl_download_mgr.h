@@ -18,12 +18,6 @@ enum guard_appl_download_mgr_h
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 
-// Predefine
-struct appl_download;
-
-// Predefine
-struct appl_download_descriptor;
-
 //
 //
 //

@@ -41,8 +41,6 @@ enum appl_file_mode
 
 }; /* enum appl_file_mode */
 
-struct appl_file_descriptor;
-
 #include <appl_extern_c_begin.h>
 
 enum appl_status

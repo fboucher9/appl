@@ -13,8 +13,6 @@ enum guard_appl_chunk_service_h
         + inc_appl_predefines_h
 };
 
-struct appl_chunk;
-
 //
 //
 //

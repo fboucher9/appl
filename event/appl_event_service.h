@@ -12,23 +12,8 @@ enum guard_appl_event_service_h
         inc_appl_status_h
 };
 
-/* Predefine */
-struct appl_context;
-
-/* Predefine */
-struct appl_mutex;
-
-/* Predefine */
-struct appl_event;
-
-/* Predefine */
-struct appl_event_descriptor;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-// Predefine
-class appl_event_service;
 
 //
 //

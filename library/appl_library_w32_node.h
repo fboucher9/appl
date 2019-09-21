@@ -12,16 +12,8 @@ enum guard_appl_library_w32_node_h
         inc_appl_library_node_h
 };
 
-struct appl_allocator;
-
-struct appl_library_descriptor;
-
-struct appl_library;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_library_w32_node;
 
 //
 //

@@ -12,13 +12,8 @@ enum guard_appl_env_h
         inc_appl_object_h
 };
 
-/* Predefine */
-struct appl_string;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-struct appl_env;
 
 //
 //

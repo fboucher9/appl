@@ -8,12 +8,6 @@ enum guard_appl_refcount_handle_h
         inc_appl_status_h
 };
 
-/* Predefine */
-struct appl_object;
-
-/* Predefine */
-struct appl_refcount;
-
 #include <appl_extern_c_begin.h>
 
 struct appl_object *

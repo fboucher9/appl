@@ -14,9 +14,6 @@ enum guard_appl_buf_iterator_h
 /* Included. */
 #define INC_APPL_BUF_ITERATOR_H
 
-/* Predefine */
-struct appl_buf;
-
 #include <appl_extern_c_begin.h>
 
 /* buf iterator write a single character */

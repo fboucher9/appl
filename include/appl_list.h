@@ -21,8 +21,6 @@ enum guard_appl_list_h
         1 /* None */
 };
 
-struct appl_list;
-
 /* pointer to node */
 union appl_list_ptr
 {

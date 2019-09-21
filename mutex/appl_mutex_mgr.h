@@ -15,14 +15,8 @@ enum guard_appl_mutex_mgr_h
         inc_appl_object_h
 };
 
-struct appl_mutex_descriptor;
-
-struct appl_mutex;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_mutex_mgr;
 
 //
 //

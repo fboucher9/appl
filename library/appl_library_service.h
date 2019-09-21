@@ -12,16 +12,8 @@ enum guard_appl_library_service_h
         inc_appl_status_h
 };
 
-struct appl_context;
-
-struct appl_library_descriptor;
-
-struct appl_library;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_library_service;
 
 //
 //

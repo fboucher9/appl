@@ -12,9 +12,6 @@ enum guard_appl_pool_h
         inc_appl_allocator_h
 };
 
-/* Predefine */
-struct appl_pool;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 

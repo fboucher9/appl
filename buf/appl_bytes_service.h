@@ -15,12 +15,6 @@ enum guard_appl_bytes_service_h
         /* ... */
 }; /* enum guard_appl_bytes_service_h */
 
-/* Predefine bytes handle */
-struct appl_bytes;
-
-/* Predefine descriptor */
-struct appl_bytes_descriptor;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 

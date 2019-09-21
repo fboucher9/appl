@@ -18,9 +18,6 @@ enum guard_appl_address_node_h
         + inc_appl_object_h
 };
 
-/* Predefine */
-struct appl_address;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 

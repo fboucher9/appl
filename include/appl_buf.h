@@ -11,9 +11,6 @@ enum guard_appl_buf_h
         1
 };
 
-/* Predefine appl_buf handle */
-struct appl_buf;
-
 /* ptr */
 union appl_buf_ptr
 {

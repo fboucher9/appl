@@ -15,8 +15,6 @@ enum guard_appl_event_node_h
         inc_appl_object_h
 };
 
-struct appl_event;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 

@@ -13,22 +13,10 @@ enum guard_appl_poll_mgr_h
         + inc_appl_object_h
 };
 
-struct appl_poll_descriptor;
-
 struct appl_poll_table;
 
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-struct appl_context;
-
-struct appl_thread;
-
-struct appl_mutex;
-
-struct appl_poll;
-
-class appl_poll_mgr;
 
 //
 //

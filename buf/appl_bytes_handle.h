@@ -15,12 +15,6 @@ enum guard_appl_bytes_handle_h
         /* ... */
 }; /* enum guard_appl_bytes_handle_h */
 
-/* Predefine handle */
-struct appl_bytes;
-
-/* Predefine descriptor */
-struct appl_bytes_descriptor;
-
 #include <appl_extern_c_begin.h>
 
 enum appl_status

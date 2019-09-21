@@ -13,9 +13,6 @@ enum guard_appl_heap_test_h
     inc_appl_heap_test_h = 1
 };
 
-/* Predefine */
-struct appl_context;
-
 #include <appl_extern_c_begin.h>
 
 void

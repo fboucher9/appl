@@ -4,12 +4,6 @@
 
 */
 
-/* Predefine */
-struct appl_object;
-
-/* Predefine */
-struct appl_refcount;
-
 class appl_refcount_service
 {
     public:

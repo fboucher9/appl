@@ -21,11 +21,7 @@ enum guard_appl_netdevice_std_h
 #include <appl_assert_cplusplus.h>
 
 /* Assert configuration */
-#if ! defined APPL_OS_LINUX
-#error include only from linux build
-#endif /* #if ! defined APPL_OS_LINUX */
-
-struct appl_context;
+#include <appl_assert_linux.h>
 
 struct appl_netdevice_descriptor;
 

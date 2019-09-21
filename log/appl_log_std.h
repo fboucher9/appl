@@ -13,8 +13,6 @@ enum guard_appl_log_std_h
         + inc_appl_log_impl_h
 };
 
-struct appl_object;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 

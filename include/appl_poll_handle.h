@@ -12,10 +12,6 @@ enum guard_appl_poll_handle_h
         inc_appl_status_h
 };
 
-struct appl_poll_descriptor;
-
-struct appl_poll;
-
 #include <appl_extern_c_begin.h>
 
 enum appl_status

@@ -12,16 +12,8 @@ enum guard_appl_library_w32_mgr_h
         inc_appl_library_mgr_h
 };
 
-struct appl_context;
-
-struct appl_library_mgr;
-
-struct appl_library_descriptor;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_library_w32_mgr;
 
 //
 //

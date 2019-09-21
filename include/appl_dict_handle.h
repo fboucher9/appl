@@ -14,12 +14,6 @@ enum guard_appl_dict_handle_h
         inc_appl_status_h
 };
 
-/* Predefine */
-struct appl_context;
-
-/* Predefine */
-struct appl_dict;
-
 #include <appl_extern_c_begin.h>
 
 /* Create a dictionary object */

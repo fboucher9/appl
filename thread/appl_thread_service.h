@@ -12,18 +12,8 @@ enum guard_appl_thread_service_h
         inc_appl_status_h
 };
 
-struct appl_thread;
-
-struct appl_thread_property;
-
-struct appl_thread_descriptor;
-
-struct appl_context;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_thread_service;
 
 //
 //

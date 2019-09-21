@@ -14,9 +14,6 @@ enum guard_appl_binary_heap_h
         + inc_appl_predefines_h
 };
 
-/* Predefine */
-struct appl_binary_heap;
-
 /*
 
 */

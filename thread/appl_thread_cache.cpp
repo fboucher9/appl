@@ -12,6 +12,8 @@ Comments:
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <appl_types.h>
 
 #include <appl_object.h>
@@ -53,8 +55,6 @@ Comments:
 #endif /* #if defined APPL_DEBUG */
 
 #include <appl_buf.h>
-
-struct appl_thread_descriptor;
 
 class appl_thread_cache_mgr;
 

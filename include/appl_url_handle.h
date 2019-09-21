@@ -8,9 +8,6 @@
 #define INC_APPL_URL_HANDLE_H
 
 /* Predefine */
-struct appl_context;
-
-/* Predefine */
 struct appl_url;
 
 /* Predefine */

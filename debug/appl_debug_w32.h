@@ -12,14 +12,10 @@ enum guard_appl_debug_w32_h
 };
 
 /* Assert configuration */
-#if ! defined APPL_DEBUG
-#error include only for debug
-#endif /* #if ! defined APPL_DEBUG */
+#include <appl_assert_debug.h>
 
 /* Assert operating system */
-#if ! defined APPL_OS_WINDOWS
-#error include only for windows
-#endif /* #if ! defined APPL_OS_WINDOWS */
+#include <appl_assert_windows.h>
 
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>

@@ -12,18 +12,10 @@ enum guard_appl_socket_std_node_h
         inc_appl_socket_node_h
 };
 
-struct appl_object;
-
-struct appl_socket_property;
-
-struct appl_socket;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 
 class appl_socket_std_mgr;
-
-class appl_socket_std_node;
 
 //
 //

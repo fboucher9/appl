@@ -12,15 +12,6 @@ enum guard_appl_thread_descriptor_h
         + inc_appl_types_h
 };
 
-/* Predefine */
-struct appl_context;
-
-/* Predefine */
-struct appl_thread_descriptor;
-
-/* Predefine */
-struct appl_buf;
-
 /*
 
 */

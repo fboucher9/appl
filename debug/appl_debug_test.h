@@ -5,9 +5,7 @@
 */
 
 /* Assert configuration */
-#if ! defined APPL_DEBUG
-#error include only from debug build
-#endif /* #if ! defined APPL_DEBUG */
+#include <appl_assert_debug.h>
 
 #include <appl_extern_c_begin.h>
 

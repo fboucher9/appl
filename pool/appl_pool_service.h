@@ -7,22 +7,11 @@
 /* Reverse include guard */
 enum guard_appl_pool_service_h
 {
-    inc_appl_pool_service_h =
+    inc_appl_pool_service_h = 1
         /* Header file dependencies */
-        inc_appl_status_h
+        + inc_appl_status_h
+        + inc_appl_predefines_h
 };
-
-/* Predefine */
-struct appl_context;
-
-/* Predefine */
-struct appl_allocator;
-
-/* Predefine */
-struct appl_pool;
-
-/* Predefine */
-struct appl_pool_descriptor;
 
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>

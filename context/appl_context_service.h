@@ -7,19 +7,13 @@
 /* Reverse include guard */
 enum guard_appl_context_service_h
 {
-    inc_appl_context_service_h =
+    inc_appl_context_service_h = 1
         /* Header file dependencies */
-        inc_appl_status_h
+        + inc_appl_status_h
+        + inc_appl_predefines_h
 };
 
-/* Predefine */
-struct appl_context;
-
-/* Predefine */
-struct appl_object;
-
-/* Predefine */
-struct appl_allocator;
+#include <appl_assert_cplusplus.h>
 
 //
 //

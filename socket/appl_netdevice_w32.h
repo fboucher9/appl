@@ -20,8 +20,6 @@ enum guard_appl_netdevice_w32_h
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 
-struct appl_context;
-
 struct appl_netdevice_descriptor;
 
 //

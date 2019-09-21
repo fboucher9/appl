@@ -12,21 +12,11 @@ enum guard_appl_library_std_mgr_h
         inc_appl_library_mgr_h
 };
 
-struct appl_object;
-
-struct appl_library_descriptor;
-
-struct appl_library;
-
 /* Assert OS */
-#if ! defined APPL_OS_LINUX
-#error include only from linux build
-#endif /* #if ! defined APPL_OS_LINUX */
+#include <appl_assert_linux.h>
 
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_library_std_mgr;
 
 //
 //

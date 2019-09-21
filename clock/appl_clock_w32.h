@@ -7,22 +7,16 @@
 /* Reverse include guard */
 enum guard_appl_clock_w32_h
 {
-    inc_appl_clock_w32_h =
+    inc_appl_clock_w32_h = 1
         /* Header file dependency */
-        inc_appl_clock_h
+        + inc_appl_clock_h
 };
 
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 
 /* Assert OS */
-#if ! defined APPL_OS_WINDOWS
-#error must define APPL_OS_WINDOWS
-#endif /* #if ! defined APPL_OS_WINDOWS */
-
-struct appl_context;
-
-class appl_clock_w32;
+#include <appl_assert_windows.h>
 
 //
 //

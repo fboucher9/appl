@@ -8,6 +8,8 @@
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <appl_debug_handle.h>
 
 #include <appl_types.h>

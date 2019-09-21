@@ -1,9 +1,6 @@
 /* See LICENSE for license details */
 
 /* Predefine */
-struct appl_refcount;
-
-/* Predefine */
 struct appl_string_refcount;
 
 #include <appl_extern_c_begin.h>

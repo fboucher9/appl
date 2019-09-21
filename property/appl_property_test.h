@@ -6,8 +6,6 @@
 
 #define INC_APPL_PROPERTY_TEST_H
 
-struct appl_context;
-
 #include <appl_extern_c_begin.h>
 
 void

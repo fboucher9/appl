@@ -4,6 +4,8 @@
 
 */
 
+#include <appl_predefines.h>
+
 #include <clock/appl_clock_test.h>
 
 #include <appl_status.h>

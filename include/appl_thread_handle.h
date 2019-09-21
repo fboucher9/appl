@@ -12,14 +12,6 @@ enum guard_appl_thread_handle_h
         inc_appl_status_h
 };
 
-struct appl_object;
-
-struct appl_thread;
-
-struct appl_thread_descriptor;
-
-struct appl_object;
-
 #include <appl_extern_c_begin.h>
 
 enum appl_status

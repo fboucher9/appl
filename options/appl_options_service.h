@@ -12,13 +12,8 @@ enum guard_appl_options_service_h
         inc_appl_status_h
 };
 
-/* Predefine */
-struct appl_object;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_options_service;
 
 //
 //

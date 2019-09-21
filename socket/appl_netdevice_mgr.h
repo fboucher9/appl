@@ -10,16 +10,11 @@ enum guard_appl_netdevice_mgr_h
     inc_appl_netdevice_mgr_h = 1
         /* Header file dependencies */
         + inc_appl_object_h
+        + inc_appl_predefines_h
 
 }; /* enum guard_appl_netdevice_mgr_h */
 
 /* Included. */
-
-/* Predefine */
-struct appl_context;
-
-/* Predefine */
-struct appl_netdevice_descriptor;
 
 //
 //

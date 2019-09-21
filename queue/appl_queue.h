@@ -12,12 +12,6 @@ enum guard_appl_queue_h
         + inc_appl_object_h
 };
 
-struct appl_context;
-
-struct appl_queue;
-
-struct appl_list;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 

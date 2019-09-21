@@ -12,16 +12,8 @@ enum guard_appl_string_service_h
         inc_appl_status_h
 };
 
-struct appl_object;
-
-struct appl_context;
-
-struct appl_string;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_string_service;
 
 //
 //

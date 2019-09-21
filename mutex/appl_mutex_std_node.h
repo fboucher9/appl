@@ -12,20 +12,10 @@ enum guard_appl_mutex_std_node_h
         inc_appl_mutex_node_h
 };
 
-struct appl_mutex_descriptor;
-
-struct appl_context;
-
-struct appl_event;
-
-struct appl_mutex;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 
 class appl_event_std_node;
-
-class appl_mutex_std_node;
 
 //
 //

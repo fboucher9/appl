@@ -13,9 +13,7 @@ enum guard_appl_env_std_h
 };
 
 /* Assert OS */
-#if ! defined APPL_OS_LINUX
-#error include only from linux build
-#endif /* #if ! defined APPL_OS_LINUX */
+#include <appl_assert_linux.h>
 
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>

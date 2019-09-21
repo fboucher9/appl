@@ -12,14 +12,8 @@ enum guard_appl_pool_mgr_h
         inc_appl_object_h
 };
 
-struct appl_pool;
-
-struct appl_pool_descriptor;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_pool_mgr;
 
 //
 //

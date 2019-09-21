@@ -6,6 +6,8 @@
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <appl_property_handle.h>
 
 #include <property/appl_property_service.h>

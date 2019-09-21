@@ -12,9 +12,6 @@ enum guard_appl_thread_std_mgr_h
         inc_appl_thread_mgr_h
 };
 
-/* Predefine */
-struct appl_allocator;
-
 #include <appl_assert_cplusplus.h>
 
 //

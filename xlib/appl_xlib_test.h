@@ -17,8 +17,6 @@ enum guard_appl_xlib_test_h
     inc_appl_xlib_test_h = 1
 };
 
-struct appl_context;
-
 #include <appl_extern_c_begin.h>
 
 /* Basic sanity check */

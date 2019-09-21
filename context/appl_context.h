@@ -7,28 +7,19 @@
 /* Reverse include guard */
 enum guard_appl_context_h
 {
-    inc_appl_context_h =
+    inc_appl_context_h = 1
         /* Header file dependencies */
-        inc_appl_object_h
+        + inc_appl_object_h
+        + inc_appl_predefines_h
 };
 
-struct appl_object;
-
-struct appl_context;
-
 #include <appl_assert_cplusplus.h>
-
-struct appl_context;
-
-struct appl_allocator;
 
 struct appl_heap;
 
 #if defined APPL_DEBUG
 class appl_debug;
 #endif /* #if defined APPL_DEBUG */
-
-struct appl_options;
 
 class appl_thread_mgr;
 

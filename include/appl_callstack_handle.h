@@ -42,9 +42,6 @@ enum guard_appl_callstack_h
 
 }; /* enum guard_appl_callstack_h */
 
-/* Predefine context handle */
-struct appl_context;
-
 #include <appl_extern_c_begin.h>
 
 void

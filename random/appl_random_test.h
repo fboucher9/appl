@@ -11,8 +11,6 @@ enum guard_appl_random_test_h
     inc_appl_random_test_h = 1
 };
 
-struct appl_context;
-
 #include <appl_extern_c_begin.h>
 
 void

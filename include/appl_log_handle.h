@@ -17,9 +17,6 @@ enum guard_appl_log_handle_h
         + inc_appl_types_h
 };
 
-/* Predefine */
-struct appl_context;
-
 /*
 
 */

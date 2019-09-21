@@ -12,14 +12,8 @@ enum guard_appl_random_mgr_h
         inc_appl_object_h
 };
 
-struct appl_random;
-
-struct appl_random_descriptor;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_random_mgr;
 
 //
 //

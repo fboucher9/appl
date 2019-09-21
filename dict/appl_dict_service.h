@@ -18,15 +18,6 @@ enum guard_appl_dict_service_h
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 
-/* Predefine */
-struct appl_context;
-
-/* Predefine */
-struct appl_dict;
-
-/* Predefine */
-struct appl_object;
-
 //
 //
 //

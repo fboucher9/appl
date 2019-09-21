@@ -13,17 +13,8 @@ enum guard_appl_allocator_service_h
         + inc_appl_types_h
 };
 
-/* Predefine */
-struct appl_object;
-
-/* Predefine */
-struct appl_allocator;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-// Predefine
-class appl_allocator_service;
 
 //
 //

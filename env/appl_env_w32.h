@@ -13,9 +13,7 @@ enum guard_appl_env_w32_h
 };
 
 /* Assert OS */
-#if ! defined APPL_OS_WINDOWS
-#error include only from windows build
-#endif /* #if ! defined APPL_OS_WINDOWS */
+#include <appl_assert_windows.h>
 
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>

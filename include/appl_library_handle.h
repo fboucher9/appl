@@ -12,10 +12,6 @@ enum guard_appl_library_handle_h
         inc_appl_status_h
 };
 
-struct appl_context;
-
-struct appl_library;
-
 struct appl_library_descriptor
 {
     unsigned char const *

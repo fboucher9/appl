@@ -12,16 +12,8 @@ enum guard_appl_socket_w32_node_h
         inc_appl_socket_node_h
 };
 
-struct appl_allocator;
-
-struct appl_socket_property;
-
-struct appl_socket;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_socket_w32_node;
 
 //
 //

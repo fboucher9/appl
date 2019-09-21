@@ -17,17 +17,10 @@ enum guard_appl_thread_std_node_h
         + inc_appl_thread_impl_h
 };
 
-struct appl_context;
-
-struct appl_thread_descriptor;
-
 #include <appl_assert_cplusplus.h>
 
 /* Predefine */
 struct appl_thread_std_node_descriptor;
-
-/* Predefine */
-class appl_thread_std_node;
 
 //
 //

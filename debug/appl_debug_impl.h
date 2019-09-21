@@ -22,9 +22,7 @@ enum guard_appl_debug_impl_h
 };
 
 /* Assert configuration */
-#if ! defined APPL_DEBUG
-#error include only from debug build
-#endif /* #if ! defined APPL_DEBUG */
+#include <appl_assert_debug.h>
 
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>

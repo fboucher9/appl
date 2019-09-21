@@ -4,13 +4,7 @@
 
 */
 
-struct appl_context;
-
-struct appl_socket;
-
 struct appl_send_socket;
-
-struct appl_address;
 
 struct appl_send_address;
 

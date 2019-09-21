@@ -12,14 +12,8 @@ enum guard_appl_library_mgr_h
         inc_appl_object_h
 };
 
-struct appl_library_descriptor;
-
-struct appl_library;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_library_mgr;
 
 //
 //

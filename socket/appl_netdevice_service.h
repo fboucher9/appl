@@ -19,8 +19,6 @@ enum guard_appl_netdevice_service_h
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 
-struct appl_context;
-
 struct appl_netdevice_descriptor;
 
 //

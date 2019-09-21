@@ -12,16 +12,8 @@ enum guard_appl_poll_service_h
         inc_appl_status_h
 };
 
-struct appl_context;
-
-struct appl_poll_descriptor;
-
-struct appl_poll;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_poll_service;
 
 //
 //

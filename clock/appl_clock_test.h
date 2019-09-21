@@ -12,6 +12,7 @@ enum guard_appl_clock_test_h
 {
     inc_appl_clock_test_h = 1
         /* Header file dependencies */
+        + inc_appl_predefines_h
 };
 
 #include <appl_extern_c_begin.h>

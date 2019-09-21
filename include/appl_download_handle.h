@@ -13,12 +13,6 @@ enum guard_appl_download_handle_h
         + inc_appl_types_h
 };
 
-/* Predefine */
-struct appl_context;
-
-/* Predefine */
-struct appl_download;
-
 /*
 
 */

@@ -13,14 +13,11 @@ Description:
 /* Reverse include guard */
 enum guard_appl_random_handle_h
 {
-    inc_appl_random_handle_h =
+    inc_appl_random_handle_h = 1
         /* Header file dependency */
-        inc_appl_status_h
+        + inc_appl_status_h
+        + inc_appl_predefines_h
 };
-
-struct appl_object;
-
-struct appl_context;
 
 enum appl_random_type
 {
@@ -42,8 +39,6 @@ struct appl_random_descriptor
         e_type;
 
 }; /* struct appl_random_descriptor */
-
-struct appl_random;
 
 #include <appl_extern_c_begin.h>
 

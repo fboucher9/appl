@@ -12,10 +12,6 @@ enum guard_appl_main_h
         inc_appl_status_h
 };
 
-struct appl_context;
-
-struct appl_options;
-
 typedef
 enum appl_status
 (appl_main_callback)(

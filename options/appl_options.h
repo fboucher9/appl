@@ -18,8 +18,6 @@ enum guard_appl_options_h
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 
-struct appl_options;
-
 //
 //
 //

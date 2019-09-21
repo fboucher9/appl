@@ -15,10 +15,6 @@ enum guard_appl_address_std_node_h
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 
-struct appl_allocator;
-
-struct appl_property;
-
 class appl_address_std_node;
 
 class appl_socket_std_node;

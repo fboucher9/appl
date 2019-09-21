@@ -12,12 +12,6 @@ enum guard_appl_file_handle_h
         inc_appl_status_h
 };
 
-struct appl_object;
-
-struct appl_file;
-
-struct appl_file_descriptor;
-
 #include <appl_extern_c_begin.h>
 
 enum appl_status

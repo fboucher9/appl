@@ -13,15 +13,6 @@ enum guard_appl_queue_impl_h
         + inc_appl_list_h
 };
 
-/* Predefine */
-struct appl_context;
-
-/* Predefine */
-struct appl_mutex;
-
-/* Predefine */
-struct appl_event;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 

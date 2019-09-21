@@ -12,14 +12,8 @@ enum guard_appl_file_std_node_h
         inc_appl_file_node_h
 };
 
-struct appl_file_descriptor;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-struct appl_context;
-
-class appl_file_std_node;
 
 struct appl_file_std_node_descriptor;
 

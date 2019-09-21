@@ -12,13 +12,7 @@ enum guard_appl_file_mgr_h
         inc_appl_object_h
 };
 
-struct appl_file_descriptor;
-
-struct appl_file;
-
 #include <appl_assert_cplusplus.h>
-
-class appl_file_mgr;
 
 //
 //

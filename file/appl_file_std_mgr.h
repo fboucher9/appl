@@ -12,13 +12,8 @@ enum guard_appl_file_std_mgr_h
         inc_appl_file_mgr_h
 };
 
-/* Predefine */
-struct appl_pool;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_file_std_mgr;
 
 //
 //

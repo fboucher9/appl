@@ -12,15 +12,6 @@ enum guard_appl_socket_descriptor_h
         + inc_appl_status_h
 };
 
-/* Predefine */
-struct appl_address;
-
-/* Predefine */
-struct appl_socket;
-
-/* Predefine */
-struct appl_socket_property;
-
 /* Protocol values */
 enum appl_socket_protocol
 {

@@ -7,20 +7,14 @@
 /* Reverse include guard */
 enum guard_appl_file_service_h
 {
-    inc_appl_file_service_h =
+    inc_appl_file_service_h = 1
         /* Header file dependencies */
-        inc_appl_status_h
+        + inc_appl_status_h
+        + inc_appl_predefines_h
 };
 
-struct appl_context;
-
-struct appl_file;
-
-struct appl_file_descriptor;
-
+/* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_file_service;
 
 //
 //

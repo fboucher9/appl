@@ -19,12 +19,6 @@ enum guard_appl_options_std_h
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 
-/* Predefine */
-struct appl_options;
-
-/* Predefine */
-class appl_options_std;
-
 enum appl_options_std_state
 {
     appl_options_std_state_space = 0,

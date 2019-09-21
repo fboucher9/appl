@@ -4,9 +4,6 @@
 
 */
 
-/* Predefine */
-struct appl_file;
-
 #include <appl_extern_c_begin.h>
 
 extern

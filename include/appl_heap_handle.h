@@ -13,9 +13,6 @@ enum guard_appl_heap_handle_h
         + inc_appl_types_h
 };
 
-/* Predefine */
-struct appl_context;
-
 #include <appl_extern_c_begin.h>
 
 enum appl_status

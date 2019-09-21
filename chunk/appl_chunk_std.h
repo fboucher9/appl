@@ -13,10 +13,6 @@ enum guard_appl_chunk_std_h
         + inc_appl_list_h
 };
 
-struct appl_allocator;
-
-class appl_chunk_std;
-
 //
 //  Class: appl_chunk_std
 //

@@ -42,9 +42,6 @@ enum guard_appl_timer_handle_h
 };
 
 /* Predefine */
-struct appl_context;
-
-/* Predefine */
 struct appl_timer_group;
 
 /* Predefine */

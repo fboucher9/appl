@@ -12,14 +12,8 @@ enum guard_appl_heap_service_h
         inc_appl_types_h
 };
 
-/* Predefine */
-struct appl_context;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-// Predefine
-class appl_heap_service;
 
 //
 //

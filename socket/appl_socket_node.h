@@ -19,10 +19,6 @@ enum guard_appl_socket_node_h
         + inc_appl_socket_descriptor_h
 };
 
-struct appl_address;
-
-struct appl_socket;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 

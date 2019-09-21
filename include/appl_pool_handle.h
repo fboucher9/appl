@@ -13,15 +13,6 @@ enum guard_appl_pool_handle_h
         + inc_appl_types_h
 };
 
-/* Predefine */
-struct appl_context;
-
-/* Predefine */
-struct appl_allocator;
-
-/* Predefine */
-struct appl_pool;
-
 /* Descriptor */
 struct appl_pool_descriptor
 {

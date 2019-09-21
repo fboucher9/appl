@@ -13,15 +13,6 @@ enum guard_appl_hash_handle_h
         + inc_appl_types_h
 };
 
-/* Predefine */
-struct appl_context;
-
-/* Predefine */
-struct appl_object;
-
-/* Predefine */
-struct appl_hash;
-
 /*
 
 */

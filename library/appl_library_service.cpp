@@ -12,6 +12,8 @@
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <library/appl_library_service.h>
 
 #include <appl_library_handle.h>

@@ -13,16 +13,6 @@ enum guard_appl_socket_handle_h
         + inc_appl_status_h
 };
 
-struct appl_object;
-
-struct appl_socket;
-
-struct appl_address;
-
-struct appl_socket_property;
-
-struct appl_poll_descriptor;
-
 #include <appl_extern_c_begin.h>
 
 enum appl_status

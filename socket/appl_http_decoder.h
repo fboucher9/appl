@@ -5,9 +5,6 @@
 */
 
 /* Predefine */
-struct appl_context;
-
-/* Predefine */
 struct appl_http_decoder;
 
 /*

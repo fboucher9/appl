@@ -19,15 +19,6 @@ enum guard_appl_event_handle_h
         inc_appl_status_h
 };
 
-/* Predefine */
-struct appl_object;
-
-/* Predefine */
-struct appl_mutex;
-
-/* Predefine */
-struct appl_event;
-
 /*
 
 Structure: appl_event_descriptor

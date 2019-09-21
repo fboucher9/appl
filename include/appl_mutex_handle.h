@@ -12,9 +12,6 @@ enum guard_appl_mutex_handle_h
         inc_appl_status_h
 };
 
-/* mutex */
-struct appl_mutex;
-
 struct appl_mutex_descriptor
 {
     void *

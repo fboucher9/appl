@@ -4,10 +4,6 @@
 
 */
 
-struct appl_options;
-
-struct appl_context;
-
 #include <appl_extern_c_begin.h>
 
 void

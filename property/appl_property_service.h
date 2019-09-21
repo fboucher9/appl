@@ -12,14 +12,8 @@ enum guard_appl_property_service_h
         inc_appl_status_h
 };
 
-struct appl_context;
-
-struct appl_property;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_property_service;
 
 //
 //

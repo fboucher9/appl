@@ -12,18 +12,8 @@ enum guard_appl_socket_service_h
         inc_appl_status_h
 };
 
-struct appl_context;
-
-struct appl_socket_property;
-
-struct appl_socket;
-
-struct appl_address;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_socket_service;
 
 //
 //

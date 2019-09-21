@@ -14,9 +14,6 @@ enum guard_appl_log_test_h
         /* Header file dependency */
 };
 
-/* Predefine */
-struct appl_context;
-
 #include <appl_extern_c_begin.h>
 
 void

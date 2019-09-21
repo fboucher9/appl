@@ -25,9 +25,6 @@ enum guard_appl_xlib_handle_h
 #endif /* #if ! defined _X11_XLIB_H_ */
 
 /* Predefine */
-struct appl_context;
-
-/* Predefine */
 struct appl_xlib;
 
 #include <appl_extern_c_begin.h>

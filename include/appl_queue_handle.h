@@ -13,15 +13,6 @@ enum guard_appl_queue_handle_h
         + inc_appl_types_h
 };
 
-/* Predefines */
-struct appl_context;
-
-/* Predefines */
-struct appl_queue;
-
-/* Predefines */
-struct appl_list;
-
 /*
 
 */

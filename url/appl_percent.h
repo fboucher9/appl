@@ -13,9 +13,6 @@ enum guard_appl_percent_h
 /* Included. */
 #define INC_APPL_PERCENT_H
 
-/* Predefine */
-struct appl_buf;
-
 #include <appl_extern_c_begin.h>
 
 void

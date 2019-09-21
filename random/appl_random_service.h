@@ -7,16 +7,11 @@
 /* Reverse include guard */
 enum guard_appl_random_service_h
 {
-    inc_appl_random_service_h =
+    inc_appl_random_service_h = 1
         /* Header file dependencies */
-        inc_appl_status_h
+        + inc_appl_status_h
+        + inc_appl_predefines_h
 };
-
-struct appl_context;
-
-struct appl_object;
-
-struct appl_random;
 
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>

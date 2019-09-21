@@ -11,10 +11,6 @@ enum guard_appl_poll_descriptor_h
         inc_appl_types_h
 };
 
-struct appl_socket;
-
-struct appl_poll_descriptor;
-
 /*
 
 */

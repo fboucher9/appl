@@ -69,12 +69,6 @@ enum guard_appl_refcount_h
         + inc_appl_types_h
 };
 
-/* Predefine */
-struct appl_mutex;
-
-/* Predefine */
-struct appl_refcount;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 

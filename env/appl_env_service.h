@@ -15,19 +15,8 @@ enum guard_appl_env_service_h
         inc_appl_status_h
 };
 
-/* Predefine */
-struct appl_context;
-
-/* Predefine */
-struct appl_string;
-
-/* Predefine */
-struct appl_env;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_env_service;
 
 //
 //

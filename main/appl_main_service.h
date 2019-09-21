@@ -15,12 +15,6 @@ enum guard_appl_main_service_h
         inc_appl_status_h
 };
 
-/* Predefine */
-struct appl_context;
-
-/* Predefine */
-struct appl_options;
-
 //
 //
 //

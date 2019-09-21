@@ -15,8 +15,6 @@ enum guard_appl_property_h
 
 union appl_property_value;
 
-struct appl_property;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 

@@ -12,16 +12,8 @@ enum guard_appl_event_mgr_h
         inc_appl_object_h
 };
 
-struct appl_event_descriptor;
-
-struct appl_context;
-
-struct appl_event;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_event_mgr;
 
 //
 //

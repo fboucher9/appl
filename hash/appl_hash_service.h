@@ -1,13 +1,5 @@
 /* See LICENSE for license details */
 
-struct appl_context;
-
-struct appl_hash_descriptor;
-
-struct appl_hash;
-
-struct appl_list;
-
 //
 //
 //

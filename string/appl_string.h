@@ -12,12 +12,6 @@ enum guard_appl_string_h
         inc_appl_object_h
 };
 
-/* Predefine */
-struct appl_object;
-
-/* Predefine */
-struct appl_string;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 

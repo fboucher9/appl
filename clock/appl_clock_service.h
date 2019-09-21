@@ -7,17 +7,15 @@
 /* Reverse include guard */
 enum guard_appl_clock_service_h
 {
-    inc_appl_clock_service_h =
+    inc_appl_clock_service_h = 1
         /* Header file dependency */
-        inc_appl_status_h
+        + inc_appl_status_h
+        + inc_appl_types_h
+        + inc_appl_predefines_h
 };
-
-struct appl_context;
 
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_clock_service;
 
 //
 //

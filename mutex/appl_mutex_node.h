@@ -12,9 +12,6 @@ enum guard_appl_mutex_node_h
         + inc_appl_object_h
 };
 
-/* Predefine */
-struct appl_mutex;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 

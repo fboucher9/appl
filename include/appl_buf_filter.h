@@ -20,9 +20,6 @@ enum guard_appl_buf_filter_h
 /* Included. */
 #define INC_APPL_BUF_FILTER_H
 
-/* Predefine */
-struct appl_buf;
-
 #include <appl_extern_c_begin.h>
 
 /* Detect if given character is part of filter */

@@ -15,12 +15,6 @@ enum guard_appl_env_main_h
 /* Included. */
 #define INC_APPL_ENV_MAIN_H
 
-/* Predefine */
-struct appl_context;
-
-/* Predefine */
-struct appl_options;
-
 #include <appl_extern_c_begin.h>
 
 enum appl_status

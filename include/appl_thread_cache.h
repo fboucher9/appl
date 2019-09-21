@@ -12,13 +12,7 @@ enum guard_appl_thread_cache_h
         inc_appl_status_h
 };
 
-struct appl_context;
-
-struct appl_thread_descriptor;
-
 struct appl_thread_cache;
-
-struct appl_thread;
 
 #include <appl_extern_c_begin.h>
 

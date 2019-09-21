@@ -22,10 +22,6 @@ enum guard_appl_string_handle_h
         inc_appl_status_h
 };
 
-struct appl_context;
-
-struct appl_string;
-
 #include <appl_extern_c_begin.h>
 
 enum appl_status

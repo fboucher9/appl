@@ -5,9 +5,7 @@
 */
 
 /* Assert configuration */
-#if ! defined APPL_DEBUG
-#error include only from debug build
-#endif /* #if ! defined APPL_DEBUG */
+#include <appl_assert_debug.h>
 
 /* Reverse include guard */
 enum guard_appl_debug_handle_h
@@ -16,8 +14,6 @@ enum guard_appl_debug_handle_h
         /* Header file dependencies */
         inc_appl_status_h
 };
-
-struct appl_context;
 
 #include <appl_extern_c_begin.h>
 

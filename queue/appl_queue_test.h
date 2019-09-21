@@ -13,8 +13,6 @@ enum guard_appl_queue_test_h
         /* Header file dependency */
 };
 
-struct appl_context;
-
 #include <appl_extern_c_begin.h>
 
 void

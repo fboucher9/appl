@@ -7,9 +7,6 @@
 /* Included. */
 #define INC_APPL_ENV_TEST_H
 
-/* Predefine */
-struct appl_context;
-
 #include <appl_extern_c_begin.h>
 
 void

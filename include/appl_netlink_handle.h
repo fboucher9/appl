@@ -18,9 +18,6 @@ enum guard_appl_netlink_handle_h
 #define INC_APPL_NETLINK_HANDLE_H
 
 /* Predefine */
-struct appl_context;
-
-/* Predefine */
 struct appl_netlink;
 
 #define APPL_NETLINK_FLAG_INTERFACE (1ul << 0u)

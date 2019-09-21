@@ -18,10 +18,6 @@ enum guard_appl_options_handle_h
         inc_appl_status_h
 };
 
-struct appl_object;
-
-struct appl_options;
-
 #include <appl_extern_c_begin.h>
 
 enum appl_status

@@ -13,15 +13,6 @@ enum guard_appl_queue_std_h
         + inc_appl_queue_impl_h
 };
 
-/* Predefine */
-struct appl_object;
-
-/* Predefine */
-struct appl_queue_descriptor;
-
-/* Predefine */
-struct appl_queue;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 

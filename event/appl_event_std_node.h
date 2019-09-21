@@ -12,16 +12,8 @@ enum guard_appl_event_std_node_h
         inc_appl_event_node_h
 };
 
-struct appl_event_descriptor;
-
-struct appl_context;
-
-struct appl_event;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_event_std_node;
 
 //
 //

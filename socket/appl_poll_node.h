@@ -10,10 +10,6 @@ class appl_poll_node;
 
 class appl_poll_mgr;
 
-struct appl_context;
-
-struct appl_poll_descriptor;
-
 //
 //
 //

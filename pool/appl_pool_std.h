@@ -17,9 +17,6 @@ enum guard_appl_pool_std_h
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 
-/* Predefine */
-struct appl_pool_descriptor;
-
 //
 //
 //

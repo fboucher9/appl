@@ -13,15 +13,6 @@ enum guard_appl_module_handle_h
         + inc_appl_types_h
 };
 
-/* Predefine */
-struct appl_module;
-
-/* Predefine */
-struct appl_object;
-
-/* Predefine */
-struct appl_packet;
-
 #include <appl_extern_c_begin.h>
 
 struct appl_object *

@@ -7,22 +7,16 @@
 /* Reverse include guard */
 enum guard_appl_clock_std_h
 {
-    inc_appl_clock_std_h =
+    inc_appl_clock_std_h = 1
         /* Header file dependencies */
-        inc_appl_clock_h
+        + inc_appl_clock_h
 };
 
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 
 /* Assert OS */
-#if ! defined APPL_OS_LINUX
-#error must define APPL_OS_LINUX
-#endif /* #if ! defined APPL_OS_LINUX */
-
-struct appl_context;
-
-class appl_clock_std;
+#include <appl_assert_linux.h>
 
 //
 //

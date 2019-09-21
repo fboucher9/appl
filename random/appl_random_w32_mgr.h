@@ -12,12 +12,8 @@ enum guard_appl_random_w32_mgr_h
         inc_appl_random_mgr_h
 };
 
-struct appl_allocator;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-class appl_random_w32_mgr;
 
 //
 //

@@ -17,23 +17,8 @@ enum guard_appl_address_service_h
         + inc_appl_status_h
 };
 
-/* Predefine */
-struct appl_context;
-
-/* Predefine */
-struct appl_address_property;
-
-/* Predefine */
-struct appl_address_descriptor;
-
-/* Predefine */
-struct appl_address;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-// Predefine
-class appl_address_service;
 
 //
 //  Class: appl_address_service

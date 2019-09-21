@@ -20,15 +20,6 @@ enum guard_appl_packet_handle_h
 
 #define APPL_PACKET_TYPE_FLUSH (3ul)
 
-/* Predefine */
-struct appl_object;
-
-/* Predefine */
-struct appl_packet;
-
-/* Predefine */
-struct appl_module;
-
 #include <appl_extern_c_begin.h>
 
 enum appl_status

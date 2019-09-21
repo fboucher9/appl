@@ -13,9 +13,6 @@ enum guard_appl_timer_std_group_h
 };
 
 /* Predefine */
-struct appl_allocator;
-
-/* Predefine */
 struct appl_timer_node;
 
 /* Assert compiler */

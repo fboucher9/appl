@@ -12,21 +12,6 @@ enum guard_appl_queue_service_h
         inc_appl_status_h
 };
 
-/* Predefines */
-struct appl_context;
-
-/* Predefines */
-struct appl_queue_descriptor;
-
-/* Predefines */
-struct appl_object;
-
-/* Predefines */
-struct appl_queue;
-
-/* Predefines */
-struct appl_list;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 

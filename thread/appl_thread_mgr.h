@@ -17,12 +17,6 @@ enum guard_appl_thread_mgr_h
 
 #include <appl_assert_cplusplus.h>
 
-struct appl_context;
-
-struct appl_thread;
-
-struct appl_thread_descriptor;
-
 //
 //
 //

@@ -12,8 +12,6 @@ enum guard_appl_log_impl_h
         inc_appl_log_handle_h
 };
 
-struct appl_context;
-
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
 

@@ -14,9 +14,6 @@ enum guard_appl_netdevice_handle_h
 /* Included. */
 #define INC_APPL_NETDEVICE_HANDLE_H
 
-/* Predefine */
-struct appl_context;
-
 /*
 
 Enumeration: appl_netdevice_type

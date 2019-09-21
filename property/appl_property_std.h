@@ -13,8 +13,6 @@ enum guard_appl_property_std_h
         + inc_appl_property_h
 };
 
-struct appl_property_node;
-
 /*
 
 */
@@ -27,8 +25,6 @@ struct appl_property_std_descriptor
 
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
-
-struct appl_property_std;
 
 //
 //
