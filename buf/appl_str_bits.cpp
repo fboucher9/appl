@@ -6,6 +6,8 @@
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <appl_buf.h>
 
 #include <buf/appl_str_bits.h>
@@ -27,7 +29,7 @@
 //
 //
 //
-class appl_str_bits : public appl_bits_base
+struct appl_str_bits : public appl_bits_base
 {
     public:
 
@@ -66,11 +68,11 @@ class appl_str_bits : public appl_bits_base
             m_buf_iterator;
 
         appl_str_bits(
-            class appl_str_bits const & r);
+            struct appl_str_bits const & r);
 
-        class appl_str_bits &
+        struct appl_str_bits &
             operator =(
-                class appl_str_bits const & r);
+                struct appl_str_bits const & r);
 
         virtual
         enum appl_status
@@ -84,7 +86,7 @@ class appl_str_bits : public appl_bits_base
                 unsigned char const
                     i_value);
 
-}; // class appl_str_bits
+}; // struct appl_str_bits
 
 //
 //
@@ -139,7 +141,7 @@ appl_size_t
 {
     return
         sizeof(
-            class appl_str_bits);
+            struct appl_str_bits);
 
 } // v_cleanup()
 
@@ -184,7 +186,7 @@ union appl_str_bits_ptr
     void *
         p_callback_context;
 
-    class appl_str_bits *
+    struct appl_str_bits *
         p_this;
 
 }; // union appl_str_bits_ptr
@@ -316,7 +318,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_str_bits *
+    struct appl_str_bits *
         p_str_bits;
 
     e_status =

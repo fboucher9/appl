@@ -14,9 +14,7 @@ enum guard_appl_buf0_h
 
 struct appl_context;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_buf0_create(
@@ -42,8 +40,6 @@ appl_buf0_len(
     unsigned char const * const
         p_buf_0);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_buf0.h */

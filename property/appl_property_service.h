@@ -17,9 +17,7 @@ struct appl_context;
 struct appl_property;
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 class appl_property_service;
 

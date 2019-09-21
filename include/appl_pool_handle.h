@@ -41,9 +41,7 @@ struct appl_pool_descriptor
 
 }; /* struct appl_pool_descriptor */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
     appl_pool_create(
@@ -83,8 +81,6 @@ enum appl_status
         void * const
             p_buffer);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_pool_handle.h */

@@ -21,9 +21,7 @@ enum guard_appl_refcount_handle_h
 
 struct appl_refcount;
 
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_begin.h>
 
 /* increment reference counter */
 enum appl_status
@@ -43,8 +41,6 @@ appl_refcount_const_parent(
     struct appl_refcount const * const
         p_refcount);
 
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_refcount_handle.h */

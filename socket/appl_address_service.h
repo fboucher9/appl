@@ -30,9 +30,7 @@ struct appl_address_descriptor;
 struct appl_address;
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 // Predefine
 class appl_address_service;

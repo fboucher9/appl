@@ -21,9 +21,7 @@ struct appl_event;
 struct appl_mutex;
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 class appl_event_std_node;
 

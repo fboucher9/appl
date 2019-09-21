@@ -19,9 +19,7 @@ enum guard_appl_xlib_test_h
 
 struct appl_context;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 /* Basic sanity check */
 void
@@ -29,8 +27,6 @@ appl_xlib_test_1(
     struct appl_context * const
         p_context);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_xlib_test.h */

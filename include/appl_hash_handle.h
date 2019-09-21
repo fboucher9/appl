@@ -57,9 +57,7 @@ struct appl_hash_descriptor
 
 }; /* struct appl_hash_descriptor */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_hash_create(
@@ -115,8 +113,6 @@ appl_hash_iterate(
     void * const
         p_context);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_hash_handle.h */

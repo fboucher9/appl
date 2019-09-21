@@ -21,9 +21,7 @@ struct appl_socket;
 struct appl_address;
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 class appl_socket_service;
 

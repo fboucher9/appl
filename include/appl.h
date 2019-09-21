@@ -33,6 +33,9 @@ enum guard_appl_h
 /* Detect types */
 #include <appl_types.h>
 
+/* Common predefines */
+#include <appl_predefines.h>
+
 /* Configuration */
 #if ( ! defined APPL_DEBUG ) && ( ! defined APPL_RELEASE )
 #error "define APPL_DEBUG or APPL_RELEASE from makefile"

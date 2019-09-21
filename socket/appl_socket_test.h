@@ -8,9 +8,7 @@ struct appl_context;
 
 struct appl_options;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 void
     appl_socket_test_1(
@@ -30,8 +28,6 @@ void
         unsigned int const
             i_shift);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_socket_test.h */

@@ -16,9 +16,7 @@ enum guard_appl_file_std_mgr_h
 struct appl_pool;
 
 /* Assert compiler */
-#if !defined(__cplusplus)
-#error use c++ compiler
-#endif /* #if !defined(__cplusplus) */
+#include <appl_assert_cplusplus.h>
 
 class appl_file_std_mgr;
 

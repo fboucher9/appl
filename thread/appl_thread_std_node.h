@@ -21,9 +21,7 @@ struct appl_context;
 
 struct appl_thread_descriptor;
 
-#if !defined(__cplusplus)
-#error use C++ compiler
-#endif /* #if !defined(__cplusplus) */
+#include <appl_assert_cplusplus.h>
 
 /* Predefine */
 struct appl_thread_std_node_descriptor;

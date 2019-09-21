@@ -64,9 +64,7 @@ struct appl_iterator
 
 }; /* struct appl_iterator */
 
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_begin.h>
 
 /*
 
@@ -314,8 +312,6 @@ appl_iterator_prev(
     struct appl_iterator * const
         p_iterator);
 
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_list.h */

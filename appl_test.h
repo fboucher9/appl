@@ -7,9 +7,7 @@
 /* Predefine */
 struct appl_file;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 extern
 struct appl_file *
@@ -59,8 +57,6 @@ appl_print_08lx(
     unsigned long int const
         i_value);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_test.h */

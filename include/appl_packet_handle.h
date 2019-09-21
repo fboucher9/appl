@@ -29,9 +29,7 @@ struct appl_packet;
 /* Predefine */
 struct appl_module;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_packet_create(
@@ -78,8 +76,6 @@ appl_packet_set_type(
     unsigned long int const
         e_type);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_packet_handle.h */

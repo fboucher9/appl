@@ -23,9 +23,7 @@ enum guard_appl_buf_filter_h
 /* Predefine */
 struct appl_buf;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 /* Detect if given character is part of filter */
 char
@@ -63,8 +61,6 @@ appl_buf_filter_convert_class(
     struct appl_buf const * const
         p_input_class);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_buf_filter.h */

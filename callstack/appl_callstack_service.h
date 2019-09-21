@@ -9,17 +9,13 @@ enum guard_appl_callstack_service_h
 {
     inc_appl_callstack_service_h = 1
         /* Header file dependencies */
+        + inc_appl_predefines_h
         /* ... */
 
 }; /* enum guard_appl_callstack_service_h */
 
-/* Predefine context handle */
-struct appl_context;
-
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 //
 //

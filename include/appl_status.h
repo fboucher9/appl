@@ -49,9 +49,7 @@ enum appl_status
 
 }; /* enum appl_status */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
     appl_raise(
@@ -76,8 +74,6 @@ enum appl_status
 enum appl_status
     appl_raise_fault_injection(void);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_status.h */

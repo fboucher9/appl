@@ -15,9 +15,7 @@ enum guard_appl_file_std_descriptor_h
 };
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif
+#include <appl_assert_cplusplus.h>
 
 //
 //

@@ -25,9 +25,7 @@
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 //
 //

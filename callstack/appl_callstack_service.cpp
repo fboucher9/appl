@@ -4,6 +4,8 @@
 
 */
 
+#include <appl_predefines.h>
+
 #include <callstack/appl_callstack_service.h>
 
 #include <appl_types.h>

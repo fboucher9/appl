@@ -17,9 +17,7 @@ enum guard_appl_event_test_h
 /* Predefine */
 struct appl_context;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 void
     appl_event_test_1(
@@ -31,8 +29,6 @@ void
         struct appl_context * const
             p_context);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_event_test.h */

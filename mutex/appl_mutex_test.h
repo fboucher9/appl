@@ -6,9 +6,7 @@
 
 struct appl_context;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 void
     appl_mutex_test_1(
@@ -25,8 +23,6 @@ void
         struct appl_context * const
             p_context);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_mutex_test.h */

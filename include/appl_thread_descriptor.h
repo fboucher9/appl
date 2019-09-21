@@ -35,9 +35,7 @@ struct appl_thread_callback
 
 }; /* struct appl_thread_callback */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
     appl_thread_descriptor_create(
@@ -84,8 +82,6 @@ char
         struct appl_buf * const
             p_name);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_thread_descriptor.h */

@@ -10,9 +10,7 @@ enum guard_appl_clock_main_h
         + inc_appl_status_h
 };
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
     appl_clock_main(
@@ -23,8 +21,6 @@ enum appl_status
         unsigned long int const
             i_shift);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_clock_main.h */

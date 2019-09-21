@@ -16,9 +16,7 @@ enum guard_appl_heap_handle_h
 /* Predefine */
 struct appl_context;
 
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_heap_alloc(
@@ -38,9 +36,7 @@ appl_heap_free(
     void * const
         p_buf);
 
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_end.h>
 
 #if defined __cplusplus
 

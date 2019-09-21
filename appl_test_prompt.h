@@ -18,9 +18,7 @@ enum guard_appl_test_prompt_h
 #error include only when APPL_BUILD_EXE is defined
 #endif /* #if ! defined APPL_BUILD_EXE */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_test_prompt(
@@ -29,8 +27,6 @@ appl_test_prompt(
     struct appl_file * const
         p_file);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_test_prompt.h */

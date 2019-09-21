@@ -25,9 +25,7 @@ struct appl_symbol_descriptor
 
 }; /* struct appl_symbol_descriptor */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 void
     appl_symbol_descriptor_init(
@@ -67,8 +65,6 @@ enum appl_status
         struct appl_buf * const
             p_buf_it);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_symbol_handle.h */

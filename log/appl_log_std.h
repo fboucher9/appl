@@ -16,9 +16,7 @@ enum guard_appl_log_std_h
 struct appl_object;
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 //
 //

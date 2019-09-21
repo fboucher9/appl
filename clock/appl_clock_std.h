@@ -13,9 +13,7 @@ enum guard_appl_clock_std_h
 };
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 /* Assert OS */
 #if ! defined APPL_OS_LINUX

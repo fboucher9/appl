@@ -26,9 +26,7 @@ struct appl_context;
 
 struct appl_string;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_string_create(
@@ -110,8 +108,6 @@ appl_string_get(
     unsigned char * * const
         r_buf_max);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_string_handle.h */

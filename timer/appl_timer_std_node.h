@@ -17,9 +17,7 @@ enum guard_appl_timer_std_node_h
 struct appl_timer_descriptor;
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 // Predefine
 class appl_timer_std_group;

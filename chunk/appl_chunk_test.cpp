@@ -4,6 +4,8 @@
 
 */
 
+#include <appl_predefines.h>
+
 #include <chunk/appl_chunk_test.h>
 
 #include <appl_status.h>

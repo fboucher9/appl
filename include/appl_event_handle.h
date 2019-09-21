@@ -44,9 +44,7 @@ struct appl_event_descriptor
 
 }; /* struct appl_event_descriptor */
 
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_begin.h>
 
 /* Create an event */
 enum appl_status
@@ -93,8 +91,6 @@ appl_event_wait(
     unsigned long int const
         i_wait_count);
 
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_event_handle.h */

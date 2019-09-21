@@ -14,10 +14,10 @@ enum guard_appl_backtrace_service_h
         /* Header file dependencies */
         + inc_appl_status_h
         + inc_appl_types_h
+        + inc_appl_predefines_h
 };
 
-/* Predefine */
-struct appl_context;
+#include <appl_assert_cplusplus.h>
 
 //
 //

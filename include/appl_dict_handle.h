@@ -20,9 +20,7 @@ struct appl_context;
 /* Predefine */
 struct appl_dict;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 /* Create a dictionary object */
 enum appl_status
@@ -70,9 +68,7 @@ appl_dict_get(
     void * * const
         r_value);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* In C++, a wrapper may be used to support different types: */
 #if defined __cplusplus

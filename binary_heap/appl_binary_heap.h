@@ -11,13 +11,8 @@ enum guard_appl_binary_heap_h
         /* Header file dependencies */
         inc_appl_status_h
         + inc_appl_types_h
+        + inc_appl_predefines_h
 };
-
-/* Predefine */
-struct appl_context;
-
-/* Predefine */
-struct appl_object;
 
 /* Predefine */
 struct appl_binary_heap;
@@ -49,9 +44,7 @@ struct appl_binary_heap_descriptor
 
 }; /* struct appl_binary_heap_descriptor */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
     appl_binary_heap_create(
@@ -86,8 +79,6 @@ enum appl_status
         void * * const
             r_data);
 
-#if defined __cplusplus
-} /* extern "C"  */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_binary_heap.h */

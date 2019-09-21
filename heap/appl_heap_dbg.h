@@ -21,9 +21,7 @@ enum guard_appl_heap_dbg_h
 struct appl_heap_dbg_descriptor;
 
 /* Assert compiler */
-#if !defined(__cplusplus)
-#error use c++ compiler
-#endif /* #if !defined(__cplusplus) */
+#include <appl_assert_cplusplus.h>
 
 class appl_heap_dbg;
 

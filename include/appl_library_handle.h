@@ -26,9 +26,7 @@ struct appl_library_descriptor
 
 }; /* struct appl_library_descriptor */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_library_create(
@@ -65,8 +63,6 @@ appl_library_query(
     void * * const
         r_symbol);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_library_handle.h */

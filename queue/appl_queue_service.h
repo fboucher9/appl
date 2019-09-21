@@ -28,9 +28,7 @@ struct appl_queue;
 struct appl_list;
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 //
 //

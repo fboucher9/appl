@@ -16,9 +16,7 @@ struct appl_file_descriptor;
 
 struct appl_file;
 
-#if !defined(__cplusplus)
-#error use c++ compiler
-#endif /* #if !defined(__cplusplus) */
+#include <appl_assert_cplusplus.h>
 
 class appl_file_mgr;
 

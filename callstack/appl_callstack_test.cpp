@@ -4,6 +4,8 @@
 
 */
 
+#include <appl_predefines.h>
+
 #include <callstack/appl_callstack_test.h>
 
 #include <appl_callstack_handle.h>

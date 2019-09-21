@@ -17,9 +17,7 @@ enum guard_appl_buf_iterator_h
 /* Predefine */
 struct appl_buf;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 /* buf iterator write a single character */
 char
@@ -109,8 +107,6 @@ appl_buf_iterator_scan_number(
     int const
         i_flags);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_buf_iterator.h */

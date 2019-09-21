@@ -27,9 +27,7 @@ struct appl_context;
 /* Predefine */
 struct appl_string;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 /** Get value of environment variable.  Lookup table of environment variables
 for an entry that matches given name string, and return value of the
@@ -96,8 +94,6 @@ appl_env_set(
     unsigned char const * const
         p_value_max);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_env_handle.h */

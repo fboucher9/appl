@@ -19,9 +19,7 @@ enum guard_appl_debug_handle_h
 
 struct appl_context;
 
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_debug_break(
@@ -55,8 +53,6 @@ appl_debug_print_number(
     unsigned int const
         i_width);
 
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_debug_handle.h */

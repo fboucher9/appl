@@ -30,9 +30,7 @@ struct appl_crc32_context
 
 }; /* struct appl_crc32_context */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 unsigned long int
     appl_crc32(
@@ -60,8 +58,6 @@ unsigned long int
         struct appl_crc32_context const * const
             p_crc32_context);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_crc32.h */

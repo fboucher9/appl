@@ -13,9 +13,7 @@ enum guard_appl_heap_h
 };
 
 /* Assert compiler */
-#if !defined(__cplusplus)
-#error use c++ compiler
-#endif /* #if !defined(__cplusplus) */
+#include <appl_assert_cplusplus.h>
 
 // Predefine
 struct appl_heap;

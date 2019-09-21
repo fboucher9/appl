@@ -16,9 +16,7 @@ struct appl_context;
 
 struct appl_property;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_property_create(
@@ -98,8 +96,6 @@ appl_property_get_long(
     signed long int * const
         r_value);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_property_handle.h */

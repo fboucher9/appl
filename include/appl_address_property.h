@@ -14,9 +14,7 @@ enum guard_appl_address_property_h
 
 struct appl_address_property;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_address_property_create(
@@ -100,8 +98,6 @@ appl_address_property_get_index(
     unsigned int * const
         r_index);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_address_property.h */

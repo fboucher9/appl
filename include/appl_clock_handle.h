@@ -18,9 +18,7 @@ enum guard_appl_clock_handle_h
 /* Predefine */
 struct appl_context;
 
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_clock_read(
@@ -40,8 +38,6 @@ appl_clock_delay(
     appl_ull_t const
         i_time_count);
 
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_clock_handle.h */

@@ -25,9 +25,7 @@ struct appl_module;
 struct appl_object;
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 class appl_packet_service
 {

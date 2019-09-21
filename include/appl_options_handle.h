@@ -22,9 +22,7 @@ struct appl_object;
 
 struct appl_options;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_options_create(
@@ -93,8 +91,6 @@ appl_options_reset(
     struct appl_options * const
         p_options);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_options_handle.h */

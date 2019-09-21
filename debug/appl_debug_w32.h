@@ -22,9 +22,7 @@ enum guard_appl_debug_w32_h
 #endif /* #if ! defined APPL_OS_WINDOWS */
 
 /* Assert compiler */
-#if !defined(__cplusplus)
-#error use C++ compiler
-#endif /* #if defined(__cplusplus) */
+#include <appl_assert_cplusplus.h>
 
 class appl_debug_w32;
 

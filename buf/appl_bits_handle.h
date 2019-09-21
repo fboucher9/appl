@@ -17,6 +17,7 @@ enum guard_appl_bits_handle_h
     inc_appl_bits_handle_h = 1
         /* Header file dependencies */
         + inc_appl_status_h
+        + inc_appl_predefines_h
         /* ... */
 }; /* enum guard_appl_bits_handle_h */
 
@@ -57,9 +58,7 @@ struct appl_bits_descriptor
 
 }; /* struct appl_bits_descriptor */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
     appl_bits_create(
@@ -93,8 +92,6 @@ enum appl_status
         unsigned long int const
             i_value);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_bits_handle.h */

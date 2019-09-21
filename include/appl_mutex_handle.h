@@ -22,9 +22,7 @@ struct appl_mutex_descriptor
 
 }; /* struct appl_mutex_descriptor */
 
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_mutex_create(
@@ -71,8 +69,6 @@ appl_mutex_sync(
     void * const
         p_sync_context);
 
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_mutex_handle.h */

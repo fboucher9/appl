@@ -43,9 +43,7 @@ enum appl_socket_wait_type
 
 }; /* enum appl_socket_wait_type */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_socket_property_create(
@@ -251,8 +249,6 @@ appl_socket_property_get_family(
     int * const
         r_family);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_socket_descriptor.h */

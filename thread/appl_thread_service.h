@@ -21,9 +21,7 @@ struct appl_thread_descriptor;
 struct appl_context;
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 class appl_thread_service;
 

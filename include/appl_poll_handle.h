@@ -16,9 +16,7 @@ struct appl_poll_descriptor;
 
 struct appl_poll;
 
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_poll_create(
@@ -29,8 +27,6 @@ appl_poll_create(
     struct appl_poll * * const
         r_poll);
 
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_poll_handle.h */

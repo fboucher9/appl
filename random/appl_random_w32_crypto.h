@@ -13,9 +13,7 @@ enum guard_appl_random_w32_crypto_h
 };
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 class appl_random_w32_crypto;
 

@@ -18,9 +18,7 @@ enum guard_appl_netdevice_std_h
 #define INC_APPL_NETDEVICE_STD_H
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 /* Assert configuration */
 #if ! defined APPL_OS_LINUX

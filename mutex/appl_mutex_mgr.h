@@ -20,9 +20,7 @@ struct appl_mutex_descriptor;
 struct appl_mutex;
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 class appl_mutex_mgr;
 

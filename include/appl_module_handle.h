@@ -22,9 +22,7 @@ struct appl_object;
 /* Predefine */
 struct appl_packet;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 struct appl_object *
 appl_module_parent(
@@ -240,8 +238,6 @@ appl_null_module_parent(
     struct appl_null_module * const
         p_null_module);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_module_handle.h */

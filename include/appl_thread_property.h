@@ -18,9 +18,7 @@ struct appl_property;
 
 struct appl_thread_property;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_thread_property_create(
@@ -58,8 +56,6 @@ appl_thread_property_get_detach_state(
     unsigned char * const
         r_detach_state);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_thread_property.h */

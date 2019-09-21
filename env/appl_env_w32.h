@@ -18,9 +18,7 @@ enum guard_appl_env_w32_h
 #endif /* #if ! defined APPL_OS_WINDOWS */
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 /* Predefine */
 class appl_refcount;

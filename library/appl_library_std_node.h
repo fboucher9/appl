@@ -24,9 +24,7 @@ struct appl_library;
 #endif /* #if ! defined APPL_OS_LINUX */
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 class appl_library_std_node;
 

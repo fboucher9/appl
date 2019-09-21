@@ -6,6 +6,8 @@
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <appl_crc_test.h>
 
 #include <appl_crc16.h>

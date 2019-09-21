@@ -19,9 +19,7 @@ struct appl_object;
 /* Predefine */
 struct appl_allocator;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 struct appl_object *
     appl_allocator_parent(
@@ -46,9 +44,7 @@ enum appl_status
         void * const
             p_buf);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* C++ Wrappers to avoid casts */
 #if defined __cplusplus

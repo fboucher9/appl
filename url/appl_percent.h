@@ -16,9 +16,7 @@ enum guard_appl_percent_h
 /* Predefine */
 struct appl_buf;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 void
     appl_percent_decoder_run(
@@ -74,8 +72,6 @@ void
         struct appl_buf * const
             p_output_iterator);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_percent.h */

@@ -19,9 +19,7 @@ struct appl_socket_property;
 struct appl_poll_descriptor;
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 class appl_socket_mgr;
 

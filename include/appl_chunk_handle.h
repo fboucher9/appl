@@ -69,18 +69,13 @@ Example:
 /* Reverse include guard */
 enum guard_appl_chunk_handle_h
 {
-    inc_appl_chunk_handle_h =
+    inc_appl_chunk_handle_h = 1
         /* Header file dependency */
-        inc_appl_status_h
+        + inc_appl_status_h
+        + inc_appl_predefines_h
 };
 
-struct appl_context;
-
-struct appl_chunk;
-
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_chunk_create(
@@ -124,8 +119,6 @@ appl_chunk_reset(
     struct appl_chunk * const
         p_chunk);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_chunk_handle.h */

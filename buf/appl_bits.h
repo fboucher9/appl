@@ -10,13 +10,12 @@ enum guard_appl_bits_h
     inc_appl_bits_h = 1
         /* Header file dependencies */
         + inc_appl_object_h
+        + inc_appl_predefines_h
 
 }; /* enum guard_appl_bits_h */
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 //
 //

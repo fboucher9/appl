@@ -46,9 +46,7 @@ enum guard_appl_coverage_h
 #error "include only if coverage is enabled"
 #endif /* #if ! defined APPL_HAVE_COVERAGE */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 void
     appl_coverage_start(
@@ -61,8 +59,6 @@ unsigned long int
 char
     appl_coverage_check(void);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_coverage.h */

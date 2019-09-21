@@ -11,6 +11,7 @@ enum guard_appl_str_bits_h
         /* Header file dependencies */
         + inc_appl_status_h
         + inc_appl_buf_h
+        + inc_appl_predefines_h
         /* ... */
 
 }; /* enum guard_appl_str_bits_h */
@@ -25,9 +26,7 @@ struct appl_str_bits_descriptor
 
 }; /* struct appl_str_bits_descriptor */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
     appl_str_bits_create(
@@ -57,8 +56,6 @@ enum appl_status
         struct appl_buf * const
             r_buf_unused);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_str_bits.h */

@@ -15,9 +15,7 @@ enum guard_appl_thread_mgr_h
         inc_appl_object_h
 };
 
-#if !defined(__cplusplus)
-#error use c++ compiler
-#endif /* #if !defined(__cplusplus) */
+#include <appl_assert_cplusplus.h>
 
 struct appl_context;
 

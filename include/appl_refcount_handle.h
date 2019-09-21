@@ -14,9 +14,7 @@ struct appl_object;
 /* Predefine */
 struct appl_refcount;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 struct appl_object *
 appl_refcount_parent(
@@ -38,8 +36,6 @@ appl_refcount_release(
     struct appl_refcount * const
         p_refcount);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_refcount_handle.h */

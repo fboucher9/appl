@@ -35,9 +35,7 @@ struct appl_queue_descriptor
 
 }; /* struct appl_queue_descriptor */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
     appl_queue_create(
@@ -86,8 +84,6 @@ enum appl_status
         struct appl_queue * const
             p_queue);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_queue_handle.h */

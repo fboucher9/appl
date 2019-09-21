@@ -69,9 +69,7 @@ struct appl_placement_descriptor
 }; /* struct appl_placement_descriptor */
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 //
 //

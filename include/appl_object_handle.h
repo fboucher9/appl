@@ -16,17 +16,13 @@ struct appl_context;
 
 struct appl_object;
 
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_begin.h>
 
 struct appl_context *
 appl_object_get_context(
     struct appl_object const * const
         p_object);
 
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_object_handle.h */

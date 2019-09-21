@@ -9,9 +9,7 @@
 #error include only from debug build
 #endif /* #if ! defined APPL_DEBUG */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 void
     appl_debug_test_1(
@@ -23,8 +21,6 @@ void
         struct appl_context * const
             p_context);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_debug_test.h */

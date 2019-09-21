@@ -4,9 +4,7 @@
 
 */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 unsigned long int
     appl_mem_zero(
@@ -35,8 +33,6 @@ unsigned long int
         unsigned long int const
             i_src_len);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_mem.h */

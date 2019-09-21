@@ -20,9 +20,7 @@ struct appl_address_property;
 
 struct appl_address_descriptor;
 
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_address_create(
@@ -101,8 +99,6 @@ appl_address_resolve(
     void * const
         p_callback_context);
 
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_address_handle.h */

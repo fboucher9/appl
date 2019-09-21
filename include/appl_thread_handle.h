@@ -20,9 +20,7 @@ struct appl_thread_descriptor;
 
 struct appl_object;
 
-#if defined(__cplusplus)
-extern "C" {
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_thread_create(
@@ -53,8 +51,6 @@ appl_thread_interrupt(
     struct appl_thread * const
         p_thread);
 
-#if defined(__cplusplus)
-} /* extern "C" */
-#endif /* #if defined(__cplusplus) */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_thread_handle.h */

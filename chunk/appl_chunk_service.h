@@ -10,9 +10,8 @@ enum guard_appl_chunk_service_h
 {
     inc_appl_chunk_service_h = 1
         + inc_appl_status_h
+        + inc_appl_predefines_h
 };
-
-struct appl_context;
 
 struct appl_chunk;
 

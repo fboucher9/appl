@@ -43,9 +43,7 @@ enum appl_file_mode
 
 struct appl_file_descriptor;
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_file_descriptor_create(
@@ -82,8 +80,6 @@ appl_file_descriptor_set_name(
     unsigned char const * const
         p_name_max);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_file_descriptor.h */

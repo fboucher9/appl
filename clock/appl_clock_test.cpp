@@ -18,9 +18,6 @@
 
 #include <clock/appl_clock.h>
 
-#if defined __cplusplus
-#endif /* #if defined __cplusplus */
-
 #if defined APPL_HAVE_COVERAGE
 #include <appl_coverage.h>
 #endif /* #if defined APPL_HAVE_COVERAGE */
@@ -416,7 +413,6 @@ void
 
     appl_print0("\n^^^ appl_clock_test_1 ^^^\n");
 
-#if defined __cplusplus
     // base class
     {
         enum appl_status
@@ -454,7 +450,6 @@ void
                 p_clock);
         }
     }
-#endif /* #if defined __cplusplus */
 
     /* Coverage of appl_clock_main() */
     {

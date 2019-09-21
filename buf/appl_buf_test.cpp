@@ -4,6 +4,8 @@
 
 */
 
+#include <appl_predefines.h>
+
 #include <buf/appl_buf_test.h>
 
 #include <appl_buf.h>

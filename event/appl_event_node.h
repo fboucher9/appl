@@ -18,9 +18,7 @@ enum guard_appl_event_node_h
 struct appl_event;
 
 /* Assert compiler */
-#if ! defined __cplusplus
-#error use c++ compiler
-#endif /* #if ! defined __cplusplus */
+#include <appl_assert_cplusplus.h>
 
 //
 //

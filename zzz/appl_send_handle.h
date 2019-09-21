@@ -68,9 +68,7 @@ struct appl_send_packet
 
 }; /* struct appl_send_packet */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
 appl_send_socket_create(
@@ -126,8 +124,6 @@ Notes:
 
 */
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_send_handle.h */

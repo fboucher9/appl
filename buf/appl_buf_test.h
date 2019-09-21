@@ -8,25 +8,19 @@
 enum guard_appl_buf_test_h
 {
     inc_appl_buf_test_h = 1
+        + inc_appl_predefines_h
 };
 
 /* Included. */
 #define INC_APPL_BUF_TEST_H
 
-/* Predefine */
-struct appl_context;
-
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 void
     appl_buf_test_1(
         struct appl_context * const
             p_context);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_buf_test.h */

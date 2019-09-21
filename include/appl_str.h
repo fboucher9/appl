@@ -4,9 +4,7 @@
 
 */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 unsigned long int
     appl_str_len(
@@ -53,8 +51,6 @@ int
         unsigned char const * const
             p_right_max);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_str.h */

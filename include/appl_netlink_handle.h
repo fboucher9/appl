@@ -56,9 +56,7 @@ struct appl_netlink_descriptor
 
 }; /* struct appl_netlink_descriptor */
 
-#if defined __cplusplus
-extern "C" {
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_begin.h>
 
 enum appl_status
     appl_netlink_create(
@@ -74,8 +72,6 @@ enum appl_status
         struct appl_netlink * const
             p_netlink);
 
-#if defined __cplusplus
-} /* extern "C" */
-#endif /* #if defined __cplusplus */
+#include <appl_extern_c_end.h>
 
 /* end-of-file: appl_netlink_handle.h */

@@ -6,6 +6,8 @@
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <buf/appl_bits_service.h>
 
 #include <appl_types.h>
