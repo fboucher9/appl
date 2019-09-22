@@ -6,6 +6,8 @@
 
 #include <appl_status.h>
 
+#include <appl_buf.h>
+
 #include <buf/appl_bytes_descriptor.h>
 
 #include <appl_unused.h>
@@ -51,15 +53,18 @@ void
         struct appl_bytes_descriptor * const
             p_descriptor)
 {
-    p_descriptor->p_consume =
+    p_descriptor->e_type =
+        appl_bytes_type_custom;
+
+    p_descriptor->u.o_custom_descriptor.p_consume =
         &(
             appl_bytes_descriptor_service::s_consume);
 
-    p_descriptor->p_produce =
+    p_descriptor->u.o_custom_descriptor.p_produce =
         &(
             appl_bytes_descriptor_service::s_produce);
 
-    p_descriptor->p_void =
+    p_descriptor->u.o_custom_descriptor.p_void =
         0;
 
 } // s_init()

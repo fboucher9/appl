@@ -12,7 +12,23 @@
 
 #include <buf/appl_bytes_service.h>
 
+#include <appl_object.h>
+
+#include <appl_buf.h>
+
+#include <buf/appl_bytes_descriptor.h>
+
+#include <buf/appl_bytes.h>
+
+#include <buf/appl_bytes_base.h>
+
+#include <buf/appl_bytes_custom.h>
+
+#include <buf/appl_bytes_mem.h>
+
 #include <appl_unused.h>
+
+#include <appl_heap_handle.h>
 
 //
 //
@@ -26,13 +42,65 @@ enum appl_status
         struct appl_bytes * * const
             r_instance)
 {
-    appl_unused(
-        p_context,
-        p_descriptor,
-        r_instance);
+    enum appl_status
+        e_status;
+
+    if (
+        appl_bytes_type_custom
+        == p_descriptor->e_type)
+    {
+        class appl_bytes_custom *
+            p_bytes_custom;
+
+        e_status =
+            appl_new(
+                p_context,
+                &(
+                    p_descriptor->u.o_custom_descriptor),
+                &(
+                    p_bytes_custom));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            *(
+                r_instance) =
+                p_bytes_custom;
+        }
+    }
+    else if (
+        appl_bytes_type_mem
+        == p_descriptor->e_type)
+    {
+        class appl_bytes_mem *
+            p_bytes_mem;
+
+        e_status =
+            appl_new(
+                p_context,
+                &(
+                    p_descriptor->u.o_mem_descriptor),
+                &(
+                    p_bytes_mem));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            *(
+                r_instance) =
+                p_bytes_mem;
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_create()
 
@@ -44,11 +112,20 @@ enum appl_status
         struct appl_bytes * const
             p_bytes)
 {
-    appl_unused(
-        p_bytes);
+    enum appl_status
+        e_status;
+
+    struct appl_context * const
+        p_context =
+        p_bytes->get_context();
+
+    e_status =
+        appl_delete(
+            p_context,
+            p_bytes);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_destroy()
 

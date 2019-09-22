@@ -50,6 +50,10 @@ appl_base-deps := \
     buf/appl_bytes_descriptor.cpp \
     buf/appl_bytes_handle.cpp \
     buf/appl_bytes_service.cpp \
+    buf/appl_bytes.cpp \
+    buf/appl_bytes_base.cpp \
+    buf/appl_bytes_custom.cpp \
+    buf/appl_bytes_mem.cpp \
     callstack/appl_callstack_handle.cpp \
     callstack/appl_callstack_service.cpp \
     chunk/appl_chunk_handle.cpp \
