@@ -138,4 +138,10 @@ struct appl_poll;
 /* Predefines */
 struct appl_poll_descriptor;
 
+/* Predefines */
+struct appl_bits;
+
+/* Predefines */
+struct appl_bits_descriptor;
+
 /* end-of-file: appl_predefines.h */

@@ -45,8 +45,8 @@ appl_base-deps := \
     buf/appl_bits_service.cpp \
     buf/appl_bits.cpp \
     buf/appl_bits_base.cpp \
-    buf/appl_bits_std.cpp \
-    buf/appl_str_bits.cpp \
+    buf/appl_bits_custom.cpp \
+    buf/appl_bits_mem.cpp \
     buf/appl_bytes_descriptor.cpp \
     buf/appl_bytes_handle.cpp \
     buf/appl_bytes_service.cpp \

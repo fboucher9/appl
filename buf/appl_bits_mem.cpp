@@ -10,7 +10,7 @@
 
 #include <appl_buf.h>
 
-#include <buf/appl_str_bits.h>
+#include <buf/appl_bits_mem.h>
 
 #include <buf/appl_bits_handle.h>
 
@@ -22,6 +22,8 @@
 
 #include <buf/appl_bits_base.h>
 
+#include <buf/appl_bits_descriptor.h>
+
 #include <appl_heap_handle.h>
 
 #include <appl_unused.h>
@@ -29,20 +31,20 @@
 //
 //
 //
-struct appl_str_bits : public appl_bits_base
+struct appl_bits_mem : public appl_bits_base
 {
     public:
 
-        appl_str_bits(
+        appl_bits_mem(
             struct appl_context * const
                 p_context);
 
         virtual
-        ~appl_str_bits();
+        ~appl_bits_mem();
 
         enum appl_status
             f_init(
-                struct appl_str_bits_descriptor const * const
+                struct appl_bits_mem_descriptor const * const
                     p_descriptor);
 
         virtual
@@ -67,12 +69,12 @@ struct appl_str_bits : public appl_bits_base
         struct appl_buf
             m_buf_iterator;
 
-        appl_str_bits(
-            struct appl_str_bits const & r);
+        appl_bits_mem(
+            struct appl_bits_mem const & r);
 
-        struct appl_str_bits &
+        struct appl_bits_mem &
             operator =(
-                struct appl_str_bits const & r);
+                struct appl_bits_mem const & r);
 
         virtual
         enum appl_status
@@ -86,12 +88,12 @@ struct appl_str_bits : public appl_bits_base
                 unsigned char const
                     i_value);
 
-}; // struct appl_str_bits
+}; // struct appl_bits_mem
 
 //
 //
 //
-appl_str_bits::appl_str_bits(
+appl_bits_mem::appl_bits_mem(
     struct appl_context * const
         p_context) :
     appl_bits_base(
@@ -104,7 +106,7 @@ appl_str_bits::appl_str_bits(
 //
 //
 //
-appl_str_bits::~appl_str_bits()
+appl_bits_mem::~appl_bits_mem()
 {
 }
 
@@ -112,8 +114,8 @@ appl_str_bits::~appl_str_bits()
 //
 //
 enum appl_status
-appl_str_bits::f_init(
-    struct appl_str_bits_descriptor const * const
+appl_bits_mem::f_init(
+    struct appl_bits_mem_descriptor const * const
         p_descriptor)
 {
     enum appl_status
@@ -137,11 +139,11 @@ appl_str_bits::f_init(
 //
 //
 appl_size_t
-    appl_str_bits::v_cleanup(void)
+    appl_bits_mem::v_cleanup(void)
 {
     return
         sizeof(
-            struct appl_str_bits);
+            struct appl_bits_mem);
 
 } // v_cleanup()
 
@@ -149,7 +151,7 @@ appl_size_t
 //
 //
 enum appl_status
-    appl_str_bits::v_query(
+    appl_bits_mem::v_query(
         struct appl_buf * const
             r_buf_used,
         struct appl_buf * const
@@ -181,21 +183,21 @@ enum appl_status
 //
 //
 //
-union appl_str_bits_ptr
+union appl_bits_mem_ptr
 {
     void *
         p_callback_context;
 
-    struct appl_str_bits *
+    struct appl_bits_mem *
         p_this;
 
-}; // union appl_str_bits_ptr
+}; // union appl_bits_mem_ptr
 
 //
 //
 //
 enum appl_status
-    appl_str_bits::v_consume(
+    appl_bits_mem::v_consume(
         unsigned char * const
             r_value)
 {
@@ -231,7 +233,7 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_str_bits::v_produce(
+    appl_bits_mem::v_produce(
         unsigned char const
             i_value)
 {
@@ -265,7 +267,7 @@ enum appl_status
 //
 //
 //
-class appl_str_bits_service
+class appl_bits_mem_service
 {
     public:
 
@@ -274,59 +276,59 @@ class appl_str_bits_service
             s_create(
                 struct appl_context * const
                     p_context,
-                struct appl_str_bits_descriptor const * const
+                struct appl_bits_mem_descriptor const * const
                     p_descriptor,
-                struct appl_str_bits * * const
+                struct appl_bits_mem * * const
                     r_instance);
 
         static
         struct appl_bits *
             s_parent(
-                struct appl_str_bits * const
+                struct appl_bits_mem * const
                     p_instance);
 
         static
         struct appl_bits const *
             s_const_parent(
-                struct appl_str_bits const * const
+                struct appl_bits_mem const * const
                     p_instance);
 
         static
         enum appl_status
             s_query(
-                struct appl_str_bits const * const
+                struct appl_bits_mem const * const
                     p_instance,
                 struct appl_buf * const
                     r_buf_used,
                 struct appl_buf * const
                     r_buf_unused);
 
-}; // class appl_str_bits_service
+}; // class appl_bits_mem_service
 
 //
 //
 //
 enum appl_status
-    appl_str_bits_service::s_create(
+    appl_bits_mem_service::s_create(
         struct appl_context * const
             p_context,
-        struct appl_str_bits_descriptor const * const
+        struct appl_bits_mem_descriptor const * const
             p_descriptor,
-        struct appl_str_bits * * const
+        struct appl_bits_mem * * const
             r_instance)
 {
     enum appl_status
         e_status;
 
-    struct appl_str_bits *
-        p_str_bits;
+    struct appl_bits_mem *
+        p_bits_mem;
 
     e_status =
         appl_new(
             p_context,
             p_descriptor,
             &(
-                p_str_bits));
+                p_bits_mem));
 
     if (
         appl_status_ok
@@ -334,7 +336,7 @@ enum appl_status
     {
         *(
             r_instance) =
-            p_str_bits;
+            p_bits_mem;
     }
 
     return
@@ -346,8 +348,8 @@ enum appl_status
 //
 //
 struct appl_bits *
-    appl_str_bits_service::s_parent(
-        struct appl_str_bits * const
+    appl_bits_mem_service::s_parent(
+        struct appl_bits_mem * const
             p_instance)
 {
     return
@@ -359,8 +361,8 @@ struct appl_bits *
 //
 //
 struct appl_bits const *
-    appl_str_bits_service::s_const_parent(
-        struct appl_str_bits const * const
+    appl_bits_mem_service::s_const_parent(
+        struct appl_bits_mem const * const
             p_instance)
 {
     return
@@ -372,8 +374,8 @@ struct appl_bits const *
 //
 //
 enum appl_status
-    appl_str_bits_service::s_query(
-        struct appl_str_bits const * const
+    appl_bits_mem_service::s_query(
+        struct appl_bits_mem const * const
             p_instance,
         struct appl_buf * const
             r_buf_used,
@@ -397,19 +399,19 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_str_bits_create(
+    appl_bits_mem_create(
         struct appl_context * const
             p_context,
-        struct appl_str_bits_descriptor const * const
+        struct appl_bits_mem_descriptor const * const
             p_descriptor,
-        struct appl_str_bits * * const
+        struct appl_bits_mem * * const
             r_instance)
 {
     enum appl_status
         e_status;
 
     e_status =
-        appl_str_bits_service::s_create(
+        appl_bits_mem_service::s_create(
             p_context,
             p_descriptor,
             r_instance);
@@ -417,42 +419,42 @@ enum appl_status
     return
         e_status;
 
-} // appl_str_bits_create()
+} // appl_bits_mem_create()
 
 //
 //
 //
 struct appl_bits *
-    appl_str_bits_parent(
-        struct appl_str_bits * const
+    appl_bits_mem_parent(
+        struct appl_bits_mem * const
             p_instance)
 {
     return
-        appl_str_bits_service::s_parent(
+        appl_bits_mem_service::s_parent(
             p_instance);
 
-} // appl_str_bits_parent()
+} // appl_bits_mem_parent()
 
 //
 //
 //
 struct appl_bits const *
-    appl_str_bits_const_parent(
-        struct appl_str_bits const * const
+    appl_bits_mem_const_parent(
+        struct appl_bits_mem const * const
             p_instance)
 {
     return
-        appl_str_bits_service::s_const_parent(
+        appl_bits_mem_service::s_const_parent(
             p_instance);
 
-} // appl_str_bits_const_parent()
+} // appl_bits_mem_const_parent()
 
 //
 //
 //
 enum appl_status
-    appl_str_bits_query(
-        struct appl_str_bits const * const
+    appl_bits_mem_query(
+        struct appl_bits_mem const * const
             p_instance,
         struct appl_buf * const
             r_buf_used,
@@ -463,7 +465,7 @@ enum appl_status
         e_status;
 
     e_status =
-        appl_str_bits_service::s_query(
+        appl_bits_mem_service::s_query(
             p_instance,
             r_buf_used,
             r_buf_unused);
@@ -471,6 +473,6 @@ enum appl_status
     return
         e_status;
 
-} // appl_str_bits_query()
+} // appl_bits_mem_query()
 
-/* end-of-file: appl_str_bits.cpp */
+/* end-of-file: appl_bits_mem.cpp */

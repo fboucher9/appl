@@ -5,51 +5,41 @@
 */
 
 /* Reverse include guard */
-enum guard_appl_str_bits_h
+enum guard_appl_bits_mem_h
 {
-    inc_appl_str_bits_h = 1
+    inc_appl_bits_mem_h = 1
         /* Header file dependencies */
         + inc_appl_status_h
         + inc_appl_buf_h
         + inc_appl_predefines_h
         /* ... */
 
-}; /* enum guard_appl_str_bits_h */
-
-/*
-
-*/
-struct appl_str_bits_descriptor
-{
-    struct appl_buf
-        o_buf;
-
-}; /* struct appl_str_bits_descriptor */
+}; /* enum guard_appl_bits_mem_h */
 
 #include <appl_extern_c_begin.h>
 
 enum appl_status
-    appl_str_bits_create(
+    appl_bits_mem_create(
         struct appl_context * const
             p_context,
-        struct appl_str_bits_descriptor const * const
+        struct appl_bits_mem_descriptor const * const
             p_descriptor,
-        struct appl_str_bits * * const
+        struct appl_bits_mem * * const
             r_instance);
 
 struct appl_bits *
-    appl_str_bits_parent(
-        struct appl_str_bits * const
+    appl_bits_mem_parent(
+        struct appl_bits_mem * const
             p_instance);
 
 struct appl_bits const *
-    appl_str_bits_const_parent(
-        struct appl_str_bits const * const
+    appl_bits_mem_const_parent(
+        struct appl_bits_mem const * const
             p_instance);
 
 enum appl_status
-    appl_str_bits_query(
-        struct appl_str_bits const * const
+    appl_bits_mem_query(
+        struct appl_bits_mem const * const
             p_instance,
         struct appl_buf * const
             r_buf_used,
@@ -58,4 +48,4 @@ enum appl_status
 
 #include <appl_extern_c_end.h>
 
-/* end-of-file: appl_str_bits.h */
+/* end-of-file: appl_bits_mem.h */

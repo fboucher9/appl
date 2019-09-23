@@ -14,11 +14,13 @@
 
 #include <buf/appl_bits.h>
 
-#include <buf/appl_bits_handle.h>
+#include <appl_buf.h>
+
+#include <buf/appl_bits_descriptor.h>
 
 #include <buf/appl_bits_base.h>
 
-#include <buf/appl_bits_std.h>
+#include <buf/appl_bits_custom.h>
 
 #include <appl_unused.h>
 
@@ -27,7 +29,7 @@
 //
 //
 //
-appl_bits_std::appl_bits_std(
+appl_bits_custom::appl_bits_custom(
     struct appl_context * const
         p_context) :
     appl_bits_base(
@@ -39,7 +41,7 @@ appl_bits_std::appl_bits_std(
 //
 //
 //
-appl_bits_std::~appl_bits_std()
+appl_bits_custom::~appl_bits_custom()
 {
 }
 
@@ -47,8 +49,8 @@ appl_bits_std::~appl_bits_std()
 //
 //
 enum appl_status
-appl_bits_std::f_init(
-    struct appl_bits_descriptor const * const
+appl_bits_custom::f_init(
+    struct appl_bits_custom_descriptor const * const
         p_descriptor)
 {
     enum appl_status
@@ -70,10 +72,10 @@ appl_bits_std::f_init(
 //
 //
 appl_size_t
-appl_bits_std::v_cleanup(void)
+appl_bits_custom::v_cleanup(void)
 {
     return
-        sizeof(class appl_bits_std);
+        sizeof(class appl_bits_custom);
 
 } // v_cleanup()
 
@@ -81,7 +83,7 @@ appl_bits_std::v_cleanup(void)
 //
 //
 enum appl_status
-appl_bits_std::v_consume(
+appl_bits_custom::v_consume(
     unsigned char * const
         r_value)
 {
@@ -103,7 +105,7 @@ appl_bits_std::v_consume(
 //
 //
 enum appl_status
-appl_bits_std::v_produce(
+appl_bits_custom::v_produce(
     unsigned char const
         i_value)
 {
@@ -120,4 +122,4 @@ appl_bits_std::v_produce(
 
 } // v_write()
 
-/* end-of-file: appl_bits_std.cpp */
+/* end-of-file: appl_bits_custom.cpp */

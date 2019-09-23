@@ -5,13 +5,13 @@
 */
 
 /* Reverse include guard */
-enum guard_appl_bits_std_h
+enum guard_appl_bits_custom_h
 {
-    inc_appl_bits_std_h = 1
+    inc_appl_bits_custom_h = 1
         /* Header file dependencies */
         + inc_appl_bits_base_h
-        + inc_appl_bits_handle_h
-}; /* enum guard_appl_bits_std_h */
+        + inc_appl_bits_descriptor_h
+}; /* enum guard_appl_bits_custom_h */
 
 /* Assert compiler */
 #include <appl_assert_cplusplus.h>
@@ -19,20 +19,20 @@ enum guard_appl_bits_std_h
 //
 //
 //
-class appl_bits_std : public appl_bits_base
+class appl_bits_custom : public appl_bits_base
 {
     public:
 
-        appl_bits_std(
+        appl_bits_custom(
             struct appl_context * const
                 p_context);
 
         virtual
-        ~appl_bits_std();
+        ~appl_bits_custom();
 
         enum appl_status
             f_init(
-                struct appl_bits_descriptor const * const
+                struct appl_bits_custom_descriptor const * const
                     p_descriptor);
 
         virtual
@@ -45,7 +45,7 @@ class appl_bits_std : public appl_bits_base
 
         /* -- */
 
-        struct appl_bits_descriptor
+        struct appl_bits_custom_descriptor
             m_descriptor;
 
         /* -- */
@@ -62,6 +62,6 @@ class appl_bits_std : public appl_bits_base
                 unsigned char const
                     i_value);
 
-}; // class appl_bits_std
+}; // class appl_bits_custom
 
-/* end-of-file: appl_bits_std.h */
+/* end-of-file: appl_bits_custom.h */

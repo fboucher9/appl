@@ -21,43 +21,6 @@ enum guard_appl_bits_handle_h
         /* ... */
 }; /* enum guard_appl_bits_handle_h */
 
-typedef
-enum appl_status
-(appl_bits_consume)(
-    void * const
-        p_callback_context,
-    unsigned char * const
-        r_value);
-
-typedef
-enum appl_status
-(appl_bits_produce)(
-    void * const
-        p_callback_context,
-    unsigned char const
-        i_value);
-
-/*
-
-*/
-struct appl_bits_descriptor
-{
-    appl_bits_consume *
-        p_callback_consume;
-
-    appl_bits_produce *
-        p_callback_produce;
-
-    /* -- */
-
-    void *
-        p_callback_context;
-
-    void *
-        pv_padding[1u];
-
-}; /* struct appl_bits_descriptor */
-
 #include <appl_extern_c_begin.h>
 
 enum appl_status
@@ -91,6 +54,13 @@ enum appl_status
             i_count,
         unsigned long int const
             i_value);
+
+enum appl_status
+    appl_bits_query(
+        struct appl_bits * const
+            p_bits,
+        unsigned long int * const
+            r_count);
 
 #include <appl_extern_c_end.h>
 

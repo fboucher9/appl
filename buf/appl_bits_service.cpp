@@ -18,9 +18,15 @@
 
 #include <buf/appl_bits_handle.h>
 
+#include <appl_buf.h>
+
+#include <buf/appl_bits_descriptor.h>
+
 #include <buf/appl_bits_base.h>
 
-#include <buf/appl_bits_std.h>
+#include <buf/appl_bits_custom.h>
+
+#include <buf/appl_bits_mem.h>
 
 #include <appl_heap_handle.h>
 
@@ -39,24 +45,61 @@ enum appl_status
     enum appl_status
         e_status;
 
-    class appl_bits_std *
-        p_bits_std;
-
-    e_status =
-        appl_new(
-            p_context,
-            p_descriptor,
-            &(
-                p_bits_std));
-
     if (
-        appl_status_ok
-        == e_status)
+        appl_bits_type_custom
+        == p_descriptor->e_type)
     {
-        *(
-            r_bits) =
-            p_bits_std;
+        class appl_bits_custom *
+            p_bits_custom;
+
+        e_status =
+            appl_new(
+                p_context,
+                &(
+                    p_descriptor->u.o_custom_descriptor),
+                &(
+                    p_bits_custom));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            *(
+                r_bits) =
+                p_bits_custom;
+        }
     }
+    else if (
+        appl_bits_type_mem
+        == p_descriptor->e_type)
+    {
+        struct appl_bits_mem *
+            p_bits_mem;
+
+        e_status =
+            appl_bits_mem_create(
+                p_context,
+                &(
+                    p_descriptor->u.o_mem_descriptor),
+                &(
+                    p_bits_mem));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            *(
+                r_bits) =
+                appl_bits_mem_parent(
+                    p_bits_mem);
+        }
+    }
+    else
+    {
+        e_status =
+            appl_status_fail;
+    }
+
 
     return
         e_status;
