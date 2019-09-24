@@ -139,12 +139,15 @@ enum appl_status
         struct appl_buf const * const
             p_buf)
 {
-    appl_unused(
-        p_bytes,
-        p_buf);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_bytes->v_write_raw(
+            p_buf);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_write_raw()
 
@@ -160,13 +163,16 @@ enum appl_status
         appl_ull_t const
             i_value)
 {
-    appl_unused(
-        p_bytes,
-        i_count,
-        i_value);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_bytes->v_write_int(
+            i_count,
+            i_value);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_write_int()
 
@@ -180,12 +186,15 @@ enum appl_status
         unsigned char const
             i_value)
 {
-    appl_unused(
-        p_bytes,
-        i_value);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_bytes->v_write_int8(
+            i_value);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_write_int8()
 
@@ -199,12 +208,15 @@ enum appl_status
         unsigned short int const
             i_value)
 {
-    appl_unused(
-        p_bytes,
-        i_value);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_bytes->v_write_int16(
+            i_value);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_write_int16()
 
@@ -218,12 +230,15 @@ enum appl_status
         unsigned long int const
             i_value)
 {
-    appl_unused(
-        p_bytes,
-        i_value);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_bytes->v_write_int24(
+            i_value);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_write_int24()
 
@@ -237,12 +252,15 @@ enum appl_status
         unsigned long int const
             i_value)
 {
-    appl_unused(
-        p_bytes,
-        i_value);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_bytes->v_write_int32(
+            i_value);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_write_int32()
 
@@ -256,12 +274,15 @@ enum appl_status
         appl_ull_t const
             i_value)
 {
-    appl_unused(
-        p_bytes,
-        i_value);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_bytes->v_write_int64(
+            i_value);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_write_int64()
 
@@ -275,12 +296,15 @@ enum appl_status
         struct appl_buf const * const
             p_buf)
 {
-    appl_unused(
-        p_bytes,
-        p_buf);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_bytes->v_read_raw(
+            p_buf);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_read_raw()
 
@@ -296,13 +320,16 @@ enum appl_status
         appl_ull_t * const
             r_value)
 {
-    appl_unused(
-        p_bytes,
-        i_count,
-        r_value);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_bytes->v_read_int(
+            i_count,
+            r_value);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_read_int()
 
@@ -316,12 +343,15 @@ enum appl_status
         unsigned char * const
             r_value)
 {
-    appl_unused(
-        p_bytes,
-        r_value);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_bytes->v_read_int8(
+            r_value);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_read_int8()
 
@@ -335,12 +365,15 @@ enum appl_status
         unsigned short int * const
             r_value)
 {
-    appl_unused(
-        p_bytes,
-        r_value);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_bytes->v_read_int16(
+            r_value);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_read_int16()
 
@@ -354,12 +387,15 @@ enum appl_status
         unsigned long int * const
             r_value)
 {
-    appl_unused(
-        p_bytes,
-        r_value);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_bytes->v_read_int24(
+            r_value);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_read_int24()
 
@@ -373,12 +409,15 @@ enum appl_status
         unsigned long int * const
             r_value)
 {
-    appl_unused(
-        p_bytes,
-        r_value);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_bytes->v_read_int32(
+            r_value);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_read_int32()
 
@@ -392,12 +431,15 @@ enum appl_status
         appl_ull_t * const
             r_value)
 {
-    appl_unused(
-        p_bytes,
-        r_value);
+    enum appl_status
+        e_status;
+
+    e_status =
+        p_bytes->v_read_int64(
+            r_value);
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_read_int64()
 
