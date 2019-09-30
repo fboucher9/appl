@@ -456,6 +456,27 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_context::v_dir_mgr(
+        class appl_dir_mgr * * const
+            r_dir_mgr) const
+{
+    appl_unused(
+        r_dir_mgr);
+
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_dir_mgr not implemented\n");
+#endif /* #if defined APPL_DEBUG */
+
+    return
+        appl_status_not_implemented;
+
+} // v_dir_mgr()
+
+//
+//
+//
 #if defined APPL_DEBUG
 enum appl_status
     appl_context::v_debug(

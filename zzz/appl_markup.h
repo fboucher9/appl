@@ -340,3 +340,205 @@ Markup File Format
 
 
 
+/*
+
+AMF style markup
+
+marker
+    null
+    true
+    false
+    number
+    binary
+    begin-object
+    end-object
+    begin-array
+    end-array
+
+struct appl_markup_special
+{
+    unsigned char marker : 4;
+    unsigned char count : 4;
+};
+
+struct appl_markup_number
+{
+    unsigned char marker;
+    unsigned char number[];
+};
+
+struct appl_markup_binary
+{
+    unsigned char marker;
+    unsigned char length[];
+    unsigned char payload[];
+};
+
+*/
+
+#if 0
+{
+    "class" "ns_config_list"
+    "version" 1234
+    "configs"
+    [
+        {
+            "index" 0
+            "service" "server"
+            "protocol" "rtsp"
+            "port" 1234
+            "tracks"
+            [
+                {
+                    "type" "video"
+                    "index" 0
+                    "port" 1234
+                    "headers"
+                    [
+                        "sps"
+                        "pps"
+                        "pps"
+                        "pps"
+                    ]
+                }
+                {
+                    "type" "audio"
+                    "index" 0
+                    "port" 1234
+                    "headers"
+                    [
+                        "asc"
+                    ]
+                }
+                {
+                    "type" "audio"
+                    "index" 1
+                }
+            ]
+        }
+        {
+            "index" 1
+            "service" "client"
+            "protocol" "rtmp"
+            "tracks"
+            [
+                {
+                }
+                {
+                }
+            ]
+        }
+    ]
+}
+#endif
+
+
+enum appl_markup_special
+{
+    /* Boolean false */
+    appl_markup_special_false = 0,
+
+    /* Boolean true */
+    appl_markup_special_true = 1,
+
+    /* Null value */
+    appl_markup_special_null = 2,
+
+    /* Begin a list of label and value pairs */
+    appl_markup_special_begin_object = 3,
+
+    /* End a list of label and value pairs */
+    appl_markup_special_end_object = 4,
+
+    /* Begin a list of values */
+    appl_markup_special_begin_array = 5,
+
+    /* End a list of values */
+    appl_markup_special_end_array = 6,
+
+    /* 1 byte of extra data */
+    appl_markup_special_direct_1 = 7,
+
+    /* 2 bytes of extra data */
+    appl_markup_special_direct_2 = 8,
+
+    /* 4 bytes of extra data */
+    appl_markup_special_direct_4 = 9,
+
+    /* 1 byte of data length */
+    appl_markup_special_indirect_1 = 10,
+
+    /* 2 bytes of data length */
+    appl_markup_special_indirect_2 = 11,
+
+    /* 4 bytes of data length */
+    appl_markup_special_indirect_4 = 12
+
+};
+
+struct appl_markup_element
+{
+    unsigned char
+        i_marker;
+
+    struct appl_buf
+        o_data;
+
+};
+
+struct appl_markup_decoder_descriptor
+{
+    enum appl_status
+        (* p_consume)(
+            void * const
+                p_consume_void,
+            unsigned char * const
+                r_value);
+
+    void *
+        p_consume_void;
+
+    /* -- */
+
+    enum appl_status
+        (* p_notify)(
+            void * const
+                p_notify_void,
+            struct appl_markup_element const * const
+                p_element);
+
+    void *
+        p_notify_void;
+
+};
+
+enum appl_status
+    appl_markup_decoder_parse_object(
+        struct appl_markup_decoder * const
+            p_instance);
+
+enum appl_status
+    appl_markup_decoder_parse_array(
+        struct appl_markup_decoder * const
+            p_instance);
+
+enum appl_status
+    appl_markup_decoder_parse_label(
+        struct appl_markup_decoder * const
+            p_instance);
+
+enum appl_status
+    appl_markup_decoder_parse_value(
+        struct appl_markup_decoder * const
+            p_instance);
+
+enum appl_status
+    appl_markup_decoder_parse_member(
+        struct appl_markup_decoder * const
+            p_instance);
+
+enum appl_status
+    appl_markup_decoder_parse_element(
+        struct appl_markup_decoder * const
+            p_instance);
+

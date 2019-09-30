@@ -161,6 +161,14 @@ class appl_context_std : public appl_context
 
         /* -- */
 
+        class appl_dir_mgr *
+            m_dir_mgr;
+
+        void *
+            pv_padding[1u];
+
+        /* -- */
+
 #if defined APPL_DEBUG
         class appl_heap_dbg *
             m_heap_dbg;
@@ -245,7 +253,10 @@ class appl_context_std : public appl_context
         bool
             b_init_download_mgr;
 
-#define PADDING (4)
+        bool
+            b_init_dir_mgr;
+
+#define PADDING (5)
 #include <appl_padding.h>
 
         /* -- */
@@ -393,6 +404,12 @@ class appl_context_std : public appl_context
         void
             cleanup_download_mgr(void);
 
+        enum appl_status
+            init_dir_mgr(void);
+
+        void
+            cleanup_dir_mgr(void);
+
         static
         void
             s_bootstrap(void);
@@ -512,6 +529,12 @@ class appl_context_std : public appl_context
             v_download_mgr(
                 class appl_download_mgr * * const
                     r_download_mgr) const;
+
+        virtual
+        enum appl_status
+            v_dir_mgr(
+                class appl_dir_mgr * * const
+                    r_dir_mgr) const;
 
 #if defined APPL_DEBUG
         virtual

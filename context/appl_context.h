@@ -57,6 +57,8 @@ class appl_backtrace;
 
 class appl_download_mgr;
 
+class appl_dir_mgr;
+
 //
 //
 //
@@ -191,6 +193,12 @@ struct appl_context : public appl_object
             v_download_mgr(
                 class appl_download_mgr * * const
                     r_download_mgr) const;
+
+        virtual
+        enum appl_status
+            v_dir_mgr(
+                class appl_dir_mgr * * const
+                    r_dir_mgr) const;
 
 #if defined APPL_DEBUG
         virtual

@@ -12,6 +12,8 @@
 
 #include <appl_buf.h>
 
+#include <appl_list.h>
+
 #include <markup/appl_markup_handle.h>
 
 #include <appl_unused.h>
