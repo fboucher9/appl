@@ -30,6 +30,13 @@ class appl_dir_std_mgr : public appl_dir_mgr
         virtual
         ~appl_dir_std_mgr();
 
+        enum appl_status
+            f_init(void);
+
+        virtual
+        appl_size_t
+            v_cleanup(void);
+
         virtual
         enum appl_status
             v_enumerate(

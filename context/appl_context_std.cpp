@@ -1616,11 +1616,22 @@ enum appl_status
 #endif /* #if defined APPL_DEBUG */
 
 #if defined APPL_OS_LINUX
+    class appl_dir_std_mgr *
+        p_dir_std_mgr;
+
     e_status =
         appl_new(
             m_allocator,
             &(
-                m_dir_mgr));
+                p_dir_std_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        m_dir_mgr =
+            p_dir_std_mgr;
+    }
 #else /* #if defined APPL_OS_LINUX */
     e_status =
         appl_raise_not_implemented();

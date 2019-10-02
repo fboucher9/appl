@@ -107,6 +107,8 @@
 
 #include <buf/appl_bytes_test.h>
 
+#include <dir/appl_dir_test.h>
+
 #include <appl_test.h>
 
 void
@@ -2775,6 +2777,7 @@ static unsigned char const g_ref_bits[] =
     's'
 };
 
+/* bytes */
 static unsigned char const g_ref_bytes[] =
 {
     'b',
@@ -2782,6 +2785,14 @@ static unsigned char const g_ref_bytes[] =
     't',
     'e',
     's'
+};
+
+/* dir */
+static unsigned char const g_ref_dir[] =
+{
+    'd',
+    'i',
+    'r'
 };
 
 struct appl_test_command
@@ -3019,6 +3030,11 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_bytes,
         g_ref_bytes + sizeof(g_ref_bytes),
         & appl_bytes_test_1
+    },
+    {
+        g_ref_dir,
+        g_ref_dir + sizeof(g_ref_dir),
+        & appl_dir_test_1
     }
 };
 

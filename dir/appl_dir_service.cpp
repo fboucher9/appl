@@ -10,7 +10,13 @@
 
 #include <dir/appl_dir_service.h>
 
-#include <appl_unused.h>
+#include <appl_types.h>
+
+#include <appl_object.h>
+
+#include <context/appl_context.h>
+
+#include <dir/appl_dir_mgr.h>
 
 //
 //
@@ -22,12 +28,28 @@ enum appl_status
         struct appl_dir_descriptor const * const
             p_descriptor)
 {
-    appl_unused(
-        p_context,
-        p_descriptor);
+    enum appl_status
+        e_status;
+
+    class appl_dir_mgr *
+        p_dir_mgr;
+
+    e_status =
+        p_context->v_dir_mgr(
+            &(
+                p_dir_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_dir_mgr->v_enumerate(
+                p_descriptor);
+    }
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_enumerate()
 
