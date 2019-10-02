@@ -86,6 +86,7 @@ appl_base-deps := \
     dir/appl_dir_service.cpp \
     dir/appl_dir_mgr.cpp \
     dir/appl_dir_std_mgr.cpp \
+    dir/appl_dir_w32_mgr.cpp \
     socket/appl_download_handle.cpp \
     socket/appl_download_service.cpp \
     socket/appl_download_mgr.cpp \

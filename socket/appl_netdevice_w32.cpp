@@ -6,6 +6,8 @@
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <appl_netdevice_handle.h>
 
 #if defined APPL_OS_WINDOWS

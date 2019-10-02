@@ -192,7 +192,11 @@
 
 #include <dir/appl_dir_std_mgr.h>
 
-#endif /* #if defined APPL_OS_LINUX */
+#elif defined APPL_OS_WINDOWS
+
+#include <dir/appl_dir_w32_mgr.h>
+
+#endif /* #if defined APPL_OS_Xx */
 
 #include <appl_once.h>
 
@@ -1631,6 +1635,23 @@ enum appl_status
     {
         m_dir_mgr =
             p_dir_std_mgr;
+    }
+#elif defined APPL_OS_WINDOWS
+    class appl_dir_w32_mgr *
+        p_dir_w32_mgr;
+
+    e_status =
+        appl_new(
+            m_allocator,
+            &(
+                p_dir_w32_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        m_dir_mgr =
+            p_dir_w32_mgr;
     }
 #else /* #if defined APPL_OS_LINUX */
     e_status =
