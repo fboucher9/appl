@@ -19,6 +19,8 @@ Description:
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <appl_buf0.h>
 
 #include <appl_unused.h>

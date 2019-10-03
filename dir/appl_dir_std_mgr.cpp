@@ -89,8 +89,8 @@ enum appl_status
     enum appl_status
         e_status;
 
-    appl_buf_ptr
-        o_name0;
+    struct appl_buf0 *
+        p_buf0;
 
     e_status =
         appl_buf0_create(
@@ -98,12 +98,19 @@ enum appl_status
             p_descriptor->o_name.o_min.pc_uchar,
             p_descriptor->o_name.o_max.pc_uchar,
             &(
-                o_name0.p_uchar));
+                p_buf0));
 
     if (
         appl_status_ok
         == e_status)
     {
+        appl_buf_ptr
+            o_name0;
+
+        o_name0.pc_uchar =
+            appl_buf0_get(
+                p_buf0);
+
         DIR *
             p_dir_std;
 
@@ -194,8 +201,7 @@ enum appl_status
         }
 
         appl_buf0_destroy(
-            m_context,
-            o_name0.p_uchar);
+            p_buf0);
     }
 
     return

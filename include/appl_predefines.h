@@ -99,6 +99,9 @@ struct appl_address_descriptor;
 /* Predefine appl_buf handle */
 struct appl_buf;
 
+/* Predefine appl_buf0 handle */
+struct appl_buf0;
+
 /* Predefine */
 struct appl_download;
 

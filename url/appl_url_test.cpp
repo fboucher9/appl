@@ -8,6 +8,8 @@
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <appl_url_types.h>
 
 #include <appl_url_handle.h>

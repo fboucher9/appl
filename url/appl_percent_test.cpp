@@ -8,6 +8,8 @@
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <appl_options_handle.h>
 
 #include <url/appl_percent_main.h>

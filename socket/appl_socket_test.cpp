@@ -8,6 +8,8 @@
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <appl_address_family.h>
 
 #include <appl_address_property.h>

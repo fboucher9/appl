@@ -6,6 +6,8 @@
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <appl_main.h>
 
 #include <main/appl_main_service.h>

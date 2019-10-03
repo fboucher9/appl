@@ -10,6 +10,8 @@
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <appl_types.h>
 
 #include <appl_object.h>
@@ -113,7 +115,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    unsigned char *
+    struct appl_buf0 *
         p_name0;
 
     e_status =
@@ -134,7 +136,7 @@ enum appl_status
         p_dlopen_result =
             dlopen(
                 appl_convert::to_char_ptr(
-                    p_name0),
+                    appl_buf0_get(p_name0)),
                 RTLD_LOCAL
                 | RTLD_NOW);
 
@@ -154,7 +156,6 @@ enum appl_status
         }
 
         appl_buf0_destroy(
-            m_context,
             p_name0);
     }
 
@@ -202,7 +203,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    unsigned char *
+    struct appl_buf0 *
         p_name0;
 
     e_status =
@@ -224,7 +225,7 @@ enum appl_status
             dlsym(
                 m_library_handle,
                 appl_convert::to_char_ptr(
-                    p_name0));
+                    appl_buf0_get(p_name0)));
 
         if (
             p_dlsym_result)
@@ -240,7 +241,6 @@ enum appl_status
         }
 
         appl_buf0_destroy(
-            m_context,
             p_name0);
     }
 

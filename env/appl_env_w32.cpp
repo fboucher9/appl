@@ -10,6 +10,8 @@
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <appl_types.h>
 
 #include <appl_object.h>
@@ -122,7 +124,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    unsigned char *
+    struct appl_buf0 *
         p_name0;
 
     e_status =
@@ -143,7 +145,7 @@ enum appl_status
         dwResult =
             GetEnvironmentVariableA(
                 appl_convert::to_char_ptr(
-                    p_name0),
+                    appl_buf0_get(p_name0)),
                 NULL,
                 0);
 
@@ -170,7 +172,7 @@ enum appl_status
                 dwResult2 =
                     GetEnvironmentVariableA(
                         appl_convert::to_char_ptr(
-                            p_name0),
+                            appl_buf0_get(p_name0)),
                         appl_convert::to_char_ptr(
                             p_value0),
                         dwResult);
@@ -220,7 +222,6 @@ enum appl_status
         }
 
         appl_buf0_destroy(
-            m_context,
             p_name0);
     }
     else
@@ -287,7 +288,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    unsigned char *
+    struct appl_buf0 *
         p_name0;
 
     e_status =
@@ -302,7 +303,7 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
-        unsigned char *
+        struct appl_buf0 *
             p_value0;
 
         e_status =
@@ -323,9 +324,9 @@ enum appl_status
             bResult =
                 SetEnvironmentVariableA(
                     appl_convert::to_char_ptr(
-                        p_name0),
+                        appl_buf0_get(p_name0)),
                     appl_convert::to_char_ptr(
-                        p_value0));
+                        appl_buf0_get(p_value0)));
 
             if (
                 bResult)
@@ -340,12 +341,10 @@ enum appl_status
             }
 
             appl_buf0_destroy(
-                m_context,
                 p_value0);
         }
 
         appl_buf0_destroy(
-            m_context,
             p_name0);
     }
 

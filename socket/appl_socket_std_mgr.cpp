@@ -466,6 +466,9 @@ enum appl_status
     union appl_buf_ptr
         o_name_ptr;
 
+    struct appl_buf0 *
+        p_name0;
+
     if (
         APPL_ADDRESS_FLAG_NAME & p_address_descriptor->i_flags)
     {
@@ -475,7 +478,16 @@ enum appl_status
                 p_address_descriptor->p_name_min,
                 p_address_descriptor->p_name_max,
                 &(
-                    o_name_ptr.p_uchar));
+                    p_name0));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            o_name_ptr.pc_uchar =
+                appl_buf0_get(
+                    p_name0);
+        }
     }
     else
     {
@@ -768,13 +780,12 @@ enum appl_status
         }
 
         if (
-            o_name_ptr.p_uchar)
+            p_name0)
         {
             appl_buf0_destroy(
-                m_context,
-                o_name_ptr.p_uchar);
+                p_name0);
 
-            o_name_ptr.p_uchar =
+            p_name0 =
                 0;
         }
     }

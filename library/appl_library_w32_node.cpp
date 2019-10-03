@@ -10,6 +10,8 @@
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <appl_types.h>
 
 #include <appl_object.h>
@@ -112,7 +114,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    unsigned char *
+    struct appl_buf0 *
         p_name0;
 
     e_status =
@@ -130,7 +132,7 @@ enum appl_status
         m_library_handle =
             LoadLibraryA(
                 appl_convert::to_char_ptr(
-                    p_name0));
+                    appl_buf0_get(p_name0)));
 
         if (
             m_library_handle)
@@ -143,7 +145,6 @@ enum appl_status
         }
 
         appl_buf0_destroy(
-            m_context,
             p_name0);
     }
 
@@ -178,7 +179,7 @@ enum appl_status
     enum appl_status
         e_status;
 
-    unsigned char *
+    struct appl_buf0 *
         p_symbol_name0;
 
     e_status =
@@ -207,14 +208,13 @@ enum appl_status
             GetProcAddress(
                 m_library_handle,
                 appl_convert::to_char_ptr(
-                    p_symbol_name0));
+                    appl_buf0_get(p_symbol_name0)));
 
         *(
             r_symbol) =
             o_symbol_ptr.p_symbol;
 
         appl_buf0_destroy(
-            m_context,
             p_symbol_name0);
     }
 

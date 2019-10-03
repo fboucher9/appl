@@ -20,6 +20,8 @@
 
 #include <appl_status.h>
 
+#include <appl_predefines.h>
+
 #include <appl_types.h>
 
 #include <appl_object.h>
@@ -175,7 +177,7 @@ enum appl_status
     else if (
         appl_file_type_disk == p_file_descriptor->e_type)
     {
-        unsigned char *
+        struct appl_buf0 *
             a_pathname;
 
         e_status =
@@ -190,19 +192,6 @@ enum appl_status
             appl_status_ok
             == e_status)
         {
-            memcpy(
-                a_pathname,
-                p_file_descriptor->p_name_min,
-                appl_buf_len(
-                    p_file_descriptor->p_name_min,
-                    p_file_descriptor->p_name_max));
-
-            *(
-                a_pathname
-                + (p_file_descriptor->p_name_max
-                    - p_file_descriptor->p_name_min)) =
-                '\000';
-
             int
                 i_flags;
 
@@ -258,7 +247,7 @@ enum appl_status
                 m_fd =
                     open(
                         appl_convert::to_char_ptr(
-                            a_pathname),
+                            appl_buf0_get(a_pathname)),
                         i_flags,
                         i_mode);
 
@@ -284,7 +273,6 @@ enum appl_status
             }
 
             appl_buf0_destroy(
-                m_context,
                 a_pathname);
         }
     }
