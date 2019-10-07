@@ -27,7 +27,7 @@ struct appl_log_client_descriptor
 }; /* struct appl_log_client_descriptor */
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //

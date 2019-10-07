@@ -12,7 +12,7 @@ enum guard_appl_thread_handle_h
         inc_appl_status_h
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
 appl_thread_create(
@@ -43,6 +43,6 @@ appl_thread_interrupt(
     struct appl_thread * const
         p_thread);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_thread_handle.h */

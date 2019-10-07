@@ -17,7 +17,7 @@ enum guard_appl_options_std_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 enum appl_options_std_state
 {
@@ -87,7 +87,7 @@ class appl_options_std : public appl_options
             m_chunk_created;
 
 #define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG + APPL_SIZEOF_INT + 1)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

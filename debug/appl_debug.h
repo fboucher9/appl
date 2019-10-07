@@ -5,7 +5,7 @@
 */
 
 /* Assert configuration */
-#include <appl_assert_debug.h>
+#include <misc/appl_assert_debug.h>
 
 /* Included. */
 #define INC_APPL_DEBUG_H
@@ -19,7 +19,7 @@ enum guard_appl_debug_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 class appl_debug;
 

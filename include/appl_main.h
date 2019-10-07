@@ -43,7 +43,7 @@ struct appl_main_descriptor
 
 }; /* struct appl_main_descriptor */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 void
     appl_main_descriptor_init(
@@ -76,6 +76,6 @@ int
         struct appl_main_descriptor const * const
             p_main_descriptor);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_main.h */

@@ -15,7 +15,7 @@ enum guard_appl_crc_test_h
 /* Included. */
 #define INC_APPL_CRC_TEST_H
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_crc16_main(
@@ -40,6 +40,6 @@ void
         struct appl_context * const
             p_context);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_crc_test.h */

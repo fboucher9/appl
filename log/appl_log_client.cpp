@@ -12,7 +12,7 @@
 
 #include <appl_node.h>
 
-#include <appl_log_handle.h>
+#include <log/appl_log_handle.h>
 
 #include <log/appl_log_client.h>
 

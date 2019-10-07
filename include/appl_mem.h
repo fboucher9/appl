@@ -4,7 +4,7 @@
 
 */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 unsigned long int
     appl_mem_zero(
@@ -33,6 +33,6 @@ unsigned long int
         unsigned long int const
             i_src_len);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_mem.h */

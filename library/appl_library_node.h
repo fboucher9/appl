@@ -15,7 +15,7 @@ enum guard_appl_library_node_h
 struct appl_library;
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //

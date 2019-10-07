@@ -89,7 +89,7 @@ struct appl_thread_cache_task
         b_kill;
 
 #define PADDING (1)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_thread_cache_task */
 
@@ -421,7 +421,7 @@ struct appl_thread_cache : public appl_thread
             m_queue_free;
 
 #define PADDING (APPL_SIZEOF_PTR)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

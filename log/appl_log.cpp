@@ -8,7 +8,7 @@
 
 #include <appl_types.h>
 
-#include <appl_log_handle.h>
+#include <log/appl_log_handle.h>
 
 #include <appl_object.h>
 

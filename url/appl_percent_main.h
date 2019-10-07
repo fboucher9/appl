@@ -4,7 +4,7 @@
 
 */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_percent_main(
@@ -15,6 +15,6 @@ enum appl_status
         unsigned long int const
             i_shift);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_percent_main.h */

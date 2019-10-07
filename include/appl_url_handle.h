@@ -13,7 +13,7 @@ struct appl_url;
 /* Predefine */
 struct appl_url_component;
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_url_create(
@@ -118,6 +118,6 @@ enum appl_status
         unsigned long int const
             i_flags);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_url.h */

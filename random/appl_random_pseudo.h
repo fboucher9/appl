@@ -13,7 +13,7 @@ enum guard_appl_random_pseudo_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 class appl_random_pseudo;
 
@@ -66,7 +66,7 @@ class appl_random_pseudo : public appl_random
             m_seed;
 
 #define PADDING (APPL_SIZEOF_LONG)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         appl_random_pseudo(
             class appl_random_pseudo const & r);

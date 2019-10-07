@@ -28,7 +28,7 @@ struct appl_string_descriptor
         i_alloc_len;
 
 #define PADDING (APPL_SIZEOF_LONG)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_string_descriptor */
 

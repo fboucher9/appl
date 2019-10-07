@@ -6,7 +6,7 @@
 
 #include <appl_status.h>
 
-#include <appl_address_property.h>
+#include <socket/appl_address_property.h>
 
 #include <appl_property_handle.h>
 

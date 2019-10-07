@@ -18,7 +18,7 @@ enum guard_appl_options_handle_h
         inc_appl_status_h
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
 appl_options_create(
@@ -87,6 +87,6 @@ appl_options_reset(
     struct appl_options * const
         p_options);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_options_handle.h */

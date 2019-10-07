@@ -12,7 +12,7 @@ enum guard_appl_bytes_h
 }; /* enum guard_appl_bytes_h */
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //

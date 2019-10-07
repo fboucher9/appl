@@ -8,7 +8,7 @@
 
 #include <appl_predefines.h>
 
-#include <appl_netdevice_handle.h>
+#include <socket/appl_netdevice_handle.h>
 
 #include <socket/appl_netdevice_service.h>
 

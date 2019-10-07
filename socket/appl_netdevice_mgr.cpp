@@ -14,7 +14,7 @@
 
 #include <socket/appl_netdevice_mgr.h>
 
-#include <appl_netdevice_handle.h>
+#include <socket/appl_netdevice_handle.h>
 
 #include <appl_unused.h>
 

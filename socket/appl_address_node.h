@@ -19,7 +19,7 @@ enum guard_appl_address_node_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //  Class: appl_address

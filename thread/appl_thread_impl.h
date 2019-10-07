@@ -19,7 +19,7 @@ enum guard_appl_thread_impl_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //

@@ -13,7 +13,7 @@ enum guard_appl_mutex_std_mgr_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //
@@ -61,7 +61,7 @@ class appl_mutex_std_mgr : public appl_mutex_mgr
             m_pool_created;
 
 #define PADDING (APPL_SIZEOF_PTR + 1)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

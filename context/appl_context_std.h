@@ -17,7 +17,7 @@ enum guard_appl_context_std_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //
@@ -257,7 +257,7 @@ class appl_context_std : public appl_context
             b_init_dir_mgr;
 
 #define PADDING (5)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         /* -- */
 

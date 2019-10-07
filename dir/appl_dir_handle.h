@@ -17,7 +17,7 @@ enum guard_appl_dir_handle_h
 /* Predefine descriptor */
 struct appl_dir_descriptor;
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_dir_enumerate(
@@ -26,6 +26,6 @@ enum appl_status
         struct appl_dir_descriptor const * const
             p_descriptor);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_dir_handle.h */

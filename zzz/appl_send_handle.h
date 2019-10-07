@@ -17,7 +17,7 @@ struct appl_send_socket_descriptor
         p_socket;
 
 #define PADDING (APPL_SIZEOF_PTR)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struc appl_send_socket_descriptor */
 
@@ -27,7 +27,7 @@ struct appl_send_address_descriptor
         p_address;
 
 #define PADDING (APPL_SIZEOF_PTR)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_send_address_descriptor */
 
@@ -58,11 +58,11 @@ struct appl_send_packet
         i_duration_usec;
 
 #define PADDING (APPL_SIZEOF_LONG)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_send_packet */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
 appl_send_socket_create(
@@ -118,6 +118,6 @@ Notes:
 
 */
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_send_handle.h */

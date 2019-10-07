@@ -19,7 +19,7 @@ struct appl_timer;
 struct appl_timer_descriptor;
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //

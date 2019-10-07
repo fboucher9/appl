@@ -14,7 +14,7 @@ enum guard_appl_thread_cache_h
 
 struct appl_thread_cache;
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_thread_cache_create(
@@ -35,6 +35,6 @@ struct appl_thread *
         struct appl_thread_cache * const
             p_thread_cache);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_thread_cache.h */

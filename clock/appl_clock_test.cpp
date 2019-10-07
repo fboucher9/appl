@@ -61,7 +61,7 @@ struct appl_clock_test_context
         i_time_freq;
 
 #define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 };
 

@@ -67,11 +67,11 @@ struct appl_markup_element
         e_type;
 
 #define PADDING (APPL_SIZEOF_INT)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_markup_element */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_markup_encoder_create(
@@ -101,6 +101,6 @@ enum appl_status
         struct appl_markup_value const * const
             p_value);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_markup_handle.h */

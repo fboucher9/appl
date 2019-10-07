@@ -14,7 +14,7 @@ enum guard_appl_dict_handle_h
         inc_appl_status_h
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 /* Create a dictionary object */
 enum appl_status
@@ -62,7 +62,7 @@ appl_dict_get(
     void * * const
         r_value);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* In C++, a wrapper may be used to support different types: */
 #if defined __cplusplus

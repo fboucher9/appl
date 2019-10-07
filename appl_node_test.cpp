@@ -65,7 +65,7 @@ class appl_letter_node : public appl_node
             m_letter;
 
 #define PADDING 1
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 
@@ -198,7 +198,7 @@ struct appl_letter_list
         m_letter;
 
 #define PADDING 1
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_letter_list */
 

@@ -31,7 +31,7 @@ struct appl_hash_test_node
         i_string_len;
 
 #define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_INT)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_hash_test_node */
 

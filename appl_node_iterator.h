@@ -13,7 +13,7 @@ enum guard_appl_node_iterator_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 class appl_node_iterator;
 

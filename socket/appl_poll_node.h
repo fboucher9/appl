@@ -4,7 +4,7 @@
 
 */
 
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 class appl_poll_node;
 
@@ -72,7 +72,7 @@ struct appl_poll : public appl_node
             m_avail;
 
 #define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_INT + 2)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

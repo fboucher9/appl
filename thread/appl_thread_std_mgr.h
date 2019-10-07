@@ -12,7 +12,7 @@ enum guard_appl_thread_std_mgr_h
         inc_appl_thread_mgr_h
 };
 
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //
@@ -61,7 +61,7 @@ class appl_thread_std_mgr :
             m_pool_created;
 
 #define PADDING (APPL_SIZEOF_PTR + 1)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

@@ -14,7 +14,7 @@ enum guard_appl_queue_impl_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //
@@ -88,7 +88,7 @@ class appl_queue_impl
             m_count;
 
 #define PADDING (APPL_SIZEOF_LONG)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

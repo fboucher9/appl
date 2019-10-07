@@ -12,7 +12,7 @@ enum guard_appl_pool_test_h
         inc_appl_h
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 char
 appl_pool_test_1(
@@ -29,6 +29,6 @@ appl_pool_test_3(
     struct appl_context * const
         p_context);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_pool_test.h */

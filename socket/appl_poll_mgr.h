@@ -16,7 +16,7 @@ enum guard_appl_poll_mgr_h
 struct appl_poll_table;
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //
@@ -67,7 +67,7 @@ class appl_poll_mgr : public appl_object
             m_kill;
 
 #define PADDING (APPL_SIZEOF_LONG)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
     private:
 

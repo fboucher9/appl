@@ -16,7 +16,7 @@ enum guard_appl_thread_node_h
         inc_appl_object_h
 };
 
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //

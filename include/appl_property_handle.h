@@ -12,7 +12,7 @@ enum guard_appl_property_handle_h
         inc_appl_status_h
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
 appl_property_create(
@@ -92,6 +92,6 @@ appl_property_get_long(
     signed long int * const
         r_value);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_property_handle.h */

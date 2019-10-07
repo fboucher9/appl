@@ -85,7 +85,7 @@ struct appl_netdevice_descriptor
 
 }; /* struct appl_netdevice_descriptor */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_netdevice_enumerate(
@@ -100,6 +100,6 @@ enum appl_status
                 p_netdevice_descriptor),
         void * p_callback_context);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_netdevice_handle.h */

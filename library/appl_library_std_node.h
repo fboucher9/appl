@@ -13,10 +13,10 @@ enum guard_appl_library_std_node_h
 };
 
 /* Assert OS */
-#include <appl_assert_linux.h>
+#include <misc/appl_assert_linux.h>
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 class appl_library_std_node;
 
@@ -70,7 +70,7 @@ class appl_library_std_node : public appl_library
             b_library_handle_initialized;
 
 #define PADDING (APPL_SIZEOF_PTR + 1)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

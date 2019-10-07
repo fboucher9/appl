@@ -34,7 +34,7 @@ enum appl_socket_wait_type
 
 }; /* enum appl_socket_wait_type */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
 appl_socket_property_create(
@@ -240,6 +240,6 @@ appl_socket_property_get_family(
     int * const
         r_family);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_socket_descriptor.h */

@@ -13,7 +13,7 @@ enum guard_appl_socket_w32_node_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //
@@ -57,7 +57,7 @@ class appl_socket_w32_node : public appl_socket
             m_fd;
 
 #define PADDING (APPL_SIZEOF_PTR)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         appl_socket_w32_node(
             class appl_socket_w32_node const & r);

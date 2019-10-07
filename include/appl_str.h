@@ -4,7 +4,7 @@
 
 */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 unsigned long int
     appl_str_len(
@@ -51,6 +51,6 @@ int
         unsigned char const * const
             p_right_max);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_str.h */

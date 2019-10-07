@@ -21,7 +21,7 @@ enum guard_appl_bits_handle_h
         /* ... */
 }; /* enum guard_appl_bits_handle_h */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_bits_create(
@@ -62,6 +62,6 @@ enum appl_status
         unsigned long int * const
             r_count);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_bits_handle.h */

@@ -18,7 +18,7 @@
 
 #include <random/appl_random_std_mgr.h>
 
-#include <appl_random_handle.h>
+#include <random/appl_random_handle.h>
 
 #include <random/appl_random.h>
 

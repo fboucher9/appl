@@ -13,7 +13,7 @@ enum guard_appl_file_std_mgr_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //
@@ -58,7 +58,7 @@ class appl_file_std_mgr : public appl_file_mgr
             m_pool;
 
 #define PADDING (APPL_SIZEOF_PTR)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

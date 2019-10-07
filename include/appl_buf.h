@@ -51,7 +51,7 @@ struct appl_buf
 
 }; /* struct appl_buf */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 #if 0
 /* buf read iteration */
@@ -295,6 +295,6 @@ appl_buf_scan_number(
     int const
         i_flags);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_buf.h */

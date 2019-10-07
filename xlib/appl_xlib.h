@@ -18,7 +18,7 @@ enum guard_appl_xlib_h
 #endif /* #if ! defined APPL_HAVE_XLIB */
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //

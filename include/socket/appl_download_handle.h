@@ -108,7 +108,7 @@ struct appl_download_descriptor
 
 }; /* struct appl_download_descriptor */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_download_create(
@@ -138,6 +138,6 @@ enum appl_status
         enum appl_download_status * const
             r_status);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_download_handle.h */

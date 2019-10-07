@@ -16,7 +16,7 @@ enum guard_appl_backtrace_handle_h
         + inc_appl_types_h
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_backtrace_capture(
@@ -45,6 +45,6 @@ enum appl_status
         char const * const
             p_header0);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_backtrace_handle.h */

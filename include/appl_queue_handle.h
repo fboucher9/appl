@@ -22,11 +22,11 @@ struct appl_queue_descriptor
         i_max_count;
 
 #define PADDING (APPL_SIZEOF_LONG)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_queue_descriptor */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_queue_create(
@@ -75,6 +75,6 @@ enum appl_status
         struct appl_queue * const
             p_queue);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_queue_handle.h */

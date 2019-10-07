@@ -18,7 +18,7 @@
 #include <appl_debug_handle.h>
 #endif /* #if defined APPL_DEBUG */
 
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //

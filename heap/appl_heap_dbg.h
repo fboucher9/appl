@@ -14,12 +14,12 @@ enum guard_appl_heap_dbg_h
 };
 
 /* Assert configuration */
-#include <appl_assert_debug.h>
+#include <misc/appl_assert_debug.h>
 
 struct appl_heap_dbg_descriptor;
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //
@@ -67,7 +67,7 @@ class appl_heap_dbg : public appl_heap
             m_alloc_count;
 
 #define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

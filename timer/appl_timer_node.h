@@ -15,7 +15,7 @@ enum guard_appl_timer_node_h
 struct appl_timer_descriptor;
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //

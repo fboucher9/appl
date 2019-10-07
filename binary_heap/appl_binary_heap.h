@@ -37,11 +37,11 @@ struct appl_binary_heap_descriptor
         i_initial_max;
 
 #define PADDING (APPL_SIZEOF_LONG)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_binary_heap_descriptor */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_binary_heap_create(
@@ -76,6 +76,6 @@ enum appl_status
         void * * const
             r_data);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_binary_heap.h */

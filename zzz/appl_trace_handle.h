@@ -53,7 +53,7 @@ struct appl_trace_node
 
 }; /* struct appl_trace_node */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 void
     appl_trace_enter(
@@ -93,7 +93,7 @@ void
         struct appl_context * const
             p_context);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 #if 0
 

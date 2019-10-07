@@ -42,7 +42,7 @@ enum guard_appl_callstack_h
 
 }; /* enum guard_appl_callstack_h */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 void
     appl_callstack_enter(
@@ -107,6 +107,6 @@ void
         void * const
             p_callback_data);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_callstack_handle.h */

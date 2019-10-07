@@ -28,7 +28,7 @@ struct appl_http_decoder_descriptor
 
 }; /* struct appl_http_decoder_descriptor */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_http_decoder_create(
@@ -53,6 +53,6 @@ enum appl_status
         unsigned char const * const
             p_buf_max);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_http_decoder.h */

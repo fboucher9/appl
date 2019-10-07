@@ -18,7 +18,7 @@
 
 #include <appl_allocator_handle.h>
 
-#include <appl_download_handle.h>
+#include <socket/appl_download_handle.h>
 
 #include <appl_node.h>
 

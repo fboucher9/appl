@@ -14,7 +14,7 @@ enum guard_appl_buf_iterator_h
 /* Included. */
 #define INC_APPL_BUF_ITERATOR_H
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 /* buf iterator write a single character */
 char
@@ -104,6 +104,6 @@ appl_buf_iterator_scan_number(
     int const
         i_flags);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_buf_iterator.h */

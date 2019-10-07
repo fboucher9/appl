@@ -59,7 +59,7 @@ struct appl_address_descriptor
         i_port;
 
 #define PADDING (4 + 2*APPL_SIZEOF_INT)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_address_descriptor */
 

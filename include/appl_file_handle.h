@@ -12,7 +12,7 @@ enum guard_appl_file_handle_h
         inc_appl_status_h
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
 appl_file_get_stdin(
@@ -81,6 +81,6 @@ appl_file_write(
     unsigned long int * const
         r_count);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_file_handle.h */

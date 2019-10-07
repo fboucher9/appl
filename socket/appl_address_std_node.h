@@ -13,7 +13,7 @@ enum guard_appl_address_std_node_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 class appl_address_std_node;
 
@@ -94,7 +94,7 @@ class appl_address_std_node : public appl_address
             m_index;
 
 #define PADDING (APPL_SIZEOF_LONG + APPL_SIZEOF_INT)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

@@ -14,7 +14,7 @@ Description:
 
 #include <appl_predefines.h>
 
-#include <appl_random_handle.h>
+#include <random/appl_random_handle.h>
 
 #include <random/appl_random_service.h>
 

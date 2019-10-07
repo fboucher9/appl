@@ -35,7 +35,7 @@ struct appl_once
 #define APPL_ONCE_INIT 0
 #endif /* #if defined APPL_OS_LINUX */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
 appl_once_dispatch(
@@ -44,6 +44,6 @@ appl_once_dispatch(
     void (* const
         p_once_callback)(void));
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_once.h */

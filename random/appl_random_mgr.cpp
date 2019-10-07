@@ -18,7 +18,7 @@
 
 #include <random/appl_random_pseudo.h>
 
-#include <appl_random_handle.h>
+#include <random/appl_random_handle.h>
 
 #include <appl_unused.h>
 

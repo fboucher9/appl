@@ -48,7 +48,7 @@ struct appl_hash_descriptor
 
 }; /* struct appl_hash_descriptor */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
 appl_hash_create(
@@ -104,6 +104,6 @@ appl_hash_iterate(
     void * const
         p_context);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_hash_handle.h */

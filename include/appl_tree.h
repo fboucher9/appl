@@ -53,7 +53,7 @@ struct appl_tree_node
 
 }; /* struct appl_tree_node */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 /* */
 void
@@ -81,6 +81,6 @@ appl_tree_detach(
     struct appl_tree_node * const
         p_tree_node);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_tree.h */

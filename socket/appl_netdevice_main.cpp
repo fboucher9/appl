@@ -8,11 +8,11 @@
 
 #include <socket/appl_netdevice_main.h>
 
-#include <appl_netdevice_handle.h>
+#include <socket/appl_netdevice_handle.h>
 
 #include <appl_options_handle.h>
 
-#include <appl_address_family.h>
+#include <socket/appl_address_family.h>
 
 #include <appl_buf.h>
 

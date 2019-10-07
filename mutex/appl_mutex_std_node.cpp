@@ -31,7 +31,7 @@
 #include <appl_allocator_handle.h>
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //

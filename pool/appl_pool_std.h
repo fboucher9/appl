@@ -15,7 +15,7 @@ enum guard_appl_pool_std_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //
@@ -72,7 +72,7 @@ class appl_pool_std : public appl_pool
             m_count_remain;
 
 #define PADDING (APPL_SIZEOF_PTR)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         appl_pool_std(
             class appl_pool_std const & r);

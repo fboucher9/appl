@@ -8,11 +8,11 @@
 
 #include <socket/appl_address_main.h>
 
-#include <appl_address_handle.h>
+#include <socket/appl_address_handle.h>
 
 #include <appl_types.h>
 
-#include <appl_address_descriptor.h>
+#include <socket/appl_address_descriptor.h>
 
 #include <appl_test.h>
 
@@ -22,7 +22,7 @@
 
 #include <appl_buf.h>
 
-#include <appl_address_family.h>
+#include <socket/appl_address_family.h>
 
 #include <appl_convert.h>
 

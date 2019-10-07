@@ -98,13 +98,13 @@ struct appl_bytes_descriptor
 
 }; /* struct appl_bytes_descriptor */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 void
     appl_bytes_descriptor_init(
         struct appl_bytes_descriptor * const
             p_descriptor);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_bytes_descriptor.h */

@@ -40,7 +40,7 @@ struct appl_random_descriptor
 
 }; /* struct appl_random_descriptor */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
 appl_random_create(
@@ -75,6 +75,6 @@ appl_random_pick(
     unsigned long int * const
         r_value);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_random_handle.h */

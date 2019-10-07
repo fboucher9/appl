@@ -13,10 +13,10 @@ enum guard_appl_clock_w32_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 /* Assert OS */
-#include <appl_assert_windows.h>
+#include <misc/appl_assert_windows.h>
 
 //
 //

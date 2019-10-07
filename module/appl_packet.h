@@ -13,7 +13,7 @@ enum guard_appl_packet_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //
@@ -51,7 +51,7 @@ struct appl_packet : public appl_object
             e_type;
 
 #define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         /* -- */
 

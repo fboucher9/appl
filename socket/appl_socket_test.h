@@ -4,7 +4,7 @@
 
 */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 void
     appl_socket_test_1(
@@ -24,6 +24,6 @@ void
         unsigned int const
             i_shift);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_socket_test.h */

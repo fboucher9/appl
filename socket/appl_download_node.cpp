@@ -8,7 +8,7 @@
 
 #include <appl_types.h>
 
-#include <appl_download_handle.h>
+#include <socket/appl_download_handle.h>
 
 #include <appl_object.h>
 
@@ -28,13 +28,13 @@
 
 #include <appl_clock_handle.h>
 
-#include <appl_address_property.h>
+#include <socket/appl_address_property.h>
 
-#include <appl_address_handle.h>
+#include <socket/appl_address_handle.h>
 
-#include <appl_socket_descriptor.h>
+#include <socket/appl_socket_descriptor.h>
 
-#include <appl_socket_handle.h>
+#include <socket/appl_socket_handle.h>
 
 #include <appl_buf.h>
 

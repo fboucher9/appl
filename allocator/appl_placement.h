@@ -64,12 +64,12 @@ struct appl_placement_descriptor
         p_placement;
 
 #define PADDING (APPL_SIZEOF_PTR)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_placement_descriptor */
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //

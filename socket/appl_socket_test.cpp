@@ -10,19 +10,19 @@
 
 #include <appl_predefines.h>
 
-#include <appl_address_family.h>
+#include <socket/appl_address_family.h>
 
-#include <appl_address_property.h>
+#include <socket/appl_address_property.h>
 
-#include <appl_address_handle.h>
+#include <socket/appl_address_handle.h>
 
-#include <appl_socket_descriptor.h>
+#include <socket/appl_socket_descriptor.h>
 
-#include <appl_socket_handle.h>
+#include <socket/appl_socket_handle.h>
 
 #include <appl_types.h>
 
-#include <appl_poll_descriptor.h>
+#include <socket/appl_poll_descriptor.h>
 
 #include <appl_object.h>
 

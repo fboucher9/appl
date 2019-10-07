@@ -45,7 +45,7 @@ Description:
 
 #include <appl_buf.h>
 
-#include <appl_address_descriptor.h>
+#include <socket/appl_address_descriptor.h>
 
 #include <property/appl_property_types.h>
 
@@ -57,9 +57,9 @@ Description:
 
 #include <appl_allocator_handle.h>
 
-#include <appl_address_family.h>
+#include <socket/appl_address_family.h>
 
-#include <appl_address_property.h>
+#include <socket/appl_address_property.h>
 
 //
 //

@@ -74,7 +74,7 @@ struct appl_xlib_intf
     } o_display_height;
 
 #define PADDING (APPL_SIZEOF_PTR)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_xlib_intf */
 

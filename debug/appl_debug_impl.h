@@ -22,10 +22,10 @@ enum guard_appl_debug_impl_h
 };
 
 /* Assert configuration */
-#include <appl_assert_debug.h>
+#include <misc/appl_assert_debug.h>
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //  Class: appl_debug_impl

@@ -19,7 +19,7 @@ struct appl_mutex_descriptor
 
 }; /* struct appl_mutex_descriptor */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
 appl_mutex_create(
@@ -66,6 +66,6 @@ appl_mutex_sync(
     void * const
         p_sync_context);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_mutex_handle.h */

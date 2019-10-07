@@ -44,7 +44,7 @@ typedef void (appl_log_callback)(
     unsigned char const * const
         p_message_max);
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_log_register(
@@ -75,6 +75,6 @@ enum appl_status
         unsigned char const * const
             p_message_max);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_log_handle.h */

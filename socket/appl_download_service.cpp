@@ -10,7 +10,7 @@
 
 #include <appl_types.h>
 
-#include <appl_download_handle.h>
+#include <socket/appl_download_handle.h>
 
 #include <socket/appl_download_service.h>
 

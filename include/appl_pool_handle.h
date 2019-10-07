@@ -28,11 +28,11 @@ struct appl_pool_descriptor
         i_length;
 
 #define PADDING (APPL_SIZEOF_PTR)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_pool_descriptor */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_pool_create(
@@ -72,6 +72,6 @@ enum appl_status
         void * const
             p_buffer);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_pool_handle.h */

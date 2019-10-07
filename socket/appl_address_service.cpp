@@ -13,7 +13,7 @@ Description:
 
 #include <appl_predefines.h>
 
-#include <appl_address_property.h>
+#include <socket/appl_address_property.h>
 
 #include <socket/appl_address_service.h>
 

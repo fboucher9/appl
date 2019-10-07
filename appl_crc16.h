@@ -20,7 +20,7 @@ enum guard_appl_crc16_h
         /* Header file dependencies */
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 /** Calculate 16-bit crc of given buffer.
 
@@ -67,6 +67,6 @@ unsigned short int
         struct appl_crc16_context * const
             p_crc16_context);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_crc16.h */

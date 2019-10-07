@@ -13,7 +13,7 @@ enum guard_appl_event_std_mgr_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 class appl_event_std_mgr;
 
@@ -63,7 +63,7 @@ class appl_event_std_mgr : public appl_event_mgr
             m_pool_created;
 
 #define PADDING (APPL_SIZEOF_PTR + 1)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

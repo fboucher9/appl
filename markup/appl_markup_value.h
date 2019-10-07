@@ -33,7 +33,7 @@ enum appl_markup_value_type
 
 }; /* enum appl_markup_value_type */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_markup_value_create(
@@ -107,6 +107,6 @@ enum appl_status
         void * const
             p_void);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_markup_value.h */

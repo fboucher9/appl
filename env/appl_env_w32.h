@@ -13,10 +13,10 @@ enum guard_appl_env_w32_h
 };
 
 /* Assert OS */
-#include <appl_assert_windows.h>
+#include <misc/appl_assert_windows.h>
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 /* Predefine */
 class appl_refcount;

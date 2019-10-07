@@ -18,7 +18,7 @@ enum guard_appl_xlib_std_h
 #endif /* #if ! defined APPL_HAVE_XLIB */
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //
@@ -114,7 +114,7 @@ class appl_xlib_std : public appl_xlib
             m_lock_initialized;
 
 #define PADDING (APPL_SIZEOF_LONG + 2)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

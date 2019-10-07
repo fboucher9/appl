@@ -15,7 +15,7 @@ enum guard_appl_dir_mgr_h
 /* Predefine descriptor */
 struct appl_dir_descriptor;
 
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //

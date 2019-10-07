@@ -24,7 +24,7 @@ struct appl_property_std_descriptor
 }; /* struct appl_property_descriptor */
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //
@@ -91,7 +91,7 @@ struct appl_property_std : public appl_property
             b_types_allocated;
 
 #define PADDING (APPL_SIZEOF_INT + 2)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

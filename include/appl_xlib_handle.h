@@ -27,7 +27,7 @@ enum guard_appl_xlib_handle_h
 /* Predefine */
 struct appl_xlib;
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
 appl_xlib_create(
@@ -90,6 +90,6 @@ appl_xlib_display_height(
     int const
         i_screen_number);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_xlib.h */

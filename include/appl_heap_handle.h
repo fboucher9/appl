@@ -13,7 +13,7 @@ enum guard_appl_heap_handle_h
         + inc_appl_types_h
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
 appl_heap_alloc(
@@ -33,7 +33,7 @@ appl_heap_free(
     void * const
         p_buf);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 #if defined __cplusplus
 

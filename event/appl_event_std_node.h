@@ -13,7 +13,7 @@ enum guard_appl_event_std_node_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //
@@ -65,7 +65,7 @@ class appl_event_std_node : public appl_event
             m_event_impl_initialized;
 
 #define PADDING (1)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

@@ -13,13 +13,13 @@ enum guard_appl_callstack_test_h
         /* ... */
 }; /* enum guard_appl_callstack_test_h */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 void
 appl_callstack_test_1(
     struct appl_context * const
         p_context);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_callstack_test.h */

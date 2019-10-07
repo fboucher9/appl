@@ -15,7 +15,7 @@ enum guard_appl_bytes_handle_h
         /* ... */
 }; /* enum guard_appl_bytes_handle_h */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_bytes_create(
@@ -133,6 +133,6 @@ enum appl_status
         appl_ull_t * const
             r_value);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_bytes_handle.h */

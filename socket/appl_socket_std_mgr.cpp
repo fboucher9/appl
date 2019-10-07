@@ -28,7 +28,7 @@
 
 #include <socket/appl_socket_std_mgr.h>
 
-#include <appl_socket_descriptor.h>
+#include <socket/appl_socket_descriptor.h>
 
 #include <socket/appl_socket_node.h>
 
@@ -40,7 +40,7 @@
 
 #include <appl_convert.h>
 
-#include <appl_poll_descriptor.h>
+#include <socket/appl_poll_descriptor.h>
 
 #include <appl_allocator_handle.h>
 
@@ -52,9 +52,9 @@
 
 #include <appl_buf0.h>
 
-#include <appl_address_descriptor.h>
+#include <socket/appl_address_descriptor.h>
 
-#include <appl_address_family.h>
+#include <socket/appl_address_family.h>
 
 #include <appl_unused.h>
 

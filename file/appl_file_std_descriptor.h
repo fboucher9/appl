@@ -15,7 +15,7 @@ enum guard_appl_file_std_descriptor_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //
@@ -53,7 +53,7 @@ struct appl_file_descriptor : public appl_object
             e_mode;
 
 #define PADDING (APPL_SIZEOF_INT*2)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
     protected:
 

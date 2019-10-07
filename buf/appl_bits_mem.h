@@ -16,7 +16,7 @@ enum guard_appl_bits_mem_h
 
 }; /* enum guard_appl_bits_mem_h */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_bits_mem_create(
@@ -46,6 +46,6 @@ enum appl_status
         struct appl_buf * const
             r_buf_unused);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_bits_mem.h */

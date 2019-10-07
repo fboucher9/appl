@@ -8,7 +8,7 @@
 
 #include <appl_predefines.h>
 
-#include <appl_netdevice_handle.h>
+#include <socket/appl_netdevice_handle.h>
 
 #if defined APPL_OS_LINUX
 
@@ -26,7 +26,7 @@
 
 #include <appl_buf0.h>
 
-#include <appl_address_family.h>
+#include <socket/appl_address_family.h>
 
 #include <sys/types.h>
 

@@ -5,7 +5,7 @@
 */
 
 /* Assert configuration */
-#include <appl_assert_debug.h>
+#include <misc/appl_assert_debug.h>
 
 /* Reverse include guard */
 enum guard_appl_debug_handle_h
@@ -15,7 +15,7 @@ enum guard_appl_debug_handle_h
         inc_appl_status_h
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
 appl_debug_break(
@@ -49,6 +49,6 @@ appl_debug_print_number(
     unsigned int const
         i_width);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_debug_handle.h */

@@ -77,7 +77,7 @@ struct appl_timer_descriptor
 
 }; /* struct appl_timer_descriptor */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 /* Create an instance of a timer, to be used as a manager of events */
 /* Timer manager may decide to return the same group */
@@ -154,6 +154,6 @@ appl_timer_node_schedule(
 /* Application is responsible for synchronization of destruction */
 /* Application may use refcount or events */
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_timer_handle.h */

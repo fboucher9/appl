@@ -35,7 +35,7 @@
 #include <appl_node_iterator.h>
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //
@@ -62,7 +62,7 @@ struct appl_poll_table
         i_count;
 
 #define PADDING (APPL_SIZEOF_INT)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; // struct appl_poll_table
 

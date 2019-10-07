@@ -167,15 +167,15 @@ enum guard_appl_h
 
 #if defined(APPL_CONFIG_WITH_SOCKET)
 
-#include <appl_address_property.h>
+#include <socket/appl_address_property.h>
 
-#include <appl_address_handle.h>
+#include <socket/appl_address_handle.h>
 
-#include <appl_socket_descriptor.h>
+#include <socket/appl_socket_descriptor.h>
 
-#include <appl_poll_descriptor.h>
+#include <socket/appl_poll_descriptor.h>
 
-#include <appl_socket_handle.h>
+#include <socket/appl_socket_handle.h>
 
 #endif /* #if defined(APPL_CONFIG_WITH_SOCKET) */
 
@@ -199,13 +199,13 @@ enum guard_appl_h
 
 #if defined APPL_CONFIG_WITH_RANDOM
 
-#include <appl_random_handle.h>
+#include <random/appl_random_handle.h>
 
 #endif /* #if defined APPL_CONFIG_WITH_RANDOM */
 
 #if defined APPL_CONFIG_WITH_LOG
 
-#include <appl_log_handle.h>
+#include <log/appl_log_handle.h>
 
 #endif /*#if defined APPL_CONFIG_WITH_LOG */
 

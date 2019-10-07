@@ -13,7 +13,7 @@ enum guard_appl_mutex_std_node_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 class appl_event_std_node;
 
@@ -61,7 +61,7 @@ class appl_mutex_std_node : public appl_mutex
             m_mutex_impl_initialized;
 
 #define PADDING (1)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         appl_mutex_std_node(
             class appl_mutex_std_node const & r);

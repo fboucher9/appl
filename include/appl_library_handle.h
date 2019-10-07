@@ -22,7 +22,7 @@ struct appl_library_descriptor
 
 }; /* struct appl_library_descriptor */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
 appl_library_create(
@@ -59,6 +59,6 @@ appl_library_query(
     void * * const
         r_symbol);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_library_handle.h */

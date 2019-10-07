@@ -70,7 +70,7 @@ enum guard_appl_refcount_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //
@@ -112,7 +112,7 @@ struct appl_refcount : public appl_object
             m_refcount;
 
 #define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

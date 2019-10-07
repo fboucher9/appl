@@ -13,7 +13,7 @@ enum guard_appl_random_w32_crypto_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 class appl_random_w32_crypto;
 

@@ -17,7 +17,7 @@ enum guard_appl_backtrace_service_h
         + inc_appl_predefines_h
 };
 
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //

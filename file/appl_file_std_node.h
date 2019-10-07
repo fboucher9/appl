@@ -13,7 +13,7 @@ enum guard_appl_file_std_node_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 struct appl_file_std_node_descriptor;
 
@@ -67,7 +67,7 @@ class appl_file_std_node : public appl_file
             m_close;
 
 #define PADDING (APPL_SIZEOF_INT + 1)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

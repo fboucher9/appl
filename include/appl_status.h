@@ -49,7 +49,7 @@ enum appl_status
 
 }; /* enum appl_status */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_raise(
@@ -74,6 +74,6 @@ enum appl_status
 enum appl_status
     appl_raise_fault_injection(void);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_status.h */

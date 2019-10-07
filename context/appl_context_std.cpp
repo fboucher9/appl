@@ -152,7 +152,7 @@
 
 #endif
 
-#include <appl_log_handle.h>
+#include <log/appl_log_handle.h>
 
 #include <log/appl_log.h>
 
@@ -254,7 +254,7 @@ class appl_context_default : public appl_context
             m_allocator;
 
 #define PADDING (APPL_SIZEOF_PTR)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

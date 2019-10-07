@@ -12,7 +12,7 @@ enum guard_appl_thread_property_h
         inc_appl_status_h
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
 appl_thread_property_create(
@@ -50,6 +50,6 @@ appl_thread_property_get_detach_state(
     unsigned char * const
         r_detach_state);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_thread_property.h */

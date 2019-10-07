@@ -17,7 +17,7 @@ enum guard_appl_timer_std_node_h
 struct appl_timer_descriptor;
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 // Predefine
 class appl_timer_std_group;
@@ -77,7 +77,7 @@ class appl_timer_std_node : public appl_timer_node
             m_state;
 
 #define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_INT)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
         // --
 

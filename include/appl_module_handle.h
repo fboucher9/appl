@@ -13,7 +13,7 @@ enum guard_appl_module_handle_h
         + inc_appl_types_h
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 struct appl_object *
 appl_module_parent(
@@ -110,7 +110,7 @@ struct appl_hex_convert_module_descriptor
         i_columns;
 
 #define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG + 2)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_hex_convert_module_descriptor */
 
@@ -143,7 +143,7 @@ struct appl_file_sink_module_descriptor
         p_file;
 
 #define PADDING (APPL_SIZEOF_PTR)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_file_sink_module_descriptor */
 
@@ -195,7 +195,7 @@ struct appl_custom_module_descriptor
         p_custom_context;
 
 #define PADDING (APPL_SIZEOF_PTR)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_custom_module_descriptor */
 
@@ -229,6 +229,6 @@ appl_null_module_parent(
     struct appl_null_module * const
         p_null_module);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_module_handle.h */

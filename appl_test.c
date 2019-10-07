@@ -370,7 +370,7 @@ struct appl_test_thread_context
         b_done;
 
 #define PADDING (2)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_test_thread_context */
 

@@ -15,7 +15,7 @@ enum guard_appl_heap_impl_h
 };
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 #define APPL_HEAP_IMPL_COUNT (256u)
 

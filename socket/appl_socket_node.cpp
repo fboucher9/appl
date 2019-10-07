@@ -10,14 +10,14 @@
 
 #include <appl_object.h>
 
-#include <appl_socket_descriptor.h>
+#include <socket/appl_socket_descriptor.h>
 
 #include <socket/appl_socket_node.h>
 
 #include <appl_unused.h>
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //

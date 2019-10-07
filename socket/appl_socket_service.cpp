@@ -8,7 +8,7 @@
 
 #include <appl_predefines.h>
 
-#include <appl_socket_descriptor.h>
+#include <socket/appl_socket_descriptor.h>
 
 #include <socket/appl_socket_service.h>
 
@@ -25,7 +25,7 @@
 #include <socket/appl_address_node.h>
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //  Function: s_create

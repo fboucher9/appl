@@ -49,11 +49,11 @@ struct appl_netlink_descriptor
         i_flags;
 
 #define PADDING (APPL_SIZEOF_LONG)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 }; /* struct appl_netlink_descriptor */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_netlink_create(
@@ -69,6 +69,6 @@ enum appl_status
         struct appl_netlink * const
             p_netlink);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_netlink_handle.h */

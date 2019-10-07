@@ -3,7 +3,7 @@
 /* Predefine */
 struct appl_string_refcount;
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
     appl_string_refcount_create(
@@ -22,6 +22,6 @@ struct appl_string *
         struct appl_string_refcount const * const
             p_string_refcount);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_string_refcount.h */

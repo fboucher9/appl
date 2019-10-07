@@ -17,7 +17,7 @@ enum guard_appl_xlib_test_h
     inc_appl_xlib_test_h = 1
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 /* Basic sanity check */
 void
@@ -25,6 +25,6 @@ appl_xlib_test_1(
     struct appl_context * const
         p_context);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_xlib_test.h */

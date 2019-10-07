@@ -34,7 +34,7 @@ struct appl_editor_node
         i_data_length;
 
 #define PADDING (3)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
     /* -- */
 
@@ -62,7 +62,7 @@ struct appl_editor
         i_total_unused;
 
 #define PADDING (APPL_SIZEOF_LONG)
-#include <appl_padding.h>
+#include <misc/appl_padding.h>
 
 };
 

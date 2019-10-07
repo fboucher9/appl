@@ -4,7 +4,7 @@
 
 */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 extern
 struct appl_file *
@@ -54,6 +54,6 @@ appl_print_08lx(
     unsigned long int const
         i_value);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_test.h */

@@ -20,7 +20,7 @@ enum guard_appl_buf_filter_h
 /* Included. */
 #define INC_APPL_BUF_FILTER_H
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 /* Detect if given character is part of filter */
 char
@@ -58,6 +58,6 @@ appl_buf_filter_convert_class(
     struct appl_buf const * const
         p_input_class);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_buf_filter.h */

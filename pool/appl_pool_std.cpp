@@ -39,7 +39,7 @@
 #include <appl_heap_handle.h>
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 union appl_pool_node_ptr
 {

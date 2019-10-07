@@ -62,7 +62,7 @@ struct appl_iterator
 
 }; /* struct appl_iterator */
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 /*
 
@@ -310,6 +310,6 @@ appl_iterator_prev(
     struct appl_iterator * const
         p_iterator);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_list.h */

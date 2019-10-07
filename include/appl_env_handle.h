@@ -21,7 +21,7 @@ enum guard_appl_env_handle_h
         + inc_appl_status_h
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 /** Get value of environment variable.  Lookup table of environment variables
 for an entry that matches given name string, and return value of the
@@ -88,6 +88,6 @@ appl_env_set(
     unsigned char const * const
         p_value_max);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_env_handle.h */

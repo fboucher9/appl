@@ -13,7 +13,7 @@ enum guard_appl_percent_h
 /* Included. */
 #define INC_APPL_PERCENT_H
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 void
     appl_percent_decoder_run(
@@ -69,6 +69,6 @@ void
         struct appl_buf * const
             p_output_iterator);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_percent.h */

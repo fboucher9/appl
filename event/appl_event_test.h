@@ -14,7 +14,7 @@ enum guard_appl_event_test_h
         /* Header file dependencies */
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 void
     appl_event_test_1(
@@ -26,6 +26,6 @@ void
         struct appl_context * const
             p_context);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_event_test.h */

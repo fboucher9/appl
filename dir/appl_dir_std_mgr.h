@@ -12,9 +12,9 @@ enum guard_appl_dir_std_mgr_h
         + inc_appl_dir_mgr_h
 }; /* enum guard_appl_dir_std_mgr_h */
 
-#include <appl_assert_linux.h>
+#include <misc/appl_assert_linux.h>
 
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //

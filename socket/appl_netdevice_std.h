@@ -18,10 +18,10 @@ enum guard_appl_netdevice_std_h
 #define INC_APPL_NETDEVICE_STD_H
 
 /* Assert compiler */
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 /* Assert configuration */
-#include <appl_assert_linux.h>
+#include <misc/appl_assert_linux.h>
 
 struct appl_netdevice_descriptor;
 

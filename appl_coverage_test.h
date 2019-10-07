@@ -13,7 +13,7 @@ enum guard_appl_coverage_test
     inc_appl_coverage_test = 1
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 unsigned long int
     appl_coverage_test(
@@ -25,6 +25,6 @@ unsigned long int
         void * const
             p_context);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_coverage_test.h */

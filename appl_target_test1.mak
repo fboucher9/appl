@@ -67,6 +67,7 @@ test_appl-deps = \
     random/appl_random_main.cpp \
     callstack/appl_callstack_test.cpp \
     dir/appl_dir_test.cpp \
+    markup/appl_markup_test.cpp \
     $(appl_base-deps)
 
 # List of libraries required to link test application

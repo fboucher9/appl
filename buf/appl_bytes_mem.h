@@ -14,7 +14,7 @@ enum guard_appl_bytes_mem_h
         /* ... */
 }; /* enum guard_appl_bytes_mem_h */
 
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 //
 //

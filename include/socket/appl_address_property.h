@@ -12,7 +12,7 @@ enum guard_appl_address_property_h
         inc_appl_status_h
 };
 
-#include <appl_extern_c_begin.h>
+#include <misc/appl_extern_c_begin.h>
 
 enum appl_status
 appl_address_property_create(
@@ -96,6 +96,6 @@ appl_address_property_get_index(
     unsigned int * const
         r_index);
 
-#include <appl_extern_c_end.h>
+#include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_address_property.h */

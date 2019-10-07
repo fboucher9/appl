@@ -17,7 +17,7 @@ enum guard_appl_thread_std_node_h
         + inc_appl_thread_impl_h
 };
 
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 /* Predefine */
 struct appl_thread_std_node_descriptor;

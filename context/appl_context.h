@@ -13,7 +13,7 @@ enum guard_appl_context_h
         + inc_appl_predefines_h
 };
 
-#include <appl_assert_cplusplus.h>
+#include <misc/appl_assert_cplusplus.h>
 
 struct appl_heap;
 
