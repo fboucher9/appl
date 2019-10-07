@@ -139,6 +139,7 @@ appl_base-deps := \
     main/appl_main.cpp \
     main/appl_main_service.cpp \
     markup/appl_markup_handle.cpp \
+    markup/appl_markup_value.cpp \
     module/appl_module_handle.cpp \
     module/appl_module_service.cpp \
     module/appl_module.cpp \
