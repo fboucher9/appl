@@ -138,8 +138,9 @@ appl_base-deps := \
     log/appl_log_client.cpp \
     main/appl_main.cpp \
     main/appl_main_service.cpp \
-    markup/appl_markup_handle.cpp \
-    markup/appl_markup_value.cpp \
+    markup/appl_markup_encoder.cpp \
+    markup/appl_markup_decoder.cpp \
+    markup/appl_markup_object.cpp \
     module/appl_module_handle.cpp \
     module/appl_module_service.cpp \
     module/appl_module.cpp \

@@ -5,16 +5,21 @@
 */
 
 /* Reverse include guard */
-enum guard_appl_markup_handle_h
+enum guard_appl_markup_encoder_h
 {
-    inc_appl_markup_handle_h = 1
+    inc_appl_markup_encoder_h = 1
         /* Header file dependencies */
         + inc_appl_status_h
         + inc_appl_predefines_h
         + inc_appl_types_h
         + inc_appl_buf_h
-        + inc_appl_list_h
-}; /* enum guard_appl_markup_handle_h */
+}; /* enum guard_appl_markup_encoder_h */
+
+/* Predefine */
+struct appl_markup_encoder;
+
+/* Predefine */
+struct appl_markup_element;
 
 typedef
 enum appl_status
@@ -36,40 +41,6 @@ struct appl_markup_encoder_descriptor
         p_produce_void;
 
 }; /* struct appl_markup_encoder_descriptor */
-
-/*
-
-*/
-enum appl_markup_element_type
-{
-    /* Element contains data payload */
-    appl_markup_element_type_data = 1,
-
-    /* Element marks beginning of a recursive object */
-    appl_markup_element_type_list = 2,
-
-    /* Element marks end of object or array */
-    appl_markup_element_type_end = 3
-
-}; /* enum appl_markup_element_type */
-
-/*
-
-*/
-struct appl_markup_element
-{
-    struct appl_buf
-        o_data;
-
-    /* -- */
-
-    enum appl_markup_element_type
-        e_type;
-
-#define PADDING (APPL_SIZEOF_INT)
-#include <misc/appl_padding.h>
-
-}; /* struct appl_markup_element */
 
 #include <misc/appl_extern_c_begin.h>
 
@@ -94,13 +65,6 @@ enum appl_status
         struct appl_markup_element const * const
             p_element);
 
-enum appl_status
-    appl_markup_encoder_convert(
-        struct appl_markup_encoder * const
-            p_instance,
-        struct appl_markup_value const * const
-            p_value);
-
 #include <misc/appl_extern_c_end.h>
 
-/* end-of-file: appl_markup_handle.h */
+/* end-of-file: appl_markup_encoder.h */

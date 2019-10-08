@@ -14,7 +14,7 @@
 
 #include <appl_list.h>
 
-#include <markup/appl_markup_handle.h>
+#include <markup/appl_markup_encoder.h>
 
 #include <appl_unused.h>
 
@@ -75,23 +75,4 @@ enum appl_status
 
 } // appl_markup_encoder_write()
 
-//
-//
-//
-enum appl_status
-    appl_markup_encoder_convert(
-        struct appl_markup_encoder * const
-            p_instance,
-        struct appl_markup_value const * const
-            p_value)
-{
-    appl_unused(
-        p_instance,
-        p_value);
-
-    return
-        appl_raise_not_implemented();
-
-} // appl_markup_encoder_convert()
-
-/* end-of-file: appl_markup_handle.cpp */
+/* end-of-file: appl_markup_encoder.cpp */
