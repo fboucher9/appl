@@ -14,9 +14,9 @@
 
 #include <context/appl_context.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
-#include <appl_node.h>
+#include <list/appl_node.h>
 
 #include <socket/appl_poll_mgr.h>
 

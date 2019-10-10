@@ -20,9 +20,9 @@
 
 #include <dir/appl_dir_w32_mgr.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_buf0.h>
+#include <buf/appl_buf0.h>
 
 #include <appl_mem.h>
 
@@ -32,7 +32,7 @@
 
 #include <appl_heap_handle.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 //
 //

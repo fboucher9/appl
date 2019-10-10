@@ -22,9 +22,9 @@
 
 #include <appl_library_handle.h>
 
-#include <appl_buf0.h>
+#include <buf/appl_buf0.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 #include <appl_allocator_handle.h>
 

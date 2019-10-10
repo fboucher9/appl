@@ -6,7 +6,7 @@
 
 #include <appl_status.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <property/appl_property_service.h>
 

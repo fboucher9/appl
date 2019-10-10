@@ -10,11 +10,11 @@
 
 #include <appl_object.h>
 
-#include <appl_node.h>
+#include <list/appl_node.h>
 
 #include <timer/appl_timer_node.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 //
 //

@@ -10,7 +10,7 @@
 
 #include <appl_property_handle.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <appl_types.h>
 
@@ -30,7 +30,7 @@
 
 #endif /* #if defined APPL_DEBUG */
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 #include <appl_heap_handle.h>
 

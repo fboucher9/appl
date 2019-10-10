@@ -14,7 +14,7 @@
 
 #include <socket/appl_socket_node.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 /* Assert compiler */
 #include <misc/appl_assert_cplusplus.h>

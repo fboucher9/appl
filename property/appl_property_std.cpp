@@ -8,7 +8,7 @@
 
 #include <appl_predefines.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <property/appl_property_types.h>
 
@@ -26,7 +26,7 @@
 
 #include <appl_heap_handle.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 #include <misc/appl_assert_cplusplus.h>
 

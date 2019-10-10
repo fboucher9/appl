@@ -20,9 +20,9 @@
 
 #include <random/appl_random_w32_crypto.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 #include <appl_allocator_handle.h>
 

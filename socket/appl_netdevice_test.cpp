@@ -10,11 +10,11 @@
 
 #include <socket/appl_netdevice_handle.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 #include <socket/appl_address_family.h>
 

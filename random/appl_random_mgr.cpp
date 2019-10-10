@@ -20,7 +20,7 @@
 
 #include <random/appl_random_handle.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <context/appl_context.h>
 

@@ -16,7 +16,7 @@
 
 #include <buf/appl_bytes_base.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <buf/appl_bytes_descriptor.h>
 

@@ -12,7 +12,7 @@
 
 #include <url/appl_url.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
 #include <appl_url_types.h>
 
@@ -24,11 +24,11 @@
 
 #include <appl_heap_handle.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <url/appl_percent.h>
 

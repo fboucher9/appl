@@ -8,7 +8,7 @@
 
 #include <appl_predefines.h>
 
-#include <appl_chunk_handle.h>
+#include <chunk/appl_chunk_handle.h>
 
 #include <chunk/appl_chunk_service.h>
 

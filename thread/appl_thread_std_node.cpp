@@ -24,7 +24,7 @@
 
 #include <appl_thread_descriptor.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <thread/appl_thread_descriptor_impl.h>
 
@@ -36,7 +36,7 @@
 
 #include <appl_allocator_handle.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 /*
 

@@ -8,7 +8,7 @@
 
 #include <appl_predefines.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <buf/appl_bits_mem.h>
 
@@ -26,7 +26,7 @@
 
 #include <appl_heap_handle.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 //
 //

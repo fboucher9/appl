@@ -4,13 +4,13 @@
 
 */
 
-#include <appl_str.h>
+#include <buf/appl_str.h>
 
-#include <appl_mem.h>
+#include <buf/appl_mem.h>
 
 #include <appl_types.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 //
 //

@@ -8,11 +8,11 @@
 
 #include <buf/appl_buf_test.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_buf_filter.h>
+#include <buf/appl_buf_filter.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <stdio.h>
 

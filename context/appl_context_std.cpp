@@ -22,9 +22,9 @@
 
 #include <appl_context_handle.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_buf0.h>
+#include <buf/appl_buf0.h>
 
 #include <appl_types.h>
 
@@ -46,7 +46,7 @@
 
 #if defined APPL_DEBUG
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
 #include <mutex/appl_mutex_impl.h>
 
@@ -84,7 +84,7 @@
 
 #include <mutex/appl_mutex_std_mgr.h>
 
-#include <appl_node.h>
+#include <list/appl_node.h>
 
 #include <socket/appl_poll_mgr.h>
 
@@ -200,9 +200,9 @@
 
 #include <appl_once.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #if defined APPL_HAVE_COVERAGE
 #include <appl_coverage.h>

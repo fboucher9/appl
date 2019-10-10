@@ -18,7 +18,7 @@
 
 #include <debug/appl_debug_w32.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <appl_allocator_handle.h>
 

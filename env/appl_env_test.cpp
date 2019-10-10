@@ -14,13 +14,13 @@
 
 #include <env/appl_env_test.h>
 
-#include <appl_env_handle.h>
+#include <env/appl_env_handle.h>
 
 #include <appl_string_handle.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <appl_heap_handle.h>
 

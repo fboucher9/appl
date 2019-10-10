@@ -20,11 +20,11 @@
 
 #include <socket/appl_download_mgr.h>
 
-#include <appl_node.h>
+#include <list/appl_node.h>
 
 #include <socket/appl_download_node.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 //
 //

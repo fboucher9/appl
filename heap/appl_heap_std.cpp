@@ -12,7 +12,7 @@
 
 #include <appl_status.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <appl_types.h>
 
@@ -24,11 +24,11 @@
 
 #include <heap/appl_heap.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
 #include <heap/appl_heap_std.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #if defined APPL_DEBUG
 #include <debug/appl_debug_impl.h>

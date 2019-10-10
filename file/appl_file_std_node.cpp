@@ -30,15 +30,15 @@
 
 #include <file/appl_file_std_node.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <appl_file_descriptor.h>
 
 #include <file/appl_file_std_descriptor.h>
 
-#include <appl_buf0.h>
+#include <buf/appl_buf0.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 #include <appl_allocator_handle.h>
 

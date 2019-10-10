@@ -18,7 +18,7 @@
 
 #include <event/appl_event_mgr.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 struct appl_event_test
 {

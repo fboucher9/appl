@@ -16,9 +16,9 @@
 
 #include <buf/appl_bits_base.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 //
 //

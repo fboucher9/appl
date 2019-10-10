@@ -10,15 +10,15 @@
 
 #include <appl_object.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
-#include <appl_node.h>
+#include <list/appl_node.h>
 
 #include <appl_poll_descriptor.h>
 
 #include <socket/appl_poll_node.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 /* Assert compiler */
 #include <misc/appl_assert_cplusplus.h>

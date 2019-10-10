@@ -14,13 +14,13 @@
 
 #include <appl_url_handle.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_buf0.h>
+#include <buf/appl_buf0.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <appl_types.h>
 

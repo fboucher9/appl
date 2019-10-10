@@ -10,13 +10,13 @@
 
 #include <appl_types.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
 #include <markup/appl_markup_encoder.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 //
 //

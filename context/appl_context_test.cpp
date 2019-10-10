@@ -10,7 +10,7 @@
 
 #include <context/appl_context.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 static void appl_context_test_1_base(
     struct appl_context * const

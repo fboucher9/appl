@@ -13,7 +13,7 @@
 
 #include <appl.h>
 
-#include <appl_chunk_handle.h>
+#include <chunk/appl_chunk_handle.h>
 
 #include <object/appl_object_test.h>
 
@@ -61,11 +61,11 @@
 
 #include <library/appl_library_test.h>
 
-#include <appl_crc_test.h>
+#include <crc/appl_crc_test.h>
 
 #include <chunk/appl_chunk_test.h>
 
-#include <appl_node_test.h>
+#include <list/appl_node_test.h>
 
 #include <dict/appl_dict_test.h>
 

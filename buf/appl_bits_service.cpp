@@ -18,7 +18,7 @@
 
 #include <buf/appl_bits_handle.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <buf/appl_bits_descriptor.h>
 

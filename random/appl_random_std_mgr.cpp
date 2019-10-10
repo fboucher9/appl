@@ -24,7 +24,7 @@
 
 #include <random/appl_random_std_crypto.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <appl_context_handle.h>
 

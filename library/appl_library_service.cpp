@@ -26,11 +26,11 @@
 
 #include <appl_allocator_handle.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_buf0.h>
+#include <buf/appl_buf0.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 #include <library/appl_library_node.h>
 

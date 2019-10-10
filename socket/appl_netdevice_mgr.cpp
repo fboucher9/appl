@@ -16,9 +16,9 @@
 
 #include <socket/appl_netdevice_handle.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 //
 //

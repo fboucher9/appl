@@ -6,11 +6,11 @@
 
 #include <appl_status.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <buf/appl_bytes_descriptor.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 //
 //

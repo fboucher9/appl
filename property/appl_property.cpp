@@ -6,7 +6,7 @@
 
 #include <appl_status.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <property/appl_property_types.h>
 
@@ -16,7 +16,7 @@
 
 #include <property/appl_property.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <misc/appl_assert_cplusplus.h>
 

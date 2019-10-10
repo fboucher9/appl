@@ -14,7 +14,7 @@
 
 #include <buf/appl_bits.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <buf/appl_bits_descriptor.h>
 
@@ -22,9 +22,9 @@
 
 #include <buf/appl_bits_custom.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 //
 //

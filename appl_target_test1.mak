@@ -45,9 +45,9 @@ test_appl-deps = \
     log/appl_log_test.cpp \
     library/appl_library_test.cpp \
     timer/appl_timer_test.cpp \
-    appl_crc_test.cpp \
+    crc/appl_crc_test.cpp \
     chunk/appl_chunk_test.cpp \
-    appl_node_test.cpp \
+    list/appl_node_test.cpp \
     dict/appl_dict_test.cpp \
     queue/appl_queue_test.cpp \
     thread/appl_thread_test.cpp \

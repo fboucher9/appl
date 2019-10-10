@@ -28,9 +28,9 @@
 
 #endif /* #if defined APPL_DEBUG */
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 /* Unique identifier for appl_socket_property structure */
 static unsigned long int const APPL_SOCKET_PROPERTY_GUID = 0x77ca3c76ul;

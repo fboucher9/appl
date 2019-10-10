@@ -14,7 +14,7 @@
 
 #include <random/appl_random_pseudo.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <appl_allocator_handle.h>
 

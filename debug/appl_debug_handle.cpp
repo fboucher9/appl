@@ -20,11 +20,11 @@
 
 #include <debug/appl_debug.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_buf0.h>
+#include <buf/appl_buf0.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 #include <misc/appl_assert_cplusplus.h>
 

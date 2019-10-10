@@ -10,9 +10,9 @@
 
 #include <appl_object.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
-#include <appl_node.h>
+#include <list/appl_node.h>
 
 /* Assert compiler */
 #include <misc/appl_assert_cplusplus.h>

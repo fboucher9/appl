@@ -83,13 +83,13 @@ enum guard_appl_h
 
 #include <appl_status.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_buf0.h>
+#include <buf/appl_buf0.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
-#include <appl_tree.h>
+#include <tree/appl_tree.h>
 
 #include <appl_object_handle.h>
 
@@ -181,13 +181,13 @@ enum guard_appl_h
 
 #if defined(APPL_CONFIG_WITH_CLOCK)
 
-#include <appl_clock_handle.h>
+#include <clock/appl_clock_handle.h>
 
 #endif /* #if defined(APPL_CONFIG_WITH_CLOCK) */
 
 #if defined(APPL_CONFIG_WITH_ENV)
 
-#include <appl_env_handle.h>
+#include <env/appl_env_handle.h>
 
 #endif /* #if defined(APPL_CONFIG_WITH_ENV) */
 

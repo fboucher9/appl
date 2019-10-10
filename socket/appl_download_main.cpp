@@ -14,9 +14,9 @@
 
 #include <appl_test.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 //
 //

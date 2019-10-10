@@ -43,7 +43,7 @@ Description:
 
 #include <socket/appl_address_std_node.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <socket/appl_address_descriptor.h>
 
@@ -51,9 +51,9 @@ Description:
 
 #include <property/appl_property.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
-#include <appl_buf0.h>
+#include <buf/appl_buf0.h>
 
 #include <appl_allocator_handle.h>
 

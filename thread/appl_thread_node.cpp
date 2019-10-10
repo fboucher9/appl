@@ -12,7 +12,7 @@
 
 #include <thread/appl_thread_node.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 /* Assert compiler */
 #include <misc/appl_assert_cplusplus.h>

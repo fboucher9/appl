@@ -16,11 +16,11 @@
 
 #include <appl_object.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
 #include <queue/appl_queue_impl.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 //
 //

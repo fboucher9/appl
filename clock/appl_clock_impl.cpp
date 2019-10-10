@@ -10,9 +10,9 @@
 
 #include <clock/appl_clock_impl.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 #if defined APPL_OS_LINUX
 

@@ -38,7 +38,7 @@
 
 #include <socket/appl_address_std_node.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 #include <socket/appl_poll_descriptor.h>
 
@@ -48,17 +48,17 @@
 
 #include <context/appl_context.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_buf0.h>
+#include <buf/appl_buf0.h>
 
 #include <socket/appl_address_descriptor.h>
 
 #include <socket/appl_address_family.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
-#include <appl_buf_iterator.h>
+#include <buf/appl_buf_iterator.h>
 
 //
 //

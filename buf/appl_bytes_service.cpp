@@ -14,7 +14,7 @@
 
 #include <appl_object.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <buf/appl_bytes_descriptor.h>
 
@@ -26,7 +26,7 @@
 
 #include <buf/appl_bytes_mem.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <appl_heap_handle.h>
 

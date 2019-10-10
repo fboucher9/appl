@@ -26,7 +26,7 @@
 
 #include <appl_status.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <appl_types.h>
 
@@ -38,7 +38,7 @@
 
 #include <heap/appl_heap.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
 #include <mutex/appl_mutex_impl.h>
 
@@ -46,7 +46,7 @@
 
 #include <backtrace/appl_backtrace_impl.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 //
 //

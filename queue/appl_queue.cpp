@@ -10,13 +10,13 @@
 
 #include <appl_queue_handle.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
 #include <appl_object.h>
 
 #include <queue/appl_queue.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 //
 //

@@ -18,7 +18,7 @@ appl_target_base.mak-included := 1
 appl_base-deps := \
     appl.cpp \
     appl_status.cpp \
-    appl_tree.cpp \
+    tree/appl_tree.cpp \
     binary_heap/appl_binary_heap.cpp \
     socket/appl_address_handle.cpp \
     socket/appl_address_node.cpp \
@@ -71,8 +71,8 @@ appl_base-deps := \
     context/appl_context_service.cpp \
     context/appl_context_std.cpp \
     appl_coverage.cpp \
-    appl_crc16.cpp \
-    appl_crc32.cpp \
+    crc/appl_crc16.cpp \
+    crc/appl_crc32.cpp \
     debug/appl_debug.cpp \
     debug/appl_debug_handle.cpp \
     debug/appl_debug_std.cpp \
@@ -129,7 +129,7 @@ appl_base-deps := \
     library/appl_library_w32_node.cpp \
     library/appl_library_std_mgr.cpp \
     library/appl_library_std_node.cpp \
-    appl_list.cpp \
+    list/appl_list.cpp \
     log/appl_log_handle.cpp \
     log/appl_log_service.cpp \
     log/appl_log.cpp \
@@ -159,8 +159,8 @@ appl_base-deps := \
     socket/appl_netdevice_mgr.cpp \
     socket/appl_netdevice_std.cpp \
     socket/appl_netdevice_w32.cpp \
-    appl_node.cpp \
-    appl_node_iterator.cpp \
+    list/appl_node.cpp \
+    list/appl_node_iterator.cpp \
     object/appl_object.cpp \
     object/appl_object_handle.cpp \
     object/appl_object_service.cpp \

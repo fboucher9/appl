@@ -8,15 +8,15 @@
 
 #include <env/appl_env_main.h>
 
-#include <appl_env_handle.h>
+#include <env/appl_env_handle.h>
 
 #include <appl_options_handle.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <appl_test.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 //
 //

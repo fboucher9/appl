@@ -8,7 +8,7 @@
 
 #include <appl_types.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
 #include <heap/appl_heap_primary.h>
 

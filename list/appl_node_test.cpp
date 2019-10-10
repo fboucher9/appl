@@ -4,7 +4,7 @@
 
 */
 
-#include <appl_node_test.h>
+#include <list/appl_node_test.h>
 
 #include <appl_status.h>
 
@@ -12,15 +12,15 @@
 
 #include <appl_object.h>
 
-#include <appl_node.h>
+#include <list/appl_node.h>
 
-#include <appl_node_iterator.h>
+#include <list/appl_node_iterator.h>
 
 #include <appl_heap_handle.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 //
 //

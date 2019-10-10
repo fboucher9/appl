@@ -4,11 +4,11 @@
 
 */
 
-#include <appl_buf_iterator.h>
+#include <buf/appl_buf_iterator.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <string.h>
 

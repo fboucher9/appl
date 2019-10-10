@@ -8,13 +8,13 @@
 
 #include <timer/appl_timer_test.h>
 
-#include <appl_node.h>
+#include <list/appl_node.h>
 
 #include <timer/appl_timer_node.h>
 
 #include <timer/appl_timer_mgr.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <stdio.h>
 

@@ -16,9 +16,9 @@
 
 #include <url/appl_percent.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_buf0.h>
+#include <buf/appl_buf0.h>
 
 //
 //

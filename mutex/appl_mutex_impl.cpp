@@ -20,7 +20,7 @@
 #include <debug/appl_debug_impl.h>
 #endif /* #if defined APPL_DEBUG */
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #if defined APPL_HAVE_COVERAGE
 #include <appl_coverage.h>

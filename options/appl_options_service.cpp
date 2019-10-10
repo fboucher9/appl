@@ -16,7 +16,7 @@
 
 #include <appl_context_handle.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
 #include <options/appl_options_std.h>
 

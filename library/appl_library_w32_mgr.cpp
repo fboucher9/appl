@@ -26,7 +26,7 @@
 
 #include <library/appl_library_w32_mgr.h>
 
-#include <appl_buf0.h>
+#include <buf/appl_buf0.h>
 
 #include <context/appl_context.h>
 

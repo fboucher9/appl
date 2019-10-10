@@ -20,7 +20,7 @@
 
 #include <appl_object.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
 #include <allocator/appl_allocator.h>
 
@@ -32,7 +32,7 @@
 
 #include <pool/appl_pool_std.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <appl_allocator_handle.h>
 

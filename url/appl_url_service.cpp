@@ -21,11 +21,11 @@ Description:
 
 #include <url/appl_url.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
 #include <url/appl_url_std.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <appl_context_handle.h>
 

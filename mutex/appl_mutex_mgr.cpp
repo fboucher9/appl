@@ -12,7 +12,7 @@
 
 #include <mutex/appl_mutex_mgr.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #if defined APPL_DEBUG
 #include <appl_debug_handle.h>

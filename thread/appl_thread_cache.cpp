@@ -20,11 +20,11 @@ Comments:
 
 #include <appl_thread_cache.h>
 
-#include <appl_node.h>
+#include <list/appl_node.h>
 
 #include <context/appl_context.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <thread/appl_thread_node.h>
 
@@ -46,15 +46,15 @@ Comments:
 
 #include <appl_queue_handle.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
-#include <appl_clock_handle.h>
+#include <clock/appl_clock_handle.h>
 
 #if defined APPL_DEBUG
 #include <appl_debug_handle.h>
 #endif /* #if defined APPL_DEBUG */
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 class appl_thread_cache_mgr;
 

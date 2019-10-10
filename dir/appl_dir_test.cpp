@@ -8,7 +8,7 @@
 
 #include <dir/appl_dir_handle.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <dir/appl_dir_descriptor.h>
 
@@ -20,7 +20,7 @@
 
 #include <appl_heap_handle.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <appl_test.h>
 

@@ -26,7 +26,7 @@
 
 #include <heap/appl_heap_std.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
 #if defined APPL_OS_LINUX
 #include <pthread.h>

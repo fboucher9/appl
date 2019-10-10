@@ -12,7 +12,7 @@
 
 #include <allocator/appl_allocator.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #if defined APPL_DEBUG
 

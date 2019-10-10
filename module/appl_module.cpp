@@ -18,15 +18,15 @@
 
 #include <module/appl_packet.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <appl_allocator_handle.h>
 
 #include <file/appl_file_node.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 /* Assert compiler */
 #include <misc/appl_assert_cplusplus.h>

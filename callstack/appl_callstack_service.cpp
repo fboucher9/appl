@@ -12,17 +12,17 @@
 
 #include <appl_status.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_buf0.h>
+#include <buf/appl_buf0.h>
 
-#include <appl_str.h>
+#include <buf/appl_str.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
-#include <appl_clock_handle.h>
+#include <clock/appl_clock_handle.h>
 
 #define APPL_CALLSTACK_FRAMES (64u)
 

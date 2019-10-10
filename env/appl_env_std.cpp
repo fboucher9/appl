@@ -30,11 +30,11 @@
 
 #include <appl_context_handle.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_buf0.h>
+#include <buf/appl_buf0.h>
 
 #include <appl_validate.h>
 

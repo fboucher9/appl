@@ -12,7 +12,7 @@
 
 #include <dict/appl_dict.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
 #include <dict/appl_dict_std.h>
 
@@ -20,13 +20,13 @@
 
 #include <appl_object_handle.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <appl_allocator_handle.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_crc16.h>
+#include <crc/appl_crc16.h>
 
 #include <appl_string_handle.h>
 

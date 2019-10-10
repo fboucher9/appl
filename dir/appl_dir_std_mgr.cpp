@@ -18,11 +18,11 @@
 
 #include <dir/appl_dir_std_mgr.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <dir/appl_dir_descriptor.h>
 
-#include <appl_buf0.h>
+#include <buf/appl_buf0.h>
 
 #include <sys/types.h>
 
@@ -36,7 +36,7 @@
 
 #endif /* #if defined APPL_DEBUG */
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 //
 //

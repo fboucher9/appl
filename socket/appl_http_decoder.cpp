@@ -18,17 +18,17 @@
 
 #include <appl_allocator_handle.h>
 
-#include <appl_chunk_handle.h>
+#include <chunk/appl_chunk_handle.h>
 
 #include <appl_heap_handle.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #if defined APPL_DEBUG
 #include <appl_debug_handle.h>
 #endif /* #if defined APPL_DEBUG */
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 //
 //

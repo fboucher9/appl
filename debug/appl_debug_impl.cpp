@@ -15,17 +15,17 @@ Description:
 
 #include <debug/appl_debug_impl.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <appl_status.h>
 
 #include <appl_predefines.h>
 
-#include <appl_buf0.h>
+#include <buf/appl_buf0.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
 #if defined APPL_OS_LINUX
 #include <signal.h>

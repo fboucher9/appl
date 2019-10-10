@@ -12,7 +12,7 @@
 
 #include <appl_object.h>
 
-#include <appl_node.h>
+#include <list/appl_node.h>
 
 #include <socket/appl_download_node.h>
 
@@ -26,7 +26,7 @@
 
 #include <appl_event_handle.h>
 
-#include <appl_clock_handle.h>
+#include <clock/appl_clock_handle.h>
 
 #include <socket/appl_address_property.h>
 
@@ -36,7 +36,7 @@
 
 #include <socket/appl_socket_handle.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <socket/appl_http_decoder.h>
 
@@ -44,7 +44,7 @@
 #include <debug/appl_debug_impl.h>
 #endif /* #if defined APPL_DEBUG */
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 //
 //

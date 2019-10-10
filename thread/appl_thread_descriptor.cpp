@@ -12,7 +12,7 @@
 
 #include <appl_object.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <thread/appl_thread_descriptor_impl.h>
 

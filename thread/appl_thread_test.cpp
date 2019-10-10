@@ -24,7 +24,7 @@
 
 #include <appl_heap_handle.h>
 
-#include <appl_clock_handle.h>
+#include <clock/appl_clock_handle.h>
 
 //
 //

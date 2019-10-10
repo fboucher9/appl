@@ -6,13 +6,13 @@
 
 #include <appl_status.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <appl_types.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
-#include <appl_mem.h>
+#include <buf/appl_mem.h>
 
 /*
 

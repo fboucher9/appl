@@ -10,7 +10,7 @@
 
 #include <buf/appl_bits_test.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <buf/appl_bits_descriptor.h>
 
@@ -26,11 +26,13 @@
 
 #include <buf/appl_bits_base.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <appl_heap_handle.h>
 
-#include <appl_mem.h>
+#include <buf/appl_mem.h>
+
+#include <appl_test.h>
 
 //
 //
@@ -86,6 +88,67 @@ enum appl_status
         e_status;
 
 } // s_produce_dummy()
+
+//
+//
+//
+static
+enum appl_status
+appl_bits_test_verify_value(
+    struct appl_bits * const
+        p_bits,
+    unsigned char const
+        i_count,
+    unsigned long int const
+        i_expect)
+{
+    enum appl_status
+        e_status;
+
+    unsigned long int
+        i_value;
+
+    e_status =
+        appl_bits_read(
+            p_bits,
+            i_count,
+            &(
+                i_value));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        if (
+            i_expect
+            == i_value)
+        {
+        }
+        else
+        {
+            appl_print0(
+                "bits verify expect ");
+
+            appl_print_lu(
+                i_expect);
+
+            appl_print0(
+                " got ");
+
+            appl_print_lu(
+                i_value);
+
+            appl_print0(
+                "\n");
+
+            e_status =
+                appl_status_fail;
+        }
+    }
+
+    return
+        e_status;
+}
 
 //
 //
@@ -461,6 +524,125 @@ void
                 p_context,
                 p_bits_base);
         }
+    }
+
+    {
+        int
+            e_result;
+
+        e_result =
+            1;
+
+        // Verify normal use cases
+        {
+            static unsigned char g_bits_read_normal[] =
+            {
+                0x5au, /* 01011010 */
+                0x5au, /* 01011010 */
+                0x5au, /* 01011010 */
+                0x5au, /* 01011010 */
+                0x5au, /* 01011010 */
+                0x5au, /* 01011010 */
+                0x5au, /* 01011010 */
+                0x5au  /* 01011010 */
+            };
+
+            struct appl_bits_descriptor
+                o_bits_descriptor;
+
+            o_bits_descriptor.e_type =
+                appl_bits_type_mem;
+
+            o_bits_descriptor.u.o_mem_descriptor.o_buf.o_min.pc_uchar =
+                g_bits_read_normal;
+
+            o_bits_descriptor.u.o_mem_descriptor.o_buf.o_max.pc_uchar =
+                g_bits_read_normal + sizeof(g_bits_read_normal);
+
+            e_status =
+                appl_bits_create(
+                    p_context,
+                    &(
+                        o_bits_descriptor),
+                    &(
+                        p_bits));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                if (
+                    appl_status_ok
+                    == appl_bits_test_verify_value(
+                        p_bits,
+                        2u,
+                        1ul))
+                {
+                }
+                else
+                {
+                    e_result =
+                        0;
+                }
+
+                if (
+                    appl_status_ok
+                    == appl_bits_test_verify_value(
+                        p_bits,
+                        3u,
+                        3ul))
+                {
+                }
+                else
+                {
+                    e_result =
+                        0;
+                }
+
+                if (
+                    appl_status_ok
+                    == appl_bits_test_verify_value(
+                        p_bits,
+                        5u,
+                        9ul))
+                {
+                }
+                else
+                {
+                    e_result =
+                        0;
+                }
+
+                if (
+                    appl_status_ok
+                    == appl_bits_test_verify_value(
+                        p_bits,
+                        7u,
+                        0x34ul))
+                {
+                }
+                else
+                {
+                    e_result =
+                        0;
+                }
+
+                appl_bits_destroy(
+                    p_bits);
+            }
+            else
+            {
+                e_result =
+                    0;
+            }
+        }
+
+        // Verify limit use cases
+
+        appl_print0(
+            e_result
+            ? "PASS\n"
+            : "FAIL\n");
     }
 
 } // appl_bits_test_1()

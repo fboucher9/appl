@@ -18,9 +18,9 @@ Usage:
 
 #include <string.h>
 
-#include <appl_buf_filter.h>
+#include <buf/appl_buf_filter.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 static
 void

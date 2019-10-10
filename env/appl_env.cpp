@@ -12,7 +12,7 @@
 
 #include <env/appl_env.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #if defined APPL_DEBUG
 #include <debug/appl_debug_impl.h>

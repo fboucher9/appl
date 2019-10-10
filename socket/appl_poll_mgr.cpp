@@ -14,9 +14,9 @@
 
 #include <appl_object.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
-#include <appl_node.h>
+#include <list/appl_node.h>
 
 #include <socket/appl_poll_mgr.h>
 
@@ -30,9 +30,9 @@
 
 #include <appl_allocator_handle.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_node_iterator.h>
+#include <list/appl_node_iterator.h>
 
 /* Assert compiler */
 #include <misc/appl_assert_cplusplus.h>

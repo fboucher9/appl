@@ -26,7 +26,7 @@
 
 #include <mutex/appl_mutex_std_node.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <appl_allocator_handle.h>
 

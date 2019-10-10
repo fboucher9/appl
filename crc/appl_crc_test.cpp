@@ -8,17 +8,17 @@
 
 #include <appl_predefines.h>
 
-#include <appl_crc_test.h>
+#include <crc/appl_crc_test.h>
 
-#include <appl_crc16.h>
+#include <crc/appl_crc16.h>
 
-#include <appl_crc32.h>
+#include <crc/appl_crc32.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 #include <appl_options_handle.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <appl_types.h>
 

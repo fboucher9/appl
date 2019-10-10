@@ -8,13 +8,13 @@
 
 #include <url/appl_percent.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
-#include <appl_buf_filter.h>
+#include <buf/appl_buf_filter.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 union write_context_ptr
 {

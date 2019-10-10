@@ -8,7 +8,7 @@
 
 #include <appl_status.h>
 
-#include <appl_list.h>
+#include <list/appl_list.h>
 
 #if defined APPL_OS_LINUX
 
@@ -28,7 +28,7 @@
 
 #include <heap/appl_heap_impl.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
 //
 //

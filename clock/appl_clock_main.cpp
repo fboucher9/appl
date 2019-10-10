@@ -12,13 +12,13 @@
 
 #include <appl_types.h>
 
-#include <appl_clock_handle.h>
+#include <clock/appl_clock_handle.h>
 
-#include <appl_convert.h>
+#include <misc/appl_convert.h>
 
-#include <appl_unused.h>
+#include <misc/appl_unused.h>
 
-#include <appl_buf.h>
+#include <buf/appl_buf.h>
 
 #include <appl_test.h>
 
