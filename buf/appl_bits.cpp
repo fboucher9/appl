@@ -10,7 +10,7 @@
 
 #include <appl_predefines.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <buf/appl_bits.h>
 

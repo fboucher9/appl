@@ -16,17 +16,17 @@
 
 #include <xlib/appl_xlib_service.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <xlib/appl_xlib.h>
 
 #include <context/appl_context.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 //
 //

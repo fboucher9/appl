@@ -8,7 +8,7 @@
 
 #include <appl_types.h>
 
-#include <appl_hash_handle.h>
+#include <hash/appl_hash_handle.h>
 
 #include <hash/appl_hash_service.h>
 

@@ -8,7 +8,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <list/appl_node.h>
 
@@ -16,7 +16,7 @@
 
 #include <log/appl_log_client.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 //
 //

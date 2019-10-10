@@ -8,11 +8,11 @@
 
 #include <appl_types.h>
 
-#include <appl_packet_handle.h>
+#include <module/appl_packet_handle.h>
 
-#include <appl_module_handle.h>
+#include <module/appl_module_handle.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <module/appl_module.h>
 
@@ -20,7 +20,7 @@
 
 #include <misc/appl_unused.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 #include <file/appl_file_node.h>
 

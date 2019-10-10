@@ -8,7 +8,7 @@
 
 #include <appl_types.h>
 
-#include <appl_timer_handle.h>
+#include <timer/appl_timer_handle.h>
 
 #include <timer/appl_timer_service.h>
 

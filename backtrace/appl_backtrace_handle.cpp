@@ -10,7 +10,7 @@
 
 #include <appl_types.h>
 
-#include <appl_backtrace_handle.h>
+#include <backtrace/appl_backtrace_handle.h>
 
 #include <backtrace/appl_backtrace_service.h>
 

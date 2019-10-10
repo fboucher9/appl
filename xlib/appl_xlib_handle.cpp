@@ -10,7 +10,7 @@
 
 #include <X11/Xlib.h>
 
-#include <appl_xlib_handle.h>
+#include <xlib/appl_xlib_handle.h>
 
 #include <xlib/appl_xlib_service.h>
 

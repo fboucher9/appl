@@ -8,15 +8,15 @@
 
 #include <appl_types.h>
 
-#include <appl_thread_descriptor.h>
+#include <thread/appl_thread_descriptor.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <buf/appl_buf.h>
 
 #include <thread/appl_thread_descriptor_impl.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 //
 //

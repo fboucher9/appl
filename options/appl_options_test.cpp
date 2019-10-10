@@ -8,15 +8,15 @@
 
 #include <options/appl_options_test.h>
 
-#include <appl_options_handle.h>
+#include <options/appl_options_handle.h>
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <options/appl_options.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 #include <misc/appl_convert.h>
 

@@ -14,7 +14,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <property/appl_property.h>
 
@@ -22,9 +22,9 @@
 
 #include <context/appl_context.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 #include <misc/appl_convert.h>
 

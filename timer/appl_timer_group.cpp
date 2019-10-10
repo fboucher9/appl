@@ -8,14 +8,14 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <timer/appl_timer_group.h>
 
 #include <misc/appl_unused.h>
 
 #if defined APPL_DEBUG
-#include <appl_debug_handle.h>
+#include <debug/appl_debug_handle.h>
 #endif /* #if defined APPL_DEBUG */
 
 //

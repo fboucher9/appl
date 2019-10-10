@@ -24,7 +24,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <file/appl_file_node.h>
 
@@ -32,7 +32,7 @@
 
 #include <buf/appl_buf.h>
 
-#include <appl_file_descriptor.h>
+#include <file/appl_file_descriptor.h>
 
 #include <file/appl_file_std_descriptor.h>
 
@@ -40,7 +40,7 @@
 
 #include <misc/appl_convert.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 struct appl_file_std_node_descriptor
 {

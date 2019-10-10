@@ -12,7 +12,7 @@
 
 #include <socket/appl_download_handle.h>
 
-#include <appl_test.h>
+#include <test/appl_test.h>
 
 #include <buf/appl_buf.h>
 

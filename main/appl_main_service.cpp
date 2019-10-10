@@ -8,15 +8,15 @@
 
 #include <appl_predefines.h>
 
-#include <appl_main.h>
+#include <main/appl_main.h>
 
 #include <main/appl_main_service.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
-#include <appl_options_handle.h>
+#include <options/appl_options_handle.h>
 
-#include <appl_object_handle.h>
+#include <object/appl_object_handle.h>
 
 #include <buf/appl_buf0.h>
 

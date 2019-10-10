@@ -8,17 +8,17 @@
 
 #include <appl_types.h>
 
-#include <appl_module_handle.h>
+#include <module/appl_module_handle.h>
 
 #include <module/appl_module_service.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <module/appl_module.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 /* Assert compiler */
 #include <misc/appl_assert_cplusplus.h>

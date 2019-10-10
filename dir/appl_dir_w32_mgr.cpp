@@ -14,7 +14,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <dir/appl_dir_mgr.h>
 
@@ -24,13 +24,13 @@
 
 #include <buf/appl_buf0.h>
 
-#include <appl_mem.h>
+#include <buf/appl_mem.h>
 
-#include <appl_str.h>
+#include <buf/appl_str.h>
 
 #include <dir/appl_dir_descriptor.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 #include <misc/appl_unused.h>
 

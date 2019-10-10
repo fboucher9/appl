@@ -12,29 +12,29 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <clock/appl_clock_handle.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 #include <clock/appl_clock.h>
 
 #if defined APPL_HAVE_COVERAGE
-#include <appl_coverage.h>
+#include <coverage/appl_coverage.h>
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
-#include <appl_coverage_test.h>
+#include <coverage/appl_coverage_test.h>
 
 #include <clock/appl_clock_main.h>
 
-#include <appl_test.h>
+#include <test/appl_test.h>
 
 #include <misc/appl_convert.h>
 
 #include <buf/appl_buf.h>
 
-#include <appl_options_handle.h>
+#include <options/appl_options_handle.h>
 
 struct appl_clock_test_context
 {

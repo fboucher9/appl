@@ -10,18 +10,18 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <allocator/appl_allocator.h>
 
 #include <heap/appl_heap.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
 #if defined APPL_HAVE_COVERAGE
-#include <appl_coverage.h>
+#include <coverage/appl_coverage.h>
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
 #include <heap/appl_heap_std.h>

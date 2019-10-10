@@ -18,7 +18,7 @@
 
 #include <buf/appl_bytes_handle.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <buf/appl_bytes.h>
 
@@ -26,7 +26,7 @@
 
 #include <buf/appl_mem.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 //
 //

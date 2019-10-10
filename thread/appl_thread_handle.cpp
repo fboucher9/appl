@@ -6,7 +6,7 @@
 
 #include <appl_status.h>
 
-#include <appl_thread_handle.h>
+#include <thread/appl_thread_handle.h>
 
 #include <thread/appl_thread_service.h>
 

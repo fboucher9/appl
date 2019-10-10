@@ -10,9 +10,9 @@
 
 #include <appl_predefines.h>
 
-#include <appl_url_types.h>
+#include <url/appl_url_types.h>
 
-#include <appl_url_handle.h>
+#include <url/appl_url_handle.h>
 
 #include <buf/appl_buf.h>
 
@@ -24,11 +24,11 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 #include <url/appl_url.h>
 

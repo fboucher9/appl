@@ -70,7 +70,7 @@ appl_base-deps := \
     context/appl_context_handle.cpp \
     context/appl_context_service.cpp \
     context/appl_context_std.cpp \
-    appl_coverage.cpp \
+    coverage/appl_coverage.cpp \
     crc/appl_crc16.cpp \
     crc/appl_crc32.cpp \
     debug/appl_debug.cpp \
@@ -164,14 +164,14 @@ appl_base-deps := \
     object/appl_object.cpp \
     object/appl_object_handle.cpp \
     object/appl_object_service.cpp \
-    appl_once.cpp \
+    thread/appl_once.cpp \
     options/appl_options.cpp \
     options/appl_options_std.cpp \
     options/appl_options_handle.cpp \
     options/appl_options_service.cpp \
-    appl_refcount.cpp \
-    appl_refcount_handle.cpp \
-    appl_refcount_service.cpp \
+    refcount/appl_refcount.cpp \
+    refcount/appl_refcount_handle.cpp \
+    refcount/appl_refcount_service.cpp \
     pool/appl_pool.cpp \
     pool/appl_pool_std.cpp \
     pool/appl_pool_mgr.cpp \
@@ -231,7 +231,7 @@ appl_base-deps := \
     url/appl_url.cpp \
     url/appl_url_std.cpp \
     url/appl_percent.cpp \
-    appl_validate.cpp \
+    coverage/appl_validate.cpp \
     xlib/appl_xlib.cpp \
     xlib/appl_xlib_std.cpp \
     xlib/appl_xlib_handle.cpp \

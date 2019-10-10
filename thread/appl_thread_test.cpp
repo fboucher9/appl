@@ -10,19 +10,19 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <thread/appl_thread_mgr.h>
 
 #include <thread/appl_thread_node.h>
 
-#include <appl_thread_descriptor.h>
+#include <thread/appl_thread_descriptor.h>
 
-#include <appl_thread_handle.h>
+#include <thread/appl_thread_handle.h>
 
-#include <appl_thread_property.h>
+#include <thread/appl_thread_property.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 #include <clock/appl_clock_handle.h>
 

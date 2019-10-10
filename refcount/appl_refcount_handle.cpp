@@ -2,9 +2,9 @@
 
 #include <appl_status.h>
 
-#include <appl_refcount_handle.h>
+#include <refcount/appl_refcount_handle.h>
 
-#include <appl_refcount_service.h>
+#include <refcount/appl_refcount_service.h>
 
 //
 //

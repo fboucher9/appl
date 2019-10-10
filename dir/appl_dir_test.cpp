@@ -14,15 +14,15 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <dir/appl_dir_mgr.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 #include <misc/appl_unused.h>
 
-#include <appl_test.h>
+#include <test/appl_test.h>
 
 //
 //

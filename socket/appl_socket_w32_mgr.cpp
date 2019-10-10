@@ -16,19 +16,19 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <socket/appl_socket_mgr.h>
 
 #include <socket/appl_socket_w32_mgr.h>
 
-#include <appl_socket_descriptor.h>
+#include <socket/appl_socket_descriptor.h>
 
 #include <socket/appl_socket_node.h>
 
 #include <socket/appl_socket_w32_node.h>
 
-#include <appl_address_property.h>
+#include <socket/appl_address_property.h>
 
 #include <socket/appl_address_node.h>
 
@@ -36,7 +36,7 @@
 
 #include <misc/appl_unused.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 #include <context/appl_context.h>
 

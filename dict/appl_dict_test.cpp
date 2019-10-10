@@ -8,15 +8,15 @@
 
 #include <appl_status.h>
 
-#include <appl_dict_handle.h>
+#include <dict/appl_dict_handle.h>
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <dict/appl_dict.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 //
 //

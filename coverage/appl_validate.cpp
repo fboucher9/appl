@@ -6,10 +6,10 @@
 
 #include <appl_status.h>
 
-#include <appl_validate.h>
+#include <coverage/appl_validate.h>
 
 #if defined APPL_HAVE_COVERAGE
-#include <appl_coverage.h>
+#include <coverage/appl_coverage.h>
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
 #if defined APPL_DEBUG

@@ -12,7 +12,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <buf/appl_bits.h>
 
@@ -28,7 +28,7 @@
 
 #include <buf/appl_bits_mem.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 //
 //

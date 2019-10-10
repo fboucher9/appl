@@ -10,11 +10,11 @@
 
 #include <appl_predefines.h>
 
-#include <appl_debug_handle.h>
+#include <debug/appl_debug_handle.h>
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <context/appl_context.h>
 

@@ -13,7 +13,7 @@ Description:
 
 #include <appl_status.h>
 
-#include <appl_event_handle.h>
+#include <event/appl_event_handle.h>
 
 #include <event/appl_event_service.h>
 

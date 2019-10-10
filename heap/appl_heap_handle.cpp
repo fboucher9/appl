@@ -8,15 +8,15 @@
 
 #include <appl_types.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 #include <heap/appl_heap_service.h>
 
-#include <appl_validate.h>
+#include <coverage/appl_validate.h>
 
 /*
 

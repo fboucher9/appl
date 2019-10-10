@@ -10,22 +10,22 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <socket/appl_http_decoder.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 #include <chunk/appl_chunk_handle.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 #include <buf/appl_buf.h>
 
 #if defined APPL_DEBUG
-#include <appl_debug_handle.h>
+#include <debug/appl_debug_handle.h>
 #endif /* #if defined APPL_DEBUG */
 
 #include <misc/appl_unused.h>

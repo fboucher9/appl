@@ -6,13 +6,13 @@
 
 #include <appl_status.h>
 
-#include <appl_thread_property.h>
+#include <thread/appl_thread_property.h>
 
-#include <appl_property_handle.h>
+#include <property/appl_property_handle.h>
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <property/appl_property_types.h>
 

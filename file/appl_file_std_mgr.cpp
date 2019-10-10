@@ -8,7 +8,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <file/appl_file_mgr.h>
 
@@ -18,9 +18,9 @@
 
 #include <file/appl_file_std_node.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
-#include <appl_pool_handle.h>
+#include <pool/appl_pool_handle.h>
 
 #include <misc/appl_assert_cplusplus.h>
 

@@ -8,13 +8,13 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
-#include <appl_refcount.h>
+#include <refcount/appl_refcount.h>
 
-#include <appl_object_handle.h>
+#include <object/appl_object_handle.h>
 
-#include <appl_mutex_handle.h>
+#include <mutex/appl_mutex_handle.h>
 
 //
 //

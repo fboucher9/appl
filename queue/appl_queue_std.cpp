@@ -8,9 +8,9 @@
 
 #include <appl_types.h>
 
-#include <appl_queue_handle.h>
+#include <queue/appl_queue_handle.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <list/appl_list.h>
 
@@ -20,7 +20,7 @@
 
 #include <queue/appl_queue_std.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 //
 //

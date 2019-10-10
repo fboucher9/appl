@@ -8,21 +8,21 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <url/appl_url.h>
 
 #include <list/appl_list.h>
 
-#include <appl_url_types.h>
+#include <url/appl_url_types.h>
 
 #include <url/appl_url_std.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 #include <buf/appl_buf.h>
 

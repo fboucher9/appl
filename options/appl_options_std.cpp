@@ -12,15 +12,15 @@
 
 #include <list/appl_list.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <options/appl_options.h>
 
 #include <options/appl_options_std.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 #include <buf/appl_buf0.h>
 
@@ -28,7 +28,7 @@
 
 #include <misc/appl_unused.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 #include <buf/appl_buf.h>
 

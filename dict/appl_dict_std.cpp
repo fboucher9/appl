@@ -8,7 +8,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <dict/appl_dict.h>
 
@@ -16,21 +16,21 @@
 
 #include <dict/appl_dict_std.h>
 
-#include <appl_hash_handle.h>
+#include <hash/appl_hash_handle.h>
 
-#include <appl_object_handle.h>
+#include <object/appl_object_handle.h>
 
 #include <misc/appl_unused.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 #include <buf/appl_buf.h>
 
 #include <crc/appl_crc16.h>
 
-#include <appl_string_handle.h>
+#include <string/appl_string_handle.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
 /*
 

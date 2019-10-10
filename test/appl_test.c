@@ -31,7 +31,7 @@
 
 #include <xlib/appl_xlib_test.h>
 
-#include <appl_test_prompt.h>
+#include <test/appl_test_prompt.h>
 
 #include <mutex/appl_mutex_test.h>
 
@@ -109,7 +109,7 @@
 
 #include <dir/appl_dir_test.h>
 
-#include <appl_test.h>
+#include <test/appl_test.h>
 
 void
 appl_thread_cache_test(

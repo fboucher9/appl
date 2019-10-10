@@ -6,7 +6,7 @@
 
 #include <appl_status.h>
 
-#include <appl_library_handle.h>
+#include <library/appl_library_handle.h>
 
 #include <library/appl_library_service.h>
 

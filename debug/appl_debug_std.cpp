@@ -14,13 +14,13 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <debug/appl_debug.h>
 
 #include <debug/appl_debug_std.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 #include <debug/appl_debug_impl.h>
 

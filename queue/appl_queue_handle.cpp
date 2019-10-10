@@ -8,7 +8,7 @@
 
 #include <appl_types.h>
 
-#include <appl_queue_handle.h>
+#include <queue/appl_queue_handle.h>
 
 #include <queue/appl_queue_service.h>
 

@@ -6,7 +6,7 @@
 
 #if defined APPL_HAVE_COVERAGE
 
-#include <appl_coverage.h>
+#include <coverage/appl_coverage.h>
 
 static unsigned long int g_coverage_count = 0ul;
 

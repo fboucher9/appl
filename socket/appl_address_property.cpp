@@ -8,15 +8,15 @@
 
 #include <socket/appl_address_property.h>
 
-#include <appl_property_handle.h>
+#include <property/appl_property_handle.h>
 
 #include <buf/appl_buf.h>
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
-#include <appl_object_handle.h>
+#include <object/appl_object_handle.h>
 
 #include <property/appl_property_types.h>
 
@@ -32,7 +32,7 @@
 
 #include <misc/appl_convert.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 #define APPL_ADDRESS_PROPERTY_GUID (0xe0bfd095ul)
 

@@ -12,7 +12,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <context/appl_context.h>
 
@@ -22,7 +22,7 @@
 
 #include <mutex/appl_mutex_node.h>
 
-#include <appl_validate.h>
+#include <coverage/appl_validate.h>
 
 //
 //

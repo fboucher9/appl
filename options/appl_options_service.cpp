@@ -10,11 +10,11 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <options/appl_options.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
 #include <list/appl_list.h>
 

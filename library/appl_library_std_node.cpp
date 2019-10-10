@@ -14,19 +14,19 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <library/appl_library_node.h>
 
 #include <library/appl_library_std_node.h>
 
-#include <appl_library_handle.h>
+#include <library/appl_library_handle.h>
 
 #include <buf/appl_buf0.h>
 
 #include <misc/appl_convert.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 //
 //

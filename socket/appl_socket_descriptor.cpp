@@ -10,13 +10,13 @@
 
 #include <socket/appl_socket_descriptor.h>
 
-#include <appl_property_handle.h>
+#include <property/appl_property_handle.h>
 
-#include <appl_object_handle.h>
+#include <object/appl_object_handle.h>
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <property/appl_property_types.h>
 
@@ -24,7 +24,7 @@
 
 #if defined APPL_DEBUG
 
-#include <appl_debug_handle.h>
+#include <debug/appl_debug_handle.h>
 
 #endif /* #if defined APPL_DEBUG */
 

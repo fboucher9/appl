@@ -6,7 +6,7 @@
 
 #include <appl.h>
 
-#include <appl_test_prompt.h>
+#include <test/appl_test_prompt.h>
 
 #include <options/appl_options_test.h>
 

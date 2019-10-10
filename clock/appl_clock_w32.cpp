@@ -14,7 +14,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <clock/appl_clock.h>
 
@@ -24,7 +24,7 @@
 
 #include <misc/appl_convert.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 //
 //

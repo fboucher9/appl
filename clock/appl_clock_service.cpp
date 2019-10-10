@@ -12,13 +12,13 @@
 
 #include <clock/appl_clock_service.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <clock/appl_clock.h>
 
 #include <context/appl_context.h>
 
-#include <appl_validate.h>
+#include <coverage/appl_validate.h>
 
 /* Assert compiler */
 #include <misc/appl_assert_cplusplus.h>

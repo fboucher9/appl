@@ -4,7 +4,7 @@
 
 */
 
-#include <appl_coverage_test.h>
+#include <coverage/appl_coverage_test.h>
 
 //
 //

@@ -16,9 +16,9 @@ Comments:
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
-#include <appl_thread_cache.h>
+#include <thread/appl_thread_cache.h>
 
 #include <list/appl_node.h>
 
@@ -30,28 +30,28 @@ Comments:
 
 #include <thread/appl_thread_mgr.h>
 
-#include <appl_mutex_handle.h>
+#include <mutex/appl_mutex_handle.h>
 
 #include <mutex/appl_mutex_node.h>
 
 #include <mutex/appl_mutex_mgr.h>
 
-#include <appl_thread_descriptor.h>
+#include <thread/appl_thread_descriptor.h>
 
 #include <allocator/appl_allocator.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 #include <queue/appl_queue.h>
 
-#include <appl_queue_handle.h>
+#include <queue/appl_queue_handle.h>
 
 #include <list/appl_list.h>
 
 #include <clock/appl_clock_handle.h>
 
 #if defined APPL_DEBUG
-#include <appl_debug_handle.h>
+#include <debug/appl_debug_handle.h>
 #endif /* #if defined APPL_DEBUG */
 
 #include <buf/appl_buf.h>

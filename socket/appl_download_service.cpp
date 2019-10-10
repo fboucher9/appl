@@ -14,7 +14,7 @@
 
 #include <socket/appl_download_service.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <context/appl_context.h>
 

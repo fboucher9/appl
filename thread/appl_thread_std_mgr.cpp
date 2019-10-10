@@ -8,15 +8,15 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <thread/appl_thread_mgr.h>
 
 #include <thread/appl_thread_std_mgr.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
-#include <appl_pool_handle.h>
+#include <pool/appl_pool_handle.h>
 
 //
 //

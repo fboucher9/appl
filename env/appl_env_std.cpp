@@ -16,19 +16,19 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <env/appl_env.h>
 
 #include <env/appl_env_std.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
-#include <appl_object_handle.h>
+#include <object/appl_object_handle.h>
 
-#include <appl_string_handle.h>
+#include <string/appl_string_handle.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
 #include <misc/appl_convert.h>
 
@@ -36,7 +36,7 @@
 
 #include <buf/appl_buf0.h>
 
-#include <appl_validate.h>
+#include <coverage/appl_validate.h>
 
 //
 //

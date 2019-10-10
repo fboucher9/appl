@@ -8,7 +8,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <allocator/appl_allocator.h>
 
@@ -24,11 +24,11 @@
 
 #if defined APPL_HAVE_COVERAGE
 
-#include <appl_coverage.h>
+#include <coverage/appl_coverage.h>
 
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
-#include <appl_validate.h>
+#include <coverage/appl_validate.h>
 
 #include <stdlib.h>
 

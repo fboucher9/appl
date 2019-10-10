@@ -6,13 +6,13 @@
 
 #include <appl_status.h>
 
-#include <appl_refcount_service.h>
+#include <refcount/appl_refcount_service.h>
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
-#include <appl_refcount.h>
+#include <refcount/appl_refcount.h>
 
 //
 //

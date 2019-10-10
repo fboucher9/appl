@@ -8,7 +8,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <event/appl_event_mgr.h>
 
@@ -16,12 +16,12 @@
 
 #include <event/appl_event_service.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
-#include <appl_pool_handle.h>
+#include <pool/appl_pool_handle.h>
 
 #if defined APPL_HAVE_COVERAGE
-#include <appl_coverage.h>
+#include <coverage/appl_coverage.h>
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
 /* Assert compiler */

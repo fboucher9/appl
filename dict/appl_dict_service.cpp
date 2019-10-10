@@ -10,7 +10,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <dict/appl_dict.h>
 
@@ -18,7 +18,7 @@
 
 #include <dict/appl_dict_std.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
 //
 //

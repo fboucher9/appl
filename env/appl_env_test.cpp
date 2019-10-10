@@ -8,7 +8,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <env/appl_env.h>
 
@@ -16,19 +16,19 @@
 
 #include <env/appl_env_handle.h>
 
-#include <appl_string_handle.h>
+#include <string/appl_string_handle.h>
 
 #include <buf/appl_buf.h>
 
 #include <misc/appl_unused.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
-#include <appl_test.h>
+#include <test/appl_test.h>
 
 #include <env/appl_env_main.h>
 
-#include <appl_options_handle.h>
+#include <options/appl_options_handle.h>
 
 //
 //

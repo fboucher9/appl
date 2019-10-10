@@ -10,7 +10,7 @@
 
 #include <log/appl_log_handle.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <log/appl_log.h>
 

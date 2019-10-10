@@ -18,13 +18,13 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <pool/appl_pool_mgr.h>
 
 #include <allocator/appl_allocator.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 #include <pool/appl_pool.h>
 
@@ -32,11 +32,11 @@
 
 #include <mutex/appl_mutex_impl.h>
 
-#include <appl_pool_handle.h>
+#include <pool/appl_pool_handle.h>
 
 #include <pool/appl_pool_std.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
 /* Assert compiler */
 #include <misc/appl_assert_cplusplus.h>

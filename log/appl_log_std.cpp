@@ -10,7 +10,7 @@
 
 #include <log/appl_log_handle.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <log/appl_log.h>
 
@@ -18,7 +18,7 @@
 
 #include <log/appl_log_std.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 //
 //

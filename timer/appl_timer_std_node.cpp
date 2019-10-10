@@ -8,9 +8,9 @@
 
 #include <appl_types.h>
 
-#include <appl_timer_handle.h>
+#include <timer/appl_timer_handle.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <list/appl_node.h>
 
@@ -18,27 +18,27 @@
 
 #include <list/appl_list.h>
 
-#include <appl_mutex_handle.h>
+#include <mutex/appl_mutex_handle.h>
 
-#include <appl_thread_descriptor.h>
+#include <thread/appl_thread_descriptor.h>
 
 #include <property/appl_property_types.h>
 
 #include <property/appl_property.h>
 
-#include <appl_property_handle.h>
+#include <property/appl_property_handle.h>
 
-#include <appl_thread_handle.h>
+#include <thread/appl_thread_handle.h>
 
-#include <appl_event_handle.h>
+#include <event/appl_event_handle.h>
 
 #include <timer/appl_timer_std_node.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 #include <clock/appl_clock_handle.h>
 

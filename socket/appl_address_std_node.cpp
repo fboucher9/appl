@@ -37,7 +37,7 @@ Description:
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <socket/appl_address_node.h>
 
@@ -55,7 +55,7 @@ Description:
 
 #include <buf/appl_buf0.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 #include <socket/appl_address_family.h>
 

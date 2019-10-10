@@ -10,11 +10,11 @@
 
 #include <appl_types.h>
 
-#include <appl_timer_handle.h>
+#include <timer/appl_timer_handle.h>
 
 #include <timer/appl_timer_service.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <list/appl_node.h>
 

@@ -9,10 +9,10 @@
 #include <event/appl_event_test.h>
 
 #if defined APPL_HAVE_COVERAGE
-#include <appl_coverage.h>
+#include <coverage/appl_coverage.h>
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
-#include <appl_coverage_test.h>
+#include <coverage/appl_coverage_test.h>
 
 #include <event/appl_event_node.h>
 

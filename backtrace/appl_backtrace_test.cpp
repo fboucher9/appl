@@ -10,15 +10,15 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
-#include <appl_backtrace_handle.h>
+#include <backtrace/appl_backtrace_handle.h>
 
 #include <backtrace/appl_backtrace.h>
 
 #include <backtrace/appl_backtrace_test.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 //
 //

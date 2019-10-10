@@ -10,7 +10,7 @@
 
 #include <appl_types.h>
 
-#include <appl_pool_handle.h>
+#include <pool/appl_pool_handle.h>
 
 #include <pool/appl_pool_service.h>
 

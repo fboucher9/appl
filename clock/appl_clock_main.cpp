@@ -8,7 +8,7 @@
 
 #include <clock/appl_clock_main.h>
 
-#include <appl_options_handle.h>
+#include <options/appl_options_handle.h>
 
 #include <appl_types.h>
 
@@ -20,7 +20,7 @@
 
 #include <buf/appl_buf.h>
 
-#include <appl_test.h>
+#include <test/appl_test.h>
 
 //
 //

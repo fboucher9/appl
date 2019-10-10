@@ -2,7 +2,7 @@
 
 #include <appl_types.h>
 
-#include <appl_module_handle.h>
+#include <module/appl_module_handle.h>
 
 #include <module/appl_module_service.h>
 

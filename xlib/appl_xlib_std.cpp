@@ -16,7 +16,7 @@ Description:
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <X11/Xlib.h>
 
@@ -26,14 +26,14 @@ Description:
 
 #include <xlib/appl_xlib_std.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
-#include <appl_library_handle.h>
+#include <library/appl_library_handle.h>
 
-#include <appl_mutex_handle.h>
+#include <mutex/appl_mutex_handle.h>
 
 #if defined APPL_DEBUG
-#include <appl_debug_handle.h>
+#include <debug/appl_debug_handle.h>
 #endif /* #if defined APPL_DEBUG */
 
 //

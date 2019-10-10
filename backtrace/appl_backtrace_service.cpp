@@ -12,7 +12,7 @@
 
 #include <backtrace/appl_backtrace_service.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <backtrace/appl_backtrace.h>
 

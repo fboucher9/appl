@@ -18,7 +18,7 @@ target-list += test_appl
 test_appl-exports = appl.exports
 
 test_appl-deps = \
-    appl_test.c \
+    test/appl_test.c \
     hash/appl_hash_test.cpp \
     pool/appl_pool_test.cpp \
     thread/appl_thread_cache_test.c \
@@ -26,7 +26,7 @@ test_appl-deps = \
     binary_heap/appl_binary_heap_test.c \
     options/appl_options_test.cpp \
     xlib/appl_xlib_test.cpp \
-    appl_test_prompt.c \
+    test/appl_test_prompt.c \
     mutex/appl_mutex_test.cpp \
     clock/appl_clock_test.cpp \
     clock/appl_clock_main.cpp \
@@ -36,7 +36,7 @@ test_appl-deps = \
     env/appl_env_test.cpp \
     env/appl_env_main.cpp \
     heap/appl_heap_test.cpp \
-    appl_coverage_test.cpp \
+    coverage/appl_coverage_test.cpp \
     object/appl_object_test.cpp \
     allocator/appl_allocator_test.cpp \
     debug/appl_debug_test.cpp \

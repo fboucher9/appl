@@ -10,13 +10,13 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <buf/appl_buf.h>
 
 #include <string/appl_string.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
 //
 //

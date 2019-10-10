@@ -14,10 +14,10 @@
 
 #include <allocator/appl_placement.h>
 
-#include <appl_coverage_test.h>
+#include <coverage/appl_coverage_test.h>
 
 #if defined APPL_HAVE_COVERAGE
-#include <appl_coverage.h>
+#include <coverage/appl_coverage.h>
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
 #include <misc/appl_unused.h>

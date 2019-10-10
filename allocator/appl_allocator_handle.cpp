@@ -8,13 +8,13 @@
 
 #include <appl_types.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 #include <allocator/appl_allocator_service.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #if defined APPL_DEBUG
 
@@ -22,7 +22,7 @@
 
 #endif /* #if defined APPL_DEBUG */
 
-#include <appl_validate.h>
+#include <coverage/appl_validate.h>
 
 #include <misc/appl_unused.h>
 

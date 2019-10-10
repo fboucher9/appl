@@ -10,13 +10,13 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <list/appl_node.h>
 
 #include <list/appl_node_iterator.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 #include <list/appl_list.h>
 

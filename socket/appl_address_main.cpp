@@ -14,11 +14,11 @@
 
 #include <socket/appl_address_descriptor.h>
 
-#include <appl_test.h>
+#include <test/appl_test.h>
 
 #include <misc/appl_unused.h>
 
-#include <appl_options_handle.h>
+#include <options/appl_options_handle.h>
 
 #include <buf/appl_buf.h>
 

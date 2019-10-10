@@ -20,7 +20,7 @@
 
 #include <appl_predefines.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
 #include <buf/appl_buf.h>
 
@@ -28,7 +28,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <context/appl_context.h>
 
@@ -42,7 +42,7 @@
 
 #include <context/appl_context_std.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 #if defined APPL_DEBUG
 
@@ -162,7 +162,7 @@
 
 #include <pool/appl_pool_mgr.h>
 
-#include <appl_thread_cache.h>
+#include <thread/appl_thread_cache.h>
 
 #include <timer/appl_timer_mgr.h>
 
@@ -198,14 +198,14 @@
 
 #endif /* #if defined APPL_OS_Xx */
 
-#include <appl_once.h>
+#include <thread/appl_once.h>
 
 #include <misc/appl_convert.h>
 
 #include <misc/appl_unused.h>
 
 #if defined APPL_HAVE_COVERAGE
-#include <appl_coverage.h>
+#include <coverage/appl_coverage.h>
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
 extern

@@ -8,15 +8,15 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <mutex/appl_mutex_mgr.h>
 
 #include <mutex/appl_mutex_std_mgr.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
-#include <appl_pool_handle.h>
+#include <pool/appl_pool_handle.h>
 
 /* Assert compiler */
 #include <misc/appl_assert_cplusplus.h>

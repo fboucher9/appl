@@ -8,17 +8,17 @@
 
 #include <appl_status.h>
 
-#include <appl_property_handle.h>
+#include <property/appl_property_handle.h>
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <property/appl_property_types.h>
 
 #include <property/appl_property.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 //
 //

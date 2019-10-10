@@ -6,7 +6,7 @@
 
 #include <appl_status.h>
 
-#include <appl_dict_handle.h>
+#include <dict/appl_dict_handle.h>
 
 #include <dict/appl_dict_service.h>
 

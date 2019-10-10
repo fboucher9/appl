@@ -18,7 +18,7 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <list/appl_list.h>
 
@@ -28,15 +28,15 @@
 
 #include <mutex/appl_mutex_impl.h>
 
-#include <appl_pool_handle.h>
+#include <pool/appl_pool_handle.h>
 
 #include <pool/appl_pool_std.h>
 
 #include <misc/appl_unused.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
-#include <appl_heap_handle.h>
+#include <heap/appl_heap_handle.h>
 
 /* Assert compiler */
 #include <misc/appl_assert_cplusplus.h>

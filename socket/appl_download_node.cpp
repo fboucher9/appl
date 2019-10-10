@@ -10,21 +10,21 @@
 
 #include <socket/appl_download_handle.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <list/appl_node.h>
 
 #include <socket/appl_download_node.h>
 
-#include <appl_thread_property.h>
+#include <thread/appl_thread_property.h>
 
-#include <appl_thread_descriptor.h>
+#include <thread/appl_thread_descriptor.h>
 
-#include <appl_thread_handle.h>
+#include <thread/appl_thread_handle.h>
 
-#include <appl_mutex_handle.h>
+#include <mutex/appl_mutex_handle.h>
 
-#include <appl_event_handle.h>
+#include <event/appl_event_handle.h>
 
 #include <clock/appl_clock_handle.h>
 

@@ -12,21 +12,21 @@
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <random/appl_random_mgr.h>
 
 #include <random/appl_random_w32_mgr.h>
 
-#include <appl_random_handle.h>
+#include <random/appl_random_handle.h>
 
 #include <random/appl_random.h>
 
 #include <random/appl_random_w32_crypto.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
 //
 //

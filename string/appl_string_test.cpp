@@ -8,7 +8,7 @@
 
 #include <appl_status.h>
 
-#include <appl_string_handle.h>
+#include <string/appl_string_handle.h>
 
 //
 //

@@ -11,13 +11,13 @@ Description:
 
 #include <appl_status.h>
 
-#include <appl_url_types.h>
+#include <url/appl_url_types.h>
 
 #include <url/appl_url_service.h>
 
 #include <appl_types.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <url/appl_url.h>
 
@@ -27,9 +27,9 @@ Description:
 
 #include <misc/appl_unused.h>
 
-#include <appl_context_handle.h>
+#include <context/appl_context_handle.h>
 
-#include <appl_allocator_handle.h>
+#include <allocator/appl_allocator_handle.h>
 
 //
 //  Function: s_create()

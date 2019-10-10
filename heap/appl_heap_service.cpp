@@ -12,13 +12,13 @@
 
 #include <heap/appl_heap_service.h>
 
-#include <appl_object.h>
+#include <object/appl_object.h>
 
 #include <context/appl_context.h>
 
 #include <allocator/appl_allocator.h>
 
-#include <appl_validate.h>
+#include <coverage/appl_validate.h>
 
 //
 //
