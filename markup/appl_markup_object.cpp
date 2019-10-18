@@ -20,9 +20,93 @@
 
 #include <markup/appl_markup_object.h>
 
+#include <markup/appl_markup_element.h>
+
 #include <heap/appl_heap_handle.h>
 
 #include <misc/appl_unused.h>
+
+//
+//
+//
+class appl_markup_element_node : public appl_node
+{
+    public:
+
+        appl_markup_element_node(
+            struct appl_context * const
+                p_context);
+
+        virtual
+        ~appl_markup_element_node();
+
+        enum appl_status
+            f_init(void);
+
+        virtual
+        appl_size_t
+            v_cleanup(void);
+
+    protected:
+
+    private:
+
+        struct appl_markup_element
+            m_element;
+
+        appl_markup_element_node(
+            class appl_markup_element_node const & r);
+
+        class appl_markup_element_node &
+            operator =(
+                class appl_markup_element_node const & r);
+
+}; // class appl_markup_element_node
+
+
+//
+//
+//
+appl_markup_element_node::appl_markup_element_node(
+    struct appl_context * const
+        p_context) :
+    appl_node(
+        p_context),
+    m_element()
+{
+}
+
+//
+//
+//
+appl_markup_element_node::~appl_markup_element_node()
+{
+}
+
+
+//
+//
+//
+enum appl_status
+    appl_markup_element_node::f_init(void)
+{
+    return
+        appl_status_ok;
+
+} // f_init()
+
+
+//
+//
+//
+appl_size_t
+    appl_markup_element_node::v_cleanup(void)
+{
+    return
+        sizeof(class appl_markup_element_node);
+
+} // v_cleanup()
+
 
 //
 //
@@ -59,6 +143,9 @@ struct appl_markup_object : public appl_object
 
     private:
 
+        class appl_node
+            m_elements;
+
         // --
 
         appl_markup_object(
@@ -77,6 +164,8 @@ appl_markup_object::appl_markup_object(
     struct appl_context * const
         p_context) :
     appl_object(
+        p_context),
+    m_elements(
         p_context)
 {
 }
