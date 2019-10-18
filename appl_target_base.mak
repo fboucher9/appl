@@ -226,6 +226,12 @@ appl_base-deps := \
     timer/appl_timer_std_mgr.cpp \
     timer/appl_timer_std_group.cpp \
     timer/appl_timer_std_node.cpp \
+    trace/appl_trace_handle.cpp \
+    trace/appl_trace_service.cpp \
+    trace/appl_trace_mgr.cpp \
+    trace/appl_trace_std_mgr.cpp \
+    trace/appl_trace_client_list.cpp \
+    trace/appl_trace_client.cpp \
     url/appl_url_handle.cpp \
     url/appl_url_service.cpp \
     url/appl_url.cpp \
