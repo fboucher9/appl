@@ -164,8 +164,8 @@ class appl_context_std : public appl_context
         class appl_dir_mgr *
             m_dir_mgr;
 
-        void *
-            pv_padding[1u];
+        class appl_unique_mgr *
+            m_unique_mgr;
 
         /* -- */
 
@@ -256,7 +256,10 @@ class appl_context_std : public appl_context
         bool
             b_init_dir_mgr;
 
-#define PADDING (5)
+        bool
+            b_init_unique_mgr;
+
+#define PADDING (6)
 #include <misc/appl_padding.h>
 
         /* -- */
@@ -410,6 +413,12 @@ class appl_context_std : public appl_context
         void
             cleanup_dir_mgr(void);
 
+        enum appl_status
+            init_unique_mgr(void);
+
+        void
+            cleanup_unique_mgr(void);
+
         static
         void
             s_bootstrap(void);
@@ -535,6 +544,12 @@ class appl_context_std : public appl_context
             v_dir_mgr(
                 class appl_dir_mgr * * const
                     r_dir_mgr) const;
+
+        virtual
+        enum appl_status
+            v_unique_mgr(
+                class appl_unique_mgr * * const
+                    r_unique_mgr) const;
 
 #if defined APPL_DEBUG
         virtual

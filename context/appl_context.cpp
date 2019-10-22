@@ -477,6 +477,27 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_context::v_unique_mgr(
+        class appl_unique_mgr * * const
+            r_unique_mgr) const
+{
+    appl_unused(
+        r_unique_mgr);
+
+#if defined APPL_DEBUG
+    appl_debug_impl::s_print0(
+        "v_unique_mgr not implemented\n");
+#endif /* #if defined APPL_DEBUG */
+
+    return
+        appl_status_not_implemented;
+
+} // v_unique_mgr()
+
+//
+//
+//
 #if defined APPL_DEBUG
 enum appl_status
     appl_context::v_debug(

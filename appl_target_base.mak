@@ -18,6 +18,11 @@ appl_target_base.mak-included := 1
 appl_base-deps := \
     appl.cpp \
     appl_status.cpp \
+    unique/appl_unique_handle.cpp \
+    unique/appl_unique_service.cpp \
+    unique/appl_unique.cpp \
+    unique/appl_unique_mgr.cpp \
+    unique/appl_unique_std_mgr.cpp \
     tree/appl_tree.cpp \
     binary_heap/appl_binary_heap.cpp \
     socket/appl_address_handle.cpp \

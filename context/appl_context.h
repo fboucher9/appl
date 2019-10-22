@@ -200,6 +200,12 @@ struct appl_context : public appl_object
                 class appl_dir_mgr * * const
                     r_dir_mgr) const;
 
+        virtual
+        enum appl_status
+            v_unique_mgr(
+                class appl_unique_mgr * * const
+                    r_unique_mgr) const;
+
 #if defined APPL_DEBUG
         virtual
         enum appl_status

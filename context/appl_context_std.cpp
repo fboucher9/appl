@@ -198,6 +198,10 @@
 
 #endif /* #if defined APPL_OS_Xx */
 
+#include <unique/appl_unique_mgr.h>
+
+#include <unique/appl_unique_std_mgr.h>
+
 #include <thread/appl_once.h>
 
 #include <misc/appl_convert.h>
@@ -1689,6 +1693,69 @@ void
     }
 } // cleanup_dir_mgr()
 
+//
+//
+//
+enum appl_status
+    appl_context_std::init_unique_mgr(void)
+{
+    enum appl_status
+        e_status;
+
+#if defined APPL_DEBUG
+    appl_debug_impl::s_validate(
+        !b_init_unique_mgr,
+        "unique_mgr already initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+    class appl_unique_std_mgr *
+        p_unique_std_mgr;
+
+    e_status =
+        appl_new(
+            m_allocator,
+            &(
+                p_unique_std_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        m_unique_mgr =
+            p_unique_std_mgr;
+    }
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        b_init_unique_mgr =
+            true;
+    }
+
+    return
+        e_status;
+
+} // init_unique_mgr()
+
+//
+//
+//
+void
+    appl_context_std::cleanup_unique_mgr(void)
+{
+    if (
+        b_init_unique_mgr)
+    {
+        appl_delete(
+            m_allocator,
+            m_unique_mgr);
+
+        b_init_unique_mgr =
+            false;
+    }
+} // cleanup_unique_mgr()
+
 
 //
 //
@@ -1796,6 +1863,7 @@ appl_context_std::appl_context_std(
     , m_netdevice_mgr()
     , m_download_mgr()
     , m_dir_mgr()
+    , m_unique_mgr()
 #if defined APPL_DEBUG
     , m_heap_dbg()
     , m_debug()
@@ -1825,6 +1893,7 @@ appl_context_std::appl_context_std(
     , b_init_netdevice_mgr()
     , b_init_download_mgr()
     , b_init_dir_mgr()
+    , b_init_unique_mgr()
 {
     appl_unused(
         p_context);
@@ -1917,6 +1986,10 @@ appl_context_std::g_init_cleanup_items[] =
     {
         & appl_context_std::init_dir_mgr,
         & appl_context_std::cleanup_dir_mgr
+    },
+    {
+        & appl_context_std::init_unique_mgr,
+        & appl_context_std::cleanup_unique_mgr
     }
 #if defined APPL_HAVE_XLIB
     , {
@@ -2743,6 +2816,43 @@ enum appl_status
         e_status;
 
 } // v_dir_mgr()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_unique_mgr(
+        class appl_unique_mgr * * const
+            r_unique_mgr) const
+{
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_unique_mgr)
+    {
+        *(
+            r_unique_mgr) =
+            m_unique_mgr;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "unique_mgr not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // v_unique_mgr()
 
 //
 //
