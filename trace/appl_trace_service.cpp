@@ -82,12 +82,21 @@ enum appl_status
     appl_trace_service::s_message(
         struct appl_context * const
             p_context,
-        struct appl_trace_message const * const
-            p_trace_message)
+        struct appl_trace * const
+            p_trace,
+        int const
+            e_type,
+        char const * const
+            p_format0,
+        void * const
+            p_arguments)
 {
     appl_unused(
         p_context,
-        p_trace_message);
+        p_trace,
+        e_type,
+        p_format0,
+        p_arguments);
 
     return
         appl_raise_not_implemented();
@@ -123,34 +132,12 @@ enum appl_status
 //
 //
 enum appl_status
-appl_trace_service::s_stack_report_length(
-        struct appl_context * const
-            p_context,
-        unsigned long int * const
-            r_length)
-{
-    appl_unused(
-        p_context,
-        r_length);
-
-    return
-        appl_raise_not_implemented();
-
-} // s_stack_report_length()
-
-//
-//
-//
-enum appl_status
     appl_trace_service::s_stack_report(
         struct appl_context * const
-            p_context,
-        struct appl_buf * const
-            p_report_iterator)
+            p_context)
 {
     appl_unused(
-        p_context,
-        p_report_iterator);
+        p_context);
 
     return
         appl_raise_not_implemented();
@@ -161,34 +148,12 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_trace_service::s_profile_report_length(
-        struct appl_context * const
-            p_context,
-        unsigned long int * const
-            r_length)
-{
-    appl_unused(
-        p_context,
-        r_length);
-
-    return
-        appl_raise_not_implemented();
-
-} // s_profile_report_length()
-
-//
-//
-//
-enum appl_status
     appl_trace_service::s_profile_report(
         struct appl_context * const
-            p_context,
-        struct appl_buf * const
-            p_report_iterator)
+            p_context)
 {
     appl_unused(
-        p_context,
-        p_report_iterator);
+        p_context);
 
     return
         appl_raise_not_implemented();

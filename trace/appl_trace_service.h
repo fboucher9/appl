@@ -59,8 +59,14 @@ class appl_trace_service
             s_message(
                 struct appl_context * const
                     p_context,
-                struct appl_trace_message const * const
-                    p_trace_message);
+                struct appl_trace * const
+                    p_trace,
+                int const
+                    e_type,
+                char const * const
+                    p_format0,
+                void * const
+                    p_arguments);
 
         static
         enum appl_status
@@ -76,35 +82,15 @@ class appl_trace_service
 
         static
         enum appl_status
-            s_stack_report_length(
-                struct appl_context * const
-                    p_context,
-                unsigned long int * const
-                    r_length);
-
-        static
-        enum appl_status
             s_stack_report(
                 struct appl_context * const
-                    p_context,
-                struct appl_buf * const
-                    p_iterator);
-
-        static
-        enum appl_status
-            s_profile_report_length(
-                struct appl_context * const
-                    p_context,
-                unsigned long int * const
-                    r_length);
+                    p_context);
 
         static
         enum appl_status
             s_profile_report(
                 struct appl_context * const
-                    p_context,
-                struct appl_buf * const
-                    p_iterator);
+                    p_context);
 
 }; // class appl_trace_service
 

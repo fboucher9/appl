@@ -18,6 +18,8 @@
 
 #include <trace/appl_trace_message.h>
 
+#include <stdarg.h>
+
 //
 //
 //
@@ -50,34 +52,34 @@ enum appl_status
             p_context,
         struct appl_trace * const
             p_trace,
-        unsigned char const * const
-            p_args_min,
-        unsigned char const * const
-            p_args_max)
+        char const * const
+            p_format0,
+        ...)
 {
-    struct appl_trace_message
-        o_trace_message;
+    enum appl_status
+        e_status;
 
-    o_trace_message.i_clock =
-        0u;
+    va_list
+        o_arguments;
 
-    o_trace_message.p_trace =
-        p_trace;
+    va_start(
+        o_arguments,
+        p_format0);
 
-    o_trace_message.o_args.o_min.pc_uchar =
-        p_args_min;
-
-    o_trace_message.o_args.o_max.pc_uchar =
-        p_args_max;
-
-    o_trace_message.b_enter =
-        1;
-
-    return
+    e_status =
         appl_trace_service::s_message(
             p_context,
+            p_trace,
+            appl_trace_message_type_enter,
+            p_format0,
             &(
-                o_trace_message));
+                o_arguments));
+
+    va_end(
+        o_arguments);
+
+    return
+        e_status;
 
 } // appl_trace_enter()
 
@@ -90,34 +92,34 @@ enum appl_status
             p_context,
         struct appl_trace * const
             p_trace,
-        unsigned char const * const
-            p_args_min,
-        unsigned char const * const
-            p_args_max)
+        char const * const
+            p_format0,
+        ...)
 {
-    struct appl_trace_message
-        o_trace_message;
+    enum appl_status
+        e_status;
 
-    o_trace_message.i_clock =
-        0u;
+    va_list
+        o_arguments;
 
-    o_trace_message.p_trace =
-        p_trace;
+    va_start(
+        o_arguments,
+        p_format0);
 
-    o_trace_message.o_args.o_min.pc_uchar =
-        p_args_min;
-
-    o_trace_message.o_args.o_max.pc_uchar =
-        p_args_max;
-
-    o_trace_message.b_enter =
-        0;
-
-    return
+    e_status =
         appl_trace_service::s_message(
             p_context,
+            p_trace,
+            appl_trace_message_type_leave,
+            p_format0,
             &(
-                o_trace_message));
+                o_arguments));
+
+    va_end(
+        o_arguments);
+
+    return
+        e_status;
 
 } // appl_trace_leave()
 
@@ -148,33 +150,13 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_trace_stack_report_length(
-        struct appl_context * const
-            p_context,
-        unsigned long int * const
-            r_length)
-{
-    return
-        appl_trace_service::s_stack_report_length(
-            p_context,
-            r_length);
-
-} // appl_trace_stack_report_length()
-
-//
-//
-//
-enum appl_status
     appl_trace_stack_report(
         struct appl_context * const
-            p_context,
-        struct appl_buf * const
-            p_report_iterator)
+            p_context)
 {
     return
         appl_trace_service::s_stack_report(
-            p_context,
-            p_report_iterator);
+            p_context);
 
 } // appl_trace_stack_report()
 
@@ -182,33 +164,13 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_trace_profile_report_length(
-        struct appl_context * const
-            p_context,
-        unsigned long int * const
-            r_report_length)
-{
-    return
-        appl_trace_service::s_profile_report_length(
-            p_context,
-            r_report_length);
-
-} // appl_trace_profile_report_length()
-
-//
-//
-//
-enum appl_status
     appl_trace_profile_report(
         struct appl_context * const
-            p_context,
-        struct appl_buf * const
-            p_report_iterator)
+            p_context)
 {
     return
         appl_trace_service::s_profile_report(
-            p_context,
-            p_report_iterator);
+            p_context);
 
 } // appl_trace_profile_report()
 

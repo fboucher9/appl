@@ -126,22 +126,6 @@ enum appl_status
 //
 //
 //
-char
-    appl_trace_mgr::v_test(
-        struct appl_trace * const
-            p_trace) const
-{
-    appl_unused(
-        p_trace);
-
-    return
-        0;
-
-} // v_test()
-
-//
-//
-//
 enum appl_status
     appl_trace_mgr::v_message(
         struct appl_trace_message const * const
@@ -181,29 +165,8 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_trace_mgr::v_stack_report_length(
-        unsigned long int * const
-            r_length)
+    appl_trace_mgr::v_stack_report(void)
 {
-    appl_unused(
-        r_length);
-
-    return
-        appl_raise_not_implemented();
-
-} // v_stack_report_length()
-
-//
-//
-//
-enum appl_status
-    appl_trace_mgr::v_stack_report(
-        struct appl_buf * const
-            p_iterator)
-{
-    appl_unused(
-        p_iterator);
-
     return
         appl_raise_not_implemented();
 
@@ -213,29 +176,8 @@ enum appl_status
 //
 //
 enum appl_status
-    appl_trace_mgr::v_profile_report_length(
-        unsigned long int * const
-            r_length)
+    appl_trace_mgr::v_profile_report(void)
 {
-    appl_unused(
-        r_length);
-
-    return
-        appl_raise_not_implemented();
-
-} // v_profile_report_length()
-
-//
-//
-//
-enum appl_status
-    appl_trace_mgr::v_profile_report(
-        struct appl_buf * const
-            p_iterator)
-{
-    appl_unused(
-        p_iterator);
-
     return
         appl_raise_not_implemented();
 

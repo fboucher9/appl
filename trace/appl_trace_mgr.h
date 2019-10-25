@@ -66,12 +66,6 @@ class appl_trace_mgr : public appl_object
                     i_levels);
 
         virtual
-        char
-            v_test(
-                struct appl_trace * const
-                    p_trace) const;
-
-        virtual
         enum appl_status
             v_message(
                 struct appl_trace_message const * const
@@ -89,27 +83,11 @@ class appl_trace_mgr : public appl_object
 
         virtual
         enum appl_status
-            v_stack_report_length(
-                unsigned long int * const
-                    r_length);
+            v_stack_report(void);
 
         virtual
         enum appl_status
-            v_stack_report(
-                struct appl_buf * const
-                    p_iterator);
-
-        virtual
-        enum appl_status
-            v_profile_report_length(
-                unsigned long int * const
-                    r_length);
-
-        virtual
-        enum appl_status
-            v_profile_report(
-                struct appl_buf * const
-                    p_iterator);
+            v_profile_report(void);
 
     protected:
 

@@ -16,28 +16,43 @@ enum guard_appl_trace_message_h
 /*
 
 */
+enum appl_trace_message_type
+{
+    appl_trace_message_type_enter = 1,
+
+    appl_trace_message_type_leave = 2,
+
+    appl_trace_message_type_signal = 3
+
+}; /* enum appl_trace_message_type */
+
+/*
+
+*/
 struct appl_trace_message
 {
+    /* time at which message was created */
     appl_ull_t
         i_clock;
 
     /* -- */
 
+    /* expansion of variable arguments */
     struct appl_buf
         o_args;
 
     /* -- */
 
+    /* pointer to trace structure, with name and stats */
     struct appl_trace *
         p_trace;
 
-    char
-        b_enter;
+    /* type of message */
+    enum appl_trace_message_type
+        e_type;
 
-#define PADDING (APPL_SIZEOF_PTR + 1)
+#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_INT)
 #include <misc/appl_padding.h>
-
-    /* -- */
 
 }; /* struct appl_trace_message */
 

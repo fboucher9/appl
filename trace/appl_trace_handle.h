@@ -24,11 +24,6 @@ enum guard_appl_trace_handle_h
 
 }; /* enum guard_appl_trace_handle_h */
 
-/* Setup default trace level */
-#if ! defined APPL_TRACE_LEVELS
-#define APPL_TRACE_LEVELS 8
-#endif /* #if ! defined APPL_TRACE_LEVELS */
-
 /* Predefine */
 struct appl_trace;
 
@@ -47,12 +42,12 @@ Description:
 struct appl_trace
 {
     appl_ull_t
-        i_count;
+        i_time;
 
     /* -- */
 
     appl_ull_t
-        i_time;
+        i_count;
 
     /* -- */
 
@@ -136,23 +131,15 @@ enum appl_status
         int const
             i_levels);
 
-char
-    appl_trace_test(
-        struct appl_context * const
-            p_context,
-        struct appl_trace * const
-            p_trace);
-
 enum appl_status
     appl_trace_enter(
         struct appl_context * const
             p_context,
         struct appl_trace * const
             p_trace,
-        unsigned char const * const
-            p_args_min,
-        unsigned char const * const
-            p_args_max);
+        char const * const
+            p_format0,
+        ...);
 
 enum appl_status
     appl_trace_leave(
@@ -160,10 +147,19 @@ enum appl_status
             p_context,
         struct appl_trace * const
             p_trace,
-        unsigned char const * const
-            p_args_min,
-        unsigned char const * const
-            p_args_max);
+        char const * const
+            p_format0,
+        ...);
+
+enum appl_status
+    appl_trace_signal(
+        struct appl_context * const
+            p_context,
+        struct appl_trace * const
+            p_trace,
+        char const * const
+            p_format0,
+        ...);
 
 enum appl_status
     appl_trace_capture(
@@ -177,38 +173,19 @@ enum appl_status
             r_capture_count);
 
 enum appl_status
-    appl_trace_stack_report_length(
-        struct appl_context * const
-            p_context,
-        unsigned long int * const
-            r_report_length);
-
-enum appl_status
     appl_trace_stack_report(
         struct appl_context * const
-            p_context,
-        struct appl_buf * const
-            p_report_iterator);
-
-enum appl_status
-    appl_trace_profile_report_length(
-        struct appl_context * const
-            p_context,
-        unsigned long int * const
-            r_report_length);
+            p_context);
 
 enum appl_status
     appl_trace_profile_report(
         struct appl_context * const
-            p_context,
-        struct appl_buf * const
-            p_report_iterator);
+            p_context);
 
 #include <misc/appl_extern_c_end.h>
 
 #if 0
 
-#if APPL_TRACE_LEVELS > 1
 static struct appl_trace_node g_demo_trace_node =
 {
     (struct appl_trace_node *)(0),
@@ -216,14 +193,12 @@ static struct appl_trace_node g_demo_trace_node =
     0,
     0
 };
-#endif
 
 void
 demo(
     struct appl_context * const
         p_context)
 {
-#if APPL_TRACE_LEVELS > 1
     if (appl_trace_test(p_context, &g_demo_trace_node))
     {
         appl_trace_enter(
@@ -237,9 +212,7 @@ demo(
                     "argc="),
                 i_argc));
     }
-#endif
 
-#if APPL_TRACE_LEVELS > 1
     if (appl_trace_test(p_context, &g_demo_trace_node))
     {
         appl_buf_print0(
@@ -251,7 +224,6 @@ demo(
             &g_demo_trace_node,
             &o_iterator);
     }
-#endif
 }
 
 #endif
