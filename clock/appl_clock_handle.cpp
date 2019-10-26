@@ -101,4 +101,49 @@ appl_clock_delay(
 
 } /* appl_clock_delay() */
 
+/*
+
+*/
+enum appl_status
+appl_clock_convert(
+    struct appl_context const * const
+        p_context,
+    unsigned long int const
+        i_time_freq,
+    appl_ull_t const
+        i_time_count,
+    struct appl_clock_details * const
+        r_clock_details)
+{
+    enum appl_status
+        e_status;
+
+    if (
+        p_context
+        && i_time_freq
+        && r_clock_details)
+    {
+        e_status =
+            appl_clock_service::s_convert(
+                p_context,
+                i_time_freq,
+                i_time_count,
+                r_clock_details);
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "clock convert invalid param\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} /* appl_clock_convert() */
+
 /* end-of-file: appl_clock_handle.cpp */

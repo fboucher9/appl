@@ -16,6 +16,8 @@
 
 #include <clock/appl_clock_handle.h>
 
+#include <clock/appl_clock_details.h>
+
 #include <heap/appl_heap_handle.h>
 
 #include <clock/appl_clock.h>
@@ -293,6 +295,55 @@ void
     appl_print0("\n... done\n");
 }
 
+static
+void
+    appl_clock_test_1_convert(
+        struct appl_clock_test_context * const
+            p_clock_test_context)
+{
+    enum appl_status
+        e_status;
+
+    appl_print0(
+        "clock convert test ...\n");
+
+    appl_ull_t
+        i_clock_value;
+
+    e_status =
+        appl_clock_read(
+            p_clock_test_context->p_context,
+            1000ul,
+            &(
+                i_clock_value));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        struct appl_clock_details
+            o_clock_details;
+
+        e_status =
+            appl_clock_convert(
+                p_clock_test_context->p_context,
+                1000ul,
+                i_clock_value,
+                &(
+                    o_clock_details));
+    }
+
+    bool const b_result =
+        (appl_status_ok == e_status);
+
+    appl_print0("clock convert test result ");
+    appl_print0(b_result ? "PASS" : "FAIL");
+
+    p_clock_test_context->i_pass_count += b_result;
+    p_clock_test_context->i_fail_count += !b_result;
+    p_clock_test_context->i_total_count ++;
+}
+
 /*
 
 */
@@ -397,6 +448,10 @@ void
     appl_coverage_test(
         &(
             appl_clock_test_1_delay),
+        &(
+            o_clock_test_context));
+
+    appl_clock_test_1_convert(
         &(
             o_clock_test_context));
 

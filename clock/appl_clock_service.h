@@ -44,6 +44,18 @@ class appl_clock_service
             appl_ull_t const
                 i_time_count);
 
+        static
+        enum appl_status
+        s_convert(
+            struct appl_context const * const
+                p_context,
+            unsigned long int const
+                i_time_freq,
+            appl_ull_t const
+                i_time_count,
+            struct appl_clock_details * const
+                r_clock_details);
+
 }; // class appl_clock_service
 
 /* end-of-file: appl_clock_service.h */

@@ -73,6 +73,34 @@ enum appl_status
 //
 //
 //
+enum appl_status
+    appl_clock::v_convert(
+        unsigned long int const
+            i_time_freq,
+        appl_ull_t const
+            i_time_count,
+        struct appl_clock_details * const
+            r_clock_details)
+{
+    enum appl_status
+        e_status;
+
+    appl_unused(
+        i_time_freq,
+        i_time_count,
+        r_clock_details);
+
+    e_status =
+        appl_raise_not_implemented();
+
+    return
+        e_status;
+
+} // v_convert()
+
+//
+//
+//
 appl_clock::appl_clock(
     struct appl_context * const
         p_context) :

@@ -79,6 +79,16 @@ class appl_clock_std : public appl_clock
             appl_ull_t const
                 i_time_count);
 
+        virtual
+        enum appl_status
+        v_convert(
+            unsigned long int const
+                i_time_freq,
+            appl_ull_t const
+                i_time_count,
+            struct appl_clock_details * const
+                r_clock_details);
+
 }; // class appl_clock_std
 
 /* end-of-file: appl_clock_std.h */

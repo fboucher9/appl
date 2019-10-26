@@ -120,4 +120,55 @@ appl_clock_service::s_delay(
 
 } // s_delay()
 
+//
+//
+//
+enum appl_status
+appl_clock_service::s_convert(
+    struct appl_context const * const
+        p_context,
+    unsigned long int const
+        i_time_freq,
+    appl_ull_t const
+        i_time_count,
+    struct appl_clock_details * const
+        r_clock_details)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_validate(
+            (0 != p_context)
+            && (0 != i_time_freq));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        class appl_clock *
+            p_clock;
+
+        e_status =
+            p_context->v_clock(
+                &(
+                    p_clock));
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            e_status =
+                p_clock->v_convert(
+                    i_time_freq,
+                    i_time_count,
+                    r_clock_details);
+        }
+    }
+
+    return
+        e_status;
+
+} // s_convert()
+
 /* end-of-file: appl_clock_service.cpp */

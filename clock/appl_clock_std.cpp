@@ -24,7 +24,11 @@
 
 #include <clock/appl_clock_impl.h>
 
+#include <clock/appl_clock_details.h>
+
 #include <allocator/appl_allocator_handle.h>
+
+#include <misc/appl_unused.h>
 
 //
 //
@@ -153,6 +157,54 @@ appl_clock_std::v_delay(
         e_status;
 
 } // v_delay()
+
+//
+//
+//
+enum appl_status
+    appl_clock_std::v_convert(
+        unsigned long int const
+            i_time_freq,
+        appl_ull_t const
+            i_time_count,
+        struct appl_clock_details * const
+            r_clock_details)
+{
+    enum appl_status
+        e_status;
+
+    appl_unused(
+        i_time_freq,
+        i_time_count);
+
+    r_clock_details->i_fraction =
+        0ul;
+
+    r_clock_details->i_year =
+        2019ul;
+
+    r_clock_details->i_month =
+        1u;
+
+    r_clock_details->i_day =
+        1u;
+
+    r_clock_details->i_hour =
+        12u;
+
+    r_clock_details->i_minute =
+        30u;
+
+    r_clock_details->i_second =
+        0u;
+
+    e_status =
+        appl_status_ok;
+
+    return
+        e_status;
+
+} // v_convert()
 
 #endif /* #if defined APPL_OS_LINUX */
 
