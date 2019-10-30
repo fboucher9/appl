@@ -48,9 +48,19 @@ class appl_clock_std : public appl_clock
         virtual
         ~appl_clock_std();
 
+        enum appl_status
+            f_init(void);
+
+        virtual
+        appl_size_t
+        v_cleanup(void);
+
     protected:
 
     private:
+
+        appl_ull_t
+            m_offset;
 
         appl_clock_std(
             class appl_clock_std const & r);
@@ -58,10 +68,6 @@ class appl_clock_std : public appl_clock
         class appl_clock_std &
             operator =(
                 class appl_clock_std const & r);
-
-        virtual
-        appl_size_t
-        v_cleanup(void);
 
         virtual
         enum appl_status
@@ -78,6 +84,9 @@ class appl_clock_std : public appl_clock
                 i_time_freq,
             appl_ull_t const
                 i_time_count);
+
+        enum appl_status
+            f_calibrate(void);
 
         virtual
         enum appl_status

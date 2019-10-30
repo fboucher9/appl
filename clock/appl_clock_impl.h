@@ -39,6 +39,13 @@ class appl_clock_impl
                 appl_ull_t const
                     i_time_count);
 
+        static
+        enum appl_status
+            s_calibrate(
+                unsigned long int const
+                    i_time_freq,
+                appl_ull_t * const
+                    p_time_count);
 
 }; // class appl_clock_impl
 

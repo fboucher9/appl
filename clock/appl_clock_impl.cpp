@@ -312,4 +312,157 @@ enum appl_status
 
 } // s_delay()
 
+//
+//
+//
+enum appl_status
+    appl_clock_impl::s_calibrate(
+        unsigned long int const
+            i_time_freq,
+        appl_ull_t * const
+            p_time_count)
+{
+    enum appl_status
+        e_status;
+
+#if defined APPL_OS_LINUX
+    {
+        int
+            i_clock_result;
+
+        struct timespec
+            o_clock_mono_value;
+
+        i_clock_result =
+#if defined APPL_HAVE_COVERAGE
+            appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
+            clock_gettime(
+                CLOCK_MONOTONIC,
+                &(
+                    o_clock_mono_value));
+
+        if (
+            0
+            == i_clock_result)
+        {
+            struct timespec
+                o_clock_real_value;
+
+            i_clock_result =
+#if defined APPL_HAVE_COVERAGE
+                appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
+                clock_gettime(
+                    CLOCK_REALTIME,
+                    &(
+                        o_clock_real_value));
+
+            if (
+                0
+                == i_clock_result)
+            {
+                appl_ull_t
+                    i_time_offset;
+
+                appl_ull_t
+                    i_time_mono_count;
+
+                appl_ull_t
+                    i_time_real_count;
+
+                i_time_offset =
+                    0u;
+
+                unsigned long int const
+                    i_clock_mono_sec =
+                    appl_convert::to_unsigned(
+                        o_clock_mono_value.tv_sec);
+
+                unsigned long int const
+                    i_clock_mono_nsec =
+                    appl_convert::to_unsigned(
+                        o_clock_mono_value.tv_nsec);
+
+                i_time_mono_count =
+                    (
+                        appl_math_muldiv(
+                            i_clock_mono_sec,
+                            i_time_freq,
+                            1ul)
+                        + appl_math_muldiv(
+                            i_clock_mono_nsec,
+                            i_time_freq,
+                            1000000000ul));
+
+                unsigned long int const
+                    i_clock_real_sec =
+                    appl_convert::to_unsigned(
+                        o_clock_real_value.tv_sec);
+
+                unsigned long int const
+                    i_clock_real_nsec =
+                    appl_convert::to_unsigned(
+                        o_clock_real_value.tv_nsec);
+
+                i_time_real_count =
+                    (
+                        appl_math_muldiv(
+                            i_clock_real_sec,
+                            i_time_freq,
+                            1ul)
+                        + appl_math_muldiv(
+                            i_clock_real_nsec,
+                            i_time_freq,
+                            1000000000ul));
+
+                i_time_offset =
+                    i_time_real_count
+                    - i_time_mono_count;
+
+                *(
+                    p_time_count) =
+                    i_time_offset;
+
+                e_status =
+                    appl_status_ok;
+            }
+            else
+            {
+#if defined APPL_DEBUG
+                appl_debug_impl::s_print0(
+                    "clock_gettime error\n");
+#endif /* #if defined APPL_DEBUG */
+
+                e_status =
+                    appl_status_fail;
+            }
+        }
+        else
+        {
+#if defined APPL_DEBUG
+            appl_debug_impl::s_print0(
+                "clock_gettime error\n");
+#endif /* #if defined APPL_DEBUG */
+
+            e_status =
+                appl_status_fail;
+        }
+    }
+#else /* #if defined APPL_OS_Xx */
+    {
+        appl_unused(
+            i_time_freq,
+            p_time_count);
+
+        e_status =
+            appl_raise_not_implemented();
+    }
+#endif /* #if defined APPL_OS_Xx */
+
+    return
+        e_status;
+
+} // s_calibrate()
+
 /* end-of-file: appl_clock_impl.cpp */

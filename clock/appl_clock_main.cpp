@@ -14,6 +14,8 @@
 
 #include <clock/appl_clock_handle.h>
 
+#include <clock/appl_clock_details.h>
+
 #include <misc/appl_convert.h>
 
 #include <misc/appl_unused.h>
@@ -188,6 +190,87 @@ enum appl_status
                             p_context,
                             i_time_freq,
                             i_time_count);
+                    }
+                }
+                else if ('c' == *p_option_min)
+                {
+                    appl_ull_t
+                        i_time_count;
+
+                    e_status =
+                        appl_clock_read(
+                            p_context,
+                            i_time_freq,
+                            &(
+                                i_time_count));
+
+                    if (
+                        appl_status_ok
+                        == e_status)
+                    {
+                        struct appl_clock_details
+                            o_clock_details;
+
+                        e_status =
+                            appl_clock_convert(
+                                p_context,
+                                i_time_freq,
+                                i_time_count,
+                                &(
+                                    o_clock_details));
+
+                        if (
+                            appl_status_ok
+                            == e_status)
+                        {
+                            appl_print_number(
+                                o_clock_details.i_year,
+                                appl_buf_print_flag_zero,
+                                4);
+
+                            appl_print0(
+                                "-");
+
+                            appl_print_number(
+                                o_clock_details.i_month,
+                                appl_buf_print_flag_zero,
+                                2);
+
+                            appl_print0(
+                                "-");
+
+                            appl_print_number(
+                                o_clock_details.i_day,
+                                appl_buf_print_flag_zero,
+                                2);
+
+                            appl_print0(
+                                " ");
+
+                            appl_print_number(
+                                o_clock_details.i_hour,
+                                appl_buf_print_flag_zero,
+                                2);
+
+                            appl_print0(
+                                ":");
+
+                            appl_print_number(
+                                o_clock_details.i_minute,
+                                appl_buf_print_flag_zero,
+                                2);
+
+                            appl_print0(
+                                ":");
+
+                            appl_print_number(
+                                o_clock_details.i_second,
+                                appl_buf_print_flag_zero,
+                                2);
+
+                            appl_print0(
+                                "\n");
+                        }
                     }
                 }
                 else

@@ -342,6 +342,80 @@ void
     p_clock_test_context->i_pass_count += b_result;
     p_clock_test_context->i_fail_count += !b_result;
     p_clock_test_context->i_total_count ++;
+
+    appl_print0("\n... done\n");
+}
+
+static
+void
+    appl_clock_test_2_convert(
+        struct appl_clock_test_context * const
+            p_clock_test_context)
+{
+    enum appl_status
+        e_status;
+
+    appl_print0(
+        "clock convert test 2...\n");
+
+    e_status =
+        appl_clock_convert(
+            0,
+            0ul,
+            0u,
+            0);
+
+    bool const b_result =
+        (appl_status_ok != e_status);
+
+    appl_print0("clock convert test 2 result ");
+    appl_print0(b_result ? "PASS" : "FAIL");
+
+    p_clock_test_context->i_pass_count += b_result;
+    p_clock_test_context->i_fail_count += !b_result;
+    p_clock_test_context->i_total_count ++;
+
+    appl_print0("\n... done\n");
+}
+
+static
+unsigned long int
+    appl_clock_test_3_convert(
+        void * const
+            p_void,
+        unsigned long int const
+            i_limit)
+{
+    unsigned long int
+        i_count = 0ul;
+
+    struct appl_clock_test_context * const
+        p_clock_test_context =
+        static_cast<struct appl_clock_test_context *>(
+            p_void);
+
+    struct appl_clock_details
+        o_clock_details;
+
+#if defined APPL_HAVE_COVERAGE
+    appl_coverage_start(
+        i_limit);
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
+    appl_clock_convert(
+        p_clock_test_context->p_context,
+        p_clock_test_context->i_time_freq,
+        0u,
+        &(
+            o_clock_details));
+
+#if defined APPL_HAVE_COVERAGE
+    i_count =
+        appl_coverage_stop();
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
+    return
+        i_count;
 }
 
 /*
@@ -455,6 +529,16 @@ void
         &(
             o_clock_test_context));
 
+    appl_clock_test_2_convert(
+        &(
+            o_clock_test_context));
+
+    appl_coverage_test(
+        &(
+            appl_clock_test_3_convert),
+        &(
+            o_clock_test_context));
+
     appl_print0("clock test results: pass=");
     appl_print_lu(
         o_clock_test_context.i_pass_count);
@@ -501,6 +585,12 @@ void
                 p_clock->v_delay(
                     1000u,
                     100u);
+
+            e_status =
+                p_clock->v_convert(
+                    0,
+                    0,
+                    0);
 
             appl_delete(
                 p_context,
@@ -562,6 +652,11 @@ void
                 '0'
             };
 
+            static unsigned char const s_arg4[] =
+            {
+                'c'
+            };
+
             if (
                 appl_status_ok
                 == e_status)
@@ -615,6 +710,17 @@ void
                         p_options,
                         s_arg2,
                         s_arg2 + sizeof(s_arg2));
+            }
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                e_status =
+                    appl_options_append_argument(
+                        p_options,
+                        s_arg4,
+                        s_arg4 + sizeof(s_arg4));
             }
 
             if (

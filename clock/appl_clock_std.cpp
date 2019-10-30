@@ -30,6 +30,14 @@
 
 #include <misc/appl_unused.h>
 
+#include <misc/appl_convert.h>
+
+#include <coverage/appl_validate.h>
+
+#if defined APPL_HAVE_COVERAGE
+#include <coverage/appl_coverage.h>
+#endif /* #if defined APPL_HAVE_COVERAGE */
+
 //
 //
 //
@@ -90,7 +98,8 @@ appl_clock_std::appl_clock_std(
     struct appl_context * const
         p_context) :
     appl_clock(
-        p_context)
+        p_context),
+    m_offset()
 {
 }
 
@@ -100,6 +109,23 @@ appl_clock_std::appl_clock_std(
 appl_clock_std::~appl_clock_std()
 {
 }
+
+//
+//
+//
+enum appl_status
+    appl_clock_std::f_init(void)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        f_calibrate();
+
+    return
+        e_status;
+
+} // f_init()
 
 //
 //
@@ -162,6 +188,26 @@ appl_clock_std::v_delay(
 //
 //
 enum appl_status
+    appl_clock_std::f_calibrate(void)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        appl_clock_impl::s_calibrate(
+            1000000ul,
+            &(
+                m_offset));
+
+    return
+        e_status;
+
+} // f_calibrate()
+
+//
+//
+//
+enum appl_status
     appl_clock_std::v_convert(
         unsigned long int const
             i_time_freq,
@@ -173,33 +219,78 @@ enum appl_status
     enum appl_status
         e_status;
 
-    appl_unused(
-        i_time_freq,
-        i_time_count);
-
-    r_clock_details->i_fraction =
-        0ul;
-
-    r_clock_details->i_year =
-        2019ul;
-
-    r_clock_details->i_month =
-        1u;
-
-    r_clock_details->i_day =
-        1u;
-
-    r_clock_details->i_hour =
-        12u;
-
-    r_clock_details->i_minute =
-        30u;
-
-    r_clock_details->i_second =
-        0u;
-
     e_status =
-        appl_status_ok;
+        appl_validate(
+            i_time_freq
+            && r_clock_details);
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        appl_ull_t const
+            i_time_usec =
+            ((i_time_count * 1000000ul) / i_time_freq);
+
+        time_t const
+            i_time_now =
+            static_cast<time_t>(
+                (i_time_usec + m_offset) / 1000000ul);
+
+        struct tm
+            o_local_time_info;
+
+        struct tm *
+            p_local_time_result;
+
+        p_local_time_result =
+#if defined APPL_HAVE_COVERAGE
+            appl_coverage_check() ? 0 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
+            localtime_r(
+                &(
+                    i_time_now),
+                &(
+                    o_local_time_info));
+
+        if (
+            p_local_time_result)
+        {
+            r_clock_details->i_fraction =
+                0ul;
+
+            r_clock_details->i_year =
+                o_local_time_info.tm_year + 1900ul;
+
+            r_clock_details->i_month =
+                appl_convert::to_uchar(
+                    o_local_time_info.tm_mon + 1u);
+
+            r_clock_details->i_day =
+                appl_convert::to_uchar(
+                    o_local_time_info.tm_mday);
+
+            r_clock_details->i_hour =
+                appl_convert::to_uchar(
+                    o_local_time_info.tm_hour);
+
+            r_clock_details->i_minute =
+                appl_convert::to_uchar(
+                    o_local_time_info.tm_min);
+
+            r_clock_details->i_second =
+                appl_convert::to_uchar(
+                    o_local_time_info.tm_sec);
+
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_raise_fail();
+        }
+    }
 
     return
         e_status;
