@@ -4,74 +4,13 @@
 
 */
 
-#include <appl_status.h>
+#include <mutex/appl_mutex_defs.h>
 
-#include <misc/appl_unused.h>
+#include <appl_status.h>
 
 #include <appl_types.h>
 
-#if defined APPL_OS_LINUX
-#include <pthread.h>
-#else /* #if defined APPL_OS_Xx */
-#include <windows.h>
-#endif /* #if defined APPL_OS_Xx */
-
 #include <mutex/appl_mutex_impl.h>
-
-#if defined APPL_OS_LINUX
-
-static void InitializeCriticalSection(
-    CRITICAL_SECTION * const p_private_windows)
-{
-    appl_unused( p_private_windows);
-}
-static void DeleteCriticalSection(
-    CRITICAL_SECTION * const p_private_windows)
-{
-    appl_unused( p_private_windows);
-}
-static void EnterCriticalSection(
-    CRITICAL_SECTION * const p_private_windows)
-{
-    appl_unused( p_private_windows);
-}
-static void LeaveCriticalSection(
-    CRITICAL_SECTION * const p_private_windows)
-{
-    appl_unused( p_private_windows);
-}
-
-#endif /* #if defined APPL_OS_Xx */
-
-#if defined APPL_OS_WINDOWS
-
-static int pthread_mutex_init(
-    pthread_mutex_t * const p_private_linux,
-    void * const p_attributes)
-{
-    appl_unused( p_private_linux, p_attributes);
-    return -1;
-}
-static int pthread_mutex_destroy(
-    pthread_mutex_t * const p_private_linux)
-{
-    appl_unused( p_private_linux);
-    return -1;
-}
-static int pthread_mutex_lock(
-    pthread_mutex_t * const p_private_linux)
-{
-    appl_unused( p_private_linux);
-    return -1;
-}
-static int pthread_mutex_unlock(
-    pthread_mutex_t * const p_private_linux)
-{
-    appl_unused( p_private_linux);
-    return -1;
-}
-
-#endif /* #if defined APPL_OS_Xx */
 
 #include <misc/appl_os.h>
 

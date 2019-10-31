@@ -162,6 +162,7 @@ appl_base-deps := \
     mutex/appl_mutex_std_mgr.cpp \
     mutex/appl_mutex_std_node.cpp \
     mutex/appl_mutex_impl.cpp \
+    mutex/appl_mutex_defs.cpp \
     misc/appl_os.cpp \
     socket/appl_netdevice_handle.cpp \
     socket/appl_netdevice_service.cpp \

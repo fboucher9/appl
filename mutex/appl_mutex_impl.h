@@ -7,9 +7,11 @@
 /* Reverse include guard */
 enum guard_appl_mutex_impl_h
 {
-    inc_appl_mutex_impl_h =
+    inc_appl_mutex_impl_h = 1
         /* Header file dependencies */
-        inc_appl_status_h
+        | inc_appl_status_h
+        | inc_appl_mutex_defs_h
+        /* ... */
 };
 
 /* Assert compiler */
@@ -18,26 +20,6 @@ enum guard_appl_mutex_impl_h
 class appl_mutex_impl;
 
 class appl_event_impl;
-
-#if defined APPL_OS_LINUX
-
-struct CRITICAL_SECTION
-{
-    void *
-        pv_reserved[2u];
-
-};
-
-#else /* #if defined APPL_OS_LINUX */
-
-struct pthread_mutex_t
-{
-    void *
-        pv_reserved[2u];
-
-};
-
-#endif /* #if defined APPL_OS_LINUX */
 
 //
 //

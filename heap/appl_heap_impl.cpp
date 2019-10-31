@@ -8,19 +8,11 @@
 
 #include <appl_status.h>
 
+#include <appl_types.h>
+
 #include <list/appl_list.h>
 
-#if defined APPL_OS_LINUX
-
-#include <pthread.h>
-
-#else /* #if defined APPL_OS_Xx */
-
-#include <windows.h>
-
-#endif /* #if defined APPL_OS_Xx */
-
-#include <appl_types.h>
+#include <mutex/appl_mutex_defs.h>
 
 #include <mutex/appl_mutex_impl.h>
 

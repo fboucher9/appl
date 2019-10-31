@@ -7,9 +7,10 @@
 /* Reverse include guard */
 enum guard_appl_event_impl_h
 {
-    inc_appl_event_impl_h =
+    inc_appl_event_impl_h = 1
         /* Header file dependencies */
-        inc_appl_status_h
+        | inc_appl_status_h
+        | inc_appl_event_defs_h
 };
 
 class appl_event_impl;
@@ -52,27 +53,29 @@ class appl_event_impl
         union appl_event_impl_storage
         {
 
-#if defined APPL_OS_LINUX
+            union appl_event_impl_storage_linux
+            {
+                pthread_cond_t
+                    m_private;
 
-            pthread_cond_t
-                m_private;
+                appl_ull_t
+                    m_padding[
+                        (sizeof(pthread_cond_t) + sizeof(appl_ull_t) - 1u)
+                        / sizeof(appl_ull_t)];
 
-            appl_ull_t
-                m_padding[
-                    (sizeof(pthread_cond_t) + sizeof(appl_ull_t) - 1u)
-                    / sizeof(appl_ull_t)];
+            } m_linux;
 
-#else /* #if defined APPL_OS_Xx */
+            union appl_event_impl_storage_windows
+            {
+                CONDITION_VARIABLE
+                    m_private;
 
-            CONDITION_VARIABLE
-                m_private;
+                appl_ull_t
+                    m_padding[
+                        (sizeof(CONDITION_VARIABLE) + sizeof(appl_ull_t) - 1u)
+                        / sizeof(appl_ull_t)];
 
-            appl_ull_t
-                m_padding[
-                    (sizeof(CONDITION_VARIABLE) + sizeof(appl_ull_t) - 1u)
-                    / sizeof(appl_ull_t)];
-
-#endif /* #if defined APPL_OS_Xx */
+            } m_windows;
 
         } m_storage;
 

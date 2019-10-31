@@ -4,25 +4,13 @@
 
 */
 
+#include <event/appl_event_defs.h>
+
+#include <mutex/appl_mutex_defs.h>
+
 #include <appl_status.h>
 
 #include <appl_types.h>
-
-#if defined APPL_OS_LINUX
-
-#include <errno.h>
-
-#include <pthread.h>
-
-#else /* #if defined APPL_OS_Xx */
-
-#define WINVER 0x601
-
-#define _WIN32_WINNT 0x601
-
-#include <windows.h>
-
-#endif /* #if defined APPL_OS_Xx */
 
 #include <event/appl_event_impl.h>
 
@@ -71,7 +59,7 @@ enum appl_status
 #endif /* #if defined APPL_HAVE_COVERAGE */
         pthread_cond_init(
             &(
-                m_storage.m_private),
+                m_storage.m_linux.m_private),
             NULL);
 
     if (
@@ -96,7 +84,7 @@ enum appl_status
 
     InitializeConditionVariable(
         &(
-            m_storage.m_private));
+            m_storage.m_windows.m_private));
 
     e_status =
         appl_status_ok;
@@ -126,7 +114,7 @@ enum appl_status
 #endif /* #if defined APPL_HAVE_COVERAGE */
         pthread_cond_destroy(
             &(
-                m_storage.m_private));
+                m_storage.m_linux.m_private));
 
     if (
         0
@@ -176,7 +164,7 @@ enum appl_status
 #endif /* #if defined APPL_HAVE_COVERAGE */
         pthread_cond_signal(
             &(
-                m_storage.m_private));
+                m_storage.m_linux.m_private));
 
     if (
         0
@@ -199,7 +187,7 @@ enum appl_status
 
     WakeConditionVariable(
         &(
-            m_storage.m_private));
+            m_storage.m_windows.m_private));
 
     e_status =
         appl_status_ok;
@@ -300,7 +288,7 @@ enum appl_status
 #endif /* #if defined APPL_HAVE_COVERAGE */
             pthread_cond_timedwait(
                 &(
-                    m_storage.m_private),
+                    m_storage.m_linux.m_private),
                 &(
                     p_mutex_impl->m_storage.m_private_linux),
                 &(
@@ -353,7 +341,7 @@ enum appl_status
         b_sleep_result =
         SleepConditionVariableCS(
             &(
-                m_storage.m_private),
+                m_storage.m_windows.m_private),
             &(
                 p_mutex_impl->m_storage.m_private_windows),
             i_timeout_msec);

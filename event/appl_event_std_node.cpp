@@ -4,15 +4,9 @@
 
 */
 
-#if defined APPL_OS_LINUX
+#include <mutex/appl_mutex_defs.h>
 
-#include <pthread.h>
-
-#else /* #if defined APPL_OS_LINUX */
-
-#include <windows.h>
-
-#endif /* #if defined APPL_OS_LINUX */
+#include <event/appl_event_defs.h>
 
 #include <appl_status.h>
 

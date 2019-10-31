@@ -28,11 +28,7 @@
 
 #include <list/appl_list.h>
 
-#if defined APPL_OS_LINUX
-#include <pthread.h>
-#else
-#include <windows.h>
-#endif
+#include <mutex/appl_mutex_defs.h>
 
 #include <mutex/appl_mutex_impl.h>
 
