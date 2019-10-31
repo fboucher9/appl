@@ -51,13 +51,8 @@ appl_mutex_create(
     }
     else
     {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "appl_mutex_create: invalid param\n");
-#endif /* #if defined APPL_DEBUG */
-
         e_status =
-            appl_status_fail;
+            appl_raise_invalid_param();
     }
 
     return
@@ -85,13 +80,8 @@ appl_mutex_destroy(
     }
     else
     {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "appl_mutex_destroy: invalid param\n");
-#endif /* #if defined APPL_DEBUG */
-
         e_status =
-            appl_status_fail;
+            appl_raise_invalid_param();
     }
 
     return
@@ -157,13 +147,8 @@ appl_mutex_lock(
     }
     else
     {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "appl_mutex_lock: invalid param\n");
-#endif /* #if defined APPL_DEBUG */
-
         e_status =
-            appl_status_fail;
+            appl_raise_invalid_param();
     }
 
     return
@@ -191,13 +176,8 @@ appl_mutex_unlock(
     }
     else
     {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "appl_mutex_unlock: invalid param\n");
-#endif /* #if defined APPL_DEBUG */
-
         e_status =
-            appl_status_fail;
+            appl_raise_invalid_param();
     }
 
     return
@@ -234,13 +214,8 @@ appl_mutex_sync(
     }
     else
     {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "appl_mutex_sync: invalid param\n");
-#endif /* #if defined APPL_DEBUG */
-
         e_status =
-            appl_status_fail;
+            appl_raise_invalid_param();
     }
 
     return

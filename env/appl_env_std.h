@@ -12,9 +12,6 @@ enum guard_appl_env_std_h
         inc_appl_env_h
 };
 
-/* Assert OS */
-#include <misc/appl_assert_linux.h>
-
 /* Assert compiler */
 #include <misc/appl_assert_cplusplus.h>
 

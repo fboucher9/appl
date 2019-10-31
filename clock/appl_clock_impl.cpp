@@ -14,13 +14,7 @@
 
 #include <misc/appl_convert.h>
 
-#if defined APPL_OS_LINUX
-
-#include <time.h>
-
-#include <unistd.h>
-
-#endif /* #if defined APPL_OS_LINUX */
+#include <clock/appl_clock_std_defs.h>
 
 #if defined APPL_DEBUG
 #include <debug/appl_debug_impl.h>
@@ -32,10 +26,11 @@
 
 #include <coverage/appl_validate.h>
 
+#include <misc/appl_os.h>
+
 //
 //
 //
-#if defined APPL_OS_LINUX
 static
 appl_ull_t
 appl_math_muldiv(
@@ -57,7 +52,92 @@ appl_math_muldiv(
         / i_div;
 
 } // appl_math_muldiv()
-#endif /* #if defined APPL_OS_LINUX */
+
+//
+//
+//
+enum appl_clock_epoch
+{
+    appl_clock_epoch_mono = 1,
+
+    appl_clock_epoch_real = 2
+
+};
+
+static
+enum appl_status
+read_at_epoch(
+    enum appl_clock_epoch const
+        e_epoch,
+    struct timespec * const
+        r_value)
+{
+    int const
+        i_clock_result =
+#if defined APPL_HAVE_COVERAGE
+        appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
+        clock_gettime(
+            (
+                appl_clock_epoch_real
+                == e_epoch)
+            ? CLOCK_REALTIME
+            : CLOCK_MONOTONIC,
+            r_value);
+
+    enum appl_status const
+        e_status =
+        (
+            0 == i_clock_result)
+        ? appl_status_ok
+        : appl_raise_fail();
+
+    return
+        e_status;
+
+}
+
+//
+//
+//
+static
+appl_ull_t
+    from_timespec_to_count(
+        struct timespec const &
+            o_clock_value,
+        unsigned long int const
+            i_time_freq)
+{
+    appl_ull_t
+        i_time_count;
+
+    unsigned long int const
+        i_clock_sec =
+        appl_convert::to_ulong(
+            appl_convert::to_unsigned(
+                o_clock_value.tv_sec));
+
+    unsigned long int const
+        i_clock_nsec =
+        appl_convert::to_ulong(
+            appl_convert::to_unsigned(
+                o_clock_value.tv_nsec));
+
+    i_time_count =
+        (
+            appl_math_muldiv(
+                i_clock_sec,
+                i_time_freq,
+                1ul)
+            + appl_math_muldiv(
+                i_clock_nsec,
+                i_time_freq,
+                1000000000ul));
+
+    return
+        i_time_count;
+
+} // from_timespec_to_count()
 
 //
 //
@@ -118,78 +198,43 @@ enum appl_status
         }
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
-#if defined APPL_OS_LINUX
-
-        int
-            i_clock_result;
-
-        struct timespec
-            o_clock_value;
-
-        i_clock_result =
-#if defined APPL_HAVE_COVERAGE
-            appl_coverage_check() ? -1 :
-#endif /* #if defined APPL_HAVE_COVERAGE */
-            clock_gettime(
-                CLOCK_MONOTONIC,
-                &(
-                    o_clock_value));
-
         if (
-            0 == i_clock_result)
+            appl_os_linux
+            == appl_os_get())
         {
-            appl_ull_t
-                i_time_count;
-
-            unsigned long int const
-                i_clock_sec =
-                appl_convert::to_unsigned(
-                    o_clock_value.tv_sec);
-
-            unsigned long int const
-                i_clock_nsec =
-                appl_convert::to_unsigned(
-                    o_clock_value.tv_nsec);
-
-            i_time_count =
-                (
-                    appl_math_muldiv(
-                        i_clock_sec,
-                        i_time_freq,
-                        1ul)
-                    + appl_math_muldiv(
-                        i_clock_nsec,
-                        i_time_freq,
-                        1000000000ul));
-
-            *(
-                p_time_count) =
-                i_time_count;
+            struct timespec
+                o_clock_value;
 
             e_status =
-                appl_status_ok;
+                read_at_epoch(
+                    appl_clock_epoch_mono,
+                    &(
+                        o_clock_value));
+
+            if (
+                appl_status_ok
+                == e_status)
+            {
+                appl_ull_t const
+                    i_time_count =
+                    from_timespec_to_count(
+                        o_clock_value,
+                        i_time_freq);
+
+                *(
+                    p_time_count) =
+                    i_time_count;
+            }
         }
         else
         {
-#if defined APPL_DEBUG
-            appl_debug_impl::s_print0(
-                "clock_gettime error\n");
-#endif /* #if defined APPL_DEBUG */
+            appl_unused(
+                i_time_freq,
+                p_time_count);
 
             e_status =
-                appl_status_fail;
+                appl_raise_not_implemented();
         }
-
-#else /* #if defined APPL_OS_Xx */
-
-        appl_unused(
-            i_time_freq,
-            p_time_count);
-
-        e_status =
-            appl_raise_not_implemented();
-
-#endif /* #if defined APPL_OS_Xx */
     }
 
     return
@@ -255,56 +300,57 @@ enum appl_status
         }
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
-#if defined APPL_OS_LINUX
-
-        appl_ull_t const
-            ul_time_usec =
-            appl_math_muldiv(
-                i_time_count,
-                1000000ul,
-                i_time_freq);
-
-        unsigned int const
-            ui_time_usec =
-            appl_convert::to_uint(
-                ul_time_usec);
-
-        int const
-            i_usleep_result =
-#if defined APPL_HAVE_COVERAGE
-            appl_coverage_check() ? -1 :
-#endif /* #if defined APPL_HAVE_COVERAGE */
-            usleep(
-                ui_time_usec);
-
         if (
-            0
-            == i_usleep_result)
+            appl_os_linux
+            == appl_os_get())
         {
-            e_status =
-                appl_status_ok;
+            appl_ull_t const
+                ul_time_usec =
+                appl_math_muldiv(
+                    i_time_count,
+                    1000000ul,
+                    i_time_freq);
+
+            unsigned int const
+                ui_time_usec =
+                appl_convert::to_uint(
+                    ul_time_usec);
+
+            int const
+                i_usleep_result =
+#if defined APPL_HAVE_COVERAGE
+                appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
+                usleep(
+                    ui_time_usec);
+
+            if (
+                0
+                == i_usleep_result)
+            {
+                e_status =
+                    appl_status_ok;
+            }
+            else
+            {
+#if defined APPL_DEBUG
+                appl_debug_impl::s_print0(
+                    "usleep error\n");
+#endif /* #if defined APPL_DEBUG */
+
+                e_status =
+                    appl_status_fail;
+            }
         }
         else
         {
-#if defined APPL_DEBUG
-            appl_debug_impl::s_print0(
-                "usleep error\n");
-#endif /* #if defined APPL_DEBUG */
+            appl_unused(
+                i_time_freq,
+                i_time_count);
 
             e_status =
-                appl_status_fail;
+                appl_raise_not_implemented();
         }
-
-#else /* #if defined APPL_OS_Xx */
-
-        appl_unused(
-            i_time_freq,
-            i_time_count);
-
-        e_status =
-            appl_raise_not_implemented();
-
-#endif /* #if defined APPL_OS_Xx */
     }
 
     return
@@ -325,131 +371,56 @@ enum appl_status
     enum appl_status
         e_status;
 
-#if defined APPL_OS_LINUX
+    if (
+        appl_os_linux
+        == appl_os_get())
     {
-        int
-            i_clock_result;
-
         struct timespec
             o_clock_mono_value;
 
-        i_clock_result =
-#if defined APPL_HAVE_COVERAGE
-            appl_coverage_check() ? -1 :
-#endif /* #if defined APPL_HAVE_COVERAGE */
-            clock_gettime(
-                CLOCK_MONOTONIC,
+        e_status =
+            read_at_epoch(
+                appl_clock_epoch_mono,
                 &(
                     o_clock_mono_value));
 
         if (
-            0
-            == i_clock_result)
+            appl_status_ok
+            == e_status)
         {
             struct timespec
                 o_clock_real_value;
 
-            i_clock_result =
-#if defined APPL_HAVE_COVERAGE
-                appl_coverage_check() ? -1 :
-#endif /* #if defined APPL_HAVE_COVERAGE */
-                clock_gettime(
-                    CLOCK_REALTIME,
+            e_status =
+                read_at_epoch(
+                    appl_clock_epoch_real,
                     &(
                         o_clock_real_value));
 
             if (
-                0
-                == i_clock_result)
+                appl_status_ok
+                == e_status)
             {
-                appl_ull_t
-                    i_time_offset;
+                appl_ull_t const
+                    i_time_mono_count =
+                    from_timespec_to_count(
+                        o_clock_mono_value,
+                        i_time_freq);
 
-                appl_ull_t
-                    i_time_mono_count;
-
-                appl_ull_t
-                    i_time_real_count;
-
-                i_time_offset =
-                    0u;
-
-                unsigned long int const
-                    i_clock_mono_sec =
-                    appl_convert::to_unsigned(
-                        o_clock_mono_value.tv_sec);
-
-                unsigned long int const
-                    i_clock_mono_nsec =
-                    appl_convert::to_unsigned(
-                        o_clock_mono_value.tv_nsec);
-
-                i_time_mono_count =
-                    (
-                        appl_math_muldiv(
-                            i_clock_mono_sec,
-                            i_time_freq,
-                            1ul)
-                        + appl_math_muldiv(
-                            i_clock_mono_nsec,
-                            i_time_freq,
-                            1000000000ul));
-
-                unsigned long int const
-                    i_clock_real_sec =
-                    appl_convert::to_unsigned(
-                        o_clock_real_value.tv_sec);
-
-                unsigned long int const
-                    i_clock_real_nsec =
-                    appl_convert::to_unsigned(
-                        o_clock_real_value.tv_nsec);
-
-                i_time_real_count =
-                    (
-                        appl_math_muldiv(
-                            i_clock_real_sec,
-                            i_time_freq,
-                            1ul)
-                        + appl_math_muldiv(
-                            i_clock_real_nsec,
-                            i_time_freq,
-                            1000000000ul));
-
-                i_time_offset =
-                    i_time_real_count
-                    - i_time_mono_count;
+                appl_ull_t const
+                    i_time_real_count =
+                    from_timespec_to_count(
+                        o_clock_real_value,
+                        i_time_freq);
 
                 *(
                     p_time_count) =
-                    i_time_offset;
-
-                e_status =
-                    appl_status_ok;
+                    i_time_real_count
+                    - i_time_mono_count;
             }
-            else
-            {
-#if defined APPL_DEBUG
-                appl_debug_impl::s_print0(
-                    "clock_gettime error\n");
-#endif /* #if defined APPL_DEBUG */
-
-                e_status =
-                    appl_status_fail;
-            }
-        }
-        else
-        {
-#if defined APPL_DEBUG
-            appl_debug_impl::s_print0(
-                "clock_gettime error\n");
-#endif /* #if defined APPL_DEBUG */
-
-            e_status =
-                appl_status_fail;
         }
     }
-#else /* #if defined APPL_OS_Xx */
+    else
     {
         appl_unused(
             i_time_freq,
@@ -458,7 +429,6 @@ enum appl_status
         e_status =
             appl_raise_not_implemented();
     }
-#endif /* #if defined APPL_OS_Xx */
 
     return
         e_status;

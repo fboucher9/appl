@@ -69,6 +69,7 @@ appl_base-deps := \
     clock/appl_clock_handle.cpp \
     clock/appl_clock_service.cpp \
     clock/appl_clock_std.cpp \
+    clock/appl_clock_std_defs.cpp \
     clock/appl_clock_w32.cpp \
     clock/appl_clock_impl.cpp \
     context/appl_context.cpp \
@@ -101,7 +102,9 @@ appl_base-deps := \
     env/appl_env_handle.cpp \
     env/appl_env_service.cpp \
     env/appl_env_std.cpp \
+    env/appl_env_std_defs.cpp \
     env/appl_env_w32.cpp \
+    env/appl_env_w32_defs.cpp \
     event/appl_event_handle.cpp \
     event/appl_event_mgr.cpp \
     event/appl_event_node.cpp \
@@ -159,6 +162,7 @@ appl_base-deps := \
     mutex/appl_mutex_std_mgr.cpp \
     mutex/appl_mutex_std_node.cpp \
     mutex/appl_mutex_impl.cpp \
+    misc/appl_os.cpp \
     socket/appl_netdevice_handle.cpp \
     socket/appl_netdevice_service.cpp \
     socket/appl_netdevice_mgr.cpp \

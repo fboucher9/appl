@@ -19,6 +19,26 @@ class appl_mutex_impl;
 
 class appl_event_impl;
 
+#if defined APPL_OS_LINUX
+
+struct CRITICAL_SECTION
+{
+    void *
+        pv_reserved[2u];
+
+};
+
+#else /* #if defined APPL_OS_LINUX */
+
+struct pthread_mutex_t
+{
+    void *
+        pv_reserved[2u];
+
+};
+
+#endif /* #if defined APPL_OS_LINUX */
+
 //
 //
 //
@@ -57,27 +77,21 @@ class appl_mutex_impl
 
         union appl_mutex_impl_storage
         {
-#if defined APPL_OS_LINUX
-
             pthread_mutex_t
-                m_private;
+                m_private_linux;
 
             appl_ull_t
-                m_padding[
+                m_padding_linux[
                     (sizeof(pthread_mutex_t) + sizeof(appl_ull_t) - 1u)
                     / sizeof(appl_ull_t)];
 
-#else /* #if defined APPL_OS_Xx */
-
             CRITICAL_SECTION
-                m_private;
+                m_private_windows;
 
             appl_ull_t
-                m_padding[
+                m_padding_windows[
                     (sizeof(CRITICAL_SECTION) + sizeof(appl_ull_t) - 1u)
                     / sizeof(appl_ull_t)];
-
-#endif /* #if defined APPL_OS_Xx */
 
         } m_storage;
 

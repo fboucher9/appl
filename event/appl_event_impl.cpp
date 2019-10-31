@@ -302,7 +302,7 @@ enum appl_status
                 &(
                     m_storage.m_private),
                 &(
-                    p_mutex_impl->m_storage.m_private),
+                    p_mutex_impl->m_storage.m_private_linux),
                 &(
                     o_abstime));
 
@@ -355,7 +355,7 @@ enum appl_status
             &(
                 m_storage.m_private),
             &(
-                p_mutex_impl->m_storage.m_private),
+                p_mutex_impl->m_storage.m_private_windows),
             i_timeout_msec);
 
     if (

@@ -4,23 +4,21 @@
 
 */
 
-#if defined APPL_OS_WINDOWS
+#include <misc/appl_unused.h>
 
-#include <windows.h>
+#include <appl_types.h>
+
+#include <clock/appl_clock_w32_defs.h>
 
 #include <appl_status.h>
 
 #include <appl_predefines.h>
-
-#include <appl_types.h>
 
 #include <object/appl_object.h>
 
 #include <clock/appl_clock.h>
 
 #include <clock/appl_clock_w32.h>
-
-#include <misc/appl_unused.h>
 
 #include <misc/appl_convert.h>
 
@@ -310,7 +308,5 @@ appl_clock_w32::v_delay(
         e_status;
 
 } // v_delay()
-
-#endif /* #if defined APPL_OS_WINDOWS */
 
 /* end-of-file: appl_clock_w32.cpp */

@@ -4,9 +4,7 @@
 
 */
 
-#if defined APPL_OS_WINDOWS
-
-#include <windows.h>
+#include <env/appl_env_w32_defs.h>
 
 #include <appl_status.h>
 
@@ -146,7 +144,7 @@ enum appl_status
             GetEnvironmentVariableA(
                 appl_convert::to_char_ptr(
                     appl_buf0_get(p_name0)),
-                NULL,
+                0,
                 0);
 
         if (
@@ -318,7 +316,7 @@ enum appl_status
             appl_status_ok
             == e_status)
         {
-            BOOL
+            int
                 bResult;
 
             bResult =
@@ -380,7 +378,5 @@ appl_size_t
         sizeof(class appl_env_w32);
 
 } // v_cleanup()
-
-#endif /* #if defined APPL_OS_WINDOWS */
 
 /* end-of-file: appl_env_w32.cpp */

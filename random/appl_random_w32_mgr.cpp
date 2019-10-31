@@ -4,8 +4,6 @@
 
 */
 
-#if defined APPL_OS_WINDOWS
-
 #include <appl_status.h>
 
 #include <appl_predefines.h>
@@ -178,7 +176,5 @@ appl_random_w32_mgr::v_destroy_node(
         e_status;
 
 } // v_destroy_node()
-
-#endif /* #if defined APPL_OS_WINDOWS */
 
 /* end-of-file: appl_random_w32_mgr.cpp */

@@ -6,25 +6,79 @@
 
 #include <appl_status.h>
 
+#include <misc/appl_unused.h>
+
+#include <appl_types.h>
+
 #if defined APPL_OS_LINUX
 #include <pthread.h>
 #else /* #if defined APPL_OS_Xx */
 #include <windows.h>
 #endif /* #if defined APPL_OS_Xx */
 
-#include <appl_types.h>
-
 #include <mutex/appl_mutex_impl.h>
 
-#if defined APPL_DEBUG
-#include <debug/appl_debug_impl.h>
-#endif /* #if defined APPL_DEBUG */
+#if defined APPL_OS_LINUX
 
-#include <misc/appl_unused.h>
+static void InitializeCriticalSection(
+    CRITICAL_SECTION * const p_private_windows)
+{
+    appl_unused( p_private_windows);
+}
+static void DeleteCriticalSection(
+    CRITICAL_SECTION * const p_private_windows)
+{
+    appl_unused( p_private_windows);
+}
+static void EnterCriticalSection(
+    CRITICAL_SECTION * const p_private_windows)
+{
+    appl_unused( p_private_windows);
+}
+static void LeaveCriticalSection(
+    CRITICAL_SECTION * const p_private_windows)
+{
+    appl_unused( p_private_windows);
+}
+
+#endif /* #if defined APPL_OS_Xx */
+
+#if defined APPL_OS_WINDOWS
+
+static int pthread_mutex_init(
+    pthread_mutex_t * const p_private_linux,
+    void * const p_attributes)
+{
+    appl_unused( p_private_linux, p_attributes);
+    return -1;
+}
+static int pthread_mutex_destroy(
+    pthread_mutex_t * const p_private_linux)
+{
+    appl_unused( p_private_linux);
+    return -1;
+}
+static int pthread_mutex_lock(
+    pthread_mutex_t * const p_private_linux)
+{
+    appl_unused( p_private_linux);
+    return -1;
+}
+static int pthread_mutex_unlock(
+    pthread_mutex_t * const p_private_linux)
+{
+    appl_unused( p_private_linux);
+    return -1;
+}
+
+#endif /* #if defined APPL_OS_Xx */
+
+#include <misc/appl_os.h>
 
 #if defined APPL_HAVE_COVERAGE
 #include <coverage/appl_coverage.h>
 #endif /* #if defined APPL_HAVE_COVERAGE */
+
 //
 //
 //
@@ -49,46 +103,49 @@ enum appl_status
     enum appl_status
         e_status;
 
-#if defined APPL_OS_LINUX
-
-    int const
-        i_init_result =
-#if defined APPL_HAVE_COVERAGE
-        appl_coverage_check() ? -1 :
-#endif /* #if defined APPL_HAVE_COVERAGE */
-        pthread_mutex_init(
-            &(
-                m_storage.m_private),
-            NULL);
-
     if (
-        0
-        == i_init_result)
+        appl_os_linux
+        == appl_os_get())
     {
+        int const
+            i_init_result =
+#if defined APPL_HAVE_COVERAGE
+            appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
+            pthread_mutex_init(
+                &(
+                    m_storage.m_private_linux),
+                NULL);
+
+        if (
+            0
+            == i_init_result)
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_raise_fail();
+        }
+    }
+    else if (
+        appl_os_windows
+        == appl_os_get())
+    {
+        InitializeCriticalSection(
+            &(
+                m_storage.m_private_windows));
+
         e_status =
             appl_status_ok;
     }
     else
     {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "pthread_mutex_init fail\n");
-#endif /* #if defined APPL_DEBUG */
-
         e_status =
             appl_status_fail;
     }
-
-#else /* #if defined APPL_OS_Xx */
-
-    InitializeCriticalSection(
-        &(
-            m_storage.m_private));
-
-    e_status =
-        appl_status_ok;
-
-#endif /* #if defined APPL_OS_Xx */
 
     return
         e_status;
@@ -104,52 +161,55 @@ enum appl_status
     enum appl_status
         e_status;
 
-#if defined APPL_OS_LINUX
+    if (
+        appl_os_linux
+        == appl_os_get())
+    {
+        int
+            i_destroy_result;
 
-    int
-        i_destroy_result;
-
-    i_destroy_result =
-        pthread_mutex_destroy(
-            &(
-                m_storage.m_private));
+        i_destroy_result =
+            pthread_mutex_destroy(
+                &(
+                    m_storage.m_private_linux));
 
 #if defined APPL_HAVE_COVERAGE
-    if (appl_coverage_check())
-    {
-        i_destroy_result =
-            -1;
-    }
+        if (appl_coverage_check())
+        {
+            i_destroy_result =
+                -1;
+        }
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
-    if (
-        0
-        == i_destroy_result)
+        if (
+            0
+            == i_destroy_result)
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_raise_fail();
+        }
+    }
+    else if (
+        appl_os_windows
+        == appl_os_get())
     {
+        DeleteCriticalSection(
+            &(
+                m_storage.m_private_windows));
+
         e_status =
             appl_status_ok;
     }
     else
     {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "pthread_mutex_destroy fail\n");
-#endif /* #if defined APPL_DEBUG */
-
         e_status =
             appl_status_fail;
     }
-
-#else /* #if defined APPL_OS_Xx */
-
-    DeleteCriticalSection(
-        &(
-            m_storage.m_private));
-
-    e_status =
-        appl_status_ok;
-
-#endif /* #if defined APPL_OS_Xx */
 
     return
         e_status;
@@ -165,45 +225,48 @@ enum appl_status
     enum appl_status
         e_status;
 
-#if defined APPL_OS_LINUX
-
-    int const
-        i_lock_result =
-#if defined APPL_HAVE_COVERAGE
-        appl_coverage_check() ? -1 :
-#endif /* #if defined APPL_HAVE_COVERAGE */
-        pthread_mutex_lock(
-            &(
-                m_storage.m_private));
-
     if (
-        0
-        == i_lock_result)
+        appl_os_linux
+        == appl_os_get())
     {
+        int const
+            i_lock_result =
+#if defined APPL_HAVE_COVERAGE
+            appl_coverage_check() ? -1 :
+#endif /* #if defined APPL_HAVE_COVERAGE */
+            pthread_mutex_lock(
+                &(
+                    m_storage.m_private_linux));
+
+        if (
+            0
+            == i_lock_result)
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_raise_fail();
+        }
+    }
+    else if (
+        appl_os_windows
+        == appl_os_get())
+    {
+        EnterCriticalSection(
+            &(
+                m_storage.m_private_windows));
+
         e_status =
             appl_status_ok;
     }
     else
     {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "pthread_mutex_lock fail\n");
-#endif /* #if defined APPL_DEBUG */
-
         e_status =
             appl_status_fail;
     }
-
-#else /* #if defined APPL_OS_Xx */
-
-    EnterCriticalSection(
-        &(
-            m_storage.m_private));
-
-    e_status =
-        appl_status_ok;
-
-#endif /* #if defined APPL_OS_Xx */
 
     return
         e_status;
@@ -219,52 +282,55 @@ enum appl_status
     enum appl_status
         e_status;
 
-#if defined APPL_OS_LINUX
+    if (
+        appl_os_linux
+        == appl_os_get())
+    {
+        int
+            i_unlock_result;
 
-    int
-        i_unlock_result;
-
-    i_unlock_result =
-        pthread_mutex_unlock(
-            &(
-                m_storage.m_private));
+        i_unlock_result =
+            pthread_mutex_unlock(
+                &(
+                    m_storage.m_private_linux));
 
 #if defined APPL_HAVE_COVERAGE
-    if (appl_coverage_check())
-    {
-        i_unlock_result =
-            -1;
-    }
+        if (appl_coverage_check())
+        {
+            i_unlock_result =
+                -1;
+        }
 #endif /* #if defined APPL_HAVE_COVERAGE */
 
-    if (
-        0
-        == i_unlock_result)
+        if (
+            0
+            == i_unlock_result)
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_raise_fail();
+        }
+    }
+    else if (
+        appl_os_windows
+        == appl_os_get())
     {
+        LeaveCriticalSection(
+            &(
+                m_storage.m_private_windows));
+
         e_status =
             appl_status_ok;
     }
     else
     {
-#if defined APPL_DEBUG
-        appl_debug_impl::s_print0(
-            "pthread_mutex_unlock fail\n");
-#endif /* #if defined APPL_DEBUG */
-
         e_status =
             appl_status_fail;
     }
-
-#else /* #if defined APPL_OS_Xx */
-
-    LeaveCriticalSection(
-        &(
-            m_storage.m_private));
-
-    e_status =
-        appl_status_ok;
-
-#endif /* #if defined APPL_OS_Xx */
 
     return
         e_status;

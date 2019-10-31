@@ -4,10 +4,6 @@
 
 */
 
-#if defined APPL_OS_WINDOWS
-
-#include <windows.h>
-
 #include <time.h>
 
 #include <appl_status.h>
@@ -135,7 +131,5 @@ appl_random_w32_crypto::v_pick(
         e_status;
 
 } // v_pick()
-
-#endif /* #if defined APPL_OS_WINDOWS */
 
 /* end-of-file: appl_random_w32_crypto.cpp */

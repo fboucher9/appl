@@ -4,11 +4,7 @@
 
 */
 
-#if defined APPL_OS_LINUX
-
-#include <time.h>
-
-#include <unistd.h>
+#include <clock/appl_clock_std_defs.h>
 
 #include <appl_status.h>
 
@@ -296,7 +292,5 @@ enum appl_status
         e_status;
 
 } // v_convert()
-
-#endif /* #if defined APPL_OS_LINUX */
 
 /* end-of-file: appl_clock_std.cpp */

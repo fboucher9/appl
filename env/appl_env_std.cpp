@@ -4,11 +4,7 @@
 
 */
 
-#if defined APPL_OS_LINUX
-
-#include <string.h>
-
-#include <stdlib.h>
+#include <env/appl_env_std_defs.h>
 
 #include <appl_status.h>
 
@@ -29,8 +25,6 @@
 #include <string/appl_string_handle.h>
 
 #include <context/appl_context_handle.h>
-
-#include <misc/appl_convert.h>
 
 #include <buf/appl_buf.h>
 
@@ -192,19 +186,27 @@ enum appl_status
             appl_status_ok
             == e_status)
         {
-            char const * const
-                p_value0 =
+            union appl_buf_ptr
+                o_name0_ptr;
+
+            o_name0_ptr.pc_uchar =
+                appl_buf0_get(
+                    p_name0);
+
+            union appl_buf_ptr
+                o_value0_ptr;
+
+            o_value0_ptr.pc_char =
                 getenv(
-                    appl_convert::to_char_ptr(
-                        appl_buf0_get(p_name0)));
+                    o_name0_ptr.pc_char);
 
             if (
-                p_value0)
+                o_value0_ptr.pc_char)
             {
-                appl_size_t const
+                unsigned long int const
                     i_value_len =
-                    strlen(
-                        p_value0);
+                    appl_buf0_len(
+                        o_value0_ptr.pc_uchar);
 
                 struct appl_string *
                     p_string;
@@ -212,10 +214,8 @@ enum appl_status
                 e_status =
                     appl_string_create_dup_buffer(
                         m_context,
-                        appl_convert::to_uchar_ptr(
-                            p_value0),
-                        appl_convert::to_uchar_ptr(
-                            p_value0 + i_value_len),
+                        o_value0_ptr.pc_uchar,
+                        o_value0_ptr.pc_uchar + i_value_len,
                         &(
                             p_string));
 
@@ -301,26 +301,32 @@ enum appl_status
             appl_status_ok
             == e_status)
         {
-            char const * const
-                p_value0 =
+            union appl_buf_ptr
+                o_name0_ptr;
+
+            o_name0_ptr.pc_uchar =
+                appl_buf0_get(
+                    p_name0);
+
+            union appl_buf_ptr
+                o_value0_ptr;
+
+            o_value0_ptr.pc_char =
                 getenv(
-                    appl_convert::to_char_ptr(
-                        appl_buf0_get(p_name0)));
+                    o_name0_ptr.pc_char);
 
             if (
-                p_value0)
+                o_value0_ptr.pc_char)
             {
-                appl_size_t const
+                unsigned long int const
                     i_value_len =
-                    strlen(
-                        p_value0);
+                    appl_buf0_len(
+                        o_value0_ptr.pc_uchar);
 
                 (*p_query_callback)(
                     p_query_context,
-                    appl_convert::to_uchar_ptr(
-                        p_value0),
-                    appl_convert::to_uchar_ptr(
-                        p_value0 + i_value_len));
+                    o_value0_ptr.pc_uchar,
+                    o_value0_ptr.pc_uchar + i_value_len);
 
                 e_status =
                     appl_status_ok;
@@ -399,13 +405,25 @@ enum appl_status
                 appl_status_ok
                 == e_status)
             {
+                union appl_buf_ptr
+                    o_name0_ptr;
+
+                o_name0_ptr.pc_uchar =
+                    appl_buf0_get(
+                        p_name0);
+
+                union appl_buf_ptr
+                    o_value0_ptr;
+
+                o_value0_ptr.pc_uchar =
+                    appl_buf0_get(
+                        p_value0);
+
                 int const
                     i_setenv_result =
                     setenv(
-                        appl_convert::to_char_ptr(
-                            appl_buf0_get(p_name0)),
-                        appl_convert::to_char_ptr(
-                            appl_buf0_get(p_value0)),
+                        o_name0_ptr.pc_char,
+                        o_value0_ptr.pc_char,
                         1);
 
                 if (
@@ -444,7 +462,5 @@ appl_env_std::v_cleanup(void)
         sizeof(class appl_env_std);
 
 } // v_cleanup()
-
-#endif /* #if defined APPL_OS_LINUX */
 
 /* end-of-file: appl_env_std.cpp */

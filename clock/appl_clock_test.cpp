@@ -38,6 +38,8 @@
 
 #include <options/appl_options_handle.h>
 
+#include <misc/appl_unused.h>
+
 struct appl_clock_test_context
 {
     unsigned long int
@@ -388,6 +390,9 @@ unsigned long int
 {
     unsigned long int
         i_count = 0ul;
+
+    appl_unused(
+        i_limit);
 
     struct appl_clock_test_context * const
         p_clock_test_context =

@@ -4,8 +4,6 @@
 
 */
 
-#if defined APPL_OS_LINUX
-
 #include <stdio.h>
 
 #include <appl_status.h>
@@ -192,7 +190,5 @@ appl_random_std_crypto::v_pick(
         e_status;
 
 } // v_pick()
-
-#endif /* #if defined APPL_OS_LINUX */
 
 /* end-of-file: appl_random_std_crypto.cpp */

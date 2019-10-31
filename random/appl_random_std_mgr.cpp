@@ -4,8 +4,6 @@
 
 */
 
-#if defined APPL_OS_LINUX
-
 #include <appl_status.h>
 
 #include <appl_predefines.h>
@@ -176,7 +174,5 @@ appl_random_std_mgr::v_destroy_node(
         e_status;
 
 } // v_destroy_node()
-
-#endif /* #if defined APPL_OS_LINUX */
 
 /* end-of-file: appl_random_std_mgr.cpp */
