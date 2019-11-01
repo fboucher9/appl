@@ -12,8 +12,9 @@ enum guard_appl_clock_impl_h
 {
     inc_appl_clock_impl_h = 1
         /* Header file dependencies */
-        + inc_appl_status_h
-        + inc_appl_types_h
+        | inc_appl_status_h
+        | inc_appl_types_h
+        /* ... */
 };
 
 //

@@ -69,7 +69,6 @@ appl_base-deps := \
     clock/appl_clock_handle.cpp \
     clock/appl_clock_service.cpp \
     clock/appl_clock_std.cpp \
-    clock/appl_clock_std_defs.cpp \
     clock/appl_clock_w32.cpp \
     clock/appl_clock_impl.cpp \
     context/appl_context.cpp \
@@ -164,6 +163,8 @@ appl_base-deps := \
     mutex/appl_mutex_impl.cpp \
     mutex/appl_mutex_defs.cpp \
     misc/appl_os.cpp \
+    misc/appl_linux.cpp \
+    misc/appl_windows.cpp \
     socket/appl_netdevice_handle.cpp \
     socket/appl_netdevice_service.cpp \
     socket/appl_netdevice_mgr.cpp \

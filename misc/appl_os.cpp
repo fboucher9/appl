@@ -24,4 +24,19 @@ appl_os_get(void)
 
 } // appl_os_get()
 
+//
+//
+//
+char
+appl_os_test(
+    enum appl_os const
+        e_os_value)
+{
+    return
+        (
+            g_appl_os
+            == e_os_value);
+
+} // appl_os_test()
+
 /* end-of-file: appl_os.cpp */

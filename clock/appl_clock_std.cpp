@@ -4,13 +4,13 @@
 
 */
 
-#include <clock/appl_clock_std_defs.h>
-
 #include <appl_status.h>
 
 #include <appl_predefines.h>
 
 #include <appl_types.h>
+
+#include <misc/appl_linux.h>
 
 #include <object/appl_object.h>
 
@@ -228,55 +228,54 @@ enum appl_status
             i_time_usec =
             ((i_time_count * 1000000ul) / i_time_freq);
 
-        time_t const
+        appl_ull_t const
             i_time_now =
-            static_cast<time_t>(
-                (i_time_usec + m_offset) / 1000000ul);
+                (i_time_usec + m_offset) / 1000000ul;
 
-        struct tm
+        struct appl_linux_time_info
             o_local_time_info;
 
-        struct tm *
-            p_local_time_result;
+        int
+            i_localtime_result;
 
-        p_local_time_result =
+        i_localtime_result =
 #if defined APPL_HAVE_COVERAGE
-            appl_coverage_check() ? 0 :
+            appl_coverage_check() ? -1 :
 #endif /* #if defined APPL_HAVE_COVERAGE */
-            localtime_r(
-                &(
-                    i_time_now),
+            appl_linux_localtime(
+                i_time_now,
                 &(
                     o_local_time_info));
 
         if (
-            p_local_time_result)
+            0
+            == i_localtime_result)
         {
             r_clock_details->i_fraction =
                 0ul;
 
             r_clock_details->i_year =
-                o_local_time_info.tm_year + 1900ul;
+                o_local_time_info.i_year + 1900ul;
 
             r_clock_details->i_month =
                 appl_convert::to_uchar(
-                    o_local_time_info.tm_mon + 1u);
+                    o_local_time_info.i_mon + 1u);
 
             r_clock_details->i_day =
                 appl_convert::to_uchar(
-                    o_local_time_info.tm_mday);
+                    o_local_time_info.i_mday);
 
             r_clock_details->i_hour =
                 appl_convert::to_uchar(
-                    o_local_time_info.tm_hour);
+                    o_local_time_info.i_hour);
 
             r_clock_details->i_minute =
                 appl_convert::to_uchar(
-                    o_local_time_info.tm_min);
+                    o_local_time_info.i_min);
 
             r_clock_details->i_second =
                 appl_convert::to_uchar(
-                    o_local_time_info.tm_sec);
+                    o_local_time_info.i_sec);
 
             e_status =
                 appl_status_ok;

@@ -8,8 +8,6 @@
 
 #include <appl_types.h>
 
-#include <clock/appl_clock_w32_defs.h>
-
 #include <appl_status.h>
 
 #include <appl_predefines.h>
@@ -23,6 +21,8 @@
 #include <misc/appl_convert.h>
 
 #include <allocator/appl_allocator_handle.h>
+
+#include <misc/appl_windows.h>
 
 //
 //
@@ -104,22 +104,9 @@ enum appl_status
     enum appl_status
         e_status;
 
-    MMRESULT
-        iWindowsResult;
-
-    UINT
-        uPeriod;
-
-    uPeriod =
-        1u;
-
-    iWindowsResult =
-        timeBeginPeriod(
-            uPeriod);
-
     if (
-        TIMERR_NOERROR
-        == iWindowsResult)
+        appl_windows_time_begin_period(
+            1u))
     {
         e_status =
             appl_status_ok;
@@ -141,22 +128,9 @@ enum appl_status
 appl_size_t
     appl_clock_w32::v_cleanup(void)
 {
-    MMRESULT
-        iWindowsResult;
-
-    UINT
-        uPeriod;
-
-    uPeriod =
-        1u;
-
-    iWindowsResult =
-        timeEndPeriod(
-            uPeriod);
-
     if (
-        TIMERR_NOERROR
-        == iWindowsResult)
+        appl_windows_time_end_period(
+            1u))
     {
     }
     else
@@ -203,30 +177,21 @@ appl_clock_w32::v_read(
     enum appl_status
         e_status;
 
-    LARGE_INTEGER
-        liFreq;
-
-    BOOL
-        bWindowsResult;
-
-    bWindowsResult =
-        QueryPerformanceFrequency(
-            &(
-                liFreq));
+    appl_ull_t
+        i_freq;
 
     if (
-        bWindowsResult)
+        appl_windows_query_performance_frequency(
+            &(
+                i_freq)))
     {
-        LARGE_INTEGER
-            liCounter;
-
-        bWindowsResult =
-            QueryPerformanceCounter(
-                &(
-                    liCounter));
+        appl_ull_t
+            i_counter;
 
         if (
-            bWindowsResult)
+            appl_windows_query_performance_counter(
+                &(
+                    i_counter)))
         {
             unsigned long int
                 i_time_count;
@@ -235,7 +200,7 @@ appl_clock_w32::v_read(
                 ll_time_count;
 
             ll_time_count =
-                ((liCounter.QuadPart * i_time_freq) / liFreq.QuadPart);
+                ((i_counter * i_time_freq) / i_freq);
 
             i_time_count =
                 appl_convert::to_ulong(
@@ -290,10 +255,10 @@ appl_clock_w32::v_delay(
                 1000ul,
                 i_time_freq);
 
-        SleepEx(
+        appl_windows_sleep_ex(
             appl_convert::to_uint(
                 i_time_msec),
-            TRUE);
+            1);
 
         e_status =
             appl_status_ok;

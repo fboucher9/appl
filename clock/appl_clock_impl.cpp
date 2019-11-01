@@ -14,7 +14,7 @@
 
 #include <misc/appl_convert.h>
 
-#include <clock/appl_clock_std_defs.h>
+#include <misc/appl_linux.h>
 
 #if defined APPL_DEBUG
 #include <debug/appl_debug_impl.h>
@@ -53,23 +53,12 @@ appl_math_muldiv(
 
 } // appl_math_muldiv()
 
-//
-//
-//
-enum appl_clock_epoch
-{
-    appl_clock_epoch_mono = 1,
-
-    appl_clock_epoch_real = 2
-
-};
-
 static
 enum appl_status
 read_at_epoch(
-    enum appl_clock_epoch const
+    enum appl_linux_clock_id const
         e_epoch,
-    struct timespec * const
+    struct appl_linux_time_nsec * const
         r_value)
 {
     int const
@@ -77,12 +66,8 @@ read_at_epoch(
 #if defined APPL_HAVE_COVERAGE
         appl_coverage_check() ? -1 :
 #endif /* #if defined APPL_HAVE_COVERAGE */
-        clock_gettime(
-            (
-                appl_clock_epoch_real
-                == e_epoch)
-            ? CLOCK_REALTIME
-            : CLOCK_MONOTONIC,
+        appl_linux_clock_gettime(
+            e_epoch,
             r_value);
 
     enum appl_status const
@@ -103,7 +88,7 @@ read_at_epoch(
 static
 appl_ull_t
     from_timespec_to_count(
-        struct timespec const &
+        struct appl_linux_time_nsec const &
             o_clock_value,
         unsigned long int const
             i_time_freq)
@@ -115,13 +100,13 @@ appl_ull_t
         i_clock_sec =
         appl_convert::to_ulong(
             appl_convert::to_unsigned(
-                o_clock_value.tv_sec));
+                o_clock_value.i_sec));
 
     unsigned long int const
         i_clock_nsec =
         appl_convert::to_ulong(
             appl_convert::to_unsigned(
-                o_clock_value.tv_nsec));
+                o_clock_value.i_nsec));
 
     i_time_count =
         (
@@ -202,12 +187,12 @@ enum appl_status
             appl_os_linux
             == appl_os_get())
         {
-            struct timespec
+            struct appl_linux_time_nsec
                 o_clock_value;
 
             e_status =
                 read_at_epoch(
-                    appl_clock_epoch_mono,
+                    appl_linux_clock_id_mono,
                     &(
                         o_clock_value));
 
@@ -321,7 +306,7 @@ enum appl_status
 #if defined APPL_HAVE_COVERAGE
                 appl_coverage_check() ? -1 :
 #endif /* #if defined APPL_HAVE_COVERAGE */
-                usleep(
+                appl_linux_usleep(
                     ui_time_usec);
 
             if (
@@ -375,12 +360,12 @@ enum appl_status
         appl_os_linux
         == appl_os_get())
     {
-        struct timespec
+        struct appl_linux_time_nsec
             o_clock_mono_value;
 
         e_status =
             read_at_epoch(
-                appl_clock_epoch_mono,
+                appl_linux_clock_id_mono,
                 &(
                     o_clock_mono_value));
 
@@ -388,12 +373,12 @@ enum appl_status
             appl_status_ok
             == e_status)
         {
-            struct timespec
+            struct appl_linux_time_nsec
                 o_clock_real_value;
 
             e_status =
                 read_at_epoch(
-                    appl_clock_epoch_real,
+                    appl_linux_clock_id_real,
                     &(
                         o_clock_real_value));
 

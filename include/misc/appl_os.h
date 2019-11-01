@@ -28,6 +28,11 @@ enum appl_os
 enum appl_os
 appl_os_get(void);
 
+char
+appl_os_test(
+    enum appl_os const
+        e_os_value);
+
 #include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_os.h */
