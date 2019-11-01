@@ -24,7 +24,7 @@ struct appl_once
     pthread_once_t
         o_lnx_impl;
 #else /* #if defined APPL_OS_LINUX */
-    LONG volatile
+    signed long int volatile
         o_w32_impl;
 #endif /* #if defined APPL_OS_LINUX */
 }; /* struct appl_once */

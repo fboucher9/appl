@@ -10,6 +10,10 @@
 
 #if defined APPL_OS_LINUX
 
+#include <string.h>
+
+#include <stdlib.h>
+
 #include <time.h>
 
 #include <unistd.h>
@@ -188,5 +192,77 @@ appl_linux_localtime(
         i_result;
 
 } // appl_linux_localtime()
+
+//
+//
+//
+char const *
+appl_linux_getenv(
+    char const * const
+        p_name)
+{
+    char const *
+        p_result;
+
+#if defined APPL_OS_LINUX
+
+    p_result =
+        getenv(
+            p_name);
+
+#else /* #if defined APPL_OS_LINUX */
+
+    appl_unused(
+        p_name);
+
+    p_result =
+        0;
+
+#endif /* #if defined APPL_OS_LINUX */
+
+    return
+        p_result;
+
+} // appl_linux_getenv()
+
+//
+//
+//
+int
+appl_linux_setenv(
+    char const * const
+        p_name,
+    char const * const
+        p_value,
+    int const
+        b_overwrite)
+{
+    int
+        i_result;
+
+#if defined APPL_OS_LINUX
+
+    i_result =
+        setenv(
+            p_name,
+            p_value,
+            b_overwrite);
+
+#else /* #if defined APPL_OS_LINUX */
+
+    appl_unused(
+        p_name,
+        p_value,
+        b_overwrite);
+
+    i_result =
+        -1;
+
+#endif /* #if defined APPL_OS_LINUX */
+
+    return
+        i_result;
+
+} // appl_linux_setenv()
 
 /* end-of-file: appl_linux.cpp */

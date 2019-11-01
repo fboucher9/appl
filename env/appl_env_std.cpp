@@ -4,8 +4,6 @@
 
 */
 
-#include <env/appl_env_std_defs.h>
-
 #include <appl_status.h>
 
 #include <appl_predefines.h>
@@ -31,6 +29,8 @@
 #include <buf/appl_buf0.h>
 
 #include <coverage/appl_validate.h>
+
+#include <misc/appl_linux.h>
 
 //
 //
@@ -197,7 +197,7 @@ enum appl_status
                 o_value0_ptr;
 
             o_value0_ptr.pc_char =
-                getenv(
+                appl_linux_getenv(
                     o_name0_ptr.pc_char);
 
             if (
@@ -312,7 +312,7 @@ enum appl_status
                 o_value0_ptr;
 
             o_value0_ptr.pc_char =
-                getenv(
+                appl_linux_getenv(
                     o_name0_ptr.pc_char);
 
             if (
@@ -421,7 +421,7 @@ enum appl_status
 
                 int const
                     i_setenv_result =
-                    setenv(
+                    appl_linux_setenv(
                         o_name0_ptr.pc_char,
                         o_value0_ptr.pc_char,
                         1);

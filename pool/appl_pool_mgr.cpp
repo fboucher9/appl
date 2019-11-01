@@ -4,7 +4,7 @@
 
 */
 
-#include <mutex/appl_mutex_defs.h>
+#include <pthread.h>
 
 #include <appl_status.h>
 

@@ -10,7 +10,6 @@ enum guard_appl_mutex_impl_h
     inc_appl_mutex_impl_h = 1
         /* Header file dependencies */
         | inc_appl_status_h
-        | inc_appl_mutex_defs_h
         /* ... */
 };
 
@@ -67,12 +66,12 @@ class appl_mutex_impl
                     (sizeof(pthread_mutex_t) + sizeof(appl_ull_t) - 1u)
                     / sizeof(appl_ull_t)];
 
-            CRITICAL_SECTION
+            struct appl_windows_critical_section *
                 m_private_windows;
 
             appl_ull_t
                 m_padding_windows[
-                    (sizeof(CRITICAL_SECTION) + sizeof(appl_ull_t) - 1u)
+                    (sizeof(void *) + sizeof(appl_ull_t) - 1u)
                     / sizeof(appl_ull_t)];
 
         } m_storage;

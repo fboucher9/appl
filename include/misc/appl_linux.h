@@ -96,6 +96,20 @@ appl_linux_localtime(
     struct appl_linux_time_info * const
         r_time_info);
 
+char const *
+appl_linux_getenv(
+    char const * const
+        p_name);
+
+int
+appl_linux_setenv(
+    char const * const
+        p_name,
+    char const * const
+        p_value,
+    int const
+        b_overwrite);
+
 #include <misc/appl_extern_c_end.h>
 
 /* end-of-file: appl_linux.h */

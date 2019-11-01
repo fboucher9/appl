@@ -12,7 +12,7 @@
 
 #include <list/appl_list.h>
 
-#include <mutex/appl_mutex_defs.h>
+#include <pthread.h>
 
 #include <mutex/appl_mutex_impl.h>
 

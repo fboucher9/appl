@@ -101,9 +101,7 @@ appl_base-deps := \
     env/appl_env_handle.cpp \
     env/appl_env_service.cpp \
     env/appl_env_std.cpp \
-    env/appl_env_std_defs.cpp \
     env/appl_env_w32.cpp \
-    env/appl_env_w32_defs.cpp \
     event/appl_event_handle.cpp \
     event/appl_event_mgr.cpp \
     event/appl_event_node.cpp \
@@ -161,7 +159,6 @@ appl_base-deps := \
     mutex/appl_mutex_std_mgr.cpp \
     mutex/appl_mutex_std_node.cpp \
     mutex/appl_mutex_impl.cpp \
-    mutex/appl_mutex_defs.cpp \
     misc/appl_os.cpp \
     misc/appl_linux.cpp \
     misc/appl_windows.cpp \

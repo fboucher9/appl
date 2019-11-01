@@ -4,8 +4,6 @@
 
 */
 
-#include <env/appl_env_w32_defs.h>
-
 #include <appl_status.h>
 
 #include <appl_predefines.h>
@@ -35,6 +33,8 @@
 #include <misc/appl_convert.h>
 
 #include <misc/appl_unused.h>
+
+#include <misc/appl_windows.h>
 
 //
 //
@@ -137,11 +137,11 @@ enum appl_status
         appl_status_ok
         == e_status)
     {
-        DWORD
+        unsigned long int
             dwResult;
 
         dwResult =
-            GetEnvironmentVariableA(
+            appl_windows_get_environment_variable(
                 appl_convert::to_char_ptr(
                     appl_buf0_get(p_name0)),
                 0,
@@ -164,11 +164,11 @@ enum appl_status
                 appl_status_ok
                 == e_status)
             {
-                DWORD
+                unsigned long int
                     dwResult2;
 
                 dwResult2 =
-                    GetEnvironmentVariableA(
+                    appl_windows_get_environment_variable(
                         appl_convert::to_char_ptr(
                             appl_buf0_get(p_name0)),
                         appl_convert::to_char_ptr(
@@ -316,11 +316,11 @@ enum appl_status
             appl_status_ok
             == e_status)
         {
-            int
+            char
                 bResult;
 
             bResult =
-                SetEnvironmentVariableA(
+                appl_windows_set_environment_variable(
                     appl_convert::to_char_ptr(
                         appl_buf0_get(p_name0)),
                     appl_convert::to_char_ptr(

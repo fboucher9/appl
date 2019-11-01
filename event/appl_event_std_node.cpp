@@ -4,13 +4,15 @@
 
 */
 
-#include <mutex/appl_mutex_defs.h>
-
-#include <event/appl_event_defs.h>
-
 #include <appl_status.h>
 
 #include <appl_types.h>
+
+#include <misc/appl_linux.h>
+
+#include <misc/appl_windows.h>
+
+#include <pthread.h>
 
 #include <object/appl_object.h>
 

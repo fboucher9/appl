@@ -4,11 +4,13 @@
 
 */
 
-#include <mutex/appl_mutex_defs.h>
+#include <pthread.h>
 
 #include <appl_status.h>
 
 #include <appl_types.h>
+
+#include <misc/appl_windows.h>
 
 #include <mutex/appl_mutex_impl.h>
 
@@ -73,12 +75,20 @@ enum appl_status
         appl_os_windows
         == appl_os_get())
     {
-        InitializeCriticalSection(
-            &(
-                m_storage.m_private_windows));
+        m_storage.m_private_windows =
+            appl_windows_create_critical_section();
 
-        e_status =
-            appl_status_ok;
+        if (
+            m_storage.m_private_windows)
+        {
+            e_status =
+                appl_status_ok;
+        }
+        else
+        {
+            e_status =
+                appl_status_fail;
+        }
     }
     else
     {
@@ -137,9 +147,15 @@ enum appl_status
         appl_os_windows
         == appl_os_get())
     {
-        DeleteCriticalSection(
-            &(
-                m_storage.m_private_windows));
+        if (
+            m_storage.m_private_windows)
+        {
+            appl_windows_destroy_critical_section(
+                m_storage.m_private_windows);
+
+            m_storage.m_private_windows =
+                0;
+        }
 
         e_status =
             appl_status_ok;
@@ -194,9 +210,8 @@ enum appl_status
         appl_os_windows
         == appl_os_get())
     {
-        EnterCriticalSection(
-            &(
-                m_storage.m_private_windows));
+        appl_windows_enter_critical_section(
+            m_storage.m_private_windows);
 
         e_status =
             appl_status_ok;
@@ -258,9 +273,8 @@ enum appl_status
         appl_os_windows
         == appl_os_get())
     {
-        LeaveCriticalSection(
-            &(
-                m_storage.m_private_windows));
+        appl_windows_leave_critical_section(
+            m_storage.m_private_windows);
 
         e_status =
             appl_status_ok;

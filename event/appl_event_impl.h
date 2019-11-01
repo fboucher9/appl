@@ -10,7 +10,9 @@ enum guard_appl_event_impl_h
     inc_appl_event_impl_h = 1
         /* Header file dependencies */
         | inc_appl_status_h
-        | inc_appl_event_defs_h
+        | inc_appl_linux_h
+        | inc_appl_windows_h
+        /* ... */
 };
 
 class appl_event_impl;
@@ -67,12 +69,12 @@ class appl_event_impl
 
             union appl_event_impl_storage_windows
             {
-                CONDITION_VARIABLE
+                struct appl_windows_condition_variable *
                     m_private;
 
                 appl_ull_t
                     m_padding[
-                        (sizeof(CONDITION_VARIABLE) + sizeof(appl_ull_t) - 1u)
+                        (sizeof(void *) + sizeof(appl_ull_t) - 1u)
                         / sizeof(appl_ull_t)];
 
             } m_windows;
