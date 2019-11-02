@@ -31,12 +31,6 @@ enum appl_trace_message_type
 */
 struct appl_trace_message
 {
-    /* time at which message was created */
-    appl_ull_t
-        i_clock;
-
-    /* -- */
-
     /* expansion of variable arguments */
     struct appl_buf
         o_args;

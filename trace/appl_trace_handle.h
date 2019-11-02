@@ -42,7 +42,17 @@ Description:
 struct appl_trace
 {
     appl_ull_t
-        i_time;
+        i_first_time;
+
+    /* -- */
+
+    appl_ull_t
+        i_last_time;
+
+    /* -- */
+
+    appl_ull_t
+        i_elapsed;
 
     /* -- */
 
@@ -186,44 +196,26 @@ enum appl_status
 
 #if 0
 
-static struct appl_trace_node g_demo_trace_node =
-{
-    (struct appl_trace_node *)(0),
-    "demo",
-    0,
-    0
-};
+static struct appl_trace g_trace_demo;
 
 void
 demo(
     struct appl_context * const
         p_context)
 {
-    if (appl_trace_test(p_context, &g_demo_trace_node))
-    {
-        appl_trace_enter(
-            p_context,
-            &g_demo_trace_node,
-            a_message,
-            appl_buf_print_number(
-                appl_buf_print0(
-                    a_message,
-                    a_message + sizeof(a_message),
-                    "argc="),
-                i_argc));
-    }
+    appl_trace_init(
+        p_context,
+        &g_trace_demo,
+        "demo",
+        1);
 
-    if (appl_trace_test(p_context, &g_demo_trace_node))
-    {
-        appl_buf_print0(
-            &o_iterator,
-            "");
+    appl_trace_enter(
+        p_context,
+        &g_trace_demo);
 
-        appl_trace_leave(
-            p_context,
-            &g_demo_trace_node,
-            &o_iterator);
-    }
+    appl_trace_leave(
+        p_context,
+        &g_trace_demo);
 }
 
 #endif

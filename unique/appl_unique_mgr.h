@@ -39,15 +39,9 @@ class appl_unique_mgr : public appl_object
 
         virtual
         enum appl_status
-            v_create(
-                struct appl_unique * * const
+            v_pick(
+                unsigned long int * const
                     r_unique);
-
-        virtual
-        enum appl_status
-            v_destroy(
-                struct appl_unique * const
-                    p_unique);
 
     protected:
 

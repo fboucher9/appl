@@ -109,6 +109,8 @@
 
 #include <dir/appl_dir_test.h>
 
+#include <unique/appl_unique_test.h>
+
 #include <test/appl_test.h>
 
 void
@@ -2795,6 +2797,17 @@ static unsigned char const g_ref_dir[] =
     'r'
 };
 
+/* unique */
+static unsigned char const g_ref_unique[] =
+{
+    'u',
+    'n',
+    'i',
+    'q',
+    'u',
+    'e'
+};
+
 struct appl_test_command
 {
     unsigned char const *
@@ -3035,6 +3048,11 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_dir,
         g_ref_dir + sizeof(g_ref_dir),
         & appl_dir_test_1
+    },
+    {
+        g_ref_unique,
+        g_ref_unique + sizeof(g_ref_unique),
+        & appl_unique_test_1
     }
 };
 

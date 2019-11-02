@@ -10,6 +10,7 @@ enum guard_appl_unique_std_mgr_h
     inc_appl_unique_std_mgr_h = 1
         /* Header file dependencies */
         | inc_appl_unique_mgr_h
+        | inc_appl_mutex_impl_h
         /* ... */
 }; // enum guard_appl_unique_std_mgr_h
 
@@ -37,9 +38,30 @@ class appl_unique_std_mgr : public appl_unique_mgr
         appl_size_t
             v_cleanup(void);
 
+        virtual
+        enum appl_status
+            v_pick(
+                unsigned long int * const
+                    r_unique);
+
     protected:
 
     private:
+
+        // --
+
+        class appl_mutex_impl
+            m_lock;
+
+        // --
+
+        unsigned long int
+            m_counter;
+
+#define PADDING (APPL_SIZEOF_LONG)
+#include <misc/appl_padding.h>
+
+        // --
 
         appl_unique_std_mgr(
             class appl_unique_std_mgr const & r);
@@ -47,18 +69,6 @@ class appl_unique_std_mgr : public appl_unique_mgr
         class appl_unique_std_mgr &
             operator =(
                 class appl_unique_std_mgr const & r);
-
-        virtual
-        enum appl_status
-            v_create(
-                struct appl_unique * * const
-                    r_unique);
-
-        virtual
-        enum appl_status
-            v_destroy(
-                struct appl_unique * const
-                    p_unique);
 
 }; // class appl_unique_std_mgr
 

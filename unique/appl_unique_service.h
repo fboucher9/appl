@@ -25,35 +25,11 @@ class appl_unique_service
 
         static
         enum appl_status
-        s_create(
+        s_pick(
             struct appl_context * const
                 p_context,
-            struct appl_unique * * const
+            unsigned long int * const
                 r_unique);
-
-        static
-        enum appl_status
-        s_destroy(
-            struct appl_unique * const
-                p_unique);
-
-        static
-        struct appl_object *
-        s_parent(
-            struct appl_unique * const
-                p_unique);
-
-        static
-        struct appl_object const *
-        s_const_parent(
-            struct appl_unique const * const
-                p_unique);
-
-        static
-        unsigned long int
-        s_get(
-            struct appl_unique const * const
-                p_unique);
 
 }; // class appl_unique_service
 
