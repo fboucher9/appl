@@ -56,6 +56,14 @@ class appl_heap_dbg : public appl_heap
                 struct appl_heap_dbg_descriptor const * const
                     p_descriptor);
 
+        virtual
+        enum appl_status
+            v_finalize(void);
+
+        virtual
+        enum appl_status
+            v_shutdown(void);
+
     protected:
 
         // --
@@ -63,10 +71,15 @@ class appl_heap_dbg : public appl_heap
         struct appl_heap *
             m_parent;
 
+        struct appl_mutex *
+            m_lock;
+
+        // --
+
         signed long int
             m_alloc_count;
 
-#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG)
+#define PADDING (APPL_SIZEOF_LONG)
 #include <misc/appl_padding.h>
 
         // --
@@ -75,9 +88,6 @@ class appl_heap_dbg : public appl_heap
             m_list;
 
         // --
-
-        class appl_mutex_impl
-            m_lock;
 
     private:
 

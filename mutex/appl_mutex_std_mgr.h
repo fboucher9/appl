@@ -54,17 +54,6 @@ class appl_mutex_std_mgr : public appl_mutex_mgr
 
         // --
 
-        struct appl_pool *
-            m_pool;
-
-        bool
-            m_pool_created;
-
-#define PADDING (APPL_SIZEOF_PTR + 1)
-#include <misc/appl_padding.h>
-
-        // --
-
         appl_mutex_std_mgr(
             class appl_mutex_std_mgr const & r);
 
@@ -79,6 +68,8 @@ class appl_mutex_std_mgr : public appl_mutex_mgr
         virtual
         enum appl_status
             v_create_node(
+                struct appl_allocator * const
+                    p_allocator,
                 struct appl_mutex_descriptor const * const
                     p_mutex_descriptor,
                 struct appl_mutex * * const
@@ -87,6 +78,8 @@ class appl_mutex_std_mgr : public appl_mutex_mgr
         virtual
         enum appl_status
             v_destroy_node(
+                struct appl_allocator * const
+                    p_allocator,
                 struct appl_mutex * const
                     p_mutex);
 

@@ -10,7 +10,6 @@ enum guard_appl_unique_std_mgr_h
     inc_appl_unique_std_mgr_h = 1
         /* Header file dependencies */
         | inc_appl_unique_mgr_h
-        | inc_appl_mutex_impl_h
         /* ... */
 }; // enum guard_appl_unique_std_mgr_h
 
@@ -50,15 +49,13 @@ class appl_unique_std_mgr : public appl_unique_mgr
 
         // --
 
-        class appl_mutex_impl
+        struct appl_mutex *
             m_lock;
-
-        // --
 
         unsigned long int
             m_counter;
 
-#define PADDING (APPL_SIZEOF_LONG)
+#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_LONG)
 #include <misc/appl_padding.h>
 
         // --

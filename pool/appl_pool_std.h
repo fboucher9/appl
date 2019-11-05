@@ -11,7 +11,6 @@ enum guard_appl_pool_std_h
         /* Header file dependencies */
         inc_appl_pool_h
         + inc_appl_list_h
-        + inc_appl_mutex_impl_h
 };
 
 /* Assert compiler */
@@ -56,12 +55,6 @@ class appl_pool_std : public appl_pool
 
         // --
 
-        // lock
-        class appl_mutex_impl
-            m_lock;
-
-        // --
-
         struct appl_pool_descriptor
             m_descriptor;
 
@@ -73,6 +66,8 @@ class appl_pool_std : public appl_pool
 
 #define PADDING (APPL_SIZEOF_PTR)
 #include <misc/appl_padding.h>
+
+        // --
 
         appl_pool_std(
             class appl_pool_std const & r);

@@ -38,8 +38,6 @@
 
 #include <list/appl_list.h>
 
-#include <mutex/appl_mutex_impl.h>
-
 #include <heap/appl_heap_dbg.h>
 
 #include <debug/appl_debug_impl.h>
@@ -404,6 +402,68 @@ void
     }
 
 } // cleanup_heap()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::finalize_heap(void)
+{
+    enum appl_status
+        e_status;
+
+    e_status =
+        m_heap_std.v_finalize();
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+#if defined APPL_DEBUG
+        if (
+            m_heap_dbg)
+        {
+            e_status =
+                m_heap_dbg->v_finalize();
+        }
+
+        if (
+            appl_status_ok
+            == e_status)
+        {
+            if (
+                appl_status_ok
+                != e_status)
+            {
+                if (
+                    m_heap_dbg)
+                {
+                    m_heap_dbg->v_shutdown();
+                }
+            }
+        }
+#endif /* #if defined APPL_DEBUG */
+
+        if (
+            appl_status_ok
+            != e_status)
+        {
+            m_heap_std.v_shutdown();
+        }
+    }
+
+    return
+        e_status;
+
+} // finalize_heap()
+
+//
+//
+//
+void
+    appl_context_std::shutdown_heap(void)
+{
+} // shutdown_heap()
 
 //
 //

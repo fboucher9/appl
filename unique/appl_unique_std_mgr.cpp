@@ -4,8 +4,6 @@
 
 */
 
-#include <pthread.h>
-
 #include <appl_status.h>
 
 #include <appl_predefines.h>
@@ -16,7 +14,7 @@
 
 #include <unique/appl_unique_mgr.h>
 
-#include <mutex/appl_mutex_impl.h>
+#include <mutex/appl_mutex_handle.h>
 
 #include <unique/appl_unique_std_mgr.h>
 
@@ -46,13 +44,22 @@ appl_unique_std_mgr::~appl_unique_std_mgr()
 enum appl_status
     appl_unique_std_mgr::f_init(void)
 {
-    m_lock.f_init();
+    enum appl_status
+        e_status;
 
-    m_counter =
-        0ul;
+    struct appl_mutex_descriptor
+        o_mutex_descriptor;
+
+    e_status =
+        appl_mutex_create(
+            m_context,
+            &(
+                o_mutex_descriptor),
+            &(
+                m_lock));
 
     return
-        appl_status_ok;
+        e_status;
 
 } // f_init()
 
@@ -62,7 +69,15 @@ enum appl_status
 appl_size_t
     appl_unique_std_mgr::v_cleanup(void)
 {
-    m_lock.f_cleanup();
+    if (
+        m_lock)
+    {
+        appl_mutex_destroy(
+            m_lock);
+
+        m_lock =
+            0;
+    }
 
     return
         sizeof(
@@ -82,7 +97,8 @@ enum appl_status
         e_status;
 
     e_status =
-        m_lock.f_lock();
+        appl_mutex_lock(
+            m_lock);
 
     if (
         appl_status_ok
@@ -94,7 +110,8 @@ enum appl_status
             r_unique) =
             m_counter;
 
-        m_lock.f_unlock();
+        appl_mutex_unlock(
+            m_lock);
     }
 
     return

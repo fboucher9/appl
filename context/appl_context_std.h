@@ -288,6 +288,12 @@ class appl_context_std : public appl_context
 #endif /* #if defined APPL_DEBUG */
 
         enum appl_status
+            finalize_heap(void);
+
+        void
+            shutdown_heap(void);
+
+        enum appl_status
             init_options(
                 struct appl_context_descriptor const * const
                     p_context_descriptor);

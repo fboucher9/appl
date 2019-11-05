@@ -4,8 +4,6 @@
 
 */
 
-#include <pthread.h>
-
 #include <appl_status.h>
 
 #include <appl_types.h>
@@ -17,8 +15,6 @@
 #include <allocator/appl_allocator.h>
 
 #include <pool/appl_pool.h>
-
-#include <mutex/appl_mutex_impl.h>
 
 #include <pool/appl_pool_handle.h>
 
@@ -72,7 +68,6 @@ appl_pool_std::appl_pool_std(
     appl_pool(
         p_context),
     m_available_items(),
-    m_lock(),
     m_descriptor(),
     m_count_remain()
 {
@@ -96,76 +91,71 @@ enum appl_status
     enum appl_status
         e_status;
 
+    e_status =
+        appl_status_ok;
+
     appl_list_init(
         &(
             m_available_items));
 
-    e_status =
-        m_lock.f_init();
+    m_descriptor =
+        *(
+            p_pool_descriptor);
+
+    m_count_remain =
+        m_descriptor.i_count_max;
 
     if (
-        appl_status_ok
-        == e_status)
+        0u
+        == m_count_remain)
     {
-        m_descriptor =
-            *(
-                p_pool_descriptor);
-
         m_count_remain =
-            m_descriptor.i_count_max;
+            0xFFFFFFFFul;
+    }
 
-        if (
-            0u
-            == m_count_remain)
+    // Pre-allocate some available items
+    if (
+        m_descriptor.i_count_min)
+    {
+        unsigned long int
+            i_count;
+
+        i_count =
+            0u;
+
+        while (
+            (
+                appl_status_ok
+                == e_status)
+            && (
+                i_count
+                < m_descriptor.i_count_min))
         {
-            m_count_remain =
-                0xFFFFFFFFul;
-        }
+            union appl_pool_node_ptr
+                o_node_ptr;
 
-        // Pre-allocate some available items
-        if (
-            m_descriptor.i_count_min)
-        {
-            unsigned long int
-                i_count;
+            e_status =
+                appl_heap_alloc(
+                    m_context,
+                    m_descriptor.i_length,
+                    &(
+                        o_node_ptr.p_void));
 
-            i_count =
-                0u;
-
-            while (
-                (
-                    appl_status_ok
-                    == e_status)
-                && (
-                    i_count
-                    < m_descriptor.i_count_min))
+            if (
+                appl_status_ok
+                == e_status)
             {
-                union appl_pool_node_ptr
-                    o_node_ptr;
+                m_count_remain --;
 
-                e_status =
-                    appl_heap_alloc(
-                        m_context,
-                        m_descriptor.i_length,
-                        &(
-                            o_node_ptr.p_void));
+                appl_list_init(
+                    o_node_ptr.p_list);
 
-                if (
-                    appl_status_ok
-                    == e_status)
-                {
-                    m_count_remain --;
+                appl_list_join(
+                    o_node_ptr.p_list,
+                    &(
+                        m_available_items));
 
-                    appl_list_init(
-                        o_node_ptr.p_list);
-
-                    appl_list_join(
-                        o_node_ptr.p_list,
-                        &(
-                            m_available_items));
-
-                    i_count ++;
-                }
+                i_count ++;
             }
         }
     }
@@ -200,8 +190,6 @@ appl_size_t
             p_node);
     }
 
-    m_lock.f_cleanup();
-
     return
         sizeof(class appl_pool_std);
 
@@ -223,111 +211,86 @@ enum appl_status
     appl_unused(
         i_buf_len);
 
-    e_status =
-        m_lock.f_lock();
+    void *
+        p_buf;
 
-#if defined APPL_HAVE_COVERAGE
+    bool
+        b_found;
+
+    p_buf =
+        0;
+
+    b_found =
+        false;
+
+    // Are there available items?
     if (
-        appl_status_ok
-        != e_status)
+        m_available_items.o_next.p_node != &(m_available_items))
     {
-        e_status =
-            m_lock.f_lock();
-    }
-#endif /* #if defined APPL_HAVE_COVERAGE */
+        union appl_pool_node_ptr
+            o_node_ptr;
 
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        void *
-            p_buf;
+        o_node_ptr.p_list =
+            m_available_items.o_next.p_node;
 
-        bool
-            b_found;
+        appl_list_join(
+            o_node_ptr.p_list,
+            o_node_ptr.p_list);
 
-        p_buf =
+        o_node_ptr.p_list->o_next.p_node =
             0;
 
+        o_node_ptr.p_list->o_prev.p_node =
+            0;
+
+        p_buf =
+            o_node_ptr.p_void;
+
         b_found =
-            false;
+            true;
+    }
 
-        // Are there available items?
+    if (
+        !(
+            b_found))
+    {
         if (
-            m_available_items.o_next.p_node != &(m_available_items))
+            m_count_remain)
         {
-            union appl_pool_node_ptr
-                o_node_ptr;
+            // allocate new item
+            e_status =
+                appl_heap_alloc(
+                    m_context,
+                    m_descriptor.i_length,
+                    &(
+                        p_buf));
 
-            o_node_ptr.p_list =
-                m_available_items.o_next.p_node;
-
-            appl_list_join(
-                o_node_ptr.p_list,
-                o_node_ptr.p_list);
-
-            o_node_ptr.p_list->o_next.p_node =
-                0;
-
-            o_node_ptr.p_list->o_prev.p_node =
-                0;
-
-            p_buf =
-                o_node_ptr.p_void;
-
-            b_found =
-                true;
-        }
-
-        m_lock.f_unlock();
-
-        if (
-            !(
-                b_found))
-        {
             if (
-                m_count_remain)
+                appl_status_ok
+                == e_status)
             {
-                // allocate new item
-                e_status =
-                    appl_heap_alloc(
-                        m_context,
-                        m_descriptor.i_length,
-                        &(
-                            p_buf));
+                m_count_remain --;
 
-                if (
-                    appl_status_ok
-                    == e_status)
-                {
-                    m_count_remain --;
-
-                    b_found =
-                        true;
-                }
+                b_found =
+                    true;
             }
         }
+    }
 
-        if (
-            b_found)
-        {
-            *(
-                r_buf) =
-                p_buf;
+    if (
+        b_found)
+    {
+        *(
+            r_buf) =
+            p_buf;
 
-            e_status =
-                appl_status_ok;
-        }
-        else
-        {
-            e_status =
-                appl_status_out_of_memory;
-        }
+        e_status =
+            appl_status_ok;
     }
     else
     {
         e_status =
-            appl_status_fail;
+            appl_status_out_of_memory;
     }
 
     return
@@ -351,40 +314,23 @@ enum appl_status
     appl_unused(
         i_buf_len);
 
+    union appl_pool_node_ptr
+        o_node_ptr;
+
+    o_node_ptr.p_void =
+        p_buf;
+
+    // place object into linked list
+    appl_list_init(
+        o_node_ptr.p_list);
+
+    appl_list_join(
+        o_node_ptr.p_list,
+        &(
+            m_available_items));
+
     e_status =
-        m_lock.f_lock();
-
-#if defined APPL_HAVE_COVERAGE
-    if (
-        appl_status_ok
-        != e_status)
-    {
-        e_status =
-            m_lock.f_lock();
-    }
-#endif /* #if defined APPL_HAVE_COVERAGE */
-
-    if (
-        appl_status_ok
-        == e_status)
-    {
-        union appl_pool_node_ptr
-            o_node_ptr;
-
-        o_node_ptr.p_void =
-            p_buf;
-
-        // place object into linked list
-        appl_list_init(
-            o_node_ptr.p_list);
-
-        appl_list_join(
-            o_node_ptr.p_list,
-            &(
-                m_available_items));
-
-        m_lock.f_unlock();
-    }
+        appl_status_ok;
 
     return
         e_status;

@@ -163,4 +163,26 @@ enum appl_status
 
 } // v_free()
 
+//
+//
+//
+enum appl_status
+    appl_heap_std::v_finalize(void)
+{
+    return
+        appl_status_ok;
+
+} // v_finalize()
+
+//
+//
+//
+enum appl_status
+    appl_heap_std::v_shutdown(void)
+{
+    return
+        appl_status_ok;
+
+} // v_shutdown()
+
 /* end-of-file: appl_heap_std.cpp */

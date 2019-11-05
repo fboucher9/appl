@@ -12,10 +12,6 @@
 
 #include <list/appl_list.h>
 
-#include <pthread.h>
-
-#include <mutex/appl_mutex_impl.h>
-
 #include <heap/appl_heap_primary.h>
 
 #include <heap/appl_heap_impl.h>
@@ -27,7 +23,6 @@
 //
 appl_heap_impl::appl_heap_impl() :
     m_primary(),
-    m_lock(),
     m_free_large()
 {
 }
@@ -55,8 +50,6 @@ enum appl_status
     m_primary.f_init(
         p_mmap_begin,
         p_mmap_end);
-
-    m_lock.f_init();
 
     appl_size_t
         i_index;
@@ -95,8 +88,6 @@ enum appl_status
         e_status;
 
     m_primary.f_cleanup();
-
-    m_lock.f_cleanup();
 
     e_status =
         appl_status_ok;
@@ -201,7 +192,7 @@ enum appl_status
         e_status;
 
     e_status =
-        m_lock.f_lock();
+        appl_status_ok;
 
     if (
         appl_status_ok
@@ -256,8 +247,6 @@ enum appl_status
             e_status =
                 appl_status_fail;
         }
-
-        m_lock.f_unlock();
     }
 
     return
@@ -279,7 +268,7 @@ enum appl_status
         e_status;
 
     e_status =
-        m_lock.f_lock();
+        appl_status_ok;
 
     if (
         appl_status_ok
@@ -317,8 +306,6 @@ enum appl_status
             e_status =
                 appl_status_fail;
         }
-
-        m_lock.f_unlock();
     }
 
     return
@@ -365,7 +352,7 @@ enum appl_status
         e_status;
 
     e_status =
-        m_lock.f_lock();
+        appl_status_ok;
 
     if (
         appl_status_ok
@@ -465,8 +452,6 @@ enum appl_status
             e_status =
                 appl_status_out_of_memory;
         }
-
-        m_lock.f_unlock();
     }
 
     return
@@ -488,7 +473,7 @@ enum appl_status
         e_status;
 
     e_status =
-        m_lock.f_lock();
+        appl_status_ok;
 
     if (
         appl_status_ok
@@ -515,8 +500,6 @@ enum appl_status
 
         e_status =
             appl_status_ok;
-
-        m_lock.f_unlock();
     }
 
     return

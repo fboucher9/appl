@@ -10,8 +10,7 @@ enum guard_appl_heap_impl_h
     inc_appl_heap_impl_h =
         /* Header file dependency */
         inc_appl_list_h
-        + inc_appl_mutex_impl_h
-        + inc_appl_heap_primary_h
+        | inc_appl_heap_primary_h
 };
 
 /* Assert compiler */
@@ -60,11 +59,6 @@ class appl_heap_impl
 
         class appl_heap_primary
             m_primary;
-
-        // --
-
-        class appl_mutex_impl
-            m_lock;
 
         // --
 

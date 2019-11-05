@@ -28,10 +28,6 @@
 
 #include <list/appl_list.h>
 
-#include <pthread.h>
-
-#include <mutex/appl_mutex_impl.h>
-
 #include <heap/appl_heap_primary.h>
 
 #include <heap/appl_heap_impl.h>

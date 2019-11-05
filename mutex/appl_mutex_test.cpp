@@ -301,10 +301,12 @@ void
             e_status =
                 p_mutex_mgr->v_create_node(
                     0,
+                    0,
                     0);
 
             e_status =
                 p_mutex_mgr->v_destroy_node(
+                    0,
                     0);
 
             appl_delete(

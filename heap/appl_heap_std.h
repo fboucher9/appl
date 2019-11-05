@@ -38,6 +38,14 @@ class appl_heap_std : public appl_heap
         appl_size_t
             v_cleanup(void);
 
+        virtual
+        enum appl_status
+            v_finalize(void);
+
+        virtual
+        enum appl_status
+            v_shutdown(void);
+
     protected:
 
     private:

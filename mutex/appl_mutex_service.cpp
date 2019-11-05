@@ -52,6 +52,7 @@ enum appl_status
     {
         e_status =
             p_mutex_mgr->v_create_node(
+                p_context->v_allocator(),
                 p_mutex_descriptor,
                 r_mutex);
     }
@@ -90,6 +91,7 @@ enum appl_status
     {
         e_status =
             p_mutex_mgr->v_destroy_node(
+                p_context->v_allocator(),
                 p_mutex);
     }
 

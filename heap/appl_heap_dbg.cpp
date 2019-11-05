@@ -12,8 +12,6 @@
 
 #include <string.h>
 
-#include <pthread.h>
-
 #include <appl_status.h>
 
 #include <buf/appl_buf.h>
@@ -30,13 +28,13 @@
 
 #include <list/appl_list.h>
 
-#include <mutex/appl_mutex_impl.h>
-
 #include <heap/appl_heap_dbg.h>
 
 #include <backtrace/appl_backtrace_impl.h>
 
 #include <misc/appl_convert.h>
+
+#include <mutex/appl_mutex_handle.h>
 
 //
 //
@@ -115,9 +113,9 @@ appl_heap_dbg::appl_heap_dbg(
     appl_heap(
         p_context),
     m_parent(),
+    m_lock(),
     m_alloc_count(0),
-    m_list(),
-    m_lock()
+    m_list()
 {
 }
 
@@ -209,8 +207,6 @@ enum appl_status
     appl_list_init(
         &(
             m_list));
-
-    m_lock.f_init();
 
     e_status =
         appl_status_ok;
@@ -306,6 +302,54 @@ appl_size_t
 //
 //
 enum appl_status
+    appl_heap_dbg::v_finalize(void)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_mutex_descriptor
+        o_mutex_descriptor;
+
+    e_status =
+        appl_mutex_create(
+            m_context,
+            &(
+                o_mutex_descriptor),
+            &(
+                m_lock));
+
+    return
+        e_status;
+
+} // v_finalize()
+
+//
+//
+//
+enum appl_status
+    appl_heap_dbg::v_shutdown(void)
+{
+    if (
+        m_lock)
+    {
+        appl_mutex_destroy(
+            m_lock);
+
+        m_lock =
+            0;
+    }
+
+    m_parent->v_shutdown();
+
+    return
+        appl_status_ok;
+
+} // v_shutdown()
+
+//
+//
+//
+enum appl_status
     appl_heap_dbg::v_alloc(
         appl_size_t const
             i_buf_len,
@@ -343,7 +387,12 @@ enum appl_status
             union appl_heap_dbg_header_ptr
                 o_header_ptr;
 
-            m_lock.f_lock();
+            if (
+                m_lock)
+            {
+                appl_mutex_lock(
+                    m_lock);
+            }
 
             o_header_ptr.p_void =
                 p_allocation;
@@ -410,7 +459,12 @@ enum appl_status
 
             m_alloc_count ++;
 
-            m_lock.f_unlock();
+            if (
+                m_lock)
+            {
+                appl_mutex_unlock(
+                    m_lock);
+            }
 
             void * const
                 pv_allocation =
@@ -447,7 +501,12 @@ enum appl_status
         union appl_heap_dbg_header_ptr
             o_header_ptr;
 
-        m_lock.f_lock();
+        if (
+            m_lock)
+        {
+            appl_mutex_lock(
+                m_lock);
+        }
 
         o_header_ptr.p_void =
             p_buf;
@@ -524,7 +583,12 @@ enum appl_status
 
         m_alloc_count --;
 
-        m_lock.f_unlock();
+        if (
+            m_lock)
+        {
+            appl_mutex_unlock(
+                m_lock);
+        }
 
         e_status =
             appl_status_ok;

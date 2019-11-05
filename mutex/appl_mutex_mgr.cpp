@@ -23,6 +23,8 @@
 //
 enum appl_status
     appl_mutex_mgr::v_create_node(
+        struct appl_allocator * const
+            p_allocator,
         struct appl_mutex_descriptor const * const
             p_mutex_descriptor,
         struct appl_mutex * * const
@@ -32,6 +34,7 @@ enum appl_status
         e_status;
 
     appl_unused(
+        p_allocator,
         p_mutex_descriptor,
         r_mutex);
 
@@ -48,6 +51,8 @@ enum appl_status
 //
 enum appl_status
     appl_mutex_mgr::v_destroy_node(
+        struct appl_allocator * const
+            p_allocator,
         struct appl_mutex * const
             p_mutex)
 {
@@ -55,6 +60,7 @@ enum appl_status
         e_status;
 
     appl_unused(
+        p_allocator,
         p_mutex);
 
     e_status =

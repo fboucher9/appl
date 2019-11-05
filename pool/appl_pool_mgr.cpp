@@ -4,8 +4,6 @@
 
 */
 
-#include <pthread.h>
-
 #include <appl_status.h>
 
 #include <appl_types.h>
@@ -21,8 +19,6 @@
 #include <pool/appl_pool.h>
 
 #include <list/appl_list.h>
-
-#include <mutex/appl_mutex_impl.h>
 
 #include <pool/appl_pool_handle.h>
 
