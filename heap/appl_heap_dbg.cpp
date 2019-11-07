@@ -34,8 +34,6 @@
 
 #include <misc/appl_convert.h>
 
-#include <mutex/appl_mutex_handle.h>
-
 //
 //
 //
@@ -113,7 +111,6 @@ appl_heap_dbg::appl_heap_dbg(
     appl_heap(
         p_context),
     m_parent(),
-    m_lock(),
     m_alloc_count(0),
     m_list()
 {
@@ -302,54 +299,6 @@ appl_size_t
 //
 //
 enum appl_status
-    appl_heap_dbg::v_finalize(void)
-{
-    enum appl_status
-        e_status;
-
-    struct appl_mutex_descriptor
-        o_mutex_descriptor;
-
-    e_status =
-        appl_mutex_create(
-            m_context,
-            &(
-                o_mutex_descriptor),
-            &(
-                m_lock));
-
-    return
-        e_status;
-
-} // v_finalize()
-
-//
-//
-//
-enum appl_status
-    appl_heap_dbg::v_shutdown(void)
-{
-    if (
-        m_lock)
-    {
-        appl_mutex_destroy(
-            m_lock);
-
-        m_lock =
-            0;
-    }
-
-    m_parent->v_shutdown();
-
-    return
-        appl_status_ok;
-
-} // v_shutdown()
-
-//
-//
-//
-enum appl_status
     appl_heap_dbg::v_alloc(
         appl_size_t const
             i_buf_len,
@@ -386,13 +335,6 @@ enum appl_status
         {
             union appl_heap_dbg_header_ptr
                 o_header_ptr;
-
-            if (
-                m_lock)
-            {
-                appl_mutex_lock(
-                    m_lock);
-            }
 
             o_header_ptr.p_void =
                 p_allocation;
@@ -459,13 +401,6 @@ enum appl_status
 
             m_alloc_count ++;
 
-            if (
-                m_lock)
-            {
-                appl_mutex_unlock(
-                    m_lock);
-            }
-
             void * const
                 pv_allocation =
                 o_header_ptr.p_header + 1;
@@ -497,102 +432,86 @@ enum appl_status
     enum appl_status
         e_status;
 
+    union appl_heap_dbg_header_ptr
+        o_header_ptr;
+
+    o_header_ptr.p_void =
+        p_buf;
+
+    o_header_ptr.p_header --;
+
+    appl_list_join(
+        o_header_ptr.p_header,
+        o_header_ptr.p_header);
+
     {
-        union appl_heap_dbg_header_ptr
-            o_header_ptr;
-
-        if (
-            m_lock)
+        unsigned int i_header_iterator;
+        for (i_header_iterator = 0u;
+            i_header_iterator < sizeof(o_header_ptr.p_header->a_header);
+            i_header_iterator ++)
         {
-            appl_mutex_lock(
-                m_lock);
-        }
-
-        o_header_ptr.p_void =
-            p_buf;
-
-        o_header_ptr.p_header --;
-
-        appl_list_join(
-            o_header_ptr.p_header,
-            o_header_ptr.p_header);
-
-        {
-            unsigned int i_header_iterator;
-            for (i_header_iterator = 0u;
-                i_header_iterator < sizeof(o_header_ptr.p_header->a_header);
-                i_header_iterator ++)
+            if (
+                g_appl_heap_dbg_header_magic
+                == o_header_ptr.p_header->a_header[i_header_iterator])
             {
-                if (
-                    g_appl_heap_dbg_header_magic
-                    == o_header_ptr.p_header->a_header[i_header_iterator])
-                {
-                }
-                else
-                {
-                }
+            }
+            else
+            {
             }
         }
-
-        void *
-            p_allocation;
-
-        p_allocation =
-            o_header_ptr.p_header;
-
-        union appl_heap_dbg_footer_ptr
-            o_footer_ptr;
-
-        o_footer_ptr.p_void =
-            p_buf;
-
-        o_footer_ptr.p_uchar +=
-            o_header_ptr.p_header->i_buf_len;
-
-        {
-            unsigned int i_footer_iterator;
-            for (i_footer_iterator = 0u;
-                i_footer_iterator < sizeof(o_footer_ptr.p_footer->a_footer);
-                i_footer_iterator ++)
-            {
-                if (
-                    g_appl_heap_dbg_footer_magic
-                    == o_footer_ptr.p_footer->a_footer[i_footer_iterator])
-                {
-                }
-                else
-                {
-                }
-            }
-        }
-
-        appl_size_t
-            i_total_buf_len;
-
-        i_total_buf_len =
-            (
-                i_buf_len
-                + sizeof(
-                    struct appl_heap_dbg_header)
-                + sizeof(
-                    struct appl_heap_dbg_footer));
-
-        m_parent->v_free(
-            i_total_buf_len,
-            p_allocation);
-
-        m_alloc_count --;
-
-        if (
-            m_lock)
-        {
-            appl_mutex_unlock(
-                m_lock);
-        }
-
-        e_status =
-            appl_status_ok;
     }
+
+    void *
+        p_allocation;
+
+    p_allocation =
+        o_header_ptr.p_header;
+
+    union appl_heap_dbg_footer_ptr
+        o_footer_ptr;
+
+    o_footer_ptr.p_void =
+        p_buf;
+
+    o_footer_ptr.p_uchar +=
+        o_header_ptr.p_header->i_buf_len;
+
+    {
+        unsigned int i_footer_iterator;
+        for (i_footer_iterator = 0u;
+            i_footer_iterator < sizeof(o_footer_ptr.p_footer->a_footer);
+            i_footer_iterator ++)
+        {
+            if (
+                g_appl_heap_dbg_footer_magic
+                == o_footer_ptr.p_footer->a_footer[i_footer_iterator])
+            {
+            }
+            else
+            {
+            }
+        }
+    }
+
+    appl_size_t
+        i_total_buf_len;
+
+    i_total_buf_len =
+        (
+            i_buf_len
+            + sizeof(
+                struct appl_heap_dbg_header)
+            + sizeof(
+                struct appl_heap_dbg_footer));
+
+    m_parent->v_free(
+        i_total_buf_len,
+        p_allocation);
+
+    m_alloc_count --;
+
+    e_status =
+        appl_status_ok;
 
     return
         e_status;

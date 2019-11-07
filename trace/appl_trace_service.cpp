@@ -10,7 +10,15 @@
 
 #include <trace/appl_trace_service.h>
 
+#include <appl_types.h>
+
 #include <misc/appl_unused.h>
+
+#include <object/appl_object.h>
+
+#include <context/appl_context.h>
+
+#include <trace/appl_trace_mgr.h>
 
 //
 //
@@ -26,14 +34,30 @@ enum appl_status
         int const
             e_level)
 {
-    appl_unused(
-        p_context,
-        p_trace,
-        p_name0,
-        e_level);
+    enum appl_status
+        e_status;
+
+    class appl_trace_mgr *
+        p_trace_mgr;
+
+    e_status =
+        p_context->v_trace_mgr(
+            &(
+                p_trace_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_trace_mgr->v_init(
+                p_trace,
+                p_name0,
+                e_level);
+    }
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_init()
 
@@ -82,24 +106,31 @@ enum appl_status
     appl_trace_service::s_message(
         struct appl_context * const
             p_context,
-        struct appl_trace * const
-            p_trace,
-        int const
-            e_type,
-        char const * const
-            p_format0,
-        void * const
-            p_arguments)
+        struct appl_trace_message const * const
+            p_message)
 {
-    appl_unused(
-        p_context,
-        p_trace,
-        e_type,
-        p_format0,
-        p_arguments);
+    enum appl_status
+        e_status;
+
+    class appl_trace_mgr *
+        p_trace_mgr;
+
+    e_status =
+        p_context->v_trace_mgr(
+            &(
+                p_trace_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            p_trace_mgr->v_message(
+                p_message);
+    }
 
     return
-        appl_raise_not_implemented();
+        e_status;
 
 } // s_message()
 

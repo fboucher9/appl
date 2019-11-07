@@ -59,14 +59,8 @@ class appl_trace_service
             s_message(
                 struct appl_context * const
                     p_context,
-                struct appl_trace * const
-                    p_trace,
-                int const
-                    e_type,
-                char const * const
-                    p_format0,
-                void * const
-                    p_arguments);
+                struct appl_trace_message const * const
+                    p_trace_message);
 
         static
         enum appl_status

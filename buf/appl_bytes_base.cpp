@@ -589,7 +589,7 @@ enum appl_status
             *(
                 r_value) =
                 appl_convert::to_ushort(
-                    (
+                    appl_convert::to_unsigned(
                         appl_convert::to_ushort(
                             i_digit_high)
                         << 8u)

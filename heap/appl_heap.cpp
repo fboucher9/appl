@@ -32,26 +32,4 @@ appl_heap::~appl_heap()
 {
 }
 
-//
-//
-//
-enum appl_status
-    appl_heap::v_finalize(void)
-{
-    return
-        appl_raise_not_implemented();
-
-} // v_finalize()
-
-//
-//
-//
-enum appl_status
-    appl_heap::v_shutdown(void)
-{
-    return
-        appl_raise_not_implemented();
-
-} // v_shutdown()
-
 /* end-of-file: appl_heap.cpp */

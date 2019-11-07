@@ -14,11 +14,7 @@
 
 #include <trace/appl_trace_service.h>
 
-#include <buf/appl_buf.h>
-
 #include <trace/appl_trace_message.h>
-
-#include <stdarg.h>
 
 //
 //
@@ -51,32 +47,32 @@ enum appl_status
         struct appl_context * const
             p_context,
         struct appl_trace * const
-            p_trace,
-        char const * const
-            p_format0,
-        ...)
+            p_trace)
 {
     enum appl_status
         e_status;
 
-    va_list
-        o_arguments;
-
-    va_start(
-        o_arguments,
-        p_format0);
+    struct appl_trace_message
+        o_message;
 
     e_status =
-        appl_trace_service::s_message(
+        appl_trace_message_init(
             p_context,
-            p_trace,
-            appl_trace_message_type_enter,
-            p_format0,
             &(
-                o_arguments));
+                o_message),
+            p_trace,
+            appl_trace_message_type_enter);
 
-    va_end(
-        o_arguments);
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_trace_service::s_message(
+                p_context,
+                &(
+                    o_message));
+    }
 
     return
         e_status;
@@ -91,37 +87,77 @@ enum appl_status
         struct appl_context * const
             p_context,
         struct appl_trace * const
-            p_trace,
-        char const * const
-            p_format0,
-        ...)
+            p_trace)
 {
     enum appl_status
         e_status;
 
-    va_list
-        o_arguments;
-
-    va_start(
-        o_arguments,
-        p_format0);
+    struct appl_trace_message
+        o_message;
 
     e_status =
-        appl_trace_service::s_message(
+        appl_trace_message_init(
             p_context,
-            p_trace,
-            appl_trace_message_type_leave,
-            p_format0,
             &(
-                o_arguments));
+                o_message),
+            p_trace,
+            appl_trace_message_type_leave);
 
-    va_end(
-        o_arguments);
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_trace_service::s_message(
+                p_context,
+                &(
+                    o_message));
+    }
 
     return
         e_status;
 
 } // appl_trace_leave()
+
+//
+//
+//
+enum appl_status
+    appl_trace_signal(
+        struct appl_context * const
+            p_context,
+        struct appl_trace * const
+            p_trace)
+{
+    enum appl_status
+        e_status;
+
+    struct appl_trace_message
+        o_message;
+
+    e_status =
+        appl_trace_message_init(
+            p_context,
+            &(
+                o_message),
+            p_trace,
+            appl_trace_message_type_signal);
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        e_status =
+            appl_trace_service::s_message(
+                p_context,
+                &(
+                    o_message));
+    }
+
+    return
+        e_status;
+
+} // appl_trace_signal()
 
 //
 //

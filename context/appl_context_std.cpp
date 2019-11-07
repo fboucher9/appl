@@ -30,6 +30,8 @@
 
 #include <heap/appl_heap_std.h>
 
+#include <heap/appl_heap_locked.h>
+
 #include <context/appl_context_std.h>
 
 #include <allocator/appl_allocator_handle.h>
@@ -189,6 +191,10 @@
 #include <unique/appl_unique_mgr.h>
 
 #include <unique/appl_unique_std_mgr.h>
+
+#include <trace/appl_trace_mgr.h>
+
+#include <trace/appl_trace_std_mgr.h>
 
 #include <thread/appl_once.h>
 
@@ -407,63 +413,71 @@ void
 //
 //
 enum appl_status
-    appl_context_std::finalize_heap(void)
+    appl_context_std::init_heap_locked(void)
 {
     enum appl_status
         e_status;
 
+    struct appl_heap_locked_descriptor
+        o_descriptor;
+
+    o_descriptor.p_parent =
+        m_allocator;
+
     e_status =
-        m_heap_std.v_finalize();
+        appl_new(
+            m_allocator,
+            &(
+                o_descriptor),
+            &(
+                m_heap_locked));
 
     if (
         appl_status_ok
         == e_status)
     {
-#if defined APPL_DEBUG
-        if (
-            m_heap_dbg)
-        {
-            e_status =
-                m_heap_dbg->v_finalize();
-        }
+        b_init_heap_locked =
+            true;
 
-        if (
-            appl_status_ok
-            == e_status)
-        {
-            if (
-                appl_status_ok
-                != e_status)
-            {
-                if (
-                    m_heap_dbg)
-                {
-                    m_heap_dbg->v_shutdown();
-                }
-            }
-        }
-#endif /* #if defined APPL_DEBUG */
-
-        if (
-            appl_status_ok
-            != e_status)
-        {
-            m_heap_std.v_shutdown();
-        }
+        m_allocator =
+            m_heap_locked;
     }
 
     return
         e_status;
 
-} // finalize_heap()
+} // init_heap_locked()
 
 //
 //
 //
 void
-    appl_context_std::shutdown_heap(void)
+    appl_context_std::cleanup_heap_locked(void)
 {
-} // shutdown_heap()
+    if (
+        b_init_heap_locked)
+    {
+        m_allocator =
+#if defined APPL_DEBUG
+            m_heap_dbg
+#else /* #if defined APPL_DEBUG */
+            &(
+                m_heap_std)
+#endif /* #if defined APPL_DEBUG */
+            ;
+
+        appl_delete(
+            m_allocator,
+            m_heap_locked);
+
+        m_heap_locked =
+            0;
+
+        b_init_heap_locked =
+            false;
+    }
+
+} // cleanup_heap_locked()
 
 //
 //
@@ -1806,6 +1820,58 @@ void
     }
 } // cleanup_unique_mgr()
 
+//
+//
+//
+enum appl_status
+    appl_context_std::init_trace_mgr(void)
+{
+    enum appl_status
+        e_status;
+
+    class appl_trace_std_mgr *
+        p_trace_std_mgr;
+
+    e_status =
+        appl_new(
+            m_allocator,
+            &(
+                p_trace_std_mgr));
+
+    if (
+        appl_status_ok
+        == e_status)
+    {
+        m_trace_mgr =
+            p_trace_std_mgr;
+
+        b_init_trace_mgr =
+            true;
+    }
+
+    return
+        e_status;
+
+} // init_trace_mgr()
+
+//
+//
+//
+void
+    appl_context_std::cleanup_trace_mgr(void)
+{
+    if (
+        b_init_trace_mgr)
+    {
+        appl_delete(
+            m_allocator,
+            m_trace_mgr);
+
+        b_init_trace_mgr =
+            false;
+    }
+
+} // cleanup_trace_mgr()
 
 //
 //
@@ -1892,6 +1958,7 @@ appl_context_std::appl_context_std(
     , m_heap_std(
         this)
     , m_allocator()
+    , m_heap_locked()
     , m_backtrace()
     , m_thread_mgr()
     , m_mutex_mgr()
@@ -1914,6 +1981,7 @@ appl_context_std::appl_context_std(
     , m_download_mgr()
     , m_dir_mgr()
     , m_unique_mgr()
+    , m_trace_mgr()
 #if defined APPL_DEBUG
     , m_heap_dbg()
     , m_debug()
@@ -1944,6 +2012,8 @@ appl_context_std::appl_context_std(
     , b_init_download_mgr()
     , b_init_dir_mgr()
     , b_init_unique_mgr()
+    , b_init_heap_locked()
+    , b_init_trace_mgr()
 {
     appl_unused(
         p_context);
@@ -1990,6 +2060,10 @@ appl_context_std::g_init_cleanup_items[] =
         & appl_context_std::cleanup_mutex_mgr
     },
     {
+        & appl_context_std::init_heap_locked,
+        & appl_context_std::cleanup_heap_locked
+    },
+    {
         & appl_context_std::init_event_mgr,
         & appl_context_std::cleanup_event_mgr
     },
@@ -2020,6 +2094,10 @@ appl_context_std::g_init_cleanup_items[] =
     {
         & appl_context_std::init_log,
         & appl_context_std::cleanup_log
+    },
+    {
+        & appl_context_std::init_trace_mgr,
+        & appl_context_std::cleanup_trace_mgr
     },
     {
         & appl_context_std::init_thread_cache_mgr,
@@ -2903,6 +2981,43 @@ enum appl_status
         e_status;
 
 } // v_unique_mgr()
+
+//
+//
+//
+enum appl_status
+    appl_context_std::v_trace_mgr(
+        class appl_trace_mgr * * const
+            r_trace_mgr) const
+{
+    enum appl_status
+        e_status;
+
+    if (
+        b_init_trace_mgr)
+    {
+        *(
+            r_trace_mgr) =
+            m_trace_mgr;
+
+        e_status =
+            appl_status_ok;
+    }
+    else
+    {
+#if defined APPL_DEBUG
+        appl_debug_impl::s_print0(
+            "trace_mgr not initialized\n");
+#endif /* #if defined APPL_DEBUG */
+
+        e_status =
+            appl_status_fail;
+    }
+
+    return
+        e_status;
+
+} // v_trace_mgr()
 
 //
 //

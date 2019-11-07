@@ -79,8 +79,8 @@ class appl_context_std : public appl_context
         struct appl_allocator *
             m_allocator;
 
-        void *
-            z_allocator[1u];
+        class appl_heap_locked *
+            m_heap_locked;
 
         /* -- */
 
@@ -166,6 +166,14 @@ class appl_context_std : public appl_context
 
         class appl_unique_mgr *
             m_unique_mgr;
+
+        /* -- */
+
+        class appl_trace_mgr *
+            m_trace_mgr;
+
+        void *
+            z_trace_mgr[1u];
 
         /* -- */
 
@@ -259,7 +267,15 @@ class appl_context_std : public appl_context
         bool
             b_init_unique_mgr;
 
-#define PADDING (6)
+        bool
+            b_init_heap_locked;
+
+        bool
+            b_init_trace_mgr;
+
+        /* -- */
+
+#define PADDING (8)
 #include <misc/appl_padding.h>
 
         /* -- */
@@ -277,6 +293,12 @@ class appl_context_std : public appl_context
         void
             cleanup_heap(void);
 
+        enum appl_status
+            init_heap_locked(void);
+
+        void
+            cleanup_heap_locked(void);
+
 #if defined APPL_DEBUG
         enum appl_status
             init_debug(void);
@@ -286,12 +308,6 @@ class appl_context_std : public appl_context
         void
             cleanup_debug(void);
 #endif /* #if defined APPL_DEBUG */
-
-        enum appl_status
-            finalize_heap(void);
-
-        void
-            shutdown_heap(void);
 
         enum appl_status
             init_options(
@@ -425,6 +441,12 @@ class appl_context_std : public appl_context
         void
             cleanup_unique_mgr(void);
 
+        enum appl_status
+            init_trace_mgr(void);
+
+        void
+            cleanup_trace_mgr(void);
+
         static
         void
             s_bootstrap(void);
@@ -556,6 +578,12 @@ class appl_context_std : public appl_context
             v_unique_mgr(
                 class appl_unique_mgr * * const
                     r_unique_mgr) const;
+
+        virtual
+        enum appl_status
+            v_trace_mgr(
+                class appl_trace_mgr * * const
+                    r_trace_mgr) const;
 
 #if defined APPL_DEBUG
         virtual

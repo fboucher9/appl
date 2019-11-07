@@ -16,7 +16,7 @@ enum guard_appl_env_w32_h
 #include <misc/appl_assert_cplusplus.h>
 
 /* Predefine */
-class appl_refcount;
+struct appl_refcount;
 
 /* Predefine */
 class appl_env_w32;

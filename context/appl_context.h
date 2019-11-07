@@ -59,6 +59,8 @@ class appl_download_mgr;
 
 class appl_dir_mgr;
 
+class appl_trace_mgr;
+
 //
 //
 //
@@ -205,6 +207,12 @@ struct appl_context : public appl_object
             v_unique_mgr(
                 class appl_unique_mgr * * const
                     r_unique_mgr) const;
+
+        virtual
+        enum appl_status
+            v_trace_mgr(
+                class appl_trace_mgr * * const
+                    r_trace_mgr) const;
 
 #if defined APPL_DEBUG
         virtual

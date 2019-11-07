@@ -135,7 +135,7 @@ enum appl_status
                 && p_dir_entry)
             {
 #if defined APPL_DEBUG
-                if (0)
+                if ((0))
                 {
                     appl_debug_print0(
                         m_context,

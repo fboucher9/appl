@@ -29,14 +29,6 @@ struct appl_heap : public appl_allocator
         virtual
         ~appl_heap();
 
-        virtual
-        enum appl_status
-            v_finalize(void);
-
-        virtual
-        enum appl_status
-            v_shutdown(void);
-
     protected:
 
     private:

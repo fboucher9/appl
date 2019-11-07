@@ -255,27 +255,33 @@ enum appl_status
                 0ul;
 
             r_clock_details->i_year =
-                o_local_time_info.i_year + 1900ul;
+                appl_convert::to_unsigned(
+                    o_local_time_info.i_year) + 1900ul;
 
             r_clock_details->i_month =
                 appl_convert::to_uchar(
-                    o_local_time_info.i_mon + 1u);
+                    appl_convert::to_unsigned(
+                        o_local_time_info.i_mon) + 1u);
 
             r_clock_details->i_day =
                 appl_convert::to_uchar(
-                    o_local_time_info.i_mday);
+                    appl_convert::to_unsigned(
+                        o_local_time_info.i_mday));
 
             r_clock_details->i_hour =
                 appl_convert::to_uchar(
-                    o_local_time_info.i_hour);
+                    appl_convert::to_unsigned(
+                        o_local_time_info.i_hour));
 
             r_clock_details->i_minute =
                 appl_convert::to_uchar(
-                    o_local_time_info.i_min);
+                    appl_convert::to_unsigned(
+                        o_local_time_info.i_min));
 
             r_clock_details->i_second =
                 appl_convert::to_uchar(
-                    o_local_time_info.i_sec);
+                    appl_convert::to_unsigned(
+                        o_local_time_info.i_sec));
 
             e_status =
                 appl_status_ok;

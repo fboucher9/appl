@@ -469,6 +469,9 @@ enum appl_status
     struct appl_buf0 *
         p_name0;
 
+    p_name0 =
+        0;
+
     if (
         APPL_ADDRESS_FLAG_NAME & p_address_descriptor->i_flags)
     {

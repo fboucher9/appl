@@ -224,7 +224,8 @@ enum appl_status
                             == e_status)
                         {
                             appl_print_number(
-                                o_clock_details.i_year,
+                                appl_convert::to_signed(
+                                    o_clock_details.i_year),
                                 appl_buf_print_flag_zero,
                                 4);
 
@@ -232,7 +233,8 @@ enum appl_status
                                 "-");
 
                             appl_print_number(
-                                o_clock_details.i_month,
+                                appl_convert::to_signed(
+                                    o_clock_details.i_month),
                                 appl_buf_print_flag_zero,
                                 2);
 

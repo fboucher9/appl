@@ -146,30 +146,81 @@ enum appl_status
         struct appl_context * const
             p_context,
         struct appl_trace * const
+            p_trace);
+
+enum appl_status
+    appl_trace_enter_1(
+        struct appl_context * const
+            p_context,
+        struct appl_trace * const
             p_trace,
-        char const * const
-            p_format0,
-        ...);
+        appl_ull_t const
+            i_argument_1);
+
+enum appl_status
+    appl_trace_enter_n(
+        struct appl_context * const
+            p_context,
+        struct appl_trace * const
+            p_trace,
+        appl_ull_t const * const
+            p_arguments,
+        unsigned char const
+            i_argument_count);
 
 enum appl_status
     appl_trace_leave(
         struct appl_context * const
             p_context,
         struct appl_trace * const
+            p_trace);
+
+enum appl_status
+    appl_trace_leave_1(
+        struct appl_context * const
+            p_context,
+        struct appl_trace * const
             p_trace,
-        char const * const
-            p_format0,
-        ...);
+        appl_ull_t const
+            i_argument_1);
+
+enum appl_status
+    appl_trace_leave_n(
+        struct appl_context * const
+            p_context,
+        struct appl_trace * const
+            p_trace,
+        appl_ull_t const * const
+            p_arguments,
+        unsigned char const
+            i_argument_count);
 
 enum appl_status
     appl_trace_signal(
         struct appl_context * const
             p_context,
         struct appl_trace * const
+            p_trace);
+
+enum appl_status
+    appl_trace_signal_1(
+        struct appl_context * const
+            p_context,
+        struct appl_trace * const
             p_trace,
-        char const * const
-            p_format0,
-        ...);
+        appl_ull_t const
+            i_argument_1);
+
+enum appl_status
+    appl_trace_signal_n(
+        struct appl_context * const
+            p_context,
+        struct appl_trace * const
+            p_trace,
+        appl_ull_t const * const
+            p_arguments,
+        unsigned char const
+            i_argument_count);
 
 enum appl_status
     appl_trace_capture(

@@ -125,6 +125,7 @@ appl_base-deps := \
     heap/appl_heap_std.cpp \
     heap/appl_heap_impl.cpp \
     heap/appl_heap_primary.cpp \
+    heap/appl_heap_locked.cpp \
     library/appl_library_handle.cpp \
     library/appl_library_service.cpp \
     library/appl_library_mgr.cpp \
@@ -239,6 +240,7 @@ appl_base-deps := \
     trace/appl_trace_std_mgr.cpp \
     trace/appl_trace_client_list.cpp \
     trace/appl_trace_client.cpp \
+    trace/appl_trace_message.cpp \
     url/appl_url_handle.cpp \
     url/appl_url_service.cpp \
     url/appl_url.cpp \
