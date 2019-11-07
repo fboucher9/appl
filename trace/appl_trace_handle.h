@@ -20,6 +20,7 @@ enum guard_appl_trace_handle_h
         | inc_appl_predefines_h
         | inc_appl_types_h
         | inc_appl_status_h
+        | inc_appl_list_h
         /* ... */
 
 }; /* enum guard_appl_trace_handle_h */
@@ -41,6 +42,11 @@ Description:
 */
 struct appl_trace
 {
+    struct appl_list
+        o_list;
+
+    /* -- */
+
     appl_ull_t
         i_first_time;
 
@@ -64,15 +70,10 @@ struct appl_trace
     char const *
         p_name0;
 
-    struct appl_trace *
-        p_next;
-
-    /* -- */
-
     int
         e_level;
 
-#define PADDING (APPL_SIZEOF_INT)
+#define PADDING (APPL_SIZEOF_PTR + APPL_SIZEOF_INT)
 #include <misc/appl_padding.h>
 
 }; /* struct appl_trace */

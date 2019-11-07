@@ -10,6 +10,8 @@
 
 #include <appl_types.h>
 
+#include <list/appl_list.h>
+
 #include <trace/appl_trace_handle.h>
 
 #include <trace/appl_trace_service.h>

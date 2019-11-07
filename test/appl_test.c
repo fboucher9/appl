@@ -111,6 +111,8 @@
 
 #include <unique/appl_unique_test.h>
 
+#include <trace/appl_trace_test.h>
+
 #include <test/appl_test.h>
 
 void
@@ -2808,6 +2810,16 @@ static unsigned char const g_ref_unique[] =
     'e'
 };
 
+/* trace */
+static unsigned char const g_ref_trace[] =
+{
+    't',
+    'r',
+    'a',
+    'c',
+    'e'
+};
+
 struct appl_test_command
 {
     unsigned char const *
@@ -3053,6 +3065,11 @@ static struct appl_test_command const g_test_commands[] =
         g_ref_unique,
         g_ref_unique + sizeof(g_ref_unique),
         & appl_unique_test_1
+    },
+    {
+        g_ref_trace,
+        g_ref_trace + sizeof(g_ref_trace),
+        & appl_trace_test_1
     }
 };
 

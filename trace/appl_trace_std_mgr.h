@@ -42,6 +42,16 @@ class appl_trace_std_mgr : public appl_trace_mgr
 
         virtual
         enum appl_status
+            v_init(
+                struct appl_trace * const
+                    p_trace,
+                char const * const
+                    p_name0,
+                int const
+                    e_level);
+
+        virtual
+        enum appl_status
             v_message(
                 struct appl_trace_message const * const
                     p_trace_message);
